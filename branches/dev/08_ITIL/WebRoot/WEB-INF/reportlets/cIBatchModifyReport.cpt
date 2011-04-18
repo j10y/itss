@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20091224"><TableDataMap><TableData name="ds1" class="com.fr.data.impl.DBTableData"><Parameters/><Attributes maxMemRowCount="-1"/><Connection class="com.fr.data.impl.NameDatabaseConnection"><DatabaseName><![CDATA[itil]]></DatabaseName></Connection><Query><![CDATA[SELECT CIBatchModify.modifyNo, CIBatchModify.name, sUserInfos.userName, 
+      CIBatchModify.applyDate, 
+      CASE WHEN CIBatchModify.status = 0 THEN '草稿' WHEN CIBatchModify.status = 1 THEN
+       '处理结束' WHEN CIBatchModify.status = 2 THEN '处理中' WHEN CIBatchModify.status
+       = 3 THEN '放弃' END AS status, 
+      CASE WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL 
+      THEN ConfigItem.name WHEN CIBatchModifyPlan.oldConfigItem IS NOT NULL 
+      THEN ConfigItem_1.name WHEN CIBatchModifyPlan.maintenanceCIRel IS NOT NULL 
+      AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIBatchModifyPlan.oldCIRelationShip IS NULL 
+      THEN ConfigItem_6.name END AS configItemName, 
+      CASE WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL 
+      THEN ConfigItem.cisn WHEN CIBatchModifyPlan.oldConfigItem IS NOT NULL 
+      THEN ConfigItem_1.cisn WHEN CIBatchModifyPlan.maintenanceCIRel IS NOT NULL 
+      AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIBatchModifyPlan.oldCIRelationShip IS NULL 
+      THEN ConfigItem_6.cisn END AS configItemCode, 
+      CASE WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL 
+      THEN ConfigItemType.name WHEN CIBatchModifyPlan.oldConfigItem IS NOT NULL 
+      THEN ConfigItemType_1.name WHEN CIBatchModifyPlan.maintenanceCIRel IS NOT NULL
+       AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIBatchModifyPlan.oldCIRelationShip IS NULL 
+      THEN ConfigItemType_6.name END AS configItemType, 
+      CASE WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL AND 
+      CIBatchModifyPlan.oldConfigItem IS NULL 
+      THEN '新建' WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL AND 
+      CIBatchModifyPlan.oldConfigItem IS NOT NULL 
+      THEN '变更' WHEN CIBatchModifyPlan.newConfigItem IS NULL AND 
+      CIBatchModifyPlan.oldConfigItem IS NOT NULL 
+      THEN '删除' WHEN CIBatchModifyPlan.newConfigItem IS NULL AND 
+      CIBatchModifyPlan.oldConfigItem IS NULL AND 
+      CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIBatchModifyPlan.oldCIRelationShip IS NULL AND 
+      CIBatchModifyPlan.maintenanceCIRel IS NOT NULL 
+      THEN '维护关系' END AS configItemModifyType, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL AND 
+      CIBatchModifyPlan.oldCIRelationShip IS NULL 
+      THEN '新建' WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL AND 
+      CIBatchModifyPlan.oldCIRelationShip IS NOT NULL 
+      THEN '变更' WHEN CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIBatchModifyPlan.oldCIRelationShip IS NOT NULL 
+      THEN '删除' END AS relModifyType, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL AND 
+      CIRelationShip.parentConfigItemType IS NOT NULL 
+      THEN ConfigItemType_2.name WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL
+       AND CIRelationShip.parentServiceItemType IS NOT NULL 
+      THEN ServiceItemType.name WHEN CIBatchModifyPlan.oldCIRelationShip IS NOT NULL
+       AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.parentConfigItemType IS NOT NULL 
+      THEN ConfigItemType_4.name WHEN CIBatchModifyPlan.oldCIRelationShip IS NOT NULL
+       AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.parentServiceItemType IS NOT NULL 
+      THEN ServiceItemType_2.name END AS parentType, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL AND 
+      CIRelationShip.parentConfigItemType IS NOT NULL 
+      THEN CIRelationShip.parentConfigItemCode WHEN CIBatchModifyPlan.newCIRelationShip
+       IS NOT NULL AND CIRelationShip.parentServiceItemType IS NOT NULL 
+      THEN CIRelationShip.parentServiceItemCode WHEN CIBatchModifyPlan.oldCIRelationShip
+       IS NOT NULL AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.parentConfigItemType IS NOT NULL 
+      THEN CIRelationShip_1.parentConfigItemCode WHEN CIBatchModifyPlan.oldCIRelationShip
+       IS NOT NULL AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.parentServiceItemType IS NOT NULL 
+      THEN CIRelationShip_1.parentServiceItemCode END AS parentCode, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL AND 
+      CIRelationShip.childConfigItemType IS NOT NULL 
+      THEN ConfigItemType_3.name WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL
+       AND CIRelationShip.childServiceItemType IS NOT NULL 
+      THEN ServiceItemType_1.name WHEN CIBatchModifyPlan.oldCIRelationShip IS NOT NULL
+       AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.childConfigItemType IS NOT NULL 
+      THEN ConfigItemType_5.name WHEN CIBatchModifyPlan.oldCIRelationShip IS NOT NULL
+       AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.childServiceItemType IS NOT NULL 
+      THEN ServiceItemType_3.name END AS childType, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL AND 
+      CIRelationShip.childConfigItemType IS NOT NULL 
+      THEN CIRelationShip.childConfigItemCode WHEN CIBatchModifyPlan.newCIRelationShip
+       IS NOT NULL AND CIRelationShip.childServiceItemType IS NOT NULL 
+      THEN CIRelationShip.childServiceItemCode WHEN CIBatchModifyPlan.oldCIRelationShip
+       IS NOT NULL AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.childConfigItemType IS NOT NULL 
+      THEN CIRelationShip_1.childConfigItemCode WHEN CIBatchModifyPlan.oldCIRelationShip
+       IS NOT NULL AND CIBatchModifyPlan.newCIRelationShip IS NULL AND 
+      CIRelationShip_1.childServiceItemType IS NOT NULL 
+      THEN CIRelationShip_1.childServiceItemCode END AS childCode
+FROM CIBatchModify LEFT OUTER JOIN
+      CIBatchModifyPlan ON 
+      CIBatchModifyPlan.batchModify = CIBatchModify.id LEFT OUTER JOIN
+      ConfigItem ON CIBatchModifyPlan.newConfigItem = ConfigItem.id LEFT OUTER JOIN
+      ConfigItemType ON 
+      ConfigItemType.id = ConfigItem.configItemType LEFT OUTER JOIN
+      ConfigItem ConfigItem_1 ON 
+      CIBatchModifyPlan.oldConfigItem = ConfigItem_1.id LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_1 ON 
+      ConfigItemType_1.id = ConfigItem_1.configItemType LEFT OUTER JOIN
+      ConfigItem ConfigItem_6 ON 
+      CIBatchModifyPlan.maintenanceCIRel = ConfigItem_6.id LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_6 ON 
+      ConfigItem_6.configItemType = ConfigItemType_6.id LEFT OUTER JOIN
+      CIRelationShip ON 
+      CIBatchModifyPlan.newCIRelationShip = CIRelationShip.id LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_2 ON 
+      CIRelationShip.parentConfigItemType = ConfigItemType_2.id LEFT OUTER JOIN
+      ServiceItemType ON 
+      CIRelationShip.parentServiceItemType = ServiceItemType.id LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_3 ON 
+      CIRelationShip.childConfigItemType = ConfigItemType_3.id LEFT OUTER JOIN
+      ServiceItemType ServiceItemType_1 ON 
+      CIRelationShip.childServiceItemType = ServiceItemType_1.id LEFT OUTER JOIN
+      CIRelationShip CIRelationShip_1 ON 
+      CIRelationShip_1.id = CIBatchModifyPlan.oldCIRelationShip LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_4 ON 
+      CIRelationShip_1.parentConfigItemType = ConfigItemType_4.id LEFT OUTER JOIN
+      ServiceItemType ServiceItemType_2 ON 
+      CIRelationShip_1.parentServiceItemType = ServiceItemType_2.id LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_5 ON 
+      CIRelationShip_1.childConfigItemType = ConfigItemType_5.id LEFT OUTER JOIN
+      ServiceItemType ServiceItemType_3 ON 
+      CIRelationShip_1.childServiceItemType = ServiceItemType_3.id LEFT OUTER JOIN
+      sUserInfos ON CIBatchModify.applyUser = sUserInfos.ID
+ORDER BY CIBatchModify.applyDate DESC]]></Query></TableData></TableDataMap><ReportSettings shrinkToFitMode="0" headerHeight="0.0" footerHeight="0.0"><PaperSize width="17.71681102362205" height="19.68511811023622"/><Margin top="0.27" left="0.7499999999999999" bottom="0.27" right="0.7499999999999999"/></ReportSettings><ReportParameterAttr><Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/><PWTitle><![CDATA[参数]]></PWTitle><ParameterUI class="com.fr.report.parameter.CustomParameterUI"><ReportSettings shrinkToFitMode="0" headerHeight="0.0" footerHeight="0.0"><Margin top="0.27" left="0.75" bottom="0.27" right="0.75"/></ReportSettings><ReportParameterAttr><Attributes showWindow="true" delayPlaying="true" windowPosition="0" align="1"/><PWTitle><![CDATA[参数]]></PWTitle><ParameterUI class="com.fr.report.parameter.CustomParameterUI"><ReportSettings headerHeight="0.0" footerHeight="0.0"><Margin top="0.27" left="0.75" bottom="0.27" right="0.75"/></ReportSettings><RowHeight defaultValue="19"><![CDATA[19,19,19,19,19,19,19,19,19,19,19]]></RowHeight><ColumnWidth defaultValue="72"><![CDATA[72,72,72,72,72,72,72,72,72,72,72]]></ColumnWidth><CellElementList><C c="0" r="0"><O><![CDATA[查询]]></O><Widget class="com.fr.report.web.ui.impl.form.FormSubmitButton"><WidgetAttr/></Widget></C></CellElementList></ParameterUI></ReportParameterAttr><ReportWebAttr><EmailManager mailHost="" password="___" user="" fromEmailAddres=""/><ServerPrinter/><Background name="NullBackground"/></ReportWebAttr><ReportWriteAttr/><RowHeight defaultValue="19"><![CDATA[19,22,22,19,19,19,19,19,19,19,19]]></RowHeight><ColumnWidth defaultValue="72"><![CDATA[37,72,109,14,83,97,17,78,89,72,72]]></ColumnWidth><CellElementList><C c="1" r="1"><O><![CDATA[变更编号：]]></O><Expand/></C><C c="2" r="1"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.TextEditor"><WidgetAttr/><FieldName><![CDATA[modifyNumber]]></FieldName><TextAttr/></Widget></C><C c="4" r="1"><O><![CDATA[变更名称：]]></O><Expand/></C><C c="5" r="1"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.TextEditor"><WidgetAttr/><FieldName><![CDATA[modifyName]]></FieldName><TextAttr/></Widget></C><C c="7" r="1"><O><![CDATA[申请提出人：]]></O><Expand/></C><C c="8" r="1"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.TextEditor"><WidgetAttr/><FieldName><![CDATA[applyUser]]></FieldName><TextAttr/></Widget></C><C c="1" r="2"><O><![CDATA[状态：]]></O><Expand/></C><C c="2" r="2"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.ComboBox"><WidgetAttr/><FieldName><![CDATA[status]]></FieldName><Dictionary class="com.fr.data.impl.CustomDictionary"><CustomDictAttr><Dict key="草稿" value="草稿"/><Dict key="审批中" value="审批中"/><Dict key="审批结束" value="审批结束"/></CustomDictAttr></Dictionary></Widget></C><C c="4" r="2"><O><![CDATA[提交时间 从：]]></O><Expand/></C><C c="5" r="2"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.DateEditor"><WidgetAttr/><FieldName><![CDATA[beginDate]]></FieldName><DateAttr/></Widget></C><C c="7" r="2"><O><![CDATA[到：]]></O><Expand/></C><C c="8" r="2"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.DateEditor"><WidgetAttr/><FieldName><![CDATA[endDate]]></FieldName><DateAttr/></Widget></C><C c="4" r="3"><Expand/><Widget class="com.fr.report.web.ui.impl.form.FormSubmitButton"><WidgetAttr/><Text><![CDATA[查询]]></Text></Widget></C></CellElementList></ParameterUI><Parameter><Attributes name="modifyNumber"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="modifyName"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="applyUser"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="beginDate"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="status"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="endDate"/><O><![CDATA[]]></O></Parameter><PP class="com.fr.report.parameter.CustomParameterProcessor"><UnitProcessorMap><ParameterUnitProcessor parameter="applyUser"><UP class="com.fr.report.parameter.processor.FormulaUnitProcessor"><Formula><Attributes><![CDATA[=if($applyUser==null,nofilter,$applyUser)]]></Attributes><O><![CDATA[]]></O></Formula></UP></ParameterUnitProcessor><ParameterUnitProcessor parameter="status"><UP class="com.fr.report.parameter.processor.FormulaUnitProcessor"><Formula><Attributes><![CDATA[=if($status==null,nofilter,$status)]]></Attributes><O><![CDATA[]]></O></Formula></UP></ParameterUnitProcessor><ParameterUnitProcessor parameter="modifyName"><UP class="com.fr.report.parameter.processor.FormulaUnitProcessor"><Formula><Attributes><![CDATA[=if($modifyName==null,nofilter,$modifyName)]]></Attributes><O><![CDATA[]]></O></Formula></UP></ParameterUnitProcessor><ParameterUnitProcessor parameter="modifyNumber"><UP class="com.fr.report.parameter.processor.FormulaUnitProcessor"><Formula><Attributes><![CDATA[=if($modifyNumber==null,nofilter,$modifyNumber)]]></Attributes><O><![CDATA[]]></O></Formula></UP></ParameterUnitProcessor><ParameterUnitProcessor parameter="endDate"><UP class="com.fr.report.parameter.processor.FormulaUnitProcessor"><Formula><Attributes><![CDATA[=if($endDate==null,nofilter,$endDate)]]></Attributes><O><![CDATA[2010-05-07]]></O></Formula></UP></ParameterUnitProcessor><ParameterUnitProcessor parameter="beginDate"><UP class="com.fr.report.parameter.processor.FormulaUnitProcessor"><Formula><Attributes><![CDATA[=if($beginDate==null,nofilter,$beginDate)]]></Attributes><O><![CDATA[2010-05-01]]></O></Formula></UP></ParameterUnitProcessor></UnitProcessorMap></PP></ReportParameterAttr><Report class="com.fr.report.WorkSheet" name="sheet1"><ReportSettings shrinkToFitMode="0" headerHeight="0.0" footerHeight="0.0"><PaperSize width="17.71681102362205" height="19.68511811023622"/><Margin top="0.27" left="0.7499999999999999" bottom="0.27" right="0.7499999999999999"/></ReportSettings><ReportPageAttr><HR F="0" T="3"/><FR/><HC/><FC/></ReportPageAttr><ReportWebAttr><EmailManager mailHost="" password="___" user="" fromEmailAddres=""/><ServerPrinter/><Background name="NullBackground"/></ReportWebAttr><Header reportPageType="0"><Background name="NullBackground"/><LeftList/><CenterList/><RightList/></Header><Footer reportPageType="0"><Background name="NullBackground"/><LeftList/><CenterList/><RightList/></Footer><ReportWriteAttr/><RowHeight defaultValue="19"><![CDATA[19,19,34,32,39,19,19,19,19,19,19]]></RowHeight><ColumnWidth defaultValue="72"><![CDATA[95,89,95,72,72,87,99,110,87,89,100,100,97,75,93,114,15,79,72,66,72,72,11,72]]></ColumnWidth><CellElementList><C c="0" r="0" cs="14" s="0"><O><![CDATA[变更信息查询]]></O><Expand/></C><C c="0" r="2" cs="5" s="1"><O><![CDATA[变更信息]]></O><Expand/></C><C c="5" r="2" cs="4" s="2"><O><![CDATA[变更配置项信息]]></O><Expand/><CellInsertPolicy/><CellPageAttr/></C><C c="9" r="2" cs="5" s="1"><O><![CDATA[变更关系信息]]></O><Expand/></C><C c="0" r="3" s="3"><O><![CDATA[变更编号]]></O><Expand/></C><C c="1" r="3" s="3"><O><![CDATA[变更名称]]></O><Expand/></C><C c="2" r="3" s="3"><O><![CDATA[变更提交人]]></O><Expand/></C><C c="3" r="3" s="3"><O><![CDATA[提交时间]]></O><Expand/></C><C c="4" r="3" s="3"><O><![CDATA[状态]]></O><Expand/></C><C c="5" r="3" s="3"><O><![CDATA[配置项类型]]></O><Expand/></C><C c="6" r="3" s="3"><O><![CDATA[配置项编号]]></O><Expand/></C><C c="7" r="3" s="3"><O><![CDATA[配置项名称]]></O><Expand/></C><C c="8" r="3" s="4"><O><![CDATA[变更类型]]></O><Expand/></C><C c="9" r="3" s="3"><O><![CDATA[父类型]]></O><Expand/></C><C c="10" r="3" s="3"><O><![CDATA[父编号]]></O><Expand/></C><C c="11" r="3" s="3"><O><![CDATA[子类型]]></O><Expand/></C><C c="12" r="3" s="3"><O><![CDATA[子编号]]></O><Expand/></C><C c="13" r="3" s="4"><O><![CDATA[变更类型]]></O><Expand/></C><C c="0" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="modifyNo"/><Condition class="com.fr.data.condition.ListCondition"><JoinCondition join="0"><Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[modifyNo]]></CNAME><Compare op="10"><O t="Formula" class="Formula"><Attributes><![CDATA[=if(LEN($modifyNumber)==0,nofilter,$modifyNumber)]]></Attributes></O></Compare></Condition></JoinCondition><JoinCondition join="0"><Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[name]]></CNAME><Compare op="10"><O t="Formula" class="Formula"><Attributes><![CDATA[=if(LEN($modifyName)==0,nofilter,$modifyName)]]></Attributes></O></Compare></Condition></JoinCondition><JoinCondition join="0"><Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[userName]]></CNAME><Compare op="10"><O t="Formula" class="Formula"><Attributes><![CDATA[=if(LEN($applyUser)==0,nofilter,$applyUser)]]></Attributes></O></Compare></Condition></JoinCondition><JoinCondition join="0"><Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[status]]></CNAME><Compare op="10"><O t="Formula" class="Formula"><Attributes><![CDATA[=if(LEN($status)==0,nofilter,$status)]]></Attributes></O></Compare></Condition></JoinCondition><JoinCondition join="0"><Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyDate]]></CNAME><Compare op="3"><O t="Formula" class="Formula"><Attributes><![CDATA[=if(LEN($beginDate)==0,nofilter,$beginDate)]]></Attributes></O></Compare></Condition></JoinCondition><JoinCondition join="0"><Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyDate]]></CNAME><Compare op="5"><O t="Formula" class="Formula"><Attributes><![CDATA[=if(LEN($endDate)==0,nofilter,$endDate)]]></Attributes></O></Compare></Condition></JoinCondition></Condition><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"><Attr divideMode="1"/></RG><Result><![CDATA[$$$]]></Result></O><Expand dir="0"/></C><C c="1" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="name"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="2" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="userName"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="3" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyDate"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="4" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="status"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="5" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="configItemType"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="6" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="configItemCode"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="7" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="configItemName"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="8" r="4" s="6"><O t="DSColumn"><Attributes dsName="ds1" columnName="configItemModifyType"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="9" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="parentType"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="10" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="parentCode"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="11" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="childType"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="12" r="4" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="childCode"/><Condition class="com.fr.data.condition.ListCondition"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/><Result><![CDATA[$$$]]></Result></O><Expand dir="0"/></C><C c="13" r="4" s="6"><O t="DSColumn"><Attributes dsName="ds1" columnName="relModifyType"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C></CellElementList></Report><StyleList><Style><FRFont name="SimSun" style="1" size="14" foreground="-16157524"/><Background name="NullBackground"/><Border><Bottom style="6" color="-6894375"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="1" size="16"/><Background name="ColorBackground" color="-4144960"/><Border/></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="1" size="16"/><Background name="ColorBackground" color="-8355712"/><Border/></Style><Style horizontal_alignment="0" imageLayout="2"><FRFont name="SimSun" style="1" size="14"/><Background name="NullBackground"/><Border><Top style="1"/><Bottom style="1"/><Left style="1"/><Right style="1"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="1" size="14"/><Background name="NullBackground"/><Border><Top style="1"/><Bottom style="1"/><Left style="1"/><Right style="1"/></Border></Style><Style horizontal_alignment="0" imageLayout="2"><FRFont name="SimSun" style="0" size="12"/><Background name="NullBackground"/><Border><Top style="1"/><Bottom style="1"/><Left style="1"/><Right style="1"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="0" size="12"/><Background name="NullBackground"/><Border><Top style="1"/><Bottom style="1"/><Left style="1"/><Right style="1"/></Border></Style></StyleList></WorkBook>

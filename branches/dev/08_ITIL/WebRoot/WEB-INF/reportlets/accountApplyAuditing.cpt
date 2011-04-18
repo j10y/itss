@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20091224"><TableDataMap><TableData name="ds1" class="com.fr.data.impl.DBTableData"><Parameters><Parameter><Attributes name="nofilter"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="applystart"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="approver"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="applyend"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="type"/><O><![CDATA[]]></O></Parameter></Parameters><Attributes maxMemRowCount="-1"/><Connection class="com.fr.data.impl.NameDatabaseConnection"><DatabaseName><![CDATA[itil]]></DatabaseName></Connection><Query><![CDATA[
+SELECT JBPM_TASKINSTANCE.ACTORID_ AS approver, 
+      JBPM_POOLEDACTOR.ACTORID_ AS approver2, 
+      itil_sci_AccountApplyMainTable.name AS name, 
+      CONVERT(varchar(10), itil_sci_AccountApplyMainTable.applyDate, 121) AS applyDate, 
+      CONVERT(varchar(20), JBPM_TASKINSTANCE.CREATE_, 20) AS createDate, 
+      ServiceItemProcess.definitionName AS definitionName, 
+      JBPM_TASKINSTANCE.NAME_ AS nowNodeName, sUserInfos.userName as applyUser
+FROM itil_sci_AccountApplyMainTable INNER JOIN
+          (SELECT siadh.requirementid, MAX(siadh.processId) AS processId
+         FROM itil_sci_AccountApplyMainTable aamt, 
+               ServiceItemApplyAuditHis siadh
+         WHERE aamt.id = siadh.requirementid AND 
+               siadh.requirementClass = 'com.digitalchina.itil.require.entity.AccountApplyMainTable'
+                AND aamt.status = 1
+         GROUP BY siadh.requirementid) a1 ON 
+      itil_sci_AccountApplyMainTable.ID = a1.requirementid INNER JOIN
+      JBPM_TASKINSTANCE ON 
+      a1.processId = JBPM_TASKINSTANCE.PROCINST_ INNER JOIN
+      JBPM_TASKACTORPOOL ON 
+      JBPM_TASKINSTANCE.ID_ = JBPM_TASKACTORPOOL.TASKINSTANCE_ INNER JOIN
+      JBPM_POOLEDACTOR ON 
+      JBPM_TASKACTORPOOL.POOLEDACTOR_ = JBPM_POOLEDACTOR.ID_ INNER JOIN
+      ServiceItemProcess ON 
+      itil_sci_AccountApplyMainTable.serviceItemProcess = ServiceItemProcess.id LEFT OUTER
+       JOIN
+      sUserInfos ON itil_sci_AccountApplyMainTable.applyUser = sUserInfos.ID
+WHERE (JBPM_TASKINSTANCE.ISOPEN_ = 1) AND (JBPM_TASKINSTANCE.END_ IS NULL)
+${if(len(approver)==0,nofilter,"and JBPM_POOLEDACTOR.ACTORID_ = '" + approver + "'" )} 
+${if(len(type)==0,nofilter,"and ServiceItemProcess.definitionName = '" + type + "'" )}
+${if(len(applystart)==0,nofilter,"and applyDate >= '" + applystart + "'" )}
+${if(len(applyend)==0,nofilter,"and applyDate <= '" + applyend + "'" )}]]></Query></TableData><TableData name="ds2" class="com.fr.data.impl.DBTableData"><Parameters/><Attributes maxMemRowCount="-1"/><Connection class="com.fr.data.impl.NameDatabaseConnection"><DatabaseName><![CDATA[itil]]></DatabaseName></Connection><Query><![CDATA[SELECT ServiceItemProcess.definitionName AS type
+FROM itil_sci_AccountApplyMainTable INNER JOIN
+      ServiceItemProcess ON 
+      itil_sci_AccountApplyMainTable.serviceItemProcess = ServiceItemProcess.id
+GROUP BY ServiceItemProcess.definitionName]]></Query></TableData></TableDataMap><ReportSettings headerHeight="0.0" footerHeight="0.0"><PaperSize width="10.827047244094489" height="11.693"/><Margin top="0.27" left="0.7499999999999999" bottom="0.27" right="0.7499999999999999"/></ReportSettings><ReportParameterAttr><Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/><PWTitle><![CDATA[参数]]></PWTitle><ParameterUI class="com.fr.report.parameter.CustomParameterUI"><TableDataMap><TableData name="ds1" class="com.fr.data.impl.DBTableData"><Parameters><Parameter><Attributes name="nofilter"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="applystart"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="approver"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="applyend"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="type"/><O><![CDATA[]]></O></Parameter></Parameters><Attributes maxMemRowCount="-1"/><Connection class="com.fr.data.impl.NameDatabaseConnection"><DatabaseName><![CDATA[itil]]></DatabaseName></Connection><Query><![CDATA[
+SELECT JBPM_TASKINSTANCE.ACTORID_ AS approver, 
+      JBPM_POOLEDACTOR.ACTORID_ AS approver2, 
+      itil_sci_AccountApplyMainTable.name AS name, 
+      CONVERT(varchar(10), itil_sci_AccountApplyMainTable.applyDate, 121) AS applyDate, 
+      CONVERT(varchar(20), JBPM_TASKINSTANCE.CREATE_, 20) AS createDate, 
+      ServiceItemProcess.definitionName AS definitionName, 
+      JBPM_TASKINSTANCE.NAME_ AS nowNodeName, sUserInfos.userName as applyUser
+FROM itil_sci_AccountApplyMainTable INNER JOIN
+          (SELECT siadh.requirementid, MAX(siadh.processId) AS processId
+         FROM itil_sci_AccountApplyMainTable aamt, 
+               ServiceItemApplyAuditHis siadh
+         WHERE aamt.id = siadh.requirementid AND 
+               siadh.requirementClass = 'com.digitalchina.itil.require.entity.AccountApplyMainTable'
+                AND aamt.status = 1
+         GROUP BY siadh.requirementid) a1 ON 
+      itil_sci_AccountApplyMainTable.ID = a1.requirementid INNER JOIN
+      JBPM_TASKINSTANCE ON 
+      a1.processId = JBPM_TASKINSTANCE.PROCINST_ INNER JOIN
+      JBPM_TASKACTORPOOL ON 
+      JBPM_TASKINSTANCE.ID_ = JBPM_TASKACTORPOOL.TASKINSTANCE_ INNER JOIN
+      JBPM_POOLEDACTOR ON 
+      JBPM_TASKACTORPOOL.POOLEDACTOR_ = JBPM_POOLEDACTOR.ID_ INNER JOIN
+      ServiceItemProcess ON 
+      itil_sci_AccountApplyMainTable.serviceItemProcess = ServiceItemProcess.id LEFT OUTER
+       JOIN
+      sUserInfos ON itil_sci_AccountApplyMainTable.applyUser = sUserInfos.ID
+WHERE (JBPM_TASKINSTANCE.ISOPEN_ = 1) AND (JBPM_TASKINSTANCE.END_ IS NULL)
+${if(len(approver)==0,nofilter,"and JBPM_POOLEDACTOR.ACTORID_ = '" + approver + "'" )} 
+${if(len(type)==0,nofilter,"and ServiceItemProcess.definitionName = '" + type + "'" )}
+${if(len(applystart)==0,nofilter,"and applyDate >= '" + applystart + "'" )}
+${if(len(applyend)==0,nofilter,"and applyDate <= '" + applyend + "'" )}]]></Query></TableData></TableDataMap><ReportSettings headerHeight="0.0" footerHeight="0.0"><Margin top="0.27" left="0.75" bottom="0.27" right="0.75"/></ReportSettings><Header reportPageType="0"><Background name="NullBackground"/><LeftList/><CenterList/><RightList/></Header><Footer reportPageType="0"><Background name="NullBackground"/><LeftList/><CenterList/><RightList/></Footer><RowHeight defaultValue="19"><![CDATA[19,20,20,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19]]></RowHeight><ColumnWidth defaultValue="72"><![CDATA[72,96,121,37,119,131,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72]]></ColumnWidth><CellElementList><C c="1" r="1"><O><![CDATA[审批人：]]></O><Expand/></C><C c="2" r="1"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.TextEditor"><WidgetAttr/><FieldName><![CDATA[approver]]></FieldName><TextAttr/></Widget></C><C c="4" r="1"><O><![CDATA[申请类型：]]></O><Expand/></C><C c="5" r="1"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.ComboBox"><WidgetAttr/><FieldName><![CDATA[type]]></FieldName><Editable><![CDATA[false]]></Editable><Dictionary class="com.fr.data.impl.TableDataDictionary"><FormulaDictAttr ki="0" vi="0"/><TableDataDictAttr><TableData class="com.fr.data.impl.NameTableData"><Name><![CDATA[ds2]]></Name></TableData></TableDataDictAttr></Dictionary></Widget></C><C c="1" r="2"><O><![CDATA[申请时间开始：]]></O><Expand/></C><C c="2" r="2" s="0"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.DateEditor"><WidgetAttr/><FieldName><![CDATA[applystart]]></FieldName><Editable><![CDATA[false]]></Editable><DateAttr start="" end=""/></Widget></C><C c="4" r="2"><O><![CDATA[申请时间结束：]]></O><Expand/></C><C c="5" r="2" s="0"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.DateEditor"><WidgetAttr/><FieldName><![CDATA[applyend]]></FieldName><Editable><![CDATA[false]]></Editable><DateAttr start="" end=""/></Widget></C><C c="4" r="3"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.impl.form.FormSubmitButton"><WidgetAttr/><Text><![CDATA[查询]]></Text></Widget></C></CellElementList></ParameterUI></ReportParameterAttr><Report class="com.fr.report.WorkSheet" name="sheet1"><ReportSettings headerHeight="0.0" footerHeight="0.0"><Margin top="0.27" left="0.75" bottom="0.27" right="0.75"/></ReportSettings><ReportPageAttr><HR F="0" T="2"/><FR/><HC F="0" T="6"/><FC/></ReportPageAttr><RowHeight defaultValue="19"><![CDATA[19,19,20,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19]]></RowHeight><ColumnWidth defaultValue="72"><![CDATA[104,72,86,171,105,134,109,72,72,72,72,72,72,72,72,72,72,72,72,72,72]]></ColumnWidth><CellElementList><C c="0" r="0" cs="7" s="1"><O><![CDATA[审批中的申请单]]></O><Expand/></C><C c="0" r="1" s="2"><O><![CDATA[总数：]]></O><Expand/></C><C c="1" r="1" cs="6" s="3"><O t="Formula" class="Formula"><Attributes><![CDATA[=COUNT(A4)]]></Attributes></O><Expand/></C><C c="0" r="2" s="4"><O><![CDATA[申请编号]]></O><Expand/></C><C c="1" r="2" s="4"><O><![CDATA[申请人]]></O><Expand/></C><C c="2" r="2" s="4"><O><![CDATA[申请时间]]></O><Expand/></C><C c="3" r="2" s="4"><O><![CDATA[申请类型]]></O><Expand/></C><C c="4" r="2" s="4"><O><![CDATA[当前环节名称]]></O><Expand/></C><C c="5" r="2" s="4"><O><![CDATA[当前环节创建时间]]></O><Expand/></C><C c="6" r="2" s="4"><O><![CDATA[当前环节审批人]]></O><Expand/></C><C c="0" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="name"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="1" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyUser"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="2" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyDate"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="3" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="definitionName"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="4" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="nowNodeName"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"><Attr divideMode="1"/></RG></O><Expand dir="0"/></C><C c="5" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="createDate"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="6" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="approver2"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C></CellElementList></Report><StyleList><Style><Format class="java.text.SimpleDateFormat"><![CDATA[yyyy-MM-dd]]></Format><FRFont name="SimSun" style="0" size="12"/><Background name="NullBackground"/><Border/></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="0" size="12" foreground="-65536"/><Background name="ColorBackground" color="-3342337"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="1" size="12" foreground="-16776961"/><Background name="NullBackground"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style><FRFont name="SimSun" style="1" size="12"/><Background name="NullBackground"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="1" size="12"/><Background name="ColorBackground" color="-3342337"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="0" size="12"/><Background name="NullBackground"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style></StyleList></WorkBook>

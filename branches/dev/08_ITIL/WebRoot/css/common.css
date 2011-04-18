@@ -1,0 +1,63 @@
+
+.add {
+    background-image:url(../images/cls/add.gif) !important;
+}
+
+.tabs {
+    background-image:url(../images/cls/tabs.gif) !important;
+}
+
+.remove {
+    background-image:url(../images/cls/delete.gif) !important;
+}
+
+.details {
+    background-image:url(../images/cls/details.gif) !important;
+}
+
+.user-delete {
+    background-image:url(../images/cls/user_delete.gif) !important;
+}
+
+.search {
+    background-image:url(../images/cls/search.gif) !important;
+}
+
+.delete {
+    background-image:url(../images/cls/delete.gif) !important;
+}
+
+.export {
+    background-image:url(../images/cls/export.gif) !important;
+}
+
+.reset {
+    background-image:url(../images/cls/gears.gif) !important;
+}
+
+.save {
+	background-image:url(../images/cls/save.gif) !important;
+} 	
+.forward {
+    background-image:url(../images/cls/forward.gif) !important;
+}
+.edit {
+     background-image:url(../images/cls/edit.png) !important;
+}
+.refresh {
+	 background-image:url(../images/cls/refresh.png) !important;
+}
+.back {
+	 background-image:url(../images/cls/back.gif) !important;
+}
+.submit {
+	 background-image:url(../images/cls/submit.gif) !important;
+}
+.look {
+	 background-image:url(../images/cls/preview.gif) !important;
+}
+.x-check-group-alt {
+ 	background: #D1DDEF;
+ 	border-top:1px dotted #B5B8C8;
+  	border-bottom:1px dotted #B5B8C8;
+}

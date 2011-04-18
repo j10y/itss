@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GBK"?>
+<grid>
+	<header>
+		<title>主数据ID</title>
+	</header>
+	<header>
+		<title>申请编号</title>
+	</header>
+	<header>
+		<title>申请名称</title>
+	</header>
+	<header>
+		<title>代申请人</title>
+	</header>
+	<header>
+		<title>申请人</title>
+	</header>
+	<header>
+		<title>申请时间</title>
+	</header>	
+	<header>
+		<title>申请类型</title>
+	</header>	
+	<header>
+		<title>当前审批环节</title>
+	</header>
+</grid>

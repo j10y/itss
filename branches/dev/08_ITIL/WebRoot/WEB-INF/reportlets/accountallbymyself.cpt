@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20091224"><TableDataMap><TableData name="ds1" class="com.fr.data.impl.DBTableData"><Parameters><Parameter><Attributes name="username"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="nofilter"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="itcode"/><O><![CDATA[]]></O></Parameter></Parameters><Attributes maxMemRowCount="-1"/><Connection class="com.fr.data.impl.NameDatabaseConnection"><DatabaseName><![CDATA[itil]]></DatabaseName></Connection><Query><![CDATA[SELECT ITIL_VIEW_ALLACCOUNTAPPLY.ID AS id, 
+      ITIL_VIEW_ALLACCOUNTAPPLY.itcode AS itcode, 
+       
+      ITIL_VIEW_ALLACCOUNTAPPLY.applyDate AS applyDate, 
+      ITIL_VIEW_ALLACCOUNTAPPLY.definitionName AS definitionName, 
+     a3.pagePath AS pagepath, 
+      CASE WHEN ITIL_VIEW_ALLACCOUNTAPPLY.nownodeid IS NULL 
+      THEN a1.name1 ELSE a2.name2 END AS nodeName,
+ITIL_VIEW_ALLACCOUNTAPPLY.userName AS userName
+FROM ITIL_VIEW_ALLACCOUNTAPPLY INNER JOIN
+          (SELECT ServiceItemProcess.serviceItem, ServiceItemProcess.definitionName, 
+               PAGE_PageModel.pagePath
+         FROM ServiceItemProcess, PAGE_PageModel
+         WHERE PAGE_PageModel.id = ServiceItemProcess.endPageModel) a3 ON 
+      ITIL_VIEW_ALLACCOUNTAPPLY.serviceItem = a3.serviceItem AND 
+      ITIL_VIEW_ALLACCOUNTAPPLY.definitionName = a3.definitionName LEFT OUTER JOIN
+          (SELECT JBPM_PAGEMODELCONFIGUNIT.nodeId, 
+               JBPM_PAGEMODELCONFIGUNIT.processId, 
+               PAGE_PageModel.pagePath
+         FROM JBPM_PAGEMODELCONFIGUNIT, PAGE_PageModel
+         WHERE PAGE_PageModel.id = JBPM_PAGEMODELCONFIGUNIT.pageModelId) 
+      a4 ON ITIL_VIEW_ALLACCOUNTAPPLY.processInfo = a4.processId AND 
+      ITIL_VIEW_ALLACCOUNTAPPLY.nownodeid = a4.nodeId LEFT OUTER JOIN
+          (SELECT id_ AS id1, name_ AS name1
+         FROM JBPM_NODE) a1 ON 
+      ITIL_VIEW_ALLACCOUNTAPPLY.nodeid = a1.id1 LEFT OUTER JOIN
+          (SELECT id_ AS id2, name_ AS name2
+         FROM JBPM_NODE) a2 ON ITIL_VIEW_ALLACCOUNTAPPLY.nownodeid = a2.id2
+where itcode='${itcode}'
+${if(len(username)==0,nofilter,"and ITIL_VIEW_ALLACCOUNTAPPLY.userName = '" + username + "'" )}
+]]></Query></TableData></TableDataMap><ReportParameterAttr><Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/><PWTitle><![CDATA[参数]]></PWTitle><ParameterUI class="com.fr.report.parameter.CustomParameterUI"><TableDataMap><TableData name="ds1" class="com.fr.data.impl.DBTableData"><Parameters><Parameter><Attributes name="username"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="nofilter"/><O><![CDATA[]]></O></Parameter><Parameter><Attributes name="itcode"/><O><![CDATA[]]></O></Parameter></Parameters><Attributes maxMemRowCount="-1"/><Connection class="com.fr.data.impl.NameDatabaseConnection"><DatabaseName><![CDATA[itil]]></DatabaseName></Connection><Query><![CDATA[SELECT ITIL_VIEW_ALLACCOUNTAPPLY.ID AS id, 
+      ITIL_VIEW_ALLACCOUNTAPPLY.itcode AS itcode, 
+       
+      ITIL_VIEW_ALLACCOUNTAPPLY.applyDate AS applyDate, 
+      ITIL_VIEW_ALLACCOUNTAPPLY.definitionName AS definitionName, 
+     a3.pagePath AS pagepath, 
+      CASE WHEN ITIL_VIEW_ALLACCOUNTAPPLY.nownodeid IS NULL 
+      THEN a1.name1 ELSE a2.name2 END AS nodeName,
+ITIL_VIEW_ALLACCOUNTAPPLY.userName AS userName
+FROM ITIL_VIEW_ALLACCOUNTAPPLY INNER JOIN
+          (SELECT ServiceItemProcess.serviceItem, ServiceItemProcess.definitionName, 
+               PAGE_PageModel.pagePath
+         FROM ServiceItemProcess, PAGE_PageModel
+         WHERE PAGE_PageModel.id = ServiceItemProcess.endPageModel) a3 ON 
+      ITIL_VIEW_ALLACCOUNTAPPLY.serviceItem = a3.serviceItem AND 
+      ITIL_VIEW_ALLACCOUNTAPPLY.definitionName = a3.definitionName LEFT OUTER JOIN
+          (SELECT JBPM_PAGEMODELCONFIGUNIT.nodeId, 
+               JBPM_PAGEMODELCONFIGUNIT.processId, 
+               PAGE_PageModel.pagePath
+         FROM JBPM_PAGEMODELCONFIGUNIT, PAGE_PageModel
+         WHERE PAGE_PageModel.id = JBPM_PAGEMODELCONFIGUNIT.pageModelId) 
+      a4 ON ITIL_VIEW_ALLACCOUNTAPPLY.processInfo = a4.processId AND 
+      ITIL_VIEW_ALLACCOUNTAPPLY.nownodeid = a4.nodeId LEFT OUTER JOIN
+          (SELECT id_ AS id1, name_ AS name1
+         FROM JBPM_NODE) a1 ON 
+      ITIL_VIEW_ALLACCOUNTAPPLY.nodeid = a1.id1 LEFT OUTER JOIN
+          (SELECT id_ AS id2, name_ AS name2
+         FROM JBPM_NODE) a2 ON ITIL_VIEW_ALLACCOUNTAPPLY.nownodeid = a2.id2
+where itcode='${itcode}'
+${if(len(username)==0,nofilter,"and ITIL_VIEW_ALLACCOUNTAPPLY.userName = '" + username + "'" )}
+]]></Query></TableData></TableDataMap><ReportSettings headerHeight="0.0" footerHeight="0.0"><Margin top="0.27" left="0.75" bottom="0.27" right="0.75"/></ReportSettings><RowHeight defaultValue="19"><![CDATA[19,19,19,19,19,19,19,19,19,19,19]]></RowHeight><ColumnWidth defaultValue="72"><![CDATA[177,72,106,37,72,72,72,72,72,72,72]]></ColumnWidth><CellElementList><C c="1" r="1"><O><![CDATA[申请人：]]></O><Expand/></C><C c="2" r="1"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.TextEditor"><WidgetAttr/><FieldName><![CDATA[username]]></FieldName><TextAttr/></Widget></C><C c="4" r="1"><O><![CDATA[]]></O><Expand/><Widget class="com.fr.report.web.ui.impl.form.FormSubmitButton"><WidgetAttr/><Text><![CDATA[查询]]></Text></Widget></C></CellElementList></ParameterUI></ReportParameterAttr><Report class="com.fr.report.WorkSheet" name="sheet1"><ReportSettings headerHeight="0.0" footerHeight="0.0"><Margin top="0.27" left="0.75" bottom="0.27" right="0.75"/></ReportSettings><Header reportPageType="0"><Background name="NullBackground"/><LeftList/><CenterList/><RightList/></Header><Footer reportPageType="0"><Background name="NullBackground"/><LeftList/><CenterList/><RightList/></Footer><RowHeight defaultValue="19"><![CDATA[19,19,19,19,19,19,19,19,19,19,19]]></RowHeight><ColumnWidth defaultValue="72"><![CDATA[95,96,91,186,107,0,0,72,72,72,72]]></ColumnWidth><CellElementList><C c="0" r="0" cs="8" s="0"><O><![CDATA[我提交的帐号申请]]></O><Expand/></C><C c="0" r="1" s="1"><O><![CDATA[总数：]]></O><Expand/></C><C c="1" r="1" cs="7" s="2"><O t="Formula" class="Formula"><Attributes><![CDATA[=COUNT(A4)]]></Attributes></O><Expand/></C><C c="0" r="2" s="3"><O><![CDATA[创建人]]></O><Expand/></C><C c="1" r="2" s="3"><O><![CDATA[ 申请日期 ]]></O><Expand/></C><C c="2" r="2" s="3"><O><![CDATA[申请人]]></O><Expand/></C><C c="3" r="2" s="3"><O><![CDATA[ 申请单类型 ]]></O><Expand/></C><C c="4" r="2" s="3"><O><![CDATA[ 当前环节类型 ]]></O><Expand/></C><C c="5" r="2" s="3"><Expand/></C><C c="6" r="2" s="3"><Expand/></C><C c="7" r="2" s="3"><O><![CDATA[ 查看 ]]></O><Expand/></C><C c="0" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="itcode"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"><Attr divideMode="1"/></RG></O><Expand dir="0"/></C><C c="1" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyDate"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="2" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="userName"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="3" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="definitionName"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="4" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="nodeName"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="5" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="pagepath"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="6" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="id"/><Complex/><RG class="com.fr.report.cellElement.core.FunctionGrouper"/></O><Expand dir="0"/></C><C c="7" r="3" s="5"><O><![CDATA[查看详细]]></O><NameJavaScriptGroup><NameJavaScript name="网页链接1"><JavaScript class="com.fr.report.js.WebHyperlink"><JavaScript class="com.fr.report.js.WebHyperlink"><Parameters><Parameter><Attributes name="dataId"/><O t="Formula" class="Formula"><Attributes><![CDATA[=G4]]></Attributes></O></Parameter><Parameter><Attributes name="url"/><O t="Formula" class="Formula"><Attributes><![CDATA[=F4]]></Attributes></O></Parameter></Parameters><TargetFrame><![CDATA[_blank]]></TargetFrame><URL><![CDATA[forword.jsp]]></URL></JavaScript></JavaScript></NameJavaScript></NameJavaScriptGroup><Expand/></C><C c="0" r="6"><O><![CDATA[  ]]></O><Expand/></C><C c="0" r="7"><O><![CDATA[  ]]></O><Expand/></C><C c="0" r="9"><O><![CDATA[ ]]></O><Expand/></C></CellElementList></Report><StyleList><Style horizontal_alignment="0"><FRFont name="SimSun" style="0" size="12" foreground="-65536"/><Background name="ColorBackground" color="-3342337"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="1" size="12" foreground="-16776961"/><Background name="ColorBackground" color="-1"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style><FRFont name="SimSun" style="1" size="12"/><Background name="NullBackground"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="1" size="12"/><Background name="ColorBackground" color="-3342337"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="0" size="12"/><Background name="NullBackground"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style><Style horizontal_alignment="0"><FRFont name="SimSun" style="0" size="12" foreground="-16776961" underline="1"/><Background name="NullBackground"/><Border><Top style="1" color="-3342337"/><Bottom style="1" color="-3342337"/><Left style="1" color="-3342337"/><Right style="1" color="-3342337"/></Border></Style></StyleList></WorkBook>

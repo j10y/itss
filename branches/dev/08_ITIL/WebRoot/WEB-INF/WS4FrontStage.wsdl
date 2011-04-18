@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="WS4FrontStage" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="WS4FrontStage" xmlns:intf="WS4FrontStage" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <wsdl:message name="connectPmcServiceRequest">
+
+      <wsdl:part name="userCode" type="xsd:string"/>
+
+      <wsdl:part name="roleId" type="xsd:string"/>
+
+      <wsdl:part name="managerCode" type="xsd:string"/>
+
+      <wsdl:part name="departmentCode" type="xsd:string"/>
+
+      <wsdl:part name="superiorDeptCode" type="xsd:string"/>
+
+      <wsdl:part name="attachPlatCode" type="xsd:string"/> 
+
+      <wsdl:part name="customerName" type="xsd:string"/>
+
+      <wsdl:part name="customerShortName" type="xsd:string"/>
+
+      <wsdl:part name="projectName" type="xsd:string"/>
+
+      <wsdl:part name="projectCode" type="xsd:string"/>
+
+      <wsdl:part name="taxRate" type="xsd:string"/>
+
+      <wsdl:part name="signCompanyName" type="xsd:string"/>
+
+      <wsdl:part name="planSignMoney" type="xsd:string"/>
+
+      <wsdl:part name="finalUserName" type="xsd:string"/>
+
+      <wsdl:part name="planRealRate" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateUserRightRequest">
+
+      <wsdl:part name="userCode" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="checkUserLoginResponse">
+
+      <wsdl:part name="checkUserLoginReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="connectPmcServiceResponse">
+
+      <wsdl:part name="connectPmcServiceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateUserRightResponse">
+
+      <wsdl:part name="validateUserRightReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="checkUserLoginRequest">
+
+      <wsdl:part name="userCode" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ConnectPmcWSImpl">
+
+      <wsdl:operation name="connectPmcService" parameterOrder="userCode roleId managerCode departmentCode superiorDeptCode attachPlatCode customerName customerShortName projectName projectCode taxRate signCompanyName planSignMoney finalUserName planRealRate">
+
+         <wsdl:input message="impl:connectPmcServiceRequest" name="connectPmcServiceRequest"/>
+
+         <wsdl:output message="impl:connectPmcServiceResponse" name="connectPmcServiceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="checkUserLogin" parameterOrder="userCode">
+
+         <wsdl:input message="impl:checkUserLoginRequest" name="checkUserLoginRequest"/>
+
+         <wsdl:output message="impl:checkUserLoginResponse" name="checkUserLoginResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateUserRight" parameterOrder="userCode">
+
+         <wsdl:input message="impl:validateUserRightRequest" name="validateUserRightRequest"/>
+
+         <wsdl:output message="impl:validateUserRightResponse" name="validateUserRightResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ConnectPmcWSImplSoapBinding" type="impl:ConnectPmcWSImpl">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="connectPmcService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="connectPmcServiceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="WS4FrontStage" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="connectPmcServiceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="WS4FrontStage" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="checkUserLogin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="checkUserLoginRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="WS4FrontStage" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="checkUserLoginResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="WS4FrontStage" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateUserRight">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="validateUserRightRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="WS4FrontStage" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="validateUserRightResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="WS4FrontStage" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ConnectPmcWSImplService">
+
+      <wsdl:port binding="impl:ConnectPmcWSImplSoapBinding" name="ConnectPmcWSImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/itil2/event"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

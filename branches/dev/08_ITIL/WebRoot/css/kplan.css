@@ -1,0 +1,268 @@
+@CHARSET "GB18030";
+
+.header {
+	font-family: Tahoma, sans-serif;
+	font-size: 12px;
+	COLOR: #2FFFFF;
+	padding-left: 10;
+	padding-right: 5;
+	font-weight: 900
+}
+
+.text {
+	font-family: Tahoma, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	padding-left: 20;
+	padding-right: 10
+}
+
+.text2 {
+	font-family: Tahoma, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	padding-left: 20;
+	padding-right: 10;
+	font-weight: 100;
+}
+
+.news {
+	font-family: Arial, sans-serif;
+	font-size: 9px;
+	color: #ffffff;
+	padding-left: 10;
+	padding-right: 5;
+	font-weight: 900;
+}
+
+a:link {
+	text-decoration: none;
+	color: #ffffff
+}
+
+a:visited {
+	text-decoration: none;
+	color: #ffffff
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #ffffff
+}
+
+a:active {
+	text-decoration: none;
+	color: #ffffff
+}
+
+li {
+	list-style-image: url('images/pic.jpg')
+}
+
+/* --[[ Main Expand Icons ]]-- */
+#imenus0 .imeam span,#imenus0 .imeamj span {
+	width: 9px;
+	height: 9px;
+	left: -1px;
+	top: 5px;
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+#imenus0 li:hover .imeam span,#imenus0 li a.iactive .imeamj span {
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+/* --[[ Sub Expand Icons ]]-- */
+#imenus0 ul .imeas span,#imenus0 ul .imeasj span {
+	background-image: url(images/small_red_pointer.gif);
+	width: 7px;
+	height: 8px;
+	left: -1px;
+	top: 3px;
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+#imenus0 ul li:hover .imeas span,#imenus0 ul li a.iactive .imeasj span {
+	background-image: url(images/small_red_pointer.gif);
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+/* --[[ Main Container ]]-- */
+#imouter0 {
+	background-color: #546347;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 0px 1px;
+	padding: 0px 2px;
+	margin: 0px;
+}
+
+/* [Rounded Corner Styles] */
+.imrcmain0 .imrcolor {
+	background-color: #546347;
+}
+
+.imrcmain0 .imrbcolor {
+	border-color: #444444;
+}
+
+.imrcmain0 .imtopspace {
+	height: 0px;
+}
+
+/* --[[ Sub Container ]]-- */
+#imenus0 li ul {
+	background-color: #cce7bc;
+	border-style: solid;
+	border-color: #a2a2a2;
+	border-width: 0px 1px;
+	padding: 5px 7px;
+}
+
+/* [Rounded Corner Styles] */
+#imenus0 .imrcolor {
+	background-color: #cce7bc;
+}
+
+#imenus0 .imrbcolor {
+	border-color: #a2a2a2;
+}
+
+#imenus0 .imtopspace {
+	height: 6px;
+}
+
+/* --[[ Main Items ]]-- */
+#imenus0 li a {
+	color: #ffffff;
+	text-align: center;
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+	border-style: none;
+	border-color: #000000;
+	border-width: 0px;
+	padding: 2px 5px 2px 12px;
+}
+
+/* [hover] - These settings must be duplicated for IE compatibility.*/
+#imenus0 li:hover>a {
+	background-color: #cce7bc;
+	color: #546347;
+}
+
+#imenus0 li a.ihover,.imde imenus0 a:hover {
+	background-color: #cce7bc;
+	color: #546347;
+}
+
+/* [active] */
+#imenus0 li a.iactive {
+	
+}
+
+/* --[[ Sub Items ]]-- */
+#imenus0 ul a {
+	color: #111111;
+	text-align: left;
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: none;
+	border-style: none;
+	border-color: #000000;
+	border-width: 1px;
+	padding: 2px 5px;
+}
+
+/* [hover] - These settings must be duplicated for IE comptatibility.*/
+#imenus0 ul li:hover>a {
+	background-color: transparent;
+	color: #000000;
+	text-decoration: underline;
+}
+
+#imenus0 ul li a.ihover {
+	background-color: transparent;
+	color: #000000;
+	text-decoration: underline;
+}
+
+/* [active] */
+#imenus0 ul li a.iactive {
+	background-color: #ffffff;
+}
+
+/* [Dividers] */
+#imenus0 .dvs {
+	border-bottom-width: 1px;
+	border-style: dotted;
+	border-color: #546347;
+	padding-bottom: 4px;
+	margin-bottom: 4px;
+}
+	
+.field-title {
+	align:left;
+	width:300;
+	font-size:10pt;
+	line-height:20pt;
+	/*display:table-cell; */	
+	zoom:0; 
+	vertical-align:middle;
+	font-weight:800; 
+}
+
+.field-value {
+	align:left;
+	font-size:10pt;
+	line-height:20pt;
+	zoom:0; 
+	vertical-align:middle;
+	text-indent:20pt;
+	/*border:#06c dashed 1px;*/
+}
+
+.field-desc {
+	align:left;
+	font-size:10pt;
+	line-height:20pt;
+	zoom:0; 
+	vertical-align:middle;
+	text-indent:0pt;
+	/*border:#06c dashed 1px;*/
+}
+
+fieldset {
+    padding:30px;
+    align:center;
+    width:92%;
+    color:#333; 
+    /*border:#06c dashed 1px;*/
+} 
+
+legend {
+    color:#06c;
+    font-weight:800; 
+    background:#fff;
+    align:center;
+}
+
+.frame{
+	
+}
+
+.view-body{
+	margin:20px;
+}
+
+.view-button{
+	height:20pt;
+	font-size:10pt
+}
+
+ 

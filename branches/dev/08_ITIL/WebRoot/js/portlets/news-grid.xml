@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<grid>
+	<header>
+		<title>新闻ID</title>
+	</header>
+	<header>
+		<title>新闻标题</title>
+	</header>
+	<header>
+		<title>发布时间</title>
+	</header>
+	<header>
+		<title>发布人名</title>
+	</header>
+	<header>
+		<title>关闭</title>
+	</header>
+</grid>

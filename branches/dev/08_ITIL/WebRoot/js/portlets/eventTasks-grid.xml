@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GBK"?>
+<grid>
+	<header>
+		<title>审批类型</title>
+	</header>	
+	<header>
+		<title>任务名称</title>
+	</header>
+	<header>
+		<title>事件编号</title>
+	</header>
+	<header>
+		<title>事件名称</title>
+	</header>	
+	<header>
+		<title>事件提交人</title>
+	</header>
+	<header>
+		<title>当前处理的工程师</title>
+	</header>
+	<header>
+		<title>事件提交时间</title>
+	</header>
+	<header>
+		<title>事件严重性</title>
+	</header>
+	
+	<header>
+		<title>主数据ID</title>
+	</header>
+	
+	<header>
+		<title>任务编号</title>
+	</header>
+	<header>
+		<title>流程名称</title>
+	</header>
+	<header>
+		<title>页面地址</title>
+	</header>
+</grid>

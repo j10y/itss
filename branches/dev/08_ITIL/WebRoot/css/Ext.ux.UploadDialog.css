@@ -1,0 +1,45 @@
+.ext-ux-uploaddialog-addbtn {
+	BACKGROUND: url(../images/file-add.gif) no-repeat left center
+}
+.ext-ux-uploaddialog-removebtn {
+	BACKGROUND: url(../images/file-remove.gif) no-repeat left center
+}
+.ext-ux-uploaddialog-resetbtn {
+	BACKGROUND: url(../images/reset.gif) no-repeat left center
+}
+.ext-ux-uploaddialog-uploadstartbtn {
+	BACKGROUND: url(../images/upload-start.gif) no-repeat left center
+}
+.ext-ux-uploaddialog-uploadstopbtn {
+	BACKGROUND: url(../images/upload-stop.gif) no-repeat left center
+}
+.ext-ux-uploaddialog-indicator-stoped {
+	BACKGROUND: url(../images/done.gif) no-repeat center center; WIDTH: 16px; HEIGHT: 16px
+}
+.ext-ux-uploaddialog-indicator-processing {
+	BACKGROUND: url(../images/loading.gif) no-repeat center center; WIDTH: 16px; HEIGHT: 16px
+}
+.ext-ux-uploaddialog-state {
+	BACKGROUND-POSITION: center center; BACKGROUND-REPEAT: no-repeat; TEXT-ALIGN: center
+}
+.ext-ux-uploaddialog-state-0 {
+	BACKGROUND-IMAGE: url(../images/uncheck.gif)
+}
+.ext-ux-uploaddialog-state-1 {
+	BACKGROUND-IMAGE: url(../images/check.gif)
+}
+.ext-ux-uploaddialog-state-2 {
+	BACKGROUND-IMAGE: url(../images/failed.gif)
+}
+.ext-ux-uploaddialog-state-3 {
+	BACKGROUND-IMAGE: url(../images/file-uploading.gif)
+}
+.ext-ie7 .ext-ux-uploaddialog-dialog .x-progress-bar .x-progress-text DIV {
+	DISPLAY: none
+}
+.ext-ie7 .ext-ux-uploaddialog-dialog .x-progress-text-back {
+	RIGHT: 0px; LEFT: 0px; POSITION: absolute
+}
+.ext-ie7 .ext-ux-uploaddialog-dialog .x-progress-text-back DIV {
+	WIDTH: auto! important; WHITE-SPACE: nowrap
+}
