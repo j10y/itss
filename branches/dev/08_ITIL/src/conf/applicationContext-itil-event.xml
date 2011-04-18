@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+           
+	<bean id="eventDao" class="com.digitalchina.itil.event.dao.impl.EventDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	<bean id="problemDao" class="com.digitalchina.itil.event.dao.impl.ProblemDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"></property>
+	</bean>
+	<bean id="supportGroupDao"
+		class="com.digitalchina.itil.event.dao.impl.SupportGroupDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"></property>
+	</bean>
+	<bean id="ccTelInfoDao" class="com.digitalchina.itil.event.dao.impl.CCTelInfoDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"></property>
+	</bean>
+	<bean id="ccTelSynDao" class="com.digitalchina.itil.event.dao.impl.CCTelSynDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"></property>
+	</bean>
+	
+	<bean id="EventService"
+		class="com.digitalchina.itil.event.service.impl.EventServiceImpl">
+		<property name="eventDao" ref="eventDao"></property>
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+	<bean id="ProblemService"
+		class="com.digitalchina.itil.event.service.impl.ProblemServiceImpl">
+		<property name="problemDao" ref="problemDao"/>
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	<bean id="SupportGroupService"
+		class="com.digitalchina.itil.event.service.impl.SupportGroupServiceImpl">
+		<property name="supportGroupDao" ref="supportGroupDao"></property>
+		<property name="metaDataManager" ref="metaDataManager"></property>
+		<property name="eventDao" ref="eventDao"></property>
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+	<bean id="ccTelSynService"
+		class="com.digitalchina.itil.event.service.impl.CCTelSynServiceImpl">
+		<property name="ccTelSynDao" ref="ccTelSynDao"></property>
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+	<!-- 发送邮件 -->
+	<bean id="ccTelInfoService"
+		class="com.digitalchina.itil.event.service.impl.CCTelInfoServicImpl">
+		<property name="ccTelInfoDao" ref="ccTelInfoDao" />
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+
+	<bean name="/event/action"
+		class="com.digitalchina.itil.event.action.EventAction"
+		scope="prototype">
+		<property name="supportGroupService"
+			ref="SupportGroupService">
+		</property>
+	</bean>
+	<bean name="/problem/action"
+		class="com.digitalchina.itil.event.action.ProblemAction"
+		scope="prototype">
+	</bean>
+	<bean name="/support/action"
+		class="com.digitalchina.itil.event.action.SupportGroupAction"
+		scope="prototype">
+	</bean>
+	<bean id="searchEventStateDao" class="com.digitalchina.itil.event.dao.impl.SearchEventStateDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"></property>
+	</bean>
+	<bean name="searchEventStateService"
+		class="com.digitalchina.itil.event.service.impl.SearchEventStateServiceImpl">
+				<property name="searchEventStateDao"
+					ref="searchEventStateDao">
+				</property>
+	</bean>
+	<bean name="searchEventStateAction"
+		class="com.digitalchina.itil.event.action.SearchEventStateAction"
+		scope="prototype">
+				<property name="searchEventStateService"
+					ref="searchEventStateService">
+				</property>
+	</bean>
+</beans>
+

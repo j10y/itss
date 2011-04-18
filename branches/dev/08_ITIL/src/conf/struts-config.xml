@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+	<form-beans>
+	</form-beans>
+	
+	<global-forwards>
+		<forward name="failure" path="/WEB-INF/jsp/struts/Error.jsp" redirect="false"/>
+		<forward name="unknown-error" path="/WEB-INF/jsp/struts/Error.jsp"/>
+		<forward name="global-signon" path="/WEB-INF/jsp/struts/SignonForm.jsp"/>
+		
+		<forward name="accessDenied" path="/accessDenied.jsp" />
+		<forward name="error" path="/error.jsp" />
+		<forward name="login" path="/login.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		
+	
+		<!-- 后台管理 -->
+		<action path="/infoAdmin/userMainTable" type="com.digitalchina.itil.config.action.UserMainTableAction"
+				parameter="methodCall" scope="request" > 	
+				<forward name="list" path="/infoAdmin/userExpand/user_table_list.jsp"/>	
+				<forward name="form" path="/infoAdmin/userExpand/user_table_column_list.jsp"/>
+				<forward name="extform" path="/infoAdmin/userExpand/user_table_extcolumn_detail.jsp"/>
+				<forward name="export" path="/infoAdmin/userExpand/user_table_cir_data.jsp"/>
+		</action> 
+		
+		<!-- 自动生成系统主表 -->
+		<action path="/infoAdmin/userListMainTable" type="com.digitalchina.info.appframework.pagemodel.web.struts.UserListTableAction"
+				parameter="methodCall" scope="request" > 	
+				<forward name="list" path="/infoAdmin/userExpand/user_list_table_list.jsp"/>	
+				<forward name="form" path="/infoAdmin/userExpand/user_list_table_column_list.jsp"/>
+		</action> 
+		
+		<action path="/infoAdmin/userMainTableColumn" type="com.digitalchina.itil.config.action.UserMainTableColumnAction"
+				parameter="methodCall" scope="request" >
+			<forward name="form" path="/infoAdmin/userExpand/user_table_column_detail.jsp"/>
+			<forward name="extform" path="/infoAdmin/userExpand/user_table_extcolumn_detail.jsp"/>
+		</action>
+		
+		<!-- 自动生成系统主表字段修改 -->
+		<action path="/infoAdmin/userListTableColumn" type="com.digitalchina.info.appframework.pagemodel.web.struts.UserListTableColumnAction"
+				parameter="methodCall" scope="request" >
+			<forward name="form" path="/infoAdmin/userExpand/user_list_table_column_detail.jsp"/>
+		</action>
+		
+		<action path="/pageModel/userMainTablePanel" type="com.digitalchina.info.appframework.pagemodel.web.struts.UserTablePanelAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listPagePanel" path="/infoAdmin/pageModel/basePagePanel/userPanel_list.jsp"/>  
+			<forward name="pagePanelEditForm" path="/infoAdmin/pageModel/basePagePanel/pagePanelEditForm.jsp"/>
+			<forward name="pagePanelShow" path="/infoAdmin/pageModel/basePagePanel/pageData-json.jsp"/> 
+		</action> 
+				
+		<action path="/infoAdmin/sysMainTable" type="com.digitalchina.info.appframework.metadata.web.struts.SystemMainTableAction"
+				parameter="methodCall" scope="request" >
+			<forward name="list" path="/infoAdmin/system/sys_table_list.jsp"/> 
+			<forward name="tjList" path="/infoAdmin/system/sys_table_tjList.jsp"/> 
+			<forward name="form" path="/infoAdmin/system/sys_table_column_list.jsp"/>
+			<forward name="tjForm" path="/infoAdmin/system/sys_table_column_tjList.jsp"/>
+		</action> 
+		
+		<action path="/infoAdmin/sysMainTableColumn" type="com.digitalchina.info.appframework.metadata.web.struts.SystemMainTableColumnAction"
+				parameter="methodCall" scope="request" >
+			<forward name="form" path="/infoAdmin/system/sys_table_column_detail.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/sysExtTableColumn" type="com.digitalchina.info.appframework.metadata.web.struts.SystemExtTableColumnAction"
+				parameter="methodCall" scope="request" >
+			<forward name="extForm" path="/infoAdmin/system/sys_exttable_column_detail.jsp"/>
+			<forward name="columns" path="/infoAdmin/system/columnsList.jsp"/>		
+		</action>
+		
+		<action path="/infoAdmin/sysTableSetting" type="com.digitalchina.info.appframework.metadata.web.struts.SystemTableSettingAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listColumns" path="/infoAdmin/system/sys_table_setting_column.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/sysTableQuery" type="com.digitalchina.info.appframework.metadata.web.struts.SystemTableQueryAction"
+				parameter="methodCall" scope="request" >
+			<forward name="list" path="/infoAdmin/system/sys_table_query_list.jsp"/>
+			<forward name="listColumns" path="/infoAdmin/system/sys_table_query_column.jsp"/>
+			<forward name="detail" path="/infoAdmin/system/sys_table_query_detail.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/sysTableRole" type="com.digitalchina.info.appframework.metadata.web.struts.SystemTableRoleAction"
+				parameter="methodCall" scope="request" >
+			<forward name="list" path="/infoAdmin/system/sys_table_role_list.jsp"/>
+			<forward name="listColumns" path="/infoAdmin/system/sys_table_role_column.jsp"/>
+			<forward name="detail" path="/infoAdmin/system/sys_table_role_detail.jsp"/>
+		</action>
+
+		<action path="/pageModel/pageModelManage" type="com.digitalchina.info.appframework.pagemodel.web.struts.PageModelAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listPageModel" path="/infoAdmin/pageModel/pageModel_list.jsp"/>  
+			<forward name="pageModelEditForm" path="/infoAdmin/pageModel/pageModelEditForm.jsp"/>  
+			<forward name="pageModelPanelShow" path="/infoAdmin/pageModel/pageModelTemplate/data-json.jsp"/>
+		</action>
+		<!--完全展开-->
+		<action path="/pageModel/pageModelExpandManage" type="com.digitalchina.info.appframework.pagemodel.web.struts.PageModelExpandAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listPageModel" path="/infoAdmin/pageModel/pageModel_listForExpand.jsp"/>  
+			<forward name="pageModelEditForm" path="/infoAdmin/pageModel/pageModelEditFormForExpand.jsp"/>  
+			<forward name="pageModelPanelShow" path="/infoAdmin/pageModel/pageModelTemplate/data-json.jsp"/>
+		</action> 
+		
+		<!-- 新增修改 
+		<action path="/infoAdmin/sysMainTableColumn" type="com.digitalchina.info.appframework.pagemodel.web.struts.PageModelPanelTableAction"
+				parameter="methodCall" scope="request">
+				<forward name="pageModelEditForm" path="/infoAdmin/pageModel/pageModelEditForm.jsp"/>  
+		</action>-->
+		
+		<action path="/pageModel/pagePanelManage" type="com.digitalchina.info.appframework.pagemodel.web.struts.PagePanelAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listPagePanel" path="/infoAdmin/pageModel/basePagePanel/pagePanel_list.jsp"/>  
+			<forward name="pagePanelEditForm" path="/infoAdmin/pageModel/basePagePanel/pagePanelEditForm.jsp"/>
+			<forward name="pagePanelShow" path="/infoAdmin/pageModel/basePagePanel/pageData-json.jsp"/> 
+		</action> 	
+		
+		<action path="/pageModel/pageGroupPanelManage" type="com.digitalchina.info.appframework.pagemodel.web.struts.PageGroupPanelAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listPageGroupPanel" path="/infoAdmin/pageModel/pageGroupPanel_list.jsp"/>  		
+			<forward name="pageGroupPanelEditForm" path="/infoAdmin/pageModel/pagePanelDemo3/pageGroupPanelEditForm.jsp"/>			
+			<forward name="pageGroupPanelShow" path="/infoAdmin/pageModel/pagePanelDemo3/data-json.jsp"/> 
+		</action> 	
+	    <action path="/admin/moduleManage" type="com.digitalchina.info.framework.security.web.adapter.struts.manager.ModuleAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listModules" path="/infoAdmin/security/modules_list.jsp"/>  
+		</action> 
+		<action path="/admin/pageModelNode" type="com.digitalchina.info.framework.workflow.web.adapter.struts.PageModelNodeAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listPageModeNodes" path="/infoAdmin/workflow/workflowPageModelNode_list.jsp"/>  
+		</action> 
+		<action path="/admin/resourceManage" type="com.digitalchina.info.framework.security.web.adapter.struts.manager.ResourceAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listRes" path="/infoAdmin/security/resources_list.jsp"/>  
+		</action> 
+		
+		<action path="/admin/rightManage" type="com.digitalchina.info.framework.security.web.adapter.struts.manager.RightAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listRights" path="/infoAdmin/security/rights_list.jsp"/>  
+		</action> 	
+	
+	    <action path="/admin/authorizationManage" type="com.digitalchina.info.framework.security.web.adapter.struts.manager.AuthorizAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listAuthorizations" path="/infoAdmin/security/authorizations_list.jsp"/>  
+		</action> 
+		<!--查询所有部门-->
+		<action path="/admin/queryDepartment" type="com.digitalchina.info.framework.security.web.adapter.struts.manager.DepartmentAction"
+				parameter="methodCall" scope="request" >
+			<forward name="success" path="/infoAdmin/security/siData.jsp"/>  
+		</action> 
+		
+ 		<action path="/admin/roleManage" type="com.digitalchina.info.framework.security.web.adapter.struts.manager.RoleAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listRoles" path="/infoAdmin/security/roles_list.jsp"/>  
+			<forward name="roleDetail" path="/infoAdmin/security/role_detail.jsp"/>  
+		</action> 
+		
+		<action path="/admin/userRoleManage" type="com.digitalchina.info.framework.security.web.adapter.struts.manager.UserRoleAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listUsers" path="/infoAdmin/security/users_list.jsp"/>  
+			<forward name="userDetail" path="/infoAdmin/security/user_detail.jsp"/>  
+		</action> 
+		<!-- 配置项 -->
+		<action path="/config/econfigItemAction" type="com.digitalchina.itil.config.action.EConfigItemAction"
+				parameter="methodCall" scope="request">
+			<forward name="view" path="/user/config/view.jsp" />  
+		</action> 
+		
+		<!-- 工作流 -->
+		<action path="/workflow/assginAndAddMark"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.AssginAndAddMarkAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/configUnit.jsp" />
+		</action>
+		
+		
+		<action path="/workflow/configunit"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ConfigUnitAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/configUnit.jsp" />
+		</action>
+		
+		<action path="/workflow/configmodel"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ConfigModelAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/configModel.jsp" />
+		</action>
+		
+		<action path="/workflow/processconfig"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ProcessConfigAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/processConfig.jsp" />
+		</action>
+		
+		<action path="/workflow/deploy"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.DeployDefinationAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/deploy.jsp" />
+		</action>
+
+		<action path="/workflow/listdefinition"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ListDefinationAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/alldefination.jsp" />
+		</action>
+
+		<action path="/workflow/listprocess"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ListProcessAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/allprocess.jsp" />
+		</action>
+
+		<action path="/workflow/endprocess"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.EndProcessAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/workflow/listprocess.do?methodCall=list" />
+		</action>
+
+		<action path="/workflow/preassign"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.PreAssignAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/preassign.jsp" />
+		</action>
+
+		<action path="/workflow/taskPreAssign"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.TaskAssignAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/assignTasklist.jsp" />
+			<forward name="detail"
+				path="/infoAdmin/workflow/assignTaskDetail.jsp" />
+			<forward name="add"
+				path="/infoAdmin/workflow/assignTaskAdd.jsp" />
+		</action>
+
+		<action path="/workflow/start"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.StartProcessAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/start.jsp" />
+		</action>
+
+		<action path="/workflow/listTask"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ListTaskAction"
+			parameter="methodCall" scope="request">
+			<forward name="listAll"
+				path="/infoAdmin/workflow/tasklistAll.jsp" />
+			<forward name="logon" path="/infoAdmin/workflow/logon.jsp" />
+			<forward name="success"
+				path="/infoAdmin/workflow/tasklist.jsp" />
+		</action>
+
+		<action path="/workflow/reassign"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ReassignAction"
+			parameter="methodCall" scope="request">
+			<forward name="success"
+				path="/infoAdmin/workflow/reassign.jsp" />
+			<forward name="noactor"
+				path="/infoAdmin/workflow/noactor.jsp" />
+		</action>
+
+		<action path="/workflow/execute"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ExecuteTaskAction"
+			parameter="methodCall" scope="request">
+		</action>
+
+		<action path="/workflow/history"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.ListHistoryAction"
+			parameter="methodCall" scope="request">
+			<forward name="view" path="/infoAdmin/workflow/view.jsp" />
+			<forward name="success"
+				path="/infoAdmin/workflow/history.jsp" />
+		</action>
+		
+		<action path="/login" type="com.digitalchina.itil.system.action.LoginAction"
+				parameter="methodCall" scope="request" > 
+				<forward name="success" path="/index.jsp"/> 
+				<forward name="login" path="/login.jsp"/>
+				<forward name="logout" path="/logout.jsp"/>
+		</action>
+		
+		<!-- 工作流更新版本 -->
+		
+		<action path="/workflow/update"
+			type="com.digitalchina.info.framework.workflow.web.adapter.struts.UpdateWorkFlowAction"
+			parameter="methodCall" scope="request">
+		</action>
+		
+		
+		<!-- 系统通知 -->
+		<action path="/sysManage/noticeAction"
+			type="com.digitalchina.itil.system.action.NoticeAction"
+			parameter="methodCall" scope="request">
+			<forward name="success" path="" />
+		</action>
+		
+		<!-- 系统管理 -->
+		<action path="/sysManage/roleAction" 
+			type="com.digitalchina.info.framework.security.web.adapter.struts.user.RoleAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listRoles" path=""/>  
+			<forward name="roleDetail" path=""/>  
+		</action>
+		
+		<action path="/sysManage/userRoleAction" type="com.digitalchina.info.framework.security.web.adapter.struts.user.UserRoleAction"
+			parameter="methodCall" scope="request" >
+			<forward name="listUsers" path=""/>  
+			<forward name="userDetail" path=""/>  
+		</action>
+		<action path="/sysManage/userMangeAction" type="com.digitalchina.info.framework.security.web.adapter.struts.user.UserManageAction"
+			parameter="methodCall" scope="request" >
+			<forward name="listUsers" path=""/>  
+			<forward name="userDetail" path=""/>  
+		</action>
+		<action path="/sysManage/userOuterMangeAction" type="com.digitalchina.itil.actor.action.UserOutManageAction"
+			parameter="methodCall" scope="request" >
+			<forward name="listUsers" path=""/>  
+			<forward name="userDetail" path=""/>  
+		</action>
+		
+		<action path="/sysManage/authorizAction" type="com.digitalchina.info.framework.security.web.adapter.struts.user.AuthorizAction"
+			parameter="methodCall" scope="request">
+			<forward name="listAuthorizations" path="/infoAdmin/security/authorizations_list.jsp" />
+		</action>
+		<!-- 用户个性化字段设定 -->
+		<action path="/user/userTableSet"  type="com.digitalchina.info.appframework.metadata.web.action.UserTableSettingAction"
+				parameter="methodCall" scope="request" >
+			<forward name="list" path="/user/user_table_column_def.jsp"/>  
+			<forward name="sysTableSettings" path="/user/sys_table_column_setting.jsp"/> 
+		</action> 
+		<action path="/user/userTableSetting" type="com.digitalchina.info.appframework.metadata.web.struts.UserTableSettingAction"
+				parameter="methodCall" scope="request" >
+			<forward name="listColumns" path="/user/userColumn/user_table_setting_column.jsp"/>
+		</action>
+		
+		<action path="/sysManage/userViewStyle" type="com.digitalchina.itil.system.action.UserViewStyleAction"
+				parameter="methodCall" scope="request" >
+			<forward name="success" path=""/>  
+		</action>
+		<action path="/fileDown" type="com.digitalchina.info.appframework.pagemodel.servlet.FileDown"
+				parameter="methodCall" scope="request" >
+		</action>
+		
+		<!-- Portal 设定和显示 -->
+
+		<action parameter="method" path="/portalContainerAction"
+			scope="request"
+			type="com.digitalchina.info.bussutil.protal.action.struts.PortalContainerAction" />
+
+		<action parameter="method" path="/portalColumnAction"
+			scope="request"
+			type="com.digitalchina.info.bussutil.protal.action.struts.PortalColumnAction" />
+		<action parameter="method" path="/portalColumnTemplateAction"
+			scope="request"
+			type="com.digitalchina.info.bussutil.protal.action.struts.PortalColumnTemplateAction">
+			<forward name="list"
+				path="/components/portal/listPortalColumnTemplates.jsp" />
+		</action>
+		<action parameter="method" path="/portalStyleAction"
+			scope="request"
+			type="com.digitalchina.info.bussutil.protal.action.struts.PortalStyleAction">
+			<forward name="list"
+				path="/components/portal/listPortalStyles.jsp" />
+		</action>
+		<action parameter="method" path="/portletAction" scope="request"
+			type="com.digitalchina.info.bussutil.protal.action.struts.PortletAction">
+			<forward name="list"
+				path="/components/portal/listPortlets.jsp" />
+			<forward name="userSubscrbie"
+				path="/components/portal/subscribePortlets.jsp" />
+		</action>
+		<action parameter="method" path="/portalAction" scope="request"
+			type="com.digitalchina.info.bussutil.protal.action.struts.PortalAction" />
+			
+			
+			
+		<!-- by tongjp -->
+		<action parameter="method" path="/infoAdmin/jfreeChartAction" scope="request"
+			type="com.digitalchina.itil.jfreeChart.action.JfreeChartAction" >
+			<forward name="showpie"
+				path="/user/jfreeChart/showpie.jsp" />
+			<forward name="showbar"
+				path="/user/jfreeChart/showbar.jsp" />
+			<forward name="showline"
+				path="/user/jfreeChart/showline.jsp" />
+			<forward name="showtable"
+				path="/user/jfreeChart/showtable.jsp" />
+		</action>
+		
+		<action path="/infoAdmin/ServiceItemTypeAction" type="com.digitalchina.itil.service.action.ServiceItemTypeAction"
+				parameter="methodCall" scope="request" >
+			<forward name="list" path="/infoAdmin/system/sys_table_scitlist.jsp"/>
+			<forward name="add" path="/infoAdmin/system/sys_table_column_scitlist.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/SCIColumnAction" type="com.digitalchina.itil.service.action.SCIColumnAction"
+				parameter="methodCall" scope="request" >
+			<forward name="add" path="/infoAdmin/system/sys_table_column_scitdetail.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/serviceItemProcessAction" type="com.digitalchina.itil.service.action.ServiceItemProcessAction"
+				parameter="methodCall" scope="request" >
+			<forward name="list" path="/infoAdmin/serviceItem/serviceItemProcess_list.jsp"/>
+			<forward name="agreement" path="/user/require/requireAgreement.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/reqTableAction" type="com.digitalchina.itil.require.action.ReqTableAction"
+				parameter="methodCall" scope="request" >
+			<forward name="form" path="/infoAdmin/serviceItem/req_table_info.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/serviceItemUserTableAction" type="com.digitalchina.itil.service.action.SerivceItemUserTableAction"
+				parameter="methodCall" scope="request" >
+			<forward name="list" path="/infoAdmin/serviceItem/serviceItemUserTable_list.jsp"/>
+			<forward name="listScid" path="/infoAdmin/serviceItem/serviceItem_listForIssue.jsp"/>
+			<forward name="info" path="/infoAdmin/serviceItem/serviceItemUserTable_info.jsp"/>
+			<forward name="info2" path="/infoAdmin/serviceItem/serviceItemUserTable_info2.jsp"/>
+			<forward name="selectTable" path="/infoAdmin/serviceItem/selectTable.jsp"/>
+		</action>
+		
+		<action path="/infoAdmin/serviceItemUserTableColumn" type="com.digitalchina.itil.service.action.SerivceItemUserTableColumnAction"
+				parameter="methodCall" scope="request" >
+			<forward name="form" path="/infoAdmin/serviceItem/serviceItemUserTable_column_detail.jsp"/>
+			<forward name="extform" path="/infoAdmin/serviceItem/user_table_extcolumn_detail.jsp"/>
+		</action>
+		<action path="/solution/uploadfile" type="com.digitalchina.itil.knowledge.action.KnowledgeAction"
+				parameter="methodCall" scope="request" >
+		</action>
+		<!-- add by tongjp  for importAccount-->
+		<action path="/account/importAccountData" type="com.digitalchina.itil.account.action.ImportAccountDataAction"
+				parameter="methodCall" scope="request" >
+				<forward name="importAccount" path="/user/account/report/importAccountData.jsp"></forward>
+		</action>
+		
+		<action path="/account/myAccount" type="com.digitalchina.itil.account.action.MyAccountAction"
+				parameter="methodCall" scope="request" >
+				<forward name="success" path="/user/account/myAccount.jsp"></forward>
+				<forward name="dcit" path="/user/account/myAccountList.jsp"></forward>
+		</action>
+		<!-- 编号生成器Action -->
+		<action path="/workflow/idGenerator"
+			type="com.digitalchina.info.framework.util.idgen.struts1.IdGeneratorAction"
+			parameter="methodCall" scope="request">
+				<forward name="success" path=""/>  
+		</action>
+		<!-- Excel导入工厂信息Action -->
+		<action path="/require/excelImportInfo" type="com.digitalchina.itil.require.action.excelImportInfoAction"  parameter="methodCall" scope="request">
+			<forward name="success" path=""></forward>
+		</action>	
+	</action-mappings>
+	
+</struts-config>
