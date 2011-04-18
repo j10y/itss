@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="portalColumnDao"
+		class="com.digitalchina.info.bussutil.protal.dao.impl.PortalColumnDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	
+	<bean id="portalContainerDao"
+		class="com.digitalchina.info.bussutil.protal.dao.impl.PortalContainerDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	
+	<bean id="portalDao"
+		class="com.digitalchina.info.bussutil.protal.dao.impl.PortalDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	
+	<bean id="portetSubscribeDao"
+		class="com.digitalchina.info.bussutil.protal.dao.impl.PortetSubscribeDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	
+	<bean id="portletDao"
+		class="com.digitalchina.info.bussutil.protal.dao.impl.PortletDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	
+	<bean id="portalColumnService"
+		class="com.digitalchina.info.bussutil.protal.service.impl.PortalColumnServiceImpl">
+		<property name="portalColumnDao" ref="portalColumnDao" />	
+		<property name="dao"><ref bean="baseDao"/></property>		
+	</bean>
+	
+	<bean id="portalContainerService"
+		class="com.digitalchina.info.bussutil.protal.service.impl.PortalContainerServiceImpl">
+		<property name="portalContainerDao" ref="portalContainerDao" />	
+		<property name="portalColumnDao" ref="portalColumnDao" />
+		<property name="portalDao" ref="portalDao" />
+		<property name="portletDao" ref="portletDao" />
+		<property name="portetSubscribeDao" ref="portetSubscribeDao" />	
+		<property name="dao"><ref bean="baseDao"/></property>
+		
+	</bean>
+	
+	<bean id="portalService"
+		class="com.digitalchina.info.bussutil.protal.service.impl.PortalServiceImpl">
+		<property name="portalDao" ref="portalDao" />
+		<property name="portalColumnDao" ref="portalColumnDao" />
+		<property name="portletDao" ref="portletDao" />		
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+	
+	<bean id="portletService"
+		class="com.digitalchina.info.bussutil.protal.service.impl.PortletServiceImpl">
+		<property name="portletDao" ref="portletDao" />		
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+</beans>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<!-- 流程定义服务-->
+	<bean id="definitionService"
+		class="com.digitalchina.info.framework.workflow.impl.DefinitionServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<!-- 流程实例服务 -->
+	<bean id="processService"
+		class="com.digitalchina.info.framework.workflow.impl.ProcessServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<!-- 任务服务 -->
+	<bean id="taskService"
+		class="com.digitalchina.info.framework.workflow.impl.TaskServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<!-- 上下文服务 -->
+	<bean id="contextService"
+		class="com.digitalchina.info.framework.workflow.impl.ContextServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<!-- 业务数据服务 -->
+	<bean id="parameterService"
+		class="com.digitalchina.info.framework.workflow.impl.ParameterServiceImpl">
+	</bean>
+
+	<!-- 任务指派服务 -->
+	<bean id="taskAssignService"
+		class="com.digitalchina.info.framework.workflow.impl.TaskAssignServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	<!-- pageModel服务 -->
+	<bean id="taskPageModelService"
+		class="com.digitalchina.info.framework.workflow.impl.TaskPageModelServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<bean id="configUnitService"
+		class="com.digitalchina.info.framework.workflow.impl.ConfigUnitServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	<!-- 流程更新 -->
+	<bean id="updateWorkflowService"
+		class="com.digitalchina.info.framework.workflow.impl.UpdateWorkflowServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	<!--流程回退  -->
+	<bean id="workflowGoBackService"
+		class="com.digitalchina.info.framework.workflow.impl.WorkFlowGoBackServiceImp">
+		<property name="workflowGoBackDao" ref="workflowGoBackDao" />
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<bean id="workflowGoBackDao" class="com.digitalchina.info.framework.workflow.daoImp.WorkFlowGoBackDaoImp">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	<!--流程回退  -->
+</beans>
+
