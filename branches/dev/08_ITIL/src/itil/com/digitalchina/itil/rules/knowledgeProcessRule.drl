@@ -1,0 +1,294 @@
+/*
+1.传入参数为一Map以适应后续的变化,因为解析过程也是动态的
+2.Map中设定各种输入参数:
+输出：
+head[Map],头部输出
+	cfx_CheckSum;
+	cfx_PriceFileDate;
+	cfx_ConfigIdentifer;
+	cfx_DateTimeStamp;
+	cfx_PropDocumentIdentifier;
+	cfx_CFXML;
+	totalListPrice;
+	orderType
+rows[List<OrderProductLine>],行集输出
+输入：
+applyType,申请类型
+disc,折扣
+listType[newbox,mes,isu,soft],列表类别
+qty,数量                                                                                                     
+time,时间标记,检查本规则对输入数据是否在有效
+bmsn[String[]],
+xmlPath,
+outPath,
+cfrPath
+*/
+
+#created on: Dec 2, 2008
+package com.digitalchina.itil.rules
+
+#list any import classes here.
+/*
+import com.digitalchina.ibmb2b.order.rules.RuleConst;
+import com.digitalchina.ibmb2b.order.rules.OrderRuleHelper;
+import com.digitalchina.ibmb2b.order.entity.OrderProductLine; 
+*/
+import com.digitalchina.itil.workflow.rules.KnowProcessRuleHelper;
+import org.dom4j.Node;
+import org.jbpm.graph.node.TaskNode;
+
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Date;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+#declare any global variables here
+
+
+
+function void knowledgeStart(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	processRuleHelper.knowledgeStartFlag(dataId,nodeId,nodeName,processId);
+}
+
+function String knowledgeApproval(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String trans = processRuleHelper.knowledgeApprovalFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return trans;	
+}
+
+function String knowledgeGoBack(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String tran = processRuleHelper.knowledgeGoBackFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+
+function void knowFileStart(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	processRuleHelper.knowFileStartFlag(dataId,nodeId,nodeName,processId);
+}
+
+function String knowFileApproval(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String trans = processRuleHelper.knowFileApprovalFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return trans;	
+}
+
+function String serviceDeptServiceStationStatus(Map $map){
+	String dataId = (String)$map.get("dataId");		
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String tran = processRuleHelper.serviceDeptServiceStationFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+
+function String knowFileGoBack(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String tran = processRuleHelper.knowFileGoBackFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+
+function void knowContractStart(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	processRuleHelper.knowContractStartFlag(dataId,nodeId,nodeName,processId);
+}
+
+function String knowContractApproval(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String trans = processRuleHelper.knowContractApprovalFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return trans;	
+}
+
+function String serviceDeptThreeStationStatus(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String tran = processRuleHelper.serviceDeptThreeStationFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+
+function String knowContractGoBack(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	KnowProcessRuleHelper processRuleHelper=new KnowProcessRuleHelper();
+	String tran = processRuleHelper.knowContractGoBackFlag(dataId,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+
+
+rule "knowledgeStartNode"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] =='knowledgeStartNode'		
+		)
+	then	 	
+	knowledgeStart($map);
+	$map.put("transitionName","NOLEAVE");	
+end
+
+rule "knowledgeApprovalNode"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='knowledgeApprovalNode'		
+		)
+	then	
+	$map.put("transitionName",knowledgeApproval($map));	
+end
+
+rule "knowledgeGoBackNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='knowledgeGoBackNode'		
+		)
+	then	
+	$map.put("transitionName",knowledgeGoBack($map));		
+end
+
+rule "knowFileStartNode"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] =='knowFileStartNode'		
+		)
+	then	 	
+	knowFileStart($map);
+	$map.put("transitionName","NOLEAVE");	
+end
+
+rule "knowFileApprovalNode"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='knowFileApprovalNode'		
+		)
+	then	
+	$map.put("transitionName",knowFileApproval($map));	
+end
+
+rule "serviceDeptServiceStationNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='serviceDeptServiceStationNode'		
+		)
+	then	
+	$map.put("transitionName",serviceDeptServiceStationStatus($map));		
+end
+
+rule "knowFileGoBackNode"
+	salience 700 
+	when
+		$map: Map(
+			this['ruleName'] =='knowFileGoBackNode'		
+		)
+	then	
+	$map.put("transitionName",knowFileGoBack($map));		
+end
+
+rule "knowContractStartNode"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] =='knowContractStartNode'		
+		)
+	then	 	
+	knowContractStart($map);
+	$map.put("transitionName","NOLEAVE");	
+end
+
+rule "knowContractApprovalNode"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='knowContractApprovalNode'		
+		)
+	then	
+	$map.put("transitionName",knowContractApproval($map));	
+end
+
+rule "serviceDeptThreeStationNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='serviceDeptThreeStationNode'		
+		)
+	then	
+	$map.put("transitionName",serviceDeptThreeStationStatus($map));		
+end
+
+rule "knowContractGoBackNode"
+	salience 700 
+	when
+		$map: Map(
+			this['ruleName'] =='knowContractGoBackNode'		
+		)
+	then	
+	$map.put("transitionName",knowContractGoBack($map));		
+end

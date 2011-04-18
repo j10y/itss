@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.config.extci.entity.ServiceEngineer" table="itil_ci_ServiceEngineer" >
+			
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>  
+              
+        <many-to-one name="userInfo" class="com.digitalchina.info.framework.security.entity.UserInfo"/>
+       		
+		<property name="employeeCode"/>
+		
+		<property name="email"/>
+		
+		<property name="phone"/>
+		
+		<property name="mobile"/>
+		
+		<property name="startServiceDate"/>
+		
+		<property name="endServiceDate"/>
+		
+		<property name="techAbility"/>
+		
+		<property name="cisn"/>
+
+	</class>
+</hibernate-mapping>

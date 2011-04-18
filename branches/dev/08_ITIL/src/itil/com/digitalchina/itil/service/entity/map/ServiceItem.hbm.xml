@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping> 
+	<class name="com.digitalchina.itil.service.entity.ServiceItem" table="ServiceItem" lazy="false">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        
+         <property name="serviceItemCode" type="string">
+            <column name="serviceItemCode" />
+        </property>
+        
+          <property name="serviceCataCode" type="string">
+            <column name="serviceCataCode" />
+        </property>
+        
+        <many-to-one name="serviceItemType" class="com.digitalchina.itil.service.entity.ServiceItemType" fetch="join" lazy="false">
+            <column name="serviceItemType" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <!-- 废弃属性add by lee in 20091121 -->
+         <!-- <many-to-one name="sp" class="com.digitalchina.itil.service.entity.ServicePortfolio">
+            <column name="sp" />
+        </many-to-one> -->
+  
+       <many-to-one name="serviceStatus" class="com.digitalchina.itil.service.entity.ServiceStatus">
+            <column name="serviceStatus" />
+        </many-to-one>
+        
+        <property name="descn" type="string">
+            <column name="descn" />
+        </property>
+        
+        <property name="beginDate" type="date">
+            <column name="beginDate" />
+        </property>
+        <property name="endDate" type="date">
+            <column name="endDate" />
+        </property>
+        
+        <property name="servePrice" type="double">
+            <column name="servePrice" />
+        </property>
+        <property name="serveCost" type="double">
+            <column name="serveCost" />
+        </property>
+        <many-to-one name="costWay" class="com.digitalchina.itil.service.entity.CostWay" >
+            <column name="costWay" />
+        </many-to-one>
+        <property name="serviceStandard" type="string">
+            <column name="serviceStandard" />
+        </property>
+      	<property name="serviceEntry" type="string">
+            <column name="serviceEntry" />
+        </property>
+        <property name="serviceFile" type="string">
+            <column name="serviceFile" />
+        </property>
+        <many-to-one name="serviceManager" class="com.digitalchina.info.framework.security.entity.UserInfo">
+            <column name="serviceManager" />
+        </many-to-one>
+        
+        <property name="deleteFlag" type="integer">
+            <column name="deleteFlag" />
+        </property>
+        
+        <many-to-one name="serviceType" class="com.digitalchina.itil.service.entity.ServiceType">
+            <column name="serviceType" />
+        </many-to-one>
+        
+        <property name="official" type="integer">
+            <column name="official" />
+        </property>
+	</class>
+</hibernate-mapping>

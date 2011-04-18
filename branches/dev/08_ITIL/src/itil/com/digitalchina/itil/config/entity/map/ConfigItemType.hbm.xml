@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.config.entity.ConfigItemType" 
+			table="ConfigItemType" dynamic-insert="true" dynamic-update="true">
+			
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id> 
+		
+		<property name="name" type="string">
+			<column name="name"></column>
+		</property>
+		
+		<many-to-one name="parentConfigItemType" class="com.digitalchina.itil.config.entity.ConfigItemType">
+			<column name="parentConfigItemType"></column>
+		</many-to-one>
+		
+		<property name="className" type="string">
+			<column name="className"></column>
+		</property>
+		
+		<property name="tableName" type="string">
+			<column name="tableName"></column>
+		</property>
+				
+		<many-to-one name="systemMainTable" class="com.digitalchina.info.appframework.metadata.entity.SystemMainTable">
+			<column name="systemMainTable"></column>
+		</many-to-one>
+		
+		<many-to-one name="pagePanel" class="com.digitalchina.info.appframework.pagemodel.entity.PagePanel" 
+        			column="pagePanel" />
+        
+        <many-to-one name="groupPanel" class="com.digitalchina.info.appframework.pagemodel.entity.PagePanel" 
+        			column="groupPanel" />
+       
+        <property name="deployFlag" type="integer">
+			<column name="deployFlag"></column>
+		</property>
+		 			
+	</class>
+</hibernate-mapping>

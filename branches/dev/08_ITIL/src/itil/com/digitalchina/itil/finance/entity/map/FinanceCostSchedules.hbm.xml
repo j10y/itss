@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.finance.entity.FinanceCostSchedules" table="ITIL_FinanceCostSchedules" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="costReduceType" type="integer">
+            <column name="costReduceType" />
+        </property>
+        <property name="costItem" type="string">
+            <column name="costItem" />
+        </property>
+        <many-to-one name="financeCostType" class="com.digitalchina.itil.finance.entity.FinanceCostType" fetch="join" lazy="false">
+		      <column name="financeCostType" />
+		</many-to-one>
+		 <property name="amount" type="big_decimal">
+            <column name="amount" />
+        </property>
+		<many-to-one name="reimbursement" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="reimbursement" />
+		</many-to-one>
+       
+        <property name="serviceProvider" type="string">
+            <column name="serviceProvider" />
+        </property>
+        <many-to-one name="costCenter" class="com.digitalchina.itil.finance.entity.FinanceCostCenter" fetch="join" lazy="false">
+		      <column name="costCenter" />
+		</many-to-one>
+        <property name="costDate" type="timestamp">
+            <column name="costDate" />
+        </property>
+        <property name="borrowDate" type="timestamp">
+            <column name="borrowDate" />
+        </property>
+         <property name="borrowType" type="integer">
+            <column name="borrowType" />
+        </property>
+        <property name="costDetailExplanation" type="string">
+            <column name="costDetailExplanation" />
+        </property>
+         <property name="costDataSource" type="integer">
+            <column name="costDataSource" />
+        </property>
+        <many-to-one name="costAuditUser" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="costAuditUser" />
+		</many-to-one>
+		<many-to-one name="costApplyUser" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="costApplyUser" />
+		</many-to-one>
+         <property name="costApplyDate" type="timestamp">
+            <column name="costApplyDate" />
+        </property>
+         
+	</class>
+</hibernate-mapping>

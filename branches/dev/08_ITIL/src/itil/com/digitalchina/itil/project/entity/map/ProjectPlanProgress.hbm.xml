@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.project.entity.ProjectPlanProgress" 
+			table="itil_sci_ProjectPlanProgress" dynamic-insert="true" dynamic-update="true">
+			
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		
+		<property name="name" type="string">
+			<column name="name"></column>
+		</property>	
+	</class>
+</hibernate-mapping>

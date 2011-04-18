@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+<class name="com.digitalchina.itil.service.entity.ServiceCatalogueContractEvent" table="ServiceCatalogueContractEvent" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="serviceCatalogueEvent" class="com.digitalchina.itil.service.entity.ServiceCatalogueEvent" fetch="join" lazy="false">
+            <column name="serviceCatalogueEvent" />
+        </many-to-one>
+        <property name="contractCode" type="string">
+            <column name="contractCode" />
+        </property>
+        <property name="contractName" type="string">
+            <column name="contractName" />
+        </property>
+        <property name="contractPrice" type="double">
+            <column name="contractPrice" />
+        </property>
+        <property name="descn" type="string">
+            <column name="descn" />
+        </property>
+        <property name="serviceBeginDate" type="date">
+            <column name="serviceBeginDate" />
+        </property>
+        <property name="serviceEndDate" type="date">
+            <column name="serviceEndDate" />
+        </property>  
+             <property name="customerId" type="long">
+            <column name="customerId" />
+        </property> 
+        
+        <many-to-one name="customerType" class="com.digitalchina.itil.actor.entity.CustomerType" fetch="join" lazy="false">
+            <column name="customerType" />
+        </many-to-one> 
+        <property name="customerName" type="string">
+            <column name="customerName" />
+        </property>
+        <property name="signDate" type="date">
+            <column name="signDate" />
+        </property> 
+        <property name="custSignDate" type="date">
+            <column name="custSignDate" />
+        </property> 
+        <many-to-one name="principal" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+            <column name="principal" />
+        </many-to-one> 
+        <property name="tel" type="string">
+            <column name="tel" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
+        <many-to-one name="custPrincipal" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+            <column name="custPrincipal" />
+        </many-to-one> 
+        <property name="custTel" type="string">
+            <column name="custTel" />
+        </property>
+         <property name="custPhone" type="string">
+            <column name="custPhone" />
+        </property>
+        <property name="custEmail" type="string">
+            <column name="custEmail" />
+        </property> 
+	</class>
+</hibernate-mapping>

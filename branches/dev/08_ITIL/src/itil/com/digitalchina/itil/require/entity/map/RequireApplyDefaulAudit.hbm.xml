@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.require.entity.RequireApplyDefaultAudit" table="itil_RequireApplyDefaultAudit">
+      <id name="id" type="long">
+			  <generator class="native"/>
+      </id>
+			<property name="departmentName" type="string">
+			  <column name="departmentName" ></column>
+			</property>
+			
+			<many-to-one name="cadreBizAudit" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="cadreBizAudit" />
+		    </many-to-one>
+		    
+			<many-to-one name="cadreFinanceAudit" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="cadreFinanceAudit" />
+		    </many-to-one>
+		    
+			<many-to-one name="groupFinanceAudit" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="groupFinanceAudit" />
+		    </many-to-one>
+		    
+		    <many-to-one name="cadreBusinessAudit" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="cadreBusinessAudit" />
+		    </many-to-one>
+		    
+		    <many-to-one name="clientItManager" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="clientItManager" />
+		    </many-to-one>
+			<property name="deleteFlag" type="java.lang.Integer">
+			  <column name="deleteFlag" ></column>
+			</property>
+			<property name="sortNum" type="integer">
+				<column name="sortNum"></column>
+			</property>	    
+			<property name="enable" type="integer">
+				<column name="enable"></column>
+			</property>	    
+	
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extlist.entity.BIServiceType" table="itil_lst_BIServiceType">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="serviceType" type="java.lang.String">
+			  <column name="SERVICETYPE" ></column>
+			</property>
+			
+	
+  </class>
+</hibernate-mapping>

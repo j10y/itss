@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.knowledge.entity.KnowContract" table="KnowContract" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="descn" type="string">
+            <column name="descn" />
+        </property>
+        <property name="files" type="string">
+            <column name="files" />
+        </property>
+        <property name="status" type="integer">
+			<column name="status"></column>
+		</property>
+		<many-to-one name="createUser" class="com.digitalchina.info.framework.security.entity.UserInfo" >
+            <column name="createUser" />
+        </many-to-one>
+         <property name="createDate" type="timestamp">
+            <column name="createDate" />
+        </property>
+         <property name="number" type="string">
+            <column name="number" />
+        </property>
+        <property name="readTimes" type="long">
+            <column name="readTimes" />
+        </property>
+        <many-to-one name="oldKnowContract" class="com.digitalchina.itil.knowledge.entity.KnowContract" >
+            <column name="oldKnowContract" />
+        </many-to-one>
+	</class>
+</hibernate-mapping>

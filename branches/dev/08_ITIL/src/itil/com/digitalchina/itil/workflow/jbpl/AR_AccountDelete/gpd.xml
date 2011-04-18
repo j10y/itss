@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="AR_AllAccountDelete" width="859" height="403">
+  <node name="提交" x="74" y="31" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审批" x="75" y="109" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="帐号管理员处理" x="77" y="210" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="76" y="313" width="132" height="36"/>
+  <node name="打回" x="296" y="146" width="132" height="36"/>
+</root-container>

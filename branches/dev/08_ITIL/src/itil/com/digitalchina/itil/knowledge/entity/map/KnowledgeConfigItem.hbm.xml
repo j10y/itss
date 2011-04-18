@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.knowledge.entity.KnowledgeConfigItem" table="KnowledgeConfigItem" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        
+        <many-to-one name="knowledge" class="com.digitalchina.itil.knowledge.entity.Knowledge">
+        	<column name="knowledge"></column>
+        </many-to-one>
+        
+        <property name="type" type="integer">
+            <column name="type" />
+        </property>
+        
+        <property name="scitype" type="long">
+            <column name="scitype" />
+        </property>
+        
+        <property name="sciddata" type="long">
+            <column name="sciddata" />
+        </property>
+	</class>
+</hibernate-mapping>

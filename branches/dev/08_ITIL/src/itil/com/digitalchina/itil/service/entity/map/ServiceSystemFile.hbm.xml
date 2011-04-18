@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.service.entity.ServiceSystemFile" table="ServiceSystemFile">
+		<id name="id" type="long">
+				<column name="id"></column>
+				<generator class="native"></generator>
+		</id>
+
+		<property name="fileName" type="string">
+			<column name="fileName"></column>
+		</property>
+		<property name="systemFileName" type="string">
+			<column name="systemFileName"></column>
+		</property>
+		<many-to-one name="uploadUser" class="com.digitalchina.info.framework.security.entity.UserInfo" >
+            <column name="uploadUser" />
+        </many-to-one>
+		<property name="uploadDate" type="date">
+			<column name="uploadDate"></column>
+		</property>
+		<property name="nowtime" type="string">
+			<column name="nowtime"></column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

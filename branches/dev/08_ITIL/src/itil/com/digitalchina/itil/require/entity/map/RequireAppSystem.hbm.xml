@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.require.entity.RequireAppSystem"
+		table="itil_req_RequireAppSystem">
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+
+		<many-to-one name="appConfigItem" class="com.digitalchina.itil.config.entity.ConfigItem">
+			<column name="appConfigItem" />
+		</many-to-one>
+		
+		<many-to-one name="appManager" class="com.digitalchina.info.framework.security.entity.UserInfo">
+			<column name="appManager" />
+		</many-to-one>
+
+		<many-to-one name="deliveryTeam" class="com.digitalchina.itil.config.extci.entity.DeliveryTeam">
+		      <column name="deliveryTeam" />
+		</many-to-one>
+		
+		<many-to-one name="engineer" class="com.digitalchina.itil.config.extci.entity.ServiceEngineer">
+		      <column name="engineer" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

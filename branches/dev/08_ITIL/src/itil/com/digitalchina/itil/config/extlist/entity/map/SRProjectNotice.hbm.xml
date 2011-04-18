@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extlist.entity.SRProjectNotice" table="itil_lst_SRProjectNotice">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="specialRequire" class="com.digitalchina.itil.require.entity.SpecialRequirement">
+		      <column name="SPECIALREQUIRE" />
+		    </many-to-one>
+			<many-to-one name="notice" class="com.digitalchina.itil.notice.entity.NewNotice">
+		      <column name="NOTICE" />
+		    </many-to-one>
+	
+  </class>
+</hibernate-mapping>

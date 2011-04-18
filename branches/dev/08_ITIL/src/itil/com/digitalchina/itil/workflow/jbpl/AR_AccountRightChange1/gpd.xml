@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="AR_AccountRightChange1" width="772" height="367">
+  <node name="提交" x="42" y="24" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审批" x="45" y="115" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="帐号管理员处理" x="51" y="197" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="50" y="291" width="132" height="36"/>
+  <node name="打回" x="286" y="131" width="132" height="36"/>
+</root-container>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extlist.entity.NotesIDFile" table="itil_lst_NotesIDFile">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="fileName" type="java.lang.String">
+			  <column name="FILENAME" ></column>
+			</property>
+			
+			<property name="webMail" type="java.lang.String">
+			  <column name="WEBMAIL" ></column>
+			</property>
+			<property name="dcMail" type="java.lang.String">
+			  <column name="dcMail" ></column>
+			</property>
+
+			<property name="attachment" type="java.lang.String">
+			  <column name="ATTACHMENT" ></column>
+			</property>
+			
+			<property name="createDate" type="date">
+			  <column name="CREATEDATE"></column>
+			</property>
+			
+			
+			 <many-to-one name="applyId" class="com.digitalchina.itil.require.entity.AccountApplyMainTable">
+		      <column name="applyId" />
+		    </many-to-one>
+		    
+		    
+		    <property name="noPassword" type="java.lang.String">
+			  <column name="noPassword" ></column>
+			</property>
+			
+			
+		    <property name="password" type="java.lang.String">
+			  <column name="password" ></column>
+			</property>
+	
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.service.entity.ServiceCatalogueAuditHis" table="ServiceCatalogueAuditHis" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id> 
+		<many-to-one name="serviceCatalogue" class="com.digitalchina.itil.service.entity.ServiceCatalogue" unique="true">
+			<column name="serviceCatalogue"></column>
+		</many-to-one>
+		<property name="comment" type="string">
+			<column name="comment" length="200"></column>
+		</property>
+		<property name="processId" type="long">
+			<column name="processId"></column>
+		</property>
+		<property name="nodeId" type="string">
+			<column name="nodeId" length="20"></column>
+		</property>
+		<property name="nodeName" type="string">
+			<column name="nodeName" length="20"></column>
+		</property>
+		<many-to-one name="approver" class="com.digitalchina.info.framework.security.entity.UserInfo" unique="true">
+			<column name="approver"></column>
+		</many-to-one>
+		<property name="resultFlag" type="string">
+			<column name="resultFlag" length="20"></column>
+		</property>
+		<property name="approverDate" type="timestamp">
+			<column name="approverDate"></column>
+		</property>
+		<property name="alterFlag" type="string">
+			<column name="alterFlag" length="20"></column>
+		</property>
+	</class>
+</hibernate-mapping>

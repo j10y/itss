@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping default-access="field">
+	<class name="com.digitalchina.itil.service.entity.ServiceItemType" table="ServiceItemType">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="hilo">
+			  <param name="table">SCITypeIdGenerator</param>
+			  <param name="column">Next_Value</param>
+			  <param name="max_lo">1</param>
+			</generator>
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+         <many-to-one name="parentServiceItemType" class="com.digitalchina.itil.service.entity.ServiceItemType">
+            <column name="parentServiceItemType" />
+        </many-to-one>
+        
+		<property name="specialFlag" type="integer">
+		     <column name="specialFlag" />
+		</property>
+		<many-to-one name="systemMainTable" class="com.digitalchina.info.appframework.metadata.entity.SystemMainTable" >
+            <column name="systemMainTable" />
+        </many-to-one>
+        <property name="className" type="string">
+            <column name="className" />
+        </property>
+        <property name="tableName" type="string">
+            <column name="tableName" />
+        </property>
+        <many-to-one name="pagePanel" class="com.digitalchina.info.appframework.pagemodel.entity.PagePanel">
+            <column name="pagePanel" />
+        </many-to-one>
+        <many-to-one name="groupPanel" class="com.digitalchina.info.appframework.pagemodel.entity.PagePanel" >
+            <column name="groupPanel" />
+        </many-to-one>
+        <property name="deployFlag" type="integer">
+		     <column name="deployFlag" />
+		</property>
+        
+	</class>
+</hibernate-mapping>

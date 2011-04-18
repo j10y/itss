@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="KnowFileChangeProcess">
+
+
+	<description>
+		文件变更审批流程
+	</description>
+
+
+	<start-state name="提交文件变更">
+		<description>
+			submit
+		</description>
+		<transition to="审批变更文件准确性"></transition>
+	</start-state>
+
+
+	<task-node name="审批变更文件准确性">
+		<description>
+			fileApproval
+		</description>
+		<transition to="IT服务管理部服务管理岗审核" name="Y"></transition>
+		<transition to="打回提交人" name="N"></transition>
+	</task-node>
+
+	<task-node name="IT服务管理部服务管理岗审核">
+		<description>
+			serviceDeptServiceStationApproval
+		</description>
+		<transition to="发布" name="Y"></transition>
+		<transition to="打回提交人" name="N"></transition>
+	</task-node>
+
+
+	<end-state name="发布">
+		<description>
+			publish
+		</description>
+	</end-state>
+
+	<end-state name="打回提交人">
+		<description>
+			goback
+		</description>
+	</end-state>
+
+
+</process-definition>

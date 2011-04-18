@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.digitalchina.itil.train.entity"
+	default-access="field">
+
+	<class name="QuestResult" table="TrainQuestResult"
+		dynamic-insert="true" dynamic-update="true">
+
+		<id name="id" type="long" column="id">
+			<generator class="native" />
+		</id>
+
+		<many-to-one name="userId"
+			class="com.digitalchina.info.framework.security.entity.UserInfo"
+			column="userId" />
+
+		<many-to-one name="quest"
+			class="com.digitalchina.itil.train.entity.Quest" column="quest" />
+
+		<many-to-one name="questOption"
+			class="com.digitalchina.itil.train.entity.QuestOption"
+			column="questOption" />
+
+
+		<many-to-one name="trainCourse"
+			class="com.digitalchina.itil.train.entity.TrainCourse"
+			column="trainCourse" />
+
+		<many-to-one name="survey"
+			class="com.digitalchina.itil.train.entity.Survey" column="survey" />
+		<property name="objId" type="long"/>
+		
+		<property name="answer" type="string" column="answer"/>
+	</class>
+</hibernate-mapping>
