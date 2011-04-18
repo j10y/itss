@@ -1,4 +1,0 @@
- select uncompress(FormattedMessageText) from SMSMT where uncompress(FormattedMessageText) like "%mile%" limit 1
-
-
- select uncompress(FormattedMessageText) from SMSMT where ID=786770892
