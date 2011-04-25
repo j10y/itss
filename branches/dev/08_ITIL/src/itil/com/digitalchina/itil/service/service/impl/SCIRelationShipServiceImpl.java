@@ -833,28 +833,30 @@ public class SCIRelationShipServiceImpl extends BaseDao implements
 		String json = "";
 		List subList=new ArrayList();
 		List paramete=new ArrayList();
-		paramete.add(sciRelationShips.get(0).getId());
-		paramete.add(level);
-		paramete.add(lft);
-		subList=this.initSCIRelationShipChild(rootChildsMap,rootChildsMap.size(),paramete);
-		json+="{id:'"+sciRelationShips.get(0).getId()+"',name:'我的服务目录',";
-		String typeName = "目录";
-		json+="typeFlag:'"+typeName+"',";
-		json+="rootName:'我的服务目录',";
-		json += "_parent:"+parent+",";
-		json += "_level:"+level+",";
-		json += "_lft:"+lft+",";
-		int subNum=0;
-		if(!subList.get(1).equals("")){
-		   subNum=((Integer) subList.get(1)).intValue();//得到值得个数，第二个参数是存的子的总个数
+		if(sciRelationShips!=null&&sciRelationShips.size()>0){
+			paramete.add(sciRelationShips.get(0).getId());
+			paramete.add(level);
+			paramete.add(lft);
+			subList=this.initSCIRelationShipChild(rootChildsMap,rootChildsMap.size(),paramete);
+			json+="{id:'"+sciRelationShips.get(0).getId()+"',name:'我的服务目录',";
+			String typeName = "目录";
+			json+="typeFlag:'"+typeName+"',";
+			json+="rootName:'我的服务目录',";
+			json += "_parent:"+parent+",";
+			json += "_level:"+level+",";
+			json += "_lft:"+lft+",";
+			int subNum=0;
+			if(!subList.get(1).equals("")){
+			   subNum=((Integer) subList.get(1)).intValue();//得到值得个数，第二个参数是存的子的总个数
+			}
+			rgt=lft+subNum*2+1;
+			json += "_rgt:"+rgt+",";
+			json += "_is_leaf:"+false+"},"; 
+			if(!subList.get(0).equals("")){
+				json +=subList.get(0);
+			 }
+			  lft=rgt+1;
 		}
-		rgt=lft+subNum*2+1;
-		json += "_rgt:"+rgt+",";
-		json += "_is_leaf:"+false+"},"; 
-		if(!subList.get(0).equals("")){
-			json +=subList.get(0);
-		 }
-		  lft=rgt+1;
 		if(json.equals("")){
 			json="[]";
 		}else{
