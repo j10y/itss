@@ -177,45 +177,41 @@ PagePanel = Ext.extend(Ext.Panel, {
 			width : 170,
 			listeners:{
 				change:function(cmp, newValue, oldValue){
-					if(newValue=='null'){
-						Ext.Msg.alert("提示",'未输入员工信息！');
+					var url = webContext + '/eventAction_selectCCallData.action?customerItcode='
+						+ newValue;
+					var CCallChangeData = da.ajaxGetData(url);
+					if(CCallChangeData.success==false){
+						Ext.Msg.alert("提示",'itcode不存在！');
+						Ext.getCmp("customerItcode").setValue(oldValue);
 					}else{
-						var url = webContext + '/eventAction_selectCCallData.action?customerItcode='
-							+ newValue;
-						var CCallChangeData = da.ajaxGetData(url);
-						if(CCallChangeData.success==false){
-							Ext.Msg.alert("提示",'itcode不存在！');
-							Ext.getCmp("customerItcode").setValue(oldValue);
-						}else{
-							var itcode=Ext.getCmp('customerItcode').getValue();
-							var url = webContext + '/accountSystemAdminAction_findRBType.action?username='
-									+ itcode;
-							var userlist = da.ajaxGetData(url);
-							var tempStyle="font-weight:400;color:black";
-							if(userlist.type==0){
-								tempStyle='font-weight:400;color:red';
-							}
-							if(userlist.type==1){
-								tempStyle='font-weight:800;color:black';
-							}
-							Ext.getCmp("customerItcode").getEl().applyStyles(tempStyle);
-							Ext.getCmp("callName").getEl().applyStyles(tempStyle);
-							Ext.getCmp("callPhone").getEl().applyStyles(tempStyle);
-							Ext.getCmp("department").getEl().applyStyles(tempStyle);
-							Ext.getCmp("userTelephone").getEl().applyStyles(tempStyle);
-							Ext.getCmp("mobilePhone").getEl().applyStyles(tempStyle);
-							Ext.getCmp("platform").getEl().applyStyles(tempStyle);
-							Ext.getCmp("postCode").getEl().applyStyles(tempStyle);
-							Ext.getCmp("personScope").getEl().applyStyles(tempStyle);
-							
-							Ext.getCmp("callName").setValue(CCallChangeData.callName);
-							Ext.getCmp("department").setValue(CCallChangeData.department);
-							Ext.getCmp("userTelephone").setValue(CCallChangeData.userTelephone);
-							Ext.getCmp("mobilePhone").setValue(CCallChangeData.mobilePhone);
-							Ext.getCmp("platform").setValue(CCallChangeData.platform);
-							Ext.getCmp("postCode").setValue(CCallChangeData.postCode);
-							Ext.getCmp("personScope").setValue(CCallChangeData.personScope);
+						var itcode=Ext.getCmp('customerItcode').getValue();
+						var url = webContext + '/accountSystemAdminAction_findRBType.action?username='
+								+ itcode;
+						var userlist = da.ajaxGetData(url);
+						var tempStyle="font-weight:400;color:black";
+						if(userlist.type==0){
+							tempStyle='font-weight:400;color:red';
 						}
+						if(userlist.type==1){
+							tempStyle='font-weight:800;color:black';
+						}
+						Ext.getCmp("customerItcode").getEl().applyStyles(tempStyle);
+						Ext.getCmp("callName").getEl().applyStyles(tempStyle);
+						Ext.getCmp("callPhone").getEl().applyStyles(tempStyle);
+						Ext.getCmp("department").getEl().applyStyles(tempStyle);
+						Ext.getCmp("userTelephone").getEl().applyStyles(tempStyle);
+						Ext.getCmp("mobilePhone").getEl().applyStyles(tempStyle);
+						Ext.getCmp("platform").getEl().applyStyles(tempStyle);
+						Ext.getCmp("postCode").getEl().applyStyles(tempStyle);
+						Ext.getCmp("personScope").getEl().applyStyles(tempStyle);
+						
+						Ext.getCmp("callName").setValue(CCallChangeData.callName);
+						Ext.getCmp("department").setValue(CCallChangeData.department);
+						Ext.getCmp("userTelephone").setValue(CCallChangeData.userTelephone);
+						Ext.getCmp("mobilePhone").setValue(CCallChangeData.mobilePhone);
+						Ext.getCmp("platform").setValue(CCallChangeData.platform);
+						Ext.getCmp("postCode").setValue(CCallChangeData.postCode);
+						Ext.getCmp("personScope").setValue(CCallChangeData.personScope);
 					}
 				}
 			}
