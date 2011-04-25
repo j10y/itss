@@ -95,9 +95,11 @@
 			classpath*:applicationContext-itil-service.xml,
 			classpath*:applicationContext-itil-event.xml,
 			classpath*:applicationContext-itil-knowledge.xml,
-			classpath*:applicationContext-itil-rule.xml,
+			classpath*:applicationContext-itil-rule.xml
+			<!--
 			classpath*:applicationContext-itil-quartz.xml,
-			classpath*:applicationContext-itil-finance.xml		
+			classpath*:applicationContext-itil-finance.xml
+			-->		
 		</param-value>
 	</context-param>
 	
@@ -186,7 +188,7 @@
         <filter-name>ContextTpyeFilter</filter-name>
         <url-pattern>/*</url-pattern>
      </filter-mapping>
- 	<!-- 单点登录 -->
+ 	<!-- 单点登录 
 	 <filter>
         <filter-name>SSOFilter</filter-name>
         <filter-class>
@@ -209,7 +211,7 @@
         <filter-name>SSOFilter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
      </filter-mapping>
-
+-->
  	<!-- struts2-->
 	 <filter>
         <filter-name>struts2</filter-name>
