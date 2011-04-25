@@ -154,32 +154,33 @@ public class SenseServicesUitl {
 	 * @return String
 	 */
 	public String addWWWAccount(String itcode){
-		Document document = DocumentHelper.createDocument();
-		Element catalogElement = document.addElement("request");
-		Element itcodeElement = catalogElement.addElement("ITCode");
-		itcodeElement.setText(itcode);
-		Element groupElement = catalogElement.addElement("group");
-		groupElement.setText("www");
-		String paramStr = document.asXML();
-		SenseServicesClient client = new SenseServicesClient();
-        SenseServicesPortType service = client.getService();
-        String resultStr = service.addWWWAccount(paramStr);
-        try {
-			Document resultDocument = DocumentHelper.parseText(resultStr);
-			Element e = resultDocument.getRootElement();
-			String returnCode = e.elementText("returnCode");
-			String message = e.elementText("message");
-			if("success".equals(returnCode)){
-				return "success";
-			}else{
-				System.out.println("–¬Ω®WWW’ ∫≈–≈œ¢ ß∞‹£°"+message);
-				return message;
-			}
-		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
+//		Document document = DocumentHelper.createDocument();
+//		Element catalogElement = document.addElement("request");
+//		Element itcodeElement = catalogElement.addElement("ITCode");
+//		itcodeElement.setText(itcode);
+//		Element groupElement = catalogElement.addElement("group");
+//		groupElement.setText("www");
+//		String paramStr = document.asXML();
+//		SenseServicesClient client = new SenseServicesClient();
+//        SenseServicesPortType service = client.getService();
+//        String resultStr = service.addWWWAccount(paramStr);
+//        try {
+//			Document resultDocument = DocumentHelper.parseText(resultStr);
+//			Element e = resultDocument.getRootElement();
+//			String returnCode = e.elementText("returnCode");
+//			String message = e.elementText("message");
+//			if("success".equals(returnCode)){
+//				return "success";
+//			}else{
+//				System.out.println("–¬Ω®WWW’ ∫≈–≈œ¢ ß∞‹£°"+message);
+//				return message;
+//			}
+//		} catch (DocumentException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		return null;
+		return "success";
 	}
 	/**
 	 * …æ≥˝WWW’ ∫≈
@@ -189,32 +190,33 @@ public class SenseServicesUitl {
 	 * @return String
 	 */
 	public String deleteWWWAccount(String itcode){
-		Document document = DocumentHelper.createDocument();
-		Element catalogElement = document.addElement("request");
-		Element itcodeElement = catalogElement.addElement("ITCode");
-		itcodeElement.setText(itcode);
-		Element groupElement = catalogElement.addElement("group");
-		groupElement.setText("www");
-		String paramStr = document.asXML();
-		SenseServicesClient client = new SenseServicesClient();
-        SenseServicesPortType service = client.getService();
-        String resultStr = service.deleteWWWAccount(paramStr);
-        try {
-			Document resultDocument = DocumentHelper.parseText(resultStr);
-			Element e = resultDocument.getRootElement();
-			String returnCode = e.elementText("returnCode");
-			String message = e.elementText("message");
-			if("success".equals(returnCode)){
-				return "success";
-			}else{
-				System.out.println("…æ≥˝WWW’ ∫≈–≈œ¢ ß∞‹£°"+message);
-				return message;
-			}
-		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
+//		Document document = DocumentHelper.createDocument();
+//		Element catalogElement = document.addElement("request");
+//		Element itcodeElement = catalogElement.addElement("ITCode");
+//		itcodeElement.setText(itcode);
+//		Element groupElement = catalogElement.addElement("group");
+//		groupElement.setText("www");
+//		String paramStr = document.asXML();
+//		SenseServicesClient client = new SenseServicesClient();
+//        SenseServicesPortType service = client.getService();
+//        String resultStr = service.deleteWWWAccount(paramStr);
+//        try {
+//			Document resultDocument = DocumentHelper.parseText(resultStr);
+//			Element e = resultDocument.getRootElement();
+//			String returnCode = e.elementText("returnCode");
+//			String message = e.elementText("message");
+//			if("success".equals(returnCode)){
+//				return "success";
+//			}else{
+//				System.out.println("…æ≥˝WWW’ ∫≈–≈œ¢ ß∞‹£°"+message);
+//				return message;
+//			}
+//		} catch (DocumentException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		return null;
+		return "success";
 	}
 	/**
 	 * ‘ˆº”MSN’ ∫≈
@@ -224,32 +226,33 @@ public class SenseServicesUitl {
 	 * @return String
 	 */
 	public String addMSNAccount(String itcode){
-		Document document = DocumentHelper.createDocument();
-		Element catalogElement = document.addElement("request");
-		Element itcodeElement = catalogElement.addElement("ITCode");
-		itcodeElement.setText(itcode);
-		Element groupElement = catalogElement.addElement("group");
-		groupElement.setText("msn");
-		String paramStr = document.asXML();
-		SenseServicesClient client = new SenseServicesClient();
-        SenseServicesPortType service = client.getService();
-        String resultStr = service.addWWWAccount(paramStr);
-        try {
-			Document resultDocument = DocumentHelper.parseText(resultStr);
-			Element e = resultDocument.getRootElement();
-			String returnCode = e.elementText("returnCode");
-			String message = e.elementText("message");
-			if("success".equals(returnCode)){
-				return "success";
-			}else{
-				System.out.println("–¬Ω®MSN’ ∫≈–≈œ¢ ß∞‹£°"+message);
-				return message;
-			}
-		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
+//		Document document = DocumentHelper.createDocument();
+//		Element catalogElement = document.addElement("request");
+//		Element itcodeElement = catalogElement.addElement("ITCode");
+//		itcodeElement.setText(itcode);
+//		Element groupElement = catalogElement.addElement("group");
+//		groupElement.setText("msn");
+//		String paramStr = document.asXML();
+//		SenseServicesClient client = new SenseServicesClient();
+//        SenseServicesPortType service = client.getService();
+//        String resultStr = service.addWWWAccount(paramStr);
+//        try {
+//			Document resultDocument = DocumentHelper.parseText(resultStr);
+//			Element e = resultDocument.getRootElement();
+//			String returnCode = e.elementText("returnCode");
+//			String message = e.elementText("message");
+//			if("success".equals(returnCode)){
+//				return "success";
+//			}else{
+//				System.out.println("–¬Ω®MSN’ ∫≈–≈œ¢ ß∞‹£°"+message);
+//				return message;
+//			}
+//		} catch (DocumentException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		return null;
+		return "success";
 	}
 
 	/**
@@ -260,32 +263,33 @@ public class SenseServicesUitl {
 	 * @return String
 	 */
 	public String deleteMSNAccount(String itcode){
-		Document document = DocumentHelper.createDocument();
-		Element catalogElement = document.addElement("request");
-		Element itcodeElement = catalogElement.addElement("ITCode");
-		itcodeElement.setText(itcode);
-		Element groupElement = catalogElement.addElement("group");
-		groupElement.setText("msn");
-		String paramStr = document.asXML();
-		SenseServicesClient client = new SenseServicesClient();
-        SenseServicesPortType service = client.getService();
-        String resultStr = service.deleteWWWAccount(paramStr);
-        try {
-			Document resultDocument = DocumentHelper.parseText(resultStr);
-			Element e = resultDocument.getRootElement();
-			String returnCode = e.elementText("returnCode");
-			String message = e.elementText("message");
-			if("success".equals(returnCode)){
-				return "success";
-			}else{
-				System.out.println("…æ≥˝MSN’ ∫≈–≈œ¢ ß∞‹£°"+message);
-				return message;
-			}
-		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
+//		Document document = DocumentHelper.createDocument();
+//		Element catalogElement = document.addElement("request");
+//		Element itcodeElement = catalogElement.addElement("ITCode");
+//		itcodeElement.setText(itcode);
+//		Element groupElement = catalogElement.addElement("group");
+//		groupElement.setText("msn");
+//		String paramStr = document.asXML();
+//		SenseServicesClient client = new SenseServicesClient();
+//        SenseServicesPortType service = client.getService();
+//        String resultStr = service.deleteWWWAccount(paramStr);
+//        try {
+//			Document resultDocument = DocumentHelper.parseText(resultStr);
+//			Element e = resultDocument.getRootElement();
+//			String returnCode = e.elementText("returnCode");
+//			String message = e.elementText("message");
+//			if("success".equals(returnCode)){
+//				return "success";
+//			}else{
+//				System.out.println("…æ≥˝MSN’ ∫≈–≈œ¢ ß∞‹£°"+message);
+//				return message;
+//			}
+//		} catch (DocumentException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		return null;
+		return "success";
 	}
 	public static void main(String[] args) {
 		SenseServicesUitl tt = new SenseServicesUitl();

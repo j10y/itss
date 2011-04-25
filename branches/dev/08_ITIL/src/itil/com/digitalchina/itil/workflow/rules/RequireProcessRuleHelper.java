@@ -28,6 +28,7 @@ import com.digitalchina.info.appframework.pagemodel.entity.PageModel;
 import com.digitalchina.info.framework.context.ContextHolder;
 import com.digitalchina.info.framework.context.UserContext;
 import com.digitalchina.info.framework.dao.BaseObject;
+import com.digitalchina.info.framework.exception.RuleFileException;
 import com.digitalchina.info.framework.message.mail.service.MailSenderService;
 import com.digitalchina.info.framework.security.entity.PersonnelScope;
 import com.digitalchina.info.framework.security.entity.Role;
@@ -39,7 +40,6 @@ import com.digitalchina.info.framework.workflow.ConfigUnitService;
 import com.digitalchina.info.framework.workflow.WorkflowConstants;
 import com.digitalchina.info.framework.workflow.base.JbpmContextFactory;
 import com.digitalchina.itil.account.entity.AccountSBUOfficer;
-import com.digitalchina.itil.account.entity.AccountType;
 import com.digitalchina.itil.account.entity.DCContacts;
 import com.digitalchina.itil.account.entity.MobileTelephoneApply;
 import com.digitalchina.itil.account.entity.PersonFormalAccount;
@@ -1595,32 +1595,22 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		ServiceItemProcess sip = (ServiceItemProcess) bw
 		.getPropertyValue("serviceItemProcess");
 		if(sip.getId().compareTo(313L)==0){
-			boolean haswww=false;
-			boolean hasmsn=false;
 			for(PersonFormalAccount pfa:account){
 				if (pfa.getAccountType().getAccountType().equals("WWWAccount")){
-					haswww=true;
+					SenseServicesUitl ssUtil = new SenseServicesUitl();
+					String mes=ssUtil.deleteWWWAccount(pfa.getAccountowner().getItcode());
+					if(!mes.equals("success")){
+						throw new RuleFileException(mes);
+					}
 				} 
 				if (pfa.getAccountType().getAccountType().equals("MSNAccount")){
-					hasmsn=true;
+					SenseServicesUitl ssUtil = new SenseServicesUitl();
+					String mes=ssUtil.deleteMSNAccount(pfa.getAccountowner().getItcode());
+					if(!mes.equals("success")){
+						throw new RuleFileException(mes);
+					}
 				} 
 			}
-			if(haswww){
-				SenseServicesUitl ssUtil = new SenseServicesUitl();
-				String mes=ssUtil.deleteWWWAccount(account.get(0).getAccountowner().getItcode());
-				if(!mes.equals("success")){
-					throw new ServiceException(mes);
-				}
-			}else{
-				if(hasmsn){
-					SenseServicesUitl ssUtil = new SenseServicesUitl();
-					String mes=ssUtil.deleteMSNAccount(account.get(0).getAccountowner().getItcode());
-					if(!mes.equals("success")){
-						throw new ServiceException(mes);
-					}
-				}
-			}
-			
 		}
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 //		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
@@ -2080,14 +2070,14 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			SenseServicesUitl ssUtil = new SenseServicesUitl();
 			String mes=ssUtil.addWWWAccount(account.getAccountowner().getItcode());
 			if(!mes.equals("success")){
-				throw new ServiceException(mes);
+				throw new RuleFileException(mes);
 			}
 		}
 		if(sip.getId().compareTo(157L)==0){
 			SenseServicesUitl ssUtil = new SenseServicesUitl();
 			String mes=ssUtil.addMSNAccount(account.getAccountowner().getItcode());
 			if(!mes.equals("success")){
-				throw new ServiceException(mes);
+				throw new RuleFileException(mes);
 			}
 		}
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
@@ -2199,21 +2189,21 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.modifyTempUserManager(acc.getAccountName(),acc.getAccountNowUser().getItcode());
 				if(!mes.equals("success")){
-					throw new ServiceException(mes);
+					throw new RuleFileException(mes);
 				}
 			}
 			if(sip.getId().compareTo(174L)==0){
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.addWWWAccount(acc.getAccountName());
 				if(!mes.equals("success")){
-					throw new ServiceException(mes);
+					throw new RuleFileException(mes);
 				}
 			}
 			if(sip.getId().compareTo(173L)==0){
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.addMSNAccount(acc.getAccountName());
 				if(!mes.equals("success")){
-					throw new ServiceException(mes);
+					throw new RuleFileException(mes);
 				}
 			}
 		}
@@ -2304,21 +2294,21 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.removeTempUser(acc.getAccountName());
 				if(!mes.equals("success")){
-					throw new ServiceException(mes);
+					throw new RuleFileException(mes);
 				}
 			}
 			if(sip.getId().compareTo(211L)==0){
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.deleteWWWAccount(acc.getAccountName());
 				if(!mes.equals("success")){
-					throw new ServiceException(mes);
+					throw new RuleFileException(mes);
 				}
 			}
 			if(sip.getId().compareTo(209L)==0){
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.deleteMSNAccount(acc.getAccountName());
 				if(!mes.equals("success")){
-					throw new ServiceException(mes);
+					throw new RuleFileException(mes);
 				}
 			}
 		}
@@ -2487,6 +2477,11 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			if (msnAccount != null) {
 				msnAccount.setAccountState("0");
 				service.save(msnAccount);
+//				SenseServicesUitl ssUtil = new SenseServicesUitl();
+//				String mes=ssUtil.deleteMSNAccount(msnAccount.getAccountowner().getItcode());
+//				if(!mes.equals("success")){
+//					throw new RuleFileException(mes);
+//				}
 			}
 		}
 //		if(accountType.equals("Telephone")&&applyUser!=null){
@@ -2505,14 +2500,14 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			SenseServicesUitl ssUtil = new SenseServicesUitl();
 			String mes=ssUtil.deleteWWWAccount(ac.getAccountowner().getItcode());
 			if(!mes.equals("success")){
-				throw new ServiceException(mes);
+				throw new RuleFileException(mes);
 			}
 		}
 		if(sip.getId().compareTo(220L)==0){
 			SenseServicesUitl ssUtil = new SenseServicesUitl();
 			String mes=ssUtil.deleteMSNAccount(ac.getAccountowner().getItcode());
 			if(!mes.equals("success")){
-				throw new ServiceException(mes);
+				throw new RuleFileException(mes);
 			}
 		}
 		//add by lee for 如果是座机，更新通讯录信息 in 20100127 begin
@@ -2746,7 +2741,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.addWWWAccount(acc.getAccountowner().getItcode());
 				if(!mes.equals("success")){
-					throw new ServiceException(mes);
+					throw new RuleFileException(mes);
 				}
 			}
 		}
@@ -4334,324 +4329,6 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		sb.append("</html>");
 		return sb.toString();
 	}	
-	
-	/**
-	 * www帐号和msn帐号删除结束节点（同步Tivoli）
-	 * @Methods Name wwwDeleteEnd
-	 * @Create In Sep 27, 2010 By liuying
-	 * @param dataId
-	 * @param serviceItemId
-	 * @param nodeId
-	 * @param nodeName
-	 * @param processId
-	 * @throws Exception void
-	 */
-	public void wwwDeleteEnd(String dataId, String serviceItemId,
-			String nodeId, String nodeName, String processId) throws Exception {
-		ServiceItem serviceItem = (ServiceItem) service.find(ServiceItem.class,
-				serviceItemId);
-		AccountApplyMainTable aamt=(AccountApplyMainTable) service.find(AccountApplyMainTable.class, dataId);
-		ServiceItemProcess sip = aamt.getServiceItemProcess();
-		
-		UserInfo applyUser = aamt.getApplyUser();
-		PersonFormalAccount account = (PersonFormalAccount) service.findUnique(
-				PersonFormalAccount.class, "applyId", aamt); // 获取关联实体
-		PersonFormalAccount oldApplyAccount = account.getOlodApplyAccount();
-		String accountType=oldApplyAccount.getAccountType().getAccountType();
-		if (accountType.equals("WWWAccount")) {
-			
-			SenseServicesUitl ssUtil = new SenseServicesUitl();
-			String mes=ssUtil.deleteWWWAccount(oldApplyAccount.getAccountowner().getItcode());
-			if(!mes.equals("success")){
-				throw new ServiceException(mes);
-			}
-			
-			UserInfo accountOwner = oldApplyAccount.getAccountowner();
-			PersonFormalAccount msnAccount = accountService.findPersonAccount(
-					"MSN帐号", accountOwner);
-			if (msnAccount != null) {
-				msnAccount.setAccountState("0");
-				service.save(msnAccount);
-
-			}
-		}
-
-		if (accountType.equals("MSNAccount")) {
-			SenseServicesUitl ssUtil = new SenseServicesUitl();
-			String mes=ssUtil.deleteMSNAccount(oldApplyAccount.getAccountowner().getItcode());
-			if(!mes.equals("success")){
-				throw new ServiceException(mes);
-			}
-		}
-		
-		oldApplyAccount.setAccountState("0");
-		PersonFormalAccount ac = (PersonFormalAccount) service.save(oldApplyAccount);
-		aamt.setStatus(Constants.STATUS_FINISHED);
-
-		if (applyUser == null) {
-			applyUser = aamt.getDelegateApplyUser();// 获取申请人
-		}
-		String email = applyUser.getEmail();
-		PageModel pageModel = sip.getEndPageModel();
-		String url = pageModel.getPagePath(); // 获取页面路径
-		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
-		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
-		String definitionName=sip.getDefinitionName();
-		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
-		String workflowEntity = "com.digitalchina.itil.service.entity.ServiceItemApplyAuditHis";		
-		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
-		String context = this.htmlContent(applyUser, realUrl,auditHis,definitionName);
-		try {
-			ms.sendMimeMail(email, null, null, subject, context, null);
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		
-			service.save(aamt);
-			this.saveRequireHis(dataId, nodeId, processId, nodeName, "com.digitalchina.itil.require.entity.AccountApplyMainTable",
-					"Y", "", null, serviceItem);
-		
-	}
-	
-	/**
-	 * 临时邮件，临时www，临时MSN帐号删除申请结束节点（同步Tivoli）
-	 * @Methods Name tempAccountDeleteEnd
-	 * @Create In Sep 27, 2010 By liuying
-	 * @param dataId
-	 * @param serviceItemId
-	 * @param nodeId
-	 * @param nodeName
-	 * @param processId
-	 * @throws Exception void
-	 */
-	public void tempAccountDeleteEnd(String dataId, String serviceItemId,
-			String nodeId, String nodeName, String processId) throws Exception{
-		ServiceItem serviceItem = (ServiceItem) service.find(ServiceItem.class,
-				serviceItemId);
-		AccountApplyMainTable aamt=(AccountApplyMainTable) service.find(AccountApplyMainTable.class, dataId);
-		ServiceItemProcess sip = aamt.getServiceItemProcess();
-		
-		List<SpecialAccount> account = service.find(SpecialAccount.class,
-				"applyId", aamt);
-		for (SpecialAccount acc : account) {
-			AccountType at=acc.getAccountType();
-			if("TempMailAccount".equals(at.getAccountType())){
-				SenseServicesUitl ssUtil = new SenseServicesUitl();
-				String mes=ssUtil.removeTempUser(acc.getAccountName());
-				if(!mes.equals("success")){
-					throw new ServiceException(mes);
-				}
-			}
-			if("TempMSNAccount".equals(at.getAccountType())){
-				SenseServicesUitl ssUtil = new SenseServicesUitl();
-				String mes=ssUtil.deleteMSNAccount(acc.getAccountName());
-				if(!mes.equals("success")){
-					throw new ServiceException(mes);
-				}
-			}
-			if("TempWWWAccount".equals(at.getAccountType())){
-				SenseServicesUitl ssUtil = new SenseServicesUitl();
-				String mes=ssUtil.deleteWWWAccount(acc.getAccountName());
-				if(!mes.equals("success")){
-					throw new ServiceException(mes);
-				}
-			}
-			SpecialAccount oldApplyAccount = acc.getOlodApplyAccount();
-			oldApplyAccount.setAccountState("0");
-			SpecialAccount ac = (SpecialAccount) service.save(oldApplyAccount);
-
-		}
-		aamt.setStatus(Constants.STATUS_FINISHED);
-
-		UserInfo applyUser = aamt.getApplyUser();
-		if (applyUser == null) {
-			applyUser = (UserInfo)aamt.getDelegateApplyUser();// 获取申请人
-		}
-		String email = applyUser.getEmail();
-		PageModel pageModel = sip.getEndPageModel();
-		String url = pageModel.getPagePath(); // 获取页面路径
-		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
-		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
-		String definitionName=sip.getDefinitionName();
-		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
-		String workflowEntity = "com.digitalchina.itil.service.entity.ServiceItemApplyAuditHis";		
-		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
-		String context = this.htmlContent(applyUser, realUrl,auditHis,definitionName);
-		try {
-			ms.sendMimeMail(email, null, null, subject, context, null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		service.save(aamt);
-		this.saveRequireHis(dataId, nodeId, processId, nodeName, "com.digitalchina.itil.require.entity.AccountApplyMainTable",
-				"Y", "", null, serviceItem);
-
-	}
-	/**
-	 * 临时邮件所有者变更，临时www,临时msn申请结束节点（同步Tivoli）
-	 * @Methods Name tempAccountEnd
-	 * @Create In Sep 27, 2010 By liuying
-	 * @param dataId
-	 * @param serviceItemId
-	 * @param nodeId
-	 * @param nodeName
-	 * @param processId
-	 * @throws Exception void
-	 */
-	public void tempAccountEnd(String dataId, String serviceItemId,
-			String nodeId, String nodeName, String processId) throws Exception {
-		ServiceItem serviceItem = (ServiceItem) service.find(ServiceItem.class,
-				serviceItemId);
-		AccountApplyMainTable aamt=(AccountApplyMainTable) service.find(AccountApplyMainTable.class, dataId);
-		ServiceItemProcess sip = aamt.getServiceItemProcess();
-		List<SpecialAccount> account = service.find(SpecialAccount.class,
-				"applyId", aamt);
-		for (SpecialAccount acc : account) {
-			AccountType at=acc.getAccountType();
-			if("TempMailAccount".equals(at.getAccountType())){
-				SenseServicesUitl ssUtil = new SenseServicesUitl();
-				String mes=ssUtil.modifyTempUserManager(acc.getAccountName(),acc.getAccountNowUser().getItcode());
-				if(!mes.equals("success")){
-					throw new ServiceException(mes);
-				}
-			}
-			if("TempMSNAccount".equals(at.getAccountType())){
-				SenseServicesUitl ssUtil = new SenseServicesUitl();
-				String mes=ssUtil.addMSNAccount(acc.getAccountName());
-				if(!mes.equals("success")){
-					throw new ServiceException(mes);
-				}
-			}
-			if("TempWWWAccount".equals(at.getAccountType())){
-				SenseServicesUitl ssUtil = new SenseServicesUitl();
-				String mes=ssUtil.addWWWAccount(acc.getAccountName());
-				if(!mes.equals("success")){
-					throw new ServiceException(mes);
-				}
-			}
-			acc.setAccountState("1");
-			SpecialAccount oldAccount = acc.getOlodApplyAccount();
-			if (oldAccount != null) {
-				if(oldAccount.getAccountState().equals("0")){
-					acc.setAccountState("0");
-				}
-				oldAccount.setAccountState("0");
-				SpecialAccount oa = (SpecialAccount) service.save(oldAccount);
-			}
-			SpecialAccount pa = (SpecialAccount) service.save(acc);
-			
-		}
-		
-		aamt.setStatus(Constants.STATUS_FINISHED);
-		
-		UserInfo applyUser = aamt.getApplyUser();
-		if (applyUser == null) {
-			applyUser = aamt.getDelegateApplyUser();// 获取申请人
-		}
-		String email = applyUser.getEmail();
-		PageModel pageModel = sip.getEndPageModel();
-		String url = pageModel.getPagePath(); // 获取页面路径
-		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
-		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
-		String definitionName=sip.getDefinitionName();
-		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
-		String workflowEntity = "com.digitalchina.itil.service.entity.ServiceItemApplyAuditHis";		
-		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
-		String context = this.htmlContent(applyUser, realUrl,auditHis,definitionName);
-		String contextEB = this.htmlContentForEB(applyUser, realUrl,auditHis,definitionName);
-		String subjectEB = "IT温馨提示："+applyUser.getRealName()+"/"+applyUser.getUserName()+"提交的" +definitionName+ "已处理完成,请查看!";
-		try {
-			ms.sendMimeMail(email, null, null, subject, context, null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		service.save(aamt);
-		this.saveRequireHis(dataId, nodeId, processId, nodeName, "com.digitalchina.itil.require.entity.AccountApplyMainTable",
-				"Y", "", null, serviceItem);
-		
-	}
-	/**
-	 * www，msn帐号申请结束节点（同步Tivoli）
-	 * @Methods Name wwwApplyEnd
-	 * @Create In Sep 27, 2010 By liuying
-	 * @param dataId
-	 * @param serviceItemId
-	 * @param nodeId
-	 * @param nodeName
-	 * @param processId
-	 * @throws Exception void
-	 */
-	public void wwwApplyEnd(String dataId, String serviceItemId,
-			String nodeId, String nodeName, String processId) throws Exception {
-		ServiceItem serviceItem = (ServiceItem) service.find(ServiceItem.class,
-				serviceItemId);
-		AccountApplyMainTable aamt=(AccountApplyMainTable) service.find(AccountApplyMainTable.class, dataId);
-		ServiceItemProcess sip = aamt.getServiceItemProcess();
-		PersonFormalAccount account = (PersonFormalAccount) service.findUnique(
-				PersonFormalAccount.class, "applyId", aamt); // 获取关联实体
-		if("WWWAccount".equals(account.getAccountType().getAccountType())){
-			SenseServicesUitl ssUtil = new SenseServicesUitl();
-			String mes=ssUtil.addWWWAccount(account.getAccountowner().getItcode());
-			if(!mes.equals("success")){
-				throw new ServiceException(mes);
-			}
-		}
-		if("MSNAccount".equals(account.getAccountType().getAccountType())){
-			SenseServicesUitl ssUtil = new SenseServicesUitl();
-			String mes=ssUtil.addMSNAccount(account.getAccountowner().getItcode());
-			if(!mes.equals("success")){
-				throw new ServiceException(mes);
-			}
-		}
-		account.setAccountState("1");
-		service.save(account);
-		PersonFormalAccount oldApplyAccount = account.getOlodApplyAccount();
-		if (oldApplyAccount != null) {
-			oldApplyAccount.setAccountState("0");
-			PersonFormalAccount ac = (PersonFormalAccount) service
-					.save(oldApplyAccount);
-		}
-
-		aamt.setStatus(Constants.STATUS_FINISHED);
-		
-		UserInfo applyUser = aamt.getApplyUser();
-		if (applyUser == null) {
-			applyUser = aamt.getDelegateApplyUser();// 获取申请人
-		}
-		String email = applyUser.getEmail();
-		PageModel pageModel = sip.getEndPageModel();
-		String url = pageModel.getPagePath(); // 获取页面路径
-		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
-		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
-		String definitionName=sip.getDefinitionName();
-		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
-		String workflowEntity = "com.digitalchina.itil.service.entity.ServiceItemApplyAuditHis";		
-		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
-		String context = this.htmlContent(applyUser, realUrl,auditHis,definitionName);
-		String contextEB = this.htmlContentForEB(applyUser, realUrl,auditHis,definitionName);
-		String subjectEB = "IT温馨提示："+applyUser.getRealName()+"/"+applyUser.getUserName()+"提交的" +definitionName+ "已处理完成,请查看!";
-		
-		try {
-			ms.sendMimeMail(email, null, null, subject, context, null);
-			
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		service.save(aamt);
-		this.saveRequireHis(dataId, nodeId, processId, nodeName, "com.digitalchina.itil.require.entity.AccountApplyMainTable",
-				"Y", "", null, serviceItem);
-		
-	}
 	
 	// /////////////////////////////////////////账号管理部分////END////////////////////////////////////
 }

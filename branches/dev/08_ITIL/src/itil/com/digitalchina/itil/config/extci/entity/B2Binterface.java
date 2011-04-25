@@ -19,15 +19,9 @@ public class B2Binterface extends BaseObject{
 	private String partnerAdmin;//对方联系人
 	private String partyEmail;//对方联系人email
 	private String partyTel;//对方联系人电话
-	private String dcBU;//我方业务部门
+	private String DCBU;//我方业务部门
 	private String costCenter;//成本中心
 	private String technicalDoc;
-	public String getDcBU() {
-		return dcBU;
-	}
-	public void setDcBU(String dcBU) {
-		this.dcBU = dcBU;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -95,16 +89,40 @@ public class B2Binterface extends BaseObject{
 	public void setPartyEmail(String partyEmail) {
 		this.partyEmail = partyEmail;
 	}
+	public String getPartyTel() {
+		return partyTel;
+	}
+	public void setPartyTel(String partyTel) {
+		this.partyTel = partyTel;
+	}
+	public String getDCBU() {
+		return DCBU;
+	}
+	public void setDCBU(String dcbu) {
+		DCBU = dcbu;
+	}
+	public String getCostCenter() {
+		return costCenter;
+	}
+	public void setCostCenter(String costCenter) {
+		this.costCenter = costCenter;
+	}
+	public B2BbusinessType getBusinessType() {
+		return businessType;
+	}
+	public void setBusinessType(B2BbusinessType businessType) {
+		this.businessType = businessType;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((DCBU == null) ? 0 : DCBU.hashCode());
 		result = prime * result
 				+ ((businessType == null) ? 0 : businessType.hashCode());
 		result = prime * result + ((cisn == null) ? 0 : cisn.hashCode());
 		result = prime * result
 				+ ((costCenter == null) ? 0 : costCenter.hashCode());
-		result = prime * result + ((dcBU == null) ? 0 : dcBU.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result
@@ -136,6 +154,11 @@ public class B2Binterface extends BaseObject{
 		if (getClass() != obj.getClass())
 			return false;
 		final B2Binterface other = (B2Binterface) obj;
+		if (DCBU == null) {
+			if (other.DCBU != null)
+				return false;
+		} else if (!DCBU.equals(other.DCBU))
+			return false;
 		if (businessType == null) {
 			if (other.businessType != null)
 				return false;
@@ -150,11 +173,6 @@ public class B2Binterface extends BaseObject{
 			if (other.costCenter != null)
 				return false;
 		} else if (!costCenter.equals(other.costCenter))
-			return false;
-		if (dcBU == null) {
-			if (other.dcBU != null)
-				return false;
-		} else if (!dcBU.equals(other.dcBU))
 			return false;
 		if (description == null) {
 			if (other.description != null)
@@ -212,24 +230,6 @@ public class B2Binterface extends BaseObject{
 		} else if (!technicalDoc.equals(other.technicalDoc))
 			return false;
 		return true;
-	}
-	public String getPartyTel() {
-		return partyTel;
-	}
-	public void setPartyTel(String partyTel) {
-		this.partyTel = partyTel;
-	}
-	public String getCostCenter() {
-		return costCenter;
-	}
-	public void setCostCenter(String costCenter) {
-		this.costCenter = costCenter;
-	}
-	public B2BbusinessType getBusinessType() {
-		return businessType;
-	}
-	public void setBusinessType(B2BbusinessType businessType) {
-		this.businessType = businessType;
 	}
 	
 }

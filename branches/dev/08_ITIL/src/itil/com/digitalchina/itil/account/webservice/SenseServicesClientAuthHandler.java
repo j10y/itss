@@ -3,7 +3,6 @@ import org.codehaus.xfire.MessageContext;
 import org.codehaus.xfire.handler.AbstractHandler;
 import org.jdom.Element;
 
-
 public class SenseServicesClientAuthHandler extends AbstractHandler {
 
 	private String username = null;

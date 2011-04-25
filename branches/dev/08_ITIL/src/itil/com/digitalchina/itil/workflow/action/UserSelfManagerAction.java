@@ -136,8 +136,7 @@ public class UserSelfManagerAction extends BaseAction{
 			}
 			
 			str += strBizParams+",";
-			//remove by lee for 删除多余传参 in 20101009
-			//str += "'comments':'"+toBlank(taskInfo.getComments().getValue("comment"))+"',";
+			str += "'comments':'"+toBlank(taskInfo.getComments().getValue("comment"))+"',";
 			str += "'applyUser':'"+applyUserItCode+"',";
 			str += "'virDesc':'"+virDesc+"'";
 			str = "{"+str+"},";
@@ -192,9 +191,8 @@ public class UserSelfManagerAction extends BaseAction{
 				strBizParams = strBizParams.substring(0,strBizParams.length()-1);
 			}
 			
-			str += strBizParams;
-			//remove by lee for 删除多余传参 in 20101009
-			//str += "'comments':'"+toBlank(taskInfo.getComments().getValue("comment"))+"'";
+			str += strBizParams+",";
+			str += "'comments':'"+toBlank(taskInfo.getComments().getValue("comment"))+"'";
 			str = "{"+str+"},";
 			
 			String applyUserItCode = (String)bizParams.get("applyUser");//获取流程提交人ITCOD

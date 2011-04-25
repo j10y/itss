@@ -25,9 +25,7 @@
 			<property name="partnerName" type="java.lang.String">
 			  <column name="partnerName" ></column>
 			</property>
-			<property name="partnerBU" type="java.lang.String">
-			  <column name="partnerBU" ></column>
-			</property>
+			
 			<property name="partnerSystem" type="java.lang.String">
 			  <column name="partnerSystem"></column>
 			</property>
@@ -41,8 +39,8 @@
 			<property name="partyTel" type="java.lang.String">
 			  <column name="partyTel" ></column>
 			</property>
-			<property name="dcBU" type="java.lang.String">
-			  <column name="dcBU" ></column>
+			<property name="DCBU" type="java.lang.String">
+			  <column name="DCBU" ></column>
 			</property>
 			<property name="costCenter" type="java.lang.String">
 			  <column name="costCenter" ></column>

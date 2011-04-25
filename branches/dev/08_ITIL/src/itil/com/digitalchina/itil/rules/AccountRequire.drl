@@ -132,18 +132,6 @@ function void accountPersonEnd(Map $map){
 	
 }
 
-function void wwwApplyEnd(Map $map){
-	
-	String dataId = (String)$map.get("dataId");	
-	String serviceItemId = (String)$map.get("serviceItemId");
-	String nodeId = (String)$map.get("nodeId");	
-	String processId = (String)$map.get("processId");
-	String nodeName = (String)$map.get("nodeName");		
-	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
-	processRuleHelper.wwwApplyEnd(dataId,serviceItemId ,nodeId,nodeName,processId);
-	
-}
-
 
 function void vpnAccountEnd(Map $map){
 	
@@ -194,18 +182,6 @@ function void specialAccountEnd(Map $map){
 	
 }
 
-function void tempAccountEnd(Map $map){
-	
-	String dataId = (String)$map.get("dataId");	
-	String serviceItemId = (String)$map.get("serviceItemId");
-	String nodeId = (String)$map.get("nodeId");	
-	String processId = (String)$map.get("processId");
-	String nodeName = (String)$map.get("nodeName");		
-	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
-	processRuleHelper.tempAccountEnd(dataId,serviceItemId ,nodeId,nodeName,processId);
-	
-}
-
 
 function void specialAccountRightChangeEnd(Map $map){
 	
@@ -232,18 +208,6 @@ function void specialAccountDeleteEnd(Map $map){
 	
 }
 
-function void tempAccountDeleteEnd(Map $map){
-	
-	String dataId = (String)$map.get("dataId");	
-	String serviceItemId = (String)$map.get("serviceItemId");
-	String nodeId = (String)$map.get("nodeId");	
-	String processId = (String)$map.get("processId");
-	String nodeName = (String)$map.get("nodeName");		
-	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
-	processRuleHelper.tempAccountDeleteEnd(dataId,serviceItemId ,nodeId,nodeName,processId);
-	
-}
-
 function void accountDeleteEnd(Map $map){
 	
 	String dataId = (String)$map.get("dataId");	
@@ -253,18 +217,6 @@ function void accountDeleteEnd(Map $map){
 	String nodeName = (String)$map.get("nodeName");		
 	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
 	processRuleHelper.accountDeleteEnd(dataId,serviceItemId ,nodeId,nodeName,processId);
-	
-}
-
-function void wwwDeleteEnd(Map $map){
-	
-	String dataId = (String)$map.get("dataId");	
-	String serviceItemId = (String)$map.get("serviceItemId");
-	String nodeId = (String)$map.get("nodeId");	
-	String processId = (String)$map.get("processId");
-	String nodeName = (String)$map.get("nodeName");		
-	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
-	processRuleHelper.wwwDeleteEnd(dataId,serviceItemId ,nodeId,nodeName,processId);
 	
 }
 
@@ -571,17 +523,6 @@ rule "accountPersonEnd"
 	$map.put("transitionName","NOLEAVE");		
 end
 
-rule "wwwApplyEnd"
-	salience 800 
-	when
-		$map: Map(
-			this['ruleName'] =='wwwApplyEnd'		
-		)
-	then	
-	wwwApplyEnd($map);
-	$map.put("transitionName","NOLEAVE");		
-end
-
 rule "vpnAccountEnd"
 	salience 800 
 	when
@@ -626,17 +567,6 @@ rule "accountDeleteEnd"
 	$map.put("transitionName","NOLEAVE");		
 end
 
-rule "wwwDeleteEnd"
-	salience 800 
-	when
-		$map: Map(
-			this['ruleName'] =='wwwDeleteEnd'		
-		)
-	then	
-	wwwDeleteEnd($map);
-	$map.put("transitionName","NOLEAVE");		
-end
-
 rule "specialAccountEnd"
 	salience 800 
 	when
@@ -645,17 +575,6 @@ rule "specialAccountEnd"
 		)
 	then	
 	specialAccountEnd($map);
-	$map.put("transitionName","NOLEAVE");		
-end
-
-rule "tempAccountEnd"
-	salience 800 
-	when
-		$map: Map(
-			this['ruleName'] =='tempAccountEnd'		
-		)
-	then	
-	tempAccountEnd($map);
 	$map.put("transitionName","NOLEAVE");		
 end
 
@@ -681,17 +600,6 @@ rule "specialAccountDeleteEnd"
 		)
 	then	
 	specialAccountDeleteEnd($map);
-	$map.put("transitionName","NOLEAVE");		
-end
-
-rule "tempAccountDeleteEnd"
-	salience 800 
-	when
-		$map: Map(
-			this['ruleName'] =='tempAccountDeleteEnd'		
-		)
-	then	
-	tempAccountDeleteEnd($map);
 	$map.put("transitionName","NOLEAVE");		
 end
 
