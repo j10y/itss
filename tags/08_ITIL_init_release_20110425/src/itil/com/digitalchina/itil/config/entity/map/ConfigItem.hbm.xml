@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.config.entity.ConfigItem" table="ConfigItem" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id> 
+		
+		<property name="name" type="string">
+			<column name="name"></column>
+		</property>
+		<property name="buyDate" type="date">
+			<column name="buyDate"></column>
+		</property>
+		<property name="useDate" type="date">
+			<column name="useDate"></column>
+		</property>
+		<property name="useFlag"/>
+		<property name="preStopDate" type="date">
+			<column name="preStopDate"></column>
+		</property>
+		<property name="acutalStopDate" type="date">
+			<column name="acutalStopDate"></column>
+		</property>
+		
+		<property name="owner" type="long">
+			<column name="owner"></column>
+		</property>
+		
+		<many-to-one name="customer" class="com.digitalchina.itil.actor.entity.Customer">
+			<column name="customer"></column>
+		</many-to-one>
+		
+		<many-to-one name="customerType" class="com.digitalchina.itil.actor.entity.CustomerType">
+			<column name="customerType"></column>
+		</many-to-one>
+		
+		<many-to-one name="principal" class="com.digitalchina.info.framework.security.entity.UserInfo">
+			<column name="principal"></column>
+		</many-to-one>
+		
+		<many-to-one name="configItemStatus" class="com.digitalchina.itil.config.entity.ConfigItemStatus">
+			<column name="configItemStatus"></column>
+		</many-to-one>
+		
+		<many-to-one name="environment" class="com.digitalchina.itil.config.entity.Environment">
+			<column name="environment"></column>
+		</many-to-one>
+		<!-- begin configItemType -->
+		<many-to-one name="configItemType" class="com.digitalchina.itil.config.entity.ConfigItemType" >
+			<column name="configItemType"></column>
+		</many-to-one>
+		
+		<property name="typeTableId" type="long">
+			<column name="typeTableId"></column>
+		</property>
+		<!-- end -->
+		
+		<property name="appFlag" type="integer">
+			<column name="appFlag"></column>
+		</property>
+		<property name="tenancyFlag" type="integer">
+			<column name="tenancyFlag"></column>
+		</property>
+		<property name="serviceFlag" type="integer">
+			<column name="serviceFlag"></column>
+		</property>
+		<property name="status" type="integer">
+			<column name="status"></column>
+		</property>
+		
+		<property name="descn" type="string">
+			<column name="descn" ></column>
+		</property>
+		
+		<property name="alterFlag" type="integer">
+			<column name="alterFlag"></column>
+		</property>
+		
+		<property name="cisn" type="string">
+			<column name="cisn"></column>
+		</property>
+		<many-to-one name="createUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="createUser" />
+		</many-to-one>
+		<property name="createDate" type="timestamp">
+		  <column name="createDate"></column>
+		</property>
+		<many-to-one name="modifyUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+	      <column name="modifyUser" />
+	    </many-to-one>
+		<property name="modifyDate" type="timestamp">
+		  <column name="modifyDate"></column>
+		</property>
+	</class>
+</hibernate-mapping>

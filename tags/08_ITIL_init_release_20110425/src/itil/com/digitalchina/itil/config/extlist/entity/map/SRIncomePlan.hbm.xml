@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extlist.entity.SRIncomePlan" table="itil_lst_SRIncomePlan">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="specialRequire" class="com.digitalchina.itil.require.entity.SpecialRequirement">
+		      <column name="SPECIALREQUIRE" />
+		    </many-to-one>
+			<property name="name" type="java.lang.String">
+			  <column name="NAME" ></column>
+			</property>
+			
+			<property name="startDate" type="date">
+			  <column name="STARTDATE"></column>
+			</property>
+			
+			<property name="endDate" type="date">
+			  <column name="ENDDATE"></column>
+			</property>
+			
+			<property name="descn" type="java.lang.String">
+			  <column name="DESCN" ></column>
+			</property>
+			
+			<property name="money" type="java.lang.Double">
+			  <column name="MONEY" ></column>
+			</property>
+			
+			<property name="isFinish" type="java.lang.Integer">
+			  <column name="isFinish" ></column>
+			</property>
+	
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+  <title>calendar sample</title>
+  <script src="extEngine/calendar/javascripts/spinelz_lib/prototype.js" type="text/javascript"></script>
+  <script src="extEngine/calendar/javascripts/spinelz_lib/scriptaculous.js" type="text/javascript"></script>
+  <script src="extEngine/calendar/javascripts/spinelz_lib/spinelz_util.js" type="text/javascript"></script>
+  <script src="extEngine/calendar/javascripts/spinelz_lib/resize.js" type="text/javascript"></script>
+  <script src="extEngine/calendar/javascripts/spinelz/calendar.js" type="text/javascript"></script>
+  <script src="extEngine/calendar/javascripts/spinelz/window.js" type="text/javascript"></script>
+  <script src="extEngine/calendar/javascripts/spinelz/window_resizeEx.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="extEngine/calendar/stylesheets/spinelz/calendar.css" type="text/css">
+  <link rel="stylesheet" href="extEngine/calendar/stylesheets/spinelz/window.css" type="text/css">
+  <style type="text/css">
+    .image1 {
+      list-style-image: url('images/cal1.gif');
+      margin-left: 15px;
+    }
+    .image2 {
+      list-style-image: url('images/cal2.gif');
+      margin-left: 15px;
+    }
+</style>
+</head>
+<body>
+  <div style="font-size: 14px; height: 250px; margin-bottom: 20px;">
+    <div>
+      <h3 style="font-size: 14px; text-align: center; margin: 0px; padding: 0px; font-weight: bold;">display</h3>
+      <div style="text-align: center; margin-bottom: 10px;">
+        <input type="checkbox" name="dayOfWeek" checked="true" value="0" onclick="changeDisplay(this)">Sun
+        <input type="checkbox" name="dayOfWeek" checked="true" value="1" onclick="changeDisplay(this)">Mon
+        <input type="checkbox" name="dayOfWeek" checked="true" value="2" onclick="changeDisplay(this)">Tue
+        <input type="checkbox" name="dayOfWeek" checked="true" value="3" onclick="changeDisplay(this)">Wed
+        <input type="checkbox" name="dayOfWeek" checked="true" value="4" onclick="changeDisplay(this)">Thr
+        <input type="checkbox" name="dayOfWeek" checked="true" value="5" onclick="changeDisplay(this)">Fri
+        <input type="checkbox" name="dayOfWeek" checked="true" value="6" onclick="changeDisplay(this)">Sat
+      </div>
+    </div>
+    
+    <div style="">
+      <h3 style="font-size: 14px; text-align: center; margin: 0px; padding: 0px; font-weight: bold;">type</h3>
+      <div style="text-align: center; margin-bottom: 10px;">
+        <a href="#" onclick="calendar.changeDisplayType('month')">month</a>
+        <a href="#" onclick="calendar.changeDisplayType('week')">week</a>
+        <a href="#" onclick="calendar.changeDisplayType('day')">day</a>
+      </div>
+    </div>
+
+    <div style="float: left; width: 30%; height: 150px;">
+      <h3 style="font-size: 14px; text-align: center; margin: 0px; padding: 0px; font-weight: bold;">holiday</h3>
+      <div style="text-align: center; margin-bottom: 10px;">
+        <div>
+          name<input type="text" id="holiday_name">
+        </div>
+        <input type="submit" value="Get" onclick="getHoliday();">
+        <input type="submit" value="Add" onclick="calendar.addHoliday({name: $('holiday_name').value});">
+        <input type="submit" value="Remove" onclick="calendar.removeHoliday();">
+        <input type="submit" value="Clear" onclick="calendar.clearHoliday();">
+      </div>
+    </div>
+
+    <div style="">
+      <h3 style="font-size: 14px; text-align: center; margin: 0px; padding: 0px; font-weight: bold;">schedule</h3>
+      <div style="text-align: center; margin-bottom: 10px;">
+        <div>
+          description<input type="text" id="schedule_description">
+        </div>
+        <div>
+          <input type="submit" value="Add" onclick="addSchedule();">
+          <input type="submit" value="Clear" onclick="calendar.clearSchedule();">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#" onclick="calendar.hideSatSun()">aaa</a>
+  <div id="calendar1" style="margin-bottom: 50px;"></div>
+
+  <script type="text/javascript">
+    var maxId = 1;
+
+    var today = new Date();
+    var holidays = [
+        {date: {year: today.getFullYear(), month: today.getMonth(), day: 2}, name: 'holiday1', onclick: function() {alert(0)}},
+        {date: {year: today.getFullYear(), month: today.getMonth(), day: 8}, name: 'holiday2'},
+        {date: {year: today.getFullYear(), month: today.getMonth(), day: 20}, name: 'holiday3'}
+    ];
+
+    var schedules = [
+      {
+        id: 'A',
+        start: {
+          year:  today.getFullYear(),
+          month: today.getMonth(),
+          day:   today.getDate(),
+          hour:  6,
+          min:   30
+        },
+        finish: {
+          year:  today.getFullYear(),
+          month: today.getMonth(),
+          day:   today.getDate(),
+          hour:  10,
+          min:   30
+        },
+        description: 'test',
+        publicity:   false
+      },
+      {
+        id: 'B',
+        start: {
+          year:  today.getFullYear(),
+          month: today.getMonth(),
+          day:   today.getDate() + 1,
+          hour:  16,
+          min:   0
+        },
+        finish: {
+          year:  today.getFullYear(),
+          month: today.getMonth(),
+          day:   today.getDate() + 2,
+          hour:  15,
+          min:   0
+        },
+        description: 'aiueo',
+        publicity:   true
+      },
+      {
+        id: 'C',
+        start: {
+          year:  today.getFullYear(),
+          month: today.getMonth(),
+          day:   today.getDate() + 1,
+          hour:  10,
+          min:   0
+        },
+        finish: {
+          year:  today.getFullYear(),
+          month: today.getMonth(),
+          day:   today.getDate() + 1,
+          hour:  12,
+          min:   0
+        },
+        description: 'test2',
+        publicity:   true
+      }
+    ];
+
+    var calendar = new Calendar(
+        'calendar1', 
+        {
+          size: 'large',
+//          afterSelect: function(date, cal) {alert(date.toDateString())},
+//          dblclickListener: function(date, element) {alert(date)},
+//          regularHoliday: [0],
+//          initDate: new Date(2006, 5, 6),
+          displayTime:        [{hour: 9, min: 00}, {hour: 18, min: 00}],
+          displayType:        'month',
+          weekIndex:          0,
+           
+          holidays:           holidays,
+          schedules:          schedules,
+          dblclickSchedule:   function(schedule) {
+            alert(schedule.description);
+          }
+//          getMonthHeaderText: function(date) {
+//            return [date.getFullYear(), date.getMonth() + 1];
+//          },
+//          getMonthSubHeaderText: function(wday) {
+//            return 'text' + wday;
+//          },
+//          getWeekHeaderText: function(first, last) {
+//            return [first.getDate(), '=', last.getDate()];
+//          },
+//          getWeekSubHeaderText: function(date) {
+//            return 'text' + date.getDay();
+//          }
+        });
+
+    var changeDisplay = function(element) {
+      if (element.checked)
+        calendar.showDayOfWeek(element.value);
+      else
+        calendar.hideDayOfWeek(element.value);
+    }
+
+    var getHoliday = function() {
+      var result = calendar.getHoliday();
+      if (result) result.each(function(r) { alert(r.name) });
+    }
+
+    var getSchedule = function() {
+      
+    }
+
+    var addSchedule = function() {
+      var term = calendar.getSelectedTerm();
+      if (!term) return;
+
+      if (calendar.options.displayType == 'month') {
+        term[0].setHours(12);
+        term[1].setHours(14);
+      }
+
+      var schedule = {
+        id:          maxId,
+        description: $('schedule_description').value
+      };
+      schedule.start =  {
+          year:  term[0].getFullYear(),
+          month: term[0].getMonth(),
+          day:   term[0].getDate(),
+          hour:  term[0].getHours(),
+          min:   term[0].getMinutes()
+      }
+      schedule.finish = {
+        year:  term[1].getFullYear(),
+        month: term[1].getMonth(),
+        day:   term[1].getDate(),
+        hour:  term[1].getHours(),
+        min:   term[1].getMinutes()
+      }
+      calendar.addSchedule(schedule);
+      calendar.clearSelected();
+      maxId++;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping default-access="field">
+	<class name="com.digitalchina.itil.event.entity.CCAgentSkillgChange" table="CC_LOG1_AGENTSKILLGCHANGE">
+		<id name="id" type="long">
+				<column name="id"></column>
+				<generator class="native"></generator>
+		</id>
+	
+        <property name="agentId" type="string">
+			<column name="agentId"></column>
+		</property>
+		
+		<property name="dn" type="string">
+			<column name="dn"></column>
+		</property>
+		
+		<property name="loginTime" type="date">
+			<column name="loginTime"></column>
+		</property>
+		
+		<property name="skilllg" type="string">
+			<column name="skilllg"></column>
+		</property>
+		
+		<property name="millisec" type="string">
+			<column name="millisec"></column>
+		</property>
+		
+		<property name="logtag" type="string">
+			<column name="logtag"></column>
+		</property>
+		
+        
+       
+	</class>
+</hibernate-mapping>

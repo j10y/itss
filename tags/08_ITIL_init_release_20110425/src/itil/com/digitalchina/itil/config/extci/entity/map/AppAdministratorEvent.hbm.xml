@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extci.entity.AppAdministratorEvent" table="itil_ci_AppAdministratorEvent">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="deptInfo" class="com.digitalchina.info.framework.security.entity.Department">
+		      <column name="DEPTINFO" />
+		    </many-to-one>
+			<many-to-one name="userInfo" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="USERINFO" />
+		    </many-to-one>
+			<property name="employeeCode" type="java.lang.String">
+			  <column name="EMPLOYEECODE" ></column>
+			</property>
+			
+			<property name="email" type="java.lang.String">
+			  <column name="EMAIL" ></column>
+			</property>
+			
+			<property name="telephone" type="java.lang.String">
+			  <column name="TELEPHONE" ></column>
+			</property>
+			
+			<property name="mobilePhone" type="java.lang.String">
+			  <column name="MOBILEPHONE" ></column>
+			</property>
+			
+			<property name="otherInfo" type="java.lang.String">
+			  <column name="OTHERINFO" ></column>
+			</property>
+			
+			<many-to-one name="createUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="CREATEUSER" />
+		    </many-to-one>
+			<property name="createDate" type="date">
+			  <column name="CREATEDATE"></column>
+			</property>
+			<many-to-one name="modifyUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="MODIFYUSER" />
+		    </many-to-one>
+			<property name="modifyDate" type="date">
+			  <column name="MODIFYDATE"></column>
+			</property>
+			<property name="cisn" type="java.lang.String">
+			  <column name="cisn" ></column>
+			</property>
+  </class>
+</hibernate-mapping>

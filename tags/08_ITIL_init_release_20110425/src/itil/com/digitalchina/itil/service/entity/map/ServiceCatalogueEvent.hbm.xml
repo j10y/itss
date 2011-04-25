@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+<class name="com.digitalchina.itil.service.entity.ServiceCatalogueEvent" table="ServiceCatalogueEvent">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <!-- 废弃属性 -->
+         <!-- <many-to-one name="sp" class="com.digitalchina.itil.service.entity.ServicePortfolio">
+            <column name="sp" />
+        </many-to-one> -->
+        <property name="serviceCatalogue" type="long">
+            <column name="serviceCatalogue" />
+        </property>
+		<many-to-one name="customer" class="com.digitalchina.itil.actor.entity.Customer">
+			<column name="customer"></column>
+		</many-to-one>
+        <property name="status" type="integer">
+            <column name="status" />
+        </property>
+        <many-to-one name="customerType" class="com.digitalchina.itil.actor.entity.CustomerType">
+			<column name="customerType"></column>
+		</many-to-one>
+		
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="descn" type="string">
+            <column name="descn" />
+        </property>
+        <property name="beginDate" type="date">
+            <column name="beginDate" />
+        </property>
+        
+        <property name="endDate" type="date">
+            <column name="endDate" />
+        </property>
+        
+        <property name="rootFlag" type="integer">
+            <column name="rootFlag" />
+        </property>
+        <property name="oldServiceCataId" type="long">
+            <column name="oldServiceCataId" />
+        </property>
+        
+        
+	</class>
+</hibernate-mapping>

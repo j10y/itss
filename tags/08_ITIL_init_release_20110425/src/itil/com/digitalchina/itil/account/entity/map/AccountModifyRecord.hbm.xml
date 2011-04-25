@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.account.entity.AccountModifyRecord" table="itil_ac_AccountModifyRecord" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id> 
+		
+		<property name="accountFlag" type="integer">
+            <column name="accountFlag" />
+        </property>
+       
+		<property name="comment" type="string">
+			<column name="comment" length="200"></column>
+		</property>
+		<property name="itCode" type="string">
+			<column name="itCode" length="200"></column>
+		</property>
+		
+		<property name="modifyDate" type="date">
+			<column name="modifyDate" length="200"></column>
+		</property>
+		
+		<property name="accountManger" type="string">
+			<column name="accountManger" length="200"></column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

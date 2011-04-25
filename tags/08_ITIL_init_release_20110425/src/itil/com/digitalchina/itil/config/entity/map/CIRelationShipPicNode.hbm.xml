@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.config.entity.CIRelationShipPicNode" table="CIRelationShipPicNode">
+	<id name="id" type="long">
+			<column name="id"></column>
+			<generator class="native"></generator>
+	</id>
+	<many-to-one name="ciRelationShipPic" class="com.digitalchina.itil.config.entity.CIRelationShipPic">
+			<column name="ciRelationShipPic"></column>
+	</many-to-one>
+	<many-to-one name="ciRelationShip" class="com.digitalchina.itil.config.entity.CIRelationShip" fetch="join" lazy="false">
+			<column name="ciRelationShip"></column>
+	</many-to-one>
+	<property name="deleteFlag" type="integer">
+			<column name="deleteFlag"></column>
+		</property>
+	</class>
+</hibernate-mapping>

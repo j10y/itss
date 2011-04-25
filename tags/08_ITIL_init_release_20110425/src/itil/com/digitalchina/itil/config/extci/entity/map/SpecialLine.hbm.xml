@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extci.entity.SpecialLine" table="itil_ci_SpecialLine">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="lineCostRecoverType" class="com.digitalchina.itil.config.extlist.entity.LineCostRecoverType">
+		      <column name="LINECOSTRECOVERTYPE" />
+		    </many-to-one>
+			<property name="cisn" type="java.lang.String">
+			  <column name="CISN" ></column>
+			</property>
+			<property name="serviceProviderATel" type="java.lang.String">
+			  <column name="SERVICEPROVIDERATEL" ></column>
+			</property>
+			<property name="serviceProviderBTel" type="java.lang.String">
+			  <column name="SERVICEPROVIDERBTEL" ></column>
+			</property>
+			<property name="lineNumberA" type="java.lang.String">
+			  <column name="LINENUMBERA" ></column>
+			</property>
+			<property name="lineNumberB" type="java.lang.String">
+			  <column name="LINENUMBERB" ></column>
+			</property>
+			<many-to-one name="type" class="com.digitalchina.itil.config.extlist.entity.SpecialLineType">
+		      <column name="TYPE" />
+		    </many-to-one>
+			<many-to-one name="createUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="CREATEUSER" />
+		    </many-to-one>
+			<property name="createDate" type="date">
+			  <column name="CREATEDATE"></column>
+			</property>
+			<many-to-one name="modifyUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="MODIFYUSER" />
+		    </many-to-one>
+			<many-to-one name="operators" class="com.digitalchina.itil.config.extci.entity.Operators">
+		      <column name="operators" />
+		    </many-to-one>
+			<property name="modifyDate" type="date">
+			  <column name="MODIFYDATE"></column>
+			</property>
+			<property name="costCenterNum" type="string">
+				<column name="costCenterNum"></column>
+			</property>
+			
+			<property name="aclientContacts" type="string">
+		      <column name="aclientContacts" />
+		    </property>
+		    
+			<property name="bclientContacts" type="string">
+		      <column name="bclientContacts" />
+		    </property>
+	
+  </class>
+</hibernate-mapping>

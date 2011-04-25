@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extlist.entity.AR_WorkSpace" table="itil_lst_AR_WorkSpace">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="space" type="java.lang.String">
+			  <column name="SPACE" ></column>
+			</property>
+			
+			<property name="mailServer" type="java.lang.String">
+			  <column name="MAILSERVER" ></column>
+			</property>
+			
+	
+  </class>
+</hibernate-mapping>

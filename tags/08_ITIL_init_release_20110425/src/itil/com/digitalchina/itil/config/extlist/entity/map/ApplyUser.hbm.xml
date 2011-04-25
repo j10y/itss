@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.config.extlist.entity.ApplyUser" table="itil_lst_ApplyUser">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="accountApplyUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="ACCOUNTAPPLYUSER" />
+		    </many-to-one>
+			<property name="accountApplyDate" type="date">
+			  <column name="ACCOUNTAPPLYDATE"></column>
+			</property>
+			<property name="applyUserNum" type="java.lang.String">
+			  <column name="APPLYUSERNUM" ></column>
+			</property>
+			
+			<property name="costCenter" type="java.lang.String">
+			  <column name="COSTCENTER" ></column>
+			</property>
+			
+			<property name="applyDept" type="java.lang.String">
+			  <column name="APPLYDEPT" ></column>
+			</property>
+			
+			<property name="applyUserTel" type="java.lang.String">
+			  <column name="APPLYUSERTEL" ></column>
+			</property>
+			
+			<property name="sameEmailDept" type="java.lang.String">
+			  <column name="SAMEEMAILDEPT" ></column>
+			</property>
+			
+			<property name="mailServer" type="java.lang.String">
+			  <column name="MAILSERVER" ></column>
+			</property>
+			
+			<property name="applyUserType" type="java.lang.String">
+			  <column name="APPLYUSERTYPE" ></column>
+			</property>
+			
+			<property name="personScope" type="java.lang.String">
+			  <column name="PERSONSCOPE" ></column>
+			</property>
+			
+			<property name="mailAddress" type="java.lang.String">
+			  <column name="MAILADDRESS" ></column>
+			</property>
+			
+	
+  </class>
+</hibernate-mapping>

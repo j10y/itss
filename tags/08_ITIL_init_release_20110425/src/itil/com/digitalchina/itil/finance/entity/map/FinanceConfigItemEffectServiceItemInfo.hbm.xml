@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.finance.entity.FinanceConfigItemEffectServiceItemInfo" table="ITIL_FinanceConfigItemEffectServiceItemInfo" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="configItem" class="com.digitalchina.itil.config.entity.ConfigItem" fetch="join" lazy="false">
+		      <column name="configItem" />
+		</many-to-one>
+		<many-to-one name="serviceItem" class="com.digitalchina.itil.service.entity.ServiceItem" fetch="join" lazy="false">
+		      <column name="serviceItem" />
+		</many-to-one>
+       
+        <property name="oldConfigItemCost" type="big_decimal">
+            <column name="oldConfigItemCost" />
+        </property>
+         <property name="inputCost" type="big_decimal">
+            <column name="inputCost" />
+        </property>
+        <property name="oldServiceItemCost" type="big_decimal">
+            <column name="oldServiceItemCost" />
+        </property>
+        <property name="changedServiceItemCost" type="big_decimal">
+            <column name="changedServiceItemCost" />
+        </property>
+         <property name="apportionType" type="string">
+            <column name="apportionType" />
+        </property>
+        <many-to-one name="reimbursement" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="reimbursement" />
+		</many-to-one>
+         <property name="costDate" type="timestamp">
+            <column name="costDate" />
+        </property>
+         <property name="CostDataSource" type="integer">
+            <column name="CostDataSource" />
+        </property>
+         
+	</class>
+</hibernate-mapping>

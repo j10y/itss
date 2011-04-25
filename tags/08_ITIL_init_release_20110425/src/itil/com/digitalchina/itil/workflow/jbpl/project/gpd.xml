@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="itilproject" width="731" height="521">
+  <node name="start" x="189" y="96" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="建立配置项" x="488" y="95" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="建立项目计划" x="350" y="195" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="137" h1="0" w2="-1" h2="100"/>
+    </edge>
+  </node>
+  <node name="填写合同信息" x="224" y="281" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="用户确认" x="104" y="367" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="9" y="-11"/>
+      <bendpoint w1="0" h1="-172" w2="-254" h2="-1"/>
+    </edge>
+  </node>
+  <node-container name="super-state1" x="700" y="498" width="8" height="8"/>
+  <node name="end" x="422" y="366" width="132" height="36"/>
+</root-container>

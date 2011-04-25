@@ -1,0 +1,242 @@
+/*
+1.传入参数为一Map以适应后续的变化,因为解析过程也是动态的
+2.Map中设定各种输入参数:
+输出：
+head[Map],头部输出
+	cfx_CheckSum;
+	cfx_PriceFileDate;
+	cfx_ConfigIdentifer;
+	cfx_DateTimeStamp;
+	cfx_PropDocumentIdentifier;
+	cfx_CFXML;
+	totalListPrice;
+	orderType
+rows[List<OrderProductLine>],行集输出
+输入：
+applyType,申请类型
+disc,折扣
+listType[newbox,mes,isu,soft],列表类别
+qty,数量                                                                                                     
+time,时间标记,检查本规则对输入数据是否在有效
+bmsn[String[]],
+xmlPath,
+outPath,
+cfrPath
+*/
+
+#created on: Dec 2, 2008
+package com.digitalchina.itil.rules
+
+#list any import classes here.
+/*
+import com.digitalchina.ibmb2b.order.rules.RuleConst;
+import com.digitalchina.ibmb2b.order.rules.OrderRuleHelper;
+import com.digitalchina.ibmb2b.order.entity.OrderProductLine; 
+*/
+import com.digitalchina.itil.workflow.rules.ProcessRuleHelper;
+import org.dom4j.Node;
+import org.jbpm.graph.node.TaskNode;
+
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Date;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+#declare any global variables here
+
+
+
+function void knowledgeStartStatus(Map $map){
+	
+	String dataId = (String)$map.get("dataId");	
+	String dataType = (String)$map.get("dataType");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	processRuleHelper.knowledgeStartFlag(dataId,dataType,nodeId,nodeName,processId);
+	
+}
+function String judgeTypeStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String dataType = (String)$map.get("dataType");	 	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	String tran = processRuleHelper.judgeTypeFlag(dataId,dataType,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+function String fileApprovalStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String dataType = (String)$map.get("dataType");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	String trans = processRuleHelper.fileApprovalFlag(dataId,dataType,nodeId,nodeName,processId,result,comment);
+	return trans;	
+}
+function String solutionApprovalStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String dataType = (String)$map.get("dataType");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	String trans = processRuleHelper.solutionApprovalFlag(dataId,dataType,nodeId,nodeName,processId,result,comment);
+	return trans;	
+}
+function String contractApprovalStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String dataType = (String)$map.get("dataType");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	String trans = processRuleHelper.contractApprovalFlag(dataId,dataType,nodeId,nodeName,processId,result,comment);
+	return trans;	
+}
+function String serviceDeptServiceStationStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");		
+	String dataType = (String)$map.get("dataType"); 	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	String tran = processRuleHelper.serviceDeptServiceStationFlag(dataId,dataType,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+function String serviceDeptThreeStationStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String dataType = (String)$map.get("dataType");	 	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	String tran = processRuleHelper.serviceDeptThreeStationFlag(dataId,dataType,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+function String gobackStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String dataType = (String)$map.get("dataType");	 	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	ProcessRuleHelper processRuleHelper=new ProcessRuleHelper();
+	String tran = processRuleHelper.gobackFlag(dataId,dataType,nodeId,nodeName,processId,result,comment);
+	return tran;	
+}
+
+rule "knowledgeStartNode"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] =='knowledgeStartNode'		
+		)
+	then	 	
+	knowledgeStartStatus($map);
+	$map.put("transitionName","NOLEAVE");	
+end
+
+rule "judgeTypeNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='judgeTypeNode'		
+		)
+	then	
+	$map.put("transitionName",judgeTypeStatus($map));		
+end
+
+rule "fileApprovalNode"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='fileApprovalNode'		
+		)
+	then	
+	$map.put("transitionName",fileApprovalStatus($map));	
+end
+
+rule "solutionApprovalNode"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='solutionApprovalNode'		
+		)
+	then	
+	$map.put("transitionName",solutionApprovalStatus($map));	
+end
+
+rule "contractApprovalNode"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='contractApprovalNode'		
+		)
+	then	
+	$map.put("transitionName",contractApprovalStatus($map));	
+end
+
+rule "serviceDeptServiceStationNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='serviceDeptServiceStationNode'		
+		)
+	then	
+	$map.put("transitionName",serviceDeptServiceStationStatus($map));		
+end
+
+rule "serviceDeptThreeStationNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='serviceDeptThreeStationNode'		
+		)
+	then	
+	$map.put("transitionName",serviceDeptThreeStationStatus($map));		
+end
+
+rule "gobackNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='gobackNode'		
+		)
+	then	
+	$map.put("transitionName",gobackStatus($map));		
+end
+

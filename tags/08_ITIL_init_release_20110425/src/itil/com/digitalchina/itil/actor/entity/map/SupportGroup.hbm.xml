@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.digitalchina.itil.actor.entity.SupportGroup" table="SupportGroup">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="groupName" type="java.lang.String">
+			  <column name="GROUPNAME" ></column>
+			</property>
+			<many-to-one name="groupLeader" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="GROUPLEADER" />
+		    </many-to-one>
+		    <!-- add by lee for groupConfirmer in 20090812 -->
+		    <many-to-one name="groupConfirmer" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="groupConfirmer" />
+		    </many-to-one>
+		      <many-to-one name="groupContractOrFileer" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="groupContractOrFileer" />
+		    </many-to-one>
+		      <many-to-one name="groupSolutioner" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="groupSolutioner" />
+		    </many-to-one>
+		      <many-to-one name="groupAlterer" class="com.digitalchina.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+		      <column name="groupAlterer" />
+		    </many-to-one>
+			<many-to-one name="createUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="CREATEUSER" />
+		    </many-to-one>
+			<property name="createDate" type="timestamp">
+			  <column name="CREATEDATE"></column>
+			</property>
+			<many-to-one name="modifyUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+		      <column name="MODIFYUSER" />
+		    </many-to-one>
+		    <many-to-one name="groupRank" class="com.digitalchina.itil.actor.entity.SupportGroupRank" >
+               <column name="groupRank" />
+            </many-to-one>
+			<property name="modifyDate" type="timestamp">
+			  <column name="MODIFYDATE"></column>
+			</property>
+			<property name="deleteFlag" type="integer">
+			  <column name="DELETEFLAG"></column>
+			</property>
+	
+  </class>
+</hibernate-mapping>

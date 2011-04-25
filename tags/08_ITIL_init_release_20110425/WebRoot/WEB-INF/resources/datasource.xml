@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DatasourceManager xmlVersion="20091224">
+	<ConnectionMap>
+		<Connection name="itil"
+			class="com.fr.data.impl.JDBCDatabaseConnection">
+			<DatabaseAttr />
+			<JDBCDatabaseAttr
+				url="jdbc:microsoft:sqlserver://localhost:1433;databaseName=ITIL;SelectMethod=cursor"
+				driver="com.microsoft.jdbc.sqlserver.SQLServerDriver" user="sa"
+				password="___0060002f" encryptPassword="true">
+				<DBCPAttr />
+			</JDBCDatabaseAttr>
+		</Connection>
+	</ConnectionMap>
+	<TableDataMap>
+		<TableData name="国家" class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Semantic>
+				<Dictionary class="com.fr.data.impl.CustomDictionary">
+					<CustomDictAttr>
+						<Dict key="Name" value="名字" />
+						<Dict key="Area" value="面积" />
+						<Dict key="Population" value="人口" />
+						<Dict key="Capital" value="首都" />
+						<Dict key="Continent" value="大陆" />
+					</CustomDictAttr>
+				</Dictionary>
+			</Semantic>
+			<Attributes maxMemRowCount="-1" />
+			<Connection class="com.fr.data.impl.NameDatabaseConnection" />
+			<Query><![CDATA[select * from Country]]></Query>
+		</TableData>
+		<TableData name="city" class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[FRDemo]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select Region from sale group by Region]]></Query>
+		</TableData>
+		<TableData name="ClassNo"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[FRDemo]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select ClassNo from StScore group by ClassNo]]></Query>
+		</TableData>
+		<TableData name="Course" class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[FRDemo]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select Course from StScore group by Course]]></Query>
+		</TableData>
+		<TableData name="accountapply"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select ServiceItemProcess.definitionName from ServiceItemProcess,(SELECT distinct serviceItemFROM itil_sci_AccountApplyMainTableWHERE (processType = 0 and status<>0)) a1where a1.serviceItem=ServiceItemProcess.serviceItemand ServiceItemProcess.sidProcessType=0group by ServiceItemProcess.definitionName ]]></Query>
+		</TableData>
+		<TableData name="accountchange"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select ServiceItemProcess.definitionName from ServiceItemProcess,(SELECT distinct serviceItemFROM itil_sci_AccountApplyMainTableWHERE (processType = 1 and status<>0)) a1where a1.serviceItem=ServiceItemProcess.serviceItemand ServiceItemProcess.sidProcessType=1group by ServiceItemProcess.definitionName ]]></Query>
+		</TableData>
+		<TableData name="accountdelete"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select ServiceItemProcess.definitionName from ServiceItemProcess,(SELECT distinct serviceItemFROM itil_sci_AccountApplyMainTableWHERE (processType = 2 and status<>0)) a1where a1.serviceItem=ServiceItemProcess.serviceItemand ServiceItemProcess.sidProcessType=2group by ServiceItemProcess.definitionName ]]></Query>
+		</TableData>
+		<TableData name="accountTypeName"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select * from itil_ac_AccountType]]></Query>
+		</TableData>
+		<TableData name="flat" class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Semantic>
+				<Dictionary class="com.fr.data.impl.CustomDictionary">
+					<CustomDictAttr>
+						<Dict key="Name" value="名字" />
+						<Dict key="Area" value="面积" />
+						<Dict key="Population" value="人口" />
+						<Dict key="Capital" value="首都" />
+						<Dict key="Continent" value="大陆" />
+					</CustomDictAttr>
+				</Dictionary>
+			</Semantic>
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[select departmentName from itil_RequireApplyDefaultAudit]]></Query>
+		</TableData>
+		<TableData name="curNodeName"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[SELECT DISTINCT NAME_FROM JBPM_NODEWHERE (PROCESSDEFINITION_ IN (114, 118, 119, 121, 122, 123, 124, 149, 160, 162, 192,       193, 194, 195, 196, 197, 198, 209, 210, 212, 227, 240, 243, 244, 245))]]></Query>
+		</TableData>
+		<TableData name="ItemType"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[SELECT  name,nameFROM dbo.ConfigItemTypeUNIONSELECT  name,nameFROM dbo.ServiceItemType;]]></Query>
+		</TableData>
+		<TableData name="mdoelAndItem"
+			class="com.fr.data.impl.DBTableData">
+			<Parameters />
+			<Attributes maxMemRowCount="-1" />
+			<Connection
+				class="com.fr.data.impl.NameDatabaseConnection">
+				<DatabaseName><![CDATA[itil]]></DatabaseName>
+			</Connection>
+			<Query><![CDATA[SELECT  name,'配置项'FROM dbo.ConfigItemTypeUNIONSELECT  name,'服务项'FROM dbo.ServiceItemType;]]></Query>
+		</TableData>
+	</TableDataMap>
+</DatasourceManager>

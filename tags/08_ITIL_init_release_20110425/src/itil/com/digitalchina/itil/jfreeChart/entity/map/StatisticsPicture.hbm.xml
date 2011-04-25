@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.jfreeChart.entity.StatisticsPicture" table="StatisticsPicture" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="tjPictureName" type="string" column="tjPictureName"/>
+        <property name="tjPictureURL" type="string" column="tjPictureURL"/>
+        <property name="tjPictureType" type="string" column="tjPictureType"/>
+        <property name="sqlString" type="string" column="sqlString"/>
+        <property name="XName" type="string" column="XName"/>
+        <property name="YName" type="string" column="YName"/>
+        <many-to-one name="sysMainTable" class="com.digitalchina.info.appframework.metadata.entity.SystemMainTable" lazy="false">
+            <column name="sysMainTable" />
+        </many-to-one>
+        <many-to-one name="itemName" class="com.digitalchina.info.appframework.metadata.entity.SystemMainTableColumn" lazy="false">
+            <column name="itemName" />
+        </many-to-one>
+        <many-to-one name="lableTickName" class="com.digitalchina.info.appframework.metadata.entity.SystemMainTableColumn" lazy="false">
+            <column name="lableTickName" />
+        </many-to-one>
+        <!--  
+       <set name="sysMainTableColumn" inverse="true" lazy="true" cascade="all">
+		  <key column="TableID"></key>
+		  <one-to-many class="com.digitalchina.info.appframework.metadata.entity.SystemMainTableColumn"/>
+		</set>
+		-->
+	</class>
+</hibernate-mapping>

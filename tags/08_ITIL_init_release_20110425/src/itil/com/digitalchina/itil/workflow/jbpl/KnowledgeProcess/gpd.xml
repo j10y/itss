@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="KnowledgeProcess" width="907" height="521">
+  <node name="提交解决方案" x="317" y="130" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审批解决方案准确性" x="305" y="240" width="162" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="发布" x="319" y="356" width="132" height="36"/>
+  <node name="打回提交人" x="532" y="241" width="132" height="36"/>
+</root-container>

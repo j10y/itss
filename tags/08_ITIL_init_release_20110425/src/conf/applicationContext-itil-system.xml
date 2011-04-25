@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+    <!-- systemDataAction -->
+    <bean name="/system/DataAction" class="com.digitalchina.appnet.system.action.SystemDataAction" scope="prototype"></bean>
+   
+	<bean id="actorUtilService" class="com.digitalchina.itil.actor.service.impl.ActorUtilServiceImpl">
+		<property name="dao" ref="baseDao"/>
+		<property name="customerDao" ref="customerDao"/>
+	</bean>
+	<bean id="departmentService" class="com.digitalchina.info.framework.security.service.impl.DepartmentServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="userPanelService" class="com.digitalchina.info.appframework.pagemodel.service.impl.UserPanelServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="jfreeChartService" class="com.digitalchina.itil.service.service.impl.JfreeChartServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="jfreeChartDao" ref="jfreeChartDao"/>
+	</bean>
+	<bean id="jfreeChartDao" class="com.digitalchina.itil.dao.impl.JfreeChartDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="customerOutUserService" class="com.digitalchina.itil.actor.service.impl.CustomerOutUserServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="customerDao" class="com.digitalchina.itil.actor.dao.impl.CustomerDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="userInfoSynDao" class="com.digitalchina.itil.actor.dao.impl.UserInfoSynDaoImpl">
+		<property name="dataSource" ref="pmcDataSource"></property>
+	</bean>
+	<bean name="/workflow/assignAction" class="com.digitalchina.itil.workflow.action.AssignAction" scope="prototype"></bean>
+	<bean name="/actor/actorUtilAction" class="com.digitalchina.itil.actor.action.ActorUtilAction" scope="prototype"></bean>
+	<bean name="/IdGenerator" class="com.digitalchina.info.framework.util.idgen.struts2.IdGeneratorAction" scope="prototype">
+		<property name="idGeneratorService" ref="idGeneratorService"></property>
+	</bean>
+	<bean name="/menuAction" class="com.digitalchina.info.appframework.menu.action.MenuAciton" scope="prototype">
+		<property name="menuService" ref="menuService"></property>
+		<property name="departmentService" ref="deptService"></property>
+	</bean>
+	
+</beans>
+

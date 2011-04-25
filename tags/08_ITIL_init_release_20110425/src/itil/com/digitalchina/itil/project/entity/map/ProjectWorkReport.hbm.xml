@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.project.entity.ProjectWorkReport" table="itil_sci_ProjectWorkReport"
+			 dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id> 
+		
+		<many-to-one name="projectPlan" class="com.digitalchina.itil.config.extlist.entity.SRProjectPlan">
+			<column name="projectPlan"></column>
+		</many-to-one>
+		
+		<property name="reportDate" type="date">
+			<column name="reportDate"></column>
+		</property>
+		
+		<many-to-one name="progress" class="com.digitalchina.itil.project.entity.ProjectPlanProgress">
+			<column name="progress"></column>
+		</many-to-one>
+	
+		<property name="spendHours" type="integer">
+			<column name="spendHours"></column>
+		</property>
+	  	
+	  	<property name="summary" type="string">
+			<column name="summary"/>
+		</property>
+	  			   
+		<property name="description" type="string">
+			<column name="description"></column>
+		</property>
+		
+		<property name="endDate" type="date">
+			<column name="endDate"></column>
+		</property>
+			
+	</class>
+</hibernate-mapping>

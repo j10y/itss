@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.event.entity.EventHandleLog" table="EventHandleLog">
+		<id name="id" type="long">
+				<column name="id"></column>
+				<generator class="native"></generator>
+		</id>
+		<many-to-one name="event" class="com.digitalchina.itil.event.entity.Event" >
+            <column name="event" />
+        </many-to-one>	
+		<property name="handleLog" type="string">
+			<column name="handleLog"></column>
+		</property>
+		<many-to-one name="handleUser" class="com.digitalchina.info.framework.security.entity.UserInfo" >
+            <column name="handleUser" />
+        </many-to-one>
+		<property name="handleDate" type="date">
+			<column name="handleDate"></column>
+		</property>
+	</class>
+</hibernate-mapping>

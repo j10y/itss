@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+   
+   
+	<bean id="customerTableService" class="com.digitalchina.itil.config.service.impl.CustomerTableServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="systemColumnService" ref="systemColumnService"/>
+		<property name="systemMainColumnService" ref="systemMainColumnService"/>
+		<property name="systemMainTableService" ref="systemMainTableService"/>
+	</bean>
+	
+	<bean id="noticeAuditService" class="com.digitalchina.itil.workflow.service.impl.NoticeAuditServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="sciRelationShipService"  class="com.digitalchina.itil.service.service.impl.SCIRelationShipServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="servcieCatalogueService"  class="com.digitalchina.itil.service.service.impl.ServiceCatalogueServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="servicePortfolioService" class="com.digitalchina.itil.service.service.impl.ServicePortfolioServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	
+	<bean name="/project/requireConfigItem" class="com.digitalchina.itil.config.action.CIRelationShipAction" scope="prototype"></bean>
+	
+	<bean name="configItemDao" class="com.digitalchina.itil.config.dao.impl.ConfigItemDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="pmcSessionFactory"></property>
+	</bean>
+	<bean name="configItemService" class="com.digitalchina.itil.config.service.impl.ConfigItemServiceImpl" scope="prototype">
+		<property name="dao" ref="baseDao"></property>
+		<property name="configItemDao" ref="configItemDao"></property>
+		<property name="metaDataManager" ref="metaDataManager"></property>
+	</bean>
+	<bean name="/configItem/action" class="com.digitalchina.itil.config.action.ConfigItemAction" scope="prototype">
+		<property name="configItemService" ref="configItemService"></property>
+		<property name="metaDataManager" ref="metaDataManager"></property>
+	</bean>
+	<!-- workflow -->
+	
+	<bean name="/workflow/configUnit" class="com.digitalchina.info.framework.workflow.web.adapter.struts.ConfigUnitAction" scope="prototype"></bean>
+	<bean name="/workflow/nodeType" class="com.digitalchina.info.framework.workflow.web.adapter.struts.NodeTypeAction" scope="prototype"></bean>
+	<bean name="/workflow/configUnitRole" class="com.digitalchina.info.framework.workflow.web.adapter.struts.ConfigUnitRoleAction" scope="prototype"></bean>	 
+	<bean name="/workflow/requireManager" class="com.digitalchina.itil.require.action.RequireManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/accountManager" class="com.digitalchina.itil.account.action.AccountManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/configManager" class="com.digitalchina.itil.config.action.ConfigManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/serviceItemManager" class="com.digitalchina.itil.service.action.ServiceItemManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/noticeManager" class="com.digitalchina.itil.notice.action.NoticeManagerAction" scope="prototype"></bean>	
+	<bean name="/workflow/eventManager" class="com.digitalchina.itil.event.action.EventManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/knowledgeManager" class="com.digitalchina.itil.knowledge.action.KnowledgeManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/userSelfManager" class="com.digitalchina.itil.workflow.action.UserSelfManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/configModifyManager" class="com.digitalchina.itil.config.action.CIBatchModifyManagerAction" scope="prototype"></bean>
+	<bean name="/workflow/businessAccountManager" class="com.digitalchina.itil.require.action.BuinessAccountManagerAction" scope="prototype"></bean>
+</beans>
+

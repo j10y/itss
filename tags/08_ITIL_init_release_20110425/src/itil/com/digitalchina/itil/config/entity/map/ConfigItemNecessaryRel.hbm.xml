@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.itil.config.entity.ConfigItemNecessaryRel" table="ConfigItemNecessaryRel">
+		<id name="id" type="long">
+				<column name="id" />
+				<generator class="native" />
+		</id>
+		<many-to-one name="configItemType" class="com.digitalchina.itil.config.entity.ConfigItemType">
+			<column name="configItemType"></column>
+		</many-to-one>
+		<many-to-one name="otherConfigItemType" class="com.digitalchina.itil.config.entity.ConfigItemType">
+			<column name="otherConfigItemType"></column>
+		</many-to-one>
+		<property name="parentOrChildType" type="integer">
+			<column name="parentOrChildType"></column>
+		</property>
+		<many-to-one name="relationShipType" class="com.digitalchina.itil.config.entity.CIRelationShipType">
+			<column name="relationShipType"></column>
+		</many-to-one>
+		<many-to-one name="relationShipGrade" class="com.digitalchina.itil.config.entity.CIRelationShipGrade">
+			<column name="relationShipGrade"></column>
+		</many-to-one>
+		<property name="attachQuotiety" type="double">
+			<column name="attachQuotiety"></column>
+		</property>
+		<property name="atechnoInfo" type="string">
+			<column name="atechnoInfo" ></column>
+		</property>
+		<property name="atechnoInfoDisplayName" type="string">
+			<column name="atechnoInfoDisplayName" ></column>
+		</property>
+		<property name="atechnoInfoAllowBlank">
+			<column name="atechnoInfoAllowBlank"></column>
+		</property>
+		<property name="atechnoInfoTip" type="string">
+			<column name="atechnoInfoTip" ></column>
+		</property>
+		<property name="btechnoInfo" type="string">
+			<column name="btechnoInfo" ></column>
+		</property>
+		<property name="btechnoInfoDisplayName" type="string">
+			<column name="btechnoInfoDisplayName" ></column>
+		</property>
+		<property name="btechnoInfoAllowBlank">
+			<column name="btechnoInfoAllowBlank"></column>
+		</property>		
+		<property name="btechnoInfoTip" type="string">
+			<column name="btechnoInfoTip" ></column>
+		</property>
+		<property name="otherInfo" type="string">
+			<column name="otherInfo" ></column>
+		</property>
+		<property name="isOptional" type="integer">
+			<column name="isOptional"></column>
+		</property>
+		<property name="description"/>
+		<property name="createDate" type="timestamp">
+			<column name="createDate"></column>
+		</property>
+		<property name="modifyDate" type="timestamp">
+			<column name="modifyDate"></column>
+		</property>
+		<many-to-one name="createUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+			<column name="createUser"></column>
+		</many-to-one>
+		<many-to-one name="modifyUser" class="com.digitalchina.info.framework.security.entity.UserInfo">
+			<column name="modifyUser"></column>
+		</many-to-one>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,93 @@
+/*
+1.传入参数为一Map以适应后续的变化,因为解析过程也是动态的
+2.Map中设定各种输入参数:
+输出：
+head[Map],头部输出
+	cfx_CheckSum;
+	cfx_PriceFileDate;
+	cfx_ConfigIdentifer;
+	cfx_DateTimeStamp;
+	cfx_PropDocumentIdentifier;
+	cfx_CFXML;
+	totalListPrice;
+	orderType
+rows[List<OrderProductLine>],行集输出
+输入：
+applyType,申请类型
+disc,折扣
+listType[newbox,mes,isu,soft],列表类别
+qty,数量                                                                                                     
+time,时间标记,检查本规则对输入数据是否在有效
+bmsn[String[]],
+xmlPath,
+outPath,
+cfrPath
+*/
+
+#created on: Dec 2, 2008
+package com.digitalchina.itil.rules
+
+#list any import classes here.
+/*
+import com.digitalchina.ibmb2b.order.rules.RuleConst;
+import com.digitalchina.ibmb2b.order.rules.OrderRuleHelper;
+import com.digitalchina.ibmb2b.order.entity.OrderProductLine; 
+*/
+import com.digitalchina.itil.workflow.rules.ProcessRuleHelper;
+import org.dom4j.Node;
+import org.jbpm.graph.node.TaskNode;
+
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Date;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+#declare any global variables here
+
+
+/*
+function void stand(Map $map){
+	Map head = (Map)$map.get("head");
+	List rows = (List)$map.get("rows");
+	String qty = (String)$map.get("qty");
+	String xmlPath = (String)$map.get("xmlPath");
+	OrderRuleHelper rh = new OrderRuleHelper();
+	rh.parseXml(head,rows,xmlPath);
+	rh.setPropertyToLine(rows,"disc",$map.get("disc"));
+	rh.setPropertyToLine(rows,"totalLineDisc",$map.get("disc"));	
+	rh.modifyRowsByQty(head,rows,qty);
+	head.put("orderType", "Standard");
+	rh.setTotalLineValue(rows);
+}
+*/
+
+
+rule "engineer process"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] == 'engineer process'
+		)
+	then 				
+		$map.put("transitionName", $map.get("next"));
+end
+
+rule "other org process"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] == 'other org process'
+		)
+	then 				
+		$map.put("transitionName", $map.get("next"));
+end

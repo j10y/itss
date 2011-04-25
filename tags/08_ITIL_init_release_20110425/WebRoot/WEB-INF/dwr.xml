@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr//dwr20.dtd">
+
+<dwr>
+	<allow>
+		
+		<create javascript="PanelManager" creator="new">
+			<param name="class" value="com.digitalchina.info.appframework.pagemodel.web.servlet.PagePanelManager">
+			</param>
+			<include method="ajaxSavePanelColumn" />
+			<include method="ajaxSavePagePanel" />
+			<include method="ajaxDeletePagePanelRelation" />
+			<include method="ajaxTestMainPanel"/>
+			<include method="ajaxTestRepeatePanel"/>
+			<include method="ajaxMovePagePanel"/>
+			<include method="ajaxIsDisplayNode"/>
+			<include method="ajaxMoveNode"/>
+		</create>
+		<create javascript="SCIRelationShipManager" creator="new">
+			<param name="class" value="com.digitalchina.itil.service.service.SCIRelationShipManager">
+			</param>
+			<include method="ajaxAddByCI" />
+			<include method="ajaxRemove" />
+			<include method="ajaxTestMove" />
+			<include method="ajaxTestAdd" />
+			<include method="ajaxGetKernel" />
+			<include method="ajaxTestRing" />
+			<include method="ajaxMoveRelationShip" />
+		</create>
+		
+		<create javascript="PageModelTemplateManager" creator="new">
+			<param name="class" value="com.digitalchina.info.appframework.pagemodel.service.PageModelTemplateManager">
+			</param>
+			<include method="ajaxTestMainPanel" />
+			<include method="ajaxTestRepeatePanel" />
+			<include method="ajaxMovePageModelPanel" />
+			<include method="ajaxDeletePageModelPanel" />
+			<include method="ajaxSavePageModelPanel" />
+			<include method="ajaxMoveRelationShip" />
+		</create>
+		<create javascript="RequirementCIRelationManager" creator="new">
+			<param name="class" value="com.digitalchina.itil.require.action.RequirementCIRelationManager">
+			</param>
+			<include method="getKernel" />
+			
+		</create>
+	</allow>
+</dwr>
