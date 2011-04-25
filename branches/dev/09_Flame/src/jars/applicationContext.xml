@@ -18,20 +18,12 @@
 		<property name="sessionFactory" ref="pmcSessionFactory"/>
 		<property name="securityManageDao" ref="securityManageDao"/>
 	</bean>
-	
-	<bean id="userMenuService" class="com.digitalchina.info.appframework.template.service.impl.UserMenuServiceImpl">
-		<property name="userMenuDao" ref="userMenuDao"/>
-	</bean>
-	
+
 	<bean id="metaDataDao" class="com.digitalchina.info.appframework.metadata.dao.impl.MetaDataDaoImpl">
 		<property name="daoSupport" ref="daoSupport"/>
 		<property name="jdbcMetaData" ref="jdbcMetaDataAware"/>
 	</bean>
-	
-	<bean id="userMenuDao" class="com.digitalchina.info.appframework.template.dao.impl.UserMenuDaoImpl">
-		<property name="daoSupport" ref="daoSupport"/>
-	</bean>
-	
+
 	<bean id="metaDataService" class="com.digitalchina.info.appframework.metadata.service.impl.MetaDataServiceImpl">
 		<property name="metaDataDao" ref="metaDataDao"/>
 		<property name="sessionFactory" ref="pmcSessionFactory"/>
@@ -49,18 +41,6 @@
 
 	<!-- 简单Ldap验证服务，计划用AcegiSecurity替换 -->
 	<bean name="ldapService" class="com.digitalchina.info.framework.security.service.impl.LDAPAuthenticationImpl">
-	</bean>
-	
-	<!-- 系统菜单服务 -->
-	<bean id="menuService" class="com.digitalchina.info.appframework.template.service.impl.MenuServiceImpl">
-		<property name="sessionFactory" ref="pmcSessionFactory"/>
-	</bean>
-	<bean id="menuDao" class="com.digitalchina.info.appframework.template.dao.impl.MenuDaoImpl">
-		<property name="sessionFactory" ref="pmcSessionFactory"/>
-	</bean>
-	<!-- 系统模板服务-->
-	<bean id="templateService" class="com.digitalchina.info.appframework.template.service.impl.TemplateServiceImpl">
-		<property name="sessionFactory" ref="pmcSessionFactory"/>
 	</bean>
 	
 	<bean id="deptService" class="com.digitalchina.info.framework.security.service.impl.DepartmentServiceImpl">
