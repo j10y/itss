@@ -7,19 +7,10 @@
 	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
-	
-	<bean id="userMenuDao"
-		class="com.digitalchina.info.appframework.template.dao.impl.UserMenuDaoImpl">
-		<property name="daoSupport" ref="daoSupport"/>
-	</bean>
+
 	<bean id="userInfoDao"
 		class="com.digitalchina.info.framework.security.dao.impl.UserDaoImpl">
 		<property name="sessionFactory" ref="pmcSessionFactory" />
-	</bean>
-	
-	<bean id="userMenuService"
-		class="com.digitalchina.info.appframework.template.service.impl.UserMenuServiceImpl">
-		<property name="userMenuDao" ref="userMenuDao"/>
 	</bean>
 	
 	<bean id="userInfoService"
@@ -29,4 +20,14 @@
 		</property>
 	</bean>
 	
-	</beans>
+	<bean id="menuDao"
+		class="com.digitalchina.info.appframework.menu.dao.impl.MenuDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	
+	<bean id="menuService"
+		class="com.digitalchina.info.appframework.menu.service.impl.MenuServiceImpl">
+		<property name="menuDao" ref="menuDao"/>
+		<property name="dao" ref="baseDao"/>
+	</bean>
+</beans>

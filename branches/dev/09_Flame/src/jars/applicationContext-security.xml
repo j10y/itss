@@ -68,6 +68,7 @@
 		class="com.digitalchina.info.framework.security.service.impl.UserDetailServiceHibernateImpl">
 		<property name="userDao" ref="userDao" />
 		<property name="acegiRoleDao" ref="acegiRoleDao" />
+		<property name="securityManageService" ref="securityManageService"/>
 	</bean>
 
 	<bean id="userDao"

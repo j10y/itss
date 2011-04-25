@@ -50,6 +50,7 @@
 				<value>com/digitalchina/info/framework/security/entity/map/Role_Authorization.hbm.xml</value>
 				<value>com/digitalchina/info/framework/security/entity/map/Role.hbm.xml</value>
 				<value>com/digitalchina/info/framework/security/entity/map/UserInfo.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/ExtendUserInfo.hbm.xml</value>
 				<value>com/digitalchina/info/framework/security/entity/map/UserRelateRole.hbm.xml</value>
 				<value>com/digitalchina/info/framework/security/entity/map/UserActionLog.hbm.xml</value>
 				<value>com/digitalchina/info/framework/security/entity/map/PersonnelScope.hbm.xml</value>
@@ -57,19 +58,14 @@
 				<value>com/digitalchina/info/framework/security/entity/map/UserType.hbm.xml</value>
 				<value>com/digitalchina/info/framework/security/entity/map/SameMailDept.hbm.xml</value>
 				<value>com/digitalchina/info/framework/security/entity/map/MailServer.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/Menu.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/MenuTemplate.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/TemplateMenu.hbm.xml</value>
+
 				<value>com/digitalchina/info/appframework/template/entity/map/Template.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/TemplateItem.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/UserMenuSetting.hbm.xml</value>
+
 				
-				<value>com/digitalchina/info/appframework/template/entity/map/SystemMenuTemplate.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/SystemMenuTemplateItem.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/DeptMenuTemplate.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/DeptMenuTemplateItem.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/UserMenu.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/template/entity/map/UserMenuItem.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/menu/entity/map/DeptMenu.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/menu/entity/map/DeptMenuItem.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/menu/entity/map/UserExtraMenuItem.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/menu/entity/map/TemplateMenuItem.hbm.xml</value>
 				
 				<!--新加两实体对应关系 用与扩展表  tongjp-->
 				<value>com/digitalchina/info/appframework/metadata/entity/map/ExtOptionData.hbm.xml</value>
@@ -84,22 +80,6 @@
 				<value>com/digitalchina/info/bussutil/protal/entity/map/Portlet.hbm.xml</value>
 				<value>com/digitalchina/info/bussutil/protal/entity/map/PortletSubscribe.hbm.xml</value>
 				
-				<!--新加两实体对应关系 用与扩展表  tongjp-->
-				<!-- 
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Option.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Select.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Text.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Radio.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_YesNoRadio.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_YesNoSelect.hbm.xml</value>	
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_DateText.hbm.xml</value>				
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_TextArea.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_CheckBox.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_RadioOption.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_CheckBoxOption.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemExtTable.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableExtColumn.hbm.xml</value>
-				 -->
 				<value>com/digitalchina/info/appframework/metadata/entity/map/MatchMode.hbm.xml</value>
 				<value>com/digitalchina/info/appframework/metadata/entity/map/PropertyType.hbm.xml</value>			
 				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTable.hbm.xml</value>
@@ -107,7 +87,6 @@
 				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableColumn.hbm.xml</value>
 				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableColumnCondition.hbm.xml</value>
 				<value>com/digitalchina/info/appframework/metadata/entity/map/Operator.hbm.xml</value>
-				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableColumnDisc.hbm.xml</value>
 				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableColumnType.hbm.xml</value>
 				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableQuery.hbm.xml</value>
 				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableQueryColumn.hbm.xml</value>
@@ -380,7 +359,25 @@
                 <prop key="synchroI*">PROPAGATION_REQUIRED</prop>
                 <prop key="post*">PROPAGATION_REQUIRED</prop>
                 <prop key="create*">PROPAGATION_REQUIRED</prop>
-                
+                <prop key="load*">PROPAGATION_REQUIRED</prop>
+                <prop key="query*">PROPAGATION_REQUIRED</prop>
+                <prop key="export*">PROPAGATION_REQUIRED</prop>
+                <prop key="gen*">PROPAGATION_REQUIRED</prop>
+                <prop key="list*">PROPAGATION_REQUIRED</prop>
+                <prop key="for*">PROPAGATION_REQUIRED</prop>
+                <prop key="check*">PROPAGATION_REQUIRED</prop>
+                <prop key="end*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="before*">PROPAGATION_REQUIRED</prop>
+                <prop key="middle*">PROPAGATION_REQUIRED</prop>
+                <prop key="change*">PROPAGATION_REQUIRED</prop>
+                <prop key="down*">PROPAGATION_REQUIRED</prop>
+                <prop key="up*">PROPAGATION_REQUIRED</prop>
+                <prop key="exist*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="auth*">PROPAGATION_REQUIRED</prop>
+                <prop key="build*">PROPAGATION_REQUIRED</prop>
+                <prop key="show*">PROPAGATION_REQUIRED</prop>
             </props>
         </property>
     </bean>
@@ -424,7 +421,24 @@
                 <prop key="synchroI*">PROPAGATION_REQUIRED</prop>
                 <prop key="post*">PROPAGATION_REQUIRED</prop>
                 <prop key="create*">PROPAGATION_REQUIRED</prop>
-                
+                <prop key="load*">PROPAGATION_REQUIRED</prop>
+                <prop key="query*">PROPAGATION_REQUIRED</prop>
+                <prop key="export*">PROPAGATION_REQUIRED</prop>
+                <prop key="gen*">PROPAGATION_REQUIRED</prop>
+                <prop key="list*">PROPAGATION_REQUIRED</prop>
+                <prop key="for*">PROPAGATION_REQUIRED</prop>
+                <prop key="check*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="before*">PROPAGATION_REQUIRED</prop>
+                <prop key="middle*">PROPAGATION_REQUIRED</prop>
+                <prop key="change*">PROPAGATION_REQUIRED</prop>
+                <prop key="down*">PROPAGATION_REQUIRED</prop>
+                <prop key="up*">PROPAGATION_REQUIRED</prop>
+                <prop key="exist*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="auth*">PROPAGATION_REQUIRED</prop>
+                <prop key="build*">PROPAGATION_REQUIRED</prop>
+                <prop key="show*">PROPAGATION_REQUIRED</prop>
             </props>
         </property>
         
@@ -477,7 +491,7 @@
 				<value>removeUser*</value>
 				<value>saveResource*</value>
 				<value>removeResource*</value>
-				<value>saveRole*</value>
+				<!-- <value>saveRole*</value> -->
 				<value>removeRole*</value>
 				<value>saveRight*</value>
 				<value>removeRight*</value>
@@ -510,7 +524,7 @@
 	 <!-- 邮件发送 -->
     <bean name="mailSenderService" class="com.digitalchina.info.framework.message.mail.service.impl.MailSenderServiceImpl">
 		  <property name="mailSender" ref="mailSender"/>
-		  <property name="uis" ref="userInfoService"/>
+		  <property name="uid" ref="userInfoDao"/>
 		  <property name="dao" ref="baseDao"/>
 	</bean>
 	
