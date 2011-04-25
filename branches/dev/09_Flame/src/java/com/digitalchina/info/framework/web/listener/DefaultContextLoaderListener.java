@@ -44,7 +44,7 @@ public class DefaultContextLoaderListener extends ContextLoaderListener {
 		}
 		AcegiCacheService acegiCacheMng = (AcegiCacheService)context.getBean("acegiCacheService");
 //		acegiCacheMng.initUserCache();
-//		acegiCacheMng.initResourceCache();		
+		acegiCacheMng.initResourceCache();		
 	}
 
 

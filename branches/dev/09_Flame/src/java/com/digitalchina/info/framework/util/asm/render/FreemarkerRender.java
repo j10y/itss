@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import com.digitalchina.info.appframework.pagemodel.entity.PageModel;
 import com.digitalchina.info.appframework.pagemodel.servlet.PageParameter;
 import com.digitalchina.info.framework.util.Assistant;
-//import com.digitalchina.itil.jfreeChart.entity.JfreeChartView;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
