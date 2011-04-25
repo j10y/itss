@@ -83,20 +83,7 @@
 		<property name="sessionFactory" ref="pmcSessionFactory"/>
 		<property name="deptService" ref="deptService"/>
 	</bean>
-	
-	<bean id="systemTemplateMenuService" class="com.digitalchina.info.appframework.template.service.impl.SystemTemplateMenuServiceImpl">
-		<property name="sessionFactory" ref="pmcSessionFactory"/>
-		<property name="deptTemplateMenuService" ref="deptTemplateMenuService"/>
-	</bean>
-	
-	<bean id="deptTemplateMenuService" class="com.digitalchina.info.appframework.template.service.impl.DeptTemplateMenuServiceImpl">
-		<property name="sessionFactory" ref="pmcSessionFactory"/>
-	</bean>
-	
-	<bean id="userTemplateMenuService" class="com.digitalchina.info.appframework.template.service.impl.UserTemplateMenuServiceImpl">
-		<property name="sessionFactory" ref="pmcSessionFactory"/>
-	</bean>
-	    
+
     <bean id="pageModelService" class="com.digitalchina.info.appframework.pagemodel.service.impl.PageModelServiceImpl">
 		<property name="sessionFactory" ref="pmcSessionFactory"/>
 	</bean>
@@ -172,6 +159,13 @@
 	<bean id="pagePanelFieldSetService" class="com.digitalchina.info.appframework.pagemodel.service.impl.PagePanelFieldSetServiceImpl">
 		<property name="sessionFactory" ref="pmcSessionFactory"/>
 	</bean>
-
+	
+	<bean id="idGeneratorDao" class="com.digitalchina.info.appframework.metadata.dao.impl.IdGeneratorDaoImp">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>	
+	
+	<bean id="idGeneratorService" class="com.digitalchina.info.appframework.metadata.service.impl.IdGeneratorServiceImp">
+		<property name="idGeneratorDao" ref="idGeneratorDao"></property>
+	</bean>
 	
 </beans>
