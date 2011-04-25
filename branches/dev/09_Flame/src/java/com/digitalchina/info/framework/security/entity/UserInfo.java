@@ -55,9 +55,6 @@ public class UserInfo extends BaseObject{
 	private UserType userType;		//员工身份类型
 	private PersonnelScope personnelScope;	//人事子范围
 	
-	//private Integer isTemp;			//是否为临时用户--后期删除无用
-	//private Integer	isAccredited;	//是否为派遣用户--后期删除无用
-	
 	private String userViewStyle;	//页面风格
 
 	private Set userTableSettings = new HashSet();
@@ -68,21 +65,21 @@ public class UserInfo extends BaseObject{
 	private Integer timeCard;
 	//新家类型	
 	private String postName;//职位名称，岗位名称
-	
-	private String costCenterName;//成本中心名称
+//	
+//	private String costCenterName;//成本中心名称
 	
 	private Date joinDate;//入职日期
 	
 	private Date leaveDate;//离职日期
 	
-	public String getCostCenterName() {
-		return costCenterName;
-	}
-
-	public void setCostCenterName(String costCenterName) {
-		this.costCenterName = costCenterName;
-	}
-
+//	public String getCostCenterName() {
+//		return costCenterName;
+//	}
+//
+//	public void setCostCenterName(String costCenterName) {
+//		this.costCenterName = costCenterName;
+//	}
+//
 	public String getPostName() {
 		return postName;
 	}

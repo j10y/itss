@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping package="com.digitalchina.info.framework.security.entity" default-access="field">
 
-    <class name="Module" table="sModules" dynamic-insert="true" dynamic-update="true">
+    <class name="Module" table="sys_Modules" dynamic-insert="true" dynamic-update="true">
         <cache usage="read-write"/>
         <id name="id" type="long"  column="ID" >
             <generator class="native" /> 

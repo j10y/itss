@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping package="com.digitalchina.info.framework.security.entity" default-access="field">
 
-    <class name="UserInfo" table="sUserInfos" dynamic-insert="true" dynamic-update="true" lazy="false">
+    <class name="UserInfo" table="sys_UserInfos" dynamic-insert="true" dynamic-update="true" lazy="false">
 
         <id name="id" type="long"  column="[ID]" >
             <generator class="native" /> 
@@ -35,13 +35,13 @@
             <column name="platform"/>
         </many-to-one>
         
-        <set name="roles" table="sUserRole" cascade="none">
+        <set name="roles" table="sys_UserRole" cascade="none">
         	<key column="USER_ID"/>
         	<many-to-many class="com.digitalchina.info.framework.security.entity.Role"  
         	              column="ROLE_ID" />
         </set>
         
-         <set name="userTableSettings" table="tUserTableSetting" inverse="true" cascade="all">
+         <set name="userTableSettings" table="sys_UserTableSetting" inverse="true" cascade="all">
         	<key column="UserID"/>
         	<one-to-many class="com.digitalchina.info.appframework.metadata.entity.UserTableSetting" />
         </set>		

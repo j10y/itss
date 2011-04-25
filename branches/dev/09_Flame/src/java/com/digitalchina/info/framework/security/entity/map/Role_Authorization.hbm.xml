@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping package="com.digitalchina.info.framework.security.entity" default-access="field">
 
-    <class name="RoleAuthoriz" table="sRoleAuthoriz" dynamic-insert="true" dynamic-update="true">
+    <class name="RoleAuthoriz" table="sys_RoleAuthoriz" dynamic-insert="true" dynamic-update="true">
         <cache usage="read-write"/>
         <id name="id" column="ID">
             <generator class="native"/>

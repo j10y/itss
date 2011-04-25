@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.digitalchina.info.framework.security.entity" default-access="field">
 
-    <class name="MailServer" table="sMailServer" dynamic-insert="true" dynamic-update="true">
+    <class name="MailServer" table="sys_MailServer" dynamic-insert="true" dynamic-update="true">
 		<cache usage="read-write"/>
     	
         <id name="id" type="long"  column="ID" >

@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping package="com.digitalchina.info.framework.security.entity" default-access="field">
 
-    <class name="Role" table="sRoles" lazy="false" dynamic-insert="true" dynamic-update="true">
+    <class name="Role" table="sys_Roles" lazy="false" dynamic-insert="true" dynamic-update="true">
 		<cache usage="read-write"/>
     	
         <id name="id" type="long"  column="ID" >
@@ -24,13 +24,13 @@
 
        	<many-to-one name="deptMenu" class="com.digitalchina.info.appframework.menu.entity.DeptMenu" 
        			column="deptMenu" />				   
-        <set name="authorizations" table="sRoleAuthoriz" cascade="none">
+        <set name="authorizations" table="sys_RoleAuthoriz" cascade="none">
         	<key column="ROLE_ID"/><!-- AUTHORIZATIONS'S ROLE_ID == THIS.ROLE.ID -->
         	<many-to-many class="com.digitalchina.info.framework.security.entity.Authorization" 
         				  column="AUTHOR_ID" /><!-- AUTHORIZATIONS'S ID == ROLE_AUTHOR.AUTHOR_ID fetch="join" lazy="false"-->
         </set>
     	
-    	 <set name="userInfos" table="sUserRole" inverse="true"  cascade="none">
+    	 <set name="userInfos" table="sys_UserRole" inverse="true"  cascade="none">
         	<key column="ROLE_ID"/><!-- ROLE_AUTHOR'S AUTHOR_ID == Authorization.ID -->
         	<many-to-many class="com.digitalchina.info.framework.security.entity.UserInfo"  
         	              column="USER_ID" /><!-- USERS'S ID == ROLE_AUTHOR.USER_ID -->
