@@ -76,8 +76,10 @@ public class SCIRelationShipDaoImpl extends BaseDao implements SCIRelationShipDa
 	public List<SCIRelationShip> getShipsByServiceType(ServiceType serviceType,
 			List<ServiceCatalogue> rootServiceCatalogues) {
 		Criteria c = super.getCriteria(SCIRelationShip.class);
-		c.add(Restrictions.in("rootServiceCatalogue", rootServiceCatalogues));
-		c.setFetchMode("rootServiceCatalogue", FetchMode.JOIN);
+		if(rootServiceCatalogues!=null&&rootServiceCatalogues.size()>0){
+			c.add(Restrictions.in("rootServiceCatalogue", rootServiceCatalogues));
+			c.setFetchMode("rootServiceCatalogue", FetchMode.JOIN);
+		}
 		c.add(Restrictions.eq("typeFlag", SCIRelationShip.SCI_TYPE_ITEM));
 		c.createAlias("this.serviceItem", "serviceItem").setFetchMode("serviceItem", FetchMode.JOIN);
 		if(serviceType!=null){//add by lee for 增加对类型为空的处理 in 20091123
