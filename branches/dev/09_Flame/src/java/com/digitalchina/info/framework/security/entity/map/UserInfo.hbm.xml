@@ -74,9 +74,9 @@
         
          <property name="titleCode" type="long" column="titleCode" />
         
-        
+        <!-- 
         <property name="costCenterName" type="string" column="costCenterName" />
-        
+         -->
         <property name="joinDate" type="date" column="joinDate" />
         
         <property name="leaveDate" type="date" column="leaveDate" />
