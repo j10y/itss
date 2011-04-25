@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping package="com.digitalchina.info.appframework.metadata.entity" default-access="field">
 
-    <class name="SystemTableSettingVersion" table="tSystemTableSettingVersion" dynamic-insert="true" dynamic-update="true">
+    <class name="SystemTableSettingVersion" table="sys_SystemTableSettingVersion" dynamic-insert="true" dynamic-update="true">
 
         <id name="id" type="long"  column="ID" >
             <generator class="native" /> 

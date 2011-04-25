@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping package="com.digitalchina.info.appframework.metadata.entity" default-access="field">
 
-    <class name="UserTableQueryColumn" table="tUserTableQueryColumn" dynamic-insert="true" dynamic-update="true">
+    <class name="UserTableQueryColumn" table="sys_UserTableQueryColumn" dynamic-insert="true" dynamic-update="true">
         <id name="id" type="long"  column="ID" >
             <generator class="native" /> 
         </id>

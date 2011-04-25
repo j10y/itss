@@ -4,7 +4,7 @@
 
 <hibernate-mapping package="com.digitalchina.info.appframework.metadata.entity" default-access="field">
 
-    <class name="EntityObjectStatus" table="tEntityObjectStatus" dynamic-insert="true" dynamic-update="true">
+    <class name="EntityObjectStatus" table="sys_EntityObjectStatus" dynamic-insert="true" dynamic-update="true">
        
         <id name="id" type="long"  column="ID" >
             <generator class="native" /> 

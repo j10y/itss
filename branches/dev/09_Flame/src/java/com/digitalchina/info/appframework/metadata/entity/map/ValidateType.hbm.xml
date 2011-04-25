@@ -6,12 +6,11 @@
 -->
 <hibernate-mapping package="com.digitalchina.info.appframework.metadata.entity" default-access="field">
 
-    <class name="ValidateType" table="tValidateType" dynamic-insert="true" dynamic-update="true">
+    <class name="ValidateType" table="sys_ValidateType" dynamic-insert="true" dynamic-update="true">
         <cache usage="read-only"/>
         <id name="id" type="long"  column="ID" >
             <generator class="native" /> 
-        </id>
-        			
+        </id>	
         <property name="validateTypeName" type="string" column="validateTypeName"/>
         <property name="validateTypeCnName" type="string" column="validateTypeCnName"/>
         <property name="regular" type="string" column="regularStr"/>
