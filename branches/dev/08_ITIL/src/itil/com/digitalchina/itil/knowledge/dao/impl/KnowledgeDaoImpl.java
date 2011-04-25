@@ -34,6 +34,7 @@ import com.digitalchina.itil.knowledge.entity.KnowProblemType;
 import com.digitalchina.itil.knowledge.entity.Knowledge;
 import com.digitalchina.itil.knowledge.entity.KnowledgeAuditHis;
 import com.digitalchina.itil.service.entity.ServiceItem;
+import com.fr.report.script.function.AND;
 
 public class KnowledgeDaoImpl extends BaseDao<Knowledge> implements
 		KnowledgeDao {
