@@ -676,7 +676,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=3px><center><a href="http://itss.digitalchina.com/ITcenter/knowledgeAction_getContentInfoAction.action?id=9009" target="_blank" style="text-decoration:none"><b>WWW配置手册</b></a></center></font>',
+				html : '<font size=3px><center><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/30f50f5f5f356be8482575680031af2a?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW配置手册</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/8f51e3c135a215b648256d6a0022f54f?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW帐号密码修改方法</b></a></center></font>',
 				cls : 'common-text',
 				style : 'margin:0px 0px 0px 170px'
 				
@@ -898,7 +898,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				fieldLabel : '申请原因'
 			}), 
 			{
-				html : '密码:',
+				html : '初始口令:',
 				cls : 'common-text',
 				style : 'width:135;text-align:right'
 			}, new Ext.form.TextField({
@@ -911,8 +911,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				style : 'color:red',
 				width : 200,
 				readOnly : true,
-				emptyText:'您的ITpassword',
-				value : '您的ITpassword',
+				emptyText:'123',
+				value : '123',
 				allowBlank : true,
 				validator : '',
 				vtype : ''

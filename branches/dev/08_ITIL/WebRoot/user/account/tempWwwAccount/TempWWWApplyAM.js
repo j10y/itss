@@ -775,7 +775,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				fieldLabel : '申请原因'
 			}), 
 			{
-				html : '密码:',
+				html : '初始口令:',
 				cls : 'common-text',
 				style : 'width:135;text-align:right'
 			}, new Ext.form.TextField({
@@ -788,8 +788,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				style : 'color:red',
 				width : 200,
 				readOnly : true,
-//				emptyText:'123',
-//				value : '123',
+				emptyText:'123',
+				value : '123',
 				allowBlank : true,
 				validator : '',
 				vtype : ''
@@ -1029,12 +1029,11 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				handler : function() {
 					var dataId=Ext.getCmp('AccountApplyMainTable$id').getValue();
 				    var rightDesc=getEncodeValue('itil_ac_SpecialAccount$rightsDesc');
-				    var pw=getEncodeValue('itil_ac_SpecialAccount$password');
 					Ext.Ajax.request({
 						url : webContext+ '/accountAction_saveSpecaiAccountInfo.action',
 						params : {
 							rightDesc : rightDesc,
-							password:pw,
+							
 							dataId:dataId
 						},
                         success : function(response, options) {

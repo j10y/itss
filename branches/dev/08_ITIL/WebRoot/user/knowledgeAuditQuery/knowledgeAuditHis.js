@@ -160,7 +160,7 @@
 		        }
 		        this.knowFormPanel = new Ext.form.FormPanel({
 		            id:'knowledgeDetails',
-//			        layout : 'fit',//modified by huzh 
+			        layout : 'fit',
 			        autoScroll:true,
 					title:"解决方案",
 				    height : 400,	

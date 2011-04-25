@@ -935,7 +935,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				fieldLabel : '±¸×¢'
 			}),   
 			{
-				html : 'ÃÜÂë:',
+				html : '³õÊ¼¿ÚÁî:',
 				cls : 'common-text',
 				style : 'width:135;text-align:right'
 			}, new Ext.form.TextField({
@@ -948,8 +948,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				style : 'color:red',
 				width : 200,
 				readOnly : true,
-				//emptyText:'123',
-				//value : '123',
+				emptyText:'123',
+				value : '123',
 				allowBlank : true,
 				validator : '',
 				vtype : ''
@@ -1180,7 +1180,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					var dataId=Ext.getCmp('AccountApplyMainTable$id').getValue();
 				
 					var rightDesc=getEncodeValue('itil_ac_PersonFormalAccount$rightsDesc');
-					var pw=getEncodeValue('itil_ac_PersonFormalAccount$password');
 					 var userInfo=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
 						Ext.Ajax.request({
 						url : webContext
@@ -1202,8 +1201,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						params : {
 							rightDesc : rightDesc,
 							userInfo:userInfo,
-							dataId:dataId,
-							password:pw
+							dataId:dataId
 						},
                         success : function(response, options) {
 							window.parent.auditContentWin.specialAudit();

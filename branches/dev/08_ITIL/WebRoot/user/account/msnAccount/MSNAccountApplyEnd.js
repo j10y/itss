@@ -779,7 +779,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=3px color=red><center><a href="http://itss.digitalchina.com/ITcenter/knowledgeAction_getContentInfoAction.action?id=9012" target="_blank" style="text-decoration:none"><b>《神州数码MSN代理配置手册》</b></a></center></font>',
+				html : '<font size=3px color=red><center><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/4899e4dc4f2b01f34825721a0012181f?OpenDocument" target="_blank" style="text-decoration:none"><b>《神州数码MSN代理配置手册》</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/8f51e3c135a215b648256d6a0022f54f?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW帐号密码修改方法</b></a></center></font>',
 				cls : 'common-text',
 				style : 'margin:0px 0px 0px 130px'
 				

@@ -63,8 +63,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				var responseArray = Ext.util.JSON.decode(response.responseText);
 				var curId = responseArray.id;
 				window.location = webContext
-									+ "/requireSIAction_toRequireInfoByServiceItemId.action?id="
-									+ curscid;
+						+ "/requireAction_toOperatePanel.action?id=" + curId
+						+ "&serviceItemId=" + curscid + "&processType=0";
 			},
 			failure : function(response, options) {
 				Ext.MessageBox.alert("±£¥Ê ß∞‹");

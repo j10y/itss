@@ -1302,7 +1302,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					var wance=Ext.getCmp('itil_ac_MobileTelephoneApply$allowance').getValue();
 					if(wance==0){
 						Ext.MessageBox.alert("提示",
-								"如果补贴标准没有自动带出，请联系手机管理员添加标准！");
+								"新入职的员工如果补贴标准没有自动带出，请联系手机管理员确认额度！");
 						return false;
 					}
 					//add by liuying for 增加补贴标准没有带出的验证 at 20100512 end
@@ -1379,7 +1379,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					var wance=Ext.getCmp('itil_ac_MobileTelephoneApply$allowance').getValue();
 					if(wance==0){
 						Ext.MessageBox.alert("提示",
-								"如果补贴标准没有自动带出，请联系手机管理员添加标准！");
+								"新入职的员工如果补贴标准没有自动带出，请第二天再提交该申请！");
 						return false;
 					}
 					//add by liuying for 增加补贴标准没有带出的验证 at 20100512 end

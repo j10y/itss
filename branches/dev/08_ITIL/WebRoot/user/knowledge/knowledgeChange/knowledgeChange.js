@@ -23,7 +23,6 @@ PagePanel = Ext.extend(Ext.Panel, {
 			resizable : true,
 			triggerAction : 'all',
 			selectOnFocus : true,
-			forceSelection : true,
 			store : new Ext.data.JsonStore({
 				url : webContext
 						+ '/eventAction_findServiceItem.action',
@@ -68,7 +67,6 @@ PagePanel = Ext.extend(Ext.Panel, {
 			resizable : true,
 			triggerAction : 'all',
 			selectOnFocus : true,
-			forceSelection : true,
 			store : new Ext.data.JsonStore({
 				url : webContext  + '/knowledgeAction_findKnowProblemType.action',
 				fields : ['id', 'name'],
@@ -153,26 +151,51 @@ PagePanel = Ext.extend(Ext.Panel, {
 	       	//2010-06-30 modified by huzh begin
 	       	for(var i=0;i<data.length;i++){
 	       		if(data[i].id=="Knowledge$serviceItemCombo"){
-	       			data[i].store.on('beforeload',function(store, opt) {
-					if (opt.params['Knowledge$serviceItem'] == undefined) {
-						opt.params['name'] = Ext.getCmp('Knowledge$serviceItemCombo').defaultParam;
-						opt.params['official'] = 1;
-					}
-					});
-					data[i].on('select', function() {
-						Ext.getCmp('Knowledge$knowProblemTypeCombo').clearValue();
-					});
+	       			data[i].on("select",function(){
+			    	  Ext.getCmp("Knowledge$knowProblemTypeCombo").clearValue();
+	       			});
+	       			data[i].on("beforequery",function(queryEvent){
+							var param = queryEvent.combo.getRawValue();
+							if (queryEvent.query == '') {
+								param = '';
+							}
+							this.store.baseParams={
+								name : param,
+								official : 1
+							}
+							this.store.load({
+								params:{
+									start:0
+								}
+							});
+							return false;
+			   		 });
 			    }
 	       		if(data[i].id=="Knowledge$knowProblemTypeCombo"){
-       				data[i].store.on('beforeload',function(store, opt) {
-						if (opt.params['Knowledge$knowProblemType'] == undefined) {
-							opt.params['name'] = Ext.getCmp('Knowledge$knowProblemTypeCombo').defaultParam;
-							opt.params['serviceItem'] = Ext.getCmp('Knowledge$serviceItemCombo').getValue();
-							opt.params['deleteFlag'] = 0;
-						}
-					});		       		
-				}
-	       	}
+	       				data[i].on("beforequery",function(queryEvent){
+							var serviceitem=Ext.getCmp("Knowledge$serviceItemCombo").getValue();
+							if(serviceitem==""){
+								Ext.MessageBox.alert("提示","请先从下拉列表中选择服务项！");
+								return false;
+							}
+							var param = queryEvent.combo.getRawValue();
+							if (queryEvent.query == '') {
+								param = '';
+							}
+							this.store.baseParams={
+								name : param,
+								serviceItem : serviceitem,
+								deleteFlag : 0
+							}
+							this.store.load({
+								params:{
+									start:0
+								}
+							});
+							return false;
+			   			 });
+	       		}
+       		}
 	        //2010-06-30 modified by huzh end
 	        var dataform = this.split(data);
 	        var knowForm = new Ext.form.FormPanel({

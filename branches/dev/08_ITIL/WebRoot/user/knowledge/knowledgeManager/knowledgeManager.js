@@ -224,24 +224,24 @@ PagePanel = Ext.extend(Ext.Panel, {
 				};
 			}
 			if(sItem!=null){
-			    sItem.store.on('beforeload',function(store, opt) {
-					if (opt.params['Knowledge$serviceItem'] == undefined) {
-						opt.params['name'] = Ext.getCmp('Knowledge$serviceItemCombo').defaultParam;
-						opt.params['official'] = 1;
-					}
-				});
-				sItem.on('select', function() {
-							Ext.getCmp('Knowledge$knowProblemTypeCombo').clearValue();
-				});
+				sItem.on("select",function(){
+			      kproblmeType.clearValue();
+			    }
+		    );
 			}
 		    if(kproblmeType!=null){
-		    	kproblmeType.store.on('beforeload',function(store, opt) {
-						if (opt.params['Knowledge$knowProblemType'] == undefined) {
-							opt.params['name'] = Ext.getCmp('Knowledge$knowProblemTypeCombo').defaultParam;
-							opt.params['serviceItem'] = Ext.getCmp('Knowledge$serviceItemCombo').getValue();
-							opt.params['deleteFlag'] = 0;
-						}
-					});
+		    	kproblmeType.on("beforequery",function(queryEvent){
+					var sitem = sItem.getValue();
+					var param = queryEvent.combo.getRawValue();
+					var val = queryEvent.combo.getValue();
+					if (queryEvent.query == '') {
+						param = '';
+					}
+					kproblmeType.store.baseParams.name=param;
+					kproblmeType.store.baseParams.serviceItem =sitem;
+					kproblmeType.store.reload();
+					return false;
+			    });
 		    }
 			var windowSkip = new Ext.Window({
 				title : '查看详细信息',
