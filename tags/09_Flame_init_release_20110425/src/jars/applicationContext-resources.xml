@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+            
+	<!-- 配置属性文件 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:ApplicationResources.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 配置DataSource -->
+	<bean id="pmcDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}"/>
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+        <property name="logAbandoned" value="${jdbc.logAbandoned}"/>
+	</bean>
+
+	<!-- 配置SessionFactory -->
+	<bean id="pmcSessionFactory" 
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="pmcDataSource"/>
+		<property name="mappingResources"> 
+			<list>
+				<value>com/digitalchina/info/framework/security/entity/map/Authorization.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Department.hbm.xml</value>
+				
+				<value>com/digitalchina/info/framework/security/entity/map/Module.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Resource.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Platform.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Region.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Province.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Right.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Role_Authorization.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/Role.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/UserInfo.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/UserRelateRole.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/UserActionLog.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/PersonnelScope.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/WorkSpace.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/UserType.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/SameMailDept.hbm.xml</value>
+				<value>com/digitalchina/info/framework/security/entity/map/MailServer.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/Menu.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/MenuTemplate.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/TemplateMenu.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/Template.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/TemplateItem.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/UserMenuSetting.hbm.xml</value>
+				
+				<value>com/digitalchina/info/appframework/template/entity/map/SystemMenuTemplate.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/SystemMenuTemplateItem.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/DeptMenuTemplate.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/DeptMenuTemplateItem.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/UserMenu.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/template/entity/map/UserMenuItem.hbm.xml</value>
+				
+				<!--新加两实体对应关系 用与扩展表  tongjp-->
+				<value>com/digitalchina/info/appframework/metadata/entity/map/ExtOptionData.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/ExtData.hbm.xml</value>
+				<!--新加两实体对应关系 用与扩展表  tongjp-->
+				<!--  portal-->
+				<value>com/digitalchina/info/bussutil/protal/entity/map/Portal.hbm.xml</value>
+				<value>com/digitalchina/info/bussutil/protal/entity/map/PortalColumn.hbm.xml</value>
+				<value>com/digitalchina/info/bussutil/protal/entity/map/PortalColumnTemplate.hbm.xml</value>
+				<value>com/digitalchina/info/bussutil/protal/entity/map/PortalContainer.hbm.xml</value>
+				<value>com/digitalchina/info/bussutil/protal/entity/map/PortalStyle.hbm.xml</value>
+				<value>com/digitalchina/info/bussutil/protal/entity/map/Portlet.hbm.xml</value>
+				<value>com/digitalchina/info/bussutil/protal/entity/map/PortletSubscribe.hbm.xml</value>
+				
+				<!--新加两实体对应关系 用与扩展表  tongjp-->
+				<!-- 
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Option.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Select.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Text.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_Radio.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_YesNoRadio.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_YesNoSelect.hbm.xml</value>	
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_DateText.hbm.xml</value>				
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_TextArea.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_CheckBox.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_RadioOption.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Ext_CheckBoxOption.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemExtTable.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableExtColumn.hbm.xml</value>
+				 -->
+				<value>com/digitalchina/info/appframework/metadata/entity/map/MatchMode.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/PropertyType.hbm.xml</value>			
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTable.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableIdBuilder.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableColumn.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableColumnCondition.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/Operator.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableColumnDisc.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemMainTableColumnType.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableQuery.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableQueryColumn.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableSetting.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableSettingVersion.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/UserTableQueryColumn.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/UserTableSetting.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/UserTableSettingVersion.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/ValidateType.hbm.xml</value>
+				
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemFile.hbm.xml</value>
+				
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableRole.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/metadata/entity/map/SystemTableRoleColumn.hbm.xml</value>
+				
+				<value>com/digitalchina/info/appframework/metadata/entity/map/TableSettingType.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PageModel.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanel.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanelFieldSet.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanelTable.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanelTableRelation.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanelType.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PageModelPanel.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PageModelPanelTable.hbm.xml</value>
+				
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PageModelBtn.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PageModelNode.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanelBtn.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PageBtnType.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanelColumn.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PagePanelRelation.hbm.xml</value>
+				<value>com/digitalchina/info/appframework/pagemodel/entity/map/PageGroupPanelTable.hbm.xml</value>		
+						
+				<value>com/digitalchina/info/framework/workflow/entity/map/TaskPreAssign.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/DefinitionPreAssign.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/WorkflowRole.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/WorkflowRoleMapping.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ActionConfigUnit.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/PageModelConfigUnit.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnit.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigModel.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnitRole.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnitRoleTable.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/NodeConfig.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/NodeType.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/DefinitionType.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/DefinitionInfo.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnitTimer.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/RuleConfigUnit.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/VirtualDefinitionInfo.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/VirtualNodeInfo.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnitMail.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnitMailCC.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/SubProcessConfigUnit.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnitMailNodeSender.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/ConfigUnitMailNodeSenderTable.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/WorkflowRegressionParameters.hbm.xml</value>
+				<value>com/digitalchina/info/framework/workflow/entity/map/WorkflowRecordTaskInfo.hbm.xml</value>
+
+				
+				<value>org/jbpm/graph/action/Script.hbm.xml</value>
+				<value>org/jbpm/db/hibernate.queries.hbm.xml</value>
+
+				<!-- graph.def mapping files -->
+				<value>org/jbpm/graph/def/ProcessDefinition.hbm.xml</value>
+				<value>org/jbpm/graph/def/Node.hbm.xml</value>
+				<value>org/jbpm/graph/def/Transition.hbm.xml</value>
+				<value>org/jbpm/graph/def/Event.hbm.xml</value>
+				<value>org/jbpm/graph/def/Action.hbm.xml</value>
+				<value>org/jbpm/graph/def/SuperState.hbm.xml</value>
+				<value>org/jbpm/graph/def/ExceptionHandler.hbm.xml</value>
+				<value>org/jbpm/instantiation/Delegation.hbm.xml</value>
+			
+				<!-- graph.node mapping files -->
+				<value>org/jbpm/graph/node/StartState.hbm.xml</value>
+				<value>org/jbpm/graph/node/EndState.hbm.xml</value>
+				<value>org/jbpm/graph/node/ProcessState.hbm.xml</value>
+				<value>org/jbpm/graph/node/Decision.hbm.xml</value>
+				<value>org/jbpm/graph/node/Fork.hbm.xml</value>
+				<value>org/jbpm/graph/node/Join.hbm.xml</value>
+				<value>org/jbpm/graph/node/State.hbm.xml</value>
+				<value>org/jbpm/graph/node/TaskNode.hbm.xml</value>
+			
+				<!-- context.def mapping files -->
+				<value>org/jbpm/context/def/ContextDefinition.hbm.xml</value>
+				<value>org/jbpm/context/def/VariableAccess.hbm.xml</value>
+			
+				<!-- taskmgmt.def mapping files -->
+				<value>org/jbpm/taskmgmt/def/TaskMgmtDefinition.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/def/Swimlane.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/def/Task.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/def/TaskController.hbm.xml</value>
+			
+				<!-- module.def mapping files -->
+				<value>org/jbpm/module/def/ModuleDefinition.hbm.xml</value>
+			
+				<!-- bytes mapping files -->
+				<value>org/jbpm/bytes/ByteArray.hbm.xml</value>
+			
+				<!-- file.def mapping files -->
+				<value>org/jbpm/file/def/FileDefinition.hbm.xml</value>
+			
+				<!-- scheduler.def mapping files -->
+				<value>org/jbpm/scheduler/def/CreateTimerAction.hbm.xml</value>
+				<value>org/jbpm/scheduler/def/CancelTimerAction.hbm.xml</value>
+			
+				<!-- graph.exe mapping files -->
+				<value>org/jbpm/graph/exe/Comment.hbm.xml</value>
+				<value>org/jbpm/graph/exe/ProcessInstance.hbm.xml</value>
+				<value>org/jbpm/graph/exe/Token.hbm.xml</value>
+				<value>org/jbpm/graph/exe/RuntimeAction.hbm.xml</value>
+			
+				<!-- module.exe mapping files -->
+				<value>org/jbpm/module/exe/ModuleInstance.hbm.xml</value>
+			
+				<!-- context.exe mapping files -->
+				<value>org/jbpm/context/exe/ContextInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/TokenVariableMap.hbm.xml</value>
+				<value>org/jbpm/context/exe/VariableInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/ByteArrayInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/DateInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/DoubleInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/HibernateLongInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/HibernateStringInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/LongInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/NullInstance.hbm.xml</value>
+				<value>org/jbpm/context/exe/variableinstance/StringInstance.hbm.xml</value>
+			
+				<!-- job mapping files -->
+				<value>org/jbpm/job/Job.hbm.xml</value>
+				<value>org/jbpm/job/Timer.hbm.xml</value>
+				<value>org/jbpm/job/ExecuteNodeJob.hbm.xml</value>
+				<value>org/jbpm/job/ExecuteActionJob.hbm.xml</value>
+			
+				<!-- taskmgmt.exe mapping files -->
+				<value>org/jbpm/taskmgmt/exe/TaskMgmtInstance.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/exe/TaskInstance.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/exe/PooledActor.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/exe/SwimlaneInstance.hbm.xml</value>
+				
+				<!--  mail mapping files  --> 
+				 <value>org/jbpm/graph/node/MailNode.hbm.xml</value> 
+				<value>org/jbpm/graph/action/MailAction.hbm.xml</value> 
+  
+				<!-- logging mapping files -->
+				<value>org/jbpm/logging/log/ProcessLog.hbm.xml</value>
+				<value>org/jbpm/logging/log/MessageLog.hbm.xml</value>
+				<value>org/jbpm/logging/log/CompositeLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/ActionLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/NodeLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/ProcessInstanceCreateLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/ProcessInstanceEndLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/ProcessStateLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/SignalLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/TokenCreateLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/TokenEndLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/TransitionLog.hbm.xml</value>
+				<value>org/jbpm/context/log/VariableLog.hbm.xml</value>
+				<value>org/jbpm/context/log/VariableCreateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/VariableDeleteLog.hbm.xml</value>
+				<value>org/jbpm/context/log/VariableUpdateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/variableinstance/ByteArrayUpdateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/variableinstance/DateUpdateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/variableinstance/DoubleUpdateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/variableinstance/HibernateLongUpdateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/variableinstance/HibernateStringUpdateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/variableinstance/LongUpdateLog.hbm.xml</value>
+				<value>org/jbpm/context/log/variableinstance/StringUpdateLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/TaskLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/TaskCreateLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/TaskAssignLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/TaskEndLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/SwimlaneLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/SwimlaneCreateLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/SwimlaneAssignLog.hbm.xml</value>
+						
+			</list>
+		</property>
+		
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>/WEB-INF/classes/com/digitalchina/${webAppPkgName}/**/entity/map/</value>
+			</list>
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop><!-- Oracle9 -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<!-- <prop key="hibernate.jdbc.batch_size">10</prop>-->
+				<!-- <prop key="current_session_context_class">thread</prop>-->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.OSCacheProvider</prop>
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="connection.pool_size">10</prop> -->
+			</props> 
+		</property>	
+		
+	</bean>
+	
+    <!-- 配置daoSupport，老架构 -->
+    <bean id="daoSupport" class="com.digitalchina.info.framework.orm.hibernate.DaoSupportHibernate3Imp">
+    	<property name="sessionFactory"><ref bean="pmcSessionFactory"/></property>
+    </bean>
+    
+    <!-- Dao基类，新架构 -->
+    <bean id="baseDao" class="com.digitalchina.info.framework.dao.BaseDao">
+    	<property name="sessionFactory"><ref bean="pmcSessionFactory"/></property>
+    </bean>
+    
+    <!-- Service基类，新架构 -->
+    <bean id="baseService" class="com.digitalchina.info.framework.service.BaseService">
+    	<property name="dao"><ref bean="baseDao"/></property>
+    </bean>
+    
+    <!-- 配置JdbcTemplate，老架构 -->
+    <bean id="jdbcTemplate" class="com.digitalchina.info.framework.orm.jdbc.MyJdbcTemplate">
+    	<property name="dataSource"><ref bean="pmcDataSource"/></property>
+    </bean>
+    
+    <bean id="jdbcMetaDataAware" class="com.digitalchina.info.framework.orm.jdbc.JdbcMetaDataAwareImpl">
+    	<property name="jdbcTemplate"><ref bean="jdbcTemplate"/></property>
+    </bean>
+    
+    
+	<!-- 配置TransactionManager -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="pmcDataSource"/>
+	</bean>
+
+	<!-- Dao异常自动日志记录  
+	<bean id="daoMethodAroundAdvice" 
+	      class="com.digitalchina.info.framework.interceptor.DaoExceptionAroundBean"/>
+	<aop:config>
+		<aop:pointcut id="daoMethodPointcut" 
+			expression="execution(* com.digitalchina.pmc..*Dao.*(..))"/>
+		<aop:aspect id="daoMethodExceptionAutoLogAspect" ref="daoMethodAroundAdvice">
+			<aop:around pointcut-ref="daoMethodPointcut" method="aroundDaoMethodCalls"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+
+	
+	<!-- 事务拦截器，对所有业务模块的服务方法进行代理拦截  -->
+	<!-- Transction Intercetor's Template -->
+    <bean id="transactionIntercetorTemplate" abstract="true">
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="fetch*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="is*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="findSystemColumns">PROPAGATION_REQUIRED</prop>
+                <prop key="findUserColumn*">PROPAGATION_REQUIRED</prop>
+                <prop key="findSystemTableQueryColumn">PROPAGATION_REQUIRED</prop>
+                <prop key="findSystemTableRoleColumn">PROPAGATION_REQUIRED</prop>
+                <prop key="audit*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="pass*">PROPAGATION_REQUIRED</prop>
+                <prop key="submit*">PROPAGATION_REQUIRED</prop>
+                <prop key="modify*">PROPAGATION_REQUIRED</prop>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="insert*">PROPAGATION_REQUIRED</prop>
+                <prop key="import*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="synchroI*">PROPAGATION_REQUIRED</prop>
+                <prop key="post*">PROPAGATION_REQUIRED</prop>
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+                
+            </props>
+        </property>
+    </bean>
+    
+    
+    
+    <!-- Hibernate Transaction Interceptor Definition -->
+    <bean id="hibernateTransactionInterceptor"
+        class="org.springframework.transaction.interceptor.TransactionInterceptor"
+        >
+        <property name="transactionManager">
+            <bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+                <property name="sessionFactory">
+                    <ref bean="pmcSessionFactory" />
+                </property>
+            </bean>
+        </property>
+        
+         <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="fetch*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="is*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="findSystemColumns">PROPAGATION_REQUIRED</prop>
+                <prop key="findUserColumn*">PROPAGATION_REQUIRED</prop>
+                <prop key="findSystemTableQueryColumn">PROPAGATION_REQUIRED</prop>
+                <prop key="findSystemTableRoleColumn">PROPAGATION_REQUIRED</prop>
+                <prop key="audit*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="pass*">PROPAGATION_REQUIRED</prop>
+                <prop key="submit*">PROPAGATION_REQUIRED</prop>
+                <prop key="modify*">PROPAGATION_REQUIRED</prop>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="end*">PROPAGATION_REQUIRED</prop>
+                <prop key="insert*">PROPAGATION_REQUIRED</prop>
+                <prop key="import*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="synchroI*">PROPAGATION_REQUIRED</prop>
+                <prop key="post*">PROPAGATION_REQUIRED</prop>
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+                
+            </props>
+        </property>
+        
+    </bean>
+    
+    
+    
+     <!-- Jdbc Transaction Interceptor Definition -->
+    <bean id="jdbcTransactionInterceptor"
+        class="org.springframework.transaction.interceptor.TransactionInterceptor"
+        parent="transactionIntercetorTemplate">
+        <property name="transactionManager">
+            <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+                <property name="dataSource">
+                    <ref bean="pmcDataSource" />
+                </property>
+            </bean>
+        </property>
+    </bean>
+	
+	<!-- 设置邮件通知 
+	<bean id="mailSenderServiceAdvice" class="com.digitalchina.info.framework.interceptor.SendEmailAdvice">
+		<property name="mailSenderService" ref="mailSenderService"/>
+	    <property name="userInfoDao" ref="userInfoDao"/>
+		<property name="mailListDao" ref="mailListDao"/>
+	</bean>
+	
+	<bean id="mailAutoSendPointcutAdvisor"
+		class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="mappedNames">
+			<list>
+				<value>audit*</value>
+				<value>submit*</value>
+			</list>
+		</property>
+		<property name="advice">
+			<ref bean="mailSenderServiceAdvice"/>
+		</property>
+	</bean>-->
+	
+	<!-- 用户、角色、权限修改后安全缓存更新 -->
+	<bean id="userOrResourceChageAdvice" class="com.digitalchina.info.framework.aop.interceptor.UserOrResourceChageAdvice">
+		<property name="acegiCacheService" ref="acegiCacheService"/>
+	</bean>
+	<bean id="userOrResourceChageAdvisor"
+		class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="mappedNames">
+			<list>
+				<value>saveUser*</value>
+				<value>removeUser*</value>
+				<value>saveResource*</value>
+				<value>removeResource*</value>
+				<value>saveRole*</value>
+				<value>removeRole*</value>
+				<value>saveRight*</value>
+				<value>removeRight*</value>
+				<value>saveAuthor*</value>
+				<value>removeAuthor*</value>
+			</list>
+		</property>
+		<property name="advice">
+			<ref bean="userOrResourceChageAdvice"/>
+		</property>
+	</bean>
+	
+    <!-- 定义自动代理生成器 -->
+    <bean id="autoProxyCreator"
+        class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+				<idref bean="mailAutoSendPointcutAdvisor"/>
+                <idref bean="hibernateTransactionInterceptor" />
+				<idref bean="jdbcTransactionInterceptor" />
+				<idref bean="methodSecurityInterceptor" />
+				<idref bean="userOrResourceChageAdvisor"/>
+            </list>
+        </property>
+        <property name="beanNames">
+            <value>*Service</value> 
+        </property>
+    </bean> 
+	
+	 <!-- 邮件发送 -->
+    <bean name="mailSenderService" class="com.digitalchina.info.framework.message.mail.service.impl.MailSenderServiceImpl">
+		  <property name="mailSender" ref="mailSender"/>
+		  <property name="uis" ref="userInfoService"/>
+		  <property name="dao" ref="baseDao"/>
+	</bean>
+	
+	<bean id="mailSenderDao" class="com.digitalchina.info.framework.message.mail.dao.impl.SendMailDaoImpl">
+    	<property name="sessionFactory" ref="pmcSessionFactory"/>
+    </bean>
+    
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>${system.mail.sendmail.host}</value>
+		</property>
+		<property name="port">
+			<value>${system.mail.sendmail.port}</value>
+		</property>
+		<property name="username">
+			<value>${system.mail.sendmail.userName}</value>
+		</property>
+		<property name="password">
+			<value>${system.mail.sendmail.passWord}</value>
+		</property>
+		<property name="javaMailProperties">
+	   <props>
+	    <prop key="mail.smtp.auth">${system.mail.sendmail.auth}</prop>
+	    <prop key="mail.smtp.timeout">25000</prop>
+	   </props>
+	  </property>
+	</bean>
+	
+	<!-- 设置邮件通知 -->
+	<bean id="mailSenderServiceAdvice" class="com.digitalchina.info.framework.aop.interceptor.SendEmailAdvice">
+		<property name="mailSenderService" ref="mailSenderService"/>
+	</bean>
+	
+	<bean id="mailAutoSendPointcutAdvisor"
+		class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="mappedNames">
+			<list>
+				<value>getMapFromInform*</value>
+			</list>
+		</property>
+		<property name="advice">
+			<ref bean="mailSenderServiceAdvice"/>
+		</property>
+	</bean>
+</beans>

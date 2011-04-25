@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.digitalchina.info.framework.security.entity" default-access="field">
+
+    <class name="Province" table="sys_Province" 
+    	   dynamic-insert="true" dynamic-update="true">
+       
+        <id name="id" type="long"  column="ID" >
+            <generator class="native" /> 
+        </id>
+        			
+        <property name="name" type="string" column="name"/>       
+      
+        <property name="keyword" type="string" column="keyword"/>
+    </class>
+</hibernate-mapping>

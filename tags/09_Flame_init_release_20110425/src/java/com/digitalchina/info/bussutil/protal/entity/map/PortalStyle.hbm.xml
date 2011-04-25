@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.digitalchina.info.bussutil.protal.entity.PortalStyle"
+		table="sys_portal_style">
+		<id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+		<property name="name" type="string">
+			<column name="name"></column>
+		</property>
+		<property name="createTime" type="timestamp" update="false">
+			<column name="createTime"></column>  
+		</property>
+
+		<set name="portalContainers" cascade="save-update"
+			inverse="true">
+			<key>
+				<column name="portalStyle_id" length="32"></column>
+			</key>
+			<one-to-many
+				class="com.digitalchina.info.bussutil.protal.entity.PortalContainer" />
+		</set>
+
+	</class>
+</hibernate-mapping>

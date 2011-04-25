@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+           default-autowire="byName" 
+           >
+   
+ 	<bean id="securityManageDao" class="com.digitalchina.info.framework.security.dao.impl.SecurityManageDaoImpl">
+		<property name="daoSupport" ref="daoSupport"/>
+	</bean>
+	
+	<bean id="securityManageService" class="com.digitalchina.info.framework.security.service.impl.SecurityManageServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="securityManageDao" ref="securityManageDao"/>
+	</bean>
+	
+	<bean id="userMenuService" class="com.digitalchina.info.appframework.template.service.impl.UserMenuServiceImpl">
+		<property name="userMenuDao" ref="userMenuDao"/>
+	</bean>
+	
+	<bean id="metaDataDao" class="com.digitalchina.info.appframework.metadata.dao.impl.MetaDataDaoImpl">
+		<property name="daoSupport" ref="daoSupport"/>
+		<property name="jdbcMetaData" ref="jdbcMetaDataAware"/>
+	</bean>
+	
+	<bean id="userMenuDao" class="com.digitalchina.info.appframework.template.dao.impl.UserMenuDaoImpl">
+		<property name="daoSupport" ref="daoSupport"/>
+	</bean>
+	
+	<bean id="metaDataService" class="com.digitalchina.info.appframework.metadata.service.impl.MetaDataServiceImpl">
+		<property name="metaDataDao" ref="metaDataDao"/>
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<!-- applicationContext.xml文件用于公用模块的配置 -->  
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>ApplicationResources</value>
+				<value>SecurityResources</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 简单Ldap验证服务，计划用AcegiSecurity替换 -->
+	<bean name="ldapService" class="com.digitalchina.info.framework.security.service.impl.LDAPAuthenticationImpl">
+	</bean>
+	
+	<!-- 系统菜单服务 -->
+	<bean id="menuService" class="com.digitalchina.info.appframework.template.service.impl.MenuServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="menuDao" class="com.digitalchina.info.appframework.template.dao.impl.MenuDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<!-- 系统模板服务-->
+	<bean id="templateService" class="com.digitalchina.info.appframework.template.service.impl.TemplateServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="deptService" class="com.digitalchina.info.framework.security.service.impl.DepartmentServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="platService" class="com.digitalchina.info.framework.security.service.impl.PlatformServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+</beans>

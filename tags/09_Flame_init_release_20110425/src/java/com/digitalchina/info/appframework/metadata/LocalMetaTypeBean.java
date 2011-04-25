@@ -1,0 +1,12 @@
+package com.digitalchina.info.appframework.metadata;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.digitalchina.info.appframework.metadata.type.MetaType;
+
+public class LocalMetaTypeBean {
+
+	private Map<String, MetaType> metaTypes = 
+					new HashMap<String, MetaType>();
+}

@@ -1,0 +1,16 @@
+张鹏-zhangpengf于2009年7月27日增加了用户操作日志记录入数据库的功能。
+童俊彭-tongjp于2009年7月31日向框架移入portal的相关代码。
+童俊彭-tongjp于2009年8月4日向框架移入itil的userinfo的相关代码和工作流更新部分。
+userinfo表新增属性如下：
+*****************************************************
+	private SameMailDept sameMailDept;//邮件等价名部门
+	private String costCenterCode;	//成本中心编号
+	private WorkSpace workSpace;	//工作地点
+	private MailServer mailServer;		//邮件服务器
+	private UserType userType;		//员工身份类型
+	private PersonnelScope personnelScope;	//人事子范围
+	private Integer isTemp;			//是否为临时用户
+	private Integer	isAccredited;
+*****************************************************
+童俊彭-tongjp于2009年8月21日把规则放到DefaultContextLoaderListener中，服务启动时加载上。
+童俊彭-tongjp于2009年9月7日向框架移入sell的角色部分的身份的相关代码
