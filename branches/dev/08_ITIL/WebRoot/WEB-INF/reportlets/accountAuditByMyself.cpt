@@ -26,8 +26,8 @@ FROM ITIL_VIEW_ACCOUNTAUDIT INNER JOIN
 where 1=1
 ${if(len(itcode)==0,nofilter,"and ITIL_VIEW_ACCOUNTAUDIT.userName = '" + itcode + "'" )}
 ${if(len(type)==0,nofilter,"and ITIL_VIEW_ACCOUNTAUDIT.definitionName = '" + type + "'" )}
-${if(len(start)==0,nofilter,"and ITIL_VIEW_ACCOUNTAUDIT.approverDate >= '" + start + "'" )}
-${if(len(end)==0,nofilter,"and ITIL_VIEW_ACCOUNTAUDIT.approverDate <= '" + end + "'" )}
+${if(len(start)==0,nofilter,"and applyDate >= '" + start + "'" )}
+${if(len(end)==0,nofilter,"and applyDate <= '" + end + "'" )}
 ]]></Query></TableData><TableData name="ds2" class="com.fr.data.impl.DBTableData"><Parameters/><Attributes maxMemRowCount="-1"/><Connection class="com.fr.data.impl.NameDatabaseConnection"><DatabaseName><![CDATA[itil]]></DatabaseName></Connection><Query><![CDATA[select ServiceItemProcess.definitionName 
 from ServiceItemProcess,
 (SELECT distinct serviceItem
