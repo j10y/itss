@@ -177,10 +177,5 @@
         	<result name="temp_menu_json">/infoAdmin/menu/temp_menu_json.jsp</result>
         	<result name="user_menu_json">/menu_json.jsp</result>
         </action>
-        <!-- 财务部分 -->
-        <action name="userCostInput_*" class="/finance/userCostInputAction" method="{1}">
-        </action>
-        <action name="CostHandInputAction_*" class="/finance/costHandInputAction" method="{1}">
-        </action>
    </package>
 </struts>
