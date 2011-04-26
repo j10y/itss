@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.dao;
+package com.zsgj.itil.account.dao;
 import com.digitalchina.info.framework.dao.support.Page;
 
 public interface AccountSystemAdminDao {
