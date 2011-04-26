@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.dao.impl;
+package com.zsgj.itil.account.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +9,8 @@ import java.sql.Statement;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.digitalchina.info.framework.exception.DaoException;
-import com.digitalchina.itil.account.dao.PersonnelScopeSynDao;
-import com.digitalchina.itil.account.service.DataBaseConnection;
+import com.zsgj.itil.account.dao.PersonnelScopeSynDao;
+import com.zsgj.itil.account.service.DataBaseConnection;
 
 public class PersonnelScopeSynDaoImpl extends JdbcDaoSupport implements PersonnelScopeSynDao {
 	

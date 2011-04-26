@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.dao.impl;
+package com.zsgj.itil.account.dao.impl;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -8,15 +8,15 @@ import org.hibernate.criterion.Restrictions;
 import com.digitalchina.info.framework.dao.BaseDao;
 import com.digitalchina.info.framework.security.entity.SameMailDept;
 import com.digitalchina.info.framework.security.entity.WorkSpace;
-import com.digitalchina.itil.account.dao.AccountSystemAdminDao;
-import com.digitalchina.itil.account.entity.AccountSBUOfficer;
-import com.digitalchina.itil.account.entity.SpecialAccount;
-import com.digitalchina.itil.actor.entity.RAndBUserList;
-import com.digitalchina.itil.config.extlist.entity.MailGroup;
-import com.digitalchina.itil.config.extlist.entity.MobileTelAllowance;
-import com.digitalchina.itil.config.extlist.entity.PlatFormHRCountSign;
-import com.digitalchina.itil.config.extlist.entity.TelephoneCountSign;
 import com.digitalchina.info.framework.dao.support.Page;
+import com.zsgj.itil.account.dao.AccountSystemAdminDao;
+import com.zsgj.itil.account.entity.AccountSBUOfficer;
+import com.zsgj.itil.account.entity.SpecialAccount;
+import com.zsgj.itil.actor.entity.RAndBUserList;
+import com.zsgj.itil.config.extlist.entity.MailGroup;
+import com.zsgj.itil.config.extlist.entity.MobileTelAllowance;
+import com.zsgj.itil.config.extlist.entity.PlatFormHRCountSign;
+import com.zsgj.itil.config.extlist.entity.TelephoneCountSign;
 
 public class AccountSystemAdminDaoImpl extends BaseDao implements AccountSystemAdminDao {
 
