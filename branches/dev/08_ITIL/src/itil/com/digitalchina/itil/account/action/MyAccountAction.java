@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.action;
+package com.zsgj.itil.account.action;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import com.digitalchina.info.framework.context.UserContext;
 import com.digitalchina.info.framework.security.entity.UserInfo;
 import com.digitalchina.info.framework.service.Service;
 import com.digitalchina.info.framework.web.adapter.struts.BaseDispatchAction;
-import com.digitalchina.itil.account.entity.MobileTelephoneApply;
-import com.digitalchina.itil.account.entity.PersonFormalAccount;
-import com.digitalchina.itil.account.entity.SpecialAccount;
-import com.digitalchina.itil.account.service.AccountService;
+import com.zsgj.itil.account.entity.MobileTelephoneApply;
+import com.zsgj.itil.account.entity.PersonFormalAccount;
+import com.zsgj.itil.account.entity.SpecialAccount;
+import com.zsgj.itil.account.service.AccountService;
 
 
 /**

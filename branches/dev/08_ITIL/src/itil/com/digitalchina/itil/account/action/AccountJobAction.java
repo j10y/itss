@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.action;
+package com.zsgj.itil.account.action;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,7 @@ import com.digitalchina.info.framework.message.mail.service.MailSenderService;
 import com.digitalchina.info.framework.security.entity.UserInfo;
 import com.digitalchina.info.framework.service.BaseService;
 import com.digitalchina.info.framework.web.adapter.struts2.BaseAction;
-import com.digitalchina.itil.account.entity.SpecialAccount;
+import com.zsgj.itil.account.entity.SpecialAccount;
 
 public class AccountJobAction extends BaseAction{
 	private BaseService baseSerivce = (BaseService)ContextHolder.getBean("baseSerivce");

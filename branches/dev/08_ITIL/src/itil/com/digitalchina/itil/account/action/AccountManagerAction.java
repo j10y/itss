@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.action;
+package com.zsgj.itil.account.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,21 +31,21 @@ import com.digitalchina.info.framework.workflow.ParameterService;
 import com.digitalchina.info.framework.workflow.ProcessService;
 import com.digitalchina.info.framework.workflow.TaskService;
 import com.digitalchina.info.framework.workflow.info.TaskInfo;
-import com.digitalchina.itil.account.entity.AccountSBUOfficer;
-import com.digitalchina.itil.account.entity.AccountType;
-import com.digitalchina.itil.account.entity.PersonFormalAccount;
-import com.digitalchina.itil.account.entity.SpecialAccount;
-import com.digitalchina.itil.account.entity.Win7PlatForm;
-import com.digitalchina.itil.account.service.AccountService;
-import com.digitalchina.itil.config.extlist.entity.AR_DrawSpace;
-import com.digitalchina.itil.config.extlist.entity.HRSAccountManger;
-import com.digitalchina.itil.config.extlist.entity.PlatFormHRCountSign;
-import com.digitalchina.itil.config.extlist.entity.TelephoneAudit;
-import com.digitalchina.itil.config.extlist.entity.TelephoneCountSign;
-import com.digitalchina.itil.require.entity.AccountApplyMainTable;
-import com.digitalchina.itil.require.entity.HRSAccountApply;
-import com.digitalchina.itil.service.entity.ServiceItem;
-import com.digitalchina.itil.service.entity.ServiceItemUserTable;
+import com.zsgj.itil.account.entity.AccountSBUOfficer;
+import com.zsgj.itil.account.entity.AccountType;
+import com.zsgj.itil.account.entity.PersonFormalAccount;
+import com.zsgj.itil.account.entity.SpecialAccount;
+import com.zsgj.itil.account.entity.Win7PlatForm;
+import com.zsgj.itil.account.service.AccountService;
+import com.zsgj.itil.config.extlist.entity.AR_DrawSpace;
+import com.zsgj.itil.config.extlist.entity.HRSAccountManger;
+import com.zsgj.itil.config.extlist.entity.PlatFormHRCountSign;
+import com.zsgj.itil.config.extlist.entity.TelephoneAudit;
+import com.zsgj.itil.config.extlist.entity.TelephoneCountSign;
+import com.zsgj.itil.require.entity.AccountApplyMainTable;
+import com.zsgj.itil.require.entity.HRSAccountApply;
+import com.zsgj.itil.service.entity.ServiceItem;
+import com.zsgj.itil.service.entity.ServiceItemUserTable;
 /**
  * 账号管理相关流程处理
  * @Class Name AccountManagerAction

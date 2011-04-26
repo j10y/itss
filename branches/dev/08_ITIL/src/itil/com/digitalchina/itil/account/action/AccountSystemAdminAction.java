@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.action;
+package com.zsgj.itil.account.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,20 +16,20 @@ import com.digitalchina.info.framework.security.entity.WorkSpace;
 import com.digitalchina.info.framework.util.DateUtil;
 import com.digitalchina.info.framework.util.HttpUtil;
 import com.digitalchina.info.framework.web.adapter.struts2.BaseAction;
-import com.digitalchina.itil.account.entity.AccountModifyDesc;
-import com.digitalchina.itil.account.entity.AccountSBUOfficer;
-import com.digitalchina.itil.account.entity.AccountType;
-import com.digitalchina.itil.account.entity.DeviceType;
-import com.digitalchina.itil.account.entity.SpecialAccount;
-import com.digitalchina.itil.account.entity.SystemAppAdmin;
-import com.digitalchina.itil.account.entity.Win7PlatForm;
-import com.digitalchina.itil.account.service.AccountService;
-import com.digitalchina.itil.account.service.AccountSystemAdminService;
-import com.digitalchina.itil.actor.entity.RAndBUserList;
-import com.digitalchina.itil.config.extlist.entity.MailGroup;
-import com.digitalchina.itil.config.extlist.entity.MobileTelAllowance;
-import com.digitalchina.itil.config.extlist.entity.PlatFormHRCountSign;
-import com.digitalchina.itil.config.extlist.entity.TelephoneCountSign;
+import com.zsgj.itil.account.entity.AccountModifyDesc;
+import com.zsgj.itil.account.entity.AccountSBUOfficer;
+import com.zsgj.itil.account.entity.AccountType;
+import com.zsgj.itil.account.entity.DeviceType;
+import com.zsgj.itil.account.entity.SpecialAccount;
+import com.zsgj.itil.account.entity.SystemAppAdmin;
+import com.zsgj.itil.account.entity.Win7PlatForm;
+import com.zsgj.itil.account.service.AccountService;
+import com.zsgj.itil.account.service.AccountSystemAdminService;
+import com.zsgj.itil.actor.entity.RAndBUserList;
+import com.zsgj.itil.config.extlist.entity.MailGroup;
+import com.zsgj.itil.config.extlist.entity.MobileTelAllowance;
+import com.zsgj.itil.config.extlist.entity.PlatFormHRCountSign;
+import com.zsgj.itil.config.extlist.entity.TelephoneCountSign;
 
 public class AccountSystemAdminAction extends BaseAction{
 	private AccountSystemAdminService accountSystemAdminService = (AccountSystemAdminService) getBean("accountSystemAdminService");

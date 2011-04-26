@@ -1,4 +1,4 @@
-package com.digitalchina.itil.account.action;
+package com.zsgj.itil.account.action;
 
 import java.io.PrintWriter;
 import java.text.NumberFormat;
@@ -25,10 +25,10 @@ import com.digitalchina.info.framework.workflow.ConfigUnitService;
 import com.digitalchina.info.framework.workflow.ProcessService;
 import com.digitalchina.info.framework.workflow.info.HistoryInfo;
 import com.digitalchina.info.framework.workflow.info.TaskInfo;
-import com.digitalchina.itil.account.service.AccountService;
-import com.digitalchina.itil.require.entity.AccountApplyMainTable;
-import com.digitalchina.itil.service.entity.ServiceItemApplyAuditHis;
-import com.digitalchina.itil.service.entity.ServiceItemProcess;
+import com.zsgj.itil.account.service.AccountService;
+import com.zsgj.itil.require.entity.AccountApplyMainTable;
+import com.zsgj.itil.service.entity.ServiceItemApplyAuditHis;
+import com.zsgj.itil.service.entity.ServiceItemProcess;
 
 public class AccountMailSendAction extends BaseAction {
 	private MailSenderService ms = (MailSenderService) ContextHolder.getBean("mailSenderService");
