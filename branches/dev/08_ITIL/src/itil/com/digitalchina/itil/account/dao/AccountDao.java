@@ -1,25 +1,25 @@
-package com.digitalchina.itil.account.dao;
+package com.zsgj.itil.account.dao;
 
 import java.util.List;
 
 import com.digitalchina.info.framework.dao.support.Page;
 import com.digitalchina.info.framework.security.entity.UserInfo;
-import com.digitalchina.itil.account.entity.AccountModifyDesc;
-import com.digitalchina.itil.account.entity.AccountModifyRecord;
-import com.digitalchina.itil.account.entity.AccountNewAppAdmin;
-import com.digitalchina.itil.account.entity.AccountSBUOfficer;
-import com.digitalchina.itil.account.entity.DCContacts;
-import com.digitalchina.itil.account.entity.MobileTelephoneApply;
-import com.digitalchina.itil.account.entity.PersonFormalAccount;
-import com.digitalchina.itil.account.entity.SpecialAccount;
-import com.digitalchina.itil.account.entity.SystemAppAdmin;
-import com.digitalchina.itil.config.extci.entity.AppAdministrator;
-import com.digitalchina.itil.config.extlist.entity.MailForwardApply;
-import com.digitalchina.itil.config.extlist.entity.MailGroup;
-import com.digitalchina.itil.require.entity.AccountApplyMainTable;
-import com.digitalchina.itil.require.entity.HRSAccountApply;
-import com.digitalchina.itil.service.entity.ServiceItemApplyAuditHis;
-import com.digitalchina.itil.service.entity.ServiceItemProcess;
+import com.zsgj.itil.account.entity.AccountModifyDesc;
+import com.zsgj.itil.account.entity.AccountModifyRecord;
+import com.zsgj.itil.account.entity.AccountNewAppAdmin;
+import com.zsgj.itil.account.entity.AccountSBUOfficer;
+import com.zsgj.itil.account.entity.DCContacts;
+import com.zsgj.itil.account.entity.MobileTelephoneApply;
+import com.zsgj.itil.account.entity.PersonFormalAccount;
+import com.zsgj.itil.account.entity.SpecialAccount;
+import com.zsgj.itil.account.entity.SystemAppAdmin;
+import com.zsgj.itil.config.extci.entity.AppAdministrator;
+import com.zsgj.itil.config.extlist.entity.MailForwardApply;
+import com.zsgj.itil.config.extlist.entity.MailGroup;
+import com.zsgj.itil.require.entity.AccountApplyMainTable;
+import com.zsgj.itil.require.entity.HRSAccountApply;
+import com.zsgj.itil.service.entity.ServiceItemApplyAuditHis;
+import com.zsgj.itil.service.entity.ServiceItemProcess;
 
 /**
  * ’ ∫≈¥¶¿ÌDAO
