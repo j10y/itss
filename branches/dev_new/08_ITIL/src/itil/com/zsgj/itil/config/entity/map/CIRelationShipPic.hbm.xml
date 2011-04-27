@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.config.entity.CIRelationShipPic" table="CIRelationShipPic" 
+		dynamic-insert="true" dynamic-update="true">
+		
+		<id name="id" type="long">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		
+		<property name="name" type="string">
+			<column name="name"></column>
+		</property>
+		
+		<property name="beginDate" type="date">
+			<column name="beginDate"></column>
+		</property>
+		
+		<property name="endDate" type="date">
+			<column name="endDate"></column>
+		</property>
+		<property name="deleteFlag" type="integer">
+			<column name="deleteFlag"></column>
+		</property>
+		<many-to-one name="customerType" class="com.zsgj.itil.actor.entity.CustomerType">
+			<column name="customerType"></column>
+		</many-to-one>
+		<property name="customer" type="long">
+			<column name="customer"></column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

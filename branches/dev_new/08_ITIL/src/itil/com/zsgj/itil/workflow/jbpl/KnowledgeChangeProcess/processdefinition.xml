@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="KnowledgeChangeProcess">
+
+
+	<description>
+		解决方案变更审批流程
+	</description>
+
+
+	<start-state name="提交解决方案变更">
+		<description>
+			submit
+		</description>
+		<transition to="审批变更解决方案准确性"></transition>
+	</start-state>
+
+
+	<task-node name="审批变更解决方案准确性">
+		<description>
+			knowledgeApproval
+		</description>
+		<transition to="发布" name="Y"></transition>
+		<transition to="打回提交人" name="N"></transition>
+	</task-node>
+
+
+	<end-state name="发布">
+		<description>
+			publish
+		</description>
+	</end-state>
+
+	<end-state name="打回提交人">
+		<description>
+			goback
+		</description>
+	</end-state>
+
+
+</process-definition>

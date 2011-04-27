@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="businessAccount1" width="680" height="400">
+  <node name="提交" x="140" y="7" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="用户确认" x="141" y="100" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="125" h1="37" w2="-123" h2="37"/>
+    </edge>
+  </node>
+  <node name="财务处理" x="142" y="201" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="打回" x="389" y="100" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-122" h1="-37" w2="126" h2="-37"/>
+    </edge>
+  </node>
+  <node name="结束" x="143" y="297" width="132" height="36"/>
+  <node name="放弃" x="388" y="201" width="132" height="36"/>
+</root-container>

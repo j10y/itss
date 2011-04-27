@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.event.entity.ProblemHandleLog" table="ProblemHandleLog">
+		<id name="id" type="long">
+				<column name="id"></column>
+				<generator class="native"></generator>
+		</id>
+		<many-to-one name="problem" class="com.zsgj.itil.event.entity.Problem" >
+            <column name="problem" />
+        </many-to-one>	
+		<property name="handleLog" type="string">
+			<column name="handleLog"></column>
+		</property>
+		<many-to-one name="handleUser" class="com.zsgj.info.framework.security.entity.UserInfo" >
+            <column name="handleUser" />
+        </many-to-one>
+		<property name="handleDate" type="timestamp">
+			<column name="handleDate"></column>
+		</property>
+		 <property name="files" type="string">
+            <column name="files" />
+        </property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+     
+
+	<bean id="srService" class="com.zsgj.itil.require.service.impl.SRServiceImpl">
+	    <property name="srdao" ref="srdao"></property>
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>  
+	<bean id="srdao" class="com.zsgj.itil.require.dao.impl.SRDaoImpl">
+	   <property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>  
+	<bean id="srServiceItemService" class="com.zsgj.itil.project.service.impl.SRServiceItemServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="SRprojectPlanService" class="com.zsgj.itil.project.service.impl.SRProjectPlanServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean name="/project/SRprojectPlan" class="com.zsgj.itil.project.action.SRProjectPlanAction" scope="prototype"></bean>
+	<bean name="/service/sciRelationShip" class="com.zsgj.itil.service.action.SCIRelationShipAction" scope="prototype"></bean>
+	<bean name="/require/RequireSI" class="com.zsgj.itil.require.action.RequireSIAction" scope="prototype"></bean>
+	<bean name="/require/specialRequire" class="com.zsgj.itil.require.action.SpecialRequireAction" scope="prototype"></bean>
+	<bean name="/require/sra" class="com.zsgj.itil.require.action.SRAction" scope="prototype"></bean>
+    <bean name="/require/updatePlanAction" class="com.zsgj.itil.require.action.UpDatePlanAction" scope="prototype"/>
+
+</beans>
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="typicalRequire_new" width="633" height="614">
+  <node name="提交" x="175" y="15" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="本部审批" x="175" y="185" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="交付经理填写实施方案" x="164" y="266" width="156" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="52" h1="37" w2="54" h2="-42"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="事业部审批" x="385" y="101" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="用户确认" x="174" y="345" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="50" h1="38" w2="50" h2="-40"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-50" h1="-41" w2="-52" h2="38"/>
+    </edge>
+  </node>
+  <node name="交付经理实施并提交验收" x="156" y="423" width="168" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="48" h1="38" w2="49" h2="-40"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-51" h1="-40" w2="-51" h2="38"/>
+    </edge>
+  </node>
+  <node name="用户评价" x="173" y="501" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-46" h1="-41" w2="-47" h2="37"/>
+    </edge>
+  </node>
+  <node name="是否事业部审批" x="176" y="102" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="173" y="577" width="132" height="36"/>
+  <node name="打回" x="385" y="186" width="132" height="36"/>
+</root-container>

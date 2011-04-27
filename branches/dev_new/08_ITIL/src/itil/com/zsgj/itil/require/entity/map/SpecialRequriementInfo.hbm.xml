@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class
+		name="com.zsgj.itil.require.entity.SpecialRequirementInfo"
+		table="itil_req_SpecialRequirementInfo">
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<many-to-one name="specialRequire"
+			class="com.zsgj.itil.require.entity.SpecialRequirement">
+			<column name="specialRequire" />
+		</many-to-one>
+		<property name="projectName" type="string">
+			<column name="projectName"></column>
+		</property>
+		<property name="content" type="string">
+			<column name="content"></column>
+		</property>
+		<property name="startDate" type="date">
+		  <column name="STARTDATE"></column>
+		</property>
+		<property name="testBeginDate" type="date">
+		  <column name="TESTBEGINDATE"></column>
+		</property>
+		<property name="testEndDate" type="date">
+		  <column name="TESTENDDATE"></column>
+		</property>
+		<property name="finishDate" type="date">
+		  <column name="FINISHDATE"></column>
+		</property>
+		<property name="analyseFile" type="java.lang.String">
+		  <column name="analyseFile" ></column>
+		</property>
+		<property name="testFile" type="java.lang.String">
+		  <column name="testFile" ></column>
+		</property>
+		<property name="isComplete" type="java.lang.Integer">
+			<column name="isComplete"></column>
+		</property>
+		<property name="isContent" type="java.lang.Integer">
+			<column name="isContent"></column>
+		</property>
+		<property name="manHour" type="java.lang.Integer">
+			<column name="manHour"></column>
+		</property>
+		<property name="isTransmis" type="java.lang.Integer">
+			<column name="isTransmis"></column>
+		</property>
+		<many-to-one name="transmisEngineer"
+			class="com.zsgj.info.framework.security.entity.UserInfo">
+			<column name="transmisEngineer" />
+		</many-to-one>
+		<set name="erpApps" table="itil_req_SRErpApplicationTable" cascade="none">
+        	  <key column="srInfo"/>
+        	  <many-to-many class="com.zsgj.itil.require.entity.SRErpApplication" column="srApp"/>     
+        </set>
+		<property name="transContent" type="string">
+			<column name="transContent"></column>
+		</property>        
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.jfreeChart.entity.StatisticsColumn" table="StatisticsColumn" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+       	<many-to-one name="sysMainTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" lazy="false">
+            <column name="sysMainTableColumn" />
+        </many-to-one>
+        <!-- 
+        <many-to-one name="itemName" class="com.zsgj.itil.jfreeChart.entity.StatisticsPicture" lazy="false">
+            <column name="itemName" />
+        </many-to-one>
+        <many-to-one name="lableTickName" class="com.zsgj.itil.jfreeChart.entity.StatisticsPicture" lazy="false">
+            <column name="lableTickName" />
+        </many-to-one>
+         -->
+        <many-to-one name="statPicture" class="com.zsgj.itil.jfreeChart.entity.StatisticsPicture" lazy="false">
+            <column name="statPicture" />
+        </many-to-one>
+	</class>
+</hibernate-mapping>

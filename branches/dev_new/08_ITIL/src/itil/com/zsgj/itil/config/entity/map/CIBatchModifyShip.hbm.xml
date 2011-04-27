@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.config.entity.CIBatchModifyShip" table="CIBatchModifyShip">
+		<id name="id" type="long">
+				<column name="id" />
+				<generator class="native" />
+		</id>
+		<many-to-one name="problem" class="com.zsgj.itil.event.entity.Problem">
+			<column name="problem"></column>
+		</many-to-one>
+		<many-to-one name="specialRequirement" class="com.zsgj.itil.require.entity.SpecialRequirement">
+			<column name="specialRequirement"></column>
+		</many-to-one>
+		<many-to-one name="ciBatchModify" class="com.zsgj.itil.config.entity.CIBatchModify">
+			<column name="ciBatchModify"></column>
+		</many-to-one>
+		<many-to-one name="submitUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+			<column name="submitUser"></column>
+		</many-to-one>
+		
+	</class>
+
+</hibernate-mapping>

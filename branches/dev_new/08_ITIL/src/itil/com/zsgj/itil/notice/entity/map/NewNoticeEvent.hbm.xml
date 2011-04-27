@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.notice.entity.NewNoticeEvent" table="NewNoticeEvent">
+		<id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        
+        <property name="title" type="string">
+            <column name="title" length="50" />
+        </property>
+        <property name="newNoticeId" type="long">
+			<column name="newNoticeId"></column>
+		</property>
+        <property name="content" type="string">
+            <column name="content" length="255" />
+        </property>
+        <property name="auditflag" type="integer">
+			<column name="auditflag" default="0"></column>
+		</property>
+		<property name="remark" type="string">
+			<column name="remark"></column>
+		</property>
+		
+		<property name="beginDate" type="date">
+			<column name="beginDate"></column>
+		</property>	
+		
+		<property name="endDate" type="date">
+			<column name="endDate"></column>
+		</property>
+		
+		<many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+			<column name="createUser"></column>
+		</many-to-one>
+		
+		<property name="createDate" type="date">
+			<column name="createDate"></column>
+		</property>
+		
+		<property name="alterNoticeId" type="long">
+			<column name="alterNoticeId"></column>
+		</property>
+	</class>
+</hibernate-mapping>

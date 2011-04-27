@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.require.entity.ERP_NormalNeedEvent" table="itil_sci_ERP_NormalNeedEvent">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="rootId" type="java.lang.Long">
+			  <column name="ROOTID" ></column>
+			</property>
+			<property name="name" type="java.lang.String">
+			  <column name="NAME" ></column>
+			</property>
+			<many-to-one name="oldApply" class="com.zsgj.itil.require.entity.ERP_NormalNeed">
+		      <column name="OLDAPPLY" />
+		    </many-to-one>
+			<property name="processType" type="java.lang.Integer">
+			  <column name="PROCESSTYPE" ></column>
+			</property>
+			<property name="status" type="java.lang.Integer">
+			  <column name="STATUS" ></column>
+			</property>
+			<property name="deleteFlag" type="java.lang.Integer">
+			  <column name="DELETEFLAG" ></column>
+			</property>
+			<property name="serviceItem" type="java.lang.Long">
+			  <column name="SERVICEITEM" ></column>
+			</property>
+			<property name="applyNum" type="java.lang.String">
+			  <column name="APPLYNUM" ></column>
+			</property>
+			<property name="applyDate" type="date">
+			  <column name="APPLYDATE"></column>
+			</property>
+			<many-to-one name="applyDept" class="com.zsgj.info.framework.security.entity.Department">
+		      <column name="APPLYDEPT" />
+		    </many-to-one>
+			<property name="costConter" type="java.lang.String">
+			  <column name="COSTCONTER" ></column>
+			</property>
+			<many-to-one name="applyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="APPLYUSER" />
+		    </many-to-one>
+			<property name="tel" type="java.lang.String">
+			  <column name="TEL" ></column>
+			</property>
+			<many-to-one name="requireLevel" class="com.zsgj.itil.config.extlist.entity.RequirementLevel">
+		      <column name="REQUIRELEVEL" />
+		    </many-to-one>
+			<property name="reason" type="java.lang.String">
+			  <column name="REASON" ></column>
+			</property>
+			<property name="oldSystemLink" type="java.lang.String">
+			  <column name="OLDSYSTEMLINK" ></column>
+			</property>
+			<property name="actualStatus" type="java.lang.String">
+			  <column name="ACTUALSTATUS" ></column>
+			</property>
+			<property name="useStation" type="java.lang.String">
+			  <column name="USESTATION" ></column>
+			</property>
+			<property name="includeAndExpend" type="java.lang.String">
+			  <column name="INCLUDEANDEXPEND" ></column>
+			</property>
+			<property name="otherInfo" type="java.lang.String">
+			  <column name="OTHERINFO" ></column>
+			</property>
+			<set name="scope" table="itil_lst_ErpReqScope" cascade="none">
+        	  <key column="erpReq"/>
+        	  <many-to-many class="com.zsgj.itil.config.extlist.entity.ErpUseScope" column="ERPSCOPE"/>     
+        	</set>
+			<property name="attachment" type="java.lang.String">
+			  <column name="ATTACHMENT" ></column>
+			</property>
+			<many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="CREATEUSER" />
+		    </many-to-one>
+			<property name="createDate" type="date">
+			  <column name="CREATEDATE"></column>
+			</property>
+			<many-to-one name="modifyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="MODIFYUSER" />
+		    </many-to-one>
+			<property name="modifyDate" type="date">
+			  <column name="MODIFYDATE"></column>
+			</property>
+			<property name="isWM" type="java.lang.Integer">
+			  <column name="isWM" ></column>
+			</property>
+			<property name="isStore" type="java.lang.Integer">
+			  <column name="isStore" ></column>
+			</property>
+			<many-to-one name="flat" class="com.zsgj.itil.require.entity.RequireApplyDefaultAudit">
+		      <column name="flat" />
+		    </many-to-one>
+  </class>
+</hibernate-mapping>

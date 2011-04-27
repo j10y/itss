@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.finance.entity.FinanceCostCenter" table="ITIL_FinanceCostCenter" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="CBZXDM" type="string">
+            <column name="CBZXDM" />
+        </property>
+        <property name="YWFWDM" type="string">
+            <column name="YWFWDM" />
+        </property>
+        <property name="GSDM" type="string">
+            <column name="GSDM" />
+        </property>
+        <property name="DJBZ" type="string">
+            <column name="DJBZ" />
+        </property>
+         <property name="CBZXLX" type="string">
+            <column name="CBZXLX" />
+        </property>
+         <property name="LRZXDM" type="string">
+            <column name="LRZXDM" />
+        </property>
+        <property name="GCDM" type="string">
+            <column name="GCDM" />
+        </property>
+         <property name="CBZXMC" type="string">
+            <column name="CBZXMC" />
+        </property>
+        <property name="CBZXLXMC" type="string">
+            <column name="CBZXLXMC" />
+        </property>
+         <property name="ZZRQ" type="timestamp">
+            <column name="ZZRQ" />
+        </property>
+         <property name="CJRQ" type="timestamp">
+            <column name="CJRQ" />
+        </property>
+	</class>
+</hibernate-mapping>

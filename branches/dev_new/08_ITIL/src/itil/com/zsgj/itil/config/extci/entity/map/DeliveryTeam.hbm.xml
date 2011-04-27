@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.config.extci.entity.DeliveryTeam" table="itil_ci_DeliveryTeam" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="cisn"/>
+        
+        <property name="name"/>
+        
+        <property name="services"/>
+        
+  		<many-to-one name="department" class="com.zsgj.info.framework.security.entity.Department"/>
+     
+		<many-to-one name="principal" class="com.zsgj.info.framework.security.entity.UserInfo"/>
+		
+		<many-to-one name="contactUser" class="com.zsgj.info.framework.security.entity.UserInfo"/>
+		
+		<many-to-one name="technicalLeader" class="com.zsgj.info.framework.security.entity.UserInfo"/>
+	     
+		<many-to-one name="majordomo" class="com.zsgj.info.framework.security.entity.UserInfo"/>
+	</class>
+</hibernate-mapping>
