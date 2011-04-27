@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class
+		name="com.zsgj.info.bussutil.protal.entity.PortletSubscribe"
+		table="sys_portletSubscribe">
+		<id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+		<property name="name" type="string">
+			<column name="name" ></column>
+		</property>
+		<property name="x" type="string">
+			<column name="x" length="50"></column>
+		</property>
+		<property name="order" type="integer">
+		  <column name="orderindex"></column>
+		</property>
+		<property name="y" type="string">
+			<column name="y" length="50"></column>
+		</property>
+		<property name="createTime" type="timestamp" update="false">
+			<column name="createTime"></column>
+		</property>
+		<many-to-one name="protlet" column="portlet_id"
+			class="com.zsgj.info.bussutil.protal.entity.Portlet"
+			cascade="save-update" />
+
+		<many-to-one name="portalColumn" column="portalColumn_id"
+			class="com.zsgj.info.bussutil.protal.entity.PortalColumn"
+			cascade="save-update" />
+		
+		<property name="refresh" type="long">
+		  <column name="refresh"></column>
+		</property>
+		
+	</class>
+</hibernate-mapping>
