@@ -105,12 +105,12 @@ public class ConfigUnitTimerAction extends BaseDispatchAction {
 					}
 					String timeName = fileName.substring(fileName.lastIndexOf("\\") + 1);										
 					String filePath = FSP
-							+ "\\WEB-INF\\classes\\com\\digitalchina\\itil\\timerClass"
+							+ "\\WEB-INF\\classes\\com\\zsgj\\itil\\timerClass"
 							+ FSP + timeName;
 					String realPath = request.getRealPath(FSP) + filePath;
 					File uploadedFile = new File(realPath);
 					item.write(uploadedFile);
-					timeName = "/com/digitalchina/itil/timerClass/" + timeName;
+					timeName = "/com/zsgj/itil/timerClass/" + timeName;
 					timePath=timeName;
 					int p1 = fileName.lastIndexOf("\\");
 					int p2 = fileName.lastIndexOf("/");

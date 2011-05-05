@@ -113,7 +113,7 @@ public class Mail implements ActionHandler {
 			recipient= recipient.substring(0,recipient.length()-1);//这样就把发送人以分号形式形成了
 		}
 		if(recipient==null||"".equals(recipient)){//如果后台没有配置收件人
-			recipient = "flameDemo@digitalchina.com";
+			recipient = "flameDemo@zsgj.com";
 		}
 		return recipient;
 	}

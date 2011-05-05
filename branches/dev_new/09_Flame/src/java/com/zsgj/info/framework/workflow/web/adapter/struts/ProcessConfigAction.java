@@ -1163,7 +1163,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 		Iterator iter = items.iterator();
 		request.setCharacterEncoding(this.getProperties(
 				"system.characterEncoding", "gbk"));
-		String systemRulePath = PropertiesUtil.getProperties("workflow.rule.package","\\WEB-INF\\classes\\com\\digitalchina\\itil\\rules");
+		String systemRulePath = PropertiesUtil.getProperties("workflow.rule.package","\\WEB-INF\\classes\\com\\zsgj\\itil\\rules");
 		try {
 			while (iter.hasNext()) {
 				// 把实体换成map，然后保存
@@ -1188,7 +1188,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 
 					File uploadedFile = new File(realPath);
 					item.write(uploadedFile);
-					ruleName = PropertiesUtil.getProperties("workflow.rult.filePackage", "/com/digitalchina/itil/rules/") + ruleName;
+					ruleName = PropertiesUtil.getProperties("workflow.rult.filePackage", "/com/zsgj/itil/rules/") + ruleName;
 					rulePath = ruleName;
 					int p1 = fileName.lastIndexOf("\\");
 					int p2 = fileName.lastIndexOf("/");
