@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src/conf"/>
 	<classpathentry kind="src" path="src/itil"/>
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/09_Flame"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/acegi-security-1.0.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/activation.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/allanlxf.jar"/>
@@ -138,5 +137,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xfire-java5-1.2.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xfire-jaxb2-1.2.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xwork-2.0.5.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/09_Flame_1.1"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
