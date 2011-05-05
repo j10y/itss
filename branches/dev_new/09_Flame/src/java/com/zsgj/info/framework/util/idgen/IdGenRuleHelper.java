@@ -46,7 +46,7 @@ public class IdGenRuleHelper {
 //		}
 		
 		//FIXME,‘› ±¥¶¿Ì
-		rulePaths.add("/com/digitalchina/ibmb2b/order/rules/OrderProductLine.drl");
+		rulePaths.add("/com/zsgj/ibmb2b/order/rules/OrderProductLine.drl");
 		
 		return rulePaths;
 	}
@@ -63,7 +63,7 @@ public class IdGenRuleHelper {
 		List rulePaths = new ArrayList();
 		
 		//FIXME
-		rulePaths.add("/com/digitalchina/info/framework/workflow/rules/OrderProductLine.drl");
+		rulePaths.add("/com/zsgj/info/framework/workflow/rules/OrderProductLine.drl");
 		
 		return rulePaths;
 	}

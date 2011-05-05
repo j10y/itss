@@ -73,7 +73,7 @@ public class SystemTableIdGenServiceImpl extends BaseDao implements
 			map.put("dept", dept);
 			
 			if(ruleFile==null){
-				ruleFile = "/com/digitalchina/info/framework/util/idgen/systemTableIdGen.drl";
+				ruleFile = "/com/zsgj/info/framework/util/idgen/systemTableIdGen.drl";
 			}
 			nextValue = IdGenRuleMethodHelper.executeRule(ruleFile, map);
 			smtIdBuilder.setLatestValue(nextValue);

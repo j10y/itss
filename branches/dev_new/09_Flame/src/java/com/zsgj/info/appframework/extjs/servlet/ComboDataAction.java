@@ -74,7 +74,7 @@ public class ComboDataAction extends HttpServlet {
 		Class clazz = null;
 		
 		String pClazz = request.getParameter("clazz");
-		if(pClazz.equals("com.digitalchina.info.appframework.metadata.entity.ExtOptionData")){
+		if(pClazz.equals("com.zsgj.info.appframework.metadata.entity.ExtOptionData")){
 			clazz = getClass(pClazz);
 			Map requestParams = HttpUtil.requestParam2Map(request);
 			Page page = metaDataManager.query(clazz, requestParams, pageNo, pageSize, orderBy, isAsc);

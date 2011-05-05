@@ -277,9 +277,9 @@ public class BaseDao<T> extends HibernateGenericDao implements Dao<T> {
 	 * 获取指定类的所有持久化实例
 	 */
 	public List getObjects(Class clazz) {
-		if(entityClass.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+		if(entityClass.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 			logger.info("userInfo loadAll");
-		}else if(entityClass.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.Department")){
+		}else if(entityClass.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.Department")){
 			logger.info("department loadAll");
 		}
 		return loadAll(clazz);

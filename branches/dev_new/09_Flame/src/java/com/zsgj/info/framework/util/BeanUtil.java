@@ -205,7 +205,7 @@ public class BeanUtil {
 											if(result==null){
 												//begin如果前端因为某种原因没有传递ID，而是传递了"管理员/admin/神州数码"这样的文本
 												String className = clazz.getName();
-												if(className.equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+												if(className.equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 													String value = paramValue.toString();
 													int firstBias = value.indexOf("/");
 													//System.out.println("firstBias:"+ firstBias);

@@ -576,7 +576,7 @@ public class SystemMainColumnServiceImpl extends BaseDao implements SystemMainCo
 			smtc.setFileNamePrefix("file_");
 			
 			Criteria c = super.getCriteria(SystemMainTable.class);
-			c.add(Restrictions.eq("className", "com.digitalchina.info.appframework.metadata.entity.SystemFile"));
+			c.add(Restrictions.eq("className", "com.zsgj.info.appframework.metadata.entity.SystemFile"));
 			SystemMainTable smtFile = (SystemMainTable) c.uniqueResult();
 			
 			smtc.setForeignTable(smtFile);

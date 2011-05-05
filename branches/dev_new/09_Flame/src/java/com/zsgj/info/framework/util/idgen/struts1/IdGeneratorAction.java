@@ -99,8 +99,8 @@ public class IdGeneratorAction extends BaseDispatchAction {
 		String StrRuleFileName = request.getParameter("ruleFileName");
 		StrRuleFileName = StrRuleFileName.substring(StrRuleFileName
 				.lastIndexOf("\\") + 1);		
-		String systemRulePath = PropertiesUtil.getProperties("idgen.rule.package","\\WEB-INF\\classes\\com\\digitalchina\\info\\framework\\util\\idGen");
-		String systemRulePathDb = PropertiesUtil.getProperties("idgen.rult.filePackage","/com/digitalchina/info/framework/util/idgen/");
+		String systemRulePath = PropertiesUtil.getProperties("idgen.rule.package","\\WEB-INF\\classes\\com\\zsgj\\info\\framework\\util\\idGen");
+		String systemRulePathDb = PropertiesUtil.getProperties("idgen.rult.filePackage","/com/zsgj/info/framework/util/idgen/");
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		List items = upload.parseRequest(request);

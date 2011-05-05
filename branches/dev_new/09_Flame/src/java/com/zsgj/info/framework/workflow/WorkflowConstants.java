@@ -9,10 +9,10 @@ public interface WorkflowConstants {
 	public static final String FORM_FILE = "/workflowform.properties";
 	
 	//定制的Action所在包,默认值
-	public static final String DEFAULT_ACTION_PACKAGE = "com.digitalchina.info.framework.workflow.action";
+	public static final String DEFAULT_ACTION_PACKAGE = "com.zsgj.info.framework.workflow.action";
 	
 	//流程图所在包,默认值
-	public static final String DEFAULT_JPDL_PACKAGE = "com.digitalchina.info.framework.workflow.jpdl";
+	public static final String DEFAULT_JPDL_PACKAGE = "com.zsgj.info.framework.workflow.jpdl";
 					
 	//上下文中存储的流程创建者标识
 	public static final String PROCESS_CREATOR_FLAG = "_PROCESS_CREATOR_FLAG_";

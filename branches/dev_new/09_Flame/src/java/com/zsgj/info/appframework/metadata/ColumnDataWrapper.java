@@ -723,7 +723,7 @@ public class ColumnDataWrapper {
 								
 								Object fObjectText = null;
 								//此处功能用户列表页面显示用户用户名或真实姓名
-								if(fClassName.equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+								if(fClassName.equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 									fObjectText = baseObjectWrapper.getPropertyValue("realNameAndDept");
 								}else{
 									fObjectText = baseObjectWrapper.getPropertyValue(mc.getForeignTableValueColumn().getPropertyName());

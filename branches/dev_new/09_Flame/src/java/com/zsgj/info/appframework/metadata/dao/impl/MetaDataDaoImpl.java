@@ -66,7 +66,7 @@ public class MetaDataDaoImpl extends BaseDao implements MetaDataDao {
 		}
 		DetachedCriteria dc =DetachedCriteria.forClass(clazz);
 		dc.add(Restrictions.isNotNull("id"));
-		if(className.equalsIgnoreCase("com.digitalchina.knowledge.common.entity.InternalRelationPerson")){
+		if(className.equalsIgnoreCase("com.zsgj.knowledge.common.entity.InternalRelationPerson")){
 			dc.addOrder(Order.asc("itcode"));
 		}
 		List list = getDaoSupport().selectByCriteria(dc);

@@ -157,7 +157,7 @@ public class IdGeneratorAction extends  BaseAction {
 		request.setCharacterEncoding(this.getProperties(
 				"system.characterEncoding", "gbk"));
 		Iterator iter = items.iterator();		
-		String realPath = "\\WEB-INF\\classes\\com\\digitalchina\\poc\\" + StrRuleFileName;
+		String realPath = "\\WEB-INF\\classes\\com\\zsgj\\poc\\" + StrRuleFileName;
 		while (iter.hasNext()) {
 			FileItem item = (FileItem) iter.next();
 			File uploadedFile = new File(realPath);

@@ -51,7 +51,7 @@ public class LogoutFilter extends org.acegisecurity.ui.logout.LogoutFilter {
 			Boolean SSO = (Boolean) httpRequest.getSession().getAttribute("SSO");
 			if(Boolean.TRUE.equals(SSO)){
 				UserContext.removeOnlineUser(user);
-				httpResponse.sendRedirect("http://dcone.digitalchina.com/pkmslogout");
+				httpResponse.sendRedirect("http://dcone.zsgj.com/pkmslogout");
 			}else{
 				super.doFilter(request, response, chain);
 			}

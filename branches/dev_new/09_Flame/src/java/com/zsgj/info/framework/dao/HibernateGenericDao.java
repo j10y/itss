@@ -142,9 +142,9 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 	 * 获取全部持久化实例，与getAll的区别是使用getHibernateTemplate()的loadAll
 	 */
 	public <T> List<T> loadAll(Class<T> entityClass) {
-		if(entityClass.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+		if(entityClass.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 			logger.info("userInfo loadAll");
-		}else if(entityClass.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.Department")){
+		}else if(entityClass.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.Department")){
 			logger.info("department loadAll");
 		}
 		return getHibernateTemplate().loadAll(entityClass);
@@ -154,9 +154,9 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 	 * 获取指定类的所有持久化实例，使用getCriteria(entityClass).list()
 	 */
 	public <T> List<T> getAll(Class<T> entityClass) {
-		if(entityClass.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+		if(entityClass.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 			logger.info("userInfo loadAll");
-		}else if(entityClass.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.Department")){
+		}else if(entityClass.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.Department")){
 			logger.info("department loadAll");
 		}
 		Criteria c = getCriteria(entityClass);

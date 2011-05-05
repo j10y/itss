@@ -53,7 +53,7 @@ public class SystemMainTable extends BaseObject {
 		if(dotIndex!=-1){
 			return ".."+ this.className.substring(dotIndex);
 		}
-		if(this.className.startsWith("com.digitalchina.info.framework")){
+		if(this.className.startsWith("com.zsgj.info.framework")){
 			int dotIndex2 = this.className.indexOf("framework");
 			return ".."+ this.className.substring(dotIndex2);
 		}

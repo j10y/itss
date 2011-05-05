@@ -27,7 +27,7 @@ public class PageModelGenServiceImpl extends BaseDao implements PageModelGenServ
 	private PagePanelColumnService pagePanelColumnService ;
 	//private ConfigItemService configItemService ;
 	
-	public static String TEMPLATE_PAGE_PANEL = "com/digitalchina/info/appframework/pagemodel/ftl/pagePanel.ftl";
+	public static String TEMPLATE_PAGE_PANEL = "com/zsgj/info/appframework/pagemodel/ftl/pagePanel.ftl";
 	
 	public void setPageModelService(PageModelService pageModelService) {
 		this.pageModelService = pageModelService;
@@ -50,15 +50,15 @@ public class PageModelGenServiceImpl extends BaseDao implements PageModelGenServ
 	   String rootPath=pagePathUrl+filepath+"\\";
 	  //"D:\\jboss-4.2.2.GA\\server\\default\\.\\deploy\\itil.war\\user\\configDemo\\";
 		 if(fileType==1){
-			String TemplatePath="com/digitalchina/info/appframework/pagemodel/ftl/listPanel.ftl";
+			String TemplatePath="com/zsgj/info/appframework/pagemodel/ftl/listPanel.ftl";
 			    render.renderPage(para, TemplatePath,rootPath+jsName+".js");
-			String TemplatePath2="com/digitalchina/info/appframework/pagemodel/ftl/listPaneljsp.ftl";
+			String TemplatePath2="com/zsgj/info/appframework/pagemodel/ftl/listPaneljsp.ftl";
 			    render.renderPage(pap, TemplatePath2,rootPath+fileName);
 		 }
 		 else if(fileType==2){
-			String TemplatePath="com/digitalchina/info/appframework/pagemodel/ftl/pagePanel.ftl";
+			String TemplatePath="com/zsgj/info/appframework/pagemodel/ftl/pagePanel.ftl";
 			    render.renderPage(para, TemplatePath,rootPath+jsName+".js");
-			String TemplatePath2="com/digitalchina/info/appframework/pagemodel/ftl/pagePaneljsp.ftl";
+			String TemplatePath2="com/zsgj/info/appframework/pagemodel/ftl/pagePaneljsp.ftl";
 			    render.renderPage(pap, TemplatePath2,rootPath+fileName);
 			
 		 }
@@ -79,15 +79,15 @@ public class PageModelGenServiceImpl extends BaseDao implements PageModelGenServ
 		   String rootPath=pagePathUrl+filepath+"\\";
 		  //"D:\\jboss-4.2.2.GA\\server\\default\\.\\deploy\\itil.war\\user\\configDemo\\";
 			 if(fileType==1){
-				String TemplatePath="com/digitalchina/info/appframework/pagemodel/ftl/expandlistPanel.ftl";
+				String TemplatePath="com/zsgj/info/appframework/pagemodel/ftl/expandlistPanel.ftl";
 				    render.renderPage(para, TemplatePath,rootPath+jsName+".js");
-				String TemplatePath2="com/digitalchina/info/appframework/pagemodel/ftl/expandlistPaneljsp.ftl";
+				String TemplatePath2="com/zsgj/info/appframework/pagemodel/ftl/expandlistPaneljsp.ftl";
 				    render.renderPage(pap, TemplatePath2,rootPath+fileName);
 			 }
 			 else if(fileType==2){
-				String TemplatePath="com/digitalchina/info/appframework/pagemodel/ftl/expandPagePanel.ftl";
+				String TemplatePath="com/zsgj/info/appframework/pagemodel/ftl/expandPagePanel.ftl";
 				    render.renderPage(para, TemplatePath,rootPath+jsName+".js");
-				String TemplatePath2="com/digitalchina/info/appframework/pagemodel/ftl/expandPagePaneljsp.ftl";
+				String TemplatePath2="com/zsgj/info/appframework/pagemodel/ftl/expandPagePaneljsp.ftl";
 				    render.renderPage(pap, TemplatePath2,rootPath+fileName);
 				
 			 }

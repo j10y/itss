@@ -33,7 +33,7 @@ public class LDAPAuthenticationImpl extends BaseService implements
 	private static final String DEFAUL_SERVICE_ADDRESS = "http://10.1.180.131/billweb/authservice.asmx?WSDL";
 
 	//新的验证方式
-	private static final String ALLOW_LDAP_ADDRESS = "LDAP://ldap.digitalchina.com"; 
+	private static final String ALLOW_LDAP_ADDRESS = "LDAP://ldap.zsgj.com"; 
 	
 	private static final int ALLOW_LDAP_PORT = 389; 
 	/**

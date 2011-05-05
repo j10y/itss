@@ -258,7 +258,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 			smtc.setPropertyType(pt);
 			
 			Criteria c = super.getCriteria(SystemMainTable.class);
-			c.add(Restrictions.eq("className", "com.digitalchina.info.appframework.metadata.entity.SystemFile"));
+			c.add(Restrictions.eq("className", "com.zsgj.info.appframework.metadata.entity.SystemFile"));
 			SystemMainTable smtFile = (SystemMainTable) c.uniqueResult();
 			
 			smtc.setForeignTable(smtFile);
@@ -515,7 +515,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 	
 		
 		
-		this.saveTableEntity(sourcePkg, sourceClass, "com.digitalchina.itil.config.extlist.entity.ExtList");
+		this.saveTableEntity(sourcePkg, sourceClass, "com.zsgj.itil.config.extlist.entity.ExtList");
 	}
 
 	
@@ -893,8 +893,8 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 		
 		StringBuffer importer = new StringBuffer();
 		importer.append("import java.util.Date;").append(LSP);
-		importer.append("import com.digitalchina.info.framework.dao.BaseObject;").append(LSP);
-		importer.append("import com.digitalchina.info.framework.security.entity.UserInfo;").append(LSP);
+		importer.append("import com.zsgj.info.framework.dao.BaseObject;").append(LSP);
+		importer.append("import com.zsgj.info.framework.security.entity.UserInfo;").append(LSP);
 		
 		code.append(importer);
 
@@ -935,7 +935,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 				//String ptName = pt.getName();
 				String ptClassName = pt.getPropertyTypeClass();
 				//Ôö¼Ó×Ö¶Î
-				if(!ptClassName.equals("com.digitalchina.info.framework.dao.BaseObject")){
+				if(!ptClassName.equals("com.zsgj.info.framework.dao.BaseObject")){
 					RenderProperty property = new RenderProperty();
 					property.setName(propertyName);
 					property.setField(propertyName);

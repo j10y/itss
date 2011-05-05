@@ -283,7 +283,7 @@ public class SystemMainTableServiceImpl extends BaseDao implements SystemMainTab
 			String classname = (String) iter.next();
 			String packageName = this.getPackagename(classname);
 			String projectName = PropertiesUtil.getProperties("webAppPkgName");
-			if(packageName.startsWith("com.digitalchina."+projectName)){
+			if(packageName.startsWith("com.zsgj."+projectName)){
 				String clazzName = this.getClassname(classname);
 //				System.out.println("classname: "+classname);
 //				System.out.println("packageName: "+packageName);

@@ -104,9 +104,9 @@ public class BaseService implements Service {
      * @return List
      */
 	public List findAll(Class clazz) {
-		if(clazz.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+		if(clazz.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 			logger.info("userInfo findAll");
-		}else if(clazz.getName().equalsIgnoreCase("com.digitalchina.info.framework.security.entity.Department")){
+		}else if(clazz.getName().equalsIgnoreCase("com.zsgj.info.framework.security.entity.Department")){
 			logger.info("department findAll");
 		}
 		return dao.getObjects(clazz);

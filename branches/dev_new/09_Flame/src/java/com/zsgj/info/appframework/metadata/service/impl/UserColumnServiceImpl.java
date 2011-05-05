@@ -281,7 +281,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 									map.put("dept", dept);
 									
 									if(ruleFile==null){
-										ruleFile = "/com/digitalchina/info/framework/util/idgen/systemTableIdGen.drl";
+										ruleFile = "/com/zsgj/info/framework/util/idgen/systemTableIdGen.drl";
 									}
 									String nextValue = IdGenRuleMethodHelper.executeRule(ruleFile, map);
 									smtIdBuilder.setLatestValue(nextValue);
@@ -1979,7 +1979,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 							if (ruleFile == null) {
 								ruleFile = "systemTableIdGen.drl";
 							}
-							String result2 = "/com/digitalchina/info/framework/util/idgen/"
+							String result2 = "/com/zsgj/info/framework/util/idgen/"
 									+ ruleFile;
 							String nextValue = IdGenRuleMethodHelper.executeRule(
 									result2, map);

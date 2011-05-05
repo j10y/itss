@@ -186,8 +186,8 @@ public class PageDataWrapper {
 							String propName =mc.getPropertyName();
 							String columnName = mc.getColumnCnName();
 							try {
-								if(!fClassName.equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")
-										&& !fClassName.equals("com.digitalchina.info.framework.security.entity.Department")){
+								if(!fClassName.equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")
+										&& !fClassName.equals("com.zsgj.info.framework.security.entity.Department")){
 									fObjects = bs.findAllBy(clazz, fValueColumn.getPropertyName(), isAsc);
 								}
 										
@@ -739,7 +739,7 @@ public class PageDataWrapper {
 								
 								Object fObjectText = null;
 								//此处功能用户列表页面显示用户用户名或真实姓名
-								if(fClassName.equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+								if(fClassName.equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 									fObjectText = baseObjectWrapper.getPropertyValue("realNameAndDept");
 								}else{
 									fObjectText = baseObjectWrapper.getPropertyValue(mc.getForeignTableValueColumn().getPropertyName());

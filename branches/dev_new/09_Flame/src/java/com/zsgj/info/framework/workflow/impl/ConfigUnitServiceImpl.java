@@ -543,7 +543,7 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		
 		sb.append("<tr>");
 		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@digitalchina.com,或者拨打IT服务建议及投诉热线7888-0。"); 
+		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@zsgj.com,或者拨打IT服务建议及投诉热线7888-0。"); 
 		sb.append("</td>");	
 		sb.append("</tr>");
 		sb.append("<tr>");

@@ -42,7 +42,7 @@ public class SystemColumnServiceImpl extends BaseDao implements SystemColumnServ
 		smtc.setFileNamePrefix("scid_");
 		
 		Criteria c = super.getCriteria(SystemMainTable.class);
-		c.add(Restrictions.eq("className", "com.digitalchina.info.appframework.metadata.entity.SystemFile"));
+		c.add(Restrictions.eq("className", "com.zsgj.info.appframework.metadata.entity.SystemFile"));
 		SystemMainTable smtFile = (SystemMainTable) c.uniqueResult();
 		
 		smtc.setForeignTable(smtFile);

@@ -78,7 +78,7 @@ public class CoderForSave {
 				}else if(smtColumn.getExtSelectType()!=null&&smtColumn.getExtSelectType()==2){
 						displayFiled = "extOptionValue";
 						valueFiled = "id";
-						relationshipClazz = "com.digitalchina.info.appframework.metadata.entity.ExtOptionData&extColumnId="+smtColumn.getId();
+						relationshipClazz = "com.zsgj.info.appframework.metadata.entity.ExtOptionData&extColumnId="+smtColumn.getId();
 				}
 			}
 			
@@ -394,7 +394,7 @@ public class CoderForSave {
 								+ filesTemp.getId()+"&columnId="+ String.valueOf(column.getId())+">"  + filesTemp.getFileName()
 								+ "</a>&nbsp;&nbsp;"
 					    	    +"<img style=\\\"display: \\\" src="+webRoot+"/images/other/suremove.gif onClick=getRemoveFile(\\\""
-							    + filesTemp.getId()+"\\\",\\\""+hiddenId+"\\\",\\\"com.digitalchina.info.appframework.metadata.entity.SystemFile\\\")" 
+							    + filesTemp.getId()+"\\\",\\\""+hiddenId+"\\\",\\\"com.zsgj.info.appframework.metadata.entity.SystemFile\\\")" 
 							    +" alt=\\\"删除附件\\\" style=\\\"cursor:hand;margin:-1 0\\\">";
 						    	//modify by lee for 修改处理JSON后附件异常 in 20100524 end  
 						    	  if(k%4==0){

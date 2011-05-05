@@ -61,7 +61,7 @@ public class ProcessRuleHelper{
 	       
         Map<String, String> mapParams = new HashMap<String, String>();
         mapParams.put("ruleName", "bid");
-        executeRule("/com/digitalchina/itil/rules/OrderProductLine1.drl",mapParams);
+        executeRule("/com/zsgj/itil/rules/OrderProductLine1.drl",mapParams);
         
 	}
 	

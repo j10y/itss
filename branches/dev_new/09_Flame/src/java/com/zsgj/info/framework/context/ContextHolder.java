@@ -101,7 +101,7 @@ public class ContextHolder {
 	 */
 	private static Package readRule(){
 		PackageBuilder builder = new PackageBuilder();
-		String pkgPathr=PropertiesUtil.getProperties("system.rulebase.path", "/com/digitalchina/info/framework/util/idgen/");
+		String pkgPathr=PropertiesUtil.getProperties("system.rulebase.path", "/com/zsgj/info/framework/util/idgen/");
 		//以','拆分,获取所有规则文件的包 
 		String[] pkgPaths=pkgPathr.split(",");
 		for(String pkgPath: pkgPaths ){
