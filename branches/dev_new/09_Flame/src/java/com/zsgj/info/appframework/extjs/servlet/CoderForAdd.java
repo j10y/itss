@@ -12,7 +12,7 @@ import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 
 public class CoderForAdd {
 	
-	//for add
+	//for add tjp
 	public static String encode(Map<String, Object> addMap,List<UserTableSetting> columns) {
 		String json = "";		
 		for(UserTableSetting uts:columns) {  
