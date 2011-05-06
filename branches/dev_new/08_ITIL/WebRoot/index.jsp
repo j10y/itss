@@ -32,7 +32,7 @@
 	    	position:absolute;
 	    	top:0px;
 	    	right:0px;
-	    	background-image:url(images/itil_logo.gif);
+	    	background-image:url();
 	    	background-repeat:no-repeat;
 	    	width:130px;
 	    	height:65px;
@@ -105,7 +105,7 @@
     Ext.onReady(function(){
 	   Ext.QuickTips.init();
 	   Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
-	   com.dc.ui.IndexPage.init('${systemAdmin}',webContext,'神州数码 版权所有');
+	   com.dc.ui.IndexPage.init('${systemAdmin}',webContext,'');
     });
 	</script>
 </head>

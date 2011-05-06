@@ -10,7 +10,7 @@ com.dc.ui.IndexPage = {
 				border : false,
 				iconCls : 'nav',
 				autoScroll : true,
-				html:'IT需求管理员：刘辉(liuhuip/6106-5388)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;樊恒发(fanhf/6106-5280)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文楠(wennan/6106-7604)<br> 手机类帐号：马然（maran/6106-5093）<br>座机类帐号：刘庆忠（liuqz/6106-7966）<br>BI类帐号：7888-4  <br> EL/EB类账号：7888-5<br>HRS类账号：李东娅（lidy/6106-7931）<br> SCM类账号：曹卫锋（caowf/6100-3385）<br> 其他账号类问题：7888-1'
+				html:''
 			});
 		menu.push(helpInfo);
 		var myApply = new Ext.grid.GridPanel({
@@ -156,7 +156,9 @@ com.dc.ui.IndexPage = {
 			},new Ext.Panel({
 				region : 'center',
 				layout:'fit',
-				bbar:[{xtype: 'tbtext',text:"IT服务热线:7888&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IT服务邮箱:it@DC&nbsp;&nbsp;&nbsp;&nbsp;IT投诉建议:7888-0&nbsp;&nbsp;&nbsp;IT投诉建议邮箱:it-manage@DC"}],
+				bbar:[
+				      //{xtype: 'tbtext',text:"IT服务热线:7888&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IT服务邮箱:it@DC&nbsp;&nbsp;&nbsp;&nbsp;IT投诉建议:7888-0&nbsp;&nbsp;&nbsp;IT投诉建议邮箱:it-manage@DC"}
+				      ],
 				items:mainPanel
 				})]
 		});
@@ -174,19 +176,23 @@ com.dc.ui.IndexPage = {
 				"-", {
 					text : "注销",
 					handler : logout
-				},"-",{
-					text : "DCone",
-					handler : toDCone
-				},"-", {
+				},
+				//"-",{
+				//	text : "DCone",
+				//	handler : toDCone
+				//},
+				"-", {
 					text : "ITcenter",
 					handler : toITService
-				},"-", {
-					text : "流程中心",
-					handler : toFlowCenter
-				},"-", {
-					text : "业务应用",
-					handler : toOperationApp
 				},
+				//"-", {
+				//	text : "流程中心",
+				//	handler : toFlowCenter
+				//},
+				//"-", {
+				//	text : "业务应用",
+				//	handler : toOperationApp
+				//},
 				"-",{
 					text : "进入后台",
 					handler : redirctAdmin
@@ -201,19 +207,23 @@ com.dc.ui.IndexPage = {
 				"-", {
 					text : "注销",
 					handler : logout
-				},"-",{ 
-					text : "DCone",
-					handler : toDCone
-				},"-", {
+				},
+				//"-",{ 
+				//	text : "DCone",
+				//	handler : toDCone
+				//},
+				"-", {
 					text : "IT服务专栏",
 					handler : toITService
-				},"-", {
-					text : "流程中心",
-					handler : toFlowCenter
-				},"-", {
-					text : "业务应用",
-					handler : toOperationApp
-				}
+				},
+				//"-", {
+				//	text : "流程中心",
+				//	handler : toFlowCenter
+				//},
+				//"-", {
+				//	text : "业务应用",
+				//	handler : toOperationApp
+				//}
 				]
 			});
 		}
@@ -237,7 +247,7 @@ com.dc.ui.IndexPage = {
 			window.open("http://dcone.zsgj.com","_blank");
 		}
 		function toITService() {
-			window.open("http://itss.zsgj.com/ITcenter","_blank");
+			window.open("/ITcenter","_blank");
 		}
 		function toFlowCenter() {
 			window.open("http://10.1.120.248/column/FY09Aris/workflow.html","_blank");
