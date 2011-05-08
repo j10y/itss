@@ -12,6 +12,13 @@ public class VirtualDefinitionInfo extends BaseObject{
 	private String realDefinitionDesc;
 	private String virtualDefinitionDesc;
 	private String ruleFileName;
+	private java.sql.Clob emailTemplate;
+	public java.sql.Clob getEmailTemplate() {
+		return emailTemplate;
+	}
+	public void setEmailTemplate(java.sql.Clob emailTemplate) {
+		this.emailTemplate = emailTemplate;
+	}
 	private Module type;
 	private Department dept;
 	public Long getId() {
