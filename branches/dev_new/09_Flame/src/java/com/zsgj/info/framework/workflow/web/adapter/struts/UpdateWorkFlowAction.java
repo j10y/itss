@@ -16,6 +16,7 @@ import net.sf.json.JSONObject;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.hibernate.Hibernate;
 import org.jbpm.graph.def.ProcessDefinition;
 
 import com.zsgj.info.appframework.extjs.servlet.CoderForList;
@@ -585,6 +586,11 @@ public class UpdateWorkFlowAction extends BaseDispatchAction {
 							.valueOf(virtualDefinitionInfoId));
 			String dept = request.getParameter("department");
 			String type = request.getParameter("processType");
+			//Added by Kanglei email tpl  begin
+			String content = request.getParameter("content");
+			content = new String((content==null?"":content).getBytes("gbk"),"utf-8");
+			vd.setEmailTemplate(Hibernate.createClob(content));
+			//Added by Kanglei email tpl  end
 			if (dept.matches("^[0-9]+$")) {// 部门修改了
 				Long departcode = Long.valueOf(dept
 						.substring(dept.indexOf("=") + 1));
@@ -891,6 +897,8 @@ public class UpdateWorkFlowAction extends BaseDispatchAction {
 					if(p!=null&&!"".equals(p)){
 						String virtualDefinitionDesc = vd.getVirtualDefinitionDesc();
 						String realDefinitionDesc = vd.getRealDefinitionDesc();
+						java.sql.Clob emailTpl = vd.getEmailTemplate();
+						String emailTplStr = emailTpl==null?"":(emailTpl.getSubString(1, (int)emailTpl.length()));
 						Module type = vd.getType();
 						Department dept = vd.getDept();
 						String ruleFileName = vd.getRuleFileName();
@@ -898,7 +906,7 @@ public class UpdateWorkFlowAction extends BaseDispatchAction {
 								+ virtualDefinitionDesc + "',realDefinitionDesc:'"
 								+ realDefinitionDesc + "',typeName:'" + type.getName()
 								+ "',deptId: '" + dept.getId()
-								+ "',ruleFileName:'" + ruleFileName +"',version:"+p.getVersion()+"}";
+								+ "',ruleFileName:'" + ruleFileName +"',version:"+p.getVersion()+",emailTplStr:'"+emailTplStr+"'}";
 					}
 				}
 			}
