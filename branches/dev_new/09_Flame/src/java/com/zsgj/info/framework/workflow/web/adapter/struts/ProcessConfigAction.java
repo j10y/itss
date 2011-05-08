@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.hibernate.Hibernate;
 import org.jbpm.graph.def.ProcessDefinition;
 
 import com.zsgj.info.appframework.extjs.servlet.CoderForList;
@@ -1141,6 +1142,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 		ProcessDefinition pd = ds.getDefinitionById(Long.valueOf(id));
 		String dept = request.getParameter("department");
 		String type = request.getParameter("processType");
+		String content = request.getParameter("content");
 		Long departcode = Long.valueOf(dept.substring(dept.indexOf("=") + 1));
 		Department de = (Department) service.findUnique(Department.class,
 				"departCode", departcode);
@@ -1204,6 +1206,10 @@ public class ProcessConfigAction extends BaseDispatchAction {
 					if ("virtualProcessDesc".equals(name)) {
 						String value = item.getString();
 						virtualProcessDesc = HttpUtil.ConverUnicode(value);
+					}
+					if("content".equals(name)){
+						content = item.getString();
+						vd.setEmailTemplate(Hibernate.createClob(content));
 					}
 				}
 			}
