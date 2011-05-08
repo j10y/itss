@@ -75,10 +75,11 @@ ProcessAction = Ext.extend(Ext.util.Observable, {
 		
 		return data;
 	},
-	saveUpdateVirtualProcess : function(virtualProcessDesc,department,processType,virtualDefinitionInfoId,realDefinitionDesc) {
+	//Modified by Kanglei  add email temlpate (content)  2011/5/9
+	saveUpdateVirtualProcess : function(virtualProcessDesc,department,processType,virtualDefinitionInfoId,realDefinitionDesc,content) {
 		var url = webContext
 				+ '/workflow/update.do?methodCall=saveUpdateVirtualProcess';
-		var param = {virtualProcessDesc:unicode(virtualProcessDesc),department:department,processType:processType,virtualDefinitionInfoId:virtualDefinitionInfoId};
+		var param = {virtualProcessDesc:unicode(virtualProcessDesc),department:department,processType:processType,virtualDefinitionInfoId:virtualDefinitionInfoId,content:unicode(content)};
 		var data = this.ajaxGetDataExt(url,param
 			,function(){
 				Ext.Msg.alert('提示','保存成功',function(){
