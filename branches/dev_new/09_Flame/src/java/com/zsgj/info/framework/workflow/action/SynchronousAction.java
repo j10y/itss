@@ -351,7 +351,8 @@ public class SynchronousAction implements Runnable{
 					UserInfo userInfo = (UserInfo)service.findUnique(UserInfo.class, "userName", users[i]);
 					String auditUserEmail=userInfo.getEmail();
 				    //add by gaowen  for 节点特定格式 邮件主题 20090927 end
-					String context = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskid,creatorMeg, vDesc, auditHis,hurryFlag,false,userInfo);
+					//String context = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskid,creatorMeg, vDesc, auditHis,hurryFlag,false,userInfo);
+					String context = cs.htmlContent(virtualDefinintionId,nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskid,creatorMeg, vDesc, auditHis,hurryFlag,false,userInfo);
 					try{
 						ms.sendMimeMail(auditUserEmail, ccEmail, null, subject, context, null);
 						log.info(virualDesc+"在"+nodeName+"(节点)给审批人发送邮件成功！");
@@ -404,7 +405,8 @@ public class SynchronousAction implements Runnable{
 				for(int i=0;i<auditPers.length;i++){
 					UserInfo userInfo = (UserInfo)service.findUnique(UserInfo.class, "userName", auditPers[i]);
 					String auditUserEmail=userInfo.getEmail();
-					content = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg, vDesc, auditHis,hurryFlag,false,userInfo);
+					//content = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg, vDesc, auditHis,hurryFlag,false,userInfo);
+					String context = cs.htmlContent(virtualDefinintionId,nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg, vDesc, auditHis,hurryFlag,false,userInfo);
 					try{
 						ms.sendMimeMail(auditUserEmail, ccEmail, null, subject, content, null);
 					}catch(Exception e){
@@ -423,7 +425,8 @@ public class SynchronousAction implements Runnable{
 					for(int j=0;j<browsePers.length;j++){
 					UserInfo browseUser = (UserInfo)service.findUnique(UserInfo.class, "userName", browsePers[j]);
 					String browseUserEmail=browseUser.getEmail();
-					String browseContext = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg, vDesc, auditHis,hurryFlag,true,browseUser);
+					//String browseContext = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg, vDesc, auditHis,hurryFlag,true,browseUser);
+					String context = cs.htmlContent(virtualDefinintionId,nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg, vDesc, auditHis,hurryFlag,false,browseUser);
 					try{
 						ms.sendMimeMail(browseUserEmail, ccEmail, null, subject, content, null);
 					}catch(Exception e){
