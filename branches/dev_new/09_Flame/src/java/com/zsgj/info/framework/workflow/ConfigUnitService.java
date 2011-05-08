@@ -219,6 +219,15 @@ public interface ConfigUnitService {
 	 */
 	public String htmlContent(String nodeName,String pageUrl,String applyType,String dataId,String reqClass,String goStartState,Long taskId,UserInfo creatorMeg,String vDesc,List auditHis,String hurryFlag ,boolean browsePerson,UserInfo userInfo);
 	/**
+	 * 组装HTML邮件发送 ITIL专用    Use Email Template
+	 * @Methods Name htmlContent
+	 * @Create In 2011-5-9 By Kanglei
+	 * @param order
+	 * @param opl
+	 * @return String
+	 */
+	public String htmlContent(long virtualDefinintionId,String nodeName,String pageUrl,String applyType,String dataId,String reqClass,String goStartState,Long taskId,UserInfo creatorMeg,String vDesc,List auditHis,String hurryFlag ,boolean browsePerson,UserInfo userInfo);
+	/**
 	 * 通过角色的ID来查找相应的用户名
 	 * @Methods Name getUserNameByRoleId
 	 * @Create In 2009-7-17 By guangsa
