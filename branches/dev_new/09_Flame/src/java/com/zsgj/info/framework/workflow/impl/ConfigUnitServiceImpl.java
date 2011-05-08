@@ -1,5 +1,6 @@
 package com.zsgj.info.framework.workflow.impl;
 
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,12 +21,14 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
+import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.BaseDao;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.Department;
 import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.security.entity.UserRole;
+import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitMail;
@@ -567,6 +570,86 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		sb.append("</html>");
 
 		return sb.toString();
+	}
+	
+	/**
+	 * 组装HTML邮件发送 ITIL专用
+	 * @Methods Name htmlContent
+	 * @Create In 2009-11-30 By Kanglei
+	 * @param nodeName 节点名称
+	 * @param creatorMeg 提交申请人
+	 * @param userInfo 该环节审批人
+	 * @param virProID 虚拟流程定义ID
+	 * @return String
+	 */
+	public String htmlContent(long virProID,String nodeName,String pageUrl,String applyType,String dataId, String reqClass,
+			String goStartState, Long taskId, UserInfo creatorMeg, String vDesc,
+			List auditHis,String hurryFlag,boolean browsePerson,UserInfo userInfo) {
+		Service service = (Service) ContextHolder.getBean("baseService");
+		VirtualDefinitionInfo vd = (VirtualDefinitionInfo) service.findUnique(
+				VirtualDefinitionInfo.class, "id", Long
+						.valueOf(556));//virProID ,  Test:556
+		java.sql.Clob emailTpl = vd.getEmailTemplate();
+		String emailTplStr = "";
+		try {
+			emailTplStr = emailTpl==null?"":(emailTpl.getSubString(1, (int)emailTpl.length()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] strArry = emailTplStr.split(";");
+		String email_real_str ="";
+		for(int i=0;i<strArry.length;i++){
+			String tmp = strArry[i].replace("&#", "");
+			email_real_str += (char)Integer.valueOf(tmp).intValue();
+		}
+		String browseFlag = "";
+		if(browsePerson){//是查看人
+			browseFlag = "1";
+		}
+		String reqFlag = "";
+		if("1".equals(hurryFlag)){
+			reqFlag = "  --  "+"<font color=red><B>'加急'</B></font>"+"  --  ";
+		}
+		StringBuilder sb = new StringBuilder();
+		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date(); 
+		String dateString  = dateFormat.format(date);
+		String auditMeg = "";
+		if(auditHis!=null&&!"".equals(auditHis)){
+			for (int i=0;i<auditHis.size();i++) {
+				BeanWrapper baseObjectWrapper = new BeanWrapperImpl(auditHis.get(i));
+				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
+				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
+				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
+				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+				String timeString  = dateFormats.format(approverDate);
+				if(user!=null){
+				String userName = user.getRealName();
+				if(nodeMeg.contains("提交")){
+					auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；";
+				}else{
+					auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；";
+				}
+				}
+	        }
+		}
+		Map m = new HashMap<String,String>();
+		m.put("[UserName]", userInfo.getRealName()+"/"+userInfo.getUserName());
+		m.put("[AppUserName]", creatorMeg.getRealName()+"/"+creatorMeg.getUserName());
+		m.put("[AppDesc]", reqFlag+vDesc);
+		m.put("[ApproveAction]", "，<a href=" + PropertiesUtil.getProperties("system.web.url","localhost:8080") + "/infoAdmin/workflow/configPage/auditFromMail.jsp?"+"taskId="+taskId+"&dataId="+dataId+"&goStartState="+goStartState+"&taskName="+"&applyType="+applyType+"&browseFlag="+browseFlag+">"+"请点击链接审批。</a>");
+		m.put("[AccessService]", "<a href=" + PropertiesUtil.getProperties("system.web.url","http://10.1.120.53/itil") +">"+"IT服务系统（ITSS）</a>");
+		m.put("[ProcessList]", auditMeg);
+		m.put("[Date]", dateString);
+		m.put("[Department]", "中商国际");
+		
+		for(Iterator it=m.keySet().iterator();it.hasNext();){
+			String ele = (String)it.next();
+			email_real_str = email_real_str.replace(ele,(String)m.get(ele));
+		}
+		
+		return email_real_str.toString();
 	}
 	
 	/**
