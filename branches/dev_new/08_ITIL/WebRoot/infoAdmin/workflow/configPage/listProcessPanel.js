@@ -256,9 +256,9 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 
 		var writeInfo = new Ext.form.FormPanel({
 			id : 'com.zsgj.writeInfo',
-			height : 220,
+			height : 520,
 			frame : true,
-			width : 520,
+			width : 900,
 			labelWidth : 150,
 			labelAlign : "right",
 			defaultType : "field",
@@ -287,13 +287,37 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 				height : 30,
 				name : 'ruleFileName',
 				fieldLabel : "此流程涉及的规则文件"
+			},{
+				id : 'content',
+				name : 'content',
+				fieldLabel : '邮件模板',
+				xtype : "textarea",
+				height : 350,
+				width : 880,
+				defaults :{
+					bodyStyle : 'margin-bottom:10px;margin-right:20px;'
+				},
+				autoScroll : true,
+				listeners : {
+				"render" : function(f) {
+					var fckEditor = new FCKeditor("content");
+					Ext.get('content').dom.value = "";
+					fckEditor.GetData = "";
+					fckEditor.Height = 360;
+					fckEditor.Width = 750;
+					fckEditor.BasePath = webContext + "/FCKeditor/";
+					fckEditor.ToolbarSet = "Default";
+					fckEditor.ReplaceTextarea();
+				}
+			}
 			}]
 		});
 
 		var win = new Ext.Window({
 			title : '增加流程信息',
-			width : 530,
-			height : 220,
+			width : 950,
+			height : 520,
+			autoScroll : true,
 			modal : true,
 			buttons : [{
 				xtype : 'button',
@@ -330,13 +354,17 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 					}
 					 
 					virtualProcessDesc = unicode(virtualProcessDesc);
-					Ext.getCmp('com.zsgj.writeInfo').getForm().submit({
+					
+					var oEditor = FCKeditorAPI.GetInstance("content");
+					var content = oEditor.EditorDocument.body.innerHTML;
+					Ext.getCmp('com.digitalchina.writeInfo').getForm().submit({
 						url : webContext
 								+ '/workflow/processconfig.do?methodCall=uploadRuleFile&id='
 								+ param + "&department=" + department
 								+ "&processType=" + processType,
 						params : {
-							virtualProcessDesc : virtualProcessDesc
+							virtualProcessDesc : virtualProcessDesc,
+							content : unicode(content)
 						},
 						method : 'post',
 						failure : function(form1, action) {
@@ -539,11 +567,13 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 			width : 340
 		});
 
+		
+		var contents_update =runicode(data.emailTplStr);
 		var writeInfo = new Ext.form.FormPanel({
 			id : 'com.zsgj.writeInfo',
-			height : 160,
+			height : 520,
 			frame : true,
-			width : 500,
+			width : 900,
 			labelWidth : 140,
 			labelAlign : "right",
 			defaultType : "field",
@@ -564,14 +594,37 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 				value : virtualDefinitionDesc,
 				name : 'virtualProcessName',
 				fieldLabel : "流程名称（中文描述）"
+			},{
+				id : 'content',
+				name : 'content',
+				fieldLabel : '邮件模板',
+				xtype : "textarea",
+				height : 350,
+				width : 880,
+				defaults :{
+					bodyStyle : 'margin-bottom:10px;margin-right:20px;'
+				},
+				autoScroll : true,
+				listeners : {
+				"render" : function(f) {
+					var fckEditor = new FCKeditor("content");
+					Ext.get('content').dom.value = contents_update;
+					fckEditor.GetData = contents_update;
+					fckEditor.Height = 300;
+					fckEditor.Width = 750;
+					fckEditor.BasePath = webContext + "/FCKeditor/";
+					fckEditor.ToolbarSet = "Default";
+					fckEditor.ReplaceTextarea();
+				}
+			}
 			}
 			]
 		});
 
 		var win = new Ext.Window({
 			title : '修改流程信息',
-			width : 510,
-			height : 200,
+			width : 950,
+			height : 520,
 			modal : true,
 			buttons : [{
 				xtype : 'button',
@@ -585,8 +638,11 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 					var virtualProcessDesc = Ext
 							.getCmp('com.zsgj.writeInfo').getForm()
 							.findField('virtualProcess').getValue();
+					var oEditor = FCKeditorAPI.GetInstance("content");
+					var content = oEditor.EditorDocument.body.innerHTML;
+					
 					processAction.saveUpdateVirtualProcess(virtualProcessDesc,
-							department, processType, virtualDefinitionInfoId, realDefinitionDesc);
+							department, processType, virtualDefinitionInfoId, realDefinitionDesc,content);
 					win.close();
 				}
 			}, {
