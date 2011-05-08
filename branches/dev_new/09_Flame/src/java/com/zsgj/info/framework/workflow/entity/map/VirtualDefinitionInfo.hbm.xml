@@ -38,6 +38,9 @@
         <property name="ruleFileName" type="string">
             <column name="ruleFileName" />
         </property>
+        <property name="emailTemplate" type="java.sql.Clob">
+            <column name="emailTemplate" />
+        </property>
         
         <many-to-one name="dept" class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false" >
             <column name="dept" />
