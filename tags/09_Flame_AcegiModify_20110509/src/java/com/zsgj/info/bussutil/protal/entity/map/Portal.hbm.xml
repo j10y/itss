@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.info.bussutil.protal.entity.Portal"
+		table="sys_portal">
+		 <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+		<property name="name" type="string">
+			<column name="name" length="50"></column>
+		</property>
+		<property name="createTime" type="timestamp" update="false">
+			<column name="createTime"></column>
+		</property>
+		<many-to-one name="portalContainer" column="portalContainer_id"
+			class="com.zsgj.info.bussutil.protal.entity.PortalContainer"
+			cascade="save-update" />
+
+		<many-to-one name="portalColumnTemplate"
+			column="portalColumnTemplate_id"
+			class="com.zsgj.info.bussutil.protal.entity.PortalColumnTemplate"
+			cascade="save-update" />
+		<set name="portalColumns" cascade="save-update"
+			inverse="true">
+			<key>
+				<column name="portal_id" length="32"></column>
+			</key>
+			<one-to-many
+				class="com.zsgj.info.bussutil.protal.entity.PortalColumn" />
+		</set>
+
+	</class>
+</hibernate-mapping>

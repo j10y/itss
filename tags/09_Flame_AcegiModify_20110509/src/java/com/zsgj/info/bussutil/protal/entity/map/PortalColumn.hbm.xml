@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.info.bussutil.protal.entity.PortalColumn"
+		table="sys_portal_column">
+		<id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+		<property name="name" type="string">
+			<column name="name"></column>
+		</property>
+		
+		<property name="icon" type="string">
+		  <column name="icon" length="255"></column>
+		</property>
+		<property name="iconCls" type="string">
+		  <column name="iconCls" length="255"></column>
+		</property>
+		<property name="singleColumnScale" type="string">
+		  <column name="singleColumnScale" length="50"></column>
+		</property>
+
+		<property name="createTime" type="timestamp" update="false">
+			<column name="createTime"></column>
+		</property>
+		<many-to-one name="portal" column="portal_id"
+			class="com.zsgj.info.bussutil.protal.entity.Portal"
+			cascade="save-update" />
+		
+
+		<set name="portletSubscribes" cascade="save-update"
+			inverse="true">
+			<key>
+				<column name="portalColumn_id" length="32"></column>
+			</key>
+			<one-to-many
+				class="com.zsgj.info.bussutil.protal.entity.PortletSubscribe" />
+		</set>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<!--========================================================================
+		认证管理器
+		=========================================================================-->
+	<bean id="messages"
+		class="com.zsgj.info.framework.security.service.impl.SecurityMessageServiceImpl" />
+
+	<!-- 登陆用户操作日志 -->
+	<bean id="logUserActionService" class="com.zsgj.info.framework.security.service.impl.LogUserActionServiceImpl" >
+		<property name="securityManageDao" ref="securityManageDao" />
+	</bean>
+	
+	<bean id="authenticationManager"
+		class="org.acegisecurity.providers.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref bean="rememberMeAuthenticationProvider" />
+				<ref bean="daoAuthenticationProvider" />
+			</list>
+		</property>
+		<property name="sessionController" ref="concurrentSessionController" />
+	</bean>
+
+	<!-- 基于DAO验证的AuthenticationProvider -->
+	<bean id="daoAuthenticationProvider"
+		class="com.zsgj.info.framework.security.service.impl.LdapDaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService" />
+		<property name="isSystemAdmin"
+			value="${system.adminkey.systemadmin}" />
+		<property name="isUserAdmin"
+			value="${system.adminkey.useradmin}" />
+		<property name="hideUserNotFoundExceptions"  value="${system.security.messageEnable}" />
+		<property name="isLdap" value="${system.security.usedLdap}" />
+		<property name="ldap" ref="ldapService" />
+		<property name="messages" ref="messages" />
+		<property name="userCache" ref="userCache" />
+	</bean>
+
+	<bean id="concurrentSessionController"
+		class="org.acegisecurity.concurrent.ConcurrentSessionControllerImpl">
+		<property name="maximumSessions" value="${system.security.maximumSessions}" />
+		<property name="sessionRegistry">
+			<ref local="sessionRegistry" />
+		</property>
+		<property name="exceptionIfMaximumExceeded" value="${system.security.maximumExceeded}" />
+	</bean>
+
+	<bean id="sessionRegistry"
+		class="org.acegisecurity.concurrent.SessionRegistryImpl" />
+
+	<!-- 通过Cookie来验证用户上次是否已成功登录并在有效期内，如Cookies接受则认证通过 -->
+	<bean id="rememberMeAuthenticationProvider"
+		class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
+		<property name="key" value="remember_Me" />
+	</bean>
+
+	<!-- AcegiUserDetailServiceImpl为基于Acegi的UserService实现类 -->
+	<bean id="userDetailsService"
+		class="com.zsgj.info.framework.security.service.impl.UserDetailServiceHibernateImpl">
+		<property name="userDao" ref="userDao" />
+		<property name="acegiRoleDao" ref="acegiRoleDao" />
+		<property name="securityManageService" ref="securityManageService"/>
+	</bean>
+
+	<bean id="userDao"
+		class="com.zsgj.info.framework.security.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<bean id="acegiRoleDao"
+		class="com.zsgj.info.framework.security.dao.impl.AcegiRoleDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+
+	<!-- 缓存器设置  -->
+	<bean id="userCacheBackend"
+		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="userCache" />
+	</bean>
+	<bean id="userCache"
+		class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache"
+		autowire="byName">
+		<property name="cache" ref="userCacheBackend" />
+	</bean>
+	<bean id="resourceCacheBackend"
+		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="resourceCache" />
+	</bean>
+	<bean id="resourceCache"
+		class="com.zsgj.info.framework.security.cache.ResourceCache"
+		autowire="byName">
+		<property name="cache" ref="resourceCacheBackend" />
+	</bean>
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+
+	<bean id="acegiCacheService"
+		class="com.zsgj.info.framework.security.cache.AcegiCacheServiceImpl">
+		<property name="userCache" ref="userCache" />
+		<property name="resourceCache" ref="resourceCache" />
+		<property name="userDao" ref="userDao" />
+		<property name="acegiRoleDao" ref="acegiRoleDao" />
+		<property name="securityManageDao" ref="securityManageDao" />
+	</bean>
+
+	<!--========================================================================
+		决策管理器
+		=========================================================================-->
+	<bean id="accessDecisionManager"
+		class="org.acegisecurity.vote.AffirmativeBased"><!-- 至少有一个投票者允许访问时就允许访问该资源 -->
+		<property name="decisionVoters">
+			<list>
+				<ref bean="urlRoleVoter" /><!-- 此AccessDecisionVoter的实现类是根据资源关联的角色进行投票 --><!--
+					<bean class="org.acegisecurity.vote.AuthenticatedVoter"/>
+				-->
+			</list>
+		</property>
+		<property name="allowIfAllAbstainDecisions" value="false" /><!-- 如果所有投票者都弃权，也不允许访问 -->
+	</bean>
+
+	<bean id="urlRoleVoter" class="org.acegisecurity.vote.RoleVoter">
+		<property name="rolePrefix">
+			<value>AUTH_</value>
+		</property>
+	</bean>
+
+	<!--========================================================================
+		过滤器链
+		=========================================================================-->
+
+	<bean id="filterChainProxy"
+		class="org.acegisecurity.util.FilterChainProxy">
+		<property name="filterInvocationDefinitionSource">
+			<value>
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
+				/**=concurrentSessionFilter,httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,rememberMeFilter,exceptionFilter,securityInterceptor
+			</value>
+		</property>
+	</bean>
+
+	<!-- 从Session中获得用户信息并放入SecurityContextHolder -->
+	<bean id="httpSessionContextIntegrationFilter"
+		class="org.acegisecurity.context.HttpSessionContextIntegrationFilter" >
+		<!-- 
+			当需要使用 session 控制时，将该值设置成 true，不需要session控制时就是用默认的 false
+			 session 控制 和 自定义的 remember-me 功能 冲突解决 
+		-->
+		<property name="forceEagerSessionCreation" value="true" />  
+	</bean>
+
+	<bean id="logoutFilter"
+		class="com.zsgj.info.framework.security.provider.LogoutFilter">
+		<!-- URL redirected to after logout -->
+		<constructor-arg value="${system.security.logoutUrl}" /><!-- 退出后跳转的页面 -->
+		<constructor-arg>
+			<list>
+				<ref bean="rememberMeServices" />
+				<bean
+					class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+		<property name="filterProcessesUrl" value="${system.security.logoutFilterUrl}" /><!-- 退出的URL -->
+	</bean>
+
+	<!-- 限制用户只能登陆一次 -->
+	<bean id="concurrentSessionFilter"
+		class="org.acegisecurity.concurrent.ConcurrentSessionFilter">
+		<property name="expiredUrl" value="${system.security.loginFormUrl}" />
+		<property name="sessionRegistry" ref="sessionRegistry" />
+	</bean>
+
+	<!-- 验证用户身份 -->
+	<bean id="authenticationProcessingFilter"
+		class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+		<property name="alwaysUseDefaultTargetUrl" value="true" />
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="authenticationFailureUrl"
+			value="${system.security.authenticationFailureUrl}" />
+		<property name="defaultTargetUrl"
+			value="${system.security.defaultTargetUrl}" /><!--登录后的默认页面login.do?methodCall=toLoginSuccessed -->
+		<property name="filterProcessesUrl" value="/j_login.do" /><!--登录提交的action -->
+		<property name="rememberMeServices" ref="rememberMeServices" />
+	</bean>
+
+	<!-- 记住用户登录信息 -->
+	<bean id="rememberMeFilter"
+		class="org.acegisecurity.ui.rememberme.RememberMeProcessingFilter">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="rememberMeServices" ref="rememberMeServices" />
+	</bean>
+
+	<!-- 处理登录异常或权限异常的Filter -->
+	<bean id="exceptionFilter"
+		class="org.acegisecurity.ui.ExceptionTranslationFilter">
+		<!-- 出现AuthenticationException时的登录入口 -->
+		<property name="authenticationEntryPoint">
+			<bean
+				class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+				<property name="loginFormUrl"
+					value="${system.security.loginFormUrl}" /><!--登录页面 -->
+				<property name="forceHttps" value="false" />
+			</bean>
+		</property>
+		<property name="accessDeniedHandler">
+			<bean
+				class="org.acegisecurity.ui.AccessDeniedHandlerImpl">
+				<property name="errorPage"
+					value="${system.security.errorPage}" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 基于URL的安全拦截器 -->
+	<bean id="securityInterceptor"
+		class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="accessDecisionManager"
+			ref="accessDecisionManager" />
+		<property name="objectDefinitionSource"
+			ref="filterDefinitionSource" />
+
+	</bean>
+
+	<bean id="filterDefinitionSource"
+		class="com.zsgj.info.framework.aop.interceptor.DBFilterDefinitionSource">
+		<property name="convertUrlToLowercaseBeforeComparison"
+			value="false" />
+		<property name="useAntPath" value="${system.security.useAntPath}" /><!-- URL过滤是否使用Ant格式，即去掉URL中 ?后面所有的内容 -->
+		<property name="acegiCacheService" ref="acegiCacheService" />
+	</bean>
+
+	<!--org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices-->
+	<bean id="rememberMeServices"
+		class="com.zsgj.info.framework.security.service.impl.TokenBasedRememberMeServices">
+		<property name="userDetailsService" ref="userDetailsService" />
+		<property name="parameter" value="j_remember_me" />
+		<property name="key" value="remember_Me" />
+		<property name="tokenValiditySeconds" value="99931536000" />
+	</bean>
+
+	<!-- 基于Method的安全拦截器 -->
+	<bean id="methodSecurityInterceptor"
+		class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="accessDecisionManager"
+			ref="businessAccessDecisionManager" />
+		<property name="objectDefinitionSource"
+			ref="methodDefinitionSource">
+		</property>
+	</bean>
+
+	<bean id="methodDefinitionSource"
+		class="com.zsgj.info.framework.aop.interceptor.DBMethodDefinitionSource">
+		<property name="acegiCacheService" ref="acegiCacheService" />
+	</bean>
+
+	<bean id="businessAccessDecisionManager"
+		class="org.acegisecurity.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<ref bean="methodRoleVoter" />
+			</list>
+		</property>
+		<property name="allowIfAllAbstainDecisions" value="false" /><!-- 如果所有投票者都弃权，也不允许访问 -->
+	</bean>
+	<bean id="methodRoleVoter"
+		class="org.acegisecurity.vote.RoleVoter">
+		<property name="rolePrefix">
+			<value>ROLE_</value>
+		</property>
+	</bean>
+
+
+
+</beans>

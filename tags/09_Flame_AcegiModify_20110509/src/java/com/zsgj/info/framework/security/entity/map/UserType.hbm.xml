@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.zsgj.info.framework.security.entity" default-access="field">
+
+    <class name="UserType" table="sys_UserType" dynamic-insert="true" dynamic-update="true">
+		<cache usage="read-write"/>
+    	
+        <id name="id" type="long"  column="ID" >
+            <generator class="native" /> 
+        </id>
+        
+        <property name="userTypeCode" type="string" column="code"/>
+        
+       <property name="name" type="string" />
+        
+    </class>
+</hibernate-mapping>
