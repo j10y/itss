@@ -237,13 +237,13 @@ public class AccountServiceImpl extends BaseService implements AccountService{
 		return accountDao.findAccountApply(applyUser,delegateApplyUser,serviceItemProcess,applyname,pageNo,pageSize);
 	}
 
-	public Page findWWWDayDetail(String calendar, int start, int size) {
-		return accountDao.selectWWWDayDetail(calendar, start, size);
-	}
-	public long findWWWMonth(){
-		DateFormat df=new SimpleDateFormat("yyyyMM");
-		return accountDao.selectWWWMonth(df.format(new Date()));
-	}
+//	public Page findWWWDayDetail(String calendar, int start, int size) {
+//		return accountDao.selectWWWDayDetail(calendar, start, size);
+//	}
+//	public long findWWWMonth(){
+//		DateFormat df=new SimpleDateFormat("yyyyMM");
+//		return accountDao.selectWWWMonth(df.format(new Date()));
+//	}
 	public Integer findWwwLimit(String itcode) {
 		String wwwLimit = "";
 		Long typeId = null;
@@ -264,8 +264,8 @@ public class AccountServiceImpl extends BaseService implements AccountService{
 		}
 		return null;
 	}
-	public List<Object[]> findWWWMonthDetail(String yearAndMonth){
-		return accountDao.selectWWWMonthDetail(yearAndMonth);
-	}
+//	public List<Object[]> findWWWMonthDetail(String yearAndMonth){
+//		return accountDao.selectWWWMonthDetail(yearAndMonth);
+//	}
 	
 }

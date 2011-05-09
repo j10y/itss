@@ -320,8 +320,8 @@ public interface AccountDao {
 			String serviceItemProcess,String applyname, int pageNo, int pageSize);
 			
 	
-	public Page selectWWWDayDetail(String calendar,int start,int size);
-	public long selectWWWMonth(String yearAndMonth);
+	//public Page selectWWWDayDetail(String calendar,int start,int size);
+	//public long selectWWWMonth(String yearAndMonth);
 	/**
      * 获取正式帐号信息
      * @Methods Name findPersonAccount
@@ -331,5 +331,5 @@ public interface AccountDao {
      * @return PersonFormalAccount
      */
     PersonFormalAccount findPersonAccount(String accountType,String accountName);
-    public List<Object[]> selectWWWMonthDetail(String yearAndMonth);
+  //  public List<Object[]> selectWWWMonthDetail(String yearAndMonth);
 }

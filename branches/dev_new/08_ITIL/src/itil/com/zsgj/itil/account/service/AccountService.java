@@ -354,13 +354,13 @@ public interface AccountService {
 			String serviceItemProcess,String applyname, int pageNo, int pageSize);
 	
 			
-	public Page findWWWDayDetail(String calendar,int start,int size);
-	public long findWWWMonth();
+//	public Page findWWWDayDetail(String calendar,int start,int size);
+//	public long findWWWMonth();
 	/**
 	 * 获取用户www额度信息
 	 * @Methods Name findWwwLimit
 	 * @Create In Sep 13, 2010 By lee
 	 */
 	Integer findWwwLimit(String itcode);
-	public List<Object[]> findWWWMonthDetail(String yearAndMonth);
+	//public List<Object[]> findWWWMonthDetail(String yearAndMonth);
 }

@@ -10992,41 +10992,41 @@ public class AccountAction extends BaseAction {
 			}
 			return null;
 		}
-		public String findWWWDayDetail(){
-			String calendar=getRequest().getParameter("calendar");
-			int pageNo=HttpUtil.getInt(getRequest(), "pageNo",1);
-			int pageSize=HttpUtil.getInt(getRequest(),"pageSize",20);
-			Page page=accountService.findWWWDayDetail(calendar,pageNo, pageSize);
-			getRequest().setAttribute("list", page.getResult());
-			getRequest().setAttribute("totalCount",page.getTotalCount() );
-			getRequest().setAttribute("pageCount", page.getTotalPageCount());
-			getRequest().setAttribute("pageNo", page.getCurrentPageNo());
-			getRequest().setAttribute("calendar", calendar);
-			return	"toWWWDayDetail";
-		}
-		public String findWWWMonth(){
-			long bytes=accountService.findWWWMonth();
-			Integer limit=accountService.findWwwLimit(UserContext.getUserInfo().getUserName());
-			if(limit==null){
-				getRequest().setAttribute("errorMessage", "您还没有WWW帐号！");
-				return "toNoWWWAccount";
-			}
-			double flux=bytes/1024/1024;
-			double fee=flux*0.25;
-			getRequest().setAttribute("limit", limit);
-			getRequest().setAttribute("flux", flux);
-			getRequest().setAttribute("balance", limit-fee);
-			getRequest().setAttribute("fee", fee);
-			DateFormat df=new SimpleDateFormat("yyyyMM");
-			getRequest().setAttribute("yearAndMonth", df.format(new Date()));
-			return "toWWWMonth";
-			
-		}
-		public  String findWWWMonthDetail(){
-			String yearAndMonth=getRequest().getParameter("yearAndMonth");
-			List<Object[]> list=accountService.findWWWMonthDetail(yearAndMonth);
-			getRequest().setAttribute("list", list);
-			getRequest().setAttribute("yearAndMonth", yearAndMonth);
-			return "toWWWMonthDetail";
-		}
+//		public String findWWWDayDetail(){
+//			String calendar=getRequest().getParameter("calendar");
+//			int pageNo=HttpUtil.getInt(getRequest(), "pageNo",1);
+//			int pageSize=HttpUtil.getInt(getRequest(),"pageSize",20);
+//			Page page=accountService.findWWWDayDetail(calendar,pageNo, pageSize);
+//			getRequest().setAttribute("list", page.getResult());
+//			getRequest().setAttribute("totalCount",page.getTotalCount() );
+//			getRequest().setAttribute("pageCount", page.getTotalPageCount());
+//			getRequest().setAttribute("pageNo", page.getCurrentPageNo());
+//			getRequest().setAttribute("calendar", calendar);
+//			return	"toWWWDayDetail";
+//		}
+//		public String findWWWMonth(){
+//			long bytes=accountService.findWWWMonth();
+//			Integer limit=accountService.findWwwLimit(UserContext.getUserInfo().getUserName());
+//			if(limit==null){
+//				getRequest().setAttribute("errorMessage", "您还没有WWW帐号！");
+//				return "toNoWWWAccount";
+//			}
+//			double flux=bytes/1024/1024;
+//			double fee=flux*0.25;
+//			getRequest().setAttribute("limit", limit);
+//			getRequest().setAttribute("flux", flux);
+//			getRequest().setAttribute("balance", limit-fee);
+//			getRequest().setAttribute("fee", fee);
+//			DateFormat df=new SimpleDateFormat("yyyyMM");
+//			getRequest().setAttribute("yearAndMonth", df.format(new Date()));
+//			return "toWWWMonth";
+//			
+//		}
+//		public  String findWWWMonthDetail(){
+//			String yearAndMonth=getRequest().getParameter("yearAndMonth");
+//			List<Object[]> list=accountService.findWWWMonthDetail(yearAndMonth);
+//			getRequest().setAttribute("list", list);
+//			getRequest().setAttribute("yearAndMonth", yearAndMonth);
+//			return "toWWWMonthDetail";
+//		}
 }

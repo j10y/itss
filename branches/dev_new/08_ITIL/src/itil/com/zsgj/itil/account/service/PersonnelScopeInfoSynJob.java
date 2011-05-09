@@ -20,8 +20,8 @@ public class PersonnelScopeInfoSynJob extends QuartzJobBean{
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		System.out.println("synchronize dws 人事子范围码表数据 ");
-		personnelScopeSynDao.saveOrUpdatePersonnelScope();
-		personnelScopeSynDao.updateUserInfo();
+//		personnelScopeSynDao.saveOrUpdatePersonnelScope();
+//		personnelScopeSynDao.updateUserInfo();
 	}
 	public PersonnelScopeSynDao getPersonnelScopeSynDao() {
 		return personnelScopeSynDao;

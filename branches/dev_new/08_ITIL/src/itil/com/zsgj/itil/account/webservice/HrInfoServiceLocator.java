@@ -14,8 +14,6 @@ public class HrInfoServiceLocator extends org.apache.axis.client.Service impleme
     public HrInfoServiceLocator() {
     	HrInfoServiceSoap_address = PropertiesUtil.getProperties("soap.hrinfo.address","http://10.1.180.81/HrInfoUpdatePhone/HrInfoService.asmx");
     }
-
-
     public HrInfoServiceLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
     }

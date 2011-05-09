@@ -3689,101 +3689,101 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		Page page = super.pagedQuery(c, pageNo, pageSize);
 		return page;
 	}
-	public Page selectWWWDayDetail(String calendar,int start,int size) {
-		List list=new ArrayList();
-		try {
-			Connection con=DataBaseConnection.getMySqlConnection();
-			String dataSql=" select * from squidlog_"+calendar+
-						   " where itcode = ? "+
-						   " order by bytes desc limit ? , ? ";
-			String countSql=" select count(*) from squidlog_"+calendar+
-							" where itcode = ? ";
-			PreparedStatement countps=con.prepareStatement(countSql);
-			countps.setString(1, UserContext.getUserInfo().getUserName());
-			ResultSet countrs=countps.executeQuery();
-			int totalCount=0;
-			if(countrs.next()){
-				totalCount=countrs.getInt(1);
-			}
-			DataBaseConnection.closeConnection(countrs, countps, null);
-			if(totalCount>0){
-				PreparedStatement ps=con.prepareStatement(dataSql);
-				ps.setString(1, UserContext.getUserInfo().getUserName());
-				ps.setInt(2, Page.getStartOfPage(start,size));
-				ps.setInt(3, size);
-				ResultSet rs=ps.executeQuery();
-				while(rs.next()){
-					Object[] obj=new Object[4];
-					String remotehost=rs.getString("remotehost");
-					obj[0]=remotehost;
-					String unixtime=rs.getString("unixtime");
-					String time = unixtime.substring(0,unixtime.indexOf("."));
-					//obj[1]=unixtime;
-					Long timestamp = Long.parseLong(time)*1000;
-					obj[1] = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date(timestamp));
-					String url=rs.getString("URL");
-					obj[2]=url;
-					long bytes=rs.getLong("bytes");
-					obj[3]=bytes;
-					list.add(obj);
-				}
-				DataBaseConnection.closeConnection(rs, ps, null);
-			}
-			DataBaseConnection.closeConnection(null, null, con);
-			return new Page(Page.getStartOfPage(start,size),totalCount,size,list);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException(e.getMessage());
-		}
-	}
-	public long selectWWWMonth(String yearAndMonth){
-		try {
-			long count=0;
-			Connection con=DataBaseConnection.getMySqlConnection();
-			String dataSql=" select sum(bytes) from visitstat_"+yearAndMonth+
-						   " where itcode = ? ";
-			PreparedStatement ps=con.prepareStatement(dataSql);
-			ps.setString(1, UserContext.getUserInfo().getUserName());
-			ResultSet rs=ps.executeQuery();
-			if(rs.next()){
-				count=rs.getLong(1);
-			}
-			DataBaseConnection.closeConnection(rs, ps, con);
-			return count;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException(e.getMessage());
-		}
-	
-	}
-	public List<Object[]> selectWWWMonthDetail(String yearAndMonth){
-		List<Object[]> list =new ArrayList<Object[]>();
-		try {
-			Connection con=DataBaseConnection.getMySqlConnection();
-			String dataSql=" select sum(bytes),max(visitdate) from visitstat_"+yearAndMonth+
-			" where itcode = ? " +
-			" group by visitdate";
-			PreparedStatement ps=con.prepareStatement(dataSql);
-			ps.setString(1, UserContext.getUserInfo().getUserName());
-			ResultSet rs=ps.executeQuery();
-			while(rs.next()){
-				Object[] obj=new Object[2];
-				//obj[0]=rs.getDouble(1)/1024/1024;
-				BigDecimal bd = new BigDecimal(rs.getDouble(1)/1024/1024);   
-				bd = bd.setScale(2,BigDecimal.ROUND_HALF_UP); 
-				obj[0]=bd.toString();
-				obj[1]=rs.getString(2);
-				list.add(obj);
-			}
-			DataBaseConnection.closeConnection(rs, ps, con);
-		} catch (SQLException e) {
+//	public Page selectWWWDayDetail(String calendar,int start,int size) {
+//		List list=new ArrayList();
+//		try {
+//			Connection con=DataBaseConnection.getMySqlConnection();
+//			String dataSql=" select * from squidlog_"+calendar+
+//						   " where itcode = ? "+
+//						   " order by bytes desc limit ? , ? ";
+//			String countSql=" select count(*) from squidlog_"+calendar+
+//							" where itcode = ? ";
+//			PreparedStatement countps=con.prepareStatement(countSql);
+//			countps.setString(1, UserContext.getUserInfo().getUserName());
+//			ResultSet countrs=countps.executeQuery();
+//			int totalCount=0;
+//			if(countrs.next()){
+//				totalCount=countrs.getInt(1);
+//			}
+//			DataBaseConnection.closeConnection(countrs, countps, null);
+//			if(totalCount>0){
+//				PreparedStatement ps=con.prepareStatement(dataSql);
+//				ps.setString(1, UserContext.getUserInfo().getUserName());
+//				ps.setInt(2, Page.getStartOfPage(start,size));
+//				ps.setInt(3, size);
+//				ResultSet rs=ps.executeQuery();
+//				while(rs.next()){
+//					Object[] obj=new Object[4];
+//					String remotehost=rs.getString("remotehost");
+//					obj[0]=remotehost;
+//					String unixtime=rs.getString("unixtime");
+//					String time = unixtime.substring(0,unixtime.indexOf("."));
+//					//obj[1]=unixtime;
+//					Long timestamp = Long.parseLong(time)*1000;
+//					obj[1] = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date(timestamp));
+//					String url=rs.getString("URL");
+//					obj[2]=url;
+//					long bytes=rs.getLong("bytes");
+//					obj[3]=bytes;
+//					list.add(obj);
+//				}
+//				DataBaseConnection.closeConnection(rs, ps, null);
+//			}
+//			DataBaseConnection.closeConnection(null, null, con);
+//			return new Page(Page.getStartOfPage(start,size),totalCount,size,list);
+//		} catch (SQLException e) {
 //			e.printStackTrace();
 //			throw new DaoException(e.getMessage());
-		} finally{
-			return list;
-		}
-		
-	}
+//		}
+//	}
+//	public long selectWWWMonth(String yearAndMonth){
+//		try {
+//			long count=0;
+//			Connection con=DataBaseConnection.getMySqlConnection();
+//			String dataSql=" select sum(bytes) from visitstat_"+yearAndMonth+
+//						   " where itcode = ? ";
+//			PreparedStatement ps=con.prepareStatement(dataSql);
+//			ps.setString(1, UserContext.getUserInfo().getUserName());
+//			ResultSet rs=ps.executeQuery();
+//			if(rs.next()){
+//				count=rs.getLong(1);
+//			}
+//			DataBaseConnection.closeConnection(rs, ps, con);
+//			return count;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new DaoException(e.getMessage());
+//		}
+//	
+//	}
+//	public List<Object[]> selectWWWMonthDetail(String yearAndMonth){
+//		List<Object[]> list =new ArrayList<Object[]>();
+//		try {
+//			Connection con=DataBaseConnection.getMySqlConnection();
+//			String dataSql=" select sum(bytes),max(visitdate) from visitstat_"+yearAndMonth+
+//			" where itcode = ? " +
+//			" group by visitdate";
+//			PreparedStatement ps=con.prepareStatement(dataSql);
+//			ps.setString(1, UserContext.getUserInfo().getUserName());
+//			ResultSet rs=ps.executeQuery();
+//			while(rs.next()){
+//				Object[] obj=new Object[2];
+//				//obj[0]=rs.getDouble(1)/1024/1024;
+//				BigDecimal bd = new BigDecimal(rs.getDouble(1)/1024/1024);   
+//				bd = bd.setScale(2,BigDecimal.ROUND_HALF_UP); 
+//				obj[0]=bd.toString();
+//				obj[1]=rs.getString(2);
+//				list.add(obj);
+//			}
+//			DataBaseConnection.closeConnection(rs, ps, con);
+//		} catch (SQLException e) {
+////			e.printStackTrace();
+////			throw new DaoException(e.getMessage());
+//		} finally{
+//			return list;
+//		}
+//		
+//	}
 	public PersonFormalAccount findPersonAccount(String accountType,
 			String accountName) {
 		Criteria c = super.createCriteria(PersonFormalAccount.class);

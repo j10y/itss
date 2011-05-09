@@ -9,13 +9,13 @@ public interface PersonnelScopeSynDao {
 	 * @Create In Nov 10, 2009 By duxh
 	 * @throws DaoException
 	 */
-	public void saveOrUpdatePersonnelScope() throws DaoException;
-	/**
-	 * 同步sUserInfos的personnelScope字段
-	 * @Methods Name updateUserInfo
-	 * @Create In Nov 10, 2009 By duxh
-	 * @throws DaoException
-	 */
-	public void updateUserInfo() throws DaoException;
-	
+//	public void saveOrUpdatePersonnelScope() throws DaoException;
+//	/**
+//	 * 同步sUserInfos的personnelScope字段
+//	 * @Methods Name updateUserInfo
+//	 * @Create In Nov 10, 2009 By duxh
+//	 * @throws DaoException
+//	 */
+//	public void updateUserInfo() throws DaoException;
+//	
 }
