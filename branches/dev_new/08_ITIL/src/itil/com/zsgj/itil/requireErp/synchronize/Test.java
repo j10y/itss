@@ -14,6 +14,6 @@ public class Test {
 //		Map datamap =sAPExecute.getErpAccountId("100", "12", "20%2,80%1", "99");
 //		System.out.println("======================================:"+datamap);
 		String[] abc = {"2","3"};
-		sAPExecute.saveRequireFactoryInfo("100", abc, "87");
+		//sAPExecute.saveRequireFactoryInfo("100", abc, "87");
 	}
 }
