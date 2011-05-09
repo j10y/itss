@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="serverManage20091209">
+
+
+	<description>
+		服务器入驻数据中心20091209
+	</description>
+
+
+	<start-state name="提交">
+		<description>
+			start
+		</description>
+		<transition to="应用备案.信息化管理部.本部会签"></transition>
+	</start-state>
+
+
+	<task-node name="应用备案.信息化管理部.本部会签">
+		<description>
+			confirmTogether
+		</description>
+		<transition to="服务器管理员初审" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="服务器管理员初审">
+		<description>
+			confirmByServerManager1
+		</description>
+		<transition to="数据中心管理员审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="数据中心管理员审批">
+		<description>
+			confirmByCenterManager
+		</description>
+		<transition to="安全管理员审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="服务器管理员终审">
+		<description>
+			confirmByServerManager2
+		</description>
+		<transition to="用户确认" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="用户确认">
+		<description>
+			confirmByClient
+		</description>
+		<transition to="结束" name="Y"></transition>
+		<transition to="服务器管理员终审" name="N"></transition>
+	</task-node>
+
+	<task-node name="安全管理员审批">
+		<description>
+			confirmBySecurityManager
+		</description>
+		<transition to="服务器管理员终审" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+
+	<end-state name="结束">
+		<description>
+			end
+		</description>
+	</end-state>
+
+	<end-state name="打回">
+		<description>
+			giveUp
+		</description>
+	</end-state>
+
+
+</process-definition>

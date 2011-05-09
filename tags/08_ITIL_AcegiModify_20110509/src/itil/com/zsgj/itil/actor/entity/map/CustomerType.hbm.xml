@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.actor.entity.CustomerType" table="CustomerType" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        
+        <!-- 一下4个字段来自于DiscObject -->
+        <property name="discValue" type="string">
+            <column name="discValue" />
+        </property>
+        
+        <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
+        			column="SystemMainTable" />
+        
+        <many-to-one name="primaryKeyColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
+        			column="primaryKeyColumn" />
+        					
+        <many-to-one name="mainTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
+        			column="mainTableColumn" />
+        <!-- 			
+        <many-to-one name="extendTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn" 
+        			column="extendTableColumn" />
+ 		-->
+	</class>
+</hibernate-mapping>

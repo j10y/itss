@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extlist.entity.SRProjectPlan" table="itil_lst_SRProjectPlan">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="planName" type="java.lang.String">
+			  <column name="PLANNAME" ></column>
+			</property>
+			
+			<many-to-one name="status" class="com.zsgj.itil.project.entity.ProjectPlanStatus">
+		      <column name="STATUS" />
+		    </many-to-one>
+			<many-to-one name="progress" class="com.zsgj.itil.project.entity.ProjectPlanProgress">
+		      <column name="PROGRESS" />
+		    </many-to-one>
+			<property name="descn" type="java.lang.String">
+			  <column name="DESCN" ></column>
+			</property>
+			
+			<property name="beginDate" type="date">
+			  <column name="BEGINDATE"></column>
+			</property>
+			<property name="endDate" type="date">
+			  <column name="ENDDATE"></column>
+			</property>
+			<property name="intendHours" type="java.lang.Integer">
+			  <column name="INTENDHOURS" ></column>
+			</property>
+			<many-to-one name="planOwner" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="PLANOWNER" />
+		    </many-to-one>
+			<many-to-one name="specialRequire" class="com.zsgj.itil.require.entity.SpecialRequirement">
+		      <column name="SPECIALREQUIRE" />
+		    </many-to-one>
+			<many-to-one name="parentPlan" class="com.zsgj.itil.config.extlist.entity.SRProjectPlan">
+		      <column name="PARENTPLAN" />
+		    </many-to-one>
+	
+  </class>
+</hibernate-mapping>

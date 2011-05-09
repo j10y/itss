@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="AR_AcccountApplyAmSign" width="817" height="467">
+  <node name="提交" x="119" y="56" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审批" x="121" y="128" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="是否SBU" x="122" y="198" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="SBU加签人审批" x="311" y="197" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="帐号管理员处理" x="122" y="260" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="363" h1="-1" w2="0" h2="128"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="打回" x="484" y="131" width="132" height="36"/>
+  <node name="是否帐号管理员加签" x="123" y="328" width="146" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="账号管理员加签" x="479" y="327" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="46" h1="-82" w2="40" h2="104"/>
+    </edge>
+  </node>
+  <node name="结束" x="124" y="394" width="132" height="36"/>
+</root-container>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="ConfigItemModify">
+
+
+	<description>
+		配置变更申请
+	</description>
+
+
+	<start-state name="提交变更">
+		<description>
+			start
+		</description>
+		<transition to="交付团队技术负责人审批" name="Y"></transition>
+	</start-state>
+
+
+	<task-node name="交付团队技术负责人审批">
+		<description>
+			confirmByManager
+		</description>
+		<transition to="打回" name="N"></transition>
+		<transition to="配置变更经理审批" name="Y"></transition>
+	</task-node>
+
+	<task-node name="打回">
+		<description>
+			back
+		</description>
+		<transition to="交付团队技术负责人审批" name="Y"></transition>
+		<transition to="放弃" name="N"></transition>
+	</task-node>
+
+	<task-node name="配置变更经理审批">
+		<description>
+			confirmByIT
+		</description>
+		<transition to="打回" name="N"></transition>
+		<transition to="提交人确认" name="Y"></transition>
+	</task-node>
+
+	<task-node name="提交人确认">
+		<description>
+			confirmUser
+		</description>
+		<transition to="变更成功" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+
+	<end-state name="变更成功">
+		<description>
+			end
+		</description>
+	</end-state>
+
+	<end-state name="放弃">
+		<description>
+			giveUp
+		</description>
+	</end-state>
+
+
+</process-definition>

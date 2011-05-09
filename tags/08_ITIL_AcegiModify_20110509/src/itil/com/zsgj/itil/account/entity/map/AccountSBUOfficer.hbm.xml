@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.account.entity.AccountSBUOfficer" table="itil_ac_AccountSBUOfficer">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id> 
+		<property name="processNameDescription" type="string">
+            <column name="processNameDescription" length="200"/>
+        </property>
+        <property name="nodeName" type="string">
+			<column name="nodeName"></column>
+		</property>
+		<property name="personScope" type="string">
+			<column name="personScope" />
+		</property>
+		<property name="confirmUser" type="string">
+			<column name="confirmUser" />
+		</property>
+		
+	</class>
+</hibernate-mapping>

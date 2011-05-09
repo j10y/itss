@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extci.entity.VirtualServerEvent" table="itil_ci_VirtualServerEvent">
+  
+     <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+      
+     	<property name="cpu" type="java.lang.String">
+		  <column name="cpu" ></column>
+		</property>
+		
+	    <property name="ram" type="java.lang.String">
+		  <column name="ram" ></column>
+		</property>
+		
+	    <property name="diskSpace" type="java.lang.String">
+		  <column name="diskSpace" ></column>
+		</property>
+		
+			<property name="cisn" type="java.lang.String">
+			  <column name="cisn" ></column>
+			</property>	
+			
+			<property name="ipAddress1" type="java.lang.String">
+			  <column name="ipAddress1" ></column>
+			</property>
+			
+			<property name="ipAddress2" type="java.lang.String">
+			  <column name="ipAddress2" ></column>
+			</property>
+			
+			<property name="ipAddress3" type="java.lang.String">
+			  <column name="ipAddress3" ></column>
+			</property>
+
+			<property name="serverName" type="java.lang.String">
+			  <column name="serverName" ></column>
+			</property>
+			
+			<many-to-one name="osType" class="com.zsgj.itil.config.extlist.entity.OStype">
+				<column name="osType"></column>
+			</many-to-one>
+			<property name="osBrand" type="java.lang.String">
+				<column name="osBrand"></column>
+			</property>
+			<property name="osModel" type="java.lang.String">
+				<column name="osModel"></column>
+			</property>
+			<property name="osPackages" type="java.lang.String">
+				<column name="osPackages"></column>
+			</property>
+			
+			<many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="createUser" />
+		    </many-to-one>
+			<property name="createDate" type="timestamp">
+			  <column name="createDate"></column>
+			</property>
+			<many-to-one name="modifyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="modifyUser" />
+		    </many-to-one>
+			<property name="modifyDate" type="timestamp">
+			  <column name="modifyDate"></column>
+			</property>
+	
+  </class>
+</hibernate-mapping>

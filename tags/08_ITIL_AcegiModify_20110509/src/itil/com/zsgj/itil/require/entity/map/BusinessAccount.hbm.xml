@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.zsgj.itil.require.entity.BusinessAccount"
+		table="itil_BusinessAccount">
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+
+		<property name="applyNum" type="string">
+			<column name="applyNum"></column>
+		</property>
+		
+		<many-to-one name="require" class="com.zsgj.itil.require.entity.SpecialRequirement">
+			<column name="require" />
+		</many-to-one>
+		
+		<property name="descn" type="string">
+			<column name="descn"></column>
+		</property>
+		
+		<many-to-one name="relationUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+			<column name="relationUser" />
+		</many-to-one>
+		
+		<many-to-one name="applyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+			<column name="applyUser" />
+		</many-to-one>
+		
+		<property name="applyDate" type="date">
+			<column name="applyDate"></column>
+		</property>
+		
+		<property name="status" type="integer">
+			<column name="status"></column>
+		</property>
+
+	</class>
+</hibernate-mapping>

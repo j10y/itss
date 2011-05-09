@@ -1,0 +1,149 @@
+/*
+1.传入参数为一Map以适应后续的变化,因为解析过程也是动态的
+2.Map中设定各种输入参数:
+输出：
+head[Map],头部输出
+	cfx_CheckSum;
+	cfx_PriceFileDate;
+	cfx_ConfigIdentifer;
+	cfx_DateTimeStamp;
+	cfx_PropDocumentIdentifier;
+	cfx_CFXML;
+	totalListPrice;
+	orderType
+rows[List<OrderProductLine>],行集输出
+输入：
+applyType,申请类型
+disc,折扣
+listType[newbox,mes,isu,soft],列表类别
+qty,数量                                                                                                     
+time,时间标记,检查本规则对输入数据是否在有效
+bmsn[String[]],
+xmlPath,
+outPath,
+cfrPath
+*/
+
+#created on: Dec 2, 2008
+package com.zsgj.itil.rules
+
+#list any import classes here.
+import com.zsgj.itil.workflow.rules.RequireProcessRuleHelper;
+import org.dom4j.Node;
+import org.jbpm.graph.node.TaskNode;
+
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Date;
+import com.zsgj.itil.workflow.rules.RequireProcessRuleHelper;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+#declare any global variables here
+
+
+
+function void requireStartFlag(Map $map){
+	
+	String dataId = (String)$map.get("dataId");	
+	String serviceItemId = (String)$map.get("serviceItemId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");	
+	String reqClass = (String)$map.get("reqClass");	
+	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
+	processRuleHelper.requireStartFlag(dataId,serviceItemId ,nodeId,nodeName,processId,reqClass);
+	
+}
+function void requireAuditFlag(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String serviceItemId = (String)$map.get("serviceItemId");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String reqClass = (String)$map.get("reqClass");	
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
+	processRuleHelper.requireAuditFlag(dataId,serviceItemId ,nodeId,nodeName,processId,reqClass,result,comment);		
+}
+function void requireBackNode(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String serviceItemId = (String)$map.get("serviceItemId");	 	
+	String nodeName = (String)$map.get("nodeName");	
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String reqClass = (String)$map.get("reqClass");	
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
+	processRuleHelper.requireBackFlag(dataId,serviceItemId ,nodeId,nodeName,processId,reqClass,result,comment);
+	
+}
+function void requireEndFlag(Map $map){
+	
+	String dataId = (String)$map.get("dataId");	
+	String serviceItemId = (String)$map.get("serviceItemId");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");	
+	String reqClass = (String)$map.get("reqClass");	
+	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
+	processRuleHelper.requireEndFlag(dataId,serviceItemId ,nodeId,nodeName,processId,reqClass);
+	
+}
+
+rule "requireStartFlag"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] =='requireStartFlag'		
+		)
+	then
+	requireStartFlag($map);
+	$map.put("transitionName","NOLEAVE");	
+end
+
+rule "requireAuditFlag"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='requireAuditFlag'		
+		)
+	then	
+	requireAuditFlag($map);
+	$map.put("transitionName",$map.get("result"));	
+end
+
+rule "requireBackNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='requireBackNode'		
+		)
+	then
+	requireBackNode($map);	
+	$map.put("transitionName",$map.get("result"));		
+end
+
+rule "requireEndFlag"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='requireEndFlag'		
+		)
+	then	
+	requireEndFlag($map);
+	$map.put("transitionName","NOLEAVE");		
+end

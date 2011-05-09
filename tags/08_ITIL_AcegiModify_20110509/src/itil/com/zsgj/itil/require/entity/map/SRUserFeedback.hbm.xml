@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.require.entity.SRUserFeedback" table="itil_SRUserFeedback">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="specialRequire" class="com.zsgj.itil.require.entity.SpecialRequirement">
+		      <column name="specialRequire" />
+		    </many-to-one>
+			<property name="complete" type="integer">
+			<column name="complete"></column>
+		</property>
+		  <property name="content" type="integer">
+			<column name="content"></column>
+		</property>
+	
+  </class>
+</hibernate-mapping>

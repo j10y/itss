@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.account.entity.SpecialAccount" table="itil_ac_SpecialAccount">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			
+		    <property name="accountName" type="java.lang.String">
+			  <column name="accountName" ></column>
+			</property>
+			
+			<property name="password" type="java.lang.String">
+			  <column name="PASSWORD" ></column>
+			</property>
+			
+			<many-to-one name="accountType" class="com.zsgj.itil.account.entity.AccountType">
+		      <column name="accountType" />
+		    </many-to-one>
+			
+			<many-to-one name="accountOldUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="accountOldUser" />
+		    </many-to-one>
+		    
+		    <many-to-one name="accountNowUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="accountNowUser" />
+		    </many-to-one>
+		    
+			
+			
+			<property name="accountState" type="java.lang.String">
+			  <column name="ACCOUNTSTATE" ></column>
+			</property>
+			
+			<property name="createDate" type="date">
+			  <column name="CREATEDATE"></column>
+			</property>
+			
+			<property name="registerServiceRightDesc" type="java.lang.String">
+			  <column name="registerServiceRightDesc" ></column>
+			</property>
+			
+			<property name="sameRightAccount" type="java.lang.String">
+			  <column name="SAMERIGHTACCOUNT" ></column>
+			</property>
+			
+			<property name="rightsDesc" type="java.lang.String">
+			  <column name="rightsDesc" ></column>
+			</property>
+			
+			<property name="remarkDesc" type="java.lang.String">
+			  <column name="remarkDesc" ></column>
+			</property>
+			
+			<property name="attachment" type="java.lang.String">
+			  <column name="ATTACHMENT" ></column>
+			</property>
+			
+			<property name="applyReason" type="java.lang.String">
+			  <column name="APPLYREASON" ></column>
+			</property>
+			
+			<many-to-one name="confirmUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="CONFIRMUSER" />
+		    </many-to-one>
+		    
+			
+			<many-to-one name="mailValue" class="com.zsgj.itil.config.extlist.entity.MailVolume">
+		      <column name="MAILVALUE" />
+		    </many-to-one>
+		    
+			<many-to-one name="wwwAccountValue" class="com.zsgj.itil.config.extlist.entity.WWWScanType">
+		      <column name="WWWACCOUNTVALUE" />
+		    </many-to-one>
+		    
+			<property name="referSalary" type="java.lang.String">
+			  <column name="REFERSALARY" ></column>
+			</property>
+			
+			<property name="telephone" type="java.lang.String">
+			  <column name="TELEPHONE" ></column>
+			</property>
+			
+			<many-to-one name="registerServiceType" class="com.zsgj.itil.config.extlist.entity.ErpServiceType">
+		      <column name="REGISTERSERVICETYPE" />
+		    </many-to-one>
+			<property name="dutyName" type="java.lang.String">
+			  <column name="DUTYNAME" ></column>
+			</property>
+			
+			<property name="thingCode" type="java.lang.String">
+			  <column name="THINGCODE" ></column>
+			</property>
+			
+			<property name="controlScope" type="java.lang.String">
+			  <column name="CONTROLSCOPE" ></column>
+			</property>
+			
+			<property name="userRight" type="java.lang.String">
+			  <column name="USERRIGHT" ></column>
+			</property>
+			
+			<property name="operatorScope" type="java.lang.String">
+			  <column name="OPERATORSCOPE" ></column>
+			</property>
+			
+			
+			<property name="erpUserName" type="java.lang.String">
+			  <column name="erpUserName" ></column>
+			</property>
+			
+			<many-to-one name="workSpace" class="com.zsgj.info.framework.security.entity.WorkSpace">
+		      <column name="WORKSPACE" />
+		    </many-to-one>
+		    
+			<property name="mailServer" type="java.lang.String">
+			  <column name="MAILSERVER" ></column>
+			</property>
+			
+			<property name="endDate" type="date">
+			  <column name="ENDDATE"></column>
+			</property>
+			
+			<property name="otherLinkCompany" type="java.lang.String">
+			  <column name="OTHERLINKCOMPANY" ></column>
+			</property>
+			
+			<many-to-one name="drawSpace" class="com.zsgj.itil.config.extlist.entity.AR_DrawSpace">
+		      <column name="DRAWSPACE" />
+		    </many-to-one>
+		    
+		     <property name="cardState" type="java.lang.Integer">
+			  <column name="cardState" ></column>
+			</property>
+			
+			 <property name="cardNumber" type="java.lang.String">
+			  <column name="cardNumber" ></column>
+			</property>
+			
+			<property name="ifHold" type="java.lang.Integer">
+			  <column name="ifHold" ></column>
+			</property>
+			
+			<property name="ifLocked" type="java.lang.Integer">
+			  <column name="ifLocked" ></column>
+			</property>
+			
+			<property name="isConfrim" type="java.lang.Integer">
+			  <column name="isConfrim" ></column>
+			</property>
+			
+			<many-to-one name="olodApplyAccount" class="com.zsgj.itil.account.entity.SpecialAccount">
+		      <column name="olodApplyAccount" />
+		    </many-to-one>
+		    
+		    <many-to-one name="applyId" class="com.zsgj.itil.require.entity.AccountApplyMainTable">
+		      <column name="applyId" />
+		    </many-to-one>
+		    
+		    <many-to-one name="department" class="com.zsgj.info.framework.security.entity.Department" >
+               <column name="department"/>
+            </many-to-one>
+            
+             <property name="costCenterCode" type="string" column="costCenterCode"/>
+            
+              <many-to-one name="sameMailDept" class="com.zsgj.info.framework.security.entity.SameMailDept" >
+                 <column name="sameMailDept"/>
+              </many-to-one>
+			 <property name="vpnType" type="string" column="vpnType"/>
+              <property name="pingCode" type="string" column="pingCode"/>
+			
+			
+			<many-to-one name="deviceType" class="com.zsgj.itil.account.entity.DeviceType">
+		      <column name="deviceType" />
+		    </many-to-one>
+		    
+			<property name="hardwareId" type="java.lang.String">
+			  <column name="hardwareId" ></column>
+			</property>
+			
+			<many-to-one name="win7PaltForm" class="com.zsgj.itil.account.entity.Win7PlatForm">
+		      <column name="win7PaltForm" />
+		    </many-to-one>
+		     <property name="writerItcode" type="string" column="writerItcode"/>
+			
+	
+  </class>
+</hibernate-mapping>

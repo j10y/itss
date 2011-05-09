@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.require.entity.HRSAccountApplyEvent" table="itil_sci_HRSAccountApplyEvent">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="rootId" type="java.lang.Long">
+			  <column name="ROOTID" ></column>
+			</property>
+			<property name="name" type="java.lang.String">
+			  <column name="NAME" ></column>
+			</property>
+			
+			<many-to-one name="oldApply" class="com.zsgj.itil.require.entity.HRSAccountApply">
+		      <column name="OLDAPPLY" />
+		    </many-to-one>
+			<property name="processType" type="java.lang.Integer">
+			  <column name="PROCESSTYPE" ></column>
+			</property>
+			<property name="status" type="java.lang.Integer">
+			  <column name="STATUS" ></column>
+			</property>
+			
+			<property name="applyDate" type="date">
+			  <column name="APPLYDATE"></column>
+			</property>
+			<many-to-one name="delegateApplyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="DELEGATEAPPLYUSER" />
+		    </many-to-one>
+		    <property name="delegateApplyTel" type="java.lang.String">
+			  <column name="DELEGATEAPPLYTEL" ></column>
+			</property>
+			<property name="deleteFlag" type="java.lang.Integer">
+			  <column name="DELETEFLAG" ></column>
+			</property>
+			<property name="serviceItem" type="java.lang.Long">
+			  <column name="SERVICEITEM" ></column>
+			</property>
+			<property name="accountName" type="java.lang.String">
+			  <column name="ACCOUNTNAME" ></column>
+			</property>
+			
+			<property name="accountState" type="java.lang.String">
+			  <column name="ACCOUNTSTATE" ></column>
+			</property>
+			
+			<property name="applyReason" type="java.lang.String">
+			  <column name="APPLYREASON" ></column>
+			</property>
+			
+			<property name="isReferMoney" type="java.lang.Integer">
+			  <column name="ISREFERMONEY" ></column>
+			</property>
+			<many-to-one name="userRight" class="com.zsgj.itil.config.extlist.entity.HRSUserRight">
+		      <column name="USERRIGHT" />
+		    </many-to-one>
+			<many-to-one name="operationScope" class="com.zsgj.itil.config.extlist.entity.HRSOperationScope">
+		      <column name="OPERATIONSCOPE" />
+		    </many-to-one>
+			<property name="userOwner" type="java.lang.String">
+			  <column name="userOwner" ></column>
+			</property>
+			
+			<property name="workDuty" type="java.lang.String">
+			  <column name="WORKDUTY" ></column>
+			</property>
+			
+			<many-to-one name="applyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="APPLYUSER" />
+		    </many-to-one>
+			<property name="applyTel" type="java.lang.String">
+			  <column name="APPLYTEL" ></column>
+			</property>
+			
+			<many-to-one name="accountManger" class="com.zsgj.itil.config.extlist.entity.HRSAccountManger">
+		      <column name="ACCOUNTMANGER" />
+		    </many-to-one>
+			<many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="CREATEUSER" />
+		    </many-to-one>
+			<property name="createDate" type="date">
+			  <column name="CREATEDATE"></column>
+			</property>
+			<many-to-one name="modifyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="MODIFYUSER" />
+		    </many-to-one>
+			<property name="modifyDate" type="date">
+			  <column name="MODIFYDATE"></column>
+			</property>
+			<property name="isChangeRight" type="java.lang.Integer">
+			  <column name="isChangeRight" ></column>
+			</property>
+			
+			<many-to-one name="confirmUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="CONFIRMUSER" />
+		    </many-to-one>
+		    
+		    <many-to-one name="serviceItemProcess" class="com.zsgj.itil.service.entity.ServiceItemProcess">
+		      <column name="serviceItemProcess" />
+		    </many-to-one>
+	
+  </class>
+</hibernate-mapping>

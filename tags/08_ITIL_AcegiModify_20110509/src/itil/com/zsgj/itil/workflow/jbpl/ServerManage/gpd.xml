@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="serverManage20091209" width="662" height="582">
+  <node name="提交" x="90" y="38" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="应用备案.信息化管理部.本部会签" x="45" y="111" width="220" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="服务器管理员初审" x="88" y="182" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="数据中心管理员审批" x="80" y="257" width="149" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="服务器管理员终审" x="88" y="402" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-56" h1="35" w2="-57" h2="-36"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="用户确认" x="89" y="473" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="55" h1="-35" w2="56" h2="36"/>
+    </edge>
+  </node>
+  <node name="结束" x="89" y="545" width="132" height="36"/>
+  <node name="打回" x="365" y="257" width="132" height="36"/>
+  <node name="安全管理员审批" x="88" y="327" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+</root-container>

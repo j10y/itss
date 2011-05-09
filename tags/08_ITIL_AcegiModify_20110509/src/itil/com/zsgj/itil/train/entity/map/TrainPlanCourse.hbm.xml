@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.train.entity.TrainPlanCourse" table="TrainPlanCourse">
+		<id name="id" type="long">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		<many-to-one name="trainPlan" class="com.zsgj.itil.train.entity.TrainPlan">
+			<column name="trainPlan"></column>
+		</many-to-one>
+		<many-to-one name="trainCourse" class="com.zsgj.itil.train.entity.TrainCourse">
+			<column name="trainCourse"></column>
+		</many-to-one>
+		<property name="remark" type="string">
+			<column name="remark"></column>
+		</property>
+		<property name="deleteFlag" type="integer">
+			<column name="deleteFlag" default="0"></column>
+		</property>
+		<property name="status" type="integer">
+			<column name="status" default="0"></column>
+		</property>
+	</class>
+</hibernate-mapping>

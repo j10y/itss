@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping default-access="field">
+	<class name="com.zsgj.itil.event.entity.CCAgentWorkSum" 
+			table="CC_LOG1_AGENTWORKSUM">
+			
+		<id name="id" type="long">
+				<column name="id"></column>
+				<generator class="native"></generator>
+		</id>
+	
+        <property name="agentId" type="string">
+			<column name="agentId"></column>
+		</property>
+		
+		<property name="skillg" type="string">
+			<column name="skillg"></column>
+		</property>
+		
+		<property name="glevel" type="integer">
+			<column name="glevel"></column>
+		</property>
+		
+		<property name="actionType" type="string">
+			<column name="actionType"></column>
+		</property>
+		
+		<property name="origid" type="string">
+			<column name="origid"></column>
+		</property>
+		
+		<property name="calledrId" type="string">
+			<column name="calledrId"></column>
+		</property>
+		
+		<property name="calleddid" type="string">
+			<column name="calleddid"></column>
+		</property>
+		
+        <property name="ringTime" type="date">
+			<column name="ringTime"></column>
+		</property>
+		
+		
+		<property name="connectTime" type="date">
+			<column name="connectTime"></column>
+		</property>
+		
+		
+		<property name="endTime" type="date">
+			<column name="endTime"></column>
+		</property>
+		
+		
+		<property name="millisec" type="string">
+			<column name="millisec"></column>
+		</property>
+		
+		<property name="callId" type="string">
+			<column name="callId"></column>
+		</property>
+		
+		
+       
+	</class>
+</hibernate-mapping>

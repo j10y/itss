@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.require.entity.SRServiceProviderInfo" table="itil_SRServiceProviderInfo">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="specialRequire" class="com.zsgj.itil.require.entity.SpecialRequirement">
+		      <column name="specialRequire" />
+		    </many-to-one>
+			<many-to-one name="deliveryTeam" class="com.zsgj.itil.config.extci.entity.DeliveryTeam">
+		      <column name="deliveryTeam" />
+		    </many-to-one>
+		    <many-to-one name="mainEngineer" class="com.zsgj.itil.config.extci.entity.ServiceEngineer">
+		      <column name="mainEngineer" />
+		    </many-to-one>
+		    <many-to-one name="assistanEngineer" class="com.zsgj.itil.config.extci.entity.ServiceEngineer">
+		      <column name="assistanEngineer" />
+		    </many-to-one>
+			<many-to-one name="bigType" class="com.zsgj.itil.config.extlist.entity.RequirementBigType">
+		      <column name="bigType" />
+		    </many-to-one>
+			<many-to-one name="smallType" class="com.zsgj.itil.config.extlist.entity.RequirementSmallType">
+		      <column name="smallType" />
+		    </many-to-one>
+	
+  </class>
+</hibernate-mapping>

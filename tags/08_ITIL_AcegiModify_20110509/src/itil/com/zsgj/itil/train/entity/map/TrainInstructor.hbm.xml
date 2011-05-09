@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.train.entity.TrainInstructor" table="TrainInstructor">
+		<id name="id" type="long">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		<property name="realName" type="string">
+			<column name="realName"></column>
+		</property>
+		<property name="deleteFlag" type="integer">
+			<column name="deleteFlag" default="0"></column>
+		</property>
+		<property name="status" type="integer">
+			<column name="status" default="0"></column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.config.entity.ConfigItemFinanceInfo" table="ConfigItemFinanceInfo" 
+			dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native"></generator>
+		</id>
+				
+		<many-to-one name="configItem" class="com.zsgj.itil.config.entity.ConfigItem" unique="true">
+			<column name="configItem"></column>
+		</many-to-one>
+		
+		<property name="mainAssetCode" type="string">
+			<column name="mainAssetCode"></column>
+		</property>
+		
+		<property name="attachAssetCode" type="string">
+			<column name="attachAssetCode"></column>
+		</property>
+		
+		<property name="companyCode" type="string">
+			<column name="companyCode"></column>
+		</property>
+			 
+		<property name="assetFlag" type="integer">
+			<column name="assetFlag"></column>
+		</property>
+		<property name="levelFlag" type="integer">
+			<column name="levelFlag"></column>
+		</property>
+		<property name="maFlag" type="integer">
+			<column name="maFlag"></column>
+		</property>
+		<property name="maFee" type="double">
+			<column name="maFee"></column>
+		</property>
+		<property name="maTimeBegin" type="date">
+			<column name="maTimeBegin"></column>
+		</property>
+		<property name="maTimeEnd" type="date">
+			<column name="maTimeEnd"></column>
+		</property>
+		<property name="buyFee" type="double">
+			<column name="buyFee"></column>
+		</property>
+		<property name="saleFee" type="double">
+			<column name="saleFee"></column>
+		</property>
+		<property name="depressPeriod" type="integer">
+			<column name="depressPeriod"></column>
+		</property>
+		<property name="depressedPeriod" type="integer">
+			<column name="depressedPeriod"></column>
+		</property>
+		<property name="monthDepressFee" type="double">
+			<column name="monthDepressFee"></column>
+		</property>
+		<property name="fee" type="double">
+			<column name="fee"></column>
+		</property>
+		<property name="feeRemain" type="double">
+			<column name="feeRemain"></column>
+		</property>
+		
+		
+		<many-to-one name="depressMode" class="com.zsgj.itil.config.entity.DepressMode">
+			<column name="depressMode" ></column>
+		</many-to-one>
+		<many-to-one name="apportionMode" class="com.zsgj.itil.finance.entity.ApportionMode">
+			<column name="apportionMode"></column>
+		</many-to-one>
+		
+	</class>
+</hibernate-mapping>

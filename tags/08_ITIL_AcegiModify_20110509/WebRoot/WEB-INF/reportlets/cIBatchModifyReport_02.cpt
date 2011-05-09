@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<WorkBook>
+<Version>6.2</Version>
+<Report class="com.fr.report.WorkSheet" name="sheet1">
+<TableDataMap>
+<NameTableData name="ds1">
+<TableData class="com.fr.data.impl.DBTableData">
+<Parameters>
+</Parameters>
+<Attributes isCache="true" isDiskCache="true" />
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName><![CDATA[itil]]></DatabaseName>
+</Connection><Query><![CDATA[SELECT CIBatchModify.modifyNo, CIBatchModify.name, sUserInfos.userName, 
+      CIBatchModify.applyDate, 
+      CASE WHEN CIBatchModify.status = 0 THEN '草稿' ELSE (CASE WHEN CIBatchModify.status
+       = 1 THEN '审批结束' ELSE '审批中' END) END AS status, 
+      CASE WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL 
+      THEN ConfigItem.name ELSE ConfigItem_1.name END AS configItemName, 
+      CASE WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL 
+      THEN ConfigItem.cisn ELSE ConfigItem_1.cisn END AS configItemCode, 
+      CASE WHEN CIBatchModifyPlan.newConfigItem IS NOT NULL 
+      THEN ConfigItemType.name ELSE ConfigItemType_1.name END AS configItemType, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN CIRelationShip.parentConfigItemCode IS NOT NULL OR
+      CIRelationShip.parentServiceItemCode IS NOT NULL 
+      THEN (CASE WHEN CIRelationShip.parentConfigItemCode IS NOT NULL 
+      THEN '配置项' ELSE '服务项' END) ELSE '' END) 
+      ELSE (CASE WHEN CIRelationShip_1.parentConfigItemCode IS NOT NULL OR
+      CIRelationShip_1.parentServiceItemCode IS NOT NULL 
+      THEN (CASE WHEN CIRelationShip_1.parentConfigItemCode IS NOT NULL 
+      THEN '配置项' ELSE '服务项' END) ELSE '' END) END AS parent, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN CIRelationShip.childConfigItemCode IS NOT NULL OR
+      CIRelationShip.childServiceItemCode IS NOT NULL 
+      THEN (CASE WHEN CIRelationShip.childConfigItemCode IS NOT NULL 
+      THEN '配置项' ELSE '服务项' END) ELSE '' END) 
+      ELSE (CASE WHEN CIRelationShip_1.childConfigItemCode IS NOT NULL OR
+      CIRelationShip_1.childServiceItemCode IS NOT NULL 
+      THEN (CASE WHEN CIRelationShip_1.childConfigItemCode IS NOT NULL 
+      THEN '配置项' ELSE '服务项' END) ELSE '' END) END AS child, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN ConfigItem_2.name IS NOT NULL 
+      THEN ConfigItem_2.name ELSE ServiceItem.name END) 
+      ELSE (CASE WHEN ConfigItem_4.name IS NOT NULL 
+      THEN ConfigItem_4.name ELSE ServiceItem_2.name END) END AS parentName, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN ConfigItemType_2.name IS NOT NULL 
+      THEN ConfigItemType_2.name ELSE ServiceItemType.name END) 
+      ELSE (CASE WHEN ConfigItemType_4.name IS NOT NULL 
+      THEN ConfigItemType_4.name ELSE ServiceItemType_2.name END) 
+      END AS parentType, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN ConfigItem_2.cisn IS NOT NULL 
+      THEN ConfigItem_2.cisn ELSE ServiceItem.serviceItemCode END) 
+      ELSE (CASE WHEN ConfigItem_4.cisn IS NOT NULL 
+      THEN ConfigItem_4.cisn ELSE ServiceItem_2.serviceItemCode END) 
+      END AS parentCode, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN ConfigItem_3.name IS NOT NULL 
+      THEN ConfigItem_3.name ELSE ServiceItem_1.name END) 
+      ELSE (CASE WHEN ConfigItem_5.name IS NOT NULL 
+      THEN ConfigItem_5.name ELSE ServiceItem_3.name END) END AS childName, 
+      CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN ConfigItemType_3.name IS NOT NULL 
+      THEN ConfigItemType_3.name ELSE ServiceItemType_1.name END) 
+      ELSE (CASE WHEN ConfigItemType_5.name IS NOT NULL 
+      THEN ConfigItemType_5.name ELSE ServiceItemType_3.name END) 
+      END AS childType, CASE WHEN CIBatchModifyPlan.newCIRelationShip IS NOT NULL 
+      THEN (CASE WHEN ConfigItem_3.cisn IS NOT NULL 
+      THEN ConfigItem_3.cisn ELSE ServiceItem_1.serviceItemCode END) 
+      ELSE (CASE WHEN ConfigItem_5.cisn IS NOT NULL 
+      THEN ConfigItem_5.cisn ELSE ServiceItem_3.serviceItemCode END) 
+      END AS childCode
+FROM ConfigItem ConfigItem_4 LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_4 ON 
+      ConfigItem_4.configItemType = ConfigItemType_4.id RIGHT OUTER JOIN
+      ServiceItem ServiceItem_2 LEFT OUTER JOIN
+      ServiceItemType ServiceItemType_2 ON 
+      ServiceItem_2.serviceItemType = ServiceItemType_2.id RIGHT OUTER JOIN
+      CIRelationShip CIRelationShip_1 LEFT OUTER JOIN
+      ServiceItemType ServiceItemType_3 RIGHT OUTER JOIN
+      ServiceItem ServiceItem_3 ON 
+      ServiceItemType_3.id = ServiceItem_3.serviceItemType ON 
+      CIRelationShip_1.childServiceItemCode = ServiceItem_3.serviceItemCode AND 
+      ServiceItem_3.deleteFlag = 0 ON 
+      ServiceItem_2.serviceItemCode = CIRelationShip_1.parentServiceItemCode AND 
+      ServiceItem_2.deleteFlag = 0 LEFT OUTER JOIN
+      ConfigItem ConfigItem_5 LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_5 ON 
+      ConfigItem_5.configItemType = ConfigItemType_5.id ON 
+      CIRelationShip_1.childConfigItemCode = ConfigItem_5.cisn AND 
+      ConfigItem_5.status = 1 ON 
+      ConfigItem_4.cisn = CIRelationShip_1.parentConfigItemCode AND 
+      ConfigItem_4.status = 1 RIGHT OUTER JOIN
+      CIBatchModifyPlan ON 
+      CIRelationShip_1.id = CIBatchModifyPlan.oldCIRelationShip LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_3 RIGHT OUTER JOIN
+      ConfigItem ConfigItem_3 ON 
+      ConfigItemType_3.id = ConfigItem_3.configItemType RIGHT OUTER JOIN
+      ServiceItemType ServiceItemType_1 RIGHT OUTER JOIN
+      ServiceItem ServiceItem_1 ON 
+      ServiceItemType_1.id = ServiceItem_1.serviceItemType RIGHT OUTER JOIN
+      CIRelationShip ON 
+      ServiceItem_1.serviceItemCode = CIRelationShip.childServiceItemCode AND 
+      ServiceItem_1.deleteFlag = 0 LEFT OUTER JOIN
+      ServiceItemType RIGHT OUTER JOIN
+      ServiceItem ON ServiceItemType.id = ServiceItem.serviceItemType ON 
+      CIRelationShip.parentServiceItemCode = ServiceItem.serviceItemCode AND 
+      ServiceItem.deleteFlag = 0 ON 
+      ConfigItem_3.cisn = CIRelationShip.childConfigItemCode AND 
+      ConfigItem_3.status = 1 LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_2 RIGHT OUTER JOIN
+      ConfigItem ConfigItem_2 ON ConfigItemType_2.id = ConfigItem_2.configItemType ON 
+      CIRelationShip.parentConfigItemCode = ConfigItem_2.cisn AND 
+      ConfigItem_2.status = 1 ON 
+      CIBatchModifyPlan.newCIRelationShip = CIRelationShip.id LEFT OUTER JOIN
+      ConfigItemType ConfigItemType_1 RIGHT OUTER JOIN
+      ConfigItem ConfigItem_1 ON ConfigItemType_1.id = ConfigItem_1.configItemType ON 
+      CIBatchModifyPlan.oldConfigItem = ConfigItem_1.id LEFT OUTER JOIN
+      ConfigItemType RIGHT OUTER JOIN
+      ConfigItem ON ConfigItemType.id = ConfigItem.configItemType ON 
+      CIBatchModifyPlan.newConfigItem = ConfigItem.id RIGHT OUTER JOIN
+      CIBatchModify ON 
+      CIBatchModifyPlan.batchModify = CIBatchModify.id LEFT OUTER JOIN
+      sUserInfos ON CIBatchModify.applyUser = sUserInfos.ID]]></Query>
+</TableData>
+</NameTableData>
+</TableDataMap>
+<ReportSettings shrinkToFit="false" headerHeight="0.0" footerHeight="0.0">
+<PaperSize width="17.71681102362205" height="19.68511811023622" />
+<Margin top="0.27" left="0.7499999999999999" bottom="0.27" right="0.7499999999999999" />
+</ReportSettings>
+<ReportPageAttr>
+</ReportPageAttr>
+<ReportParameterAttr>
+<Parameters>
+<Parameter>
+<Attributes name="modifyNumber"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="modifyName"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="applyUser"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="beginDate"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="status"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.ComboBoxCellEditorDef"><Attributes allowBlank="true" />
+<Dict class="com.fr.data.impl.CustomDictionary">
+<CustomDictAttr>
+<Dict key="草稿" value="草稿"/>
+<Dict key="审批中" value="审批中"/>
+<Dict key="审批结束" value="审批结束"/>
+</CustomDictAttr>
+</Dict></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="endDate"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+</Parameters>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" userDefineWindow="true" />
+<PWTitle><![CDATA[参数]]></PWTitle>
+<WorkSheet>
+<ReportSettings shrinkToFit="false" headerHeight="0.0" footerHeight="0.0">
+<Margin top="0.27" left="0.75" bottom="0.27" right="0.75" />
+</ReportSettings>
+<ReportParameterAttr>
+<Parameters>
+</Parameters>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="0" userDefineWindow="false" />
+<PWTitle><![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<AutoRecalculate>false</AutoRecalculate>
+<DesignAttributes>
+</DesignAttributes>
+<ReportWebAttr>
+<EmailManager mailHost="" password="___" user="" fromEmailAddress="" />
+<ServerPrinter>
+</ServerPrinter>
+</ReportWebAttr>
+<ReportWriteAttr>
+</ReportWriteAttr>
+<RowHeight defaultValue="19">
+<![CDATA[19,22,22]]>
+</RowHeight>
+<ColumnWidth defaultValue="72">
+<![CDATA[37,72,109,14,83,97,17,78,89]]>
+</ColumnWidth>
+<CellElementList>
+<C c="1" r="1"><O t="S"><![CDATA[变更编号：]]></O>
+</C>
+<C c="2" r="1"><O t="PR" >
+<ParameterRef name="modifyNumber" />
+</O>
+</C>
+<C c="4" r="1"><O t="S"><![CDATA[变更名称：]]></O>
+</C>
+<C c="5" r="1"><O t="PR" >
+<ParameterRef name="modifyName" />
+</O>
+</C>
+<C c="7" r="1"><O t="S"><![CDATA[申请提出人：]]></O>
+</C>
+<C c="8" r="1"><O t="PR" >
+<ParameterRef name="applyUser" />
+</O>
+</C>
+<C c="1" r="2"><O t="S"><![CDATA[状态：]]></O>
+</C>
+<C c="2" r="2"><O t="PR" >
+<ParameterRef name="status" />
+</O>
+</C>
+<C c="4" r="2"><O t="S"><![CDATA[提交时间 从：]]></O>
+</C>
+<C c="5" r="2"><O t="PR" >
+<ParameterRef name="beginDate" />
+</O>
+</C>
+<C c="7" r="2"><O t="S"><![CDATA[到：]]></O>
+</C>
+<C c="8" r="2"><O t="PR" >
+<ParameterRef name="endDate" />
+</O>
+</C>
+<C c="4" r="4"><O t="PB" >
+<ParameterButton name="查询" type="0" />
+</O>
+</C>
+</CellElementList>
+</WorkSheet>
+<PP class="com.fr.report.parameter.CustomParameterProcessor">
+<UnitProcessorMap>
+<ParameterUnitProcessor parameter="applyUser">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyUser==null,nofilter,$applyUser)]]></Attributes><Result type="String"></Result></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="modifyName">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($modifyName==null,nofilter,$modifyName)]]></Attributes><Result type="String"></Result></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="status">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($status==null,nofilter,$status)]]></Attributes><Result type="String"></Result></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="modifyNumber">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($modifyNumber==null,nofilter,$modifyNumber)]]></Attributes><Result type="String"></Result></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="endDate">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($endDate==null,nofilter,$endDate)]]></Attributes><Result type="String"></Result></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="beginDate">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($beginDate==null,nofilter,$beginDate)]]></Attributes><Result type="String"></Result></Formula></UP>
+</ParameterUnitProcessor>
+</UnitProcessorMap>
+</PP>
+</ReportParameterAttr>
+<AutoRecalculate>false</AutoRecalculate>
+<DesignAttributes>
+</DesignAttributes>
+<ReportWebAttr>
+<EmailManager mailHost="" password="___" user="" fromEmailAddress="" />
+<ServerPrinter>
+</ServerPrinter>
+</ReportWebAttr>
+<ReportWriteAttr>
+</ReportWriteAttr>
+<Header reportPageType="0">
+<Background name="NullBackground" />
+<LeftList>
+</LeftList>
+<CenterList>
+</CenterList>
+<RightList>
+</RightList>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground" />
+<LeftList>
+</LeftList>
+<CenterList>
+</CenterList>
+<RightList>
+</RightList>
+</Footer>
+<RowHeight defaultValue="19">
+<![CDATA[34,32,19,32,19,30]]>
+</RowHeight>
+<ColumnWidth defaultValue="72">
+<![CDATA[95,76,95,72,72,99,118,123,119,100,119,114,115,100,98,70,98,93,114,15,79,72,66,72,72,11]]>
+</ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="13" s="0"><O t="S"><![CDATA[变更信息]]></O>
+</C>
+<C c="13" r="0"></C>
+<C c="14" r="0"></C>
+<C c="15" r="0"></C>
+<C c="0" r="1" s="1"><O t="S"><![CDATA[变更编号]]></O>
+</C>
+<C c="1" r="1" s="1"><O t="S"><![CDATA[变更名称]]></O>
+</C>
+<C c="2" r="1" s="1"><O t="S"><![CDATA[变更提交人]]></O>
+</C>
+<C c="3" r="1" s="1"><O t="S"><![CDATA[提交时间]]></O>
+</C>
+<C c="4" r="1" s="1"><O t="S"><![CDATA[状态]]></O>
+</C>
+<C c="5" r="1" cs="8" s="2"><O t="S"><![CDATA[变更配置项信息]]></O>
+</C>
+<C c="0" r="2" rs="4" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="modifyNo" />
+<Condition class="com.fr.data.condition.ListCondition"><JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[modifyNo]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="modifyNumber"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[name]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="modifyName"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[userName]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="applyUser"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[status]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="status"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyDate]]></CNAME><Compare op="3">
+<Parameter>
+<Attributes name="beginDate"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyDate]]></CNAME><Compare op="5">
+<Parameter>
+<Attributes name="endDate"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+</Condition>
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG><Result><![CDATA[$$$]]></Result></O>
+<Expand dir="0" />
+</C>
+<C c="1" r="2" rs="4" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="name" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="2" r="2" rs="4" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="userName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="3" r="2" rs="4" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyDate" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="4" r="2" rs="4" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="status" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="5" r="2" cs="2" s="4"><O t="S"><![CDATA[配置项编号]]></O>
+</C>
+<C c="7" r="2" cs="3" s="4"><O t="S"><![CDATA[配置项名称]]></O>
+</C>
+<C c="10" r="2" cs="3" s="4"><O t="S"><![CDATA[配置项类型]]></O>
+</C>
+<C c="5" r="3" cs="2" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="configItemCode" />
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[configItemCode]]></CNAME><Compare op="1">
+<O t="NULL" />
+</Compare>
+</Condition>
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"><Attr divideMode="1" /></RG><Result><![CDATA[$$$]]></Result></O>
+<Expand dir="0" />
+</C>
+<C c="7" r="3" cs="3" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="configItemName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="10" r="3" cs="3" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="configItemType" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="5" r="4" s="5"><O t="S"><![CDATA[父模块类型]]></O>
+</C>
+<C c="6" r="4" s="4"><O t="S"><![CDATA[父编号]]></O>
+</C>
+<C c="7" r="4" s="4"><O t="S"><![CDATA[父名称]]></O>
+</C>
+<C c="8" r="4" s="4"><O t="S"><![CDATA[父类型]]></O>
+</C>
+<C c="9" r="4" s="6"><O t="S"><![CDATA[子模块类型]]></O>
+</C>
+<C c="10" r="4" s="4"><O t="S"><![CDATA[子编号]]></O>
+</C>
+<C c="11" r="4" s="4"><O t="S"><![CDATA[子名称]]></O>
+</C>
+<C c="12" r="4" s="4"><O t="S"><![CDATA[子类型]]></O>
+</C>
+<C c="5" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="parent" />
+<Condition class="com.fr.data.condition.ListCondition"><JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[parent]]></CNAME><Compare op="1">
+<O t="NULL" />
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[parent]]></CNAME><Compare op="1">
+<O t="S"><![CDATA[\"\"]]></O>
+</Compare>
+</Condition>
+</JoinCondition>
+</Condition>
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG><Result><![CDATA[$$$]]></Result></O>
+<Expand dir="0" />
+</C>
+<C c="6" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="parentCode" />
+<Condition class="com.fr.data.condition.ListCondition"></Condition>
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"><Attr divideMode="1" /></RG><Result><![CDATA[$$$]]></Result></O>
+<Expand dir="0" />
+</C>
+<C c="7" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="parentName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="8" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="parentType" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="9" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="child" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="10" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="childCode" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="11" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="childName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="12" r="5" s="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="childType" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+</CellElementList>
+</Report>
+<StyleList>
+<Style horizontal_alignment="0">
+<FRFont name="SimSun" style="1" size="16" />
+<Background name="ColorBackground"
+ color="-4144960">
+</Background>
+<Border><Top style="1" /><Bottom style="1" /><Left style="1" /><Right style="1" /></Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="2">
+<FRFont name="SimSun" style="1" size="14" />
+<Background name="ColorBackground"
+ color="-16711936">
+</Background>
+<Border><Top style="1" /><Bottom style="1" /><Left style="1" /><Right style="1" /></Border>
+</Style>
+<Style horizontal_alignment="0">
+<FRFont name="SimSun" style="1" size="16" />
+<Background name="ColorBackground"
+ color="-16711936">
+</Background>
+<Border><Top style="1" /><Bottom style="1" /><Left style="1" /><Right style="1" /></Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="2">
+<FRFont name="SimSun" style="0" size="12" />
+<Background name="NullBackground" />
+<Border><Top style="1" /><Bottom style="1" /><Left style="1" /><Right style="1" /></Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="2">
+<FRFont name="SimSun" style="1" size="14" />
+<Background name="ColorBackground"
+ color="-256">
+</Background>
+<Border><Top style="1" /><Bottom style="1" /><Left style="1" /><Right style="1" /></Border>
+</Style>
+<Style>
+<FRFont name="SimSun" style="1" size="14" />
+<Background name="ColorBackground"
+ color="-256">
+</Background>
+<Border><Top style="1" /><Bottom style="1" /><Left style="1" /><Right style="1" /></Border>
+</Style>
+<Style horizontal_alignment="0">
+<FRFont name="SimSun" style="1" size="14" />
+<Background name="ColorBackground"
+ color="-256">
+</Background>
+<Border><Top style="1" /><Bottom style="1" /><Left style="1" /><Right style="1" /></Border>
+</Style>
+</StyleList>
+</WorkBook>

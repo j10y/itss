@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping default-access="field">
+	<class name="com.zsgj.itil.event.entity.CCIVRWorkSum" 
+			table="CC_LOG1_IVRWORKSUM">
+			
+		<id name="id" type="long">
+				<column name="id"></column>
+				<generator class="native"></generator>
+		</id>
+	
+        <property name="actionIO" type="string">
+			<column name="actionIO"></column>
+		</property>
+		
+		<property name="origId" type="string">
+			<column name="origId"></column>
+		</property>
+		
+		<property name="calledrId" type="string">
+			<column name="calledrId"></column>
+		</property>
+		
+		<property name="calleddId" type="string">
+			<column name="calleddId"></column>
+		</property>
+		
+		<property name="startTime" type="date">
+			<column name="startTime"></column>
+		</property>
+		
+		<property name="endTime" type="date">
+			<column name="endTime"></column>
+		</property>
+		
+		<property name="timeSpan" type="integer">
+			<column name="timeSpan"></column>
+		</property>
+		
+        <property name="tag" type="integer">
+			<column name="tag"></column>
+		</property>
+		
+		<property name="millisec" type="string">
+			<column name="millisec"></column>
+		</property>
+		
+		<property name="callId" type="string">
+			<column name="callId"></column>
+		</property>
+		
+		
+       
+	</class>
+</hibernate-mapping>

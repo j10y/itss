@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<WorkBook>
+<Version>6.2</Version>
+<Report class="com.fr.report.WorkSheet" name="sheet1">
+<TableDataMap>
+<NameTableData name="ds1">
+<TableData class="com.fr.data.impl.DBTableData">
+<Parameters>
+</Parameters>
+<Attributes isCache="true" isDiskCache="true" />
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName><![CDATA[itil]]></DatabaseName>
+</Connection><Query><![CDATA[SELECT ITIL_VIEW_REQUIREAPPLY.ID AS id, 
+	  ITIL_VIEW_REQUIREAPPLY.applyNum, 
+	  ITIL_VIEW_REQUIREAPPLY.applyName, 
+	  ITIL_VIEW_REQUIREAPPLY.applyUser,  
+      ITIL_VIEW_REQUIREAPPLY.itcode AS applyItcode, 
+      ITIL_VIEW_REQUIREAPPLY.createDate AS applyDate, 
+      ITIL_VIEW_REQUIREAPPLY.definitionName AS definitionName, 
+      CASE WHEN ITIL_VIEW_REQUIREAPPLY.nownodeid IS NULL 
+      THEN a3.pagePath ELSE a4.pagePath END AS pagepath, 
+      CASE WHEN ITIL_VIEW_REQUIREAPPLY.nownodeid IS NULL 
+      THEN a1.name1 ELSE a2.name2 END AS nodeName,
+	  apin.name as serviceProviderIn,
+	  mainEngineer.mainEngineerItcode AS mainEngineerItcode,
+	  mainEngineer.mainEngineerName+'/'+mainEngineer.mainEngineerItcode AS mainEngineerName,
+	  reqFlat.departmentName AS flatName
+FROM ITIL_VIEW_REQUIREAPPLY INNER JOIN
+          (SELECT ServiceItemProcess.serviceItem, ServiceItemProcess.definitionName, 
+               PAGE_PageModel.pagePath
+         FROM ServiceItemProcess, PAGE_PageModel
+         WHERE PAGE_PageModel.id = ServiceItemProcess.endPageModel) a3 ON 
+      ITIL_VIEW_REQUIREAPPLY.serviceItem = a3.serviceItem AND 
+      ITIL_VIEW_REQUIREAPPLY.definitionName = a3.definitionName LEFT OUTER JOIN
+          (SELECT JBPM_PAGEMODELCONFIGUNIT.nodeId, 
+               JBPM_PAGEMODELCONFIGUNIT.processId, 
+               PAGE_PageModel.pagePath
+         FROM JBPM_PAGEMODELCONFIGUNIT, PAGE_PageModel
+         WHERE PAGE_PageModel.id = JBPM_PAGEMODELCONFIGUNIT.pageModelId) 
+      a4 ON ITIL_VIEW_REQUIREAPPLY.processInfo = a4.processId AND 
+      ITIL_VIEW_REQUIREAPPLY.nownodeid = a4.nodeId LEFT OUTER JOIN
+          (SELECT id_ AS id1, name_ AS name1
+         FROM JBPM_NODE) a1 ON 
+      ITIL_VIEW_REQUIREAPPLY.nodeid = a1.id1 LEFT OUTER JOIN
+          (SELECT id_ AS id2, name_ AS name2
+         FROM JBPM_NODE) a2 ON 
+	  ITIL_VIEW_REQUIREAPPLY.nownodeid = a2.id2 LEFT OUTER JOIN
+	  ServiceProviderIn apin ON 
+	  ITIL_VIEW_REQUIREAPPLY.serviceProviderIn = apin.id LEFT OUTER JOIN
+	  (SELECT ServiceEngineerIn.id AS mainEngineerId, sUserInfos.userName AS mainEngineerItcode, sUserInfos.realName AS mainEngineerName
+         FROM sUserInfos,ServiceEngineerIn WHERE sUserInfos.id = ServiceEngineerIn.userInfo) mainEngineer ON 
+	  ITIL_VIEW_REQUIREAPPLY.mainEngineer = mainEngineer.mainEngineerId LEFT OUTER JOIN
+	  itil_RequireApplyDefaultAudit reqFlat ON
+	  reqFlat.id = ITIL_VIEW_REQUIREAPPLY.flat]]></Query>
+</TableData>
+</NameTableData>
+</TableDataMap>
+<ReportSettings shrinkToFit="false" headerHeight="0.0" footerHeight="0.0">
+<PaperSize width="13.917" height="19.694" />
+<Margin top="0.27" left="0.7499999999999999" bottom="0.27" right="0.7499999999999999" />
+</ReportSettings>
+<ReportPageAttr>
+</ReportPageAttr>
+<ReportParameterAttr>
+<Parameters>
+<Parameter>
+<Attributes name="applyNum"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="applyUser"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="applyFlat"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="applyType"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="applyDate"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="curNode"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="serviceProvider"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="mainEngineer"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="applyDateBegin"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+<Parameter>
+<Attributes name="applyDateEnd"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+</Parameters>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" userDefineWindow="true" />
+<PWTitle><![CDATA[参数]]></PWTitle>
+<WorkSheet>
+<ReportSettings shrinkToFit="false" headerHeight="0.0" footerHeight="0.0">
+<Margin top="0.27" left="0.75" bottom="0.27" right="0.75" />
+</ReportSettings>
+<ReportParameterAttr>
+<Parameters>
+</Parameters>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="0" userDefineWindow="false" />
+<PWTitle><![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<AutoRecalculate>false</AutoRecalculate>
+<DesignAttributes>
+</DesignAttributes>
+<ReportWebAttr>
+<EmailManager mailHost="" password="___" user="" fromEmailAddress="" />
+<ServerPrinter>
+</ServerPrinter>
+</ReportWebAttr>
+<ReportWriteAttr>
+</ReportWriteAttr>
+<Header reportPageType="0">
+<Background name="NullBackground" />
+<LeftList>
+</LeftList>
+<CenterList>
+</CenterList>
+<RightList>
+</RightList>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground" />
+<LeftList>
+</LeftList>
+<CenterList>
+</CenterList>
+<RightList>
+</RightList>
+</Footer>
+<RowHeight defaultValue="19">
+<![CDATA[19,17]]>
+</RowHeight>
+<ColumnWidth defaultValue="72">
+<![CDATA[72,72,83,97,11,82,86,11,57,97,14,60,98]]>
+</ColumnWidth>
+<CellElementList>
+<C c="2" r="0"><O t="S"><![CDATA[申请编号]]></O>
+</C>
+<C c="3" r="0"><O t="PR" >
+<ParameterRef name="applyNum" />
+</O>
+</C>
+<C c="5" r="0"><O t="S"><![CDATA[申请部门]]></O>
+</C>
+<C c="6" r="0"><O t="PR" >
+<ParameterRef name="applyFlat" />
+</O>
+</C>
+<C c="8" r="0"><O t="S"><![CDATA[申请类型]]></O>
+</C>
+<C c="9" r="0"><O t="PR" >
+<ParameterRef name="applyType" />
+</O>
+</C>
+<C c="2" r="1"><O t="S"><![CDATA[申请人]]></O>
+</C>
+<C c="3" r="1"><O t="PR" >
+<ParameterRef name="applyUser" />
+</O>
+</C>
+<C c="5" r="1"><O t="S"><![CDATA[当前状态]]></O>
+</C>
+<C c="6" r="1"><O t="PR" >
+<ParameterRef name="curNode" />
+</O>
+</C>
+<C c="8" r="1"><O t="S"><![CDATA[交付团队]]></O>
+</C>
+<C c="9" r="1"><O t="PR" >
+<ParameterRef name="serviceProvider" />
+</O>
+</C>
+<C c="2" r="2"><O t="S"><![CDATA[交付经理]]></O>
+</C>
+<C c="3" r="2"><O t="PR" >
+<ParameterRef name="mainEngineer" />
+</O>
+</C>
+<C c="4" r="2"></C>
+<C c="5" r="2"><O t="S"><![CDATA[申请时间 从：]]></O>
+</C>
+<C c="6" r="2"><O t="PR" >
+<ParameterRef name="applyDateBegin" />
+</O>
+</C>
+<C c="7" r="2"></C>
+<C c="8" r="2"><O t="S"><![CDATA[到：]]></O>
+</C>
+<C c="9" r="2"><O t="PR" >
+<ParameterRef name="applyDateEnd" />
+</O>
+</C>
+<C c="5" r="3"><O t="PB" >
+<ParameterButton name="查询" type="0" />
+</O>
+</C>
+</CellElementList>
+</WorkSheet>
+<PP class="com.fr.report.parameter.CustomParameterProcessor">
+<UnitProcessorMap>
+<ParameterUnitProcessor parameter="applyNum">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyNum==null,nofilter,$applyNum)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="applyUser">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyUser==null,nofilter,$applyUser)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="mainEngineer">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($mainEngineer==null,nofilter,$mainEngineer)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="curNode">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($curNode==null,nofilter,$curNode)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="applyFlat">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyFlat==null,nofilter,$applyFlat)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="applyType">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyType==null,nofilter,$applyType)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="applyDateBegin">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyDateBegin==null,nofilter,$applyDateBegin)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="applyDateEnd">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyDateEnd==null,nofilter,$applyDateEnd)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="serviceProvider">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($serviceProvider==null,nofilter,$serviceProvider)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+<ParameterUnitProcessor parameter="applyDate">
+<UP class="com.fr.report.parameter.UnitProcessor.FormulaUnitProcessor">
+<Formula><Attributes><![CDATA[=if($applyDate==null,nofilter,$applyDate)]]></Attributes></Formula></UP>
+</ParameterUnitProcessor>
+</UnitProcessorMap>
+</PP>
+</ReportParameterAttr>
+<AutoRecalculate>false</AutoRecalculate>
+<DesignAttributes>
+</DesignAttributes>
+<ReportWebAttr>
+<EmailManager mailHost="" password="___" user="" fromEmailAddress="" />
+<ServerPrinter>
+</ServerPrinter>
+</ReportWebAttr>
+<ReportWriteAttr>
+</ReportWriteAttr>
+<Header reportPageType="0">
+<Background name="NullBackground" />
+<LeftList>
+</LeftList>
+<CenterList>
+</CenterList>
+<RightList>
+</RightList>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground" />
+<LeftList>
+</LeftList>
+<CenterList>
+</CenterList>
+<RightList>
+</RightList>
+</Footer>
+<RowHeight defaultValue="19">
+<![CDATA[24,19,27,37]]>
+</RowHeight>
+<ColumnWidth defaultValue="72">
+<![CDATA[98,185,92,108,92,79,88,98,87,70,0,0,0,1]]>
+</ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="10" s="0"><O t="S"><![CDATA[需求流程综合查询报表]]></O>
+</C>
+<C c="0" r="2" s="1"><O t="S"><![CDATA[申请编号]]></O>
+</C>
+<C c="1" r="2" s="2"><O t="S"><![CDATA[申请名称]]></O>
+</C>
+<C c="2" r="2" s="2"><O t="S"><![CDATA[申请类型]]></O>
+</C>
+<C c="3" r="2" s="2"><O t="S"><![CDATA[申请部门]]></O>
+</C>
+<C c="4" r="2" s="2"><O t="S"><![CDATA[申请人]]></O>
+</C>
+<C c="5" r="2" s="2"><O t="S"><![CDATA[申请时间]]></O>
+</C>
+<C c="6" r="2" s="2"><O t="S"><![CDATA[当前状态]]></O>
+</C>
+<C c="7" r="2" s="2"><O t="S"><![CDATA[交付团队]]></O>
+</C>
+<C c="8" r="2" s="2"><O t="S"><![CDATA[交付经理]]></O>
+</C>
+<C c="9" r="2" s="3"><O t="S"><![CDATA[链接]]></O>
+</C>
+<C c="0" r="3" s="4"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyNum" />
+<Condition class="com.fr.data.condition.ListCondition"><JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyNum]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="applyNum"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyItcode]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="applyUser"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[flatName]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="applyFlat"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[definitionName]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="applyType"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[nodeName]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="curNode"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[serviceProviderIn]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="serviceProvider"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[mainEngineerItcode]]></CNAME><Compare op="10">
+<Parameter>
+<Attributes name="mainEngineer"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.TextCellEditorDef"><Attributes allowBlank="true" />
+<Attr multiLine="false" /></CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyDate]]></CNAME><Compare op="5">
+<Parameter>
+<Attributes name="applyDateEnd"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+<JoinCondition join="0">
+<Condition class="com.fr.data.condition.CommonCondition"><CNAME><![CDATA[applyDate]]></CNAME><Compare op="3">
+<Parameter>
+<Attributes name="applyDateBegin"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[]]></O>
+<CellEditorDef class="com.fr.report.cellElement.DateCellEditorDef"><Attributes allowBlank="true" />
+<Attribute format="yyyy-MM-dd" />
+</CellEditorDef>
+</Parameter>
+</Compare>
+</Condition>
+</JoinCondition>
+</Condition>
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG><Result><![CDATA[$$$]]></Result></O>
+<HighlightList><Highlight class="com.fr.report.highlight.DefaultHighlight"><Condition class="com.fr.data.condition.FormulaCondition"><Formula>
+<![CDATA[=Row()%2==0]]>
+</Formula>
+</Condition>
+<HighlightAction class="com.fr.report.highlight.BackgroundHighlightAction">
+<Background name="ColorBackground"
+ color="-1250068">
+</Background>
+<Scope val="1" /></HighlightAction>
+</Highlight></HighlightList><Expand dir="0" />
+</C>
+<C c="1" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="2" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="definitionName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="3" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="flatName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<HighlightList><Highlight class="com.fr.report.highlight.DefaultHighlight"><Condition class="com.fr.data.condition.FormulaCondition"><Formula>
+<![CDATA[=Row()%2==0]]>
+</Formula>
+</Condition>
+<HighlightAction class="com.fr.report.highlight.BackgroundHighlightAction">
+<Background name="ColorBackground"
+ color="-1250068">
+</Background>
+</HighlightAction>
+</Highlight></HighlightList><Expand dir="0" />
+</C>
+<C c="4" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyUser" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="5" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyDate" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="6" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="nodeName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="7" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="serviceProviderIn" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="8" r="3" s="5"><O t="DSColumn"><Attributes dsName="ds1" columnName="mainEngineerName" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="9" r="3" s="6"><O t="S"><![CDATA[查看]]></O>
+<NameJavaScriptGroup>
+<NameJavaScript name="网页链接1">
+<JavaScript class="com.fr.report.javaScript.WebHyperlink"><URL><![CDATA[forword.jsp]]></URL>
+<Parameters>
+<Parameter>
+<Attributes name="url"
+ type="7"
+ shown="true" />
+<O t="Formula" class="Formula" ><Attributes><![CDATA[=L3]]></Attributes></O>
+</Parameter>
+<Parameter>
+<Attributes name="dataId"
+ type="7"
+ shown="true" />
+<O t="Formula" class="Formula" ><Attributes><![CDATA[=K3]]></Attributes></O>
+</Parameter>
+<Parameter>
+<Attributes name="readOnly"
+ type="0"
+ shown="true" />
+<O t="S"><![CDATA[1]]></O>
+</Parameter>
+</Parameters>
+</JavaScript>
+</NameJavaScript>
+</NameJavaScriptGroup>
+</C>
+<C c="10" r="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="id" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="11" r="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="pagepath" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="12" r="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="applyItcode" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="13" r="3"><O t="DSColumn"><Attributes dsName="ds1" columnName="mainEngineerItcode" />
+<RG class="com.fr.report.cellElement.core.FunctionGrouper"></RG></O>
+<Expand dir="0" />
+</C>
+<C c="0" r="4"><O t="S"><![CDATA[]]></O>
+</C>
+</CellElementList>
+</Report>
+<StyleList>
+<Style>
+<FRFont name="SimSun" style="1" size="14" foreground="-16157524" />
+<Background name="NullBackground" />
+<Border><Bottom style="6" color="-6894375"
+ /></Border>
+</Style>
+<Style horizontal_alignment="0">
+<FRFont name="SimSun" style="1" size="14" />
+<Background name="NullBackground" />
+<Border><Top style="1" color="-3619644"
+ /><Bottom style="1" color="-3619644"
+ /><Right style="1" color="-3619644"
+ /></Border>
+</Style>
+<Style horizontal_alignment="0">
+<FRFont name="SimSun" style="1" size="14" />
+<Background name="NullBackground" />
+<Border><Top style="1" color="-3619644"
+ /><Bottom style="1" color="-3619644"
+ /><Left style="1" color="-3619644"
+ /><Right style="1" color="-3619644"
+ /></Border>
+</Style>
+<Style horizontal_alignment="0">
+<FRFont name="SimSun" style="1" size="14" />
+<Background name="NullBackground" />
+<Border><Top style="1" color="-3619644"
+ /><Bottom style="1" color="-3619644"
+ /><Left style="1" color="-3619644"
+ /></Border>
+</Style>
+<Style>
+<FRFont name="SimSun" style="0" size="12" />
+<Background name="NullBackground" />
+<Border><Top style="1" color="-3619644"
+ /><Bottom style="1" color="-3619644"
+ /><Right style="1" color="-3619644"
+ /></Border>
+</Style>
+<Style>
+<FRFont name="SimSun" style="0" size="12" />
+<Background name="NullBackground" />
+<Border><Top style="1" color="-3619644"
+ /><Bottom style="1" color="-3619644"
+ /><Left style="1" color="-3619644"
+ /><Right style="1" color="-3619644"
+ /></Border>
+</Style>
+<Style horizontal_alignment="0">
+<FRFont name="SimSun" style="0" size="12" foreground="-16776961" underline="1" />
+<Background name="NullBackground" />
+<Border><Top style="1" color="-3619644"
+ /><Bottom style="1" color="-3619644"
+ /><Left style="1" color="-3619644"
+ /></Border>
+</Style>
+</StyleList>
+</WorkBook>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="AR_AccountApplyHRSign" width="755" height="406">
+  <node name="提交" x="51" y="9" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审批" x="51" y="78" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="是否SBU" x="53" y="148" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="SBU加签人审批" x="264" y="156" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="hr加签人审批" x="53" y="220" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="353" h1="-3" w2="-112" h2="147"/>
+    </edge>
+  </node>
+  <node name="帐号管理员处理" x="51" y="285" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="464" h1="3" w2="5" h2="218"/>
+    </edge>
+  </node>
+  <node name="结束" x="54" y="369" width="132" height="36"/>
+  <node name="打回" x="518" y="70" width="132" height="36"/>
+</root-container>

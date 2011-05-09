@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+   
+   	<!-- FinanceEntity -->
+   	<bean name="financeSchedules" class="com.zsgj.itil.finance.entity.FinanceCostSchedules" scope="prototype">
+   	</bean>
+   	
+   	<!-- FinanceService -->
+   	<bean name="userCostInputService" class="com.zsgj.itil.finance.service.impl.UserCostInputServiceImpl" scope="prototype">
+   		<property name="userCostInputDao" ref="userCostInputDao"></property>
+   	</bean>
+   	<bean name="CostHandInputService" class="com.zsgj.itil.finance.service.impl.CostHandInputServiceImpl" scope="prototype">
+		<property name="costHandInputDao" ref="CostHandInputDao"></property>
+	</bean>
+   	<!-- FinanceDao -->
+   	<bean name="userCostInputDao" class="com.zsgj.itil.finance.dao.impl.UserCostInputDaoImpl" scope="prototype">
+   		<property name="sessionFactory" ref="pmcSessionFactory"></property>
+   	</bean>
+   	<bean name="CostHandInputDao" class="com.zsgj.itil.finance.dao.impl.CostHandInputDaoImpl" >
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+   	
+   	<!-- FinanceAction -->
+	<bean name="/finance/userCostInputAction" class="com.zsgj.itil.finance.action.UserCostInputAction" scope="prototype">
+		<property name="financeCostSchedules" ref="financeSchedules"></property>
+		<property name="userCostInputService" ref="userCostInputService"></property>
+	</bean>
+	<bean name="/finance/costHandInputAction" class="com.zsgj.itil.finance.action.CostHandInputAction" scope="prototype">
+		<property name="costHandInputService" ref="CostHandInputService"></property>
+	</bean>
+</beans>
+

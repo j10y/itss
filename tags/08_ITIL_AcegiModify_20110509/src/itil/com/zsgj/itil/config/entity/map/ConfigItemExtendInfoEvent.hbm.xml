@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.config.entity.ConfigItemExtendInfoEvent" 
+			table="ConfigItemExtendInfoEvent" dynamic-insert="true" dynamic-update="true">
+			
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		
+		<many-to-one name="configItemEvent" class="com.zsgj.itil.config.entity.ConfigItemEvent">
+			<column name="configItemEvent"></column>
+		</many-to-one>
+		
+		<many-to-one 
+			      name="systemMainTable" 
+			      class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
+			      column="systemMainTable" fetch="join" lazy="false" />
+			      
+		<property name="extendDataId" type="long">
+			<column name="extendDataId"></column>
+		</property>
+		<property name="levelFlag" type="integer">
+			<column name="levelFlag"></column>
+		</property>
+		     
+		
+	</class>
+</hibernate-mapping>

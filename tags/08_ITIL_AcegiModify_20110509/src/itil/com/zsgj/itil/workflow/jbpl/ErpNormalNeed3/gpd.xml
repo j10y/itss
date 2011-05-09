@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="ErpNormalNeed3" width="732" height="457">
+  <node name="提交" x="152" y="15" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="本部财务经理审批" x="152" y="89" width="132" height="37">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-35" h1="35" w2="-36" h2="-41"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="ERP工程师处理" x="153" y="165" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="41" h1="-38" w2="42" h2="38"/>
+    </edge>
+  </node>
+  <node name="是否需要BASIS工程师" x="153" y="240" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="是否需要EB工程师" x="152" y="321" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="BASIS工程师处理" x="339" y="272" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="EB工程师处理" x="339" y="359" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="152" y="401" width="132" height="36"/>
+  <node name="打回" x="347" y="89" width="132" height="36"/>
+</root-container>

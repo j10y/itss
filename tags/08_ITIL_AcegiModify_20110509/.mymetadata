@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="08_ITIL"
+  id="myeclipse.1204523630640"
+  context-root="/itil"
+  j2ee-spec="1.5"
+  archive="08_ITIL.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+
