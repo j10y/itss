@@ -16,7 +16,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-import com.lotus.sametime.chatui.conf.c;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.ExtData;
 import com.zsgj.info.appframework.metadata.entity.Operator;

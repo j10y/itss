@@ -2,7 +2,6 @@ package com.zsgj.info.appframework.metadata.service;
 
 import java.util.List;
 
-import com.lotus.sametime.community.kernel.vpkmsg.v;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 
