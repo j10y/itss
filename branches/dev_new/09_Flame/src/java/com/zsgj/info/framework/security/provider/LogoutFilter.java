@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework
- * @Path: com.zsgj.info.framework.security.providerLogoutFilter.java
+ * @Path: com.digitalchina.info.framework.security.providerLogoutFilter.java
  * @Create By ’≈≈Ù
  * @Create In Nov 10, 2008 3:46:18 PM
  * TODO
@@ -48,19 +48,15 @@ public class LogoutFilter extends org.springframework.security.web.authenticatio
 			if (authen != null) {
 				user = authen.getCurrentUserInfo();
 			}
-			Boolean SSO = (Boolean) httpRequest.getSession().getAttribute("SSO");
-			if(Boolean.TRUE.equals(SSO)){
+			if (user != null) {
 				UserContext.removeOnlineUser(user);
-				httpResponse.sendRedirect("http://dcone.zsgj.com/pkmslogout");
-			}else{
-				super.doFilter(request, response, chain);
+				System.out.println("remove Online User: " + user.getUserName());
 			}
+			
+			super.doFilter(request, response, chain);
 		}else{
 			super.doFilter(request, response, chain);
 		}
-		if (user != null) {
-			UserContext.removeOnlineUser(user);
-			System.out.println("remove Online User: " + user.getUserName());
-		}
+		
 	}
 }
