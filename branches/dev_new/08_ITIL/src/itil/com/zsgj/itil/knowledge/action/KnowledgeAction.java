@@ -8,24 +8,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.acegisecurity.GrantedAuthority;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.pagemodel.PageManager;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
-import com.zsgj.info.appframework.pagemodel.service.PageModelService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
 import com.zsgj.info.appframework.pagemodel.servlet.CoderForSave;
 import com.zsgj.info.framework.context.ContextHolder;
@@ -39,14 +36,12 @@ import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
 import com.zsgj.itil.event.entity.Event;
 import com.zsgj.itil.event.entity.EventSulotion;
-import com.zsgj.itil.event.entity.EventType;
 import com.zsgj.itil.knowledge.entity.KnowContract;
 import com.zsgj.itil.knowledge.entity.KnowFile;
 import com.zsgj.itil.knowledge.entity.KnowProblemType;
 import com.zsgj.itil.knowledge.entity.Knowledge;
 import com.zsgj.itil.knowledge.entity.KnowledgeType;
 import com.zsgj.itil.knowledge.service.KnowledgeService;
-import com.zsgj.itil.service.entity.ServiceItemType;
 
 public class KnowledgeAction extends BaseAction {
 	static final String FSP = System.getProperty("file.separator");
@@ -418,15 +413,10 @@ public class KnowledgeAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		HttpServletRequest request = super.getRequest();
 		String problmeTypeId = request.getParameter("problmeTypeId");
-		GrantedAuthority[] authorities=UserContext.getAuthorities();
 		String json="";
-		boolean isAdmin=false;
-			for(int i=0;i<authorities.length;i++){
-				if(authorities[i].getAuthority().equals("AUTH_SYS_ADMIN")){
-					isAdmin=true;
-					break;
-				}
-			}
+		
+		boolean isAdmin = this.isSystemAdmin(UserContext.getAuthorities()) ? true : false;
+			
 		if(isAdmin==true){//为管理员
 			json = "{success:true,flag:'yes'}";
 		}else{
@@ -1367,16 +1357,8 @@ public class KnowledgeAction extends BaseAction {
 		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
 		int start = HttpUtil.getInt(request, "start", 0);
 		int pageNo = start / pageSize + 1;
-		GrantedAuthority[] authorities=UserContext.getAuthorities();
-		String adminFlag="no";
-		if(authorities!=null){
-			for(int i=0;i<authorities.length;i++){
-				if(authorities[i].getAuthority().equals("AUTH_SYS_ADMIN")){
-					adminFlag="yes";
-					break;
-				}
-			}
-		}
+		
+		String adminFlag = this.isSystemAdmin(UserContext.getAuthorities()) ? "yes" : "no";
 		Page page =knowService.findAllProblemType(UserContext.getUserInfo(),adminFlag,name,serviceItem,pageNo,pageSize);
 		Long total=1L;
 		List typeList=page.list();

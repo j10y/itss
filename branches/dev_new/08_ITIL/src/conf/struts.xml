@@ -21,11 +21,12 @@
           	<result name="addCallBackSuccess">/user/train/train_userBackMessage.jsp</result>
         </action>
         
+        <!-- 
          <action name="requireConfigItem_*" class="/project/requireConfigItem" method="{1}">
          	<result name="success">/user/configRel/configItemRelInfo.jsp</result>
          	<result name="relationDate">/user/configRel/configItemRelInfo_datajson.jsp</result>
         </action>
-
+		 -->
         <action	name="serviceCatalogue_*" class="/service/serviceCataLogue" method="{1}">
         </action>
         
@@ -83,8 +84,11 @@
           <result name="success">/user/account/userFeedback_success.jsp</result>
         </action>
          <!-- 个性化需求 -->
+         
+         <!-- 
         <action	name="specialRequireAction_*" class="/require/specialRequire" method="{1}">
         </action>
+         -->
         <action	name="SRAction_*" class="/require/sra" method="{1}">
         <result name="userFeedback_view">/user/require/userFeedback_view.jsp</result>
         	<result name="userFeedback_success">/user/require/userFeedback_success.jsp</result>

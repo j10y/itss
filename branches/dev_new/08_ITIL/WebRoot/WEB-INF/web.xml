@@ -116,6 +116,7 @@
     
 	 
     <!-- Acegi过滤器 -->
+    <!--
     <filter>
         <filter-name>acegiFilterChain</filter-name>
         <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
@@ -124,8 +125,10 @@
             <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
         </init-param>
     </filter>
+    -->
 
     <!-- Acegi过滤器URL映射 -->
+    <!-- 
     <filter-mapping>
         <filter-name>acegiFilterChain</filter-name>
         <url-pattern>*.jsp</url-pattern>
@@ -147,7 +150,18 @@
 	 	<filter-name>acegiFilterChain</filter-name>
 	  	<url-pattern>*.action</url-pattern>
 	 </filter-mapping>
-	
+	 -->
+	 
+	 <!-- spring security delegatingFilterProxy -->
+	 <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>	 
+	 
 	 <!-- openSessionInViewFilter -->
 	 <filter>  
        <filter-name>openSessionInViewFilter</filter-name>  
@@ -229,17 +243,24 @@
 		<listener-class>com.zsgj.info.framework.web.listener.DefaultContextLoaderListener</listener-class>
 	</listener>   
 	
+	<!-- spring security httpSessionEventPublisher -->
+	<listener>
+      <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+	
 	<!--Spring log4j Config loader-->
 	<listener>
 	    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 	
 	<!--add by duxh in 20091218 解决登陆异常问题begin-->
+	<!-- 
 	<listener>  
    		<listener-class>  
         	org.acegisecurity.ui.session.HttpSessionEventPublisher  
     	</listener-class>  
 	</listener>
+	 -->
 	<!--add by duxh in 20091218 end-->
 	<!-- struts action servlet （org.apache.struts.action.ActionServlet）-->
    <servlet>

@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.acegisecurity.GrantedAuthority;
+
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -676,16 +676,9 @@ public class SupportGroupAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		String supportId = HttpUtil.getString(request, "dataId","0");
 		super.getRequest().setAttribute("dataId", supportId);
-		GrantedAuthority[] authorities=UserContext.getAuthorities();
-		String adminFlag="no";
-		if(authorities!=null){
-			for(int i=0;i<authorities.length;i++){
-				if(authorities[i].getAuthority().equals("AUTH_SYS_ADMIN")){
-					adminFlag="yes";
-					break;
-				}
-			}
-		}
+		
+		String adminFlag= this.isSystemAdmin(UserContext.getAuthorities()) ? "yes" : "no";
+		
 		if(adminFlag.equals("yes")){
 			return "toModifyPage";
 		}
@@ -707,17 +700,8 @@ public class SupportGroupAction extends BaseAction {
 	 */
 	public String confirmUserInfo() throws IOException {
 		HttpServletResponse response =super.getResponse();
-		GrantedAuthority[] authorities=UserContext.getAuthorities();
-		String adminFlag="no";
 		String json="{success:true,isAdmin:'no'}";
-		if(authorities!=null){
-			for(int i=0;i<authorities.length;i++){
-				if(authorities[i].getAuthority().equals("AUTH_SYS_ADMIN")){
-					adminFlag="yes";
-					break;
-				}
-			}
-		}
+		String adminFlag= this.isSystemAdmin(UserContext.getAuthorities()) ? "yes" : "no";
 		if(adminFlag.equals("yes")){
 			json="{success:true,isAdmin:'yes'}";
 		}

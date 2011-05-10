@@ -8,7 +8,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-		window.location.href="${pageContext.request.contextPath}/login.do?methodCall=firstInto";
+		window.location.href="${pageContext.request.contextPath}/loginForm.jsp";
 	</script>
 </body>
 </html>

@@ -2820,16 +2820,9 @@ public class EventAction extends BaseAction {
 			int pageNo = start / pageSize + 1;
 			String name=HttpUtil.getString(request, "name","");
 			String official=HttpUtil.getString(request, "official","1");
-			GrantedAuthority[] authorities=UserContext.getAuthorities();
-			String adminFlag="no";
-			if(authorities!=null){
-				for(int i=0;i<authorities.length;i++){
-					if(authorities[i].getAuthority().equals("AUTH_SYS_ADMIN")){
-						adminFlag="yes";
-						break;
-					}
-				}
-			}
+			
+			String adminFlag= this.isSystemAdmin(UserContext.getAuthorities()) ? "yes" : "no";
+			
 			UserInfo userInfo=UserContext.getUserInfo();
 			Long total=1L;
 			Long userId=(userInfo==null)?Long.valueOf("0"):userInfo.getId();
