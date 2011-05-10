@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework
- * @Path: com.digitalchina.info.framework.security.service.implConcurrentSessionControllerImpl.java
+ * @Path: com.zsgj.info.framework.security.service.implConcurrentSessionControllerImpl.java
  * @Create By ’≈≈Ù
  * @Create In Nov 10, 2008 2:13:55 PM
  * TODO
@@ -10,6 +10,8 @@ package com.zsgj.info.framework.security.service.impl;
 import org.acegisecurity.AcegiMessageSource;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationException;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.AuthenticationException;
 import org.acegisecurity.concurrent.ConcurrentLoginException;
 import org.acegisecurity.concurrent.ConcurrentSessionController;
 import org.acegisecurity.concurrent.SessionInformation;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.util.Assert;
 
 /**
@@ -28,7 +31,7 @@ import org.springframework.util.Assert;
  */
 public class ConcurrentSessionControllerImpl implements
 		ConcurrentSessionController, InitializingBean, MessageSourceAware {
-	protected MessageSourceAccessor messages = AcegiMessageSource.getAccessor();
+	protected MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
 	private SessionRegistry sessionRegistry;
 	private boolean exceptionIfMaximumExceeded = false;
 	private int maximumSessions = 1;

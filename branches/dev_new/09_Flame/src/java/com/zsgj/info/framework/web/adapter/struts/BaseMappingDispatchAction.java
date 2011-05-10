@@ -3,7 +3,7 @@ package com.zsgj.info.framework.web.adapter.struts;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.acegisecurity.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
@@ -150,7 +150,7 @@ public abstract class BaseMappingDispatchAction extends MappingDispatchAction {
 			logger.error("发生应用级异常: " + e.getMessageAndErrorCode());
 			request.setAttribute("errorMessage", e.getMessage());
 			return mapping.findForward("error");
-		} catch (org.acegisecurity.AccessDeniedException e) {
+		} catch (org.springframework.security.access.AccessDeniedException e) {
 			logger.error("没有服务方法服务权限: " + e.getMessage());
 			e.printStackTrace();
 			request.setAttribute("errorMessage", e.getMessage());

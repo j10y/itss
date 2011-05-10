@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework_B2
- * @Path: com.digitalchina.info.framework.security.providerAbstractUserDetailsAuthenticationProvider.java
+ * @Path: com.zsgj.info.framework.security.providerAbstractUserDetailsAuthenticationProvider.java
  * @Create By zhangpeng
  * @Create In 2008-5-16 ÏÂÎç12:05:44
  * TODO
@@ -22,20 +22,20 @@
 
 package com.zsgj.info.framework.security.provider;
 
-import org.acegisecurity.AccountExpiredException;
-import org.acegisecurity.AcegiMessageSource;
-import org.acegisecurity.Authentication;
-import org.acegisecurity.AuthenticationException;
-import org.acegisecurity.BadCredentialsException;
-import org.acegisecurity.CredentialsExpiredException;
-import org.acegisecurity.DisabledException;
-import org.acegisecurity.LockedException;
-import org.acegisecurity.providers.AuthenticationProvider;
-import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
-import org.acegisecurity.providers.dao.UserCache;
-import org.acegisecurity.providers.dao.cache.NullUserCache;
-import org.acegisecurity.userdetails.UserDetailsService;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.SpringSecurityMessageSource;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserCache;
+import org.springframework.security.core.userdetails.cache.NullUserCache;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
@@ -47,7 +47,7 @@ import com.zsgj.info.framework.security.entity.UserDetails;
 
 /**
  * A base {@link AuthenticationProvider} that allows subclasses to override and
- * work with {@link org.acegisecurity.userdetails.UserDetails} objects. The class is
+ * work with {@link org.springframework.security.core.userdetails.UserDetails} objects. The class is
  * designed to respond to {@link UsernamePasswordAuthenticationToken}
  * authentication requests.
  * 
@@ -84,7 +84,7 @@ public abstract class AbstractUserDetailsAuthenticationProvider
     implements AuthenticationProvider, InitializingBean, MessageSourceAware {
     //~ Instance fields ========================================================
 
-    protected MessageSourceAccessor messages = AcegiMessageSource.getAccessor();
+    protected MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
     private UserCache userCache = new NullUserCache();
     private boolean forcePrincipalAsString = false;
     protected boolean hideUserNotFoundExceptions = true;

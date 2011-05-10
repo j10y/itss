@@ -1,13 +1,13 @@
 /**
  * @Probject Name: 10_InfoFramework_B2
- * @Path: com.digitalchina.info.framework.security.service.implUser.java
+ * @Path: com.zsgj.info.framework.security.service.implUser.java
  * @Create By zhangpeng
  * @Create In 2008-5-16 ÉÏÎç11:52:22
  * TODO
  */
 package com.zsgj.info.framework.security.service.impl;
 
-import org.acegisecurity.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.zsgj.info.framework.security.entity.UserDetails;
 import com.zsgj.info.framework.security.entity.UserInfo;
@@ -17,7 +17,7 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Author zhangpeng
  * @Create In 2008-5-16
  */
-public class User extends org.acegisecurity.userdetails.User implements
+public class User extends org.springframework.security.core.userdetails.User implements
 		UserDetails {
 
 	/**
@@ -32,7 +32,7 @@ public class User extends org.acegisecurity.userdetails.User implements
 
 	public User(String username, String password, boolean enabled,
 			GrantedAuthority[] authorities) throws IllegalArgumentException {
-		super(username, password, enabled, true, true, authorities);
+		super(username, password, enabled, true, true, true, authorities);
 	}
 
 	public User(String username, String password, boolean enabled,
@@ -64,7 +64,7 @@ public class User extends org.acegisecurity.userdetails.User implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.service.UserDetails#isSpecialUser()
+	 * @see com.zsgj.info.framework.security.service.UserDetails#isSpecialUser()
 	 */
 	public boolean isSpecialUser() {
 		// TODO Auto-generated method stub

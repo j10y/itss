@@ -673,7 +673,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				
 				Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
 				
-				BeanWrapper bwMain = new BeanWrapperImpl(object); //使用BeanWrapper保证主实体
+				BeanWrapperImpl bwMain = new BeanWrapperImpl(object); //使用BeanWrapper保证主实体
 				for(int j=0;j<allcolumns.size();j++){
 					UserTableSetting uts=(UserTableSetting)allcolumns.get(j);
 					SystemMainTableColumn mc = uts.getMainTableColumn();
@@ -1816,7 +1816,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				//处理用户类字段的用户名显示问题，即“管理员/admin/神州数码”
 //				if(mc.getForeignTable()!=null){
 //					String fclassName = mc.getForeignTable().getClassName();
-//					if(fclassName.equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")){
+//					if(fclassName.equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")){
 //						Object fObject = columnDataWrapper.getValue();
 //						item.put("realNameAndDept", fObject.toString());
 //					}

@@ -2,24 +2,25 @@ package com.zsgj.info.framework.aop.interceptor;
 
 
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.acegisecurity.ConfigAttributeDefinition;
-import org.acegisecurity.ConfigAttributeEditor;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.intercept.web.AbstractFilterInvocationDefinitionSource;
+import org.springframework.security.access.ConfigAttributeEditor;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
 import com.zsgj.info.framework.security.cache.AcegiCacheService;
-import com.zsgj.info.framework.security.dao.AcegiRoleDao;
 import com.zsgj.info.framework.security.entity.ResourceDetail;
 
 /**
@@ -28,7 +29,7 @@ import com.zsgj.info.framework.security.entity.ResourceDetail;
  * @Author xiaofeng
  * @Create In 2008-3-12
  */
-public class DBFilterDefinitionSource extends AbstractFilterInvocationDefinitionSource {
+public class DBFilterDefinitionSource implements FilterInvocationSecurityMetadataSource/*extends AbstractFilterInvocationDefinitionSource*/ {
 
 	private boolean convertUrlToLowercaseBeforeComparison = false;
 	private boolean useAntPath = false;
@@ -45,7 +46,7 @@ public class DBFilterDefinitionSource extends AbstractFilterInvocationDefinition
 	 * @see org.acegisecurity.intercept.web.AbstractFilterInvocationDefinitionSource#lookupAttributes(java.lang.String)
 	 */
 
-	public ConfigAttributeDefinition lookupAttributes(String url) {
+	public Collection<ConfigAttribute> lookupAttributes(String url) {
 		
 		if(!this.acegiCacheService.isInitializedResourceCache()){
 			this.acegiCacheService.initResourceCache();
@@ -106,7 +107,8 @@ public class DBFilterDefinitionSource extends AbstractFilterInvocationDefinition
 					.length() - 1);
 			ConfigAttributeEditor configAttrEditor = new ConfigAttributeEditor();
 			configAttrEditor.setAsText(authStr.trim());
-			return (ConfigAttributeDefinition) configAttrEditor.getValue();
+			//return (ConfigAttributeDefinition) configAttrEditor.getValue();
+			return (Collection<ConfigAttribute>)configAttrEditor.getValue();
 		}
 
 
@@ -146,6 +148,26 @@ public class DBFilterDefinitionSource extends AbstractFilterInvocationDefinition
 	 */
 	public void setAcegiCacheService(AcegiCacheService acegiCacheService) {
 		this.acegiCacheService = acegiCacheService;
+	}
+	
+	public boolean supports(Class<?> clazz) {
+        return FilterInvocation.class.isAssignableFrom(clazz);
+    }
+
+	public Collection<ConfigAttribute> getAllConfigAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<ConfigAttribute> getAttributes(Object object)
+			throws IllegalArgumentException {
+		if ((object == null) || !this.supports(object.getClass())) {
+            throw new IllegalArgumentException("Object must be a FilterInvocation");
+        }
+
+        String url = ((FilterInvocation) object).getRequestUrl();
+
+        return lookupAttributes(url);
 	}
 
 }

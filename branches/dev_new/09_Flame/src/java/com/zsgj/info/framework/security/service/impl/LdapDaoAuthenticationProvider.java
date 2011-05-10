@@ -1,27 +1,30 @@
 /**
  * @Probject Name: 10_InfoFramework_B2
- * @Path: com.digitalchina.info.framework.security.service.implLdapDaoAuthenticationProvider.java
+ * @Path: com.zsgj.info.framework.security.service.implLdapDaoAuthenticationProvider.java
  * @Create By zhangpeng
  * @Create In 2008-5-9 下午04:18:21
  * TODO
  */
 package com.zsgj.info.framework.security.service.impl;
 
-import org.acegisecurity.AccountExpiredException;
-import org.acegisecurity.Authentication;
-import org.acegisecurity.AuthenticationException;
-import org.acegisecurity.AuthenticationServiceException;
-import org.acegisecurity.BadCredentialsException;
-import org.acegisecurity.CredentialsExpiredException;
-import org.acegisecurity.DisabledException;
-import org.acegisecurity.LockedException;
-import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
-import org.acegisecurity.providers.dao.AbstractUserDetailsAuthenticationProvider;
-import org.acegisecurity.providers.dao.SaltSource;
-import org.acegisecurity.providers.encoding.PasswordEncoder;
-import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
+import java.util.Iterator;
+
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.Assert;
 
 import com.zsgj.info.framework.context.UserContext;
@@ -318,10 +321,10 @@ public class LdapDaoAuthenticationProvider extends
 	 * @return boolean
 	 */
 	protected boolean isSystemAdmin(UserDetails userDetails) {
-		for (int i = 0; i < userDetails.getAuthorities().length; i++) {
-			if (userDetails.getAuthorities()[i].equals(this.isSystemAdmin)) {
-				return true;
-			}
+		Iterator<GrantedAuthority> iterator = userDetails.getAuthorities().iterator();
+		while(iterator.hasNext()){
+			if(iterator.next().equals(this.isSystemAdmin))
+			return true;
 		}
 		return false;
 	}
@@ -335,10 +338,10 @@ public class LdapDaoAuthenticationProvider extends
 	 * @return boolean
 	 */
 	protected boolean isUserAdmin(UserDetails userDetails) {
-		for (int i = 0; i < userDetails.getAuthorities().length; i++) {
-			if (userDetails.getAuthorities()[i].equals(this.isUserAdmin)) {
-				return true;
-			}
+		Iterator<GrantedAuthority> iterator = userDetails.getAuthorities().iterator();
+		while(iterator.hasNext()){
+			if(iterator.next().equals(this.isUserAdmin))
+			return true;
 		}
 		return false;
 	}
@@ -364,9 +367,9 @@ public class LdapDaoAuthenticationProvider extends
 	 * 读取登陆人员信息
 	 * 
 	 * @see
-	 * org.acegisecurity.providers.dao.AbstractUserDetailsAuthenticationProvider
+	 * org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider
 	 * #retrieveUser(java.lang.String,
-	 * org.acegisecurity.providers.UsernamePasswordAuthenticationToken)
+	 * org.springframework.security.authentication.UsernamePasswordAuthenticationToken)
 	 */
 	protected final UserDetails retrieveUser(String username,
 			UsernamePasswordAuthenticationToken authentication)
@@ -467,7 +470,7 @@ public class LdapDaoAuthenticationProvider extends
 
 	@Override
 	protected void additionalAuthenticationChecks(
-			org.acegisecurity.userdetails.UserDetails arg0,
+			org.springframework.security.core.userdetails.UserDetails arg0,
 			UsernamePasswordAuthenticationToken arg1)
 			throws AuthenticationException {
 		// TODO Auto-generated method stub
@@ -479,8 +482,7 @@ public class LdapDaoAuthenticationProvider extends
 			Object principalToReturn, Authentication authentication,
 			UserDetails user) {
 		UsernamePasswordAuthenticationTokenCust result = new UsernamePasswordAuthenticationTokenCust(
-				principalToReturn, authentication.getCredentials(), user
-						.getAuthorities());
+				principalToReturn, authentication.getCredentials(), user.getAuthorities().toArray(new GrantedAuthority[user.getAuthorities().size()]));
 		result.setDetails(authentication.getDetails());
 		result.setCurrentUserInfo(user.getCurrentUserInfo());
 		return result;

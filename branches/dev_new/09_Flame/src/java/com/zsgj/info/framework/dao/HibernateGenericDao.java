@@ -97,11 +97,13 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 	 */
 	@SuppressWarnings("static-access")
 	protected SessionFactory getHibernateSessionFactory(){
-		Proxy  proxy = (Proxy) ContextHolder.getBean("pmcSessionFactory");
-		InvocationHandler handler = proxy.getInvocationHandler(proxy);
-		AbstractSessionFactoryBean.TransactionAwareInvocationHandler asfbTransHandler = 
-			(AbstractSessionFactoryBean.TransactionAwareInvocationHandler) handler;
-		SessionFactory sf = asfbTransHandler.getObject();
+//		Proxy  proxy = (Proxy) ContextHolder.getBean("pmcSessionFactory");
+//		InvocationHandler handler = proxy.getInvocationHandler(proxy);
+//		AbstractSessionFactoryBean.TransactionAwareInvocationHandler asfbTransHandler = 
+//			(AbstractSessionFactoryBean.TransactionAwareInvocationHandler) handler;
+//		SessionFactory sf = asfbTransHandler.getObject();
+		LocalSessionFactoryBean localSessionFactoryBean = (LocalSessionFactoryBean) ContextHolder.getBean("pmcSessionFactory");
+		SessionFactory sf = localSessionFactoryBean.getObject();
 		return sf;
 	}
 	

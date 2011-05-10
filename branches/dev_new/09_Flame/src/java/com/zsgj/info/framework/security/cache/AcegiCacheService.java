@@ -2,8 +2,8 @@ package com.zsgj.info.framework.security.cache;
 
 import java.util.List;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.providers.dao.UserCache;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserCache;
 
 import com.zsgj.info.framework.security.entity.Authorization;
 import com.zsgj.info.framework.security.entity.Resource;

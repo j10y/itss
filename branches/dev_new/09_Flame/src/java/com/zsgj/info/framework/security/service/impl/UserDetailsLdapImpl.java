@@ -1,10 +1,12 @@
 package com.zsgj.info.framework.security.service.impl;
 
+import java.util.Collection;
+
 import javax.naming.directory.Attributes;
 import javax.naming.ldap.Control;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.userdetails.ldap.LdapUserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.ldap.userdetails.LdapUserDetails;
 
 public class UserDetailsLdapImpl implements LdapUserDetails {
 
@@ -24,11 +26,13 @@ public class UserDetailsLdapImpl implements LdapUserDetails {
 		return null;
 	}
 
-	public GrantedAuthority[] getAuthorities() {
+	//modify by awen for change returnType from GrantedAuthority[] to Collection<GrantedAuthority> because acegi to security3
+	public Collection<GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	//modify by awen for change acegi to security3
+	
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return null;

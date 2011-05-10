@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework
- * @Path: com.digitalchina.info.framework.security.Service.implUserInfoServiceImpl.java
+ * @Path: com.zsgj.info.framework.security.Service.implUserInfoServiceImpl.java
  * @Create By zhangpeng
  * @Create In Apr 3, 2008 10:35:08 AM
  * TODO
@@ -34,7 +34,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
 		this.uid = uid;
 	}
 	/* (non-Javadoc)
-	 * @see com.digitalchina.info.framework.security.Service.UserInfoService#findUserInfoByUserName(java.lang.String)
+	 * @see com.zsgj.info.framework.security.Service.UserInfoService#findUserInfoByUserName(java.lang.String)
 	 */
 	public UserInfo findUserInfoByUserName(String userName) {
 		// TODO Auto-generated method stub

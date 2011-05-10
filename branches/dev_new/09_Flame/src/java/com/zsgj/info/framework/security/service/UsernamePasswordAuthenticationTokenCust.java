@@ -1,13 +1,15 @@
 /**
  * @Probject Name: FrameworkB2B
- * @Path: com.digitalchina.info.framework.security.serviceUsernamePasswordAuthenticationToken.java
+ * @Path: com.zsgj.info.framework.security.serviceUsernamePasswordAuthenticationToken.java
  * @Create By 张鹏
  * @Create In Sep 25, 2008 11:51:58 AM
  * TODO
  */
 package com.zsgj.info.framework.security.service;
 
-import org.acegisecurity.GrantedAuthority;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.zsgj.info.framework.security.entity.UserInfo;
 
@@ -17,7 +19,7 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In Sep 25, 2008
  */
 public class UsernamePasswordAuthenticationTokenCust extends
-		org.acegisecurity.providers.UsernamePasswordAuthenticationToken implements AuthenticationCust{
+	org.springframework.security.authentication.UsernamePasswordAuthenticationToken implements AuthenticationCust{
 	
 	/**
 	 * 当前登录用户信息
@@ -26,6 +28,12 @@ public class UsernamePasswordAuthenticationTokenCust extends
 	
 	public UsernamePasswordAuthenticationTokenCust(Object principal,
 			Object credentials, GrantedAuthority[] authorities) {
+		super(principal, credentials, authorities);
+		// TODO Auto-generated constructor stub
+	}	
+
+	public UsernamePasswordAuthenticationTokenCust(Object principal,
+			Object credentials, Collection<GrantedAuthority> authorities) {
 		super(principal, credentials, authorities);
 		// TODO Auto-generated constructor stub
 	}

@@ -3,23 +3,23 @@ package com.zsgj.info.framework.aop.interceptor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.acegisecurity.ConfigAttributeDefinition;
 import org.acegisecurity.ConfigAttributeEditor;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.intercept.method.MethodDefinitionSource;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.CodeSignature;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.method.MethodSecurityMetadataSource;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.zsgj.info.framework.security.cache.AcegiCacheService;
-import com.zsgj.info.framework.security.dao.AcegiRoleDao;
 import com.zsgj.info.framework.security.entity.ResourceDetail;
 
 /**
@@ -27,7 +27,7 @@ import com.zsgj.info.framework.security.entity.ResourceDetail;
  * 
  * @author xiaofeng
  */
-public class DBMethodDefinitionSource implements MethodDefinitionSource {
+public class DBMethodDefinitionSource implements MethodSecurityMetadataSource/*MethodDefinitionSource*/ {
 	private static final Log logger = LogFactory
 			.getLog(DBMethodDefinitionSource.class);
 
@@ -40,52 +40,52 @@ public class DBMethodDefinitionSource implements MethodDefinitionSource {
 	// ~ Methods
 	// ========================================================================================================
 
-	public ConfigAttributeDefinition getAttributes(Object object) {
-		// Assert.notNull(object, "Object cannot be null");
+//	public ConfigAttributeDefinition getAttributes(Object object) {
+//		// Assert.notNull(object, "Object cannot be null");
+//
+//		if (object instanceof MethodInvocation) {
+//			MethodInvocation miv = (MethodInvocation) object;
+//			return this.lookupAttributes(miv.getThis().getClass(), miv
+//					.getMethod());
+//		}
+//
+//		if (object instanceof JoinPoint) {
+//			JoinPoint jp = (JoinPoint) object;
+//			Class targetClazz = jp.getTarget().getClass();
+//			String targetMethodName = jp.getStaticPart().getSignature()
+//					.getName();
+//			Class[] types = ((CodeSignature) jp.getStaticPart().getSignature())
+//					.getParameterTypes();
+//
+//			if (logger.isDebugEnabled()) {
+//				logger.debug("Target Class: " + targetClazz);
+//				logger.debug("Target Method Name: " + targetMethodName);
+//
+//				for (int i = 0; i < types.length; i++) {
+//					logger.debug("Target Method Arg #" + i + ": " + types[i]);
+//				}
+//			}
+//
+//			try {
+//				return this.lookupAttributes(targetClazz, targetClazz
+//						.getMethod(targetMethodName, types));
+//			} catch (NoSuchMethodException nsme) {
+//				throw new IllegalArgumentException(
+//						"Could not obtain target method from JoinPoint: " + jp/*
+//																			 * ,
+//																			 * nsme
+//																			 */);
+//			}
+//		}
+//
+//		throw new IllegalArgumentException(
+//				"Object must be a MethodInvocation or JoinPoint");
+//	}
 
-		if (object instanceof MethodInvocation) {
-			MethodInvocation miv = (MethodInvocation) object;
-			return this.lookupAttributes(miv.getThis().getClass(), miv
-					.getMethod());
-		}
-
-		if (object instanceof JoinPoint) {
-			JoinPoint jp = (JoinPoint) object;
-			Class targetClazz = jp.getTarget().getClass();
-			String targetMethodName = jp.getStaticPart().getSignature()
-					.getName();
-			Class[] types = ((CodeSignature) jp.getStaticPart().getSignature())
-					.getParameterTypes();
-
-			if (logger.isDebugEnabled()) {
-				logger.debug("Target Class: " + targetClazz);
-				logger.debug("Target Method Name: " + targetMethodName);
-
-				for (int i = 0; i < types.length; i++) {
-					logger.debug("Target Method Arg #" + i + ": " + types[i]);
-				}
-			}
-
-			try {
-				return this.lookupAttributes(targetClazz, targetClazz
-						.getMethod(targetMethodName, types));
-			} catch (NoSuchMethodException nsme) {
-				throw new IllegalArgumentException(
-						"Could not obtain target method from JoinPoint: " + jp/*
-																			 * ,
-																			 * nsme
-																			 */);
-			}
-		}
-
-		throw new IllegalArgumentException(
-				"Object must be a MethodInvocation or JoinPoint");
-	}
-
-	public boolean supports(Class clazz) {
-		return (MethodInvocation.class.isAssignableFrom(clazz) || JoinPoint.class
-				.isAssignableFrom(clazz));
-	}
+//	public boolean supports(Class clazz) {
+//		return (MethodInvocation.class.isAssignableFrom(clazz) || JoinPoint.class
+//				.isAssignableFrom(clazz));
+//	}
 
 	/**
 	 * 从resourceCache中获取当前方法对应的ResourceDetails{@link ResourceDetails} 最后返回由Role
@@ -93,8 +93,8 @@ public class DBMethodDefinitionSource implements MethodDefinitionSource {
 	 * 
 	 * @see org.acegisecurity.intercept.method.AbstractMethodDefinitionSource#lookupAttributes(java.lang.reflect.Method)
 	 */
-
-	protected ConfigAttributeDefinition lookupAttributes(Class clszz, Method mi) {
+	//protected ConfigAttributeDefinition lookupAttributes(Class clszz, Method mi) {
+	protected Collection<ConfigAttribute> lookupAttributes(Class clszz, Method mi) {
 
 		if (!this.acegiCacheService.isInitializedResourceCache()) {
 			this.acegiCacheService.initResourceCache();
@@ -138,9 +138,10 @@ public class DBMethodDefinitionSource implements MethodDefinitionSource {
 				authoritiesStr.length() - 1);
 
 		configAttrEditor.setAsText(authStr.trim());
-		ConfigAttributeDefinition cad = (ConfigAttributeDefinition) configAttrEditor
-				.getValue();
-		return cad;
+		/*ConfigAttributeDefinition cad = (ConfigAttributeDefinition)configAttrEditor
+				.getValue(); 
+		return cad;*/
+		return (Collection<ConfigAttribute>)configAttrEditor.getValue();
 
 	}
 
@@ -235,6 +236,68 @@ public class DBMethodDefinitionSource implements MethodDefinitionSource {
 	 */
 	public void setAcegiCacheService(AcegiCacheService acegiCacheService) {
 		this.acegiCacheService = acegiCacheService;
+	}
+
+	public java.util.Collection<org.springframework.security.access.ConfigAttribute> getAttributes(
+			Method method, Class<?> targetClass) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public java.util.Collection<org.springframework.security.access.ConfigAttribute> getAllConfigAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//add by awen for change acegi to spring security 
+	
+	public java.util.Collection<org.springframework.security.access.ConfigAttribute> getAttributes(
+			Object object) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		// Assert.notNull(object, "Object cannot be null");
+
+		if (object instanceof MethodInvocation) {
+			MethodInvocation miv = (MethodInvocation) object;
+			return this.lookupAttributes(miv.getThis().getClass(), miv
+					.getMethod());
+		}
+
+		if (object instanceof JoinPoint) {
+			JoinPoint jp = (JoinPoint) object;
+			Class targetClazz = jp.getTarget().getClass();
+			String targetMethodName = jp.getStaticPart().getSignature()
+					.getName();
+			Class[] types = ((CodeSignature) jp.getStaticPart().getSignature())
+					.getParameterTypes();
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("Target Class: " + targetClazz);
+				logger.debug("Target Method Name: " + targetMethodName);
+
+				for (int i = 0; i < types.length; i++) {
+					logger.debug("Target Method Arg #" + i + ": " + types[i]);
+				}
+			}
+
+			try {
+				return this.lookupAttributes(targetClazz, targetClazz
+						.getMethod(targetMethodName, types));
+			} catch (NoSuchMethodException nsme) {
+				throw new IllegalArgumentException(
+						"Could not obtain target method from JoinPoint: " + jp/*
+																			 * ,
+																			 * nsme
+																			 */);
+			}
+		}
+
+		throw new IllegalArgumentException(
+				"Object must be a MethodInvocation or JoinPoint");
+	}
+
+	public boolean supports(Class<?> clazz) {
+		return (MethodInvocation.class.isAssignableFrom(clazz) || JoinPoint.class
+				.isAssignableFrom(clazz));
 	}
 
 }

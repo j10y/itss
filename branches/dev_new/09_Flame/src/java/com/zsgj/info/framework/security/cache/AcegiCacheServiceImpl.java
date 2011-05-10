@@ -1,6 +1,6 @@
 /**
  * @Probject Name: FrameworkB2B
- * @Path: com.digitalchina.info.framework.security.cacheAcegiCacheManager.java
+ * @Path: com.zsgj.info.framework.security.cacheAcegiCacheManager.java
  * @Create By ’≈≈Ù
  * @Create In Sep 28, 2008 4:51:03 PM
  * TODO
@@ -10,9 +10,9 @@ package com.zsgj.info.framework.security.cache;
 import java.util.Iterator;
 import java.util.List;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.providers.dao.UserCache;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserCache;
 
 import com.zsgj.info.framework.security.Constants;
 import com.zsgj.info.framework.security.dao.AcegiRoleDao;
@@ -48,7 +48,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getUserCache()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getUserCache()
 	 */
 	public UserCache getUserCache() {
 		return userCache;
@@ -57,7 +57,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#setUserCache(org.acegisecurity.providers.dao.UserCache)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#setUserCache(org.springframework.security.core.userdetails.UserCache)
 	 */
 	public void setUserCache(UserCache userCache) {
 		this.userCache = userCache;
@@ -66,7 +66,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#modifyUserInCache(com.digitalchina.info.framework.security.service.UserDetails,
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#modifyUserInCache(com.zsgj.info.framework.security.service.UserDetails,
 	 *      java.lang.String)
 	 */
 	public void modifyUserInCache(UserDetails user, String orgUsername) {
@@ -79,7 +79,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#removeUser(java.lang.String)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#removeUser(java.lang.String)
 	 */
 	public void removeUser(String userName) {
 		// TODO Auto-generated method stub
@@ -92,7 +92,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#removeResource(java.lang.String)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#removeResource(java.lang.String)
 	 */
 	public void removeResource(String resString) {
 		if (this.getResourceCache().getAuthorityFromCache(resString) != null) {
@@ -103,7 +103,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#removeRole(com.digitalchina.info.framework.security.entity.Role)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#removeRole(com.zsgj.info.framework.security.entity.Role)
 	 */
 	public void removeRole(Role role) {
 		for (Iterator<UserInfo> it = role.getUserInfos().iterator(); it
@@ -117,7 +117,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#removePermi(com.digitalchina.info.framework.security.entity.Authorization)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#removePermi(com.zsgj.info.framework.security.entity.Authorization)
 	 */
 	public void removePermi(Authorization permi) {
 		modifyPermiInCache(permi, permi.getName());
@@ -126,7 +126,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#modifyResourceInCache(com.digitalchina.info.framework.security.entity.Resource,
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#modifyResourceInCache(com.zsgj.info.framework.security.entity.Resource,
 	 *      java.lang.String)
 	 */
 	public void modifyResourceInCache(Resource resource, String orgResourcename) {
@@ -163,7 +163,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#modifyPermiInCache(org.acegisecurity.acls.Permission,
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#modifyPermiInCache(org.acegisecurity.acls.Permission,
 	 *      java.lang.String)
 	 */
 	public void modifyPermiInCache(Authorization permi, String orgPerminame) {
@@ -178,7 +178,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#modifyRightInCache(com.digitalchina.info.framework.security.entity.Right,
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#modifyRightInCache(com.zsgj.info.framework.security.entity.Right,
 	 *      java.lang.String)
 	 */
 	public void modifyRightInCache(Right right, String orgRightName) {
@@ -195,7 +195,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#authRoleInCache(com.digitalchina.info.framework.security.service.impl.User)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#authRoleInCache(com.zsgj.info.framework.security.service.impl.User)
 	 */
 	public void authRoleInCache(User user) {
 		if (this.getUserCache().getUserFromCache(user.getUsername()) != null) {
@@ -207,7 +207,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#authPermissionInCache(com.digitalchina.info.framework.security.entity.Role)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#authPermissionInCache(com.zsgj.info.framework.security.entity.Role)
 	 */
 	public void authPermissionInCache(Role role) {
 		for (Iterator<UserInfo> it = role.getUserInfos().iterator(); it
@@ -229,7 +229,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#authResourceInCache(org.acegisecurity.acls.Permission)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#authResourceInCache(org.acegisecurity.acls.Permission)
 	 */
 	public void authResourceInCache(Authorization permi) {
 		List userList = this.userDao.selectUserByAuthorization(permi);
@@ -242,7 +242,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	
 	/*
 	 * (non-Javadoc)
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#buildUserDetail(com.digitalchina.info.framework.security.entity.UserInfo)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#buildUserDetail(com.zsgj.info.framework.security.entity.UserInfo)
 	 */
 	public UserDetails buildUserDetail(UserInfo user) {
 		GrantedAuthority[] auths = this.acegiRoleDao.selectAcegiRoleNamesByUser(user);
@@ -295,7 +295,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#initUserCache()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#initUserCache()
 	 */
 	public void initUserCache() {
 		if (!initializedUserCache) {
@@ -316,7 +316,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#initResourceCache()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#initResourceCache()
 	 */
 	public void initResourceCache() {
 		if (!initializedResourceCache) {
@@ -357,7 +357,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getUrlResStrings()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getUrlResStrings()
 	 */
 	public List getUrlResStrings() {
 		return this.getResourceCache().getUrlResStrings();
@@ -366,7 +366,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getFunctions()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getFunctions()
 	 */
 	public List getFunctions() {
 		return this.getResourceCache().getFunctions();
@@ -375,7 +375,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getAuthorityFromCache(java.lang.String)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getAuthorityFromCache(java.lang.String)
 	 */
 	public ResourceDetail getAuthorityFromCache(String resString) {
 		return this.getResourceCache().getAuthorityFromCache(resString);
@@ -384,7 +384,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getResourceCache()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getResourceCache()
 	 */
 	public ResourceCache getResourceCache() {
 		return resourceCache;
@@ -393,7 +393,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#setResourceCache(com.digitalchina.info.framework.security.cache.ResourceCache)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#setResourceCache(com.zsgj.info.framework.security.cache.ResourceCache)
 	 */
 	public void setResourceCache(ResourceCache resourceCache) {
 		this.resourceCache = resourceCache;
@@ -402,7 +402,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getUserDao()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getUserDao()
 	 */
 	public UserInfoDao getUserDao() {
 		return userDao;
@@ -411,7 +411,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#setUserDao(com.digitalchina.info.framework.security.dao.UserInfoDao)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#setUserDao(com.zsgj.info.framework.security.dao.UserInfoDao)
 	 */
 	public void setUserDao(UserInfoDao userDao) {
 		this.userDao = userDao;
@@ -420,7 +420,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getAcegiRoleDao()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getAcegiRoleDao()
 	 */
 	public AcegiRoleDao getAcegiRoleDao() {
 		return acegiRoleDao;
@@ -429,7 +429,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#setAcegiRoleDao(com.digitalchina.info.framework.security.dao.AcegiRoleDao)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#setAcegiRoleDao(com.zsgj.info.framework.security.dao.AcegiRoleDao)
 	 */
 	public void setAcegiRoleDao(AcegiRoleDao acegiRoleDao) {
 		this.acegiRoleDao = acegiRoleDao;
@@ -438,7 +438,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#setInitializedUserCache(boolean)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#setInitializedUserCache(boolean)
 	 */
 	public void setInitializedUserCache(boolean initializedUserCache) {
 		this.initializedUserCache = initializedUserCache;
@@ -447,7 +447,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#setInitializedResourceCache(boolean)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#setInitializedResourceCache(boolean)
 	 */
 	public void setInitializedResourceCache(boolean initializedResourceCache) {
 		this.initializedResourceCache = initializedResourceCache;
@@ -456,7 +456,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#getSecurityManageDao()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#getSecurityManageDao()
 	 */
 	public SecurityManageDao getSecurityManageDao() {
 		return securityManageDao;
@@ -465,7 +465,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#setSecurityManageDao(com.digitalchina.info.framework.security.dao.SecurityManageDao)
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#setSecurityManageDao(com.zsgj.info.framework.security.dao.SecurityManageDao)
 	 */
 	public void setSecurityManageDao(SecurityManageDao securityManageDao) {
 		this.securityManageDao = securityManageDao;
@@ -474,7 +474,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#isInitializedUserCache()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#isInitializedUserCache()
 	 */
 	public boolean isInitializedUserCache() {
 		return initializedUserCache;
@@ -483,7 +483,7 @@ public class AcegiCacheServiceImpl extends BaseService implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.digitalchina.info.framework.security.cache.AcegiCacheService#isInitializedResourceCache()
+	 * @see com.zsgj.info.framework.security.cache.AcegiCacheService#isInitializedResourceCache()
 	 */
 	public boolean isInitializedResourceCache() {
 		return initializedResourceCache;

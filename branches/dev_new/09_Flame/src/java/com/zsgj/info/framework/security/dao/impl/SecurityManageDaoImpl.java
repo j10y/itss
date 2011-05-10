@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -19,10 +19,10 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-//import com.digitalchina.info.appframework.metadata.entity.SystemMainTableExtColumn;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
+//import com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn;
 import com.zsgj.info.appframework.metadata.entity.SystemTableRole;
 import com.zsgj.info.appframework.metadata.entity.SystemTableRoleColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;

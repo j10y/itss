@@ -11,10 +11,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.providers.ProviderManager;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.zsgj.info.framework.security.entity.SecurityMessageInfo;
 import com.zsgj.info.framework.security.entity.UserInfo;
@@ -46,7 +47,19 @@ public class UserContext
 		ProviderManager authenticationManager = (ProviderManager) ctx
 				.getBean("authenticationManager");
 		
-		authenticationManager.getSessionController();
+		//authenticationManager.getSessionController();
+
+		//add by awen for chang acegi to security3 on 2011-5-4 begin
+		//空
+		if(SecurityContextHolder.getContext() == null){
+			return null;
+		}
+		
+		//匿名登录，可能为第一次登录
+		if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken){
+			return null;
+		}
+		//add by awen for chang acegi to security3 end
 		
 		AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -69,13 +82,13 @@ public class UserContext
 		ProviderManager authenticationManager = (ProviderManager) ctx
 				.getBean("authenticationManager");
 		
-		authenticationManager.getSessionController();
+		//authenticationManager.getSessionController();
 		
 		AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
 				.getAuthentication();
 		
 		if(authen != null){
-			return authen.getAuthorities();
+			return authen.getAuthorities().toArray(new GrantedAuthority[authen.getAuthorities().size()]);
 		}else{
 			return null;
 		}
@@ -92,7 +105,7 @@ public class UserContext
 		ProviderManager authenticationManager = (ProviderManager) ctx
 				.getBean("authenticationManager");
 		
-		authenticationManager.getSessionController();
+		//authenticationManager.getSessionController();
 		
 		AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
 				.getAuthentication();

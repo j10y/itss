@@ -20,6 +20,7 @@ import com.zsgj.info.appframework.metadata.entity.PropertyType;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumnType;
+//import com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn;
 import com.zsgj.info.appframework.metadata.entity.SystemTableQueryColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableQueryColumn;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
@@ -112,7 +113,7 @@ public class PageManagerImpl implements PageManager {
 				//取出list中的map
 				Map<String,Object> listMap = list.iterator().next();
 				
-				BeanWrapper bw = new BeanWrapperImpl(currentObject);
+				BeanWrapperImpl bw = new BeanWrapperImpl(currentObject);
 				Object parentObject = bw.getPropertyValue(stcPropName);
 				//这里注意父对象可能类型不确定，如配置项的客户分内外客户,功能留扩展
 				if(parentObject!=null){

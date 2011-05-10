@@ -3,7 +3,7 @@ package com.zsgj.info.framework.security.dao;
 import java.util.List;
 import java.util.Set;
 
-import org.acegisecurity.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.zsgj.info.framework.security.entity.Module;
 import com.zsgj.info.framework.security.entity.Resource;

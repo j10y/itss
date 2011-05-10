@@ -181,8 +181,8 @@ public class ColumnDataWrapper {
 //							String propName =mc.getPropertyName();
 //							String columnName = mc.getColumnCnName();
 //							try {
-//								if(!fClassName.equalsIgnoreCase("com.digitalchina.info.framework.security.entity.UserInfo")
-//										&& !fClassName.equals("com.digitalchina.info.framework.security.entity.Department")){
+//								if(!fClassName.equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")
+//										&& !fClassName.equals("com.zsgj.info.framework.security.entity.Department")){
 //									fObjects = bs.findAllBy(clazz, fValueColumn.getPropertyName(), isAsc);
 //								}
 //										
@@ -462,7 +462,7 @@ public class ColumnDataWrapper {
 	public void initData(BaseObject object){
 		String propertyName = column.getPropertyName();
 		//初始化根对象数据
-		BeanWrapper baseObjectWrapper = new BeanWrapperImpl(object);
+		BeanWrapperImpl baseObjectWrapper = new BeanWrapperImpl(object);
 		SystemMainTableColumn mc = (SystemMainTableColumn) column;
 		Integer isExtOrMain=mc.getIsExtColumn();
 		if(isExtOrMain==SystemMainTableColumn.isMain){
@@ -505,7 +505,7 @@ public class ColumnDataWrapper {
 				}
 				
 			}else if(columnTypenName.equalsIgnoreCase("hidden")){
-				BeanWrapper bw = new BeanWrapperImpl(object);
+				BeanWrapperImpl bw = new BeanWrapperImpl(object);
 				Object foreignValue = bw.getPropertyValue(column.getPropertyName()); 
 				if(foreignValue!=null){
 					if(foreignValue instanceof BaseObject){

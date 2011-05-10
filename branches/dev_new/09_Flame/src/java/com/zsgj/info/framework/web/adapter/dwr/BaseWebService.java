@@ -1,15 +1,15 @@
 /**
  * @Probject Name: 10_InfoFramework
- * @Path: com.digitalchina.info.framework.web.adapterBaseWebService.java
+ * @Path: com.zsgj.info.framework.web.adapterBaseWebService.java
  * @Create By ’≈≈Ù
  * @Create In Aug 20, 2008 5:57:02 PM
  * TODO
  */
 package com.zsgj.info.framework.web.adapter.dwr;
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;

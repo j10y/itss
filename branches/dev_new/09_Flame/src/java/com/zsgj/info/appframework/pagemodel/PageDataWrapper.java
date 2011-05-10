@@ -467,7 +467,7 @@ public class PageDataWrapper {
 	public void initData(BaseObject object){
 		String propertyName = column.getPropertyName();
 		//初始化根对象数据
-		BeanWrapper baseObjectWrapper = new BeanWrapperImpl(object);
+		BeanWrapperImpl baseObjectWrapper = new BeanWrapperImpl(object);
 		SystemMainTableColumn mc = (SystemMainTableColumn) column;
 		if(mc.getIsExtColumn()==SystemMainTableColumn.isMain){
 			
@@ -509,7 +509,7 @@ public class PageDataWrapper {
 				}
 				
 			}else if(columnTypenName.equalsIgnoreCase("hidden")){
-				BeanWrapper bw = new BeanWrapperImpl(object);
+				BeanWrapperImpl bw = new BeanWrapperImpl(object);
 				Object foreignValue = bw.getPropertyValue(column.getPropertyName()); 
 				if(foreignValue!=null){
 					if(foreignValue instanceof BaseObject){
@@ -551,7 +551,7 @@ public class PageDataWrapper {
 					
 				}
 			}else if(columnTypenName.equalsIgnoreCase("textArea")){
-				BeanWrapper bw = new BeanWrapperImpl(object);
+				BeanWrapperImpl bw = new BeanWrapperImpl(object);
 				Object foreignValue = bw.getPropertyValue(column.getPropertyName()); 
 				if(foreignValue!=null){
 					this.text = foreignValue.toString();

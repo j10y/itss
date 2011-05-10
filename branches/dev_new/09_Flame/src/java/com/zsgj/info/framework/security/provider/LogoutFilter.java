@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework
- * @Path: com.digitalchina.info.framework.security.providerLogoutFilter.java
+ * @Path: com.zsgj.info.framework.security.providerLogoutFilter.java
  * @Create By ’≈≈Ù
  * @Create In Nov 10, 2008 3:46:18 PM
  * TODO
@@ -16,8 +16,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.ui.logout.LogoutHandler;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.security.entity.UserInfo;
@@ -28,7 +28,7 @@ import com.zsgj.info.framework.security.service.AuthenticationCust;
  * @Author ’≈≈Ù
  * @Create In Nov 10, 2008
  */
-public class LogoutFilter extends org.acegisecurity.ui.logout.LogoutFilter {
+public class LogoutFilter extends org.springframework.security.web.authentication.logout.LogoutFilter {
 
 	public LogoutFilter(String logoutSuccessUrl, LogoutHandler[] handlers) {
 		super(logoutSuccessUrl, handlers);

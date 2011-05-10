@@ -85,16 +85,26 @@ public class DaoSupportHibernate3Imp extends HibernateDaoSupport implements DaoS
 	}
 
 	public int selectCountByCriteria(final DetachedCriteria dc) {
+//		Integer count = (Integer) getHibernateTemplate().execute(
+//				new HibernateCallback() {
+//					public Object doInHibernate(Session session)
+//							throws HibernateException {
+//						Criteria criteria = dc
+//								.getExecutableCriteria(session);
+//						return criteria.setProjection(Projections.rowCount())
+//								.uniqueResult();
+//					}
+//				}, true);
 		Integer count = (Integer) getHibernateTemplate().execute(
-				new HibernateCallback() {
-					public Object doInHibernate(Session session)
+				new HibernateCallback<Integer>() {
+					public Integer doInHibernate(Session session)
 							throws HibernateException {
 						Criteria criteria = dc
 								.getExecutableCriteria(session);
-						return criteria.setProjection(Projections.rowCount())
-								.uniqueResult();
+						return (Integer)(criteria.setProjection(Projections.rowCount())
+								.uniqueResult());
 					}
-				}, true);
+				});
 		return count.intValue();
 	}
 

@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework_B2B
- * @Path: com.digitalchina.info.framework.security.serviceMenuService.java
+ * @Path: com.zsgj.info.framework.security.serviceMenuService.java
  * @Create By zhangpeng
  * @Create In 2008-7-17 обнГ03:03:04
  * TODO

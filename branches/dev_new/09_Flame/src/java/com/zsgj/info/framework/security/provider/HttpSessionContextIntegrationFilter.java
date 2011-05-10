@@ -29,9 +29,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.context.SecurityContextImpl;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -55,7 +55,7 @@ import org.springframework.util.ReflectionUtils;
  * <code>HttpSession</code> for whatever reason, a fresh
  * <code>SecurityContext</code> will be created and used instead. The created
  * object will be of the instance defined by the {@link #setContext(Class)}
- * method (which defaults to {@link org.acegisecurity.context.SecurityContextImpl}.
+ * method (which defaults to {@link org.springframework.security.core.context.SecurityContextImpl}.
  * </p>
  * <p/>
  * No <code>HttpSession</code> will be created by this filter if one does not
@@ -177,7 +177,7 @@ public class HttpSessionContextIntegrationFilter implements InitializingBean, Fi
     public void afterPropertiesSet() throws Exception {
         if ((this.context == null) || (!SecurityContext.class.isAssignableFrom(this.context))) {
             throw new IllegalArgumentException("context must be defined and implement SecurityContext "
-                    + "(typically use org.acegisecurity.context.SecurityContextImpl; existing class is " + this.context
+                    + "(typically use org.springframework.security.core.context.SecurityContextImpl; existing class is " + this.context
                     + ")");
         }
 

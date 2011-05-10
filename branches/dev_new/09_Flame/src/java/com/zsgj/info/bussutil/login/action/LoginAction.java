@@ -1,6 +1,6 @@
 /**
  * @Probject Name: IBMB2B
- * @Path: com.digitalchina.ibmb2b.product.actionLoginAction.java
+ * @Path: com.zsgj.ibmb2b.product.actionLoginAction.java
  * @Create By zhangpeng
  * @Create In 2008-6-18 ионГ09:44:44
  * TODO
@@ -15,7 +15,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;

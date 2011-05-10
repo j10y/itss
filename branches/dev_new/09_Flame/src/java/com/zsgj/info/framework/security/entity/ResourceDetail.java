@@ -3,7 +3,7 @@ package com.zsgj.info.framework.security.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import org.acegisecurity.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * 资源授权实体

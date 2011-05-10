@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework
- * @Path: com.digitalchina.info.framework.security.service.implTokenBasedRememberMeServices.java
+ * @Path: com.zsgj.info.framework.security.service.implTokenBasedRememberMeServices.java
  * @Create By ’≈≈Ù
  * @Create In Nov 10, 2008 5:09:17 PM
  * TODO
@@ -14,18 +14,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.providers.rememberme.RememberMeAuthenticationToken;
-import org.acegisecurity.ui.AuthenticationDetailsSource;
-import org.acegisecurity.ui.AuthenticationDetailsSourceImpl;
-import org.acegisecurity.ui.logout.LogoutHandler;
-import org.acegisecurity.ui.rememberme.RememberMeServices;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authentication.AuthenticationDetailsSourceImpl;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.bind.RequestUtils;
+//import org.springframework.web.bind.RequestUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
@@ -320,7 +320,8 @@ public class TokenBasedRememberMeServices implements RememberMeServices,
 			return true;
 		}
 
-		return RequestUtils.getBooleanParameter(request, parameter, false);
+		//return RequestUtils.getBooleanParameter(request, parameter, false);
+		return request.getAttribute(parameter)!=null ? new Boolean((String)request.getAttribute(parameter)).booleanValue() : false;
 	}
 
 	public void loginSuccess(HttpServletRequest request,

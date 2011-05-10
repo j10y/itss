@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework_1
- * @Path: com.digitalchina.info.framework.aop.securityfliterAuthorizeSupport.java
+ * @Path: com.zsgj.info.framework.aop.securityfliterAuthorizeSupport.java
  * @Create By ’≈≈Ù
  * @Create In 2009-6-29 œ¬ŒÁ03:21:06
  * TODO
@@ -10,9 +10,9 @@ package com.zsgj.info.framework.aop.securityfliter;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -74,7 +74,7 @@ public abstract class AuthorizeSupport {
              Authentication auth = SecurityContextHolder.getContext()
                              .getAuthentication();
              if (auth != null) {
-                     GrantedAuthority[] authorities = auth.getAuthorities();
+                     GrantedAuthority[] authorities = auth.getAuthorities().toArray(new GrantedAuthority[auth.getAuthorities().size()]);
                      if (authorities != null) {
                              for (GrantedAuthority authority : authorities) {
                                      result.add(authority.getAuthority());

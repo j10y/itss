@@ -1,6 +1,6 @@
 /**
  * @Probject Name: 10_InfoFramework_B2
- * @Path: com.digitalchina.info.framework.security.serviceUserDetails.java
+ * @Path: com.zsgj.info.framework.security.serviceUserDetails.java
  * @Create By zhangpeng
  * @Create In 2008-5-16 上午11:50:38
  * TODO
@@ -13,7 +13,7 @@ package com.zsgj.info.framework.security.entity;
  * @Author zhangpeng
  * @Create In 2008-5-16
  */
-public interface UserDetails extends org.acegisecurity.userdetails.UserDetails {
+public interface UserDetails extends org.springframework.security.core.userdetails.UserDetails {
 
 	/**
 	 * 判断是否特殊用户类型

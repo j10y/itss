@@ -1,6 +1,6 @@
 /**
  * @Probject Name: FrameworkB2B
- * @Path: com.digitalchina.info.framework.security.serviceAuthentication.java
+ * @Path: com.zsgj.info.framework.security.serviceAuthentication.java
  * @Create By 张鹏
  * @Create In Sep 25, 2008 12:02:36 PM
  * TODO
@@ -14,7 +14,7 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Author 张鹏
  * @Create In Sep 25, 2008
  */
-public interface AuthenticationCust extends org.acegisecurity.Authentication {
+public interface AuthenticationCust extends org.springframework.security.core.Authentication {
 	
 	/**
 	 * 获取当前登录用户

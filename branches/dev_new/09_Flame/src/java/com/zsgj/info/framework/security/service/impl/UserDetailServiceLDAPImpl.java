@@ -1,8 +1,8 @@
 package com.zsgj.info.framework.security.service.impl;
 
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UserDetailsService;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.dao.DataAccessException;
 
 public class UserDetailServiceLDAPImpl implements UserDetailsService {
