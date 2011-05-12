@@ -9,13 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.acegisecurity.ConfigAttributeEditor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.CodeSignature;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.ConfigAttributeEditor;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.core.GrantedAuthority;
 

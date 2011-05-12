@@ -7,9 +7,9 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springside.core.utils.GenericsUtils;
 
 import com.zsgj.info.framework.dao.support.Page;
+import com.zsgj.info.framework.util.GenericsUtils;
 
 /**
  * 负责为单个Entity对象提供CRUD操作的Hibernate DAO基类.

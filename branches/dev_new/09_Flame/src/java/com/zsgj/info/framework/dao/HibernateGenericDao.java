@@ -1,9 +1,7 @@
 package com.zsgj.info.framework.dao;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Proxy;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +28,15 @@ import org.hibernate.mapping.PersistentClass;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.transform.ResultTransformer;
 import org.hibernate.type.Type;
-import org.springframework.orm.hibernate3.AbstractSessionFactoryBean;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
-import org.springside.core.utils.BeanUtils;
 
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
-import com.zsgj.info.framework.security.entity.UserInfo;
+import com.zsgj.info.framework.util.EntityBeanUtils;
 
 
 /**
@@ -652,9 +648,9 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 		Projection projection = impl.getProjection();
 		List<CriteriaImpl.OrderEntry> orderEntries;
 		try {
-			orderEntries = (List) BeanUtils.forceGetProperty(impl, "orderEntries");
-			BeanUtils.forceSetProperty(impl, "orderEntries", new ArrayList());
-			BeanUtils.forceSetProperty(impl, "resultTransformer", resultTransformer); //新增，解决bug
+			orderEntries = (List) EntityBeanUtils.forceGetProperty(impl, "orderEntries");
+			EntityBeanUtils.forceSetProperty(impl, "orderEntries", new ArrayList());
+			EntityBeanUtils.forceSetProperty(impl, "resultTransformer", resultTransformer); //新增，解决bug
 		} catch (Exception e) {
 			throw new InternalError(" Runtime Exception impossibility throw ");
 		}
@@ -673,8 +669,8 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 		}
 
 		try {
-			BeanUtils.forceSetProperty(impl, "orderEntries", orderEntries);
-			BeanUtils.forceSetProperty(impl, "resultTransformer", resultTransformer);
+			EntityBeanUtils.forceSetProperty(impl, "orderEntries", orderEntries);
+			EntityBeanUtils.forceSetProperty(impl, "resultTransformer", resultTransformer);
 		} catch (Exception e) {
 			throw new InternalError(" Runtime Exception impossibility throw ");
 		}

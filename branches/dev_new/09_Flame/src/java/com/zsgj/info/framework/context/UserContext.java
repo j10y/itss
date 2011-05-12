@@ -14,12 +14,16 @@ import java.util.Set;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.cas.authentication.CasAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.zsgj.info.framework.security.entity.SecurityMessageInfo;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.security.service.AuthenticationCust;
+import com.zsgj.info.framework.security.service.impl.User;
 
 /**
  * 用户信息缓存
@@ -43,11 +47,6 @@ public class UserContext
      * @return UserInfo
      */
     public static UserInfo getUserInfo() {
-    	ApplicationContext ctx = ContextHolder.getApplicationContext();
-		ProviderManager authenticationManager = (ProviderManager) ctx
-				.getBean("authenticationManager");
-		
-		//authenticationManager.getSessionController();
 
 		//add by awen for chang acegi to security3 on 2011-5-4 begin
 		//空
@@ -60,14 +59,19 @@ public class UserContext
 			return null;
 		}
 		//add by awen for chang acegi to security3 end
-		
-		AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
-				.getAuthentication();
-		if(authen != null){
-			return authen.getCurrentUserInfo();
-		}else{
-			return null;
+		if(SecurityContextHolder.getContext() instanceof UsernamePasswordAuthenticationToken){
+			AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
+					.getAuthentication();
+			if(authen != null){
+				return authen.getCurrentUserInfo();
+			}else{
+				return null;
+			}
 		}
+		Authentication cas = (Authentication)SecurityContextHolder.getContext().getAuthentication();
+		UserInfo user = ((User)cas.getPrincipal()).getCurrentUserInfo();
+			
+			return user;
     	
     }
     
@@ -78,13 +82,7 @@ public class UserContext
      * @return GrantedAuthority[]
      */
     public static GrantedAuthority[] getAuthorities(){
-    	ApplicationContext ctx = ContextHolder.getApplicationContext();
-		ProviderManager authenticationManager = (ProviderManager) ctx
-				.getBean("authenticationManager");
-		
-		//authenticationManager.getSessionController();
-		
-		AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
+		Authentication authen = (Authentication)SecurityContextHolder.getContext()
 				.getAuthentication();
 		
 		if(authen != null){
@@ -101,17 +99,14 @@ public class UserContext
      * @param userInfo void
      */
     public static void changeCurrentUserInfo(UserInfo userInfo){
-    	ApplicationContext ctx = ContextHolder.getApplicationContext();
-		ProviderManager authenticationManager = (ProviderManager) ctx
-				.getBean("authenticationManager");
-		
-		//authenticationManager.getSessionController();
-		
-		AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
-				.getAuthentication();
-		
-		authen.setCurrentUserInfo(userInfo);
-		SecurityContextHolder.getContext().setAuthentication(authen);
+		if(SecurityContextHolder.getContext() instanceof UsernamePasswordAuthenticationToken){
+			AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
+					.getAuthentication();
+			
+			authen.setCurrentUserInfo(userInfo);
+			SecurityContextHolder.getContext().setAuthentication(authen);
+		}
+
     }
     
     /**
