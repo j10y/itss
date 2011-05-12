@@ -4,5 +4,5 @@
     session.invalidate();
 %>
 <script>
-	document.location.href="http://dcone.zsgj.com/pkmslogout";
+	document.location.href="https://172.16.100.173:8443/cas3/logout";
 </script>

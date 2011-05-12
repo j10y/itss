@@ -89,26 +89,26 @@
 								j_username : userName,
 								j_password : passWd
 					},				
-					url : serverPath + '/j_login.do',
+					url : serverPath + '/j_spring_security_check',
 					success : function(response, options) {
-					var responseArray = Ext.util.JSON.decode(response.responseText);
-					var curSuccess = responseArray.success;
-					if(curSuccess==true){
-						//window.location='/index.jsp';
-						var demoData = new Cookie(document, userName, 240);
-						demoData.loginName = userName;
-						demoData.password = passWd;
-						demoData.names = '';
-						demoData.store();
-						gotoIndex();
-					}else{
-						document.getElementById('loginMessage').innerHTML = "ITcodeªÚItPassword¥ÌŒÛ£°";
-						document.getElementById('j_username').value="";
-						document.getElementById('j_password').value="";
-						document.getElementById('j_username').focus(true);	
-					}
+						var responseArray = Ext.util.JSON.decode(response.responseText);
+						var curSuccess = responseArray.success;
+						if(curSuccess==true){
+							//window.location='/index.jsp';
+							var demoData = new Cookie(document, userName, 240);
+							demoData.loginName = userName;
+							demoData.password = passWd;
+							demoData.names = '';
+							demoData.store();
+							gotoIndex();
+						}else{
+							document.getElementById('loginMessage').innerHTML = "ITcodeªÚItPassword¥ÌŒÛ£°";
+							document.getElementById('j_username').value="";
+							document.getElementById('j_password').value="";
+							document.getElementById('j_username').focus(true);	
+						}
 					},
-					failure : function() {
+					failure : function(response, options) {
 						document.getElementById('loginMessage').innerHTML = "ITcodeªÚItPassword¥ÌŒÛ£°";
 						document.getElementById('j_username').focus(true);							
 					return;	

@@ -215,7 +215,7 @@ com.dc.ui.IndexPage = {
 				"-", {
 					text : "IT服务专栏",
 					handler : toITService
-				},
+				}
 				//"-", {
 				//	text : "流程中心",
 				//	handler : toFlowCenter
@@ -262,7 +262,7 @@ com.dc.ui.IndexPage = {
 		function logout() {
 			Ext.MessageBox.confirm("请确认", "您真的要退出系统吗?", function(button, text) {
 				if (button == "yes") {
-					window.location.href = webContext + '/j_logout.do';
+					window.location.href = webContext + '/j_spring_security_logout';
 				}
 			});
 		}

@@ -94,7 +94,7 @@
 	}
 	
 	function toLogin() {
-		window.location.href= webContext + "/j_logout.do";
+		window.location.href= webContext + "/j_spring_security_logout";
 	}
 	function refreshWorkflow(){//刷新用户审批任务列表
 		setInterval(function(){
