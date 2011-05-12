@@ -25,7 +25,7 @@
     	&nbsp;<a onclick="window.parent.location='${pageContext.request.contextPath}/login.jsp'" style="cursor:auto;"><font color="blue">[重新登录]</font></a> 
     </td>
     <td width="90" align="right" nowrap style="cursor:head;">
-    	<a onclick="window.parent.location='${pageContext.request.contextPath}/j_logout.do'"  ><font color="blue">[退出登录]</font></a> 
+    	<a onclick="window.parent.location='${pageContext.request.contextPath}/j_spring_security_logout'"  ><font color="blue">[退出登录]</font></a> 
     </td>
   </tr>
 </table>

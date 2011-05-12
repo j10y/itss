@@ -488,7 +488,7 @@ background="${pageContext.request.contextPath}/images/SysLeft_bg_click.gif" bord
   </table>
 </div>
 
-
+<!--  
 <div id="main18" onclick=expandIt(18)>
   <table width="167" height="26" border="0" cellpadding="0" cellspacing="0" background="${pageContext.request.contextPath}/images/Admin_left_8.gif">
     <tr style="cursor: hand;">
@@ -496,7 +496,8 @@ background="${pageContext.request.contextPath}/images/SysLeft_bg_click.gif" bord
       <td class="SystemLeft">系统模板管理</td>
     </tr>
   </table>
-</div>
+</div
+-->
 <div id="sub18" style="display:none">
 <table width="160" border="0" cellspacing="0" cellpadding="0" background="${pageContext.request.contextPath}/images/SysLeft_bg_link.gif">
   <tr>
@@ -539,7 +540,7 @@ background="${pageContext.request.contextPath}/images/SysLeft_bg_click.gif" bord
 
 
 
- 
+<!--
 <div id="main29" onclick=expandIt(29)>
   <table width="167" height="26" border="0" cellpadding="0" cellspacing="0" background="${pageContext.request.contextPath}/images/Admin_left_9.gif">
     <tr style="cursor: hand;">
@@ -558,6 +559,8 @@ background="${pageContext.request.contextPath}/images/SysLeft_bg_click.gif" bord
   </tr>
 </table>
 </div> 
+
+-->
  <div id="main31" onclick=expandIt(31)>
   <table width="167" height="26" border="0" cellpadding="0" cellspacing="0" background="${pageContext.request.contextPath}/images/Admin_left_9.gif">
     <tr style="cursor: hand;">
