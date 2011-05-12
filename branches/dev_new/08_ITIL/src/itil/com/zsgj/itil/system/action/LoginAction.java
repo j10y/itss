@@ -8,11 +8,11 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.acegisecurity.context.SecurityContextHolder;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionRedirect;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.security.entity.Role;
@@ -34,18 +34,9 @@ public class LoginAction extends BaseDispatchAction {
 	public ActionForward firstInto(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		request.getSession().getServletContext().getInitParameter("");
+		
 		if (UserContext.getUserInfo() == null) {
-			//modify by zhangpengf  for  SSO in 2009-12-15 begin
-			String username = request.getHeader("iv-user");
-			if (username != null) {
-				request.getSession().setAttribute("SSO", true);
-				return new ActionRedirect("/j_login.do?j_username=" + username
-						+ "&j_password=SP_SSO");
-			} else {
-				return mapping.findForward("login");
-			}
-			//modify by zhangpengf  for  SSO in 2009-12-15 end
+			return mapping.findForward("login");
 		} else {
 			return mapping.findForward("success");
 		}
@@ -75,22 +66,15 @@ public class LoginAction extends BaseDispatchAction {
 			return mapping.findForward("login");
 		}
 		// add by lee for 为无角色用户添加默认角色 in 20090818 end
-		System.out.println(request.getSession().getAttribute(
-				"ACEGI_SAVED_REQUEST_KEY"));
-
+		
 		UserContext.setOnlineUser(loginUser);
-		if (request.getSession().getAttribute("ACEGI_SAVED_REQUEST_KEY") != null) {
-			String redir = String.valueOf(request.getSession().getAttribute(
-					"ACEGI_SAVED_REQUEST_KEY"));
-			redir = (String) redir.substring(redir.indexOf("[") + 1, redir
-					.indexOf("]"));
-			String realUrl = "";
-			if(redir.indexOf(this.getProperties("realmurl", "http://itss.digitalcina.com"))>=0){
-				realUrl = this.getProperties("realmurl", "http://itss.digitalcina.com");
-			}else{
-				realUrl = this.getProperties("weburl", "http://10.1.120.53");
-			}
-			redir = redir.substring(realUrl.length() + 1);
+		
+		System.out.println(request.getSession().getAttribute("ACEGI_SAVED_REQUEST_KEY"));
+		if(request.getSession().getAttribute("ACEGI_SAVED_REQUEST_KEY") != null){
+			String redir = String.valueOf(request.getSession().getAttribute("ACEGI_SAVED_REQUEST_KEY"));
+			redir = (String) redir.substring(redir.indexOf("["), redir.indexOf("]"));
+			redir = redir.substring(redir.lastIndexOf(this.getProperties("webContext", "")) + this.getProperties("webContext", "b2b").length() + 1);
+			System.out.print(redir);
 			return new ActionRedirect(redir);
 		}
 
