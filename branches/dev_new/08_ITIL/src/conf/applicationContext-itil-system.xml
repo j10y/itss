@@ -13,7 +13,6 @@
     -->
     
 	<bean id="actorUtilService" class="com.zsgj.itil.actor.service.impl.ActorUtilServiceImpl">
-		<property name="dao" ref="baseDao"/>
 		<property name="customerDao" ref="customerDao"/>
 	</bean>
 	<bean id="departmentService" class="com.zsgj.info.framework.security.service.impl.DepartmentServiceImpl">
