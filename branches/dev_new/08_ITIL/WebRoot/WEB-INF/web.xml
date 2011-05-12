@@ -84,7 +84,7 @@
 		<param-value>
 		    classpath*:applicationContext-personsetting.xml,
 			classpath*:applicationContext-resources.xml,
-			classpath*:applicationContext-security.xml,
+			classpath*:applicationContext-security-form.xml,
 			classpath*:applicationContext-workflow.xml,
 			classpath*:applicationContext-portal.xml,
 			classpath*:applicationContext-metadata.xml,
@@ -113,45 +113,6 @@
         <param-value>60000</param-value>
     </context-param>
     
-    
-	 
-    <!-- Acegi过滤器 -->
-    <!--
-    <filter>
-        <filter-name>acegiFilterChain</filter-name>
-        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
-        <init-param>
-            <param-name>targetClass</param-name>
-            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
-        </init-param>
-    </filter>
-    -->
-
-    <!-- Acegi过滤器URL映射 -->
-    <!-- 
-    <filter-mapping>
-        <filter-name>acegiFilterChain</filter-name>
-        <url-pattern>*.jsp</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>acegiFilterChain</filter-name>
-        <url-pattern>*.do</url-pattern>
-    </filter-mapping>
-	 <filter-mapping>
-	 	<filter-name>acegiFilterChain</filter-name>
-	  	<url-pattern>/extjs/*</url-pattern>
-	 </filter-mapping>
-	 <filter-mapping>
-	 	<filter-name>acegiFilterChain</filter-name>
-	  	<url-pattern>/servlet/*</url-pattern>
-	 </filter-mapping>
-	 <filter-mapping>
-	 	<filter-name>acegiFilterChain</filter-name>
-	  	<url-pattern>*.action</url-pattern>
-	 </filter-mapping>
-	 -->
-	 
 	 <!-- spring security delegatingFilterProxy -->
 	 <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -161,7 +122,13 @@
       <filter-name>springSecurityFilterChain</filter-name>
       <url-pattern>/*</url-pattern>
     </filter-mapping>	 
-	 
+	<!-- 单点登出时用到-->
+ 	<listener>
+  		<listener-class>
+   			org.jasig.cas.client.session.SingleSignOutHttpSessionListener
+  		</listener-class>
+ 	</listener>
+ 	<!-- single sign out -->
 	 <!-- openSessionInViewFilter -->
 	 <filter>  
        <filter-name>openSessionInViewFilter</filter-name>  
@@ -202,30 +169,7 @@
         <filter-name>ContextTpyeFilter</filter-name>
         <url-pattern>/*</url-pattern>
      </filter-mapping>
- 	<!-- 单点登录 
-	 <filter>
-        <filter-name>SSOFilter</filter-name>
-        <filter-class>
-            com.zsgj.itil.util.SSOFilter
-        </filter-class>
-     </filter>
-     <filter-mapping>
-        <filter-name>SSOFilter</filter-name>
-        <url-pattern>*.do</url-pattern>
-     </filter-mapping>
-     <filter-mapping>
-        <filter-name>SSOFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
-     </filter-mapping>
-     <filter-mapping>
-        <filter-name>SSOFilter</filter-name>
-        <url-pattern>*.action</url-pattern>
-     </filter-mapping>
-     <filter-mapping>
-        <filter-name>SSOFilter</filter-name>
-        <url-pattern>/servlet/*</url-pattern>
-     </filter-mapping>
--->
+ 	
  	<!-- struts2-->
 	 <filter>
         <filter-name>struts2</filter-name>
@@ -253,15 +197,6 @@
 	    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 	
-	<!--add by duxh in 20091218 解决登陆异常问题begin-->
-	<!-- 
-	<listener>  
-   		<listener-class>  
-        	org.acegisecurity.ui.session.HttpSessionEventPublisher  
-    	</listener-class>  
-	</listener>
-	 -->
-	<!--add by duxh in 20091218 end-->
 	<!-- struts action servlet （org.apache.struts.action.ActionServlet）-->
    <servlet>
     <servlet-name>action</servlet-name>
@@ -269,13 +204,8 @@
     <init-param>
       <param-name>config</param-name>
       <param-value>/WEB-INF/classes/struts-config.xml</param-value>     
-    </init-param><!--
-    <init-param>
-      <param-name>characterEncoding</param-name>
-      <param-value>gbk</param-value>
     </init-param>
-   
-    --><init-param>
+	<init-param>
       <param-name>debug</param-name>
       <param-value>3</param-value>
     </init-param>
@@ -339,13 +269,7 @@
     <url-pattern>/SOAPMonitor</url-pattern>
   </servlet-mapping>
 
- <!-- uncomment this if you want the admin servlet -->
- <!--
-  <servlet-mapping>
-    <servlet-name>AdminServlet</servlet-name>
-    <url-pattern>/servlet/AdminServlet</url-pattern>
-  </servlet-mapping>
- -->
+
   <mime-mapping>
     <extension>wsdl</extension>
      <mime-type>text/xml</mime-type>
@@ -639,21 +563,15 @@
 	    <servlet-name>ReportServer</servlet-name>
 	    <servlet-class>com.fr.web.ReportServlet</servlet-class>
 	    <load-on-startup>0</load-on-startup>
-	</servlet>
-  <servlet>
-    <servlet-name>SSOServlet</servlet-name>
-    <servlet-class>com.zsgj.itil.system.action.SSOServlet</servlet-class>
   </servlet>
+
 
 
   <servlet-mapping>
     <servlet-name>ReportServer</servlet-name>
     <url-pattern>/ReportServer</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>SSOServlet</servlet-name>
-    <url-pattern>/SSOServlet</url-pattern>
-  </servlet-mapping>
+
   <!--finereport end by tongjp  -->
   
   <!-- session config -->
