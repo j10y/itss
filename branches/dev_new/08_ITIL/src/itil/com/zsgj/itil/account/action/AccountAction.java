@@ -9532,23 +9532,23 @@ public class AccountAction extends BaseAction {
 			user.setMobilePhone(mobilePhone);
 			getService().save(user);
 		}
-		HrInfoService hs = new HrInfoServiceLocator();
-		try {
-			HrInfoServiceSoap_PortType hp = hs.getHrInfoServiceSoap();
-			int reslut = hp.updatePhone(employeeCode,telephone,mobilePhone,voipPhone,isDelete);
-			if(reslut==1){
-				System.out.println("更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！");
-			}else{
-				System.out.println("更新HR更新通讯录"+employeeCode+"信息失败！");
-				System.out.println("ERROR:"+(reslut==-1?"调用失败":"没有权限"));
-			}
-		} catch (ServiceException e) {
-			System.out.println("创建HR更新通讯录webservice调用失败！");
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			System.out.println("运行HR更新通讯录webservice调用失败！");
-			e.printStackTrace();
-		}
+//		HrInfoService hs = new HrInfoServiceLocator();
+//		try {
+//			HrInfoServiceSoap_PortType hp = hs.getHrInfoServiceSoap();
+//			int reslut = hp.updatePhone(employeeCode,telephone,mobilePhone,voipPhone,isDelete);
+//			if(reslut==1){
+//				System.out.println("更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！");
+//			}else{
+//				System.out.println("更新HR更新通讯录"+employeeCode+"信息失败！");
+//				System.out.println("ERROR:"+(reslut==-1?"调用失败":"没有权限"));
+//			}
+//		} catch (ServiceException e) {
+//			System.out.println("创建HR更新通讯录webservice调用失败！");
+//			e.printStackTrace();
+//		} catch (RemoteException e) {
+//			System.out.println("运行HR更新通讯录webservice调用失败！");
+//			e.printStackTrace();
+//		}
 	}
 	/**
 	 * 通过用户名得到员工编号

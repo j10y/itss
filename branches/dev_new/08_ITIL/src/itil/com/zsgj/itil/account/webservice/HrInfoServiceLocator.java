@@ -10,6 +10,10 @@ package com.zsgj.itil.account.webservice;
 import com.zsgj.info.framework.util.PropertiesUtil;
 
 public class HrInfoServiceLocator extends org.apache.axis.client.Service implements com.zsgj.itil.account.webservice.HrInfoService {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 5036434242589687593L;
 	private java.lang.String HrInfoServiceSoap_address; //= "http://10.1.180.81/HrInfoUpdatePhone/HrInfoService.asmx";
     public HrInfoServiceLocator() {
     	HrInfoServiceSoap_address = PropertiesUtil.getProperties("soap.hrinfo.address","http://10.1.180.81/HrInfoUpdatePhone/HrInfoService.asmx");

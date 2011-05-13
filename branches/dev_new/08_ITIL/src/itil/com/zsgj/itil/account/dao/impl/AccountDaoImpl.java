@@ -3624,26 +3624,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 			save(user);
 		}
 		String error="";
-		HrInfoService hs = new HrInfoServiceLocator();
-		try {
-			HrInfoServiceSoap_PortType hp = hs.getHrInfoServiceSoap();
-			int reslut = hp.updatePhone(employeeCode,telephone,mobilePhone,voipPhone,isDelete);
-			if(reslut==1){
-				System.out.println("更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！");
-				error="更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！";
-			}else{
-				System.out.println("更新HR更新通讯录"+employeeCode+"信息失败！");
-				error="更新通讯录失败！";
-			}
-		} catch (ServiceException e) {
-			System.out.println("创建HR更新通讯录webservice调用失败！");
-			error="更新通讯录失败！";
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			System.out.println("运行HR更新通讯录webservice调用失败！");
-			error="更新通讯录失败！";
-			e.printStackTrace();
-		}
+//		HrInfoService hs = new HrInfoServiceLocator();
+//		try {
+//			HrInfoServiceSoap_PortType hp = hs.getHrInfoServiceSoap();
+//			int reslut = hp.updatePhone(employeeCode,telephone,mobilePhone,voipPhone,isDelete);
+//			if(reslut==1){
+//				System.out.println("更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！");
+//				error="更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！";
+//			}else{
+//				System.out.println("更新HR更新通讯录"+employeeCode+"信息失败！");
+//				error="更新通讯录失败！";
+//			}
+//		} catch (ServiceException e) {
+//			System.out.println("创建HR更新通讯录webservice调用失败！");
+//			error="更新通讯录失败！";
+//			e.printStackTrace();
+//		} catch (RemoteException e) {
+//			System.out.println("运行HR更新通讯录webservice调用失败！");
+//			error="更新通讯录失败！";
+//			e.printStackTrace();
+//		}
+		error="更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！";
 		return error;
 	}
 
