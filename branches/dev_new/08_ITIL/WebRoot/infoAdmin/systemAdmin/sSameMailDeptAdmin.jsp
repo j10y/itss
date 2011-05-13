@@ -60,7 +60,7 @@
     Ext.onReady(function(){	
 	      Ext.QuickTips.init();
 		  Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
-		  modLoader.addModule('${pageContext.request.contextPath}/infoAdmin/sSameMailDeptAdmin.js', 'Page');
+		  modLoader.addModule('${pageContext.request.contextPath}/infoAdmin/systemAdmin/sSameMailDeptAdmin.js', 'Page');
           modLoader.loadModules(); 
 	});
     

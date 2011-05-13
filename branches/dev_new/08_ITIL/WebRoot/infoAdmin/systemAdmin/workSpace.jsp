@@ -60,7 +60,7 @@
     Ext.onReady(function(){	
 	      Ext.QuickTips.init();
 		  Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
-		  modLoader.addModule('${pageContext.request.contextPath}/infoAdmin/workSpace.js', 'Page');
+		  modLoader.addModule('${pageContext.request.contextPath}/infoAdmin/systemAdmin/workSpace.js', 'Page');
           modLoader.loadModules(); 
 	});
     
