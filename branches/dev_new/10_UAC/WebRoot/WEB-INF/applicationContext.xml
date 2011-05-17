@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/ldap.properties" />
+	</bean>
+	
+	<bean id="contextSourceTarget"
+		class="org.springframework.ldap.core.support.LdapContextSource">
+		<property name="url" value="${urls}"></property>
+		<property name="base" value="${base}"></property>
+		<property name="userDn" value="${userDn}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+	
+	<!-- 
+	<bean id="poolingContextSource" class="org.springframework.ldap.pool.factory.PoolingContextSource">
+		<property name="contextSource" ref="contextSourceTarget" />
+		<property name="dirContextValidator" ref="dirContextValidator" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testWhileIdle" value="true" />
+	</bean>
+	<bean id="dirContextValidator"
+		class="org.springframework.ldap.pool.validation.DefaultDirContextValidator" />
+	 -->
+	
+	<bean id="contextSource"
+		class="org.springframework.ldap.transaction.compensating.manager.TransactionAwareContextSourceProxy">
+		<constructor-arg ref="contextSourceTarget"></constructor-arg>
+	</bean>
+	
+	
+	<bean id="ldapTemplate"
+		class="org.springframework.ldap.core.LdapTemplate">		
+		<constructor-arg ref="contextSource" />
+		
+		<!--
+		<constructor-arg ref="poolingContextSource" />
+		-->
+	</bean>
+	<!-- 
+	<bean id="transactionManager"
+		class="org.springframework.ldap.transaction.compensating.manager.ContextSourceTransactionManager">
+		<property name="contextSource" ref="poolingContextSource" />
+	</bean>
+	<bean id="myDataAccessObjectTarget" class="com.example.MyDataAccessObject">
+		<property name="ldapTemplate" ref="ldapTemplate" />
+	</bean>
+	<bean id="myDataAccessObject"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="myDataAccessObjectTarget" />
+		<property name="transactionAttributes">
+		<props>
+			<prop key="*">PROPAGATION_REQUIRES_NEW</prop>
+		</props>
+	</property>
+	</bean>
+	 -->
+
+	<bean id="ldapTreeBuilder"
+		class="org.springframework.ldap.samples.utils.LdapTreeBuilder">
+		<constructor-arg ref="ldapTemplate" />
+	</bean>
+
+	<bean id="personDao"
+		class="org.springframework.ldap.samples.article.dao.PersonDaoImpl">
+		<property name="ldapTemplate" ref="ldapTemplate" />
+	</bean>
+	
+	<bean id="deptDao"
+		class="net.shopin.ldap.dao.DeptDaoImpl">
+		<property name="ldapTemplate" ref="ldapTemplate" />
+	</bean>
+	
+	<bean id="userDao"
+		class="net.shopin.ldap.dao.UserDaoImpl">
+		<property name="ldapTemplate" ref="ldapTemplate" />
+	</bean>
+
+	<bean id="springContextUtils" class="net.shopin.util.SpringContextUtils" lazy-init="false"/>
+
+</beans>

@@ -1,0 +1,517 @@
+
+
+BODY {
+	FONT-SIZE: 12px; COLOR: #111111 ;background-color: #000000
+}
+P {
+	FONT-SIZE: 12px; COLOR: #111111
+}
+TH {
+	FONT-SIZE: 12px; COLOR: #111111
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #111111
+}
+INPUT {
+	FONT-SIZE: 12px; color: #333333; background:#fef7df ;height:22px
+}
+SELECT {
+	FONT-SIZE: 12px; color: #333333; background:#fef7df ;height:20px
+}
+TEXTAREA {
+	FONT-SIZE: 12px; COLOR: #111111; background:#fef7df 
+}<!--fffddd --> 
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; TEXT-ALIGN: center
+	;BACKGROUD-IMAGE: url(ar_gray.gif)
+}
+TABLE {
+	TEXT-ALIGN: left
+}
+P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 3px; MARGIN: 15px 0px; PADDING-TOP: 3px
+}
+HR {
+	BORDER-RIGHT: #000000 0px solid; BORDER-TOP: #d1d7dc 1px solid; BORDER-LEFT: #000000 0px solid; BORDER-BOTTOM: #000000 0px solid; HEIGHT: 0px
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+FORM {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.B {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px
+}
+H1 {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px
+}
+.boldFontSize12 {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px
+}
+.C {
+	FONT-SIZE: 14px
+}
+.fontSize14 {
+	FONT-SIZE: 14px
+}
+.CB {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px
+}
+.M {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px
+}
+.L {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px
+}
+.boldFontSize14 {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px
+}
+.D {
+	FONT-SIZE: 16px
+}
+.C1 {
+	FONT-SIZE: 16px
+}
+.fontSize16 {
+	FONT-SIZE: 16px
+}
+.DB {
+	FONT-WEIGHT: bold; FONT-SIZE: 16px
+}
+.boldFontSize16 {
+	FONT-WEIGHT: bold; FONT-SIZE: 16px
+}
+.H {
+	COLOR: #ff5500
+}
+.G {
+	COLOR: #666666
+}
+.EN {
+	FONT-FAMILY: Arial
+}
+.LM {
+	LINE-HEIGHT: 120%
+}
+.LL {
+	LINE-HEIGHT: 150%
+}
+.LG {
+	LINE-HEIGHT: 200%
+}
+.ImgB {
+	BORDER-RIGHT: #dddddd 1px solid; BORDER-TOP: #dddddd 1px solid; BORDER-LEFT: #dddddd 1px solid; BORDER-BOTTOM: #dddddd 1px solid
+}
+A:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ff5500; TEXT-DECORATION: underline
+}
+A:active {
+	COLOR: #ff5500; TEXT-DECORATION: underline
+}
+A.U:link {
+	COLOR: #0044dd; TEXT-DECORATION: underline
+}
+A.U:visited {
+	COLOR: #0044dd; TEXT-DECORATION: underline
+}
+A.U:hover {
+	COLOR: #ff5500; TEXT-DECORATION: underline
+}
+A.U:active {
+	COLOR: #ff5500; TEXT-DECORATION: underline
+}
+
+}
+
+.width {
+	MIN-WIDTH: 780px
+}
+.pd_left10 {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; TEXT-ALIGN: center
+}
+.mgt15 {
+	MARGIN-TOP: 15px
+}
+.td_c_bg {
+	BACKGROUND: url(images/c060608_cc.gif) repeat-x; LINE-HEIGHT: 7px
+}
+.td_left_bg {
+	BORDER-RIGHT: #d8d8d8 1px solid; PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: #f0f0f0; PADDING-BOTTOM: 0px; BORDER-LEFT: #d8d8d8 1px solid; PADDING-TOP: 0px; TEXT-ALIGN: left
+}
+.td22 {
+	WORD-BREAK: break-all; LINE-HEIGHT: 22px; TEXT-ALIGN: left
+}
+A {
+	FONT-SIZE: 12px; COLOR: #000; TEXT-DECORATION: none
+}
+.blue_14x {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #03c; TEXT-DECORATION: underline
+}
+.td_c_list {
+	BORDER-RIGHT: #d8d8d8 1px solid; PADDING-RIGHT: 12px; PADDING-LEFT: 12px; BACKGROUND: #fff; PADDING-BOTTOM: 0px; BORDER-LEFT: #d8d8d8 1px solid; PADDING-TOP: 0px; TEXT-ALIGN: left
+}
+.td26 {
+	WORD-BREAK: break-all; LINE-HEIGHT: 26px; TEXT-ALIGN: left
+}
+.green_14_b {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #008000; FONT-FAMILY: Arial; TEXT-DECORATION: none
+}
+.green_12_x {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #008000; TEXT-DECORATION: underline
+}
+.td18 {
+	WORD-BREAK: break-all; LINE-HEIGHT: 18px; TEXT-ALIGN: left
+}
+.td26_line {
+	BORDER-TOP: #d8d8d8 1px dashed; WORD-BREAK: break-all; LINE-HEIGHT: 26px; HEIGHT: 26px
+}
+.gray_12 {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #666
+}
+.blue_12x {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #03c; TEXT-DECORATION: underline
+}
+#Head {
+	TEXT-ALIGN: center;background:#FFFFFF; width:900px
+}
+#Head #HeadTop {
+	MARGIN: 5px auto 10px; WIDTH: 900px; POSITION: relative; TEXT-ALIGN: center
+}
+#Head A:link {
+	COLOR: #0044ff
+}
+#head A:visited {
+	COLOR: #0044ff
+}
+#Head A:hover {
+	COLOR: #ff6600
+}
+#head A:active {
+	COLOR: #ff6600
+}
+#Head A.current:link {
+	COLOR: #ff3300; TEXT-DECORATION: none
+}
+#Head A.current:visited {
+	COLOR: #ff3300; TEXT-DECORATION: none
+}
+#Head A.current:hover {
+	COLOR: #ff3300; TEXT-DECORATION: underline
+}
+#Head A.current:active {
+	COLOR: #ff3300; TEXT-DECORATION: underline
+}
+#Head UL {
+	LIST-STYLE-TYPE: none
+}
+#Head UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#Head #SystemAnnouce {
+	BORDER-RIGHT: #eee 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #eee 1px solid; PADDING-LEFT: 8px; FONT-WEIGHT: bold; PADDING-BOTTOM: 8px; MARGIN: 0px 0px 10px; BORDER-LEFT: #eee 1px solid; WIDTH: 760px; COLOR: #f30; PADDING-TOP: 8px; BORDER-BOTTOM: #eee 1px solid; BACKGROUND-COLOR: #f6f6f6; TEXT-ALIGN: center
+}
+BODY.FullWidth #Head #SystemAnnouce {
+	WIDTH: 100%
+}
+#Head #Logo {
+	LEFT: 0px; WIDTH: 265px; POSITION: absolute; TOP: 15px
+}
+	#Head #QuickLinks {
+	FLOAT: right; MARGIN-BOTTOM: 2px; WIDTH: 500px
+}
+#Head #QuickLinks LI {
+	FLOAT: right; MARGIN-LEFT: 10px
+}
+#Head #HeadNavBar {
+	CLEAR: right; FLOAT: right; WIDTH: 335px
+}
+#Head #HeadNavBar LI {
+	BACKGROUND:  url(../images/navigate/head_nav_bar_bk_left.gif) #ffffed no-repeat left top; FLOAT: left; MARGIN-LEFT: 10px; HEIGHT: 21px
+}
+#Head #HeadNavBar LI A {
+	PADDING-RIGHT: 8px; DISPLAY: block; PADDING-LEFT: 8px; BACKGROUND:  url(../images/navigate/head_nav_bar_bk_right.gif) no-repeat right top; FLOAT: left; PADDING-BOTTOM: 0px; LINE-HEIGHT: 21px; PADDING-TOP: 0px; HEIGHT: 21px
+}
+#Head #EBAlliance {
+	BORDER-TOP: #d0d0d0 1px solid; MARGIN-TOP: 5px; FLOAT: right; WIDTH: 510px; COLOR: #666; PADDING-TOP: 5px; TEXT-ALIGN: right
+}
+#Head #ChannelMenu {
+	MARGIN: 0px auto; WIDTH: 900px; TEXT-ALIGN: center
+}
+BODY.FullWidth #Head #ChannelMenu {
+	WIDTH: 100%
+}
+#Head #ChannelMenuItems {
+	MARGIN: 0px auto; WIDTH:820px; HEIGHT: 30px
+}
+#Head #ChannelMenuItems LI {
+	FLOAT: left; MARGIN-RIGHT: 1px; HEIGHT: 30px
+}
+#Head #ChannelMenuItems A {//* menu background picture: the left large yellow pic ,not move at all   *//
+	DISPLAY: block; BACKGROUND:  url(../images/navigate/home_left.gif) no-repeat left top; FLOAT: left; HEIGHT: 30px; TEXT-DECORATION: none
+}
+#Head #ChannelMenuItems A SPAN {//* menu background picture: the right yellow pic ,not move at all   *//
+	PADDING-RIGHT: 15px; DISPLAY: block; PADDING-LEFT: 15px; BACKGROUND:  url(../images/navigate/chl_home_right.gif) no-repeat right top; FLOAT: left; PADDING-BOTTOM: 0px; CURSOR: hand; COLOR: #000; PADDING-TOP: 11px; FONT-STYLE: normal; HEIGHT: 30px; TEXT-ALIGN: center
+}
+#Head #SearchBox {
+	HEIGHT: 34px; TEXT-ALIGN: left
+}
+#Head #SearchBox A {//* don'nt know why ????   *//
+	COLOR: #fff 
+}
+#Head #SearchForm {
+	FLOAT: left; WIDTH: 400px; HEIGHT: 34px
+}
+BODY.FullWidth #Head #SearchForm {
+	WIDTH: 430px
+}
+#Head #SearchForm FORM {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; PADDING-TOP: 6px
+}
+#Head #HotKeywords {
+	FLOAT: right; WIDTH: 320px; HEIGHT: 34px
+}
+BODY.FullWidth #Head #HotKeywords {
+	WIDTH: 290px
+}
+#Head #HotKeywords UL LI {
+	MARGIN-TOP: 12px; FLOAT: left; COLOR: #fff; MARGIN-RIGHT: 5px
+}
+.6 #Head #HotKeywords A {
+	COLOR: #111
+}
+.6 #Head #HotKeywords LI {
+	COLOR: #111
+}
+BODY #SearchBox {
+	BACKGROUND-COLOR: #ff9000
+}
+BODY #SearchForm {//* left circle yellow red color pic  *//
+	BACKGROUND:  url(../images/navigate/search_box_home_bk_left.gif) no-repeat left top
+}
+BODY #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_home_bk_right.gif) no-repeat right top
+}
+BODY.1 #SearchClass{
+		width:20px;
+}
+
+BODY.1 UL#ChannelMenuItems LI#MenuHome A {   //*contol change menu ,change pictures.*//
+
+	BACKGROUND: url(navigate/chl_home_left_act.gif) #ff9000 no-repeat left top
+}
+BODY.1 UL#ChannelMenuItems LI#MenuHome A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_home_right_act.gif) no-repeat right top; COLOR: #fff
+}
+
+BODY.1 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_home_bk_left.gif) no-repeat left top
+}
+BODY.1 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_home_bk_right.gif) no-repeat right top
+}
+BODY.2 UL#ChannelMenuItems LI#MenuDigital A {
+	BACKGROUND:  url(../images/navigate/chl_digital_left_act.gif) #99a2b1 no-repeat left top
+}
+BODY.2 UL#ChannelMenuItems LI#MenuDigital A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_digital_right_act.gif) no-repeat right top; COLOR: #fff
+}
+BODY.2 #SearchBox {
+	BACKGROUND-COLOR: #99a2b1
+}
+BODY.2 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_digital_bk_left.gif) no-repeat left top
+}
+BODY.2 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_digital_bk_right.gif) no-repeat right top
+}
+BODY.3 UL#ChannelMenuItems LI#MenuLady A {
+	BACKGROUND:  url(../images/navigate/chl_lady_left_act.gif) #e1569a no-repeat left top
+}
+BODY.3 UL#ChannelMenuItems LI#MenuLady A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_lady_right_act.gif) no-repeat right top; COLOR: #fff
+}
+BODY.3 #SearchBox {
+	BACKGROUND-COLOR: #e1569a
+}
+BODY.3 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_lady_bk_left.gif) no-repeat left top
+}
+BODY.3 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_lady_bk_right.gif) no-repeat right top
+}
+BODY.4 UL#ChannelMenuItems LI#MenuMan A {
+	BACKGROUND:  url(../images/navigate/chl_man_left_act.gif) #3672ae no-repeat left top
+}
+BODY.4 UL#ChannelMenuItems LI#MenuMan A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_man_right_act.gif) no-repeat right top; COLOR: #fff
+}
+BODY.4 #SearchBox {
+	BACKGROUND-COLOR: #3672ae
+}
+BODY.4 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_man_bk_left.gif) no-repeat left top
+}
+BODY.4 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_man_bk_right.gif) no-repeat right top
+}
+BODY.5 UL#ChannelMenuItems LI#MenuLife A {
+	BACKGROUND:  url(../images/navigate/chl_life_left_act.gif) #ec9307 no-repeat left top
+}
+BODY.5 UL#ChannelMenuItems LI#MenuLife A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_life_right_act.gif) no-repeat right top; COLOR: #fff
+}
+BODY.5 #SearchBox {
+	BACKGROUND-COLOR: #ec9307
+}
+BODY.5 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_life_bk_left.gif) no-repeat left top
+}
+BODY.5 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_life_bk_right.gif) no-repeat right top
+}
+BODY.6 UL#ChannelMenuItems LI#MenuSports A {
+	BACKGROUND:  url(../images/navigate/chl_sports_left_act.gif) #afc326 no-repeat left top
+}
+BODY.6 UL#ChannelMenuItems LI#MenuSports A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_sports_right_act.gif) no-repeat right top; COLOR: #fff
+}
+BODY.6 #SearchBox {
+	BACKGROUND-COLOR: #afc326
+}
+BODY.6 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_sports_bk_left.gif) no-repeat left top
+}
+BODY.6 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_sports_bk_right.gif) no-repeat right top
+}
+BODY.7 UL#ChannelMenuItems LI#MenuGame A {
+	BACKGROUND:  url(../images/navigate/chl_game_left_act.gif) #c34b26 no-repeat left top
+}
+BODY.7 UL#ChannelMenuItems LI#MenuGame A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_game_right_act.gif) no-repeat right top; COLOR: #fff
+}
+BODY.7 #SearchBox {
+	BACKGROUND-COLOR: #c34b26
+}
+BODY.7 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_game_bk_left.gif) no-repeat left top
+}
+BODY.7 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_game_bk_right.gif) no-repeat right top
+}
+BODY.8 UL#ChannelMenuItems LI#MenuCollection A {
+	BACKGROUND:  url(../images/navigate/chl_collection_left_act2.gif) #88605f no-repeat left top
+}
+BODY.8 UL#ChannelMenuItems LI#MenuCollection A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_collection_right_act2.gif) no-repeat right top; COLOR: #fff
+}
+BODY.8 #SearchBox {
+	BACKGROUND-COLOR: #88605f
+}
+BODY.8 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_collection_bk_left2.gif) no-repeat left top
+}
+BODY.8 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_collection_bk_right2.gif) no-repeat right top
+}
+BODY.9 UL#ChannelMenuItems LI#MenuHongkong A {
+	BACKGROUND:  url(../images/navigate/chl_hongkong_left_act2.gif) #965bb9 no-repeat left top
+}
+BODY.9 UL#ChannelMenuItems LI#MenuHongkong A SPAN {
+	FONT-WEIGHT: bold; BACKGROUND:  url(../images/navigate/chl_hongkong_right_act2.gif) no-repeat right top; COLOR: #fff
+}
+BODY.9 #SearchBox {
+	BACKGROUND-COLOR: #965bb9
+}
+BODY.9 #SearchForm {
+	BACKGROUND:  url(../images/navigate/search_box_hongkong_bk_left2.gif) no-repeat left top
+}
+BODY.9 #HotKeywords {
+	BACKGROUND:  url(../images/navigate/search_box_hongkong_bk_right2.gif) no-repeat right top
+}
+BODY.FullWidth #Head #ChannelMenu {
+	WIDTH: 100%
+}
+BODY.FullWidth #Head #SearchForm {
+	BACKGROUND-IMAGE: none
+}
+BODY.FullWidth #Head #HotKeywords {
+	BACKGROUND-IMAGE: none
+}
+#Head #ChannelMenuItems LI#MenuHome A:hover {
+	BACKGROUND:  url(../images/navigate/chl_home_left_act.gif) #ff9000 no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuHome A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_home_right_act.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuDigital A:hover {
+	BACKGROUND:  url(../images/navigate/chl_digital_left_act.gif) #99a2b1 no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuDigital A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_digital_right_act.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuLady A:hover {
+	BACKGROUND:  url(../images/navigate/chl_lady_left_act.gif) #e1569a no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuLady A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_lady_right_act.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuMan A:hover {
+	BACKGROUND:  url(../images/navigate/chl_man_left_act.gif) #3672ae no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuMan A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_man_right_act.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuLife A:hover {
+	BACKGROUND:  url(../images/navigate/chl_life_left_act.gif) #ec9307 no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuLife A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_life_right_act.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuSports A:hover {
+	BACKGROUND:  url(../images/navigate/chl_sports_left_act.gif) #afc326 no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuSports A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_sports_right_act.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuGame A:hover {
+	BACKGROUND:  url(../images/navigate/chl_game_left_act.gif) #c34b26 no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuGame A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_game_right_act.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuCollection A:hover {
+	BACKGROUND:  url(../images/navigate/chl_collection_left_act2.gif) #88605f no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuCollection A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_collection_right_act2.gif) no-repeat right top; COLOR: #fff
+}
+#Head #ChannelMenuItems LI#MenuHongkong A:hover {
+	BACKGROUND:  url(../images/navigate/chl_hongkong_left_act2.gif) #965bb9 no-repeat left top
+}
+#Head #ChannelMenuItems LI#MenuHongkong A:hover SPAN {
+	BACKGROUND:  url(../images/navigate/chl_hongkong_right_act2.gif) no-repeat right top; COLOR: #fff
+}
+#Content {
+	CLEAR: both; MARGIN: 5px auto; WIDTH: 760px; TEXT-ALIGN: left
+}
+BODY.FullWidth #Content {
+	MARGIN: 5px 0px; WIDTH: 100%
+}
+
+
+
+
+
+
+
+
+
+

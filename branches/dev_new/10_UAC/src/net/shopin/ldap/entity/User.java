@@ -1,0 +1,127 @@
+package net.shopin.ldap.entity;
+
+import java.io.Serializable;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+public class User  implements Serializable {
+
+	private String dn;//专有名称
+	private String uid;//uid
+	private String password;//
+	private String cn;//姓名
+	private String sn;//姓
+	private String departmentNumber;//部门编号
+	private String title;//职务
+	private String mail;//email
+	private String telephoneNumber;//座机号码
+	private String mobile;//手机号码
+	private String facsimileTelephoneNumber;//传真号码
+	private String userType;//1员工，2客户，3供应商	, 4特殊用户
+	private byte [] photo;//仅支持jpeg格式
+	
+	private String deptName;//部门名称，为了展示方便
+	
+	public String getDn() {
+		return dn;
+	}
+	public void setDn(String dn) {
+		this.dn = dn;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getCn() {
+		return cn;
+	}
+	public void setCn(String cn) {
+		this.cn = cn;
+	}
+	public String getSn() {
+		return sn;
+	}
+	public void setSn(String sn) {
+		this.sn = sn;
+	}
+	public String getDepartmentNumber() {
+		return departmentNumber;
+	}
+	public void setDepartmentNumber(String departmentNumber) {
+		this.departmentNumber = departmentNumber;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getMail() {
+		return mail;
+	}
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getFacsimileTelephoneNumber() {
+		return facsimileTelephoneNumber;
+	}
+	public void setFacsimileTelephoneNumber(String facsimileTelephoneNumber) {
+		this.facsimileTelephoneNumber = facsimileTelephoneNumber;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	
+	public byte[] getPhoto() {
+		return photo;
+	}
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+	
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+	
+}
