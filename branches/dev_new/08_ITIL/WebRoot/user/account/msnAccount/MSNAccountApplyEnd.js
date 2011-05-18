@@ -779,7 +779,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=3px color=red><center><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/4899e4dc4f2b01f34825721a0012181f?OpenDocument" target="_blank" style="text-decoration:none"><b>《神州数码MSN代理配置手册》</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/8f51e3c135a215b648256d6a0022f54f?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW帐号密码修改方法</b></a></center></font>',
+				html : '<font size=3px color=red><center>无</center></font>',
 				cls : 'common-text',
 				style : 'margin:0px 0px 0px 130px'
 				
@@ -833,7 +833,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				name : 'itil_ac_PersonFormalAccount$otherLinkCompany',
 				style : '',
 				width : 530,
-				emptyText : 'MSN帐号用于神州数码内部IT用户与外部供应商/厂商、代理商、客户等业务合作伙伴进行协同办公',
+				emptyText : '',
 				allowBlank : true,
 				validator : '',
 				vtype : ''
@@ -1060,7 +1060,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			},
 			
 			items:[ {
-				html : '1、MSN帐号用于神州数码内部IT用户与外部供应商/厂商、代理商、客户等业务合作伙伴进行协同办公。<br>2、根据公司IT资源配置原则，MSN的使用实行月租制，每帐号月租成本20元，每月分摊至MSN帐号管理者所在部门。<br>3、禁止使用MSN发送附件，尤其是大附件。<br>4、禁止共用、借用、盗用MSN帐号。',
+				html : '无',
 				cls : 'common-text',
 				style : 'margin:0px 0px 0px 50px'
 				

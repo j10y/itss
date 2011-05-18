@@ -14,7 +14,7 @@ function PanelInfoForm(){
 //	 conn.send(null);
 //	 alert(conn.responseText);
 	 
-	 var data = [["50101635","在线科技公司"],["50102458","BTC"],["50109938","神州金信公司"]];
+	 var data = [["50000075","上品折扣"]];
 	 var store = new Ext.data.SimpleStore({
 //	 	        url: webContext+'/servlet/findAllDept',
 	 			data: data,

@@ -959,7 +959,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=3px color=red><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/5f8bbff4e52b51934825756800337d6d?OpenDocument" target="_blank" >神州数码企业移动终端Push Mail服务使用手册</a></font>',
+				html : '<font size=3px color=red></font>',
 				cls : 'common-text',
 				style : 'margin:0px 0px 0px 170px'
 				

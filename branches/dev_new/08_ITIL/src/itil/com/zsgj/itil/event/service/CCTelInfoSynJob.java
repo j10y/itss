@@ -190,7 +190,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 //		sb.append("</tr>");
 //		sb.append("<tr>");
 //		sb.append("<td class=\"STYLE1\" align=\"right\">");
-//		sb.append("<br>集团信息化管理部(神州数码IT)");
+//		sb.append("<br>信息系统部");
 //		sb.append("</td>");
 //		sb.append("</tr>");
 //		sb.append("<tr>");
@@ -257,7 +257,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append("<br>集团信息化管理部(神州数码IT)");
+		sb.append("<br>信息系统部");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
@@ -339,7 +339,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 //		sb.append("</tr>");
 //		sb.append("<tr>");
 //		sb.append("<td class=\"STYLE1\" align=\"right\">");
-//		sb.append("<br>集团信息化管理部(神州数码IT)");
+//		sb.append("<br>信息系统部");
 //		sb.append("</td>");
 //		sb.append("</tr>");
 //		sb.append("<tr>");
@@ -408,7 +408,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append("<br>集团信息化管理部(神州数码IT)");
+		sb.append("<br>信息系统部");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("<tr>");

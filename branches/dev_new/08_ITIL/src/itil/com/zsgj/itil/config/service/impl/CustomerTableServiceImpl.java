@@ -1821,8 +1821,11 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 			buff.append("CREATE TABLE ").append(tableName).append("(");
 			buff.append(" ID ").append(dialect.getTypeName(Types.BIGINT)).append(" primary key");
 			buff.append(");");
+		}else if (dialectName.equalsIgnoreCase("org.hibernate.dialect.MySQLDialect")) {
+			buff.append("CREATE TABLE `").append(tableName).append("` (");
+			buff.append("`id` bigint(40) NOT NULL AUTO_INCREMENT,  KEY `Auto_Increment_Key` (`id`)  ENGINE=InnoDB DEFAULT CHARSET=utf8");
+			buff.append(");");
 		}
-
 		try {
 			Connection conn = super.getSession().connection();
 			Statement stmt = conn.createStatement();

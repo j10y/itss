@@ -44,7 +44,7 @@ var BottomLayout = new Ext.Panel({
 	region : 'south',
 	// title:'bottom',
 	height : 25,
-	html : '<p align="center">2008 <a href="http://www.zsgj.com">神州数码</a> All Rights Reserved</p>'
+	html : '<p align="center">2008 <a href="">上品折扣</a> All Rights Reserved</p>'
 });
 com.faceye.ui.BottomLayout = {
 	init : function(context) {

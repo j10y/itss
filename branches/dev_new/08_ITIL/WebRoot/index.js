@@ -241,7 +241,7 @@ com.dc.ui.IndexPage = {
 		        frame:true,
 		        modal:true,
 		        closeAction:'hide',
-		        html:'<div class="itil-sugBox-content">感谢您使用我们提供的IT服务，并对我们的服务提出意见和建议！<br>您可以发送邮件到it-manage@zsgj.com，或者拨打IT服务建议及投诉热线7888-0，我们有专人负责处理！</div><div class="itil-sugBox-unit">集团信息化管理部(神州数码IT)</div>'
+		        html:'<div class="itil-sugBox-content">感谢您使用我们提供的IT服务，并对我们的服务提出意见和建议！</div>'
 	   		 });
 		function toDCone() {
 			window.open("http://dcone.zsgj.com","_blank");

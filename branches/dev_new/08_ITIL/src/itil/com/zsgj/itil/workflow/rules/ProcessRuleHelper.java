@@ -614,7 +614,7 @@ public class ProcessRuleHelper {
 		sb.append("<tr>");
 		sb.append("<td>");
 		sb.append("<div align=\"right\">");
-		sb.append("集团信息化管理部（神州数码IT）");
+		sb.append("信息系统部");
 		sb.append("</div>");
 		sb.append("<br");
 		sb.append("<div align=\"right\">");
@@ -698,7 +698,7 @@ public class ProcessRuleHelper {
 		sb.append("<tr>");
 		sb.append("<td>");
 		sb.append("<div align=\"right\">");
-		sb.append("集团信息化管理部（神州数码IT）");
+		sb.append("信息系统部");
 		sb.append("</div>");
 		sb.append("</td>");
 		sb.append("</tr>");

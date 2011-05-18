@@ -10,7 +10,7 @@ import java.util.Map;
 public class Test {
 
 	public static void main(String[] args) {
-		SAPExecute sAPExecute = new SAPExecute();
+//		SAPExecute sAPExecute = new SAPExecute();
 //		Map datamap =sAPExecute.getErpAccountId("100", "12", "20%2,80%1", "99");
 //		System.out.println("======================================:"+datamap);
 		String[] abc = {"2","3"};

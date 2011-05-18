@@ -83,9 +83,9 @@ public class UserMainTableAction extends BaseDispatchAction{
 		SystemMainTable smt = smts.findSystemMainTable(smtId);
 		request.setAttribute("smt", smt);
 		
-		ConfigItemType citype = this.cts.findConfigItemTypeByTable(smt);
-		request.setAttribute("citype", citype);
-		
+//		ConfigItemType citype = this.cts.findConfigItemTypeByTable(smt);
+//		request.setAttribute("citype", citype);
+//		
 		List modules = getService().findAll(Module.class);
 		request.setAttribute("modules", modules);
 		

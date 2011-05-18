@@ -137,7 +137,7 @@ public class RequireSIServiceImpl extends BaseDao implements RequireSIService{
 			c.add(Restrictions.eq("status", Integer.valueOf(1))); //不等于-1
 			
 			/*
-			 终止日期在神码财年起始后，起始有效日期在神码财年结束之前。也就是日期坐落在财年范围之内。
+			 终止日期在财年起始后，起始有效日期在财年结束之前。也就是日期坐落在财年范围之内。
 			 */
 //			int year = TimeTool.getYearOfDate(DateUtil.getCurrentDateTime());
 //			String yearBegin = year+"-04-01";

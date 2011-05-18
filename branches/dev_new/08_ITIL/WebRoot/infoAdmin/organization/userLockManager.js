@@ -219,7 +219,7 @@ UserLockManagePanel = Ext.extend(Ext.Panel, {
 			y : 40
 		});
 		var userDetailWin = new Ext.Window({
-			title : '选择角色【<font color=red>通过相应的部门选择相应的角色，默认部门是神州数码</font>】',
+			title : '选择角色【<font color=red>通过相应的部门选择相应的角色，默认部门是上品折扣</font>】',
 			modal : true,
 			height : 320,
 			width : 520,

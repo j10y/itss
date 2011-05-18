@@ -809,7 +809,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				name : 'itil_ac_PersonFormalAccount$otherLinkCompany',
 				style : '',
 				width : 530,
-				emptyText : 'MSN帐号用于神州数码内部IT用户与外部供应商/厂商、代理商、客户等业务合作伙伴进行协同办公',
+				emptyText : '无',
 				allowBlank : true,
 				validator : '',
 				vtype : ''

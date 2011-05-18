@@ -33,7 +33,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 			height : 400,
 			autoScroll : true,
 			root : new Ext.tree.AsyncTreeNode({
-				text : '神州数码(<font color=blue>50000075</font>)',
+				text : '上品折扣(<font color=blue>50000075</font>)',
 				id : -1
 			})
 		});
