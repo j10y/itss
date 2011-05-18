@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <td width="300" align="center" style="background-color: #808080;" valign="top" background="${pageContext.request.contextPath}/user/js/images/globe2.gif">
     </td>
 	<td width="659" valign="top" style="background-color: #FFFFFF;">
-    <h3 align='center'>神州数码IT热线支持服务反馈调查</h3>
+    <h3 align='center'>上品折扣IT热线支持服务反馈调查</h3>
     <br>
     	<br>
     	<br>

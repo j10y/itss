@@ -293,7 +293,7 @@ ConfigItemInfo = Ext.extend(Ext.TabPanel, {
 				data[i].initComponent();
 			}
 			if(data[i].id=='ConfigItem$customerCombo'){
-				data[i].value=74;//神州数码
+				data[i].value=74;//上品折扣 
 				data[i].initComponent();
 			}
 			if(data[i].id=='ConfigItem$useDate'){
