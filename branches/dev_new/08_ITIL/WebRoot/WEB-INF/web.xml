@@ -196,7 +196,10 @@
 	<listener>
 	    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-	
+	<!-- Spring 刷新Introspector防止内存泄露 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
 	<!-- struts action servlet （org.apache.struts.action.ActionServlet）-->
    <servlet>
     <servlet-name>action</servlet-name>
