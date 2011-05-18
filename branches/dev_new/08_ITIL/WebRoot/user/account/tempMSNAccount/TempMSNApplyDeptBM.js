@@ -698,7 +698,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			})]}, 
 			
 				{
-				html : '<h3><font color=red>MSN帐号申请说明:</font></h3><br> 1、MSN帐号用于神州数码内部IT用户与外部供应商/厂商、代理商、客户等业务合作伙伴进行协同办公。<br>2、根据公司IT资源配置原则，MSN的使用实行月租制，每帐号月租成本20元，每月分摊至MSN帐号管理者所在部门。<br>3、禁止使用MSN发送附件，尤其是大附件。<br>4、禁止共用、借用、盗用MSN帐号。<br>5、具体管理办法内容请点击。<br><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/4899e4dc4f2b01f34825721a0012181f/$FILE/MSN%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C.doc" target="_blank"><font color="blue" size=2px style="text-decoration:none">《神州数码MSN代理配置手册》</font></a>请点击访问。',
+				html : '',
 				cls : 'common-text',
 				colspan : 2,
 				rowspan : 0,
@@ -725,7 +725,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				fieldLabel : ''
 			}),
 			 {
-				html : '<font color=red>*</font> MSN帐号用于神州数码内部IT用户与外部供应商/厂商、代理商、客户等业务合作伙伴进行协同办公。请填写对方联系单位:',
+				html : '<font color=red>*</font>请填写对方联系单位:',
 				cls : 'common-text',
 				colspan : 2,
 				rowspan : 0,

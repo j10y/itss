@@ -956,7 +956,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				columns : 2
 			},
 			items:[{
-				html : '<h3><font color=red>Lotus Traveler服务说明:</font></h3><br><a href="/user/account/document/LotusTraveler(iPhone).pdf" target="_blank"><b><font color="blue" size=2px style="text-decoration:none">《LotusTraveler使用手册(iPhone)》</font></b></a><br><a href="/user/account/document/LotusTraveler(Nokia).pdf" target="_blank"><b><font color="blue" size=2px style="text-decoration:none">《LotusTraveler使用手册(Nokia)》</font></b></a><br><a href="/user/account/document/LotusTraveler(Windows Mobile).pdf" target="_blank"><b><font color="blue" size=2px style="text-decoration:none">《LotusTraveler使用手册(Windows Mobile)》</font></b></a><br><br> 1、企业移动终端Lotus Traveler服务目前适用于：中国联通用户、中国电信的GPRS或3G用户，中国移动除神州行之外的用户。<br>2、企业移动终端Lotus Traveler服务支持多种移动设备（包括Windows Mobile 设备，Nokia S60 第三版和第五版设备， Apple iPhone），请您在申请服务时确认您的手机型号是否在支持范围内，具体请查看相应的服务手册。<br>3、企业移动终端Lotus Traveler服务费用：神州数码标准服务费 + 手机网络流量费，其中：神州数码标准服务费：8元/用户月（为FY10试运行期间标准，正式运行的标准根据具体情况核算后另行公布），用户所在部门承担,按月分摊。手机网络流量费：用户承担,由移动运营商计费和收取，具体请查询各地运营商资费标准。<br><br><h3><font color=red>Lotus Traveler注意事项:</font></h3><br><br> 1、申请通过后，后台系统生效最多可能需要2小时，之后可以进行手机端配置；<br>2、请勿“同步通讯录”：Traveler同步通讯录方式为手机通讯录与Notes通讯录单向推送同步，同步操作会将手机的存储信息清空；<br>3、Traveler软件提示“未连接到服务器”时，可能是由于手机Traveler服务异常，可以重启手机设备再进行连接。<br>4、若您的终端已随机附带lotus traveler软件（如Nokia E72、E52等机型），则无需再安装客户端，请使用功能表-电邮服务-新建-lotus traveler-进行配置。',
+				html : '',
 				cls : 'common-text',
 				colspan : 2,
 				rowspan : 0,
