@@ -18,7 +18,7 @@ public class User  implements Serializable {
 	private String telephoneNumber;//座机号码
 	private String mobile;//手机号码
 	private String facsimileTelephoneNumber;//传真号码
-	private String userType;//1员工，2客户，3供应商	, 4特殊用户
+	private String userType;//1员工employees，2客户customers，3供应商suppliers, 4特殊用户specialuser
 	private byte [] photo;//仅支持jpeg格式
 	
 	private String deptName;//部门名称，为了展示方便

@@ -1,0 +1,4 @@
+---2011-05-18
+修改了net.shopin.ldap.dao.UserDaoImpl.buildDn,增加了判断特殊用户逻辑
+注：特殊用户即类似管理员之类的非真实存在的人员
+shopin.net_20110518.ldif在ou=users下增加了ou=specialuser

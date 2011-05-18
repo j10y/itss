@@ -99,7 +99,13 @@ public class UserDaoImpl implements UserDao {
 				case 4 : userType="specialuser"; break;
 			}
 		}else{
-			userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : "3");
+			//delete by awen for add userType specialuser on 2011-05-18 begin
+			//userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : "3");
+			//delete by awen for add userType specialuser on 2011-05-18 end
+			
+			//add by awen for add userType specialuser on 2011-05-18 begin
+			userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : (user.getDn().contains("ou=suppliers") ? "3" : "4"));
+			//add by awen for add userType specialuser on 2011-05-18 end
 		}
 		return new DistinguishedName("uid=" + user.getUid() + ",ou="+ userType + ",ou=users");
 	}
