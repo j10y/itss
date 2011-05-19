@@ -665,7 +665,8 @@ public class ConfigItemAction extends BaseAction {
 				json += "{\"id\":"+id+",\"name\":\""+name+"\"},";
 			}
 		}
-		json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		//json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		json = "{data:[" + (json.length()>1 ? json.substring(0, json.length()-1) : "") + "]}";
 		try {			
 			super.getResponse().setCharacterEncoding("utf-8");
 			PrintWriter pw = super.getResponse().getWriter();	
