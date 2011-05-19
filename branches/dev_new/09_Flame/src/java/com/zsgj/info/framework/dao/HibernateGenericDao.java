@@ -98,9 +98,7 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 //		AbstractSessionFactoryBean.TransactionAwareInvocationHandler asfbTransHandler = 
 //			(AbstractSessionFactoryBean.TransactionAwareInvocationHandler) handler;
 //		SessionFactory sf = asfbTransHandler.getObject();
-		LocalSessionFactoryBean localSessionFactoryBean = (LocalSessionFactoryBean) ContextHolder.getBean("pmcSessionFactory");
-		SessionFactory sf = localSessionFactoryBean.getObject();
-		return sf;
+		return (org.hibernate.impl.SessionFactoryImpl) ContextHolder.getBean("pmcSessionFactory");
 	}
 	
 	/**
