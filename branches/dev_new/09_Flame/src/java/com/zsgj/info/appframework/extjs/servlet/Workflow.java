@@ -29,7 +29,6 @@ import org.jbpm.graph.exe.Token;
 import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
-//import com.digitalchina.info.framework.workflow.handler.TimerCreateActionHandler;
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.appframework.pagemodel.service.PageModelService;
 import com.zsgj.info.framework.context.ContextHolder;
@@ -53,7 +52,6 @@ import com.zsgj.info.framework.workflow.WorkflowConstants;
 import com.zsgj.info.framework.workflow.action.SynchronousAction;
 import com.zsgj.info.framework.workflow.base.FormHelper;
 import com.zsgj.info.framework.workflow.base.JbpmContextFactory;
-import com.zsgj.info.framework.workflow.entity.ConfigUnitMail;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitRole;
 import com.zsgj.info.framework.workflow.entity.DefinitionPreAssign;
 import com.zsgj.info.framework.workflow.entity.TaskPreAssign;
@@ -80,12 +78,10 @@ public class Workflow extends HttpServlet {
 			.getBean("parameterService");
 	private TaskAssignService tas = (TaskAssignService) ContextHolder
 			.getBean("taskAssignService");
-	private PageModelService pagemodels = (PageModelService) ContextHolder
-			.getBean("pageModelService");
+	
 	private TaskAssignService si = (TaskAssignService) ContextHolder
 			.getBean("taskAssignService");
-	private MailSenderService ms = (MailSenderService) ContextHolder
-			.getBean("mailSenderService");
+	
 	private ConfigUnitService cs = (ConfigUnitService) ContextHolder
 			.getBean("configUnitService");
 	private WorkFlowGoBackService wfBack = (WorkFlowGoBackService) ContextHolder.getBean("workflowGoBackService");
@@ -2201,45 +2197,15 @@ public class Workflow extends HttpServlet {
 				/**************************************************************************************************************/
 				// 指派完之后，给这个加签人发邮件
 				String pageUrl = PropertiesUtil.getProperties("system.mail.develop.background.link", "/servlet/getPageModel?taskId=");
-				List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.valueOf(processId));//查找出来的是所有的按流程顺序排列的节点信息
 				
-				String content = cs.htmlContent(taskNodeName,pageUrl,applyType,dataId, reqClass, goStartState, newTaskId, creator, vDesc, auditHis,"0",false);
 				//add By gaowen for 加签邮件模板修改 in 2009-12-1 begin
-//				JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
-//				TaskInstance taskInstance = null;
-//					try{
-//						taskInstance = jbpmContext.loadTaskInstance(taskId);
-//						Map variables = taskInstance.getContextInstance().getVariables();
-//						// 先清除TASKINFO,否则会有死循环问题。
-//						if (variables.containsKey(WorkflowConstants.TASKINFO_KEY)) {
-//							variables.remove(WorkflowConstants.TASKINFO_KEY);
-//						}
-//						JSONObject jo = JSONObject.fromObject(variables);
-//						String result = (String) jo.get(WorkflowConstants.RESULT_FLAG);
-//						String comment = (String) jo.get(WorkflowConstants.COMMENT_FLAG);
-//						cs.saveWorkflowHistoryAuditHis(workflowEntity, processId,dataId,reqClass,taskNodeName,nodeId.toString(),serviceItem,result,comment);
-//					 }catch(Exception e){
-//						 throw new RuntimeException("保存加签审批历史失败，请核实");
-//					 }
-						
-					
-					/** **********得到results***************** */
-					
-				
+
+				/** **********得到results***************** */
 				String[] auditPers=new String[]{userInfo.getUserName()};
 				SynchronousAction sa = new SynchronousAction(taskNodeName,pageUrl,dataId,reqClass,goStartState,Long.parseLong(processId),taskId,applyType, vDesc, virtualDefinintionId, creator, bizParam, node, String.valueOf(nodeId),auditPers,new HashMap(),null);
 				Thread t = new Thread(sa);
 				t.start();
-			//add By gaowen for 加签邮件模板修改 in 2009-12-1 end
-//				ConfigUnitMail unitMail = cs.findMailObjectById(
-//						String.valueOf(virtualDefinintionId),
-//						String.valueOf(nodeId));
-//				
-//				ms.sendSimplyMail(userInfo.getEmail(), null, null,
-//						unitMail == null ? "审批通知" : unitMail
-//								.getSubject(),
-//						unitMail == null ? content : unitMail
-//								.getContent());
+				//add By gaowen for 加签邮件模板修改 in 2009-12-1 end
 				
 
 				/** ***********得到剩下的加签人*************************/

@@ -200,33 +200,49 @@ public interface ConfigUnitService {
 	public String findUserInfoMessageById(Long userId);
 	
 	/**
-	 * 组装HTML邮件发送
-	 * @Methods Name htmlContent
-	 * @Create In 2009-7-17 By guangsa
-	 * @param order
-	 * @param opl
-	 * @return String
-	 */
-	public String htmlContent(String nodeName,String pageUrl,String applyType,String dataId,String reqClass,String goStartState,Long taskId,String creator,String vDesc,List auditHis,String hurryFlag ,boolean browsePerson);
-	
-	/**
-	 * 组装HTML邮件发送 ITIL专用
-	 * @Methods Name htmlContent
-	 * @Create In 2009-11-27 By gaowen
-	 * @param order
-	 * @param opl
-	 * @return String
-	 */
-	public String htmlContent(String nodeName,String pageUrl,String applyType,String dataId,String reqClass,String goStartState,Long taskId,UserInfo creatorMeg,String vDesc,List auditHis,String hurryFlag ,boolean browsePerson,UserInfo userInfo);
-	/**
 	 * 组装HTML邮件发送 ITIL专用    Use Email Template
 	 * @Methods Name htmlContent
 	 * @Create In 2011-5-9 By Kanglei
-	 * @param order
-	 * @param opl
-	 * @return String
+	 * @param virtualDefinintionId 虚拟流程ID
+	 * @param nodeName 节点名称
+	 * @param pageUrl 目的页面URL
+	 * @param applyType 申请类型
+	 * @param dataId 数据ID
+	 * @param reqClass
+	 * @param goStartState
+	 * @param taskId
+	 * @param creatorMeg
+	 * @param vDesc
+	 * @param auditHis
+	 * @param hurryFlag
+	 * @param browsePerson
+	 * @param userInfo 所需发送的用户实体
+	 * @return String 邮件内容
 	 */
 	public String htmlContent(long virtualDefinintionId,String nodeName,String pageUrl,String applyType,String dataId,String reqClass,String goStartState,Long taskId,UserInfo creatorMeg,String vDesc,List auditHis,String hurryFlag ,boolean browsePerson,UserInfo userInfo);
+	
+	/**
+	 * 组装HTML邮件发送 ITIL专用    Use Email Template
+	 * @Methods Name htmlContent
+	 * @Create In 2011-5-9 By zhangpengf
+	 * @param virtualDefinintionId 虚拟流程ID
+	 * @param nodeName 节点名称
+	 * @param pageUrl 目的页面URL
+	 * @param applyType 申请类型
+	 * @param dataId 数据ID
+	 * @param reqClass
+	 * @param goStartState
+	 * @param taskId
+	 * @param creatorMeg
+	 * @param vDesc
+	 * @param auditHis
+	 * @param hurryFlag
+	 * @param browsePerson
+	 * @param userInfo 发送到的目的用户真实名称，可以是以','分割的多个用户
+	 * @return String 邮件内容
+	 */
+	public String htmlContent(long virtualDefinintionId,String nodeName,String pageUrl,String applyType,String dataId,String reqClass,String goStartState,Long taskId,UserInfo creatorMeg,String vDesc,List auditHis,String hurryFlag ,boolean browsePerson,String userInfo);
+	
 	/**
 	 * 通过角色的ID来查找相应的用户名
 	 * @Methods Name getUserNameByRoleId

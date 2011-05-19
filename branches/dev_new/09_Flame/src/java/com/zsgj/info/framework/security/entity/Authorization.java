@@ -11,9 +11,9 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Author peixf
  * @Create In 2008-3-11
  */
+@SuppressWarnings("serial")
 public class Authorization extends BaseObject {
-	private static final Long serialVersionUID = 7373331899233513702L;
-	
+
 	private Long id;
 	private String name;
 	private Right right;

@@ -256,7 +256,11 @@ public class ConfigUnitRoleAction extends BaseAction {
 					out.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
-					out.close();
+					
+				}finally{
+					if (out != null){
+						out.close();
+					}
 				}
 			}else{//如果库中已经存在了这样一条role记录，只需要保存相应的角色
 				List<ConfigUnitRoleTable> list = super.getService().find(ConfigUnitRoleTable.class, "configUnitRole", unitRole);
@@ -279,7 +283,10 @@ public class ConfigUnitRoleAction extends BaseAction {
 									return null;
 								} catch (IOException e) {
 									e.printStackTrace();
-									out.close();
+								}finally{
+									if(out != null){
+										out.close();
+									}
 								}
 								/***************************************************/
 							}else{
@@ -296,7 +303,9 @@ public class ConfigUnitRoleAction extends BaseAction {
 									out.flush();
 								} catch (IOException e) {
 									e.printStackTrace();
-									out.close();
+								}finally{
+									if(out != null)
+										out.close();
 								}
 							}
 						}
@@ -329,7 +338,9 @@ public class ConfigUnitRoleAction extends BaseAction {
 								return null;
 							}catch (IOException e) {
 								e.printStackTrace();
-								out.close();
+							}finally{
+								if(out != null)
+									out.close();
 							}
 							/***************************************************/
 						}else{							

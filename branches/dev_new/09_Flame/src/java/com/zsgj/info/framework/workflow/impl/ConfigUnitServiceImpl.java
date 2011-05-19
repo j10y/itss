@@ -1,7 +1,6 @@
 package com.zsgj.info.framework.workflow.impl;
 
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +18,7 @@ import org.hibernate.criterion.Restrictions;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.util.StringUtils;
 
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.framework.context.ContextHolder;
@@ -257,22 +257,6 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		return mailSender;
 	}
 
-//	public void saveRecordTaskMessage(Long vProcess,Long nodeId ,Long processInstanceId,TaskInstance ti,String vProcessName,String dataId,String nodeName,String nodeDesc) {
-//		
-//		if(ti!=null&&!"".equals(ti)){
-//			WorkflowRecordTaskInfo recordTask = new WorkflowRecordTaskInfo();
-//			recordTask.setVirtualProcessId(vProcess);
-//			recordTask.setNodeId(nodeId);
-//			recordTask.setProcessInstanceId(processInstanceId);
-//			recordTask.setTaskId(ti.getId());
-//			recordTask.setDataId(Long.valueOf(dataId));
-//			recordTask.setVirtualProcessName(vProcessName);
-//			recordTask.setNodeDesc(nodeDesc);
-//			recordTask.setNodeName(nodeName);
-//			super.save(recordTask);
-//		}
-//		
-//	}
 	public void saveRecordTaskMessage(Long vProcess,Long nodeId ,Long processInstanceId,TaskInstance ti,String vProcessName,String dataId,String nodeName,String nodeDesc,String[] auditUserInfos,String processCreator) {
 			
 			if(ti!=null&&!"".equals(ti)){
@@ -366,212 +350,6 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		return realName;
 	}
 	
-	
-	/**
-	 * 组装HTML邮件发送
-	 * @Methods Name htmlContent
-	 * @Create In 2009-7-17 By guangsa
-	 * @param order
-	 * @param opl
-	 * @return String
-	 */
-	public String htmlContent(String nodeName,String pageUrl,String applyType,String dataId, String reqClass,
-			String goStartState, Long taskId, String creator, String vDesc,
-			List auditHis,String hurryFlag,boolean browsePerson) {
-		//add by guangsa for 查看人标识 in 20090824 begin
-		String browseFlag = "";
-		if(browsePerson){//是查看人
-			browseFlag = "1";
-		}
-		String reqFlag = "";
-		if("1".equals(hurryFlag)){
-			reqFlag = "加急";
-		}
-		//add by guangsa for 查看人标识 in 20090824 end
-		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		sb
-				.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		sb.append("<html>");
-		sb.append("	<head>");
-		sb.append("		<title>PO Details</title>");
-
-		sb.append("		<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
-		sb.append("		<meta http-equiv=\"description\" content=\"this is my page\">");
-		sb.append("		<meta http-equiv=\"content-type\" content=\"text/plain; charset=GBK\">");
-
-		sb.append("		<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
-		sb.append("		<style type=\"text/css\">");
-		sb.append("		<!--");
-		sb.append("		.STYLE1 {");
-		sb.append("			font-size: 24px;");
-		sb.append("			font-weight: bold;");
-		sb.append("		}");
-		sb.append("		-->");
-		sb.append("		</style>");
-		sb.append("	</head>");
-
-		sb.append("	<body>");
-		sb.append("		<div align=\"center\">");
-		sb.append("			<table width=\"1000\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
-		sb.append("				<tr>");
-		sb.append("					<td height=\"29\" colspan=\"3\" nowrap><div align=\"center\" class=\"STYLE1\">邮件通知</div></td>");
-		sb.append("				</tr>");
-		sb.append("				<tr>");
-		sb.append("					<td ><div align=\"left\"><strong>提交人:</strong></div>"+creator+"提交了"+reqFlag+vDesc +",请审批！"+"</td>");
-		sb.append("				</tr>");
-		sb.append("				<tr>");
-		sb.append("					<td align=\"left\">"+"点击此链接，查看仔细并请审批！链接：");///infoAdmin/workflow/configPage/defaultPageModel.jsp///nodeName
-		sb.append("				"+"<a href=" + PropertiesUtil.getProperties("system.web.url","localhost:8080") + "/infoAdmin/workflow/configPage/auditFromMail.jsp?"+"taskId="+taskId+"&dataId="+dataId+"&goStartState="+goStartState+"&taskName="+"&applyType="+applyType+"&browseFlag="+browseFlag+">"+"审批链接</a>"+"</td>");
-		sb.append("				</tr>");
-		if(auditHis!=null&&!"".equals(auditHis)){
-			for (int i=0;i<auditHis.size();i++) {
-				BeanWrapper baseObjectWrapper = new BeanWrapperImpl(auditHis.get(i));
-				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
-				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
-				if(user!=null){
-				String userName = user.getRealName();
-				String auditMeg = nodeMeg+"(节点)"+userName+"审批通过!  ;";
-	        	sb.append("				 <tr>");
-	        	sb.append("					<td><div align=\"left\">" + auditMeg + "</div></td>");
-	        	sb.append("				 </tr>");
-				}
-	        }
-		}
-		sb.append("			</table>");
-		sb.append("		</div>");
-		sb.append("	</body>");
-		sb.append("</html>");
-
-		return sb.toString();
-	}
-	
-	/**
-	 * 组装HTML邮件发送 ITIL专用
-	 * @Methods Name htmlContent
-	 * @Create In 2009-11-30 By gaowen
-	 * @param nodeName 节点名称
-	 * @param creatorMeg 提交申请人
-	 * @param userInfo 该环节审批人
-	 * @return String
-	 */
-	public String htmlContent(String nodeName,String pageUrl,String applyType,String dataId, String reqClass,
-			String goStartState, Long taskId, UserInfo creatorMeg, String vDesc,
-			List auditHis,String hurryFlag,boolean browsePerson,UserInfo userInfo) {
-		String browseFlag = "";
-		if(browsePerson){//是查看人
-			browseFlag = "1";
-		}
-		String reqFlag = "";
-		if("1".equals(hurryFlag)){
-			reqFlag = "  --  "+"<font color=red><B>'加急'</B></font>"+"  --  ";
-		}
-		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date(); 
-		String dateString  = dateFormat.format(date);
-		sb
-				.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		sb.append("<html>");
-		sb.append("	<head>");
-		sb.append("		<title>PO Details</title>");
-
-		sb.append("		<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
-		sb.append("		<meta http-equiv=\"description\" content=\"this is my page\">");
-		sb.append("		<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
-
-		sb.append("		<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
-		sb.append("<style type=\"text/css\">");
-
-		sb.append("<!--");
-		sb.append(".STYLE1 {");
-		sb.append("font-size: 14px;");
-		sb.append("line-height:20px;");
-		sb.append("}");
-		sb.append(".STYLE2 {");
-		sb.append("font-family:'楷体';");
-		sb.append("font-size: 14px;");
-		sb.append("}");
-		sb.append("-->");
-		sb.append("</style>");
-		sb.append("	</head>");
-
-		sb.append("	<body>");
-		sb.append("		<div align=\"center\">");
-		sb.append("			<table width=\"900\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
-		sb.append("				<tr>");
-		sb.append("					<td height=\"29\" colspan=\"3\" nowrap><div align=\"center\" class=\"STYLE1\"><h3>邮件通知</h3></div></td>");
-		sb.append("				</tr>");
-		sb.append("				<tr>");
-		sb.append("                <td class=\"STYLE1\">尊敬的"+userInfo.getRealName()+"/"+userInfo.getUserName()+"，您好:</td>");
-		sb.append("				</tr>");
-		sb.append("				 <br>");
-		sb.append("				<tr>");
-		sb.append("             <td class=\"STYLE1\" style=\"padding-left:2em\">");
-		sb.append("				"+creatorMeg.getRealName()+"/"+creatorMeg.getUserName()+"提交了"+reqFlag+vDesc +"，<a href=" + PropertiesUtil.getProperties("system.web.url","localhost:8080") + "/infoAdmin/workflow/configPage/auditFromMail.jsp?"+"taskId="+taskId+"&dataId="+dataId+"&goStartState="+goStartState+"&taskName="+"&applyType="+applyType+"&browseFlag="+browseFlag+">"+"请点击链接审批。</a>"+"谢谢!</td>");
-		sb.append("				</tr>");
-		sb.append("<tr>");
-		sb.append("             <td class=\"STYLE1\" style=\"padding-left:2em\">");
-		sb.append("如果需要同时审批多个IT服务类申请，您可以直接访问"+"<a href=" + PropertiesUtil.getProperties("system.web.url","http://10.1.120.53/itil") +">"+"IT服务系统（ITSS）</a>"+"，减少您多次输入ITcode和ITpassword进行验证的过程。"); 
-		sb.append("</td>");	
-		sb.append("</tr>");
-	
-		sb.append("				 <tr>");
-    	sb.append("					<td><div class=\"STYLE1\" align=\"left\"><br>过程：</div></td>");
-    	sb.append("				 </tr>");
-		if(auditHis!=null&&!"".equals(auditHis)){
-			for (int i=0;i<auditHis.size();i++) {
-				BeanWrapper baseObjectWrapper = new BeanWrapperImpl(auditHis.get(i));
-				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
-				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
-				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-				String timeString  = dateFormats.format(approverDate);
-				String auditMeg=null;
-				if(user!=null){
-				String userName = user.getRealName();
-				if(nodeMeg.contains("提交")){
-					auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；";
-				}else{
-					auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；";
-				}
-		        sb.append("				 <tr>");
-	        	sb.append("					<td><div class=\"STYLE1\" align=\"left\">" + auditMeg + "</div></td>");
-	        	sb.append("				 </tr>");
-				}
-	        }
-		}
-		
-		sb.append("<tr>");
-		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@zsgj.com,或者拨打IT服务建议及投诉热线7888-0。"); 
-		sb.append("</td>");	
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append("<br>集团信息化管理部(神州数码IT)");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append(dateString);
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
-		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("			</table>");
-		sb.append("		</div>");
-		sb.append("	</body>");
-		sb.append("</html>");
-
-		return sb.toString();
-	}
-	
 	/**
 	 * 组装HTML邮件发送 ITIL专用
 	 * @Methods Name htmlContent
@@ -587,8 +365,7 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 			List auditHis,String hurryFlag,boolean browsePerson,UserInfo userInfo) {
 		Service service = (Service) ContextHolder.getBean("baseService");
 		VirtualDefinitionInfo vd = (VirtualDefinitionInfo) service.findUnique(
-				VirtualDefinitionInfo.class, "id", Long
-						.valueOf(556));//virProID ,  Test:556
+				VirtualDefinitionInfo.class, "id",  virProID);//virProID ,  Test:556
 		java.sql.Clob emailTpl = vd.getEmailTemplate();
 		String emailTplStr = "";
 		try {
@@ -610,8 +387,7 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		if("1".equals(hurryFlag)){
 			reqFlag = "  --  "+"<font color=red><B>'加急'</B></font>"+"  --  ";
 		}
-		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -634,7 +410,7 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 				}
 	        }
 		}
-		Map m = new HashMap<String,String>();
+		Map<String, String> m = new HashMap<String,String>();
 		m.put("[UserName]", userInfo.getRealName()+"/"+userInfo.getUserName());
 		m.put("[AppUserName]", creatorMeg.getRealName()+"/"+creatorMeg.getUserName());
 		m.put("[AppDesc]", reqFlag+vDesc);
@@ -642,11 +418,91 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		m.put("[AccessService]", "<a href=" + PropertiesUtil.getProperties("system.web.url","http://10.1.120.53/itil") +">"+"IT服务系统（ITSS）</a>");
 		m.put("[ProcessList]", auditMeg);
 		m.put("[Date]", dateString);
-		m.put("[Department]", "中商国际");
+		m.put("[Department]", PropertiesUtil.getProperties("system.dept.rootdepttext","上品折扣") + "IT");
 		
 		for(Iterator it=m.keySet().iterator();it.hasNext();){
 			String ele = (String)it.next();
-			email_real_str = email_real_str.replace(ele,(String)m.get(ele));
+			//email_real_str = email_real_str.replace(ele,(String)m.get(ele));
+			StringUtils.replace(email_real_str, ele, (String)m.get(ele));
+		}
+		
+		return email_real_str.toString();
+	}
+	
+	/**
+	 * 组装HTML邮件发送 ITIL专用
+	 * @Methods Name htmlContent
+	 * @Create In 2009-11-30 By Kanglei
+	 * @param nodeName 节点名称
+	 * @param creatorMeg 提交申请人
+	 * @param userInfo 该环节审批人
+	 * @param virProID 虚拟流程定义ID
+	 * @return String
+	 */
+	public String htmlContent(long virProID,String nodeName,String pageUrl,String applyType,String dataId, String reqClass,
+			String goStartState, Long taskId, UserInfo creatorMeg, String vDesc,
+			List auditHis,String hurryFlag,boolean browsePerson,String userInfo) {
+		Service service = (Service) ContextHolder.getBean("baseService");
+		VirtualDefinitionInfo vd = (VirtualDefinitionInfo) service.findUnique(
+				VirtualDefinitionInfo.class, "id",  virProID);//virProID ,  Test:556
+		java.sql.Clob emailTpl = vd.getEmailTemplate();
+		String emailTplStr = "";
+		try {
+			emailTplStr = emailTpl==null?"":(emailTpl.getSubString(1, (int)emailTpl.length()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] strArry = emailTplStr.split(";");
+		String email_real_str ="";
+		for(int i=0;i<strArry.length;i++){
+			String tmp = strArry[i].replace("&#", "");
+			email_real_str += (char)Integer.valueOf(tmp).intValue();
+		}
+		String browseFlag = "";
+		if(browsePerson){//是查看人
+			browseFlag = "1";
+		}
+		String reqFlag = "";
+		if("1".equals(hurryFlag)){
+			reqFlag = "  --  "+"<font color=red><B>'加急'</B></font>"+"  --  ";
+		}
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date(); 
+		String dateString  = dateFormat.format(date);
+		String auditMeg = "";
+		if(auditHis!=null&&!"".equals(auditHis)){
+			for (int i=0;i<auditHis.size();i++) {
+				BeanWrapper baseObjectWrapper = new BeanWrapperImpl(auditHis.get(i));
+				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
+				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
+				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
+				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+				String timeString  = dateFormats.format(approverDate);
+				if(user!=null){
+					String userName = user.getRealName();
+					if(nodeMeg.contains("提交")){
+						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；";
+					}else{
+						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；";
+					}
+				}
+	        }
+		}
+		Map<String, String> m = new HashMap<String,String>();
+		m.put("[UserName]", userInfo);
+		m.put("[AppUserName]", creatorMeg.getRealName()+"/"+creatorMeg.getUserName());
+		m.put("[AppDesc]", reqFlag+vDesc);
+		m.put("[ApproveAction]", "，<a href=" + PropertiesUtil.getProperties("system.web.url","localhost:8080") + "/infoAdmin/workflow/configPage/auditFromMail.jsp?"+"taskId="+taskId+"&dataId="+dataId+"&goStartState="+goStartState+"&taskName="+"&applyType="+applyType+"&browseFlag="+browseFlag+">"+"请点击链接审批。</a>");
+		m.put("[AccessService]", "<a href=" + PropertiesUtil.getProperties("system.web.url","http://10.1.120.53/itil") +">"+"IT服务系统（ITSS）</a>");
+		m.put("[ProcessList]", auditMeg);
+		m.put("[Date]", dateString);
+		m.put("[Department]", PropertiesUtil.getProperties("system.dept.rootdepttext","上品折扣") + "IT");
+		
+		for(Iterator it=m.keySet().iterator();it.hasNext();){
+			String ele = (String)it.next();
+			//email_real_str = email_real_str.replace(ele,(String)m.get(ele));
+			StringUtils.replace(email_real_str, ele, (String)m.get(ele));
 		}
 		
 		return email_real_str.toString();

@@ -42,9 +42,14 @@ public class DefaultContextLoaderListener extends ContextLoaderListener {
 		if(debug.equals("false")){
 			ContextHolder.getInstance().getRuleBase();
 		}
+
 		AcegiCacheService acegiCacheMng = (AcegiCacheService)context.getBean("acegiCacheService");
-//		acegiCacheMng.initUserCache();
-		acegiCacheMng.initResourceCache();		
+		if(!"false".equalsIgnoreCase(PropertiesUtil.getProperties("system.security.isUserCache", "false"))){
+			acegiCacheMng.initUserCache();
+		}
+		if(!"false".equalsIgnoreCase(PropertiesUtil.getProperties("system.security.isResourceCache", "false"))){
+			acegiCacheMng.initResourceCache();	
+		}
 	}
 
 
