@@ -3,7 +3,6 @@ package com.zsgj.itil.account.action;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +22,6 @@ import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.ProcessService;
-import com.zsgj.info.framework.workflow.info.HistoryInfo;
 import com.zsgj.info.framework.workflow.info.TaskInfo;
 import com.zsgj.itil.account.service.AccountService;
 import com.zsgj.itil.require.entity.AccountApplyMainTable;
