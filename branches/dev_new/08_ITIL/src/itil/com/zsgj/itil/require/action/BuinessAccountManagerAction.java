@@ -29,6 +29,7 @@ import com.zsgj.info.framework.workflow.info.TaskInfo;
 import com.zsgj.itil.require.entity.BusinessAccount;
 import com.zsgj.itil.require.entity.SpecialRequirement;
 
+@SuppressWarnings("serial")
 public class BuinessAccountManagerAction extends BaseAction{
 	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService)ContextHolder.getBean("parameterService");
