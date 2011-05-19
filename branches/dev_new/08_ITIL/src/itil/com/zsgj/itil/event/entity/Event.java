@@ -43,9 +43,7 @@ public class Event extends BaseObject {
 	
 	private EventStatus eventStatus; //事件状态
 	
-	private EventViewFlag userViewFlag; //查看标记
-	
-	private Integer userViewFlag_$$$$; //是否所有人可见，后台配置成是否列表 
+	private EventViewFlag userViewFlag; //查看标记,是否所有人可见，后台配置成是否列表 
 	
 	private Integer selfResolveFlag; //自解决标记,1为自解决
 	
