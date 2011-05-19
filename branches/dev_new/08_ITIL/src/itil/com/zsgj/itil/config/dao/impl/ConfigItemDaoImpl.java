@@ -545,9 +545,15 @@ public class ConfigItemDaoImpl extends BaseDao implements ConfigItemDao {
 	    StringBuilder countString=new StringBuilder();
 	    countString.append("select count(*) ");
 	    countString.append(from);
-		Integer count=(Integer) getSession().createSQLQuery(countString.toString())
+	    
+	    //modifid by awen for system db change from SQLServer to MYSQL so sql cout(*) operations need to change on2011-05-18 begin
+		/*Integer count=(Integer) getSession().createSQLQuery(countString.toString())
 		.setParameters(values.toArray(), types.toArray(typesArray))
-		.uniqueResult();
+		.uniqueResult();*/
+	    Long count=((java.math.BigInteger) getSession().createSQLQuery(countString.toString())
+	    		.setParameters(values.toArray(), types.toArray(typesArray))
+	    		.uniqueResult()).longValue();
+	    //modifid by awen for system db change from SQLServer to MYSQL so sql cout(*) operations need to change on2011-05-18 end
 		return new Page(start,count,pageSize,rels);
 	}
 	public Page selectRelList(String itemCode,List<String> ignoreCode, int pageNo, int pageSize) {
@@ -1311,81 +1317,81 @@ public class ConfigItemDaoImpl extends BaseDao implements ConfigItemDao {
 		hqlSelect.append("    + '->' END AS necessaryRelation,   ");
 		hqlSelect.append("   parentOrChildType  AS necessaryRelationType  ");
 		
-		hqlFrom.append(" FROM (SELECT dbo.ConfigItemNecessaryRel.configItemType AS configItemType,   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.parentOrChildType AS parentOrChildType,   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.isOptional AS isOptional,   ");
-		hqlFrom.append("           dbo.ConfigItem.id AS configItemId,   ");
-		hqlFrom.append("           dbo.ConfigItem.name AS configItemName,   ");
-		hqlFrom.append("           dbo.ConfigItem.cisn AS configItemNum,   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.id AS configItemNecessaryId  ,dbo.ConfigItem.configItemStatus as configItemStatus");
-		hqlFrom.append("     FROM dbo.ConfigItemNecessaryRel INNER JOIN  ");
-		hqlFrom.append("           dbo.ConfigItem ON   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.configItemType = dbo.ConfigItem.configItemType AND  ");
+		hqlFrom.append(" FROM (SELECT ConfigItemNecessaryRel.configItemType AS configItemType,   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.parentOrChildType AS parentOrChildType,   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.isOptional AS isOptional,   ");
+		hqlFrom.append("           ConfigItem.id AS configItemId,   ");
+		hqlFrom.append("           ConfigItem.name AS configItemName,   ");
+		hqlFrom.append("           ConfigItem.cisn AS configItemNum,   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.id AS configItemNecessaryId  ,ConfigItem.configItemStatus as configItemStatus");
+		hqlFrom.append("     FROM ConfigItemNecessaryRel INNER JOIN  ");
+		hqlFrom.append("           ConfigItem ON   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.configItemType = ConfigItem.configItemType AND  ");
 		hqlFrom.append("          ConfigItem.status = :configItemStatus1  LEFT OUTER JOIN  ");
-		hqlFrom.append("          dbo.CIRelationShip ON   ");
-		hqlFrom.append("          dbo.ConfigItem.cisn = dbo.CIRelationShip.parentConfigItemCode AND   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.otherConfigItemType = dbo.CIRelationShip.childConfigItemType  ");
+		hqlFrom.append("          CIRelationShip ON   ");
+		hqlFrom.append("          ConfigItem.cisn = CIRelationShip.parentConfigItemCode AND   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.otherConfigItemType = CIRelationShip.childConfigItemType  ");
 		hqlFrom.append("            AND CIRelationShip.status = :relationStatus1  ");
-		hqlFrom.append("     WHERE (dbo.CIRelationShip.id IS NULL) AND parentOrChildType = :parentOrChildType1 AND  "); 
+		hqlFrom.append("     WHERE (CIRelationShip.id IS NULL) AND parentOrChildType = :parentOrChildType1 AND  "); 
 		hqlFrom.append("            otherConfigItemType IS NOT NULL  ");
 		hqlFrom.append("   UNION  ");
-		hqlFrom.append("     SELECT dbo.ConfigItemNecessaryRel.configItemType AS configItemType,   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.parentOrChildType,   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.isOptional AS isOptional,   ");
-		hqlFrom.append("           dbo.ConfigItem.id AS configItemId,   ");
-		hqlFrom.append("           dbo.ConfigItem.name AS configItemName,   ");
-		hqlFrom.append("          dbo.ConfigItem.cisn AS configItemNum,   ");
-		hqlFrom.append("        dbo.ConfigItemNecessaryRel.id AS configItemNecessaryId  ,dbo.ConfigItem.configItemStatus");
-		hqlFrom.append("    FROM dbo.ConfigItemNecessaryRel INNER JOIN  ");
-		hqlFrom.append("          dbo.ConfigItem ON   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.configItemType = dbo.ConfigItem.configItemType AND  ");
+		hqlFrom.append("     SELECT ConfigItemNecessaryRel.configItemType AS configItemType,   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.parentOrChildType,   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.isOptional AS isOptional,   ");
+		hqlFrom.append("           ConfigItem.id AS configItemId,   ");
+		hqlFrom.append("           ConfigItem.name AS configItemName,   ");
+		hqlFrom.append("          ConfigItem.cisn AS configItemNum,   ");
+		hqlFrom.append("        ConfigItemNecessaryRel.id AS configItemNecessaryId  ,ConfigItem.configItemStatus");
+		hqlFrom.append("    FROM ConfigItemNecessaryRel INNER JOIN  ");
+		hqlFrom.append("          ConfigItem ON   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.configItemType = ConfigItem.configItemType AND  ");
 		hqlFrom.append("           ConfigItem.status = :configItemStatus2  LEFT OUTER JOIN  ");
-		hqlFrom.append("          dbo.CIRelationShip ON   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.otherConfigItemType = dbo.CIRelationShip.parentConfigItemType  ");
-		hqlFrom.append("          AND dbo.ConfigItem.cisn = dbo.CIRelationShip.childConfigItemCode AND   ");
+		hqlFrom.append("          CIRelationShip ON   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.otherConfigItemType = CIRelationShip.parentConfigItemType  ");
+		hqlFrom.append("          AND ConfigItem.cisn = CIRelationShip.childConfigItemCode AND   ");
 		hqlFrom.append("         CIRelationShip.status = :relationStatus2  ");
-		hqlFrom.append("    WHERE (dbo.CIRelationShip.id IS NULL) AND parentOrChildType = :parentOrChildType2 AND   ");
+		hqlFrom.append("    WHERE (CIRelationShip.id IS NULL) AND parentOrChildType = :parentOrChildType2 AND   ");
 		hqlFrom.append("           otherConfigItemType IS NOT NULL  ");
 		hqlFrom.append("   UNION  ");
-		hqlFrom.append("    SELECT dbo.ConfigItemNecessaryRel.configItemType AS configItemType,   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.parentOrChildType AS parentOrChildType,   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.isOptional AS isOptional,   ");
-		hqlFrom.append("           dbo.ConfigItem.id AS configItemId,   ");
-		hqlFrom.append("        dbo.ConfigItem.name AS configItemName,   ");
-		hqlFrom.append("         dbo.ConfigItem.cisn AS configItemNum,   ");
-		hqlFrom.append("         dbo.ConfigItemNecessaryRel.id AS configItemNecessaryId  ,dbo.ConfigItem.configItemStatus");
-		hqlFrom.append("     FROM dbo.ConfigItemNecessaryRel INNER JOIN  ");
-		hqlFrom.append("           dbo.ConfigItem ON   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.configItemType = dbo.ConfigItem.configItemType AND  ");
-		hqlFrom.append("            dbo.ConfigItem.status = :configItemStatus3  LEFT OUTER JOIN  ");
-		hqlFrom.append("           dbo.CIRelationShip ON   ");
-		hqlFrom.append("           dbo.ConfigItem.cisn = dbo.CIRelationShip.parentConfigItemCode AND   ");
-		hqlFrom.append("          dbo.CIRelationShip.status = :relationStatus3  ");
-		hqlFrom.append("      WHERE (dbo.CIRelationShip.id IS NULL) AND   ");
-		hqlFrom.append("          (dbo.ConfigItemNecessaryRel.parentOrChildType = :parentOrChildType3) AND   ");
-		hqlFrom.append("          (dbo.ConfigItemNecessaryRel.otherConfigItemType IS NULL)  ");
+		hqlFrom.append("    SELECT ConfigItemNecessaryRel.configItemType AS configItemType,   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.parentOrChildType AS parentOrChildType,   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.isOptional AS isOptional,   ");
+		hqlFrom.append("           ConfigItem.id AS configItemId,   ");
+		hqlFrom.append("        ConfigItem.name AS configItemName,   ");
+		hqlFrom.append("         ConfigItem.cisn AS configItemNum,   ");
+		hqlFrom.append("         ConfigItemNecessaryRel.id AS configItemNecessaryId  ,ConfigItem.configItemStatus");
+		hqlFrom.append("     FROM ConfigItemNecessaryRel INNER JOIN  ");
+		hqlFrom.append("           ConfigItem ON   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.configItemType = ConfigItem.configItemType AND  ");
+		hqlFrom.append("            ConfigItem.status = :configItemStatus3  LEFT OUTER JOIN  ");
+		hqlFrom.append("           CIRelationShip ON   ");
+		hqlFrom.append("           ConfigItem.cisn = CIRelationShip.parentConfigItemCode AND   ");
+		hqlFrom.append("          CIRelationShip.status = :relationStatus3  ");
+		hqlFrom.append("      WHERE (CIRelationShip.id IS NULL) AND   ");
+		hqlFrom.append("          (ConfigItemNecessaryRel.parentOrChildType = :parentOrChildType3) AND   ");
+		hqlFrom.append("          (ConfigItemNecessaryRel.otherConfigItemType IS NULL)  ");
 		hqlFrom.append("    UNION  ");
-		hqlFrom.append("      SELECT dbo.ConfigItemNecessaryRel.configItemType AS configItemType,   ");
-		hqlFrom.append("          dbo.ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
-		hqlFrom.append("        dbo.ConfigItemNecessaryRel.parentOrChildType AS parentOrChildType,   ");
-		hqlFrom.append("           dbo.ConfigItemNecessaryRel.isOptional AS isOptional,   ");
-		hqlFrom.append("           dbo.ConfigItem.id AS configItemId,   ");
-		hqlFrom.append("          dbo.ConfigItem.name AS configItemName,   ");
-		hqlFrom.append("          dbo.ConfigItem.cisn AS configItemNum,   ");
-		hqlFrom.append("         dbo.ConfigItemNecessaryRel.id AS configItemNecessaryId  ,dbo.ConfigItem.configItemStatus");
-		hqlFrom.append("    FROM dbo.ConfigItemNecessaryRel INNER JOIN  ");
-		hqlFrom.append("          dbo.ConfigItem ON   ");
-		hqlFrom.append("         dbo.ConfigItemNecessaryRel.configItemType = dbo.ConfigItem.configItemType AND  ");
-		hqlFrom.append("          dbo.ConfigItem.status = :configItemStatus4  LEFT OUTER JOIN  ");
-		hqlFrom.append("            dbo.CIRelationShip ON   ");
-		hqlFrom.append("         dbo.ConfigItem.cisn = dbo.CIRelationShip.childConfigItemCode AND   ");
-		hqlFrom.append("           dbo.CIRelationShip.status = :relationStatus4  ");
-		hqlFrom.append("    WHERE (dbo.CIRelationShip.id IS NULL) AND   ");
-		hqlFrom.append("         (dbo.ConfigItemNecessaryRel.parentOrChildType = :parentOrChildType4) AND   ");
-		hqlFrom.append("         (dbo.ConfigItemNecessaryRel.otherConfigItemType IS NULL))   ");
+		hqlFrom.append("      SELECT ConfigItemNecessaryRel.configItemType AS configItemType,   ");
+		hqlFrom.append("          ConfigItemNecessaryRel.otherConfigItemType AS otherConfigItemType,   ");
+		hqlFrom.append("        ConfigItemNecessaryRel.parentOrChildType AS parentOrChildType,   ");
+		hqlFrom.append("           ConfigItemNecessaryRel.isOptional AS isOptional,   ");
+		hqlFrom.append("           ConfigItem.id AS configItemId,   ");
+		hqlFrom.append("          ConfigItem.name AS configItemName,   ");
+		hqlFrom.append("          ConfigItem.cisn AS configItemNum,   ");
+		hqlFrom.append("         ConfigItemNecessaryRel.id AS configItemNecessaryId  ,ConfigItem.configItemStatus");
+		hqlFrom.append("    FROM ConfigItemNecessaryRel INNER JOIN  ");
+		hqlFrom.append("          ConfigItem ON   ");
+		hqlFrom.append("         ConfigItemNecessaryRel.configItemType = ConfigItem.configItemType AND  ");
+		hqlFrom.append("          ConfigItem.status = :configItemStatus4  LEFT OUTER JOIN  ");
+		hqlFrom.append("            CIRelationShip ON   ");
+		hqlFrom.append("         ConfigItem.cisn = CIRelationShip.childConfigItemCode AND   ");
+		hqlFrom.append("           CIRelationShip.status = :relationStatus4  ");
+		hqlFrom.append("    WHERE (CIRelationShip.id IS NULL) AND   ");
+		hqlFrom.append("         (ConfigItemNecessaryRel.parentOrChildType = :parentOrChildType4) AND   ");
+		hqlFrom.append("         (ConfigItemNecessaryRel.otherConfigItemType IS NULL))   ");
 		hqlFrom.append("  data1 LEFT OUTER JOIN  ");
 		hqlFrom.append("  CIRelationShip CIR1 ON data1.configItemType <> :configItemType1 AND data1.configItemType <> :configItemType2 AND data1.configItemNum = CIR1.parentConfigItemCode AND   ");
 		hqlFrom.append("   CIR1.childConfigItemType = :configItemType3 AND CIR1.parentConfigItemCode IS NOT NULL   ");
@@ -1395,8 +1401,8 @@ public class ConfigItemDaoImpl extends BaseDao implements ConfigItemDao {
 		hqlFrom.append("   ConfigItemType configItemType1 ON   ");
 		hqlFrom.append("  data1.configItemType = configItemType1.id LEFT OUTER JOIN  ");
 		hqlFrom.append("  ConfigItemType configItemType2 ON data1.otherConfigItemType = configItemType2.id   inner JOIN ");
-		hqlFrom.append("  dbo.ConfigItemStatus ON ");
-		hqlFrom.append("  data1.configItemStatus = dbo.ConfigItemStatus.id AND dbo.ConfigItemStatus.enname not in ( :standby, :disabled , :archived , :loan) ");
+		hqlFrom.append("  ConfigItemStatus ON ");
+		hqlFrom.append("  data1.configItemStatus = ConfigItemStatus.id AND ConfigItemStatus.enname not in ( :standby, :disabled , :archived , :loan) ");
 		hqlFrom.append("  where 1=1 ");
 		propertys.put("relationStatus1", CIRelationShip.VALID_STATUS);
 		propertys.put("relationStatus2", CIRelationShip.VALID_STATUS);
@@ -1461,7 +1467,7 @@ public class ConfigItemDaoImpl extends BaseDao implements ConfigItemDao {
 										.setProperties(propertys)
 										.list();
 			StringBuilder hqlCount = new StringBuilder("select count(*) ");
-			Integer count = (Integer)getSession().createSQLQuery(hqlCount.append(hqlFrom).toString()).setProperties(propertys).uniqueResult();			
+			Long count = ((java.math.BigInteger)getSession().createSQLQuery(hqlCount.append(hqlFrom).toString()).setProperties(propertys).uniqueResult()).longValue();			
 			return new Page(start,count.longValue(),pageSize,dataList);
 		
 	}

@@ -1,6 +1,7 @@
 package com.zsgj.itil.service.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1031,7 +1032,10 @@ public class SCIRelationShipServiceImpl extends BaseDao implements
 		List<SCIRelationShip> myShips = new ArrayList<SCIRelationShip>();
 		List<Long> custIds = customerDao.findCustIdsByUser(userInfo);
 		List<ServiceCatalogue> rootServiceCatalogues = sciRelationShipDao.findRootServiceCatalogueByCust(custIds,userInfo);
-		List<SCIRelationShip> allShip = sciRelationShipDao.getShipsByServiceType(serviceType, rootServiceCatalogues);
+		//modify by awen for conditon judgement on2011-05-18 begin
+		//List<SCIRelationShip> allShip = sciRelationShipDao.getShipsByServiceType(serviceType, rootServiceCatalogues);
+		List<SCIRelationShip> allShip = (rootServiceCatalogues==null || rootServiceCatalogues.size()==0) ? Collections.<SCIRelationShip>emptyList() : sciRelationShipDao.getShipsByServiceType(serviceType, rootServiceCatalogues);
+		//modify by awen for conditon judgement on2011-05-18 enf
 		Map<ServiceItem,Map<Long,SCIRelationShip>> map = new HashMap<ServiceItem,Map<Long,SCIRelationShip>>();
 		for(SCIRelationShip ship : allShip){
 			ServiceItem curSi = ship.getServiceItem();
@@ -1071,8 +1075,16 @@ public class SCIRelationShipServiceImpl extends BaseDao implements
 		try {
 			List<SCIRelationShip> myShips = new ArrayList<SCIRelationShip>();
 			List<Long> custIds = customerDao.findCustIdsByUser(userInfo);
-			List<ServiceCatalogue> rootServiceCatalogues = sciRelationShipDao.findRootServiceCatalogueByCust(custIds,userInfo);
-			List<SCIRelationShip> allShip = sciRelationShipDao.getShipsByServiceType(serviceItemName , serviceItemType , serviceType, rootServiceCatalogues );
+			
+			//modify by awen for add conditon judgement on 2011-05-18 begin
+			
+			//List<ServiceCatalogue> rootServiceCatalogues = sciRelationShipDao.findRootServiceCatalogueByCust(custIds,userInfo);
+			List<ServiceCatalogue> rootServiceCatalogues = custIds!=null && custIds.size() > 0 ? sciRelationShipDao.findRootServiceCatalogueByCust(custIds,userInfo) : Collections.<ServiceCatalogue>emptyList();			
+			
+			//List<SCIRelationShip> allShip = sciRelationShipDao.getShipsByServiceType(serviceItemName , serviceItemType , serviceType, rootServiceCatalogues );
+			List<SCIRelationShip> allShip = rootServiceCatalogues!=null && rootServiceCatalogues.size()>0 ? sciRelationShipDao.getShipsByServiceType(serviceItemName , serviceItemType , serviceType, rootServiceCatalogues ) : Collections.<SCIRelationShip>emptyList();
+			
+			//modify by awen for add conditon judgement on 2011-05-18 end
 
 			Map<ServiceItem,Map<Long,SCIRelationShip>> map = new HashMap<ServiceItem,Map<Long,SCIRelationShip>>();
 			for(SCIRelationShip ship : allShip){

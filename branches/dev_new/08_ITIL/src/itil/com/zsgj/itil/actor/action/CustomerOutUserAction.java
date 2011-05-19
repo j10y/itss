@@ -532,7 +532,9 @@ public class CustomerOutUserAction extends BaseDispatchAction{
 			String name = dept.getDepartName();
 			json += "{\"id\":"+id+",\"name\":\""+name+"\"},";
 		}
-		json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		//json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		json = "{data:[" + (json.length()>1 ? json.substring(0, json.length()-1) : "") + "]}";
+		//modified by awen for add json length judgement on 2011-05-18 end
 		System.out.println("创建用户时,发往前台的部门数据： "+json);
 		try {
 			httpServletResponse.setCharacterEncoding("gbk");

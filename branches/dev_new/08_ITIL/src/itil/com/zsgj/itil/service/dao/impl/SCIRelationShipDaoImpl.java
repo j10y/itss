@@ -1,6 +1,7 @@
 package com.zsgj.itil.service.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.zsgj.info.framework.dao.BaseDao;
-import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.util.DateUtil;
 import com.zsgj.itil.actor.entity.CustomerType;
@@ -26,6 +26,11 @@ import com.zsgj.itil.service.entity.ServiceType;
 public class SCIRelationShipDaoImpl extends BaseDao implements SCIRelationShipDao{
 	
 	public List<ServiceCatalogue> findRootServiceCatalogueByCust(List<Long> custIds,UserInfo userInfo) {
+		
+		//add by awen for add condition judgement on 2011-05-18 begin
+		if(custIds==null || custIds.size()<=0) return Collections.<ServiceCatalogue>emptyList();
+		//add by awen for add condition judgement on 2011-05-18 end
+		
 		Integer externalFlag = userInfo.getExternalFlag();
 		CustomerType customerType = null;
 		if(externalFlag==null||externalFlag.intValue()==0){

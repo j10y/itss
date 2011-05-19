@@ -80,7 +80,7 @@
 					method : 'post',
 					scope : this
 					}
-	            },
+	            }/*,
 	            {title: '我的WWW费用',
 	            autoLoad : {
 					url : webContext + "/tabFrame.jsp?url=" + webContext
@@ -89,7 +89,7 @@
 					method : 'post',
 					scope : this
 					}
-	            }
+	            }*/
 	                     	            	            	            
 	        ]
     	});

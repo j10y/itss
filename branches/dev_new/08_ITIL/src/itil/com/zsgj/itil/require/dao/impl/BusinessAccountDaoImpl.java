@@ -99,7 +99,14 @@ public class BusinessAccountDaoImpl extends BaseDao implements BusinessAccountDa
 		for (SRExpendPlan plan : expendPlans) {
 			requireSet.add(plan.getSpecialRequire().getId());// 放入未完成付款计划的需求
 		}
-
+		
+		//add by awen for add condition judgement on 2011-05-18 begin
+		//如果未完成收款计划的需求和未完成付款计划的需求总数为0，那么返回空
+		if(requireSet.size()<=0){
+			return new Page();
+		}
+		//add by awen for add condition judgement on 2011-05-18 end
+		
 		Criteria c = super.getCriteria(SpecialRequirement.class);
 		if (StringUtils.isNotBlank(name)) {
 			c.add(Restrictions.ilike("name", name, MatchMode.ANYWHERE));

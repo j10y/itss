@@ -302,7 +302,10 @@ public class TrainPlanAction extends BaseAction{
 
 //			json += "{\"code\":"+id+",\"name\":\""+name+"\"},";
 			}
-			json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+			//modified by awen for add json length jud
+			//json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+			json = "{data:[" + (json.length()>1 ? json.substring(0, json.length()-1) : "") + "]}";
+			//modified by awen for add json length judgement on 2011-05-18 end
 			System.out.println(json);
 			try {			
 				super.getResponse().setCharacterEncoding("utf-8");
@@ -884,7 +887,10 @@ public class TrainPlanAction extends BaseAction{
 			String name2 = surveyType.getName();
 			json += "{\"code\":"+code+",\"name2\":\""+name2+"\"},";
 		}
-		json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		//modified by awen for add json length judgement on 2011-05-18 begin
+		//json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		json = "{data:[" + (json.length()>1 ? json.substring(0, json.length()-1) : "") + "]}";
+		//modified by awen for add json length judgement on 2011-05-18 end
 		System.out.println(json);
 		try {			
 			super.getResponse().setCharacterEncoding("utf-8");
@@ -913,7 +919,10 @@ public class TrainPlanAction extends BaseAction{
 			String answerNo = questOption.getAnswerNo();
 			json += "{\"id\":"+id+",\"content\":\""+content+"\",\"answerNo\":\""+answerNo+"\"},";
 		}
-		json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		//modified by awen for add json length judgement on 2011-05-18 begin
+		//json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		json = "{data:[" + (json.length()>1 ? json.substring(0, json.length()-1) : "") + "]}";
+		//modified by awen for add json length judgement on 2011-05-18 end
 		System.out.println(json);
 		try {			
 			super.getResponse().setCharacterEncoding("utf-8");
