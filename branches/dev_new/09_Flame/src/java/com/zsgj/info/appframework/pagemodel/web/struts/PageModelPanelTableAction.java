@@ -12,27 +12,21 @@ import org.apache.struts.action.ActionMapping;
 
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.TableSettingType;
-import com.zsgj.info.appframework.metadata.service.SystemColumnService;
-import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
-import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.appframework.pagemodel.entity.PageModelPanelTable;
-import com.zsgj.info.appframework.pagemodel.service.PageModelPanelService;
 import com.zsgj.info.appframework.pagemodel.service.PageModelService;
-import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
 import com.zsgj.info.framework.security.entity.Module;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 
 public class PageModelPanelTableAction extends BaseDispatchAction{
 	
-	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
-	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
-	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
+//	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
+//	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	private PageModelService pms = (PageModelService) getBean("pageModelService");
-	private PagePanelService pps = (PagePanelService) getBean("pagePanelService");
-	private PageModelPanelService pmps = (PageModelPanelService) getBean("pageModelPanelService");
+//	private PagePanelService pps = (PagePanelService) getBean("pagePanelService");
+//	private PageModelPanelService pmps = (PageModelPanelService) getBean("pageModelPanelService");
 //	private CustomerTableService cts = (CustomerTableService) getBean("customerTableService");
 	
 	public ActionForward toForm(ActionMapping mapping ,ActionForm form ,

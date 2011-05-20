@@ -21,12 +21,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-//import com.digitalchina.info.appframework.metadata.entity.SystemMainTableExtColumn;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.entity.TableSettingType;
-import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.appframework.pagemodel.entity.PageGroupPanelTable;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
@@ -36,8 +34,6 @@ import com.zsgj.info.appframework.pagemodel.entity.PagePanelTable;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelTableRelation;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelType;
 import com.zsgj.info.appframework.pagemodel.service.PageGroupPanelService;
-import com.zsgj.info.appframework.pagemodel.service.PageModelPanelService;
-import com.zsgj.info.appframework.pagemodel.service.PageModelService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelRelationService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
 import com.zsgj.info.framework.dao.support.Page;
@@ -51,12 +47,12 @@ import com.zsgj.info.framework.web.json.JsonUtil;
 public class PageGroupPanelAction extends BaseDispatchAction{
 
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
-	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private PageModelService pms = (PageModelService) getBean("pageModelService");
+//	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
+//	private PageModelService pms = (PageModelService) getBean("pageModelService");
 	private PagePanelService pps = (PagePanelService) getBean("pagePanelService");
 	private PageGroupPanelService pgps = (PageGroupPanelService) getBean("pageGroupPanelService");
 	private PagePanelRelationService pprs = (PagePanelRelationService) getBean("pagePanelRelationService");
-	private PageModelPanelService pmps = (PageModelPanelService) getBean("pageModelPanelService");
+//	private PageModelPanelService pmps = (PageModelPanelService) getBean("pageModelPanelService");
 	
 	public ActionForward list(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
@@ -95,6 +91,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 		return mapping.findForward("listPageGroupPanel");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward toPageGroupPanelEditForm(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -153,6 +150,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward findTableByModule(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -290,6 +288,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 	 * @return null
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward mainTableList(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -375,6 +374,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward loadPagePanel(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -497,11 +497,11 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 		PagePanel pagePanel = ppr.getPagePanel();
 		
 		PagePanelType ppt = (PagePanelType)pagePanel.getXtype();
-		Long pid = pagePanel.getXtype().getId();
-		Long id = ppt.getId();
+//		Long pid = pagePanel.getXtype().getId();
+//		Long id = ppt.getId();
 		String typeName = ppt.getCnName();
 		
-		Long panelId = pagePanel.getId();
+//		Long panelId = pagePanel.getId();
 		String json = "";
 		json += "{\"display\":"+display+",\"onlyRead\":"+onlyRead+",\"title\":"+title+",\"typeName\":\""+typeName+"\"}";
 		//System.out.println("json:"+json);
@@ -526,6 +526,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 	 * @param response
 	 * @return ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward idDisplayByPagePanel(ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request,HttpServletResponse response){		
 		List isDisplay = new ArrayList();
@@ -558,6 +559,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 	 * @param response
 	 * @return ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward isTitleDisplayByPagePanel(ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request,HttpServletResponse response){
 		List isDisplay = new ArrayList();
@@ -590,6 +592,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 	 * @param response
 	 * @return ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward idreadonlyByPagePanel(ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request,HttpServletResponse response){
 		List isDisplay = new ArrayList();
@@ -628,7 +631,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 		//System.out.println(request.getCharacterEncoding());
 		//System.out.println(HttpUtil.GBKtoUTF8(request.getParameter("readonly"))); 
 		//PagePanelType xtypeEntity = (PagePanelType)super.getService().findUnique(PagePanelType.class, "cnName", HttpUtil.GBKtoUTF8(request.getParameter("type")));
-		String json = "{success:true}";		
+//		String json = "{success:true}";		
 		String pagePanelRelationId = request.getParameter("panelId");		
 		String modifyDis =request.getParameter("display");
 		String modifyTypeId = request.getParameter("typeId");//xtypeEntity.getId()+"";		
@@ -991,6 +994,7 @@ public class PageGroupPanelAction extends BaseDispatchAction{
 		return null;
 		
 	}
+	@SuppressWarnings("unchecked")
 	public ActionForward toPageGroupTableSave (ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request ,HttpServletResponse response ) throws UnsupportedEncodingException{
 				String ppId = HttpUtil.ConverUnicode(request.getParameter("ppId"));

@@ -22,14 +22,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-//import com.digitalchina.info.appframework.metadata.service.SystemExtColumnServcie;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.entity.TableSettingType;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
-import com.zsgj.info.appframework.metadata.service.SystemColumnService;
-import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
-import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.appframework.pagemodel.entity.PageGroupPanelTable;
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.appframework.pagemodel.entity.PageModelBtn;
@@ -50,7 +46,6 @@ import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.exception.ApplicationException;
 import com.zsgj.info.framework.security.entity.Module;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -59,10 +54,10 @@ import com.zsgj.info.framework.web.json.JsonUtil;
 public class PageModelAction extends BaseDispatchAction{
 	static final String FSP = System.getProperty("file.separator");
  
-	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
-	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
-	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
+//	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
+//	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 //	private SystemExtColumnServcie secs=(SystemExtColumnServcie)getBean("systemExtColumnService");
 	private PageModelService pms = (PageModelService) getBean("pageModelService");
 	private PagePanelService pps = (PagePanelService) getBean("pagePanelService");
@@ -90,7 +85,6 @@ public class PageModelAction extends BaseDispatchAction{
 		//我现在需要的是从根的下面开始写一直写到最后。
 		
 		PageModel model2 = pms.findPageModel$$$$$(keyName);
-		@SuppressWarnings("unused")
 		List<PageModelPanel> pmps2 = model2.getPagePanels();
 //		if(StringUtils.isNotBlank(dataId)&& !dataId.equals("0")){
 //			pmps2 = configItemService.findPageModelPanel(keyName, dataId);
@@ -131,10 +125,10 @@ public class PageModelAction extends BaseDispatchAction{
 		String fcolumnPropName = "";
 		String pcolumnPropName = "";
 		PagePanel panel = pmp.getPagePanel();
-		String panelName = panel.getName();
-		Long panelId= panel.getId();
-		PagePanel parent = pmp.getParentPagePanel();
-		Long parentId = parent.getId();
+//		String panelName = panel.getName();
+//		Long panelId= panel.getId();
+//		PagePanel parent = pmp.getParentPagePanel();
+//		Long parentId = parent.getId();
 		//程序进入此处，肯定是从分组面板进入的
 		List<PageGroupPanelTable> list2 = this.pgps.findGroupPanelTableBySub(pmp.getParentPagePanel(), panel);
 		PageGroupPanelTable pgpt = null;
@@ -204,15 +198,15 @@ public class PageModelAction extends BaseDispatchAction{
 					fcolumnPropName = subFc.getPropertyName();
 				}
 				//通过子面板和子面板主表获取关联表等信息
-				List<PageModelPanelMiddleTable>  pmpMiddts = this.pms.findPageModelPanelMiddleTableBySub(
-						pmp.getPageModel(), panel, subTable);
-				for(PageModelPanelMiddleTable pmpt : pmpMiddts){
+//				List<PageModelPanelMiddleTable>  pmpMiddts = this.pms.findPageModelPanelMiddleTableBySub(
+//						pmp.getPageModel(), panel, subTable);
+//				for(PageModelPanelMiddleTable pmpt : pmpMiddts){
 					//配置项面板
-					SystemMainTable middleTable = pmpt.getMiddleTable();
-					SystemMainTableColumn parentColumn = pmpt.getParentColumn();
+//					SystemMainTable middleTable = pmpt.getMiddleTable();
+//					SystemMainTableColumn parentColumn = pmpt.getParentColumn();
 					
 					
-				}
+//				}
 				
 			}
 			//System.out.println("panelname: "+ panel.getName());
@@ -480,7 +474,7 @@ public class PageModelAction extends BaseDispatchAction{
 	
 	public ActionForward modifyAndSavePanelMessage(ActionMapping mapping ,ActionForm actionForm,
 			HttpServletRequest request,HttpServletResponse response) throws IOException{
-		String json = "{success:true}";		
+//		String json = "{success:true}";		
 		String pagePanelId = request.getParameter("panelId");
 		String modifyDis =request.getParameter("display");
 		String modifyTypeId = request.getParameter("type");		
@@ -691,7 +685,7 @@ public class PageModelAction extends BaseDispatchAction{
 	 */
 	public ActionForward modifyButtonTypeByCustomer(ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request ,HttpServletResponse response ) throws UnsupportedEncodingException{
-		boolean marker = false;
+//		boolean marker = false;
 		String js = "";
 		String pageModelId = request.getParameter("ModelId");
 		String btnName = request.getParameter("btnName");
@@ -747,10 +741,10 @@ public class PageModelAction extends BaseDispatchAction{
 				btn.setOpenWinFlag(1);
 			}
 			//*******************************************************************************************************************
-			if(!pageModelName.equals("null")){
-				String nextPageModelId = pmps.findPageModelByRealName(pageModelName);
-				PageModel nextPageModel = pmps.findPageModelById(nextPageModelId);
-			}
+//			if(!pageModelName.equals("null")){
+//				String nextPageModelId = pmps.findPageModelByRealName(pageModelName);
+//				PageModel nextPageModel = pmps.findPageModelById(nextPageModelId);
+//			}
 			//***************************
 			btn.setNextPageModel(null);
 			btn.setPageModel(pageModel);
@@ -1009,8 +1003,8 @@ public class PageModelAction extends BaseDispatchAction{
 		PagePanel pagePanel = pmp.getPagePanel();
 		
 		PagePanelType ppt = (PagePanelType)pagePanel.getXtype();
-		Long pid = pagePanel.getXtype().getId();
-		Long id = ppt.getId();
+//		Long pid = pagePanel.getXtype().getId();
+//		Long id = ppt.getId();
 		String typeName = ppt.getCnName();
 		Integer display = pmp.getIsDisplay();
 		Integer titleDisplay = pmp.getTitleDisplayFlag();

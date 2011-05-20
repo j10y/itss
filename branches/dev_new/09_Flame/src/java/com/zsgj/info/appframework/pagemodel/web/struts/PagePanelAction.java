@@ -20,21 +20,15 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts2.ServletActionContext;
-import org.jaxen.Context;
-
 
 import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumnType;
 import com.zsgj.info.appframework.metadata.entity.TableSettingType;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
-import com.zsgj.info.appframework.pagemodel.entity.PageModel;
-import com.zsgj.info.appframework.pagemodel.entity.PageModelBtn;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelBtn;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
@@ -42,7 +36,6 @@ import com.zsgj.info.appframework.pagemodel.entity.PagePanelFieldSet;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelTable;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelTableRelation;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelType;
-import com.zsgj.info.appframework.pagemodel.service.PageModelService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelBtnService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelColumnService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
@@ -51,9 +44,7 @@ import com.zsgj.info.appframework.pagemodel.service.PagePanelTableService;
 import com.zsgj.info.appframework.pagemodel.servlet.CoderForButton;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.exception.ApplicationException;
-import com.zsgj.info.framework.exception.ServiceException;
 import com.zsgj.info.framework.security.entity.Module;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -64,8 +55,8 @@ public class PagePanelAction extends BaseDispatchAction{
 	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
 	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
-	private PageModelService pms = (PageModelService) getBean("pageModelService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private PageModelService pms = (PageModelService) getBean("pageModelService");
 	private PagePanelService pps = (PagePanelService) getBean("pagePanelService");
 	private PagePanelColumnService ppcs=(PagePanelColumnService) getBean("pagePanelColumnService");
 	private PagePanelTableService ppts=(PagePanelTableService) getBean("pagePanelTableService");
@@ -109,6 +100,7 @@ public class PagePanelAction extends BaseDispatchAction{
 		return mapping.findForward("listPagePanel");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward toPagePanelEditForm(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -167,6 +159,7 @@ public class PagePanelAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward findTableByModule(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -348,7 +341,7 @@ public class PagePanelAction extends BaseDispatchAction{
 			ppts.remove(ppId, smtId);
 			ppcs.removePanelColumn(ppId, smtId);
 		}
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		return HttpUtil.redirect("pagePanelManage.do?methodCall=toPagePanelEditForm&id="+ppId);
 	}
 	
@@ -370,7 +363,7 @@ public class PagePanelAction extends BaseDispatchAction{
 			pptrs.remove(pagePanel, ppt.getSystemMainTable());
 		}
 		ppts.removePagePanelTable(smtIds);
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		return HttpUtil.redirect("pagePanelManage.do?methodCall=toPagePanelEditForm&id="+ppId);
 	}
 	
@@ -390,7 +383,7 @@ public class PagePanelAction extends BaseDispatchAction{
 			String isDisplayPara = request.getParameter("isDisplay"+ppcId);
 			String lengthForPage = request.getParameter("lengthForPage"+ppcId);
 			String isMustInput = request.getParameter("isMustInput"+ppcId);
-			String hiddenValue = request.getParameter("hiddenValue"+ppcId);
+//			String hiddenValue = request.getParameter("hiddenValue"+ppcId);
 
 			if(isDisplayPara==null){
 				isDisplayPara="0";
@@ -431,7 +424,7 @@ public class PagePanelAction extends BaseDispatchAction{
 			String isDisplayPara = request.getParameter("isDisplay"+smtcId);
 			String lengthForPage = request.getParameter("lengthForPage"+smtcId);
 			String isMustInput = request.getParameter("isMustInput"+smtcId);
-			String hiddenValue = request.getParameter("hiddenValue"+smtcId);
+//			String hiddenValue = request.getParameter("hiddenValue"+smtcId);
 			String orderPara = request.getParameter("order"+smtcId);
 			
 			if(isDisplayPara==null){
@@ -465,6 +458,7 @@ public class PagePanelAction extends BaseDispatchAction{
 	 * @return null
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward mainTableList(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -550,6 +544,7 @@ public class PagePanelAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward loadPagePanel(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -638,20 +633,20 @@ public class PagePanelAction extends BaseDispatchAction{
 			HttpServletResponse response) throws Exception {
 		String smtId = request.getParameter("systemMainTable");
 		String ppId = request.getParameter("ppId");
-		PagePanel pagePanel = pps.findPagePanelById(ppId);
+//		PagePanel pagePanel = pps.findPagePanelById(ppId);
 		//保存新的表到panelTable之前做判断，是否有外键关联
-		SystemMainTable smt = null;
-		if(StringUtils.isNotBlank(smtId)){
-			smt = (SystemMainTable) getService().find(SystemMainTable.class, smtId,true);
-		}
-		if(smt.getId()!=null){
-		List lists = pps.findMainTableByPanel(pagePanel);
+//		SystemMainTable smt = null;
+//		if(StringUtils.isNotBlank(smtId)){
+//			smt = (SystemMainTable) getService().find(SystemMainTable.class, smtId,true);
+//		}
+//		if(smt.getId()!=null){
+//		List lists = pps.findMainTableByPanel(pagePanel);
 //			for(int i=0; i < lists.size(); i++){
 //				if(lists.get(i).equals(smt)==true){
 //					throw new ApplicationException("主表已存在");
 //				}
 //			}
-		List<Column> list = pps.findColumns(smt, pagePanel.getSettingType());	
+//		List<Column> list = pps.findColumns(smt, pagePanel.getSettingType());	
 //		if(!list.isEmpty()){
 //			int count = 0;
 //			int sum=0;
@@ -676,7 +671,7 @@ public class PagePanelAction extends BaseDispatchAction{
 //			}
 //		}
 		
-		}
+//		}
 		
 		pps.savePanelColumnsFormSysMainTable(ppId,smtId);
 		ppts.save(ppId, smtId);
@@ -699,7 +694,7 @@ public class PagePanelAction extends BaseDispatchAction{
 //		PagePanel pp = pps.findPagePanel(panelName);
 		String json = "";
 		String ppId=request.getParameter("pagePanelId");
-		Object obj=request.getAttribute("pagePanelId");
+//		Object obj=request.getAttribute("pagePanelId");
 		PagePanel pp=null;
 		if(!ppId.equals("")){
 			pp = pps.findPagePanelById(ppId);
@@ -716,6 +711,7 @@ public class PagePanelAction extends BaseDispatchAction{
 		}
 		return null;
 	}
+	@SuppressWarnings("unchecked")
 	public ActionForward modifyButton(ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request ,HttpServletResponse response ) throws UnsupportedEncodingException{
 		String ppId=request.getParameter("ppId"); 
@@ -756,6 +752,7 @@ public class PagePanelAction extends BaseDispatchAction{
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward showAllPagePanel(ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request ,HttpServletResponse response ){
 		
@@ -846,6 +843,7 @@ public class PagePanelAction extends BaseDispatchAction{
 				return null;
 		
 	}
+	@SuppressWarnings("unchecked")
 	public ActionForward toForeignTableSave (ActionMapping mapping ,ActionForm form,
 			HttpServletRequest request ,HttpServletResponse response ) throws UnsupportedEncodingException{
 				String ppId = HttpUtil.ConverUnicode(request.getParameter("ppId"));
@@ -957,14 +955,14 @@ public class PagePanelAction extends BaseDispatchAction{
 				SystemMainTable systemMainTable = systemMainTableColumn.getForeignTable();
 					Long code = systemMainTable.getId();
 					String code1=String.valueOf(code);
-					String name = systemMainTable.getTableCnName();
+//					String name = systemMainTable.getTableCnName();
 				try {
 					response.setCharacterEncoding("GBK");
 					PrintWriter pw = response.getWriter();
 					pw.write(code1);		
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				return null;
 	}
 	public ActionForward toForeignTableRemove(ActionMapping mapping ,ActionForm form,
@@ -1024,7 +1022,8 @@ public class PagePanelAction extends BaseDispatchAction{
 		PagePanel pagePanel =pps.findPagePanelById(pagePanelId);
 		PagePanelColumn pagePanelColumn = pps.savePagePanelColumn(pagePanel, index);
 		String title = HttpUtil.ConverUnicode(request.getParameter("title"));	
-		PagePanelFieldSet pagePanelFieldSet = pps.savePagePanelFieldSet(pagePanelColumn, pagePanel, title);
+		
+		pps.savePagePanelFieldSet(pagePanelColumn, pagePanel, title);
 		
 		
 		try{
