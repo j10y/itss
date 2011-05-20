@@ -13,10 +13,10 @@
        
 
         <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" 
-        			column="USER_ID" fetch="join" lazy="false"/>
+        			column="USER_ID" fetch="join" lazy="false" not-found="ignore"/>
         			
          <many-to-one name="role" class="com.zsgj.info.framework.security.entity.Role" 
-        			column="ROLE_ID" fetch="join" lazy="false"/>			
+        			column="ROLE_ID" fetch="join" lazy="false" not-found="ignore"/>			
         
       
 

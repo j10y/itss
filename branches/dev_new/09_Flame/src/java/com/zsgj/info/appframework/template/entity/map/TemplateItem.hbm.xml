@@ -16,19 +16,19 @@
             <column name="name" />
         </property>
         <many-to-one name="template"  column="template"  
-					   class="com.zsgj.info.appframework.template.entity.Template" />
+					   class="com.zsgj.info.appframework.template.entity.Template" not-found="ignore"/>
        
        	<many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="SystemMainTableID" />
+        			column="SystemMainTableID" not-found="ignore"/>
         			
         <many-to-one name="mainTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="MainTableColumnID" cascade="none" />
+        			column="MainTableColumnID" cascade="none" not-found="ignore"/>
         <!-- 	
         <many-to-one name="extendTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn" 
         			column="ExtendTableID" />
          -->					
         <many-to-one name="parentTemplateItem"  column="parentTemplateItem"
-					   class="com.zsgj.info.appframework.template.entity.TemplateItem" />
+					   class="com.zsgj.info.appframework.template.entity.TemplateItem" not-found="ignore"/>
 		 
 		 <set name="childTemplateItems"
 		 	 cascade="all-delete-orphan"

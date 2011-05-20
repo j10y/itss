@@ -15,11 +15,11 @@
 		</property>
 
 		<many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" 
-        			column="userInfo" fetch="join" lazy="false"/>
+        			column="userInfo" fetch="join" lazy="false" not-found="ignore"/>
 
 		<many-to-one name="portalStyle" column="portalStyle_id"
 			class="com.zsgj.info.bussutil.protal.entity.PortalStyle"
-			cascade="save-update" />
+			cascade="save-update" not-found="ignore"/>
 		<set name="portals" cascade="save-update"
 			inverse="true">
 			<key>

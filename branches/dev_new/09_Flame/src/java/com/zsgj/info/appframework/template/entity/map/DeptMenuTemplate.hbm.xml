@@ -18,10 +18,10 @@
         </property>
         
        	<many-to-one name="systemMenuTemplate" class="com.zsgj.info.appframework.template.entity.SystemMenuTemplate" 
-       			column="systemMenuTemplate" />
+       			column="systemMenuTemplate" not-found="ignore"/>
        
        	<many-to-one name="dept" class="com.zsgj.info.framework.security.entity.Department" 
-      			column="dept" />
+      			column="dept" not-found="ignore"/>
         
         <property name="adminFlag" type="integer">
             <column name="adminFlag" />

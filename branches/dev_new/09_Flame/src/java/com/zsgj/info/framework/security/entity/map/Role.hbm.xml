@@ -20,10 +20,10 @@
         <property name="dataViewFlag" type="integer" column="dataViewFlag"/>
 	
 		<many-to-one name="department"  column="departCode" 
-					   class="com.zsgj.info.framework.security.entity.Department" />
+					   class="com.zsgj.info.framework.security.entity.Department" not-found="ignore"/>
 
        	<many-to-one name="deptMenu" class="com.zsgj.info.appframework.menu.entity.DeptMenu" 
-       			column="deptMenu" />				   
+       			column="deptMenu" not-found="ignore"/>				   
         <set name="authorizations" table="sys_RoleAuthoriz" cascade="none">
         	<key column="ROLE_ID"/><!-- AUTHORIZATIONS'S ROLE_ID == THIS.ROLE.ID -->
         	<many-to-many class="com.zsgj.info.framework.security.entity.Authorization" 
@@ -39,16 +39,16 @@
         <property name="dataViewPlatformFlag" type="integer" column="dataViewPlatformFlag"/>
         
         <many-to-one name="platform"  column="platform" 
-					   class="com.zsgj.info.framework.security.entity.Platform" />
+					   class="com.zsgj.info.framework.security.entity.Platform" not-found="ignore"/>
 		
 		
         <many-to-one name="region"  column="region" 
-        			class="com.zsgj.info.framework.security.entity.Region"/>
+        			class="com.zsgj.info.framework.security.entity.Region" not-found="ignore"/>
         
         <property name="dataViewRegionFlag" type="integer" column="dataViewRegionFlag"/> 
         
         <many-to-one name="province"  column="province" 
-        			class="com.zsgj.info.framework.security.entity.Province"/>
+        			class="com.zsgj.info.framework.security.entity.Province" not-found="ignore"/>
         
         <property name="dataViewProvinceFlag" type="integer" column="dataViewProvinceFlag"/>   
 

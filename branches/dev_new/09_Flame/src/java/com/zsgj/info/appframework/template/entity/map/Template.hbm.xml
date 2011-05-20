@@ -22,14 +22,14 @@
         
         
 		<many-to-one name="department"  column="department"  
-					   class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false"/>
+					   class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false" not-found="ignore"/>
 		 
 		 <property name="createDate" type="date">
             <column name="createDate" />
         </property>
         
         <many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo" 
-        			column="createUser" fetch="join" lazy="false"/>
+        			column="createUser" fetch="join" lazy="false" not-found="ignore"/>
         
         <property name="ruleFile" type="string">
             <column name="ruleFile" />

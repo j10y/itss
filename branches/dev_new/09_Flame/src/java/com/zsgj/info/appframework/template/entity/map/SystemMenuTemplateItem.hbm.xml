@@ -12,7 +12,7 @@
             <generator class="native" />
         </id>
         <many-to-one name="systemMenuTemplate"  column="systemMenuTemplate"  
-					   class="com.zsgj.info.appframework.template.entity.SystemMenuTemplate" />
+					   class="com.zsgj.info.appframework.template.entity.SystemMenuTemplate" not-found="ignore"/>
 					   
         <property name="menuName" type="string">
             <column name="menuName" />
@@ -23,7 +23,7 @@
         </property>
         
         <many-to-one name="parentMenu"  column="parentMenu"  
-					   class="com.zsgj.info.appframework.template.entity.SystemMenuTemplateItem" />
+					   class="com.zsgj.info.appframework.template.entity.SystemMenuTemplateItem" not-found="ignore"/>
 					   
 	 	<set name="childMenus"
 		 	 cascade="all-delete-orphan"

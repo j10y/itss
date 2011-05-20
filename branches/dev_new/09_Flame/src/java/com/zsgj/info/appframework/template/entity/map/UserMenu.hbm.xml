@@ -13,12 +13,12 @@
             <generator class="native" />
         </id>
         
-        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" fetch="join" lazy="false" not-found="ignore">
             <column name="userInfo" />
         </many-to-one>
         
        	<many-to-one name="deptMenuTemplate" class="com.zsgj.info.appframework.template.entity.DeptMenuTemplate" 
-       			column="deptMenuTemplate" fetch="join" lazy="false"/>
+       			column="deptMenuTemplate" fetch="join" lazy="false" not-found="ignore"/>
        
         
     </class>

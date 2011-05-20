@@ -26,7 +26,7 @@
 		</property>
 		<many-to-one name="portal" column="portal_id"
 			class="com.zsgj.info.bussutil.protal.entity.Portal"
-			cascade="save-update" />
+			cascade="save-update" not-found="ignore"/>
 		
 
 		<set name="portletSubscribes" cascade="save-update"

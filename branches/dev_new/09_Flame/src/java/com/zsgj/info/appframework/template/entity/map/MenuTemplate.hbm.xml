@@ -19,7 +19,7 @@
         
        
 		 <many-to-one name="department"  column="departCode"  
-					   class="com.zsgj.info.framework.security.entity.Department" />
+					   class="com.zsgj.info.framework.security.entity.Department" not-found="ignore"/>
 		 
 		
     </class>

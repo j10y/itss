@@ -18,7 +18,7 @@
         </property>
        
         <many-to-one name="parentDepartment"  column="ParentCode"  cascade="none"
-					   class="com.zsgj.info.framework.security.entity.Department" />
+					   class="com.zsgj.info.framework.security.entity.Department" not-found="ignore"/>
 		
 		<set name="childDepartments"
 		 	 cascade="all-delete-orphan"

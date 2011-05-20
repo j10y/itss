@@ -27,11 +27,11 @@
         
         <property name="departCode" type="long" column="departCode" insert="false" update="false"/>
         
-        <many-to-one name="department" class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false">
-            <column name="departCode"/>
+        <many-to-one name="department" class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false" not-found="ignore">
+            <column name="departCode" />
         </many-to-one>
         
-       	<many-to-one name="platform" class="com.zsgj.info.framework.security.entity.Platform">
+       	<many-to-one name="platform" class="com.zsgj.info.framework.security.entity.Platform" not-found="ignore">
             <column name="platform"/>
         </many-to-one>
         
@@ -50,23 +50,23 @@
         <property name="userViewStyle" type="string" column="userViewStyle"/>
         <property name="externalFlag" type="integer" column="externalFlag" />
         <property name="timeCard" type="integer" column="timeCard" />
-        <many-to-one name="sameMailDept" class="com.zsgj.info.framework.security.entity.SameMailDept" lazy="false">
+        <many-to-one name="sameMailDept" class="com.zsgj.info.framework.security.entity.SameMailDept" lazy="false" not-found="ignore">
             <column name="sameMailDept"/>
         </many-to-one>
         
-        <many-to-one name="workSpace" class="com.zsgj.info.framework.security.entity.WorkSpace" lazy="false">
+        <many-to-one name="workSpace" class="com.zsgj.info.framework.security.entity.WorkSpace" lazy="false" not-found="ignore">
             <column name="workSpace"/>
         </many-to-one>
         
-        <many-to-one name="mailServer" class="com.zsgj.info.framework.security.entity.MailServer" lazy="false">
+        <many-to-one name="mailServer" class="com.zsgj.info.framework.security.entity.MailServer" lazy="false" not-found="ignore">
             <column name="mailServer"/>
         </many-to-one>
         
-        <many-to-one name="userType" class="com.zsgj.info.framework.security.entity.UserType" lazy="false">
+        <many-to-one name="userType" class="com.zsgj.info.framework.security.entity.UserType" lazy="false" not-found="ignore">
             <column name="userType"/>
         </many-to-one>
         
-         <many-to-one name="personnelScope" class="com.zsgj.info.framework.security.entity.PersonnelScope" lazy="false">
+         <many-to-one name="personnelScope" class="com.zsgj.info.framework.security.entity.PersonnelScope" lazy="false" not-found="ignore">
             <column name="personnelScope"/>
         </many-to-one>
         <property name="postName" type="string" column="postName" />

@@ -13,10 +13,10 @@
         <property name="name" column="NAME" type="string"  />
 
         <many-to-one name="right" class="com.zsgj.info.framework.security.entity.Right" 
-        			column="RIGHT_ID" />
+        			column="RIGHT_ID" not-found="ignore"/>
         			
          <many-to-one name="resource" class="com.zsgj.info.framework.security.entity.Resource" 
-        			column="RESOURCE_ID" />			
+        			column="RESOURCE_ID" not-found="ignore"/>			
         
         <set name="roles" table="sys_RoleAuthoriz" inverse="true" cascade="none">
         	<key column="AUTHOR_ID"/><!-- ROLE_AUTHOR'S AUTHOR_ID == Authorization.ID -->
@@ -25,7 +25,7 @@
         </set>
         
          <many-to-one name="module" class="com.zsgj.info.framework.security.entity.Module" 
-        			column="MODULE_ID" />
+        			column="MODULE_ID" not-found="ignore"/>
 
     </class>
 </hibernate-mapping>

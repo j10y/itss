@@ -15,17 +15,17 @@
         
         <many-to-one name="parentTemplateMenu" 
         			class="com.zsgj.info.appframework.template.entity.MenuTemplate" 
-        			column="parentTemplateMenu" fetch="join" lazy="false"/>
+        			column="parentTemplateMenu" fetch="join" lazy="false" not-found="ignore"/>
        
         <property name="menuOrder" type="integer">
             <column name="menuOrder" />
         </property>
         
         <many-to-one name="template"  column="template"  
-					   class="com.zsgj.info.appframework.template.entity.Template" />
+					   class="com.zsgj.info.appframework.template.entity.Template" not-found="ignore"/>
 		
 		 <many-to-one name="menu"  column="menu"  
-					   class="com.zsgj.info.appframework.template.entity.Menu" />
+					   class="com.zsgj.info.appframework.template.entity.Menu" not-found="ignore"/>
 		
     </class> 
 </hibernate-mapping>

@@ -15,12 +15,12 @@
 		</property>
 		<many-to-one name="portalContainer" column="portalContainer_id"
 			class="com.zsgj.info.bussutil.protal.entity.PortalContainer"
-			cascade="save-update" />
+			cascade="save-update" not-found="ignore"/>
 
 		<many-to-one name="portalColumnTemplate"
 			column="portalColumnTemplate_id"
 			class="com.zsgj.info.bussutil.protal.entity.PortalColumnTemplate"
-			cascade="save-update" />
+			cascade="save-update" not-found="ignore" />
 		<set name="portalColumns" cascade="save-update"
 			inverse="true">
 			<key>

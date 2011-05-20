@@ -17,7 +17,7 @@
  		<property name="leafFlag" type="integer" column="leafFlag"/>
         
         <many-to-one name="parentMenu" class="com.zsgj.info.appframework.template.entity.Menu" 
-        			column="parentMenu" fetch="join" lazy="false"/>
+        			column="parentMenu" fetch="join" lazy="false" not-found="ignore"/>
         			
         <set name="childMenus"
 		 	 cascade="all-delete-orphan"

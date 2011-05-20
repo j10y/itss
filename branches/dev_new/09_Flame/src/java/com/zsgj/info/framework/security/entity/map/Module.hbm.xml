@@ -15,7 +15,7 @@
         <property name="name" type="string" column="NAME"/>
         
         <many-to-one name="parentModule" class="com.zsgj.info.framework.security.entity.Module" 
-        			column="PARENT_MODULE_ID" />
+        			column="PARENT_MODULE_ID" not-found="ignore"/>
         			
 		<set name="childModules" inverse="true" cascade="all-delete-orphan"  >
 			 <!-- fetch="join" lazy="false" -->

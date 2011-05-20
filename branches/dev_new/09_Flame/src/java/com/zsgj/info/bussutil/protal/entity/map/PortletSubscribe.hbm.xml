@@ -25,11 +25,11 @@
 		</property>
 		<many-to-one name="protlet" column="portlet_id"
 			class="com.zsgj.info.bussutil.protal.entity.Portlet"
-			cascade="save-update" />
+			cascade="save-update" not-found="ignore"/>
 
 		<many-to-one name="portalColumn" column="portalColumn_id"
 			class="com.zsgj.info.bussutil.protal.entity.PortalColumn"
-			cascade="save-update" />
+			cascade="save-update" not-found="ignore"/>
 		
 		<property name="refresh" type="long">
 		  <column name="refresh"></column>

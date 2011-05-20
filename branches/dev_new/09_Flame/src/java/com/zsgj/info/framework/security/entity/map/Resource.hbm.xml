@@ -17,7 +17,7 @@
         <property name="methodName" column="METHOD_NAME"  type="string" not-null="true"/>
 
         <many-to-one name="module" class="com.zsgj.info.framework.security.entity.Module" 
-        			column="MODULE_ID" />
+        			column="MODULE_ID" not-found="ignore"/>
 	
         <property name="descn" column="DESCN" type="string" />
         

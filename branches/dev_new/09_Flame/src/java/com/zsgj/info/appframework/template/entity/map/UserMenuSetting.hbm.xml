@@ -15,10 +15,10 @@
        
        <many-to-one name="parent" 
         			class="com.zsgj.info.appframework.template.entity.UserMenuSetting" 
-        			column="parent" fetch="join" lazy="false"/>
+        			column="parent" fetch="join" lazy="false" not-found="ignore"/>
         			
         <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" 
-        			column="userInfo" fetch="join" lazy="false"/>
+        			column="userInfo" fetch="join" lazy="false" not-found="ignore"/>
         			
         <property name="dispFlag" type="integer">
             <column name="dispFlag" />
@@ -29,7 +29,7 @@
         </property>
 		
 		<many-to-one name="menu"  column="menu"  
-					   class="com.zsgj.info.appframework.template.entity.Menu" />
+					   class="com.zsgj.info.appframework.template.entity.Menu" not-found="ignore"/>
 		
     </class> 
 </hibernate-mapping>
