@@ -423,9 +423,13 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 			buff.append(" ID ").append(dialect.getTypeName(Types.BIGINT)).append(" identity primary key");
 			buff.append(");");
 		}else if(dialectName.equalsIgnoreCase("org.hibernate.dialect.OracleDialect")){
-			buff.append("CREATE TABLE ").append(smt.getTableName()).append("(");
+			buff.append("CREATE TABLE ").append(tablePrefix+ smt.getTableName()).append("(");
 			buff.append(" ID ").append(dialect.getTypeName(Types.BIGINT)).append(" primary key");
 			buff.append(");");
+		}else if (dialectName.equalsIgnoreCase("org.hibernate.dialect.MySQLDialect")) {
+			buff.append("CREATE TABLE `").append(tablePrefix+tableName).append("` (");
+			buff.append("`id` bigint(40) NOT NULL AUTO_INCREMENT,PRIMARY KEY (`id`), KEY `Auto_Increment_Key` (`id`)");
+			buff.append(")ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 		}
 		
 		try {
