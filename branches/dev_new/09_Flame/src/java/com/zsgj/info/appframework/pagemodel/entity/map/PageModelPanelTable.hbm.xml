@@ -13,25 +13,25 @@
         </id>
         
         <many-to-one name="pageModel" class="com.zsgj.info.appframework.pagemodel.entity.PageModel" 
-        			column="pageModel" />
+        			column="pageModel" not-found="ignore"/>
         			
         <many-to-one name="subPagePanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" 
-        			column="subPagePanel" />
+        			column="subPagePanel" not-found="ignore"/>
         			
         <many-to-one name="subPanelTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="subPanelTable" />
+        			column="subPanelTable" not-found="ignore"/>
         			
         <many-to-one name="subPanelTableFColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="subPanelTableFColumn"/> 			
+        			column="subPanelTableFColumn" not-found="ignore"/> 			
         
         <many-to-one name="parentPagePanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" 
-        			column="parentPagePanel" />
+        			column="parentPagePanel" not-found="ignore"/>
         					
 		<many-to-one name="parentPanelTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="parentPanelTable" />
+        			column="parentPanelTable" not-found="ignore"/>
         			
          <many-to-one name="parentPanelTablePColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="parentPanelTablePColumn"/> 
+        			column="parentPanelTablePColumn" not-found="ignore"/> 
    
     </class>
 </hibernate-mapping>

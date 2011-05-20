@@ -17,10 +17,10 @@
         <property name="title" type="string" column="title"/>
         
         <many-to-one name="module" class="com.zsgj.info.framework.security.entity.Module" 
-        			column="moduleID"  />
+        			column="moduleID"  not-found="ignore"/>
    
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="systemMainTable" />
+        			column="systemMainTable" not-found="ignore"/>
         			
  		<set name="childPagePanels" table="PAGE_PagePanelRelation" cascade="none" order-by="OrderFlag">
         	<key column="parentPagePanel"/>

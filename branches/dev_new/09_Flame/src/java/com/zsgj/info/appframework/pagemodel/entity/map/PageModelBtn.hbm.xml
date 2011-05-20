@@ -15,10 +15,10 @@
         </id>
         
        <many-to-one name="pageModel" class="com.zsgj.info.appframework.pagemodel.entity.PageModel" 
-        			column="pageModel"/>
+        			column="pageModel" not-found="ignore"/>
         			
        <many-to-one name="btnType" class="com.zsgj.info.appframework.pagemodel.entity.PageBtnType" 
-        			column="btnType"/>
+        			column="btnType" not-found="ignore"/>
         
        <property name="btnName" type="string" column="btnName"/> 
        <property name="method" type="string" column="method"/>      
@@ -29,7 +29,7 @@
        <property name="openWinFlag" type="integer" column="openWinFlag"/>
         
         <many-to-one name="nextPageModel" class="com.zsgj.info.appframework.pagemodel.entity.PageModel" 
-        			column="nextPageModel"/>
+        			column="nextPageModel" not-found="ignore"/>
         			
     </class>
 </hibernate-mapping>

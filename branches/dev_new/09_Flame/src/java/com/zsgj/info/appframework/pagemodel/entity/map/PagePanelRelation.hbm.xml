@@ -13,10 +13,10 @@
         </id>
    
         <many-to-one name="parentPagePanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" 
-        			column="parentPagePanel" />
+        			column="parentPagePanel" not-found="ignore"/>
 		
         <many-to-one name="pagePanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" 
-        			column="pagePanel" />
+        			column="pagePanel" not-found="ignore"/>
 
 		<property name="order" type="integer" column="orderFlag"/>
 		        

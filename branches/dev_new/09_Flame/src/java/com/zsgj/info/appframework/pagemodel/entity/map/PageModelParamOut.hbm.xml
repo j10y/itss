@@ -15,7 +15,7 @@
         </id>
         
        <many-to-one name="pageModel" class="com.zsgj.info.appframework.pagemodel.entity.PageModel" 
-        			column="pageModel"/>
+        			column="pageModel" not-found="ignore"/>
         
        <property name="paramName" type="string" column="paramName"/>
        <property name="paramValue" type="string" column="paramValue"/>

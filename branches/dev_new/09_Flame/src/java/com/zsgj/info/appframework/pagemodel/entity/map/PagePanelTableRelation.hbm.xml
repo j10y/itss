@@ -14,16 +14,16 @@
         
         
         <many-to-one name="pagePanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" 
-        			column="pagePanel" />
+        			column="pagePanel" not-found="ignore"/>
         			
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="systemMainTable" />
+        			column="systemMainTable" not-found="ignore"/>
        
         <many-to-one name="foreignTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="foreignTableColumn"/> 
+        			column="foreignTableColumn" not-found="ignore"/> 
         			
 		<many-to-one name="foreignTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="foreignTable" />
+        			column="foreignTable" not-found="ignore"/>
         			
         
    
