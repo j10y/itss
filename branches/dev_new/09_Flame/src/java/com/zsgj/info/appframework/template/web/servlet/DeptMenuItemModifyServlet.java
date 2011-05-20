@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.zsgj.info.appframework.template.service.DeptTemplateMenuService;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.exception.ServiceException;
 import com.zsgj.info.framework.util.PropertiesUtil;
@@ -23,7 +22,7 @@ import com.zsgj.info.framework.util.PropertiesUtil;
 @SuppressWarnings("serial")
 public class DeptMenuItemModifyServlet extends HttpServlet {
 	
-	private DeptTemplateMenuService deptTemplateMenuService = (DeptTemplateMenuService) getBean("deptTemplateMenuService");
+//	private DeptTemplateMenuService deptTemplateMenuService = (DeptTemplateMenuService) getBean("deptTemplateMenuService");
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,7 +31,7 @@ public class DeptMenuItemModifyServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//父节点ID
-		String parentId = request.getParameter("id");
+//		String parentId = request.getParameter("id");
 		//部门菜单模板ID
 		String dmtId = request.getParameter("dmtId");
 		//系统菜单模板ID

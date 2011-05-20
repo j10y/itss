@@ -41,7 +41,7 @@ public class UserTemplateMenuServiceImpl extends BaseDao implements UserTemplate
 		c.add(Restrictions.eq("id", umPara.getId()));
 		c.setFetchMode("deptMenuTemplate", FetchMode.JOIN);
 		UserMenu umOld = (UserMenu) c.uniqueResult(); //当前用户菜单模板
-		@SuppressWarnings("unused")
+		
 		DeptMenuTemplate dmtOld = umOld.getDeptMenuTemplate(); //老的部门菜单模板
 		//先改用户的，先找使用了老部门模板的用户模板
 		String hql="select um from UserMenu um where um.deptMenuTemplate=?";

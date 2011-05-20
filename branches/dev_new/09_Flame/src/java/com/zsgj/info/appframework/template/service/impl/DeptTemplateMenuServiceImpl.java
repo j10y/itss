@@ -93,10 +93,10 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 			Long count = (Long) query.uniqueResult();
 			if(count.intValue()>1){
 				
-				Set userDeptTemplates = new HashSet();
+//				Set userDeptTemplates = new HashSet();
 				//获取所有的部门模板
 				
-				Set userDeptTemplateItems = new HashSet();
+//				Set userDeptTemplateItems = new HashSet();
 				
 //				Criteria cud = super.getCriteria(UserMenuItem.class);
 //				cud.add(Restrictions.eq("userInfo", userInfo));//***********************************************
@@ -123,6 +123,7 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 		
 	}
 
+	@SuppressWarnings("unused")
 	private boolean exitsDeptMenuItem(Set userDeptTemplateItems, DeptMenuTemplateItem dmti){
 		boolean result = false;
 		String menuNameCurrent = dmti.getMenuName();
@@ -132,11 +133,11 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 		Iterator iter2 = userDeptTemplateItems.iterator();
 		while(iter2.hasNext()){
 			DeptMenuTemplateItem deptMenuTemplateItem = (DeptMenuTemplateItem) iter2.next();
-			DeptMenuTemplate deptMenuTemplate = deptMenuTemplateItem.getDeptMenuTemplate();
+//			DeptMenuTemplate deptMenuTemplate = deptMenuTemplateItem.getDeptMenuTemplate();
 			String menuName = deptMenuTemplateItem.getMenuName();
 			String menuUrl = deptMenuTemplateItem.getMenuUrl();
 			System.out.println("current loop:"+ menuName+"/ "+ menuUrl);
-			DeptMenuTemplateItem parentMenu = deptMenuTemplateItem.getParentMenu();
+//			DeptMenuTemplateItem parentMenu = deptMenuTemplateItem.getParentMenu();
 			if(StringUtils.isNotBlank(menuUrl)){ //如果菜单有连接，用菜单连接判断是否等同
 				result = menuUrl.equalsIgnoreCase(menuUrlCurrent);
 				if(result == true) break; //只有是存在一样的就返回，说明已经存在
@@ -189,6 +190,7 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 		}
 	}
 	//未使用
+	@SuppressWarnings("unused")
 	private UserMenu saveUserMenu(UserMenu um) {
 		UserMenu userMenu = null;
 		if(um.getId()==null){
@@ -279,6 +281,7 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 		
 	}
 
+	@SuppressWarnings("unused")
 	private void initChilden(SystemMenuTemplateItem sItem){
 		Criteria c = super.getCriteria(SystemMenuTemplateItem.class);
 		c.add(Restrictions.eq("id", sItem.getId()));
@@ -789,7 +792,7 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 					c.add(Restrictions.eq("deptMenuTemplateItem", obj));
 					c.add(Restrictions.eq("userMenu", userMenu));
 					UserMenuItem userMenuItem = (UserMenuItem) c.uniqueResult();
-					UserInfo userInfo = userMenu.getUserInfo();
+//					UserInfo userInfo = userMenu.getUserInfo();
 					
 					if(userMenuItem!=null){ //对用的用户菜单有才移动，没有移动是部门菜单项目隐藏了，用户在初始化时就得不到这个菜单项
 						Long userMenuId = userMenuItem.getId(); //对应的当前用户菜单项
@@ -826,7 +829,7 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 				Long menuId = Long.valueOf(mId);
 				DeptMenuTemplateItem obj = this.get(DeptMenuTemplateItem.class, menuId);
 				
-				Long newParentId = Long.valueOf(newPid);
+//				Long newParentId = Long.valueOf(newPid);
 				
 				DeptMenuTemplate smt = obj.getDeptMenuTemplate();
 				String hql2="select dmt from UserMenu dmt where dmt.deptMenuTemplate=?";
@@ -1148,6 +1151,7 @@ public class DeptTemplateMenuServiceImpl extends BaseDao implements DeptTemplate
 		
 	}
 
+	@SuppressWarnings("unused")
 	private void saveUserNodeEnableWithDept(DeptMenuTemplateItem dmti){
 		String hql = "select dmti from UserMenuItem dmti where dmti.deptMenuTemplateItem=?";
 		List<UserMenuItem> list = super.find(hql, dmti);

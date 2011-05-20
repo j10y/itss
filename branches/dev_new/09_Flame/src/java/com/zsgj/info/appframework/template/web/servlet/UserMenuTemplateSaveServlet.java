@@ -33,7 +33,7 @@ public class UserMenuTemplateSaveServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Department obj = null;
+//		Department obj = null;
 		request.setCharacterEncoding("gbk");
 		String js = "";
 		List<Department> depts = deptService.findDeptAll();

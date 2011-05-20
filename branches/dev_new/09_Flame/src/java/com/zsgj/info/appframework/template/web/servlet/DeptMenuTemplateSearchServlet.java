@@ -34,7 +34,7 @@ public class DeptMenuTemplateSearchServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Department obj = null;
+//		Department obj = null;
 		String js = "";
 		List<DeptMenuTemplate> dmtList = deptMenuTemplateService.findDeptMenuTemplates();
 		for (DeptMenuTemplate item : dmtList) {

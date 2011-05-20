@@ -20,7 +20,7 @@ import com.zsgj.info.framework.exception.ServiceException;
  * @Create In Oct 24, 2008
  * TODO
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "deprecation" })
 public class TemplateSaveServlet extends HttpServlet {
 	
 	private MenuService menuService = (MenuService)getBean("menuService");

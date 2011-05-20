@@ -113,19 +113,6 @@ public class SystemTemplateMenuServiceImpl extends BaseDao implements SystemTemp
 		}
 	}
 	
-	
-
-	private String initChild(TemplateItem templateItem){
-		String temp = "";
-		Criteria c = super.getCriteria(TemplateItem.class);
-		c.add(Restrictions.eq("id", templateItem.getId()));
-		c.setFetchMode("childTemplateItems", FetchMode.JOIN);
-		TemplateItem item = (TemplateItem) c.uniqueResult();
-		Set childen =  item.getChildTemplateItems();
-		
-		return null;
-	}
-		
 	public List findSystemMenuTemplates() {
 		List list = null;
 		list = super.getObjects(SystemMenuTemplate.class);

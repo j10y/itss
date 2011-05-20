@@ -28,7 +28,7 @@ public class DeptMenuItemJsonServlet extends HttpServlet {
 		//部门菜单模板ID
 		String dmtId = request.getParameter("dmtId");
 		//系统菜单模板ID
-		String smtId = request.getParameter("smtId");
+//		String smtId = request.getParameter("smtId");
 		
 		System.out.println("deptMenuJson 部门菜单模板ID :"+dmtId);
 		

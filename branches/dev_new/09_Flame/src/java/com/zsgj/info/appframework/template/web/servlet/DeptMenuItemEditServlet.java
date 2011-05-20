@@ -30,7 +30,7 @@ public class DeptMenuItemEditServlet extends HttpServlet {
 		String parentId = request.getParameter("parentId");
 		String leaf = request.getParameter("leaf");
 		String number = request.getParameter("number");
-		String smtId = request.getParameter("smtId");
+//		String smtId = request.getParameter("smtId");
 		String dmtId = request.getParameter("dmtId");
 		
 		DeptMenuTemplateItem obj = null;

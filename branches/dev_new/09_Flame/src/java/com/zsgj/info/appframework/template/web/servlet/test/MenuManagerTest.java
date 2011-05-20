@@ -1,10 +1,12 @@
 package com.zsgj.info.appframework.template.web.servlet.test;
 
+import com.zsgj.info.appframework.template.entity.Menu;
 import com.zsgj.info.appframework.template.service.MenuService;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.exception.ServiceException;
 
 
+@SuppressWarnings("deprecation")
 public class MenuManagerTest {
 	
 	private MenuService menuService = (MenuService)getBean("menuService");
@@ -16,8 +18,8 @@ public class MenuManagerTest {
 	 * @return true-修改成功 false-修改失败
 	 */
 	public Boolean ajaxUpdateTitle(String id,String menuName){
-		menuService.modifyMenuName(id, menuName);
-		return true;
+		Menu mu = menuService.modifyMenuName(id, menuName);
+		return mu != null ? true : false;
 	}
 	/**
 	 * 异步删除数据，包括其子孙节点

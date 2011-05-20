@@ -34,7 +34,7 @@ public class SystemMenuTemplateSearchServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 	    
-		SystemMenuTemplate obj = null;
+//		SystemMenuTemplate obj = null;
 		request.setCharacterEncoding("gbk");
 		String templateName = request.getParameter("templateName");
 		
