@@ -109,7 +109,7 @@ public class PagePanelRelationServiceImpl extends BaseDao implements PagePanelRe
 	public void removeLeafPagePanelRelation(PagePanelRelation PagePanelRelation, int nodeIndex ,String pagePanelId) {
 		
 		String parentId = "-100";
-		int minIndex = PagePanelRelation.getOrder();
+//		int minIndex = PagePanelRelation.getOrder();
 		if(PagePanelRelation.getParentPagePanel()!=null){
 			parentId = PagePanelRelation.getParentPagePanel().getId()+"";
 		}
@@ -150,7 +150,7 @@ public class PagePanelRelationServiceImpl extends BaseDao implements PagePanelRe
 		paramList.add(pagePanelRelation.getId());
 		
 		Object[] params = paramList.toArray();		
-		Object result = super.createQuery(hql.toString(), params).uniqueResult();
+//		Object result = super.createQuery(hql.toString(), params).uniqueResult();
 		List<PagePanelRelation> list = super.createQuery(hql.toString(), params).list();
 		if(list.size()!=0){
 			for(int i=0;i<list.size();i++){
@@ -292,7 +292,7 @@ public class PagePanelRelationServiceImpl extends BaseDao implements PagePanelRe
 		 * @return List<PagePanelRelation>
 		 */
 		public void removePagePanelRelation(String pagePanelId) {
-			PagePanel panel = super.get(PagePanel.class, Long.valueOf(pagePanelId));
+//			PagePanel panel = super.get(PagePanel.class, Long.valueOf(pagePanelId));
 			super.executeUpdate("delete from PagePanelRelation ppr " +
 					"where ppr.parentPagePanel.id=?", Long.valueOf(pagePanelId));
 					
