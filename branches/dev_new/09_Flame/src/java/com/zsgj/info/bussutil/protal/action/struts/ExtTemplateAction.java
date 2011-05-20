@@ -152,6 +152,7 @@ public abstract class ExtTemplateAction extends BaseDispatchAction {
 	/**
 	 * 鍒犻櫎鏁版嵁
 	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward remove(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		Map params = getRequestParameterMap(request);
@@ -222,6 +223,7 @@ public abstract class ExtTemplateAction extends BaseDispatchAction {
 		return null;
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected Object initEntity(HttpServletRequest request, ActionForm form) {
 		Object o = null;
 		try {
@@ -286,7 +288,7 @@ public abstract class ExtTemplateAction extends BaseDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		try {
-			Map params = getRequestParameterMap(request);
+//			Map params = getRequestParameterMap(request);
 			Object o = this.initEntity(request, form);
 			this.getService().save(o);
 			return null;
@@ -299,6 +301,7 @@ public abstract class ExtTemplateAction extends BaseDispatchAction {
 	/**
 	 * 鏇存柊鏁版嵁
 	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward update(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
@@ -374,10 +377,17 @@ public abstract class ExtTemplateAction extends BaseDispatchAction {
 	protected String getPageJson(HttpServletRequest request) {
 		return null;
 	}
-
+	
+	/**
+	 * Object到Jason转换
+	 * @Methods Name object2Json
+	 * @Create In 2011-5-19 By Jack
+	 * @param o Object对象
+	 * @return String
+	 */
 	protected String object2Json(Object o) {
 		String json = null;
-		// 灏嗗鍍忚浆鍖栦负json缁撴瀯
+		// obj转换
 		if (null != o) {
 			Class clazz = o.getClass();
 			if (ClassUtils.hasMethod(clazz, StringPool.REFLECTION_METHOD_MAP,

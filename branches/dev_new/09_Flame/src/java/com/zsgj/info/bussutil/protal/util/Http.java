@@ -93,6 +93,7 @@ public class Http {
 		return size;
 	}
 
+	@SuppressWarnings("static-access")
 	public int getCurrentPageSize(HttpServletRequest request) {
 		return null == this.getHttp().getParameter(request,
 				StringPool.CURRENT_PAGE_SIZE) ? 15 : Integer.parseInt(this

@@ -27,6 +27,7 @@ import com.zsgj.info.framework.security.entity.ResourceDetail;
  * 
  * @author xiaofeng
  */
+@SuppressWarnings("deprecation")
 public class DBMethodDefinitionSource implements MethodSecurityMetadataSource/*MethodDefinitionSource*/ {
 	private static final Log logger = LogFactory
 			.getLog(DBMethodDefinitionSource.class);
@@ -94,6 +95,7 @@ public class DBMethodDefinitionSource implements MethodSecurityMetadataSource/*M
 	 * @see org.acegisecurity.intercept.method.AbstractMethodDefinitionSource#lookupAttributes(java.lang.reflect.Method)
 	 */
 	//protected ConfigAttributeDefinition lookupAttributes(Class clszz, Method mi) {
+	@SuppressWarnings({ "unchecked" })
 	protected Collection<ConfigAttribute> lookupAttributes(Class clszz, Method mi) {
 
 		if (!this.acegiCacheService.isInitializedResourceCache()) {
@@ -148,7 +150,7 @@ public class DBMethodDefinitionSource implements MethodSecurityMetadataSource/*M
 	public Iterator getConfigAttributeDefinitions() {
 		List list = new ArrayList();
 		ConfigAttributeEditor configAttrEditor = new ConfigAttributeEditor();
-		String authoritiesStr = " ";
+		//String authoritiesStr = " ";
 
 		configAttrEditor.setAsText("");
 		configAttrEditor.setValue(null);

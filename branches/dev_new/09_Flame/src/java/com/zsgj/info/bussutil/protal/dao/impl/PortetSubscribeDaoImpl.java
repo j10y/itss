@@ -16,7 +16,7 @@ public class PortetSubscribeDaoImpl extends BaseDao implements PortetSubscribeDa
 			+ PortletSubscribe.class.getName()
 			+ " p where p.protlet.id=? and p.portalColumn.portal.id=? ";
 		List items = super.find(hql, new Long(portletId.toString()), new Long(portalId.toString()) );
-		Set idRemove = new HashSet();
+//		Set idRemove = new HashSet();
 		if (!items.isEmpty()) {
 			PortletSubscribe portletSubscribe=(PortletSubscribe) items.get(0);
 			

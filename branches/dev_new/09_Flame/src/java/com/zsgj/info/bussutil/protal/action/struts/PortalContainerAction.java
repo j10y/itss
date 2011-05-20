@@ -164,7 +164,7 @@ public class PortalContainerAction extends ExtTemplateAction {
 	public ActionForward saveUserPorletRefersh(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
-		Serializable userId = super.getHttp().getUserId(request);
+//		Serializable userId = super.getHttp().getUserId(request);
 		Map params = this.getRequestParameterMap(request);
 		String portalId = params.get("porletID").toString();
 		String portalColumnId = params.get("porlatColumnID").toString();
@@ -176,7 +176,7 @@ public class PortalContainerAction extends ExtTemplateAction {
 	public ActionForward getUserPorletRefersh(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
-		Serializable userId = super.getHttp().getUserId(request);
+//		Serializable userId = super.getHttp().getUserId(request);
 		Map params = this.getRequestParameterMap(request);
 		String portalId = params.get("porletID").toString();
 		String portalColumnId = params.get("porlatColumnID").toString();

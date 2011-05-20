@@ -127,6 +127,7 @@ public class PaginationSupport {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public List transItems() {
 		return CollectionUtil.getCollectionUtil().transList(this.getItems());
 	}

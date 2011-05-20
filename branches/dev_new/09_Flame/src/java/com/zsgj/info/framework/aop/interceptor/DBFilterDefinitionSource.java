@@ -7,13 +7,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.security.access.ConfigAttributeEditor;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.ConfigAttributeEditor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -29,6 +29,7 @@ import com.zsgj.info.framework.security.entity.ResourceDetail;
  * @Author xiaofeng
  * @Create In 2008-3-12
  */
+@SuppressWarnings("deprecation")
 public class DBFilterDefinitionSource implements FilterInvocationSecurityMetadataSource/*extends AbstractFilterInvocationDefinitionSource*/ {
 
 	private boolean convertUrlToLowercaseBeforeComparison = false;
@@ -46,6 +47,7 @@ public class DBFilterDefinitionSource implements FilterInvocationSecurityMetadat
 	 * @see org.acegisecurity.intercept.web.AbstractFilterInvocationDefinitionSource#lookupAttributes(java.lang.String)
 	 */
 
+	@SuppressWarnings({ "unchecked" })
 	public Collection<ConfigAttribute> lookupAttributes(String url) {
 		
 		if(!this.acegiCacheService.isInitializedResourceCache()){

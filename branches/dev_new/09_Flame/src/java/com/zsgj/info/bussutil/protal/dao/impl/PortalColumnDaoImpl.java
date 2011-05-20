@@ -32,13 +32,13 @@ public class PortalColumnDaoImpl extends BaseDao implements PortalColumnDao {
 
 	public Page getAllPortalColumnTemplates() {
 		int pageNo = 1;
-		int pageSize = 10;
+		int pageSize = 9999999;
 		String hql = "from " + PortalColumnTemplate.class.getName()
 				+ " p order by p.id asc";
 		/*List items = this.getAllByHQL(hql);
 		PaginationSupport ps = new PaginationSupport(items);*/  //原意为显示所有记录在一页
-		long totalCount = super.totalCount(hql, null);
-		pageSize = (int) totalCount;
+		//long totalCount = super.totalCount(hql, null);
+		//pageSize = (int) totalCount;
 		Page ps = super.pagedQuery(hql, pageNo, pageSize, null);
 		return ps;
 	}

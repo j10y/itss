@@ -48,7 +48,7 @@ public class PortletServiceImpl extends BaseService implements PortletService {
 		// TODO Auto-generated method stub
 	    Page ps=this.getPortlets(startIndex, pageSize);
 	    List subscribedPortlets=this.getPortletDao().getAllPortletSubscribeByUserId(userId,portalId);
-	    List items=new ArrayList();
+//	    List items=new ArrayList();
 	    if(CollectionUtils.isNotEmpty(ps.getData())&&CollectionUtils.isNotEmpty(subscribedPortlets)){
 	    	for(int i=0;i<ps.getData().size();i++){
 	    		Portlet item=(Portlet)ps.getData().get(i);

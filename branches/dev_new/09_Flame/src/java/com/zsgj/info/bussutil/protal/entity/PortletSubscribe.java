@@ -14,6 +14,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Description:用户征订portlet
  */
 public class PortletSubscribe extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 5040717620713156160L;
 	private Long id;
 	private String name;
 	// 正在征订的portlet

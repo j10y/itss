@@ -7,9 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 
-import com.zsgj.info.framework.context.UserContext;
-import com.zsgj.info.framework.security.entity.UserInfo;
-
 /**
  * 用户权限Around Advice，实现对服务方法的权限拦截。
  * 注意：此类的userRights的类型为List， 用于存放与某一服务方法相关的权限配置。
@@ -71,7 +68,7 @@ public class UserRightAroundBean {
 		System.out.println("●before invoke "+ result);
 		
 		// 获取与当前线程绑定的userInfo
-		UserInfo userInfo = UserContext.getUserInfo();
+//		UserInfo userInfo = UserContext.getUserInfo();
 
 		// 权限验证
 		

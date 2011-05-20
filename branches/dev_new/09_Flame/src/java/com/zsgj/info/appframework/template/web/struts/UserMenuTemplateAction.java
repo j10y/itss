@@ -15,11 +15,9 @@ import org.apache.struts.action.ActionMapping;
 import com.zsgj.info.appframework.template.entity.DeptMenuTemplate;
 import com.zsgj.info.appframework.template.entity.UserMenu;
 import com.zsgj.info.appframework.template.service.DeptTemplateMenuService;
-import com.zsgj.info.appframework.template.service.SystemTemplateMenuService;
 import com.zsgj.info.appframework.template.service.UserTemplateMenuService;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.exception.ApplicationException;
-import com.zsgj.info.framework.security.service.DepartmentService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -33,8 +31,8 @@ import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
  */
 public class UserMenuTemplateAction extends BaseDispatchAction{
 	
-	private DepartmentService ds = (DepartmentService) getBean("deptService");
-	private SystemTemplateMenuService stms = (SystemTemplateMenuService)getBean("systemTemplateMenuService");
+//	private DepartmentService ds = (DepartmentService) getBean("deptService");
+//	private SystemTemplateMenuService stms = (SystemTemplateMenuService)getBean("systemTemplateMenuService");
 	private DeptTemplateMenuService dtms = (DeptTemplateMenuService) getBean("deptTemplateMenuService");
 	private UserTemplateMenuService utms = (UserTemplateMenuService)getBean("userTemplateMenuService");
 	
