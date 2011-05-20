@@ -19,26 +19,24 @@ import org.apache.commons.lang.StringUtils;
 
 import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
-import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 import com.zsgj.info.appframework.pagemodel.PageManager;
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
-import com.zsgj.info.appframework.pagemodel.service.PageModelPanelService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
-import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.servlet.BaseServlet;
 
+@SuppressWarnings("serial")
 public class ObjectData extends BaseServlet {
 	private PageManager pageManager =  (PageManager) ContextHolder.getBean("pageManager");
 	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
 	private PagePanelService pagePanelService=(PagePanelService) ContextHolder.getBean("pagePanelService");
-	private PageModelPanelService pageModelPanelService=(PageModelPanelService) ContextHolder.getBean("pageModelPanelService");
+//	private PageModelPanelService pageModelPanelService=(PageModelPanelService) ContextHolder.getBean("pageModelPanelService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
 	//private ConfigItemService configItemService = (ConfigItemService) ContextHolder.getBean("configItemService");
 	
@@ -52,7 +50,7 @@ public class ObjectData extends BaseServlet {
 		response.setCharacterEncoding("utf-8");  
 		String msg = "";
 		String method = request.getParameter("method");
-		String model = request.getParameter("model");
+//		String model = request.getParameter("model");
 		
 		if (StringUtils.isBlank(method)) {
 			msg = "Error: no method parameter name specified.";
@@ -123,11 +121,12 @@ public class ObjectData extends BaseServlet {
 		return json;
 	}
 		
+	@SuppressWarnings("unchecked")
 	private String treeQuery(HttpServletRequest request) {
 		String json = "";
 		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
-		int start = HttpUtil.getInt(request, "start", 0);
-		int pageNo=start/pageSize+1;
+//		int start = HttpUtil.getInt(request, "start", 0);
+//		int pageNo=start/pageSize+1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "id");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
 		String panelName = request.getParameter("panelname");
@@ -176,7 +175,7 @@ public class ObjectData extends BaseServlet {
 	private String savePanel(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		//String json = "{success:true}";
 		String info=request.getParameter("info");
-		String modelId=request.getParameter("dataId");
+//		String modelId=request.getParameter("dataId");
 		String panel=request.getParameter("panel");
 		String model=request.getParameter("model");
 		Map<String,List<Map<String,Object>>> panelDataMap = new HashMap<String,List<Map<String,Object>>>();
@@ -208,6 +207,7 @@ public class ObjectData extends BaseServlet {
 		//System.out.println("发送前台数据："+json);
 		return json;
 	}
+	@SuppressWarnings("unused")
 	private static Object[] getObjectArray4Json(String jsonString) {   
         JSONArray jsonArray = JSONArray.fromObject(jsonString);   
         return jsonArray.toArray();   
@@ -292,7 +292,7 @@ public class ObjectData extends BaseServlet {
 		String json = "{success:true}";
 		//String pClazz = request.getParameter("clazz");
 		String modelName = request.getParameter("model");
-		String dataId = request.getParameter("dataId");
+//		String dataId = request.getParameter("dataId");
 		
 		PageModel model = this.pageManager.findPageModel(modelName);
 		SystemMainTable smt = model.getSystemMainTable();
@@ -324,7 +324,7 @@ public class ObjectData extends BaseServlet {
 		service.remove(clazz, dataId);
 		return json;
 	}
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private String queryOld(HttpServletRequest request) {
 		String json = "";
 		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
@@ -402,7 +402,6 @@ public class ObjectData extends BaseServlet {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	private String queryCobom(HttpServletRequest request) {
 		String json = "";
 		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
@@ -411,6 +410,8 @@ public class ObjectData extends BaseServlet {
 		String orderBy = HttpUtil.getString(request, "orderBy", "id");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
 		String pClazz = request.getParameter("clazz");
+		String panelName = request.getParameter("panelname");
+		
 		Class clazz = getClass(pClazz);
 		Map<String, String> requestParams = HttpUtil.requestParam2Map(request);
 		Map<Object, Object> queryParamValues = metaDataManager.genQueryParams(
@@ -421,12 +422,16 @@ public class ObjectData extends BaseServlet {
 		List queryList = page.list();
 		List<Map<String, Object>> listData = metaDataManager
 				.getEntityMapDataForList(clazz, queryList);
-		List<UserTableSetting> userVisibleColumns = metaDataManager
-				.getUserColumnForList(clazz);
-		//json = CoderForList.encode(userVisibleColumns, listData,total);
+//		List<UserTableSetting> userVisibleColumns = metaDataManager
+//				.getUserColumnForList(clazz);
+		
+		List<PagePanelColumn> pagePanelColumns=pageManager.getUserPagePanelColumn(panelName);
+		json = CoderForList.encode(pagePanelColumns, listData,total);
+		
 		return json;
 	}
 	
+	@SuppressWarnings("unused")
 	private int getInt(HttpServletRequest request,String param,int defaultValue){
 		String strValue = request.getParameter(param);
 		if(strValue==null){
@@ -441,7 +446,6 @@ public class ObjectData extends BaseServlet {
 		return json;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {

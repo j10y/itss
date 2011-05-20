@@ -31,6 +31,7 @@ import com.zsgj.info.framework.web.adapter.servlet.BaseServlet;
  * @Author sa
  * @Create In Mar 26, 2009
  */
+@SuppressWarnings("serial")
 public class FileUpDownData extends BaseServlet {
 	static final String FSP = System.getProperty("file.separator");
 	static final String LSP = System.getProperty("line.separator");
@@ -51,9 +52,10 @@ public class FileUpDownData extends BaseServlet {
 				msg = downloadFile(request, response);
 			}
 		}
-
+		System.out.println(msg);
 	}
 
+	@SuppressWarnings("deprecation")
 	private String downloadFile(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -63,7 +65,7 @@ public class FileUpDownData extends BaseServlet {
 				.findSystemMainTableColumnById(columnId);
 		SystemMainTable ftable = column.getForeignTable();
 		String uploadUrl = column.getUploadUrl();
-		String fileNamePrefix = column.getFileNamePrefix();
+//		String fileNamePrefix = column.getFileNamePrefix();
 		SystemMainTableColumn fileNameColumn = column.getFileNameColumn();
 		SystemMainTableColumn systemFileNameColumn = column
 				.getSystemFileNameColumn();

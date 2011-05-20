@@ -16,7 +16,7 @@ public class CoderForFind {
 		String json = "";
 		for(UserTableQueryColumn utqc :columns) {			
 			Column column = utqc.getColumn();
-			String columnName = column.getColumnName();
+//			String columnName = column.getColumnName();
 			String tableName=column.getSystemMainTable().getTableName();
 			String propertyName = column.getPropertyName();
 			String tablePropertyName=tableName+"$"+propertyName;

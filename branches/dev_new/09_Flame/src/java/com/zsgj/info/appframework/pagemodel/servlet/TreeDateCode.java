@@ -28,13 +28,13 @@ public class TreeDateCode {
 		temp+="{'company':'2. Alcoa Inc','_id':3,'_parent':1,'_level':2,'_lft':4,'_rgt':5,'_is_leaf':true}";
        temp+="]";
        
-		int _parent=0;
-		int _level=1;
-		int _lft=1;
-		int _rgt=20;
-		int y=8;
-		int x=1;
-		boolean _is_leaf=false;
+//		int _parent=0;
+//		int _level=1;
+//		int _lft=1;
+//		int _rgt=20;
+//		int y=8;
+//		int x=1;
+//		boolean _is_leaf=false;
 		
 		for(Object object :listData) {
 			String dataItem = "";
@@ -51,7 +51,7 @@ public class TreeDateCode {
 				String tableName = smt.getTableName();
 				String propertyName = column.getPropertyName();
 				String tablePropertyName = tableName + "$"+ propertyName;
-				String columnCnName = column.getColumnCnName();//表头标题
+//				String columnCnName = column.getColumnCnName();//表头标题
 				String columnTypeName = column.getSystemMainTableColumnType().getColumnTypeName();
 
 				if(columnTypeName.equalsIgnoreCase("hidden")) {
@@ -109,7 +109,7 @@ public class TreeDateCode {
 				String tableName = smt.getTableName();
 				String propertyName = column.getPropertyName();
 				String tablePropertyName = tableName + "$"+ propertyName;
-				String columnCnName = column.getColumnCnName();//表头标题
+//				String columnCnName = column.getColumnCnName();//表头标题
 				//String tablePropertyName = tableName + "." + propertyName;
 
 					String columnTypeName = column.getSystemMainTableColumnType().getColumnTypeName();

@@ -35,20 +35,20 @@ public class CoderForAdd {
 			String width = tableColumn.getLengthForPage();
 			String componentStr = "";
 			String columnType = tableColumn.getSystemMainTableColumnType().getColumnTypeName();
-			String type = tableColumn.getValidateType()==null?"":tableColumn.getValidateType().getValidateTypeName();
+//			String type = tableColumn.getValidateType()==null?"":tableColumn.getValidateType().getValidateTypeName();
 			isMustInput = ppc.getIsMustInput();
 			
 			//必填项		
-			String mustInput = "";
-			if(isMustInput.intValue()==1) {//必填
-				mustInput = "true";
-			}
-			else{//选填					
-			}
+//			String mustInput = "";
+//			if(isMustInput.intValue()==1) {//必填
+//				mustInput = "true";
+//			}
+//			else{//选填					
+//			}
 			
 			//校验器		
-			String validator = "";
-			validator = Validator.get(type);				
+//			String validator = "";
+//			validator = Validator.get(type);				
 			isDisplay = isDisplay||columnType.equalsIgnoreCase("hidden");				
 
 			//组件编码
@@ -108,7 +108,7 @@ public class CoderForAdd {
 			else if(columnType.equalsIgnoreCase("select")) {
 				Integer extSelectType = tableColumn.getExtSelectType();
 				List vList = (List)addMap.get(tablePropertyNames);
-				String vId = (String)addMap.get(tablePropertyName);
+//				String vId = (String)addMap.get(tablePropertyName);
 				String[][] values = new String[vList.size()][3];
 									
 				for(int i=0;i<vList.size();i++) {

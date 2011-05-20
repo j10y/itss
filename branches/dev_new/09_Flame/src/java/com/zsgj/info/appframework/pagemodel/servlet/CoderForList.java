@@ -23,7 +23,7 @@ public class CoderForList {
 				String tableName = smt.getTableName();
 				String propertyName = column.getPropertyName();
 				String tablePropertyName = tableName + "$"+ propertyName;
-				String columnCnName = column.getColumnCnName();//表头标题
+//				String columnCnName = column.getColumnCnName();//表头标题
 				//String tablePropertyName = tableName + "." + propertyName;
 
 					String columnTypeName = column.getSystemMainTableColumnType().getColumnTypeName();

@@ -14,13 +14,11 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 import com.jspsmart.upload.SmartUpload;
-import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.appframework.metadata.entity.SystemFile;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
-import com.zsgj.info.appframework.pagemodel.PageManager;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.service.Service;
@@ -32,11 +30,12 @@ import com.zsgj.info.framework.web.adapter.servlet.BaseServlet;
  * @Author sa
  * @Create In 2009-3-19 
  */
+@SuppressWarnings("serial")
 public class FileUpload extends BaseServlet {
 	static final String FSP = System.getProperty("file.separator");
 	static final String LSP = System.getProperty("line.separator");
-	private PageManager pageManager = (PageManager) ContextHolder.getBean("pageManager");
-	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
+//	private PageManager pageManager = (PageManager) ContextHolder.getBean("pageManager");
+//	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
 	private Service service = (Service) ContextHolder.getBean("baseService");	
 	private SystemMainColumnService smss = (SystemMainColumnService) ContextHolder.getBean("systemMainColumnService");
 	private SystemColumnService scs = (SystemColumnService) ContextHolder.getBean("systemColumnService");
@@ -46,6 +45,7 @@ public class FileUpload extends BaseServlet {
 		this.config = config;
 	}
 	    
+	@SuppressWarnings("deprecation")
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("gbk");

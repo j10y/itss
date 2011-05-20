@@ -42,6 +42,7 @@ public class FileDown extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward downloadFile(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -51,7 +52,7 @@ public class FileDown extends BaseDispatchAction {
 		SystemMainTableColumn column = smss.findSystemMainTableColumnById(columnId);
 		SystemMainTable ftable = column.getForeignTable();
 		String uploadUrl = column.getUploadUrl();
-		String fileNamePrefix = column.getFileNamePrefix();
+//		String fileNamePrefix = column.getFileNamePrefix();
 		SystemMainTableColumn fileNameColumn = column.getFileNameColumn();
 		SystemMainTableColumn systemFileNameColumn = column.getSystemFileNameColumn();	
 		//默认附件统一存储在com.digitalchina.info.appframework.metadata.entity.SystemFile

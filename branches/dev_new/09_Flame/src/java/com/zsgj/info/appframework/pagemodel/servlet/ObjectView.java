@@ -19,7 +19,6 @@ import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableQueryColumn;
-import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 import com.zsgj.info.appframework.pagemodel.PageManager;
 import com.zsgj.info.appframework.pagemodel.entity.PageGroupPanelTable;
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
@@ -33,19 +32,19 @@ import com.zsgj.info.appframework.pagemodel.entity.PagePanelRelation;
 import com.zsgj.info.appframework.pagemodel.service.PageGroupPanelService;
 import com.zsgj.info.appframework.pagemodel.service.PageModelService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelBtnService;
-import com.zsgj.info.appframework.pagemodel.service.PagePanelColumnService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.web.adapter.servlet.BaseServlet;
 
+@SuppressWarnings("serial")
 public class ObjectView extends BaseServlet {
 	private PageManager pageManager = (PageManager) ContextHolder.getBean("pageManager");
 	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
 	private Service service = (Service) ContextHolder.getBean("baseService");	
 	private PageModelService pageModelService = (PageModelService)ContextHolder.getBean("pageModelService");
 	private PagePanelService pagePanelService = (PagePanelService)ContextHolder.getBean("pagePanelService");
-	private PagePanelColumnService pagePanelColumnService = (PagePanelColumnService)ContextHolder.getBean("pagePanelColumnService");
+//	private PagePanelColumnService pagePanelColumnService = (PagePanelColumnService)ContextHolder.getBean("pagePanelColumnService");
 	private PagePanelBtnService pagePanelBtnService = (PagePanelBtnService)ContextHolder.getBean("pagePanelBtnService");
 //	private ConfigItemService configItemService = (ConfigItemService) ContextHolder.getBean("configItemService");
 	private PageGroupPanelService pgps = (PageGroupPanelService) ContextHolder.getBean("pageGroupPanelService");
@@ -105,9 +104,9 @@ public class ObjectView extends BaseServlet {
 		String panelName = request.getParameter("panelname");
     	PagePanel pagePanel = pagePanelService.findPagePanel(panelName);
     	if(pagePanel==null)return null;
-    	String className = pagePanel.getSystemMainTable().getClassName();
-    	List<UserTableSetting> utss = metaDataManager.getUserColumnForList(getClass(className));
-    	PagePanel panel=pagePanelService.findPagePanel(panelName);
+//    	String className = pagePanel.getSystemMainTable().getClassName();
+//    	List<UserTableSetting> utss = metaDataManager.getUserColumnForList(getClass(className));
+//    	PagePanel panel=pagePanelService.findPagePanel(panelName);
 		List<PagePanelColumn> pagePanelColumns=pageManager.getUserPagePanelColumn(panelName);
     	String json="";
         	for(PagePanelColumn ppcolumn : pagePanelColumns){  //改成遍历
@@ -246,6 +245,7 @@ public class ObjectView extends BaseServlet {
 	 * @param panel
 	 * @return String
 	 */
+	@SuppressWarnings("unused")
 	private String genPagePanelJson(PagePanel panel){
 		String json = "";
 		//PagePanel panel = pmp.getPagePanel();
@@ -363,7 +363,7 @@ public class ObjectView extends BaseServlet {
 
 	private String forModel(HttpServletRequest request) {
 		String keyName = request.getParameter("name");
-		String dataId = request.getParameter("dataId");
+//		String dataId = request.getParameter("dataId");
 		//根据model的关键字取model，此方法是考虑新的分组面板思想而设计的，底层主动获取分组面板的子面板
 		PageModel model = pageModelService.findPageModel$$$$$(keyName);
 		String json = "";
@@ -376,7 +376,7 @@ public class ObjectView extends BaseServlet {
 		json+="}],";
 		//end
 			
-		List<PageModelPanel> pmps = pmps = model.getPagePanels();
+		List<PageModelPanel> pmps = model.getPagePanels();
 		if(pmps.isEmpty()){
 			json=""; //告诉页面model没有选择panel
 			return json;
@@ -689,9 +689,10 @@ public class ObjectView extends BaseServlet {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unchecked")
 	private String forQuery(HttpServletRequest request) {
 		String json = "";
-		String id = request.getParameter("id");
+//		String id = request.getParameter("id");
 		String panelName = request.getParameter("panelname");
 		PagePanel panel=pagePanelService.findPagePanel(panelName);
 		SystemMainTable smt = panel.getSystemMainTable();
@@ -710,6 +711,7 @@ public class ObjectView extends BaseServlet {
 	 * @param request
 	 * @return String
 	 */
+	@SuppressWarnings("unchecked")
 	private String forHtmlQuery(HttpServletRequest request) {
 		String json = "";
 		String className = request.getParameter("clazz");
@@ -728,7 +730,6 @@ public class ObjectView extends BaseServlet {
 	 * @return
 	 * @ReturnType String
 	 */
-	@SuppressWarnings("unchecked")
 	private String forListHead(HttpServletRequest request) {
 		String json = "";
 		String panelName = request.getParameter("panelname");
@@ -758,7 +759,6 @@ public class ObjectView extends BaseServlet {
 		return json;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {
