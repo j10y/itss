@@ -13,7 +13,7 @@
 		<property name="systemFileName" type="string">
 			<column name="systemFileName"></column>
 		</property>
-		<many-to-one name="uploadUser" class="com.zsgj.info.framework.security.entity.UserInfo" >
+		<many-to-one name="uploadUser" class="com.zsgj.info.framework.security.entity.UserInfo" not-found="ignore">
             <column name="uploadUser" />
         </many-to-one>
 		<property name="uploadDate" type="date">

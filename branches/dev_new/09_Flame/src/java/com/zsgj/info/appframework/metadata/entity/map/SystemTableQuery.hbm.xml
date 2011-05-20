@@ -19,7 +19,7 @@
         <property name="queryType" type="integer" column="queryType"/> 		
         
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="SystemMainTableID" />
+        			column="SystemMainTableID" not-found="ignore"/>
 
 		<set name="queryColumns" inverse="true" lazy="true" order-by="orderFlag" cascade="delete">
 		  <key column="SystemTableQueryID"></key>

@@ -12,16 +12,16 @@
         </id>
      
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="systemMainTable" />
+        			column="systemMainTable" not-found="ignore"/>
         			
         <many-to-one name="mainTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="mainTableColumn" cascade="none" />
+        			column="mainTableColumn" cascade="none" not-found="ignore"/>
         <!--  	
         <many-to-one name="extendTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn" 
         			column="extendTableColumn" />		
 		-->
 	    <many-to-one name="operator" class="com.zsgj.info.appframework.metadata.entity.Operator" 
-        			column="operator" />
+        			column="operator" not-found="ignore"/>
         			
         <property name="value" type="string" column="value_"/>
         

@@ -8,10 +8,10 @@
             <column name="id" />
             <generator class="native" />
         </id>
-        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" fetch="join" lazy="false">
+        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" fetch="join" lazy="false" not-found="ignore">
             <column name="userInfo" />
         </many-to-one>
-      	<many-to-one name="templateMenuItem" class="com.zsgj.info.appframework.menu.entity.TemplateMenuItem" >
+      	<many-to-one name="templateMenuItem" class="com.zsgj.info.appframework.menu.entity.TemplateMenuItem" not-found="ignore">
       		<column name="templateMenuItem" />
       	</many-to-one>
     </class>

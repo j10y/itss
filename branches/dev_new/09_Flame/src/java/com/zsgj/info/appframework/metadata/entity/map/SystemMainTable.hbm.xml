@@ -18,10 +18,10 @@
         <property name="columnSum" type="integer" column="ColumnSum"/>
 
         <many-to-one name="primaryKeyColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="PrimaryKeyColumnId"/>
+        			column="PrimaryKeyColumnId" not-found="ignore"/>
         
         <many-to-one name="parentColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="ParentColumnID" />
+        			column="ParentColumnID" not-found="ignore" />
         			
         <property name="level" type="integer" column="levelFlag"/>
         <property name="showLeafOnly" type="integer" column="ShowLeafOnly"/>
@@ -39,7 +39,7 @@
 		</set>
 		 -->
         <many-to-one name="module" class="com.zsgj.info.framework.security.entity.Module" 
-        			column="ModuleID"/>
+        			column="ModuleID" not-found="ignore"/>
         			
 		 <property name="descn" type="string" column="descn"/>
 		 
@@ -50,7 +50,7 @@
     	 <property name="deployFlag" type="integer" column="deployFlag"/>
     	 
     	  <many-to-one name="template"  column="template"  
-					   class="com.zsgj.info.appframework.template.entity.Template" />  
+					   class="com.zsgj.info.appframework.template.entity.Template" not-found="ignore"/>  
 					   
 		 <set name="userTableSettings" table="sys_UserTableSetting" inverse="true" cascade="all">
         	<key column="SystemMainTableID"/>

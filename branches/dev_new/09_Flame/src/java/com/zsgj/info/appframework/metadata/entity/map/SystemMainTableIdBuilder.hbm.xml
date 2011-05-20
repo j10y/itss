@@ -16,12 +16,12 @@
         <many-to-one 
 			      name="systemMainTable" 
 			      class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-			      column="systemMainTable" />
+			      column="systemMainTable" not-found="ignore"/>
 			      
 		<property name="tableName" type="string" column="tableName"/>	   
 		   
 		<many-to-one name="department"  column="department" 
-					   class="com.zsgj.info.framework.security.entity.Department" /> 
+					   class="com.zsgj.info.framework.security.entity.Department" not-found="ignore"/> 
 					   
 		<property name="prefix" type="string" column="prefix"/>	   
 		

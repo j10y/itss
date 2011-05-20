@@ -17,12 +17,12 @@
         <property name="roleSettingCnName" type="string" column="roleSettingCnName"/>
         
         <many-to-one name="role" class="com.zsgj.info.framework.security.entity.Role" 
-        			column="ROLE" fetch="join" lazy="false"/>		
+        			column="ROLE" fetch="join" lazy="false" not-found="ignore"/>		
         
         <property name="settingType" type="integer" column="settingType"/>
         
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="SystemMainTableID" />
+        			column="SystemMainTableID" not-found="ignore"/>
 
     </class>
 </hibernate-mapping>

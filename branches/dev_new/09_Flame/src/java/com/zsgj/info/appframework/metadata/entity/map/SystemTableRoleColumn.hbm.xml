@@ -14,13 +14,13 @@
    
      
      <many-to-one name="systemTableRole" class="com.zsgj.info.appframework.metadata.entity.SystemTableRole" 
-        			column="systemTableRole"/>
+        			column="systemTableRole" not-found="ignore"/>
         			
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="SystemMainTableID" />
+        			column="SystemMainTableID" not-found="ignore"/>
         			
         <many-to-one name="mainTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="MainTableColumnID" cascade="none" />
+        			column="MainTableColumnID" cascade="none" not-found="ignore"/>
         <!-- 		
         <many-to-one name="extendTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn" 
         			column="ExtendTableID" />

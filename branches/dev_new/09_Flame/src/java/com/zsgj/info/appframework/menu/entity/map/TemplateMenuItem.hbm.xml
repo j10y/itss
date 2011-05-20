@@ -15,7 +15,7 @@
             <column name="menuUrl" />
         </property>
         <many-to-one name="parentItem"  column="parentItem"  
-					   class="com.zsgj.info.appframework.menu.entity.TemplateMenuItem" />
+					   class="com.zsgj.info.appframework.menu.entity.TemplateMenuItem" not-found="ignore"/>
 
         <property name="leafFlag" type="integer">
             <column name="leafFlag" />

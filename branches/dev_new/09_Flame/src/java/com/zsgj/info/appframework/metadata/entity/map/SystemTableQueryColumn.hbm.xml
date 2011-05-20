@@ -13,14 +13,14 @@
         </id>
         
         <many-to-one name="systemTableQuery" class="com.zsgj.info.appframework.metadata.entity.SystemTableQuery" 
-        			column="SystemTableQueryID"/>
+        			column="SystemTableQueryID" not-found="ignore"/>
         
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="SystemMainTableID" />
+        			column="SystemMainTableID" not-found="ignore"/>
         			
         
   		<many-to-one name="matchMode" class="com.zsgj.info.appframework.metadata.entity.MatchMode" 
-        			column="MatchMode" fetch="join" lazy="false"/>
+        			column="MatchMode" fetch="join" lazy="false" not-found="ignore"/>
         
         <property name="lengthForPage" type="string" column="lengthForPage"/>
         <property name="isMustInput" type="integer" column="isMustInput"/>
@@ -28,7 +28,7 @@
         
         <property name="isHiddenItem" type="integer" column="isHiddenItem"/>
         <many-to-one name="mainTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="MainTableColumnID" cascade="none" />
+        			column="MainTableColumnID" cascade="none" not-found="ignore"/>
         <!-- 			
         <many-to-one name="extendTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn" 
         			column="ExtendTableID" />

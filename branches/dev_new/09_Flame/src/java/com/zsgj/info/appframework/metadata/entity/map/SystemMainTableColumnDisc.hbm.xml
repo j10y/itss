@@ -14,19 +14,19 @@
         <many-to-one 
 			      name="systemMainTable" 
 			      class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-			      column="systemMainTable" fetch="join" lazy="false" />
+			      column="systemMainTable" fetch="join" lazy="false" not-found="ignore"/>
 			      
 	    <many-to-one name="abstractColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-                  column="abstractColumn"/>        
+                  column="abstractColumn" not-found="ignore"/>        
 			      
         <many-to-one name="discColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-                  column="discColumn"/> 
+                  column="discColumn" not-found="ignore"/> 
                   			
         <property name="discValue" type="string" column="discValue"/>
         
         <many-to-one 
 			      name="abstractTable" 
 			      class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-			      column="abstractTable" fetch="join" lazy="false" />
+			      column="abstractTable" fetch="join" lazy="false" not-found="ignore"/>
    </class>
 </hibernate-mapping>

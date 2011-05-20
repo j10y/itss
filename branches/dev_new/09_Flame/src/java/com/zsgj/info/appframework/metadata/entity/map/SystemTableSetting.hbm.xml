@@ -13,10 +13,10 @@
         </id>
      
         <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" 
-        			column="SystemMainTableID" />
+        			column="SystemMainTableID" not-found="ignore"/>
         			
         <many-to-one name="mainTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn" 
-        			column="MainTableColumnID" cascade="none" />
+        			column="MainTableColumnID" cascade="none" not-found="ignore"/>
         <!-- 			
         <many-to-one name="extendTableColumn" class="com.zsgj.info.appframework.metadata.entity.SystemMainTableExtColumn" 
         			column="ExtendTableID" />
@@ -24,7 +24,7 @@
        <property name="settingType" type="integer" column="SettingType" update="false"/> 			
 
 	   <many-to-one name="role" class="com.zsgj.info.framework.security.entity.Role" 
-        			column="role" />
+        			column="role" not-found="ignore"/>
         			
         <property name="isDisplay" type="integer" column="isDisplay"/>
  		<property name="order" type="integer" column="orderFlag"/>
