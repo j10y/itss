@@ -29,7 +29,7 @@
             <column name="ends" />
         </property>       
         
-        <many-to-one name="nodeInfo" class="com.zsgj.info.framework.workflow.info.NodeInfo" fetch="join" lazy="false" >
+        <many-to-one name="nodeInfo" class="com.zsgj.info.framework.workflow.info.NodeInfo" fetch="join" lazy="false" not-found="ignore">
             <column name="nodeInfo" />
         </many-to-one>
         

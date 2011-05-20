@@ -15,9 +15,9 @@
         </id>       
       
         <many-to-one name="role" class="com.zsgj.info.framework.security.entity.Role" 
-        			column="ROLE_ID" fetch="join" lazy="false"/>
+        			column="ROLE_ID" fetch="join" lazy="false" not-found="ignore"/>
              
-        <many-to-one name="workflowRole" class="com.zsgj.info.framework.workflow.entity.WorkflowRole" fetch="join" lazy="false" >
+        <many-to-one name="workflowRole" class="com.zsgj.info.framework.workflow.entity.WorkflowRole" fetch="join" lazy="false" not-found="ignore">
             <column name="workflowRole" />
         </many-to-one>
         

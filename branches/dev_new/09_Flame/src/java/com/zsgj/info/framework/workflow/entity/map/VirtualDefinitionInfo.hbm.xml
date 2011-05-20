@@ -42,11 +42,11 @@
             <column name="emailTemplate" />
         </property>
         
-        <many-to-one name="dept" class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false" >
+        <many-to-one name="dept" class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false" not-found="ignore">
             <column name="dept" />
         </many-to-one>
         
-        <many-to-one name="type" class="com.zsgj.info.framework.security.entity.Module" fetch="join" lazy="false" >
+        <many-to-one name="type" class="com.zsgj.info.framework.security.entity.Module" fetch="join" lazy="false" not-found="ignore">
             <column name="type" />
         </many-to-one>
         

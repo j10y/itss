@@ -22,7 +22,7 @@
             <column name="nodeName" />
         </property>         
         
-        <many-to-one name="nodeType" class="com.zsgj.info.framework.workflow.entity.NodeType" fetch="join" lazy="false" >
+        <many-to-one name="nodeType" class="com.zsgj.info.framework.workflow.entity.NodeType" fetch="join" lazy="false" not-found="ignore">
             <column name="nodeType" />
         </many-to-one>        
         

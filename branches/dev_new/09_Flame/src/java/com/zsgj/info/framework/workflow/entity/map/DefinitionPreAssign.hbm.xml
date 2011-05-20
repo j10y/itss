@@ -34,7 +34,7 @@
             <column name="nodeName" />
         </property>
         
-        <many-to-one name="workflowRole" class="com.zsgj.info.framework.workflow.entity.WorkflowRole" fetch="join" lazy="false" >
+        <many-to-one name="workflowRole" class="com.zsgj.info.framework.workflow.entity.WorkflowRole" fetch="join" lazy="false" not-found="ignore">
             <column name="workflowRole" />
         </many-to-one>
         

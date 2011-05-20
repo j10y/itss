@@ -22,7 +22,7 @@
             <column name="deleteflag" />
         </property>          
         
-        <many-to-one name="parenteType" class="com.zsgj.info.framework.workflow.entity.DefinitionType" fetch="join" lazy="false" >
+        <many-to-one name="parenteType" class="com.zsgj.info.framework.workflow.entity.DefinitionType" fetch="join" lazy="false" not-found="ignore">
             <column name="parenteType" />
         </many-to-one>
         

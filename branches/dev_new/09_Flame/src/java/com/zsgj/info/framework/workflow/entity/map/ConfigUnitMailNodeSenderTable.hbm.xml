@@ -18,11 +18,11 @@
             <column name="mail" />
         </property>
         
-        <many-to-one name="mailNodeSender" class="com.zsgj.info.framework.workflow.entity.ConfigUnitMailNodeSender" >
+        <many-to-one name="mailNodeSender" class="com.zsgj.info.framework.workflow.entity.ConfigUnitMailNodeSender" not-found="ignore">
             <column name="mailNodeSender" />
         </many-to-one>
         
-        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" column="userInfo" />
+        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" column="userInfo" not-found="ignore"/>
         		
        </class>
 </hibernate-mapping>

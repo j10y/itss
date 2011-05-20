@@ -16,11 +16,11 @@
         <property name="mail" type="string">
             <column name="mail" />
         </property>
-        <many-to-one name="configUnitMail" class="com.zsgj.info.framework.workflow.entity.ConfigUnitMail" >
+        <many-to-one name="configUnitMail" class="com.zsgj.info.framework.workflow.entity.ConfigUnitMail" not-found="ignore">
             <column name="configUnitMail" />
         </many-to-one>
         
-        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" column="userInfo" />
+        <many-to-one name="userInfo" class="com.zsgj.info.framework.security.entity.UserInfo" column="userInfo" not-found="ignore"/>
         		
        </class>
 </hibernate-mapping>

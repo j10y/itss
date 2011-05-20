@@ -18,7 +18,7 @@
             <column name="nodeType" />
         </property>    
                 
-        <many-to-one name="configUnit" class="com.zsgj.info.framework.workflow.entity.ConfigUnit" fetch="join" lazy="false" >
+        <many-to-one name="configUnit" class="com.zsgj.info.framework.workflow.entity.ConfigUnit" fetch="join" lazy="false" not-found="ignore">
             <column name="configUnit" />
         </many-to-one>
        </class>

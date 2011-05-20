@@ -22,11 +22,11 @@
             <column name="workflowBrowsePerson" />
         </property>
         
-        <many-to-one name="configUnitRole" class="com.zsgj.info.framework.workflow.entity.ConfigUnitRole" >
+        <many-to-one name="configUnitRole" class="com.zsgj.info.framework.workflow.entity.ConfigUnitRole" not-found="ignore">
             <column name="configUnitRole" />
         </many-to-one>
         
-        <many-to-one name="role" class="com.zsgj.info.framework.security.entity.Role">
+        <many-to-one name="role" class="com.zsgj.info.framework.security.entity.Role" not-found="ignore">
             <column name="role" />
         </many-to-one>
        
