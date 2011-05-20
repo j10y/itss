@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.info.bussutil.protal.entity.Portlet"
+		table="sys_portlet">
+		<id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+		<property name="name" type="string">
+			<column name="name"></column>
+		</property>
+		<property name="source" type="text">
+			<column name="source"></column>
+		</property>
+		<property name="url" length="255" type="string">
+		  <column name="url"></column>
+		</property>
+		<property name="imageSrc" length="255" type="string">
+		  <column name="imageSrc"></column>
+		</property>
+		<property name="createTime" type="timestamp" update="false">
+			<column name="createTime"></column>
+		</property>
+		<property name="init" length="255" type="string">
+		  <column name="init"></column>
+		</property>
+		
+		<property name="defalutRefersh" type="long">
+		  <column name="defalutRefersh"></column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+           default-autowire="byName" >
+           
+   
+	<!-- 系统原数据类型 -->
+	
+	<bean id="currencyTextMetaType" class="com.zsgj.info.appframework.metadata.type.impl.CurrencyTextMetaType"/>
+	<bean id="dateTextMetaType" class="com.zsgj.info.appframework.metadata.type.impl.DateTextMetaType"/>
+	<bean id="genderMetaType" class="com.zsgj.info.appframework.metadata.type.impl.GenderMetaType"/>
+	<bean id="hiddenMetaType" class="com.zsgj.info.appframework.metadata.type.impl.HiddenMetaType"/>
+
+	<bean id="radioMetaType" class="com.zsgj.info.appframework.metadata.type.impl.RadioMetaType" />
+	<bean id="richTextAreaMetaType" class="com.zsgj.info.appframework.metadata.type.impl.RichTextAreaMetaType"/>
+	
+	<bean id="textAreaMetaType" class="com.zsgj.info.appframework.metadata.type.impl.TextAreaMetaType"/>
+	<bean id="textMetaType" class="com.zsgj.info.appframework.metadata.type.impl.TextMetaType"/>
+	<bean id="yesNoSelectMetaType" class="com.zsgj.info.appframework.metadata.type.impl.YesNoSelectMetaType"/>
+	
+	<bean id="selectMetaType" class="com.zsgj.info.appframework.metadata.type.impl.SelectMetaType"/>
+	
+	<bean id="multiSelectMetaType" class="com.zsgj.info.appframework.metadata.type.impl.MultiSelectMetaType"/>
+	<bean id="parentChildSelectMetaType" class="com.zsgj.info.appframework.metadata.type.impl.ParentChildSelectMetaType"/>
+	
+	<!-- 元数据管理器 -->
+	<bean id="metaDataManager" class="com.zsgj.info.appframework.metadata.impl.MetaDataManagerImpl">
+		<property name="systemMainTableService" ref="systemMainTableService"/>
+		<!--
+		<property name="systemMainColumnService" ref="systemMainColumnService"/>
+		 -->
+		<property name="userColumnService" ref="userColumnService"/>
+		<property name="systemColumnService" ref="systemColumnService"/>
+		<property name="queryService" ref="columnQueryServiceDefaultImpl"/>
+		<property name="baseService" ref="baseService"/>
+	</bean>
+	
+	<!-- 系统主表服务 -->
+	<bean id="systemMainTableService" class="com.zsgj.info.appframework.metadata.service.impl.SystemMainTableServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<!-- 系统主字段服务 -->
+	<bean id="systemMainColumnService" class="com.zsgj.info.appframework.metadata.service.impl.SystemMainColumnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<!-- 系统扩展字段服务 
+	<bean id="systemExtColumnService" class="com.zsgj.info.appframework.metadata.service.impl.SystemExtColumnServcieImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	-->
+	<!-- 系统主表字段和扩展字段合并服务 -->
+	<bean id="systemMainAndExtColumnService" class="com.zsgj.info.appframework.metadata.service.impl.SystemMainAndExtColumnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<!-- 系统字段服务，抽象主字段与扩展字段 -->
+	<bean id="systemColumnService" class="com.zsgj.info.appframework.metadata.service.impl.SystemColumnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="systemMainAndExtColumnService" ref="systemMainAndExtColumnService"/>
+		<property name="systemMainColumnService" ref="systemMainColumnService"/>
+		<!--  <property name="systemExtColumnService" ref="systemExtColumnService"/>-->
+	</bean>
+	
+	<!-- 用户可见字段设服务 -->
+	<bean id="userColumnService" class="com.zsgj.info.appframework.metadata.service.impl.UserColumnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="systemMainTableService" ref="systemMainTableService"/>
+		<property name="systemMainColumnService" ref="systemMainColumnService"/>
+		<!-- <property name="systemExtColumnService" ref="systemExtColumnService"/>-->
+		<property name="systemColumnService" ref="systemColumnService"/>
+	</bean>
+	
+	<!-- 字段查询服务默认实现类 -->
+	<bean id="columnQueryServiceDefaultImpl" class="com.zsgj.info.appframework.metadata.impl.ColumnQueryServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="deptService" ref="deptService"/>
+	</bean>
+
+    <bean id="pageModelService" class="com.zsgj.info.appframework.pagemodel.service.impl.PageModelServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+    <bean id="pagePanelService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+		<bean id="pageGroupPanelService" class="com.zsgj.info.appframework.pagemodel.service.impl.PageGroupPanelServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="pagePanelColumnService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelColumnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="pageModelPanelService" class="com.zsgj.info.appframework.pagemodel.service.impl.PageModelPanelServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="pagePanelTableService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelTableServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="pagePanelBtnService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelBtnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="pagePanelTableRelationService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelTableRelationServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<!-- 用户自服务建表的service方法 -->
+	<bean id="userListTableService" class="com.zsgj.info.appframework.pagemodel.service.impl.UserListTableServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>	
+		<property name="systemColumnService" ref="systemColumnService"/>	
+	</bean>
+	
+	<bean id="PagePanelBtnService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelBtnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+
+	<bean id="pagePanelRelationService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelRelationServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+
+	<bean id="pageModelGenService"  class="com.zsgj.info.appframework.pagemodel.service.impl.PageModelGenServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="metaDataManager" ref="metaDataManager"/>
+		<property name="pageModelService" ref="pageModelService"/>
+		<property name="pagePanelService" ref="pagePanelService"/>
+		<property name="pagePanelColumnService" ref="pagePanelColumnService"/>
+	</bean>
+	
+	<bean id="pageQueryService"  class="com.zsgj.info.appframework.pagemodel.impl.PageDefaultQueryServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+
+	<bean id="pageManager" class="com.zsgj.info.appframework.pagemodel.impl.PageManagerImpl">
+		<property name="service" ref="baseService"/>
+		<property name="metaDataManager" ref="metaDataManager"/>
+		<property name="pageModelService" ref="pageModelService"/>
+		<property name="pagePanelService" ref="pagePanelService"/>
+		<property name="pageModelPanelService" ref="pageModelPanelService"/>
+		<property name="pagePanelColumnService" ref="pagePanelColumnService"></property>
+		<property name="systemColumnService" ref="systemColumnService"/>
+		<property name="pageQueryService" ref="pageQueryService"/>
+		<property name="pageGroupPanelService" ref="pageGroupPanelService"/>
+	</bean>
+	
+	<bean id="systemTableIdGenService" class="com.zsgj.info.appframework.metadata.service.impl.SystemTableIdGenServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="pagePanelFieldSetService" class="com.zsgj.info.appframework.pagemodel.service.impl.PagePanelFieldSetServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="idGeneratorDao" class="com.zsgj.info.appframework.metadata.dao.impl.IdGeneratorDaoImp">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>	
+	
+	<bean id="idGeneratorService" class="com.zsgj.info.appframework.metadata.service.impl.IdGeneratorServiceImp">
+		<property name="idGeneratorDao" ref="idGeneratorDao"></property>
+	</bean>
+	
+</beans>

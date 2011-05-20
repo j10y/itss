@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security
+           				http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+ 
+	 <bean id="messages"
+		class="com.zsgj.info.framework.security.service.impl.SecurityMessageServiceImpl" />
+		
+	<!-- 登陆用户操作日志 -->
+	<bean id="logUserActionService" class="com.zsgj.info.framework.security.service.impl.LogUserActionServiceImpl" >
+		<property name="securityManageDao" ref="securityManageDao" />
+	</bean>
+ 
+  	<sec:http access-denied-page="${system.security.errorPage}"><!-- 当访问被拒绝时，会转到403.jsp -->
+        <sec:intercept-url pattern="${system.security.loginFormUrl}" filters="none" />
+        <sec:form-login login-page="${system.security.loginFormUrl}"
+            authentication-failure-url="${system.security.authenticationFailureUrl}"
+            default-target-url="${system.security.defaultTargetUrl}" />
+        <sec:logout logout-success-url="${system.security.loginFormUrl}" />
+        <sec:http-basic />
+        <!-- 增加一个filter，这点与Acegi是不一样的，不能修改默认的filter了，这个filter位于FILTER_SECURITY_INTERCEPTOR之前 -->
+        <sec:custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="fsi" />
+        
+        <sec:custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrentSessionFilter" />
+	    <sec:session-management session-authentication-strategy-ref="sas"/>
+	    
+    </sec:http>
+    
+    <!-- 限制用户只能登陆一次 -->
+	<bean id="concurrentSessionFilter"
+		class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<property name="expiredUrl" value="${system.security.loginFormUrl}" />
+		<property name="sessionRegistry" ref="sessionRegistry" />
+	</bean>
+    
+    <bean id="sas"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<property name="maximumSessions" value="${system.security.maximumSessions}" />
+		<constructor-arg name="sessionRegistry" ref="sessionRegistry" />		
+		<property name="exceptionIfMaximumExceeded" value="${system.security.maximumExceeded}" />
+	</bean>
+
+	<bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+		
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider ref="daoAuthenticationProvider"/>
+    </sec:authentication-manager>
+
+	<bean id="daoAuthenticationProvider"
+		class="com.zsgj.info.framework.security.service.impl.LdapDaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService" />
+		<property name="isSystemAdmin"
+			value="${system.adminkey.systemadmin}" />
+		<property name="isUserAdmin"
+			value="${system.adminkey.useradmin}" />
+		<property name="hideUserNotFoundExceptions"  value="${system.security.messageEnable}" />
+		<property name="isLdap" value="${system.security.usedLdap}" />
+		<property name="ldap" ref="ldapService" />
+		<property name="messages" ref="messages" />
+		<property name="userCache" ref="userCache" />
+	</bean>
+	
+    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg value="${system.security.cas.loginPath}"/>
+        <property name="filterProcessesUrl" value="${system.security.cas.loginOutPath}" />
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+    </bean>
+ 
+    <bean id="servletContext" class="org.springframework.web.context.support.ServletContextFactoryBean"/>
+ 
+   <bean id="fsi" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="securityMetadataSource" ref="filterDefinitionSource" />
+    </bean>
+
+    
+	<!-- 基于URL的安全拦截器  --> 	
+	<bean id="filterDefinitionSource"
+		class="com.zsgj.info.framework.aop.interceptor.DBFilterDefinitionSource">
+		<property name="convertUrlToLowercaseBeforeComparison"
+			value="false" />
+		<property name="useAntPath" value="${system.security.useAntPath}" />
+		<property name="acegiCacheService" ref="acegiCacheService" />
+	</bean>
+	
+	<bean id="accessDecisionManager"
+		class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<ref bean="urlRoleVoter" />
+			</list>
+		</property>
+		<property name="allowIfAllAbstainDecisions" value="false" />
+	</bean>
+	<bean id="urlRoleVoter" class="org.springframework.security.access.vote.RoleVoter">
+		<property name="rolePrefix" value="${system.security.auth.urlPrefix}"/>
+	</bean>
+
+	<!-- 基于Method的安全拦截器 -->
+	<bean id="methodSecurityInterceptor"
+		class="org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="accessDecisionManager"
+			ref="businessAccessDecisionManager" />
+		 <property name="securityMetadataSource"
+			ref="methodDefinitionSource">
+		</property>
+	</bean>
+
+	<bean id="methodDefinitionSource"
+		class="com.zsgj.info.framework.aop.interceptor.DBMethodDefinitionSource">
+		<property name="acegiCacheService" ref="acegiCacheService" />
+	</bean>
+
+	<bean id="businessAccessDecisionManager"
+		class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<ref bean="methodRoleVoter" />
+			</list>
+		</property>
+		<property name="allowIfAllAbstainDecisions" value="false" />
+	</bean>
+	<bean id="methodRoleVoter"
+		class="org.springframework.security.access.vote.RoleVoter">
+		<property name="rolePrefix" value="${system.security.auth.fnPrefix}">
+		</property>
+	</bean>
+     
+    
+	
+	<!-- AcegiUserDetailServiceImpl为基于Acegi的UserService实现类 -->
+	<bean id="userDetailsService"
+		class="com.zsgj.info.framework.security.service.impl.UserDetailServiceHibernateImpl">
+		<property name="userDao" ref="userDao" />
+		<property name="acegiRoleDao" ref="acegiRoleDao" />
+		<property name="securityManageService" ref="securityManageService"/>
+	</bean>
+
+	<bean id="userDao"
+		class="com.zsgj.info.framework.security.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<bean id="acegiRoleDao"
+		class="com.zsgj.info.framework.security.dao.impl.AcegiRoleDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+
+	<!-- 缓存器设置  -->
+	<bean id="userCacheBackend"
+		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="userCache" />
+	</bean>
+	<bean id="userCache"
+		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache"
+		autowire="byName">
+		<property name="cache" ref="userCacheBackend" />
+	</bean>
+	<bean id="resourceCacheBackend"
+		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="resourceCache" />
+	</bean>
+	<bean id="resourceCache"
+		class="com.zsgj.info.framework.security.cache.ResourceCache"
+		autowire="byName">
+		<property name="cache" ref="resourceCacheBackend" />
+	</bean>
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+
+	<bean id="acegiCacheService"
+		class="com.zsgj.info.framework.security.cache.AcegiCacheServiceImpl">
+		<property name="userCache" ref="userCache" />
+		<property name="resourceCache" ref="resourceCache" />
+		<property name="userDao" ref="userDao" />
+		<property name="acegiRoleDao" ref="acegiRoleDao" />
+		<property name="securityManageDao" ref="securityManageDao" />
+	</bean>
+
+</beans>

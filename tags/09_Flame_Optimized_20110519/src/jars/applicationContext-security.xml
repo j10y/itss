@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security
+           				http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+ 
+	<!-- 登陆用户操作日志 -->
+	<bean id="logUserActionService" class="com.zsgj.info.framework.security.service.impl.LogUserActionServiceImpl" >
+		<property name="securityManageDao" ref="securityManageDao" />
+	</bean>
+	
+    <bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+        <sec:filter-chain-map path-type="ant">
+        	<sec:filter-chain pattern="/js/**" filters="none" />
+        	<sec:filter-chain pattern="/css/**" filters="none" />
+        	<sec:filter-chain pattern="/images/**" filters="none" />
+        	<sec:filter-chain pattern="/ext-3.2.1/**" filters="none" />
+        	<sec:filter-chain pattern="/extEngine/**" filters="none" />
+        	<sec:filter-chain pattern="/FCKeditor/**" filters="none" />
+        	<sec:filter-chain pattern="/treegrid/**" filters="none" />
+        	<sec:filter-chain pattern="/**/**/*.js" filters="none" />
+        	<sec:filter-chain pattern="/**/*.js" filters="none" />
+        	<sec:filter-chain pattern="/*.js" filters="none" />
+        	
+            <sec:filter-chain pattern="/" filters="casValidationFilter, wrappingFilter" />
+            <sec:filter-chain pattern="/secure/receptor" filters="casValidationFilter" />
+            <sec:filter-chain pattern="/j_spring_security_logout" filters=",etf,fsi" />
+            <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,j2eePreAuthFilter,logoutFilter,etf,fsi"/>
+        </sec:filter-chain-map>
+    </bean>
+ 
+    <bean id="sif" class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
+ 
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider ref="preAuthAuthProvider"/>
+    </sec:authentication-manager>
+ 
+     <bean id="preAuthAuthProvider" class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+        <property name="preAuthenticatedUserDetailsService">
+            <bean id="userDetailsServiceWrapper" class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+                <property name="userDetailsService" ref="userDetailsService"/>
+            </bean>
+        </property>
+    </bean>
+ 
+    <bean id="preAuthEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint" />
+ 
+    <bean id="j2eePreAuthFilter" class="org.springframework.security.web.authentication.preauth.j2ee.J2eePreAuthenticatedProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationDetailsSource">
+            <bean class="org.springframework.security.web.authentication.WebAuthenticationDetailsSource" />
+        </property>
+    </bean>
+ 
+    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg value="/"/>
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+    </bean>
+ 
+    <bean id="servletContext" class="org.springframework.web.context.support.ServletContextFactoryBean"/>
+ 
+    <bean id="etf" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint" ref="preAuthEntryPoint"/>
+        <property name="accessDeniedHandler">
+			<bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+				<property name="errorPage" value="${system.security.errorPage}" />
+			</bean>
+		</property>
+    </bean>
+ 
+   <bean id="fsi" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="securityMetadataSource" ref="filterDefinitionSource" />
+    </bean>
+
+    <bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter"/>
+    
+    
+	<!-- 基于URL的安全拦截器  --> 	
+	<bean id="filterDefinitionSource"
+		class="com.zsgj.info.framework.aop.interceptor.DBFilterDefinitionSource">
+		<property name="convertUrlToLowercaseBeforeComparison"
+			value="false" />
+		<property name="useAntPath" value="${system.security.useAntPath}" />
+		<property name="acegiCacheService" ref="acegiCacheService" />
+	</bean>
+	
+	<bean id="accessDecisionManager"
+		class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<ref bean="urlRoleVoter" />
+			</list>
+		</property>
+		<property name="allowIfAllAbstainDecisions" value="false" />
+	</bean>
+	<bean id="urlRoleVoter" class="org.springframework.security.access.vote.RoleVoter">
+		<property name="rolePrefix" value="${system.security.auth.urlPrefix}"/>
+	</bean>
+
+	<!-- 基于Method的安全拦截器 -->
+	<bean id="methodSecurityInterceptor"
+		class="org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="accessDecisionManager"
+			ref="businessAccessDecisionManager" />
+		 <property name="securityMetadataSource"
+			ref="methodDefinitionSource">
+		</property>
+	</bean>
+
+	<bean id="methodDefinitionSource"
+		class="com.zsgj.info.framework.aop.interceptor.DBMethodDefinitionSource">
+		<property name="acegiCacheService" ref="acegiCacheService" />
+	</bean>
+
+	<bean id="businessAccessDecisionManager"
+		class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<ref bean="methodRoleVoter" />
+			</list>
+		</property>
+		<property name="allowIfAllAbstainDecisions" value="false" />
+	</bean>
+	<bean id="methodRoleVoter"
+		class="org.springframework.security.access.vote.RoleVoter">
+		<property name="rolePrefix" value="${system.security.auth.fnPrefix}">
+		</property>
+	</bean>
+     
+    <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator" id="ticketValidator">
+        <constructor-arg index="0" value="${system.security.cas.path}" />
+        <property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage" />
+        <property name="proxyCallbackUrl" value="${system.security.cas.clientPath}/secure/receptor" />
+    </bean>
+ 
+    <bean id="proxyGrantingTicketStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl" />
+
+    <bean id="casAuthenticationFilter" class="org.jasig.cas.client.authentication.AuthenticationFilter">
+        <property name="casServerLoginUrl" value="${system.security.cas.loginPath}" />
+        <property name="serverName" value="${system.security.cas.clientPath}" />
+    </bean>
+ 
+    <bean id="casValidationFilter" class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter">
+        <property name="serverName" value="${system.security.cas.clientPath}" />
+        <property name="exceptionOnValidationFailure" value="true" />
+        <property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage" />
+        <property name="redirectAfterValidation" value="true" />
+        <property name="ticketValidator" ref="ticketValidator" />
+        <property name="proxyReceptorUrl" value="/secure/receptor" />
+    </bean>
+ 
+    <bean id="wrappingFilter" class="org.jasig.cas.client.util.HttpServletRequestWrapperFilter" />
+	
+	
+	<!-- AcegiUserDetailServiceImpl为基于Acegi的UserService实现类 -->
+	<bean id="userDetailsService"
+		class="com.zsgj.info.framework.security.service.impl.UserDetailServiceHibernateImpl">
+		<property name="userDao" ref="userDao" />
+		<property name="acegiRoleDao" ref="acegiRoleDao" />
+		<property name="securityManageService" ref="securityManageService"/>
+	</bean>
+
+	<bean id="userDao"
+		class="com.zsgj.info.framework.security.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+	<bean id="acegiRoleDao"
+		class="com.zsgj.info.framework.security.dao.impl.AcegiRoleDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+
+
+	<!-- 缓存器设置  -->
+	<bean id="userCacheBackend"
+		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="userCache" />
+	</bean>
+	<bean id="userCache"
+		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache"
+		autowire="byName">
+		<property name="cache" ref="userCacheBackend" />
+	</bean>
+	<bean id="resourceCacheBackend"
+		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="resourceCache" />
+	</bean>
+	<bean id="resourceCache"
+		class="com.zsgj.info.framework.security.cache.ResourceCache"
+		autowire="byName">
+		<property name="cache" ref="resourceCacheBackend" />
+	</bean>
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+
+	<bean id="acegiCacheService"
+		class="com.zsgj.info.framework.security.cache.AcegiCacheServiceImpl">
+		<property name="userCache" ref="userCache" />
+		<property name="resourceCache" ref="resourceCache" />
+		<property name="userDao" ref="userDao" />
+		<property name="acegiRoleDao" ref="acegiRoleDao" />
+		<property name="securityManageDao" ref="securityManageDao" />
+	</bean>
+
+</beans>
