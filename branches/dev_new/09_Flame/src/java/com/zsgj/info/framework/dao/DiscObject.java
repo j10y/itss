@@ -11,6 +11,10 @@ import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
  * @Create In 2009-1-20
  */
 public class DiscObject extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -5916403505044940182L;
 	private Long id;
 	private String discValue;
 	private SystemMainTable systemMainTable;

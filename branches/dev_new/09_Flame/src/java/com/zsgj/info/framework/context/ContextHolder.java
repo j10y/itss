@@ -53,6 +53,7 @@ public class ContextHolder {
 		return instance;
 	}
 
+	@SuppressWarnings("static-access")
 	public synchronized void setApplicationContext(ApplicationContext ac) {
 		this.ac = ac;
 	}
@@ -68,6 +69,7 @@ public class ContextHolder {
 	 * @param name
 	 * @return Object
 	 */
+	@SuppressWarnings("static-access")
 	public static Object getBean(String name){
 		return ContextHolder.getInstance().getApplicationContext().getBean(name);
 	}

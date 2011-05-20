@@ -48,6 +48,7 @@ public class ExceptionMessageFactory {
 	 * @param Key 异常信息Key
 	 * @return 异常信息
 	 */
+	@SuppressWarnings("static-access")
 	public static String getExceptionMessage(String Key){
 		if(appResource != null){
 			return appResource.getFrameWorkMessage(Key);
@@ -66,6 +67,7 @@ public class ExceptionMessageFactory {
 	 * @param Default 默认异常信息
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	public static String getExceptionMessage(String Key, String Default){
 		if(appResource != null){
 			return appResource.getFrameWorkMessage(Key,Default);

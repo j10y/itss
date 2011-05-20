@@ -14,6 +14,7 @@ import com.zsgj.info.framework.exception.base.BaseException;
  * @Create In 2007-10-30
 
  */
+@SuppressWarnings("serial")
 public class ServiceException extends BaseException {
 	
 	

@@ -11,6 +11,7 @@ import java.util.Map;
  * @Author peixf
  * @Create In 2008-3-3
  */
+@SuppressWarnings("serial")
 public abstract class BaseObject implements Serializable{
 
 	private Long id;

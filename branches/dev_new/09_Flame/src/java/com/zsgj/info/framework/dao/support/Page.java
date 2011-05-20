@@ -159,6 +159,7 @@ public class Page implements Serializable {
 	 * @Create In 2008-10-23 By sa
 	 * @return List
 	 */
+	@SuppressWarnings("static-access")
 	public List transItems() {
 		return CollectionUtil.getCollectionUtil().transList(this.getData());
 	}
