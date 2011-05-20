@@ -130,6 +130,7 @@ public class UserPanelServiceImpl extends BaseDao implements UserPanelService {
 		return result;
 	}
 
+	@SuppressWarnings("unused")
 	private List<PageModelPanel> getChildPanels(PageModelPanel pmp){
 		Criteria c = super.getCriteria(PageModelPanel.class);
 		c.add(Restrictions.eq("pageModel", pmp.getPageModel()));
@@ -248,7 +249,7 @@ public class UserPanelServiceImpl extends BaseDao implements UserPanelService {
 		Long newParentId = Long.valueOf(newPid);
 		int nodeIndex = Integer.parseInt(nodeIndx);
 		PagePanel obj = this.get(PagePanel.class, menuId);
-		PagePanel newParent = super.get(PagePanel.class, newParentId);
+//		PagePanel newParent = super.get(PagePanel.class, newParentId);
 		int minIndex = 1/*obj.getMenuOrder().intValue()*/;
 		int maxIndex = Integer.valueOf(nodeIndex); //nodeIndex;
 		if(oldParentId.intValue() == newParentId.intValue() && minIndex != maxIndex){
