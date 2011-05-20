@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.require.entity.UpDatePlanEvent" table="itil_upDatePlanEvent">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="startDate" type="date">
+			  <column name="startDate"></column>
+			</property>
+			
+			<property name="endDate" type="date">
+			  <column name="ENDDATE"></column>
+			</property>
+			<property name="money" type="java.lang.Double">
+			  <column name="MONEY" ></column>
+			</property>
+			<many-to-one name="incomePlan" class="com.zsgj.itil.config.extlist.entity.SRIncomePlan">
+		      <column name="incomePlan" />
+		    </many-to-one>
+		    <many-to-one name="expendPlan" class="com.zsgj.itil.config.extlist.entity.SRExpendPlan">
+		      <column name="expendPlan" />
+		    </many-to-one>
+			<property name="descn" type="java.lang.String">
+			  <column name="DESCN" ></column>
+			</property>
+			<property name="createDate" type="java.util.Date">
+			  <column name="createDate" ></column>
+			</property>
+			 <many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="createUser" />
+		    </many-to-one>
+  </class>
+</hibernate-mapping>

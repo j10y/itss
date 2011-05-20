@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.account.entity.AccountNewAppAdmin" table="itil_ac_AccountNewAppAdmin" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id> 
+		
+		<many-to-one name="amt" class="com.zsgj.itil.require.entity.AccountApplyMainTable">
+			<column name="amt" />
+		</many-to-one>
+		
+		<many-to-one name="newUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+			<column name="newUser" />
+		</many-to-one>
+		
+		<many-to-one name="configItem" class="com.zsgj.itil.config.entity.ConfigItem">
+			<column name="configItem" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

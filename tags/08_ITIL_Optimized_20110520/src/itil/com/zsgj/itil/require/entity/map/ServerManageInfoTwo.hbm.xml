@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.zsgj.itil.require.entity.ServerManageInfoTwo"
+		table="itil_req_ServerManageInfoTwo">
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<many-to-one name="serverManage"
+			class="com.zsgj.itil.require.entity.ServerManage">
+			<column name="serverManage" />
+		</many-to-one>
+		<property name="powerSwitch" type="string">
+			<column name="powerSwitch"></column>
+		</property>
+		<property name="kvm" type="string">
+			<column name="kvm"></column>
+		</property>
+		<property name="port" type="string">
+			<column name="port"></column>
+		</property>
+		<property name="dmzAddress" type="string">
+			<column name="dmzAddress"></column>
+		</property>
+		<property name="internetAddress" type="string">
+			<column name="internetAddress"></column>
+		</property>
+		<property name="remark" type="string">
+			<column name="remark"></column>
+		</property>
+	</class>
+</hibernate-mapping>

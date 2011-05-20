@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extci.entity.AirCondition" table="itil_ci_AirCondition">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="model" type="java.lang.String">
+			  <column name="MODEL" ></column>
+			</property>
+			<many-to-one name="type" class="com.zsgj.itil.config.extlist.entity.AirConditionType">
+		      <column name="TYPE" />
+		    </many-to-one>
+			<property name="powerConsumption" type="java.lang.String">
+			  <column name="POWERCONSUMPTION" ></column>
+			</property>
+			<property name="brand" type="java.lang.String">
+			  <column name="BRAND" ></column>
+			</property>
+			<many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="CREATEUSER" />
+		    </many-to-one>
+			<property name="createDate" type="timestamp">
+			  <column name="CREATEDATE"></column>
+			</property>
+			<many-to-one name="modifyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="MODIFYUSER" />
+		    </many-to-one>
+			<property name="modifyDate" type="timestamp">
+			  <column name="MODIFYDATE"></column>
+			</property>
+			<property name="sn" type="java.lang.String">
+			  <column name="SN" ></column>
+			</property>
+			<property name="capacity" type="java.lang.String">
+			  <column name="CAPACITY" ></column>
+			</property>
+			<property name="cisn" type="java.lang.String">
+			  <column name="CISN" ></column>
+			</property>
+	
+  </class>
+</hibernate-mapping>

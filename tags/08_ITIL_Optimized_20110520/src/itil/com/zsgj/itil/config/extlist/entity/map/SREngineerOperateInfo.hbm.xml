@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extlist.entity.SREngineerOperateInfo" table="itil_lst_SREngineerOperateInfo">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<many-to-one name="specialRequire" class="com.zsgj.itil.require.entity.SpecialRequirement">
+		      <column name="SPECIALREQUIRE" />
+		    </many-to-one>
+			<property name="operateInfo" type="java.lang.String">
+			  <column name="OPERATEINFO" ></column>
+			</property>
+			
+			<property name="attachment" type="java.lang.String">
+			  <column name="ATTACHMENT" ></column>
+			</property>
+			
+	
+  </class>
+</hibernate-mapping>

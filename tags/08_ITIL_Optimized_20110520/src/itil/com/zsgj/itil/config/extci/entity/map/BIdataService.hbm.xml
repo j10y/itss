@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extci.entity.BIdataService" table="itil_ci_BIdataService">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="biDataInterface" type="java.lang.String">
+			  <column name="BIDATAINTERFACE" ></column>
+			</property>
+			
+			<many-to-one name="serviceType" class="com.zsgj.itil.config.extlist.entity.BIServiceType">
+		      <column name="SERVICETYPE" />
+		    </many-to-one>
+			<property name="goliveDate" type="date">
+			  <column name="GOLIVEDATE"></column>
+			</property>
+			<property name="description" type="java.lang.String">
+			  <column name="DESCRIPTION" ></column>
+			</property>
+			
+			<property name="cisn" type="java.lang.String">
+			  <column name="CISN" ></column>
+			</property>
+			
+	
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    
+<struts>
+   
+   <package name="struts2" extends="struts-default">
+     <!-- 公告管理 -->
+      <action name="noticeaction_*" class="/notice/noticeaction" method="{1}">
+      </action>
+        <!-- 培训管理 -->
+          <action name="trainPlan_*" class="/train/trainPlan" method="{1}">
+            <result name="ContactSucess">/user/train/templeteview.jsp</result>
+          	<result name="success">/user/train/view.jsp</result>
+          	<result name="ok">/user/train/train_feedback.jsp</result>
+          	<result name="view">/user/train/train_view.jsp</result>
+          	<result name="hello">/user/train/train_courseGradeList.jsp</result>
+          	<result name="noresult">/user/train/train_noresult.jsp</result>
+          	<result name="nosurvey">/user/train/train_nosurvey.jsp</result>
+          	<result name="addCallBackSuccess">/user/train/train_userBackMessage.jsp</result>
+        </action>
+        
+        <!-- 
+         <action name="requireConfigItem_*" class="/project/requireConfigItem" method="{1}">
+         	<result name="success">/user/configRel/configItemRelInfo.jsp</result>
+         	<result name="relationDate">/user/configRel/configItemRelInfo_datajson.jsp</result>
+        </action>
+		 -->
+        <action	name="serviceCatalogue_*" class="/service/serviceCataLogue" method="{1}">
+        </action>
+        
+         <action name="serviceItem_*" class="/service/serviceItem" method="{1}">
+         	<result name="list">/infoAdmin/serviceItem/serviceItem_list.jsp</result>
+         	<result name="listForIssue">/infoAdmin/serviceItem/serviceItem_listForIssue.jsp</result>
+         	<result name="info">/infoAdmin/serviceItem/serviceItem_info.jsp</result>
+       		<result name="columnInfo">/infoAdmin/scidColumn/scidColumn_list.jsp</result>
+       		<result name="columnDetail">/infoAdmin/scidColumn/scidColumn_detail.jsp</result>
+        </action>
+        <!--服务项流程 -->
+        <action name="sciProcess_*" class="/service/sciProcess" method="{1}">
+        </action>
+         <!-- 服务目录关联 -->
+        <action	name="sciRelationShip_*" class="/service/sciRelationShip" method="{1}">
+        	<result name="forRelationShipData">/user/serviceKeep/serviceRelationShipTreeJson.jsp</result>
+        	<result name="toModifyPage">/user/service/sciRelationShipForm.jsp</result>
+        	<result name="issuePage">/user/serviceIssue/sciRelationShipIssueForm.jsp</result>
+        	<result name="submitPage">/user/serviceIssue/serviceCatalogueAudit.jsp</result>
+        	<result name="queryPage">/user/serviceCatalogueQuery/sciRelationShipQueryForm.jsp</result>
+        	<result name="keepPage">/user/serviceKeep/sciRelationShipKeepForm.jsp</result>
+        	<result name="backPage">/user/serviceKeep/sciRelationShipKeepForm.jsp</result>
+        	<result name="modifyPage">/user/serviceCataModify/sciRelationShipModifyForm.jsp</result>
+        	<result name="readOnlyPage">/user/serviceCataModify/sciRelationShipDisModifyForm.jsp</result>
+        	<result name="editorPage">/user/serviceCataModify/sciRelationShipModifyForm.jsp</result>
+        </action>
+        <!-- 服务目录显示 -->
+        <action	name="requireSIAction_*" class="/require/RequireSI" method="{1}">
+          <result name="serviceCatalogueShow">/user/require/siData.jsp</result>
+          <result name="requireInfo">/user/require/siChildList.jsp</result>
+          <result name="requireInfo2">/user/account/siChildList.jsp</result>
+          <result name="requireTreeData">/user/require/siChildData.jsp</result>
+        </action>
+        <!-- 需求 -->
+        <action	name="requireAction_*" class="/require/require" method="{1}">
+        	 <result name="operate">/user/require/requireInfoOperate.jsp</result>
+        	 <result name="forward">${forwardUrl}</result>
+        	 <result name="error">/error.jsp</result>
+        	 <result name="noAccountPage">/user/account/noAccountPage.jsp</result>
+        	 <result name="requireInfo">/user/require/siChildList.jsp</result>
+        	 <result name="agreement">/user/require/requireAgreement.jsp</result>
+        </action>
+        <!-- 帐号 -->
+        <action name="accountAction_*" class="/require/account" method="{1}">
+          <result name="success">/user/account/userFeedback_success.jsp</result>
+          <result name="toWWWMonth">/user/account/www/myAccountList1.jsp</result>
+          <result name="toWWWMonthDetail">/user/account/www/myAccountList2.jsp</result>
+          <result name="toWWWDayDetail">/user/account/www/myAccountList3.jsp</result>
+          <result name="toNoWWWAccount">/user/account/accountError.jsp</result>
+        </action>
+        <action name="accountMailAction_*" class="/require/accountMail" method="{1}">
+          <result name="success">/user/account/userFeedback_success.jsp</result>
+        </action>
+         <action name="accountJobAction_*" class="/require/accountJob" method="{1}">
+          <result name="success">/user/account/userFeedback_success.jsp</result>
+        </action>
+         <!-- 个性化需求 -->
+         
+         <!-- 
+        <action	name="specialRequireAction_*" class="/require/specialRequire" method="{1}">
+        </action>
+         -->
+        <action	name="SRAction_*" class="/require/sra" method="{1}">
+        <result name="userFeedback_view">/user/require/userFeedback_view.jsp</result>
+        	<result name="userFeedback_success">/user/require/userFeedback_success.jsp</result>
+        	<result name="userFeedback_history">/user/require/userFeedback_history.jsp</result>
+        	<result name="userFeedback_result">/user/require/userFeedback_result.jsp</result>
+        </action>
+        <action	name="SRprojectPlanAction_*" class="/project/SRprojectPlan" method="{1}">
+        </action>
+       <!-- 工作流 -->
+        <action name="configUnit_*" class="/workflow/configUnit" method="{1}">
+        	<result>/infoAdmin/workflow/configPage/configUnit.jsp</result>
+        </action>
+         <!-- 知识管理 -->
+        <action	name="knowledgeAction_*" class="/knowledge/action" method="{1}">
+        </action>
+        <!-- 问题管理 -->
+        <action	name="eventAction_*" class="/event/action" method="{1}">
+        	<result name="createPage">/user/event/eventNormal/eventCreate.jsp</result>
+        	<result name="userFeedback_show">/user/event/searchEventStatus/userFeedback_show.jsp</result>
+        	<result name="userFeedback_null">/user/event/searchEventStatus/userFeedback_null.jsp</result>
+        	<result name="userFeedback_view">/user/event/transactionFlow/userFeedback_view.jsp</result>
+        	<result name="userFeedback_success">/user/event/transactionFlow/userFeedback_success.jsp</result>
+        	<result name="userFeedback_history">/user/event/transactionFlow/userFeedback_history.jsp</result>
+        	<result name="userFeedback_result">/user/event/transactionFlow/userFeedback_result.jsp</result>
+        </action>
+        <action	name="problemAction_*" class="/problem/action" method="{1}">
+        </action>
+        <action	name="supportGroupAction_*" class="/support/action" method="{1}">
+        	<result name="toModifyPage">/user/event/supportGroup/newsupportGroup.jsp</result>
+        	<result name="toShowPage">/user/event/supportGroup/showSupportGroup.jsp</result>
+        </action>
+         <action name="nodeType_*" class="/workflow/nodeType" method="{1}">
+        	<result>/infoAdmin/workflow/configPage/configUnit.jsp</result>
+        </action>
+        
+        <action name="configUnitRole_*" class="/workflow/configUnitRole" method="{1}">
+        	<result>/infoAdmin/workflow/configPage/configUnit.jsp</result>
+        </action>
+        
+        <action name="requireWorkflow_*" class="/workflow/requireManager" method="{1}"></action>
+		<action name="accountWorkflow_*" class="/workflow/accountManager" method="{1}"></action>      	
+       <action name="configWorkflow_*" class="/workflow/configManager" method="{1}"></action>  
+       <action name="serviceItemWorkflow_*" class="/workflow/serviceItemManager" method="{1}"></action>  
+       <action name="noticeManagerWorkflow_*" class="/workflow/noticeManager" method="{1}"></action> 
+       <action name="eventWorkflow_*" class="/workflow/eventManager" method="{1}"></action>
+       <action name="knowledgeWorkflow_*" class="/workflow/knowledgeManager" method="{1}"></action>     
+       
+       <action name="configModifyWorkflow_*" class="/workflow/configModifyManager" method="{1}"></action>
+       <action name="businessAccountWorkflow_*" class="/workflow/businessAccountManager" method="{1}"></action>
+       <action name="userSelfWorkflow_*" class="/workflow/userSelfManager" method="{1}">
+      		 <result name="reqPanelEnter">/user/require/requireInfoOperate.jsp</result>
+        	 <result name="ciBatchModifyEnter">/user/configItem/configItemBatchModify/configItemBatchModifyReadOnlyForUser.jsp</result>
+        	 <result name="eventEnter">/user/event/transactionFlow/eventInfoForUser.jsp</result>
+        	 <result name="noticeEnter">/user/notice/noticeInfoForUser.jsp</result>
+        	 <result name="knowFileEnter">/user/knowledge/knowFileForUser.jsp</result>
+        	 <result name="knowProjectEnter">/user/knowledge/knowProjectForUser.jsp</result>
+        	 <result name="knowContractEnter">/user/knowledge/knowContractForUser.jsp</result>
+        	 <result name="baIncomeEnter">/user/businessAccount/incomeForUser.jsp</result>
+        	 <result name="baPaymentEnter">/user/businessAccount/paymentForUser.jsp</result>
+        	 <result name="serviceCataEnter">/user/serviceCatalogueAuditQuery/serviceCatalogueAuditHisForUser.jsp</result>
+        	 <result name="forward">${forwardUrl}</result>
+        	 <result name="error">/error.jsp</result>
+       </action>
+
+        <action name="businessAccountAction_*" class="/require/businessAccountAction" method="{1}">
+        		<result name="incomeApply">/user/businessAccount/incomeApply.jsp</result>
+     			<result name="paymentApply">/user/businessAccount/expendApply.jsp</result>
+     			<result name="incomeForUser">/user/businessAccount/incomeForUser_search.jsp</result>
+     			<result name="back_income">/user/businessAccount/back_income_search.jsp</result>
+     			<result name="paymentForUser">/user/businessAccount/paymentForUser_search.jsp</result>
+     			<result name="back_payment">/user/businessAccount/back_payment_search.jsp</result>
+        </action>
+        <action name="assignAction_*" class="/workflow/assignAction" method="{1}">
+        </action>
+        <action name="actorUtilAction_*" class="/actor/actorUtilAction" method="{1}">
+        </action>
+         <action name="accountSystemAdminAction_*" class="/require/accountSystemAdminAction" method="{1}">
+        </action>
+        <action name="configItemAction_*" class="/configItem/action" method="{1}">
+        </action>
+        <!-- 编号生成 -->
+        <action name="IdGeneratorAction_*" class="/IdGenerator" method="{1}">
+        	<result name="success">/infoAdmin/idgen/tableIdGenList.jsp</result>
+        </action>
+        <action name="searchEventStateAction_*" class="searchEventStateAction" method="{1}">
+        	<result name="success">/user/enent/searchEventStatus/searchEventStatus_new.jsp</result>
+        </action>
+        <action name="menu_*" class="/menuAction" method="{1}">
+        	<result name="template_menu_json">/infoAdmin/menu/template_menu_json.jsp</result>
+        	<result name="temp_menu_json">/infoAdmin/menu/temp_menu_json.jsp</result>
+        	<result name="user_menu_json">/menu_json.jsp</result>
+        </action>
+   </package>
+</struts>

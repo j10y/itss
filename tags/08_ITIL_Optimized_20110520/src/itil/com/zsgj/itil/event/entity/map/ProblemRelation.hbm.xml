@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.event.entity.ProblemRelation" 
+  		 table="ProblemRelation">
+      <id name="id" type="long">
+			  <generator class="native"/>
+      </id>
+        <many-to-one name="parentEvent" class="com.zsgj.itil.event.entity.Event" >
+            <column name="parentEvent" />
+        </many-to-one>
+        <many-to-one name="event" class="com.zsgj.itil.event.entity.Event" >
+            <column name="event" />
+        </many-to-one>	
+         <many-to-one name="parentProblem" class="com.zsgj.itil.event.entity.Problem" >
+            <column name="parentProblem" />
+        </many-to-one>
+         <many-to-one name="problem" class="com.zsgj.itil.event.entity.Problem" >
+            <column name="problem" />
+        </many-to-one>
+        <many-to-one name="problemRelationType" class="com.zsgj.itil.event.entity.ProblemRelationType" >
+            <column name="problemRelationType" />
+        </many-to-one>		
+  </class>
+</hibernate-mapping>

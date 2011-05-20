@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extlist.entity.MailForwardApply" table="itil_lst_MailForwardApply">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="accountName" type="java.lang.String">
+			  <column name="ACCOUNTNAME" ></column>
+			</property>
+			
+			<property name="applyReason" type="java.lang.String">
+			  <column name="APPLYREASON" ></column>
+			</property>
+			
+			<property name="targetMail" type="java.lang.String">
+			  <column name="TARGETMAIL" ></column>
+			</property>
+			
+			<property name="accountState" type="java.lang.String">
+			  <column name="ACCOUNTSTATE" ></column>
+			</property>
+			
+			<property name="mailType" type="java.lang.String">
+			  <column name="mailType" ></column>
+			</property>
+			
+			<many-to-one name="accountOwner" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="accountOwner" />
+		    </many-to-one>
+		    
+		    
+		     <many-to-one name="applyId" class="com.zsgj.itil.require.entity.AccountApplyMainTable">
+		      <column name="applyId" />
+		    </many-to-one>
+		    
+		    <many-to-one name="oldApply" class="com.zsgj.itil.config.extlist.entity.MailForwardApply">
+		      <column name="oldApply" />
+		    </many-to-one>
+		    
+		    
+		    <property name="createDate" type="date">
+			  <column name="CREATEDATE"></column>
+			</property>
+			 <property name="stopDate" type="date">
+			  <column name="stopDate"></column>
+			</property>
+			
+			 <property name="companionDCMail" type="java.lang.String">
+			  <column name="companionDCMail"></column>
+			</property>
+	
+  </class>
+</hibernate-mapping>

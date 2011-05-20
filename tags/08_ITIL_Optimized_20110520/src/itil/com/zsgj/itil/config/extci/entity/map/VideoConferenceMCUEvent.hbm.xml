@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extci.entity.VideoConferenceMCUEvent" table="itil_ci_VideoConferenceMCUEvent">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="brand" type="java.lang.String">
+			  <column name="BRAND" ></column>
+			</property>
+			<property name="model" type="java.lang.String">
+			  <column name="MODEL" ></column>
+			</property>
+			<property name="sn" type="java.lang.String">
+			  <column name="SN" ></column>
+			</property>
+			<property name="ipAddress" type="java.lang.String">
+			  <column name="IPADDRESS" ></column>
+			</property>
+	
+  </class>
+</hibernate-mapping>

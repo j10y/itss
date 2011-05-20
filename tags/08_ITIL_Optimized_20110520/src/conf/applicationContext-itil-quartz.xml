@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+    <!-- Job -->
+    <!-- 远程接入帐号到期JOb   -->
+    <bean name="vpnJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.zsgj.itil.account.service.RemoteAccessAccountJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="accountService" value-ref="accountService"/>
+            </map>
+        </property>
+    </bean>
+
+ 	<!-- 同步人员信息 -->
+    <bean name="userInfoSynJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.zsgj.itil.actor.synchronize.UserInfoSynJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="userInfoSynDao" value-ref="userInfoSynDao"/>
+            </map>
+        </property>
+    </bean>
+        <!-- 同步话务信息 -->
+	<bean name="ccJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.zsgj.itil.event.service.CCTelInfoSynJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <!-- 如果需要按照cronExpression的配置自动同步当天的产品价格数据，此处synchrDate的value=current -->
+                <entry key="synchrDate" value="current" /> <!-- current -->
+                <entry key="ccTelSynService" value-ref="ccTelSynService"/>
+                 <entry key="ccTelInfoService" value-ref="ccTelInfoService"/>
+            </map>
+        </property>
+    </bean>
+    <!-- 临时人员邮件催办JOb 
+    <bean name="tempAccountJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.zsgj.itil.account.service.TempAccountJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="accountService" value-ref="accountService"/>
+            </map>
+        </property>
+    </bean>
+    -->
+    <!-- 部门特殊邮件催办通知邮件JOb 
+     <bean name="deptAccountJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.zsgj.itil.account.service.DeptAccountJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="accountService" value-ref="accountService"/>
+            </map>
+        </property>
+    </bean>
+    -->
+    
+    <!-- 部门特殊邮件锁定JOb
+     <bean name="deptAccountLockJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.zsgj.itil.account.service.DeptAccountLockJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="accountService" value-ref="accountService"/>
+                  <entry key="baseService" value-ref="baseService"/>
+            </map>
+        </property>
+    </bean>
+ -->
+
+    <!-- Trigger -->
+
+    <!-- 定时运行vpnJob    -->
+    <bean id="vpnTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="vpnJob" />
+      
+       <!-- 每月1号和17号执行 -->
+       <property name="cronExpression" value="0 0 1 19 * ?" /> 
+    </bean>
+
+    
+     <!-- 定时运行tempAccountJob
+    <bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="tempAccountJob" /> -->
+       <!-- 每月1号和17号执行
+        <property name="cronExpression" value="0 0 3 1,18 * ?" />
+    </bean>
+     -->
+    
+        <!-- 定时运行deptAccountJob 
+    <bean id="cronTrigger3" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="deptAccountJob" /> -->
+       <!-- 6,12月1号执行 
+        <property name="cronExpression" value="0 0 3 1 6,12 ?" />
+    </bean>
+    -->
+    
+    <!-- 定时运行deptAccountLockJob  
+    <bean id="cronTrigger4" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="deptAccountLockJob" />-->
+       <!-- 6,12月第3周号执行
+        <property name="cronExpression" value="0 0 3 15 6,12 ?" />
+    </bean>
+     -->
+
+
+	<!-- 同步人员信息 -->
+    <bean id="userInfoSynTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="userInfoSynJob" />
+        <!-- 每天晚上11点执行 -->
+        <property name="cronExpression" value="0 30 7 * * ?" />
+    </bean>
+ 	<!-- 同步话务信息 -->
+ 	<bean id="ccTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="ccJob" />
+        <!-- 每小时执行 -->
+        <property name="cronExpression" value="59 59 * * * ?" />
+    </bean>
+
+    <!-- 启动调度器 -->
+
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+              <!-- <ref bean="vpnTrigger" />  -->
+              <!-- <ref bean="cronTrigger2" />  -->
+              <!-- <ref bean="cronTrigger3" /> -->
+              <!-- <ref bean="userInfoSynTrigger" /> -->
+              <!-- <ref bean="ccTrigger" /> -->
+            </list>
+        </property>
+    </bean>
+    
+   
+</beans>
+

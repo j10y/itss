@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="specialRequire2">
+
+
+	<description>
+		小型配置或开发需求申请流程
+	</description>
+
+
+	<start-state name="提交申请">
+		<description>
+			start
+		</description>
+		<transition to="部门经理审批"></transition>
+	</start-state>
+
+
+	<task-node name="客户IT经理审批">
+		<description>
+			confirmByITManager
+		</description>
+		<transition to="技术总监审批" name="Y"></transition>
+		<transition to="拒绝" name="N"></transition>
+	</task-node>
+
+	<task-node name="交付经理填写实施方案">
+		<description>
+			makeInfoByEngineer
+		</description>
+		<transition to="用户确认实施计划" name="Y"></transition>
+	</task-node>
+
+	<task-node name="用户确认实施计划">
+		<description>
+			confirmByClient
+		</description>
+		<transition to="交付经理实施并提交测试" name="Y"></transition>
+		<transition to="交付经理填写实施方案" name="N"></transition>
+	</task-node>
+
+	<task-node name="交付经理实施并提交测试">
+		<description>
+			executeByEngineer
+		</description>
+		<transition to="用户测试并验收" name="Y"></transition>
+	</task-node>
+
+	<task-node name="用户测试并验收">
+		<description>
+			testByClient
+		</description>
+		<transition to="交付经理实施并提交测试" name="N"></transition>
+		<transition to="交付经理提交上线" name="Y"></transition>
+	</task-node>
+
+	<task-node name="交付经理提交上线">
+		<description>
+			issueByEngineer
+		</description>
+		<transition to="是否传输" name="Y"></transition>
+	</task-node>
+
+	<task-node name="工程师传输">
+		<description>
+			transmitByEngineer
+		</description>
+		<transition to="项目上线" name="Y"></transition>
+		<transition to="交付经理提交上线" name="N"></transition>
+	</task-node>
+
+	<task-node name="部门经理审批">
+		<description>
+			confirmByCadre
+		</description>
+		<transition to="拒绝" name="N"></transition>
+		<transition to="客户IT经理审批" name="Y"></transition>
+	</task-node>
+
+	<task-node name="技术总监审批">
+		<description>
+			confirmByTechnicManager
+		</description>
+		<transition to="客户IT经理审批" name="N"></transition>
+		<transition to="是否由负责人指派交付经理" name="Y"></transition>
+	</task-node>
+
+	<task-node name="交付线负责人指定交付经理">
+		<description>
+			selectEngineer
+		</description>
+		<transition to="交付经理填写实施方案" name="Y"></transition>
+		<transition to="技术总监审批" name="N"></transition>
+	</task-node>
+
+	<node name="是否由负责人指派交付经理">
+		<description>
+			needSelect
+		</description>
+		<transition to="交付经理填写实施方案" name="N"></transition>
+		<transition to="交付线负责人指定交付经理" name="Y"></transition>
+	</node>
+
+	<node name="是否传输">
+		<description>
+			transmitOrNot
+		</description>
+		<transition to="项目上线" name="N"></transition>
+		<transition to="工程师传输" name="Y"></transition>
+	</node>
+
+
+	<end-state name="项目上线">
+		<description>
+			end
+		</description>
+	</end-state>
+
+	<end-state name="拒绝">
+		<description>
+			giveUp
+		</description>
+	</end-state>
+
+
+</process-definition>

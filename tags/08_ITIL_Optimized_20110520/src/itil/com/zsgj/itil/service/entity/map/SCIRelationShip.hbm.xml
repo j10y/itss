@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+<class name="com.zsgj.itil.service.entity.SCIRelationShip" table="SCIRelationShip" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        
+        <many-to-one name="rootServiceCatalogue" class="com.zsgj.itil.service.entity.ServiceCatalogue">
+            <column name="rootServiceCatalogue" />
+        </many-to-one>
+        
+        <many-to-one name="parentRelationShip" class="com.zsgj.itil.service.entity.SCIRelationShip" fetch="join" lazy="false">
+            <column name="parentRelationShip" />
+        </many-to-one>
+        
+        <set name="childRelationShips"
+		 	 cascade="all-delete-orphan" 
+		 	 inverse="true" order-by="OrderFlag">
+		  <key column="parentRelationShip"></key>
+		  <one-to-many class="com.zsgj.itil.service.entity.SCIRelationShip"/>
+		</set>
+        
+        <many-to-one name="serviceCatalogue" class="com.zsgj.itil.service.entity.ServiceCatalogue" fetch="join" lazy="false">
+            <column name="serviceCatalogue" />
+        </many-to-one>
+        
+        <many-to-one name="serviceItem" class="com.zsgj.itil.service.entity.ServiceItem" fetch="join" lazy="false">
+            <column name="serviceItem" />
+        </many-to-one>
+        
+        <property name="serviceItemFee" type="double">
+            <column name="serviceItemFee" />
+        </property>
+        
+        <property name="typeFlag" type="string">
+            <column name="typeFlag" />
+        </property>
+        
+        <property name="order" type="integer">
+            <column name="orderFlag" />
+        </property>
+        
+        <property name="dispFlag" type="integer">
+            <column name="dispFlag" />
+        </property>
+        
+	</class>
+</hibernate-mapping>

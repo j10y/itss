@@ -1,0 +1,207 @@
+/*
+1.传入参数为一Map以适应后续的变化,因为解析过程也是动态的
+2.Map中设定各种输入参数:
+输出：
+head[Map],头部输出
+	cfx_CheckSum;
+	cfx_PriceFileDate;
+	cfx_ConfigIdentifer;
+	cfx_DateTimeStamp;
+	cfx_PropDocumentIdentifier;
+	cfx_CFXML;
+	totalListPrice;
+	orderType
+rows[List<OrderProductLine>],行集输出
+输入：
+applyType,申请类型
+disc,折扣
+listType[newbox,mes,isu,soft],列表类别
+qty,数量                                                                                                     
+time,时间标记,检查本规则对输入数据是否在有效
+bmsn[String[]],
+xmlPath,
+outPath,
+cfrPath
+*/
+
+#created on: Dec 2, 2008
+package com.zsgj.itil.rules
+
+#list any import classes here.
+import com.zsgj.itil.notice.rules.NoticeRuleHelper;
+import org.dom4j.Node;
+import org.jbpm.graph.node.TaskNode;
+
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Date;
+import com.zsgj.itil.notice.rules.NoticeRuleHelper;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+#declare any global variables here
+
+
+
+function void noticeStartStatus(Map $map){
+	
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");	
+	String alterFlag = (String)$map.get("alterFlag");	
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	NoticeRuleHelper noticeRuleHelper=new NoticeRuleHelper();
+	noticeRuleHelper.noticeStartFlag(dataId,nodeId,nodeName,processId,alterFlag);
+	
+}
+
+function String isABCStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");		 	
+	NoticeRuleHelper noticeRuleHelper=new NoticeRuleHelper();
+	return noticeRuleHelper.isABCFlag(dataId);
+}
+
+function String auditStatus(Map $map){
+	String dataId = (String)$map.get("dataId");	
+	String nodeId = (String)$map.get("nodeId");
+	String alterFlag = (String)$map.get("alterFlag");		
+	String processId = (String)$map.get("processId");
+	String nodeName = (String)$map.get("nodeName");		
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	NoticeRuleHelper noticeRuleHelper=new NoticeRuleHelper();
+	String trans = noticeRuleHelper.noticeAuditFlag(dataId,nodeId,nodeName,processId,result,comment,alterFlag);
+	return trans;	
+}
+function String isBCStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");		 	
+	NoticeRuleHelper noticeRuleHelper=new NoticeRuleHelper();
+	return noticeRuleHelper.isBCFlag(dataId);
+}
+
+function String deployStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");		 	
+	String nodeName = (String)$map.get("nodeName");	
+	String alterFlag = (String)$map.get("alterFlag");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	NoticeRuleHelper noticeRuleHelper=new NoticeRuleHelper();
+	String tran = noticeRuleHelper.deployFlag(dataId,nodeId,nodeName,processId,result,comment,alterFlag);
+	return tran;	
+}
+
+
+function String rollBackStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");		 	
+	String nodeName = (String)$map.get("nodeName");	
+	String alterFlag = (String)$map.get("alterFlag");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	NoticeRuleHelper noticeRuleHelper=new NoticeRuleHelper();
+	String tran = noticeRuleHelper.rollBackFlag(dataId,nodeId,nodeName,processId,result,comment,alterFlag);
+	return tran;	
+}
+
+function String deployAlterStatus(Map $map){
+
+	String dataId = (String)$map.get("dataId");	
+	String oldDataId = (String)$map.get("oldDataId");
+	String nodeName = (String)$map.get("nodeName");	
+	String alterFlag = (String)$map.get("alterFlag");
+	String nodeId = (String)$map.get("nodeId");	
+	String processId = (String)$map.get("processId");
+	String result = (String)$map.get("result");	
+	String comment = (String)$map.get("comment");
+	NoticeRuleHelper noticeRuleHelper=new NoticeRuleHelper();
+	String tran = noticeRuleHelper.deployAlterFlag(dataId,oldDataId,nodeId,nodeName,processId,result,comment,alterFlag);
+	return tran;	
+}
+
+rule "noticeStartNode"
+	salience 1000 
+	when
+		$map: Map(
+			this['ruleName'] =='noticeStartNode'		
+		)
+	then	 	
+	noticeStartStatus($map);
+	$map.put("transitionName","NOLEAVE");	
+end
+
+rule "isABCNode"
+	salience 900 
+	when
+		$map: Map(
+			this['ruleName'] =='isABCNode'		
+		)
+	then	
+	$map.put("transitionName",isABCStatus($map));	
+end
+
+rule "auditNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='auditNode'		
+		)
+	then	
+	$map.put("transitionName",auditStatus($map));		
+end
+
+rule "isBCNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='isBCNode'		
+		)
+	then	
+	$map.put("transitionName",isBCStatus($map));		
+end
+
+rule "deployNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='deployNode'		
+		)
+	then	
+	$map.put("transitionName",deployStatus($map));		
+end
+
+rule "rollbackNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='rollbackNode'		
+		)
+	then	
+	$map.put("transitionName",rollBackStatus($map));		
+end
+
+
+rule "deployAlterNode"
+	salience 800 
+	when
+		$map: Map(
+			this['ruleName'] =='deployAlterNode'		
+		)
+	then	
+	$map.put("transitionName",deployAlterStatus($map));		
+end

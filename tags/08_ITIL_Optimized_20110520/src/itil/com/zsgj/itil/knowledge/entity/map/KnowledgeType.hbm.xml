@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.knowledge.entity.KnowledgeType" table="KnowledgeType" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+           <property name="className" type="string">
+            <column name="className" />
+        </property>
+        <many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" >
+            <column name="systemMainTable" />
+        </many-to-one>
+         <many-to-one name="pagePanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" >
+            <column name="pagePanel" />
+        </many-to-one>
+        <many-to-one name="pageListPanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" >
+            <column name="pageListPanel" />
+        </many-to-one>
+        <many-to-one name="pageQueryPanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" >
+            <column name="pageQueryPanel" />
+        </many-to-one>
+	</class>
+</hibernate-mapping>

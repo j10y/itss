@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="ErpNormalNeed4">
+
+
+	<description>
+		ERP常规需求4(无加签人版)
+	</description>
+
+
+	<start-state name="提交">
+		<description>
+			start
+		</description>
+		<transition to="本部财务经理审批"></transition>
+	</start-state>
+
+
+	<task-node name="本部财务经理审批">
+		<description>
+			confirmByFinancialManager
+		</description>
+		<transition to="业务加签人审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="业务加签人审批">
+		<description>
+			comfirmByBussniseCountersign
+		</description>
+		<transition to="ERP工程师处理" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="ERP工程师处理">
+		<description>
+			operateByEngineer
+		</description>
+		<transition to="是否需要BASIS工程师处理" name="Y"></transition>
+		<transition to="业务加签人审批" name="N"></transition>
+	</task-node>
+
+	<node name="是否需要BASIS工程师处理">
+		<description>
+			needBASISEngineerOrNot
+		</description>
+		<transition to="是否需要EB工程师处理" name="N"></transition>
+		<transition to="BASIS工程师处理" name="Y"></transition>
+	</node>
+
+	<node name="是否需要EB工程师处理">
+		<description>
+			needEBEngineerOrNot
+		</description>
+		<transition to="结束" name="N"></transition>
+		<transition to="EB工程师处理" name="Y"></transition>
+	</node>
+
+	<task-node name="BASIS工程师处理">
+		<description>
+			operateByBASISEngineer
+		</description>
+		<transition to="是否需要EB工程师处理" name="Y"></transition>
+	</task-node>
+
+	<task-node name="EB工程师处理">
+		<description>
+			operateByEBEngineer
+		</description>
+		<transition to="结束" name="Y"></transition>
+	</task-node>
+
+
+	<end-state name="结束">
+		<description>
+			end
+		</description>
+	</end-state>
+
+	<end-state name="打回">
+		<description>
+			giveUp
+		</description>
+	</end-state>
+
+
+</process-definition>

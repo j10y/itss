@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.zsgj.itil.config.extlist.entity.MailGroup" table="itil_lst_MailGroup">
+      <id name="id" type="java.lang.Long">
+			  <generator class="native"/>
+      </id>
+			<property name="groupName" type="java.lang.String">
+			  <column name="GROUPNAME" ></column>
+			</property>
+			
+			<property name="groupManger" type="java.lang.String">
+			  <column name="GROUPMANGER" ></column>
+			</property>
+			
+			<property name="changeGroupManger" type="java.lang.String">
+			  <column name="CHANGEGROUPMANGER" ></column>
+			</property>
+			
+			<property name="accountState" type="java.lang.String">
+			  <column name="ACCOUNTSTATE" ></column>
+			</property>
+			
+			<property name="groupNewName" type="java.lang.String">
+			  <column name="GROUPNEWNAME" ></column>
+			</property>
+			
+			<property name="applyReason" type="java.lang.String">
+			  <column name="APPLYREASON" ></column>
+			</property>
+			
+			<many-to-one name="oldApply" class="com.zsgj.itil.config.extlist.entity.MailGroup">
+		      <column name="OLDAPPLY" />
+		    </many-to-one>
+		    
+		    
+		    <many-to-one name="applyId" class="com.zsgj.itil.require.entity.AccountApplyMainTable">
+		      <column name="applyId" />
+		    </many-to-one>
+		    
+		    <many-to-one name="accountowner" class="com.zsgj.info.framework.security.entity.UserInfo">
+		      <column name="accountowner" />
+		    </many-to-one>
+	
+  </class>
+</hibernate-mapping>

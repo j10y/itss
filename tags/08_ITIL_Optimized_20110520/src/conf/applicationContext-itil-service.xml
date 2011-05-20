@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+           
+     <bean id="personnelScopeSynDao" class="com.zsgj.itil.account.dao.impl.PersonnelScopeSynDaoImpl">
+     	<property name="dataSource" ref="pmcDataSource"></property>
+     </bean>
+     
+      <bean id="accountSystemAdminDao" class="com.zsgj.itil.account.dao.impl.AccountSystemAdminDaoImpl">
+      <property name="sessionFactory" ref="pmcSessionFactory" />
+     </bean>
+     
+     <bean id="sciRelationShipDao" class="com.zsgj.itil.service.dao.impl.SCIRelationShipDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+    <bean id="trainPlanService"  class="com.zsgj.itil.train.service.impl.TrainPlanServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="questService"  class="com.zsgj.itil.train.service.impl.QuestServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+    <bean id="sciRelationShipService" class="com.zsgj.itil.service.service.impl.SCIRelationShipServiceImpl">
+		<property name="sciRelationShipDao" ref="sciRelationShipDao"/>
+		<property name="customerDao" ref="customerDao"/>
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="sciRelationShipTypeService" class="com.zsgj.itil.service.service.impl.SCIRelationShipTypeServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="serviceCatalogueService" class="com.zsgj.itil.service.service.impl.ServiceCatalogueServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<!--树形服务目录 -->
+	<bean id="requireSIService" class="com.zsgj.itil.require.service.impl.RequireSIServiceImpl">
+		<property name="sciRelationShipTypeService" ref="sciRelationShipTypeService"></property>
+		<property name="deptService" ref="deptService"></property>
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="businessAccountService" class="com.zsgj.itil.require.service.impl.BusinessAccountServiceImpl">
+		<property name="businessAccountDao" ref="businessAccountDao"/>
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+	<bean id="businessAccountDao" class="com.zsgj.itil.require.dao.impl.BusinessAccountDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="requireService" class="com.zsgj.itil.require.service.impl.RequireServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="metaDataManager" ref="metaDataManager"/>
+		<property name="rsd" ref="requireServiceDao"/>
+	</bean>
+	
+	<bean id="requireServiceDao" class="com.zsgj.itil.service.dao.impl.RequireServiceDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory" />
+	</bean>
+	
+	<bean id="accountService" class="com.zsgj.itil.account.service.impl.AccountServiceImpl">
+		<property name="accountDao" ref="accountDao"/>
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+	<bean id="accountDao" class="com.zsgj.itil.account.dao.impl.AccountDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<bean id="accountSystemAdminService" class="com.zsgj.itil.account.service.impl.AccountSystemAdminServiceImpl">
+		<property name="systemAdminDao"><ref bean="accountSystemAdminDao"/></property>
+		<property name="dao"><ref bean="baseDao"/></property>
+	</bean>
+	
+	<bean id="serviceItemService" class="com.zsgj.itil.service.service.impl.ServiceItemServiceImpl">
+		<property name="sciRelationShipTypeService" ref="sciRelationShipTypeService"></property>
+		<property name="metaDataManager" ref="metaDataManager"></property>
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<!-- begin tongjp  -->
+	<bean id="serviceItemTypeService" class="com.zsgj.itil.service.service.impl.ServiceItemTypeServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="sCIColumnService" class="com.zsgj.itil.service.service.impl.SCIColumnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="sCIDColumnService" class="com.zsgj.itil.service.service.impl.SCIDColumnServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	<!-- end -->
+	<bean id="servicePortfolioService" class="com.zsgj.itil.service.service.impl.ServicePortfolioServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="serviceItemUserTableService" class="com.zsgj.itil.service.service.impl.ServiceItemUserTableServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+		<property name="systemColumnService" ref="systemColumnService"/>
+		<property name="systemMainColumnService" ref="systemMainColumnService"/>
+		<property name="systemMainTableService" ref="systemMainTableService"/>
+		<property name="customerTableService" ref="customerTableService"/>
+		
+	</bean>
+	<bean id="reqTableService" class="com.zsgj.itil.require.service.impl.ReqTableServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean> 
+	<bean id="serviceItemProcessService" class="com.zsgj.itil.service.service.impl.ServiceItemProcessServiceImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+    <bean name="/service/sciRelationShip" class="com.zsgj.itil.service.action.SCIRelationShipAction" scope="prototype"></bean>
+    
+    <bean name="/service/serviceCataLogue" class="com.zsgj.itil.service.action.ServiceCatalogueAction" scope="prototype"></bean>
+	
+	<bean name="/service/serviceItem" class="com.zsgj.itil.service.action.ServiceItemAction" scope="prototype"></bean>
+	
+	<bean name="/service/sciProcess" class="com.zsgj.itil.service.action.SCIProcessAction" scope="prototype"></bean>
+	
+	<bean name="/require/require" class="com.zsgj.itil.require.action.RequireAction" scope="prototype"></bean>
+	
+	<bean name="/require/account" class="com.zsgj.itil.account.action.AccountAction" scope="prototype"></bean>
+	
+	<bean name="/require/accountMail" class="com.zsgj.itil.account.action.AccountMailSendAction" scope="prototype"></bean>
+
+	<bean name="/require/accountJob" class="com.zsgj.itil.account.action.AccountJobAction" scope="prototype"></bean>
+	
+	<bean name="/require/accountSystemAdminAction" class="com.zsgj.itil.account.action.AccountSystemAdminAction" scope="prototype"></bean>
+	
+	<bean name="/train/trainPlan" class="com.zsgj.itil.train.action.TrainPlanAction" scope="prototype"></bean>
+	
+	<bean name="/notice/noticeaction" class="com.zsgj.itil.notice.action.nticeAction" scope="prototype"></bean>
+    <bean name="/require/businessAccountAction" class="com.zsgj.itil.require.action.BusinessAccountAction" scope="prototype"></bean>
+	<bean id="SAPExecute" class="com.zsgj.itil.requireErp.synchronize.SAPExecute" scope="prototype">
+	</bean>    
+</beans>
+

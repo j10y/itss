@@ -1,0 +1,1346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowViewLayout Version="1.2">
+  <StrutsActivity path="/infoAdmin/userMainTable.do" location="50,50" dimension="496,84" />
+  <StrutsActivity path="/infoAdmin/userListMainTable.do" location="3650,50" dimension="496,84" />
+  <StrutsActivity path="/infoAdmin/userMainTableColumn.do" location="2150,50" dimension="532,84" />
+  <StrutsActivity path="/infoAdmin/userListTableColumn.do" location="3950,250" dimension="532,84" />
+  <StrutsActivity path="/pageModel/userMainTablePanel.do" location="3950,650" dimension="502,84" />
+  <StrutsActivity path="/infoAdmin/sysMainTable.do" location="3050,50" dimension="502,84" />
+  <StrutsActivity path="/infoAdmin/sysMainTableColumn.do" location="3350,650" dimension="538,84" />
+  <StrutsActivity path="/infoAdmin/sysExtTableColumn.do" location="3650,2250" dimension="543,104" />
+  <StrutsActivity path="/infoAdmin/sysTableSetting.do" location="3350,1250" dimension="520,84" />
+  <StrutsActivity path="/infoAdmin/sysTableQuery.do" location="3350,1650" dimension="508,84" />
+  <StrutsActivity path="/infoAdmin/sysTableRole.do" location="3650,2450" dimension="508,104" />
+  <StrutsActivity path="/pageModel/pageModelManage.do" location="3050,1450" dimension="472,84" />
+  <StrutsActivity path="/pageModel/pageModelExpandManage.do" location="4250,50" dimension="508,84" />
+  <StrutsActivity path="/pageModel/pagePanelManage.do" location="950,1750" dimension="472,84" />
+  <StrutsActivity path="/pageModel/pageGroupPanelManage.do" location="3050,850" dimension="502,84" />
+  <StrutsActivity path="/admin/moduleManage.do" location="950,50" dimension="364,84" />
+  <StrutsActivity path="/admin/pageModelNode.do" location="3650,850" dimension="520,84" />
+  <StrutsActivity path="/admin/resourceManage.do" location="1550,50" dimension="376,84" />
+  <StrutsActivity path="/admin/rightManage.do" location="1250,250" dimension="358,84" />
+  <StrutsActivity path="/admin/authorizationManage.do" location="1850,250" dimension="376,84" />
+  <StrutsActivity path="/admin/queryDepartment.do" location="50,3450" dimension="538,84" />
+  <StrutsActivity path="/admin/roleManage.do" location="1250,450" dimension="352,84" />
+  <StrutsActivity path="/admin/userRoleManage.do" location="1850,450" dimension="376,84" />
+  <StrutsActivity path="/config/econfigItemAction.do" location="2750,650" dimension="364,84" />
+  <StrutsActivity path="/workflow/assginAndAddMark.do" location="4250,450" dimension="538,84" />
+  <StrutsActivity path="/workflow/configunit.do" location="50,2250" dimension="502,84" />
+  <StrutsActivity path="/workflow/configmodel.do" location="650,2250" dimension="502,84" />
+  <StrutsActivity path="/workflow/processconfig.do" location="4250,2050" dimension="508,84" />
+  <StrutsActivity path="/workflow/deploy.do" location="350,1650" dimension="490,84" />
+  <StrutsActivity path="/workflow/listdefinition.do" location="3050,450" dimension="416,80" />
+  <StrutsActivity path="/workflow/listprocess.do" location="2450,950" dimension="460,84" />
+  <StrutsActivity path="/workflow/endprocess.do" location="2450,1450" dimension="454,84" />
+  <StrutsActivity path="/workflow/preassign.do" location="650,1950" dimension="448,84" />
+  <StrutsActivity path="/workflow/taskPreAssign.do" location="2750,3150" dimension="498,104" />
+  <StrutsActivity path="/workflow/start.do" location="1250,2050" dimension="466,84" />
+  <StrutsActivity path="/workflow/listTask.do" location="4550,250" dimension="490,84" />
+  <StrutsActivity path="/workflow/reassign.do" location="50,2050" dimension="442,84" />
+  <StrutsActivity path="/workflow/execute.do" location="1850,1650" dimension="460,84" />
+  <StrutsActivity path="/workflow/history.do" location="2150,1250" dimension="460,84" />
+  <StrutsActivity path="/login.do" location="2450,1850" dimension="308,80" />
+  <StrutsActivity path="/workflow/update.do" location="4250,850" dimension="526,84" />
+  <StrutsActivity path="/sysManage/noticeAction.do" location="3950,1150" dimension="334,84" />
+  <StrutsActivity path="/sysManage/roleAction.do" location="1850,2050" dimension="478,104" />
+  <StrutsActivity path="/sysManage/userRoleAction.do" location="2450,2050" dimension="505,104" />
+  <StrutsActivity path="/sysManage/userMangeAction.do" location="4550,650" dimension="532,84" />
+  <StrutsActivity path="/sysManage/userOuterMangeAction.do" location="4550,1050" dimension="370,84" />
+  <StrutsActivity path="/sysManage/authorizAction.do" location="3050,3450" dimension="520,84" />
+  <StrutsActivity path="/user/userTableSet.do" location="3050,2250" dimension="458,80" />
+  <StrutsActivity path="/user/userTableSetting.do" location="50,3250" dimension="508,104" />
+  <StrutsActivity path="/sysManage/userViewStyle.do" location="1250,2250" dimension="351,80" />
+  <StrutsActivity path="/fileDown.do" location="4250,2250" dimension="412,84" />
+  <StrutsActivity path="/portalContainerAction.do" location="2750,250" dimension="400,84" />
+  <StrutsActivity path="/portalColumnAction.do" location="3350,250" dimension="382,84" />
+  <StrutsActivity path="/portalColumnTemplateAction.do" location="3650,450" dimension="430,84" />
+  <StrutsActivity path="/portalStyleAction.do" location="350,650" dimension="376,84" />
+  <StrutsActivity path="/portletAction.do" location="950,650" dimension="352,84" />
+  <StrutsActivity path="/portalAction.do" location="1550,650" dimension="346,84" />
+  <StrutsActivity path="/infoAdmin/jfreeChartAction.do" location="3950,1650" dimension="382,84" />
+  <StrutsActivity path="/infoAdmin/ServiceItemTypeAction.do" location="3050,2450" dimension="394,84" />
+  <StrutsActivity path="/infoAdmin/SCIColumnAction.do" location="4250,2450" dimension="358,84" />
+  <StrutsActivity path="/infoAdmin/serviceItemProcessAction.do" location="50,2850" dimension="412,84" />
+  <StrutsActivity path="/infoAdmin/reqTableAction.do" location="4550,1250" dimension="352,84" />
+  <StrutsActivity path="/infoAdmin/serviceItemUserTableAction.do" location="950,2850" dimension="424,84" />
+  <StrutsActivity path="/infoAdmin/serviceItemUserTableColumn.do" location="1550,2850" dimension="460,84" />
+  <StrutsActivity path="/solution/uploadfile.do" location="4250,3050" dimension="370,84" />
+  <StrutsActivity path="/account/importAccountData.do" location="4550,1450" dimension="406,84" />
+  <StrutsActivity path="/account/myAccount.do" location="4550,1650" dimension="358,84" />
+  <StrutsActivity path="/workflow/idGenerator.do" location="4550,1850" dimension="454,84" />
+  <StrutsActivity path="/require/excelImportInfo.do" location="4550,2650" dimension="394,84" />
+  <StrutsActivity path="failure;6" location="0,307" dimension="244,90" />
+  <StrutsActivity path="unknown-error;6" location="344,307" dimension="244,90" />
+  <StrutsActivity path="global-signon;6" location="633,307" dimension="289,90" />
+  <StrutsActivity path="accessDenied;6" location="1850,1150" dimension="178,72" />
+  <StrutsActivity path="error;6" location="186,596" dimension="110,90" />
+  <StrutsActivity path="login;6" location="2450,350" dimension="97,87" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_table_cir_data.jsp" location="2150,2850" dimension="310,48" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_table_column_list.jsp" location="950,950" dimension="328,48" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_table_extcolumn_detail.jsp" location="3350,1850" dimension="358,48" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_table_list.jsp" location="350,950" dimension="286,48" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_list_table_column_list.jsp" location="50,1950" dimension="358,48" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_list_table_list.jsp" location="3950,1850" dimension="316,48" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_table_column_detail.jsp" location="1550,950" dimension="340,48" />
+  <StrutsActivity path="/infoAdmin/userExpand/user_list_table_column_detail.jsp" location="3350,1950" dimension="370,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/basePagePanel/pageData-json.jsp" location="3650,2050" dimension="352,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/basePagePanel/pagePanelEditForm.jsp" location="3950,1950" dimension="376,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/basePagePanel/userPanel_list.jsp" location="650,2150" dimension="358,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_column_list.jsp" location="2750,2950" dimension="298,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_column_tjList.jsp" location="3650,2150" dimension="310,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_tjList.jsp" location="3050,2150" dimension="268,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_list.jsp" location="2150,2950" dimension="256,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_column_detail.jsp" location="3350,2950" dimension="310,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_exttable_column_detail.jsp" location="950,3650" dimension="319,53" />
+  <StrutsActivity path="/infoAdmin/system/columnsList.jsp" location="650,3650" dimension="233,53" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_setting_column.jsp" location="50,3050" dimension="316,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_query_detail.jsp" location="1850,3050" dimension="304,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_query_column.jsp" location="1250,3050" dimension="304,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_query_list.jsp" location="650,3050" dimension="292,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_role_detail.jsp" location="3650,3650" dimension="283,53" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_role_column.jsp" location="3050,3650" dimension="293,53" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_role_list.jsp" location="2450,3650" dimension="267,53" />
+  <StrutsActivity path="/infoAdmin/pageModel/pageModelEditForm.jsp" location="2750,1650" dimension="292,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pageModel_list.jsp" location="2750,1350" dimension="274,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pageModelTemplate/data-json.jsp" location="950,1150" dimension="352,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pageModelEditFormForExpand.jsp" location="4550,3250" dimension="346,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pageModel_listForExpand.jsp" location="4550,3350" dimension="328,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/basePagePanel/pagePanel_list.jsp" location="1850,2350" dimension="358,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pagePanelDemo3/data-json.jsp" location="2450,2350" dimension="334,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pagePanelDemo3/pageGroupPanelEditForm.jsp" location="950,2450" dimension="412,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pageGroupPanel_list.jsp" location="350,2450" dimension="304,48" />
+  <StrutsActivity path="/infoAdmin/security/modules_list.jsp" location="2450,3050" dimension="256,48" />
+  <StrutsActivity path="/infoAdmin/workflow/workflowPageModelNode_list.jsp" location="2150,2450" dimension="340,48" />
+  <StrutsActivity path="/infoAdmin/security/resources_list.jsp" location="3050,3050" dimension="268,48" />
+  <StrutsActivity path="/infoAdmin/security/rights_list.jsp" location="50,3150" dimension="250,48" />
+  <StrutsActivity path="/infoAdmin/security/authorizations_list.jsp" location="350,3150" dimension="298,48" />
+  <StrutsActivity path="/infoAdmin/security/siData.jsp" location="350,850" dimension="220,48" />
+  <StrutsActivity path="/infoAdmin/security/roles_list.jsp" location="1250,3150" dimension="244,48" />
+  <StrutsActivity path="/infoAdmin/security/role_detail.jsp" location="950,3150" dimension="250,48" />
+  <StrutsActivity path="/infoAdmin/security/user_detail.jsp" location="1850,3150" dimension="250,48" />
+  <StrutsActivity path="/infoAdmin/security/users_list.jsp" location="1550,3150" dimension="244,48" />
+  <StrutsActivity path="/user/config/view.jsp" location="2750,1250" dimension="166,48" />
+  <StrutsActivity path="/infoAdmin/workflow/configUnit.jsp" location="4250,1450" dimension="244,48" />
+  <StrutsActivity path="/infoAdmin/workflow/configModel.jsp" location="4250,1550" dimension="250,48" />
+  <StrutsActivity path="/infoAdmin/workflow/processConfig.jsp" location="4250,3750" dimension="262,48" />
+  <StrutsActivity path="/infoAdmin/workflow/deploy.jsp" location="50,4150" dimension="219,53" />
+  <StrutsActivity path="/infoAdmin/workflow/alldefination.jsp" location="350,4150" dimension="250,53" />
+  <StrutsActivity path="/infoAdmin/workflow/allprocess.jsp" location="650,4150" dimension="238,53" />
+  <StrutsActivity path="/infoAdmin/workflow/preassign.jsp" location="950,4150" dimension="236,53" />
+  <StrutsActivity path="/infoAdmin/workflow/assignTaskDetail.jsp" location="1250,3250" dimension="276,53" />
+  <StrutsActivity path="/infoAdmin/workflow/assignTaskAdd.jsp" location="2450,2550" dimension="262,48" />
+  <StrutsActivity path="/infoAdmin/workflow/assignTasklist.jsp" location="3350,3250" dimension="259,53" />
+  <StrutsActivity path="/infoAdmin/workflow/start.jsp" location="1250,4150" dimension="205,53" />
+  <StrutsActivity path="/infoAdmin/workflow/logon.jsp" location="1550,4150" dimension="213,53" />
+  <StrutsActivity path="/infoAdmin/workflow/tasklist.jsp" location="1850,4150" dimension="219,53" />
+  <StrutsActivity path="/infoAdmin/workflow/tasklistAll.jsp" location="3050,1850" dimension="233,53" />
+  <StrutsActivity path="/infoAdmin/workflow/noactor.jsp" location="2450,4150" dimension="224,53" />
+  <StrutsActivity path="/infoAdmin/workflow/reassign.jsp" location="2750,4150" dimension="228,53" />
+  <StrutsActivity path="/infoAdmin/workflow/view.jsp" location="3050,4150" dimension="204,53" />
+  <StrutsActivity path="/infoAdmin/workflow/history.jsp" location="3350,4150" dimension="218,53" />
+  <StrutsActivity path="/logout.jsp" location="350,3650" dimension="106,48" />
+  <StrutsActivity path="/login.jsp" location="1250,2750" dimension="78,47" />
+  <StrutsActivity path="/index.jsp" location="1550,2750" dimension="81,47" />
+  <StrutsActivity path="" location="1850,2750" dimension="29,47" />
+  <StrutsActivity path="/user/user_table_column_def.jsp" location="2750,2750" dimension="198,47" />
+  <StrutsActivity path="/user/sys_table_column_setting.jsp" location="3050,2750" dimension="213,47" />
+  <StrutsActivity path="/user/userColumn/user_table_setting_column.jsp" location="3950,3250" dimension="311,53" />
+  <StrutsActivity path="/components/portal/listPortalColumnTemplates.jsp" location="3050,1050" dimension="328,48" />
+  <StrutsActivity path="/components/portal/listPortalStyles.jsp" location="3650,1050" dimension="274,48" />
+  <StrutsActivity path="/components/portal/subscribePortlets.jsp" location="350,1150" dimension="280,48" />
+  <StrutsActivity path="/components/portal/listPortlets.jsp" location="50,1150" dimension="250,48" />
+  <StrutsActivity path="/user/jfreeChart/showbar.jsp" location="3650,2750" dimension="208,48" />
+  <StrutsActivity path="/user/jfreeChart/showtable.jsp" location="3350,2750" dimension="220,48" />
+  <StrutsActivity path="/user/jfreeChart/showline.jsp" location="350,2750" dimension="214,48" />
+  <StrutsActivity path="/user/jfreeChart/showpie.jsp" location="650,2750" dimension="208,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_scitlist.jsp" location="350,4050" dimension="280,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_column_scitlist.jsp" location="950,4050" dimension="322,48" />
+  <StrutsActivity path="/infoAdmin/system/sys_table_column_scitdetail.jsp" location="1550,4050" dimension="334,48" />
+  <StrutsActivity path="/user/require/requireAgreement.jsp" location="2150,3750" dimension="244,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/serviceItemProcess_list.jsp" location="2150,4050" dimension="340,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/req_table_info.jsp" location="4550,3850" dimension="286,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/serviceItemUserTable_list.jsp" location="2750,4050" dimension="352,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/serviceItem_listForIssue.jsp" location="3650,4150" dimension="346,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/selectTable.jsp" location="3950,4050" dimension="268,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/serviceItemUserTable_info2.jsp" location="4250,4150" dimension="358,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/serviceItemUserTable_info.jsp" location="3350,4050" dimension="352,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/serviceItemUserTable_column_detail.jsp" location="3950,4250" dimension="406,48" />
+  <StrutsActivity path="/infoAdmin/serviceItem/user_table_extcolumn_detail.jsp" location="50,4350" dimension="364,48" />
+  <StrutsActivity path="/user/account/report/importAccountData.jsp" location="4550,3950" dimension="292,48" />
+  <StrutsActivity path="/user/account/myAccountList.jsp" location="4550,4050" dimension="226,48" />
+  <StrutsActivity path="/user/account/myAccount.jsp" location="4550,4250" dimension="202,48" />
+  <StrutsActivity path="/WEB-INF/jsp/struts/Error.jsp" location="179,497" dimension="230,54" />
+  <StrutsActivity path="/WEB-INF/jsp/struts/SignonForm.jsp" location="640,497" dimension="275,54" />
+  <StrutsActivity path="/accessDenied.jsp" location="650,2850" dimension="124,47" />
+  <StrutsActivity path="/error.jsp" location="193,786" dimension="96,54" />
+  <StrutsActivity path="/infoAdmin/template/sys_menu_template_detail.jsp" location="50,3750" dimension="325,53" />
+  <StrutsActivity path="/infoAdmin/template/sys_menu_template_list.jsp" location="1550,3750" dimension="309,53" />
+  <StrutsActivity path="/infoAdmin/template/dept_menu_template_detail.jsp" location="650,3850" dimension="334,53" />
+  <StrutsActivity path="/infoAdmin/template/dept_menu_template_list.jsp" location="2150,3850" dimension="318,53" />
+  <StrutsActivity path="/infoAdmin/template/user_menu_template_detail.jsp" location="2750,3850" dimension="332,53" />
+  <StrutsActivity path="/infoAdmin/template/user_menu_template_list.jsp" location="3350,3850" dimension="316,53" />
+  <StrutsActivity path="/infoAdmin/template/template_detail.jsp" location="3950,3850" dimension="265,53" />
+  <StrutsActivity path="/infoAdmin/template/template_list.jsp" location="50,3950" dimension="249,53" />
+  <StrutsActivity path="/infoAdmin/pageModel/pagePanelDemo3/pagePanelEditForm.jsp" location="2750,1150" dimension="382,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pagePanelDemo3/pagePanel-json.jsp" location="3350,1150" dimension="364,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pagePanel_list.jsp" location="2450,1750" dimension="274,48" />
+  <StrutsActivity path="/b2b/view.jsp" location="950,2750" dimension="102,47" />
+  <StrutsActivity path="/order_apply_list.jsp" location="1850,3350" dimension="148,53" />
+  <StrutsActivity path="/order_apply_form.jsp" location="2150,3350" dimension="160,53" />
+  <StrutsActivity path="/test/helloWorld.jsp" location="650,1250" dimension="160,48" />
+  <StrutsActivity path="/test/system/sys_maintables_list.jsp" location="1550,1350" dimension="256,48" />
+  <StrutsActivity path="/test/system/sys_exttables_list.jsp" location="50,1450" dimension="250,48" />
+  <StrutsActivity path="/test/system/sys_table_def_list.jsp" location="350,1450" dimension="250,48" />
+  <StrutsActivity path="/test/system/sys_extendtables_list.jsp" location="650,1450" dimension="268,48" />
+  <StrutsActivity path="/test/system/extend_columns_def.jsp" location="1250,1450" dimension="250,48" />
+  <StrutsActivity path="/test/system/sys_exttable_def.jsp" location="1550,1450" dimension="238,48" />
+  <StrutsActivity path="/test/system/ext_options_def.jsp" location="1850,1450" dimension="232,48" />
+  <StrutsActivity path="/test/system/sys_table_columns_def_list.jsp" location="50,1550" dimension="298,48" />
+  <StrutsActivity path="/test/system/user_table_column_def.jsp" location="650,1550" dimension="268,48" />
+  <StrutsActivity path="/test/system/sys_table_column_setting.jsp" location="650,2550" dimension="253,47" />
+  <StrutsActivity path="/test/system/sys_maintable_queries.jsp" location="1250,2550" dimension="236,47" />
+  <StrutsActivity path="/test/system/sys_maintable_query_item.jsp" location="1550,2550" dimension="257,47" />
+  <StrutsActivity path="/test/system/user_query_columns_def.jsp" location="2150,2550" dimension="246,47" />
+  <StrutsActivity path="/test/system/sys_main_column_types_list.jsp" location="1250,1550" dimension="298,48" />
+  <StrutsActivity path="/test/customer/customer_detail.jsp" location="1850,1550" dimension="244,48" />
+  <StrutsActivity path="/test/customer/customers_list.jsp" location="50,1650" dimension="238,48" />
+  <StrutsActivity path="/test/customer/customer_multi_list.jsp" location="50,2650" dimension="230,47" />
+  <StrutsActivity path="/test/customer/tradeways_list.jsp" location="350,2650" dimension="204,47" />
+  <StrutsActivity path="/test/customer/tradeway_detail.jsp" location="650,2650" dimension="213,47" />
+  <StrutsActivity path="/test/jbpm/tasklistAll.jsp" location="2150,4150" dimension="172,53" />
+  <StrutsActivity path="/indexN.jsp" location="3650,4250" dimension="98,53" />
+  <StrutsActivity path="/test/admin/role_detail.jsp" location="350,1350" dimension="202,48" />
+  <StrutsActivity path="/test/admin/roles_list.jsp" location="650,1350" dimension="196,48" />
+  <StrutsActivity path="/test/admin/users_list.jsp" location="950,1350" dimension="196,48" />
+  <StrutsActivity path="/test/admin/user_detail.jsp" location="1250,1350" dimension="202,48" />
+  <StrutsActivity path="/test/admin/authorizations_list.jsp" location="50,1350" dimension="250,48" />
+  <StrutsActivity path="/admin/notice_list.jsp" location="2150,2750" dimension="144,47" />
+  <StrutsActivity path="/admin/notice_detail.jsp" location="2450,2750" dimension="158,47" />
+  <StrutsActivity path="/system/module.jsp" location="650,3550" dimension="148,48" />
+  <StrutsActivity path="/system/resource.jsp" location="950,3550" dimension="160,48" />
+  <StrutsActivity path="/system/right.jsp" location="1250,3550" dimension="142,48" />
+  <StrutsActivity path="/system/auth.jsp" location="1550,3550" dimension="136,48" />
+  <StrutsActivity path="/system/main_column_types.jsp" location="1850,3550" dimension="214,48" />
+  <StrutsActivity path="/system/ext_column_types.jsp" location="2150,3550" dimension="208,48" />
+  <StrutsActivity path="/system/sys_menu_menutable_list.jsp" location="50,2450" dimension="227,47" />
+  <StrutsActivity path="/system/sys_menu_menutable_def.jsp" location="2750,3550" dimension="244,48" />
+  <StrutsActivity path="/test/errorBack.jsp" location="1550,1650" dimension="154,48" />
+  <StrutsActivity path="/test/jbpm/deploy.jsp" location="2150,1450" dimension="166,48" />
+  <StrutsActivity path="/test/jbpm/alldefination.jsp" location="2150,1550" dimension="208,48" />
+  <StrutsActivity path="/test/jbpm/allprocess.jsp" location="2450,850" dimension="190,48" />
+  <StrutsActivity path="/test/jbpm/preassign.jsp" location="50,1750" dimension="184,48" />
+  <StrutsActivity path="/test/jbpm/start.jsp" location="1550,1750" dimension="160,48" />
+  <StrutsActivity path="/test/jbpm/logon.jsp" location="50,1850" dimension="160,48" />
+  <StrutsActivity path="/test/jbpm/tasklist.jsp" location="350,1850" dimension="178,48" />
+  <StrutsActivity path="/test/jbpm/noactor.jsp" location="650,1850" dimension="172,48" />
+  <StrutsActivity path="/test/jbpm/reassign.jsp" location="2150,1850" dimension="178,48" />
+  <StrutsActivity path="/test/jbpm/view.jsp" location="2450,650" dimension="154,48" />
+  <StrutsActivity path="/test/jbpm/history.jsp" location="2450,750" dimension="172,48" />
+  <StrutsActivity path="/test/admin/modules_list.jsp" location="950,1250" dimension="208,48" />
+  <StrutsActivity path="/test/admin/resources_list.jsp" location="1250,1250" dimension="220,48" />
+  <StrutsActivity path="/test/admin/rights_list.jsp" location="1550,1250" dimension="202,48" />
+  <StrutsActivity path="/test/accessDenied.jsp" location="950,1650" dimension="172,48" />
+  <StrutsActivity path="/test/error.jsp" location="1250,1650" dimension="130,48" />
+  <StrutsActivity path="/jbpm/deploy.jsp" location="2150,750" dimension="136,48" />
+  <StrutsActivity path="/jbpm/alldefination.jsp" location="350,2550" dimension="178,48" />
+  <StrutsActivity path="/jbpm/preassign.jsp" location="2150,850" dimension="154,48" />
+  <StrutsActivity path="/jbpm/start.jsp" location="2150,650" dimension="130,48" />
+  <StrutsActivity path="/jbpm/logon.jsp" location="2150,950" dimension="130,48" />
+  <StrutsActivity path="/jbpm/tasklist.jsp" location="50,950" dimension="148,48" />
+  <StrutsActivity path="/jbpm/noactor.jsp" location="1850,1050" dimension="142,48" />
+  <StrutsActivity path="/jbpm/reassign.jsp" location="2150,1050" dimension="148,48" />
+  <StrutsActivity path="/jbpm/view.jsp" location="350,1250" dimension="124,48" />
+  <StrutsActivity path="/jbpm/history.jsp" location="50,1250" dimension="142,48" />
+  <StrutsActivity path="/customer/customer_detail.jsp" location="1850,2450" dimension="214,48" />
+  <StrutsActivity path="/customer/customers_list.jsp" location="50,2550" dimension="208,48" />
+  <StrutsActivity path="/contract/applyAnnex2.jsp" location="131,208" dimension="207,54" />
+  <StrutsActivity path="/errorBack.jsp" location="7,786" dimension="127,54" />
+  <StrutsActivity path="/jbpm/customers_list.jsp" location="2150,1150" dimension="184,48" />
+  <StrutsActivity path="/test/jbpm/endprocess.jsp" location="2450,1150" dimension="190,48" />
+  <StrutsActivity path="/workflow/listprocess" location="2450,1650" dimension="166,48" />
+  <StrutsActivity path="/infoAdmin/template/pageModelEditForm.jsp" location="3650,1450" dimension="286,48" />
+  <StrutsActivity path="pageModelEditForm.jsp/pageModelEditForm.jsp" location="3650,1550" dimension="298,48" />
+  <StrutsActivity path="/infoAdmin/pageModel/pagePanelEditForm.jsp" location="3050,2050" dimension="292,48" />
+  <StrutsActivity path="/infoAdmin/workflow/configunit.jsp" location="3050,1750" dimension="244,48" />
+  <StrutsActivity path="/infoAdmin/workflow/configmodel.jsp" location="1250,1950" dimension="250,48" />
+  <StrutsTransition id="failure;6,null,/WEB-INF/jsp/struts/Error.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="229,397" />
+      <AbsolutePoint location="229,497" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysExtTableColumn.do,columns,/infoAdmin/system/columnsList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3921,2354" />
+      <AbsolutePoint location="3921,2413" />
+      <AbsolutePoint location="4989,2413" />
+      <AbsolutePoint location="4989,3718" />
+      <AbsolutePoint location="766,3718" />
+      <AbsolutePoint location="766,3703" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageGroupPanelManage.do,pageGroupPanelEditForm,/infoAdmin/pageModel/pagePanelDemo3/pageGroupPanelEditForm.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3311,934" />
+      <AbsolutePoint location="3311,971" />
+      <AbsolutePoint location="4537,971" />
+      <AbsolutePoint location="4537,2041" />
+      <AbsolutePoint location="1159,2041" />
+      <AbsolutePoint location="1159,2450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/userMainTablePanel.do,pagePanelEditForm,/infoAdmin/pageModel/basePagePanel/pagePanelEditForm.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4231,734" />
+      <AbsolutePoint location="4231,765" />
+      <AbsolutePoint location="5049,765" />
+      <AbsolutePoint location="5049,1974" />
+      <AbsolutePoint location="4326,1974" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageModelManage.do,listPageModel,/infoAdmin/pageModel/pageModel_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3286,1450" />
+      <AbsolutePoint location="3286,1374" />
+      <AbsolutePoint location="3024,1374" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pagePanelManage.do,pagePanelShow,/infoAdmin/pageModel/basePagePanel/pageData-json.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1222,1834" />
+      <AbsolutePoint location="1222,1941" />
+      <AbsolutePoint location="3826,1941" />
+      <AbsolutePoint location="3826,2050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/processconfig.do,success,/infoAdmin/workflow/processConfig.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4677,2134" />
+      <AbsolutePoint location="4677,2495" />
+      <AbsolutePoint location="5187,2495" />
+      <AbsolutePoint location="5187,3774" />
+      <AbsolutePoint location="4512,3774" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/roleManage.do,listRoles,/infoAdmin/security/roles_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1426,534" />
+      <AbsolutePoint location="1426,1240" />
+      <AbsolutePoint location="5080,1240" />
+      <AbsolutePoint location="5080,3317" />
+      <AbsolutePoint location="1226,3317" />
+      <AbsolutePoint location="1226,3174" />
+      <AbsolutePoint location="1250,3174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/userMangeAction.do,listUsers,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4958,734" />
+      <AbsolutePoint location="4958,1644" />
+      <AbsolutePoint location="2334,1644" />
+      <AbsolutePoint location="2334,2446" />
+      <AbsolutePoint location="2106,2446" />
+      <AbsolutePoint location="2106,2790" />
+      <AbsolutePoint location="1879,2790" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/userRoleAction.do,userDetail,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2829,2154" />
+      <AbsolutePoint location="2829,2643" />
+      <AbsolutePoint location="1954,2643" />
+      <AbsolutePoint location="1954,2756" />
+      <AbsolutePoint location="1879,2756" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageGroupPanelManage.do,listPageGroupPanel,/infoAdmin/pageModel/pageGroupPanel_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3301,934" />
+      <AbsolutePoint location="3301,1043" />
+      <AbsolutePoint location="40,1043" />
+      <AbsolutePoint location="40,2374" />
+      <AbsolutePoint location="502,2374" />
+      <AbsolutePoint location="502,2450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemUserTableColumn.do,extform,/infoAdmin/serviceItem/user_table_extcolumn_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1780,2934" />
+      <AbsolutePoint location="1780,2971" />
+      <AbsolutePoint location="40,2971" />
+      <AbsolutePoint location="40,4374" />
+      <AbsolutePoint location="50,4374" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user/userTableSet.do,sysTableSettings,/user/sys_table_column_setting.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3459,2330" />
+      <AbsolutePoint location="3459,2579" />
+      <AbsolutePoint location="3156,2579" />
+      <AbsolutePoint location="3156,2750" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/queryDepartment.do,success,/infoAdmin/security/siData.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,3492" />
+      <AbsolutePoint location="43,3492" />
+      <AbsolutePoint location="43,874" />
+      <AbsolutePoint location="350,874" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/listTask.do,logon,/infoAdmin/workflow/logon.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="5040,292" />
+      <AbsolutePoint location="5050,292" />
+      <AbsolutePoint location="5050,4213" />
+      <AbsolutePoint location="1656,4213" />
+      <AbsolutePoint location="1656,4203" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/taskPreAssign.do,detail,/infoAdmin/workflow/assignTaskDetail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3009,3254" />
+      <AbsolutePoint location="3009,3276" />
+      <AbsolutePoint location="1526,3276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/reassign.do,noactor,/infoAdmin/workflow/noactor.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,2092" />
+      <AbsolutePoint location="-147,2092" />
+      <AbsolutePoint location="-147,4425" />
+      <AbsolutePoint location="2562,4425" />
+      <AbsolutePoint location="2562,4203" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/login.do,success,/index.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2450,1890" />
+      <AbsolutePoint location="2349,1890" />
+      <AbsolutePoint location="2349,2341" />
+      <AbsolutePoint location="1537,2341" />
+      <AbsolutePoint location="1537,2773" />
+      <AbsolutePoint location="1550,2773" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/userRoleManage.do,listUsers,/infoAdmin/security/users_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2038,534" />
+      <AbsolutePoint location="2038,1372" />
+      <AbsolutePoint location="2374,1372" />
+      <AbsolutePoint location="2374,2288" />
+      <AbsolutePoint location="2969,2288" />
+      <AbsolutePoint location="2969,2940" />
+      <AbsolutePoint location="1672,2940" />
+      <AbsolutePoint location="1672,3150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageModelExpandManage.do,pageModelEditForm,/infoAdmin/pageModel/pageModelEditFormForExpand.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4504,50" />
+      <AbsolutePoint location="4504,27" />
+      <AbsolutePoint location="929,27" />
+      <AbsolutePoint location="929,1841" />
+      <AbsolutePoint location="5163,1841" />
+      <AbsolutePoint location="5163,3274" />
+      <AbsolutePoint location="4896,3274" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemUserTableAction.do,selectTable,/infoAdmin/serviceItem/selectTable.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1221,2934" />
+      <AbsolutePoint location="1221,3541" />
+      <AbsolutePoint location="4239,3541" />
+      <AbsolutePoint location="4239,4074" />
+      <AbsolutePoint location="4218,4074" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/configmodel.do,success,/infoAdmin/workflow/configModel.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1100,2250" />
+      <AbsolutePoint location="1100,2030" />
+      <AbsolutePoint location="4375,2030" />
+      <AbsolutePoint location="4375,1598" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/portletAction.do,list,/components/portal/listPortlets.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1285,734" />
+      <AbsolutePoint location="1285,1087" />
+      <AbsolutePoint location="175,1087" />
+      <AbsolutePoint location="175,1150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/account/importAccountData.do,importAccount,/user/account/report/importAccountData.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4956,1492" />
+      <AbsolutePoint location="4966,1492" />
+      <AbsolutePoint location="4966,3974" />
+      <AbsolutePoint location="4842,3974" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysMainTable.do,form,/infoAdmin/system/sys_table_column_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3331,50" />
+      <AbsolutePoint location="3331,5" />
+      <AbsolutePoint location="5127,5" />
+      <AbsolutePoint location="5127,2813" />
+      <AbsolutePoint location="2899,2813" />
+      <AbsolutePoint location="2899,2950" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/userRoleManage.do,userDetail,/infoAdmin/security/user_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,492" />
+      <AbsolutePoint location="1844,492" />
+      <AbsolutePoint location="1844,3174" />
+      <AbsolutePoint location="1850,3174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysMainTable.do,list,/infoAdmin/system/sys_table_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3050,92" />
+      <AbsolutePoint location="2697,92" />
+      <AbsolutePoint location="2697,813" />
+      <AbsolutePoint location="5019,813" />
+      <AbsolutePoint location="5019,3013" />
+      <AbsolutePoint location="2278,3013" />
+      <AbsolutePoint location="2278,2998" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/account/myAccount.do,success,/user/account/myAccount.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4908,1692" />
+      <AbsolutePoint location="4918,1692" />
+      <AbsolutePoint location="4918,4274" />
+      <AbsolutePoint location="4752,4274" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageGroupPanelManage.do,pageGroupPanelShow,/infoAdmin/pageModel/pagePanelDemo3/data-json.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3050,931" />
+      <AbsolutePoint location="46,931" />
+      <AbsolutePoint location="46,2513" />
+      <AbsolutePoint location="2617,2513" />
+      <AbsolutePoint location="2617,2398" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userListMainTable.do,form,/infoAdmin/userExpand/user_list_table_column_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3898,50" />
+      <AbsolutePoint location="3898,-25" />
+      <AbsolutePoint location="-15,-25" />
+      <AbsolutePoint location="-15,1974" />
+      <AbsolutePoint location="50,1974" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/portletAction.do,userSubscrbie,/components/portal/subscribePortlets.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="950,692" />
+      <AbsolutePoint location="771,692" />
+      <AbsolutePoint location="771,1174" />
+      <AbsolutePoint location="630,1174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/roleAction.do,roleDetail,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,2102" />
+      <AbsolutePoint location="1761,2102" />
+      <AbsolutePoint location="1761,2531" />
+      <AbsolutePoint location="1865,2531" />
+      <AbsolutePoint location="1865,2750" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/rightManage.do,listRights,/infoAdmin/security/rights_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1605,334" />
+      <AbsolutePoint location="1605,635" />
+      <AbsolutePoint location="2141,635" />
+      <AbsolutePoint location="2141,1645" />
+      <AbsolutePoint location="-135,1645" />
+      <AbsolutePoint location="-135,3174" />
+      <AbsolutePoint location="50,3174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userListTableColumn.do,form,/infoAdmin/userExpand/user_list_table_column_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4216,334" />
+      <AbsolutePoint location="4216,611" />
+      <AbsolutePoint location="5187,611" />
+      <AbsolutePoint location="5187,2213" />
+      <AbsolutePoint location="3535,2213" />
+      <AbsolutePoint location="3535,1998" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/authorizationManage.do,listAuthorizations,/infoAdmin/security/authorizations_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2226,292" />
+      <AbsolutePoint location="2440,292" />
+      <AbsolutePoint location="2440,1207" />
+      <AbsolutePoint location="3045,1207" />
+      <AbsolutePoint location="3045,2837" />
+      <AbsolutePoint location="499,2837" />
+      <AbsolutePoint location="499,3150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/portalStyleAction.do,list,/components/portal/listPortalStyles.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="657,734" />
+      <AbsolutePoint location="657,941" />
+      <AbsolutePoint location="3787,941" />
+      <AbsolutePoint location="3787,1050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/history.do,view,/infoAdmin/workflow/view.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2150,1292" />
+      <AbsolutePoint location="2140,1292" />
+      <AbsolutePoint location="2140,4140" />
+      <AbsolutePoint location="3152,4140" />
+      <AbsolutePoint location="3152,4150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/userRoleAction.do,listUsers,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2799,2154" />
+      <AbsolutePoint location="2799,2613" />
+      <AbsolutePoint location="2653,2613" />
+      <AbsolutePoint location="2653,2813" />
+      <AbsolutePoint location="1865,2813" />
+      <AbsolutePoint location="1865,2797" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/authorizAction.do,listAuthorizations,/infoAdmin/security/authorizations_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3050,3492" />
+      <AbsolutePoint location="603,3492" />
+      <AbsolutePoint location="603,3198" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysTableSetting.do,listColumns,/infoAdmin/system/sys_table_setting_column.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3610,1334" />
+      <AbsolutePoint location="3610,1635" />
+      <AbsolutePoint location="-39,1635" />
+      <AbsolutePoint location="-39,3074" />
+      <AbsolutePoint location="50,3074" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/deploy.do,success,/infoAdmin/workflow/deploy.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="595,1734" />
+      <AbsolutePoint location="595,2413" />
+      <AbsolutePoint location="-15,2413" />
+      <AbsolutePoint location="-15,4176" />
+      <AbsolutePoint location="50,4176" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysTableRole.do,list,/infoAdmin/system/sys_table_role_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3934,2554" />
+      <AbsolutePoint location="3934,2769" />
+      <AbsolutePoint location="5097,2769" />
+      <AbsolutePoint location="5097,3818" />
+      <AbsolutePoint location="2583,3818" />
+      <AbsolutePoint location="2583,3703" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemUserTableAction.do,listScid,/infoAdmin/serviceItem/serviceItem_listForIssue.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1211,2934" />
+      <AbsolutePoint location="1211,3635" />
+      <AbsolutePoint location="3940,3635" />
+      <AbsolutePoint location="3940,4150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/userMangeAction.do,userDetail,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="5082,692" />
+      <AbsolutePoint location="5092,692" />
+      <AbsolutePoint location="5092,2808" />
+      <AbsolutePoint location="1864,2808" />
+      <AbsolutePoint location="1864,2797" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysTableQuery.do,listColumns,/infoAdmin/system/sys_table_query_column.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3588,1650" />
+      <AbsolutePoint location="3588,1565" />
+      <AbsolutePoint location="2433,1565" />
+      <AbsolutePoint location="2433,2413" />
+      <AbsolutePoint location="1501,2413" />
+      <AbsolutePoint location="1501,3050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemUserTableAction.do,info,/infoAdmin/serviceItem/serviceItemUserTable_info.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1202,2934" />
+      <AbsolutePoint location="1202,3645" />
+      <AbsolutePoint location="3346,3645" />
+      <AbsolutePoint location="3346,4074" />
+      <AbsolutePoint location="3350,4074" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/taskPreAssign.do,add,/infoAdmin/workflow/assignTaskAdd.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2750,3202" />
+      <AbsolutePoint location="2727,3202" />
+      <AbsolutePoint location="2727,2579" />
+      <AbsolutePoint location="2712,2579" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/listprocess.do,success,/infoAdmin/workflow/allprocess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2450,1030" />
+      <AbsolutePoint location="1828,1030" />
+      <AbsolutePoint location="1828,1830" />
+      <AbsolutePoint location="5148,1830" />
+      <AbsolutePoint location="5148,4124" />
+      <AbsolutePoint location="769,4124" />
+      <AbsolutePoint location="769,4150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/ServiceItemTypeAction.do,add,/infoAdmin/system/sys_table_column_scitlist.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3325,2534" />
+      <AbsolutePoint location="3325,3326" />
+      <AbsolutePoint location="1490,3326" />
+      <AbsolutePoint location="1490,4074" />
+      <AbsolutePoint location="1272,4074" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/jfreeChartAction.do,showbar,/user/jfreeChart/showbar.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4141,1734" />
+      <AbsolutePoint location="4141,1744" />
+      <AbsolutePoint location="3640,1744" />
+      <AbsolutePoint location="3640,2774" />
+      <AbsolutePoint location="3650,2774" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/roleManage.do,roleDetail,/infoAdmin/security/role_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1503,534" />
+      <AbsolutePoint location="1503,1543" />
+      <AbsolutePoint location="2381,1543" />
+      <AbsolutePoint location="2381,2437" />
+      <AbsolutePoint location="945,2437" />
+      <AbsolutePoint location="945,3174" />
+      <AbsolutePoint location="950,3174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/ServiceItemTypeAction.do,list,/infoAdmin/system/sys_table_scitlist.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3339,2534" />
+      <AbsolutePoint location="3339,3441" />
+      <AbsolutePoint location="625,3441" />
+      <AbsolutePoint location="625,4050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemUserTableAction.do,info2,/infoAdmin/serviceItem/serviceItemUserTable_info2.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1226,2934" />
+      <AbsolutePoint location="1226,3035" />
+      <AbsolutePoint location="5025,3035" />
+      <AbsolutePoint location="5025,4174" />
+      <AbsolutePoint location="4608,4174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userMainTable.do,form,/infoAdmin/userExpand/user_table_column_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,122" />
+      <AbsolutePoint location="-45,122" />
+      <AbsolutePoint location="-45,1065" />
+      <AbsolutePoint location="1114,1065" />
+      <AbsolutePoint location="1114,998" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/listdefinition.do,success,/infoAdmin/workflow/alldefination.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3258,450" />
+      <AbsolutePoint location="3258,440" />
+      <AbsolutePoint location="610,440" />
+      <AbsolutePoint location="610,4176" />
+      <AbsolutePoint location="600,4176" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysMainTable.do,tjList,/infoAdmin/system/sys_table_tjList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3050,122" />
+      <AbsolutePoint location="2727,122" />
+      <AbsolutePoint location="2727,713" />
+      <AbsolutePoint location="2109,713" />
+      <AbsolutePoint location="2109,1413" />
+      <AbsolutePoint location="2403,1413" />
+      <AbsolutePoint location="2403,2174" />
+      <AbsolutePoint location="3050,2174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemProcessAction.do,agreement,/user/require/requireAgreement.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,2892" />
+      <AbsolutePoint location="-83,2892" />
+      <AbsolutePoint location="-83,3824" />
+      <AbsolutePoint location="2272,3824" />
+      <AbsolutePoint location="2272,3798" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/history.do,success,/infoAdmin/workflow/history.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2150,1300" />
+      <AbsolutePoint location="920,1300" />
+      <AbsolutePoint location="920,1916" />
+      <AbsolutePoint location="-142,1916" />
+      <AbsolutePoint location="-142,4108" />
+      <AbsolutePoint location="3459,4108" />
+      <AbsolutePoint location="3459,4150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/moduleManage.do,listModules,/infoAdmin/security/modules_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1132,134" />
+      <AbsolutePoint location="1132,617" />
+      <AbsolutePoint location="2131,617" />
+      <AbsolutePoint location="2131,1519" />
+      <AbsolutePoint location="-53,1519" />
+      <AbsolutePoint location="-53,3135" />
+      <AbsolutePoint location="2578,3135" />
+      <AbsolutePoint location="2578,3098" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysTableQuery.do,list,/infoAdmin/system/sys_table_query_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3735,1734" />
+      <AbsolutePoint location="3735,2013" />
+      <AbsolutePoint location="1822,2013" />
+      <AbsolutePoint location="1822,2813" />
+      <AbsolutePoint location="796,2813" />
+      <AbsolutePoint location="796,3050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysTableRole.do,detail,/infoAdmin/system/sys_table_role_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4158,2549" />
+      <AbsolutePoint location="5049,2549" />
+      <AbsolutePoint location="5049,3676" />
+      <AbsolutePoint location="3933,3676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysMainTableColumn.do,form,/infoAdmin/system/sys_table_column_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3619,734" />
+      <AbsolutePoint location="3619,1113" />
+      <AbsolutePoint location="22,1113" />
+      <AbsolutePoint location="22,3113" />
+      <AbsolutePoint location="3505,3113" />
+      <AbsolutePoint location="3505,2998" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysMainTable.do,tjForm,/infoAdmin/system/sys_table_column_tjList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3301,50" />
+      <AbsolutePoint location="3301,-55" />
+      <AbsolutePoint location="5217,-55" />
+      <AbsolutePoint location="5217,2174" />
+      <AbsolutePoint location="3960,2174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/SCIColumnAction.do,add,/infoAdmin/system/sys_table_column_scitdetail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4608,2517" />
+      <AbsolutePoint location="5223,2517" />
+      <AbsolutePoint location="5223,4133" />
+      <AbsolutePoint location="1717,4133" />
+      <AbsolutePoint location="1717,4098" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/resourceManage.do,listRes,/infoAdmin/security/resources_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1738,134" />
+      <AbsolutePoint location="1738,418" />
+      <AbsolutePoint location="3,418" />
+      <AbsolutePoint location="3,3145" />
+      <AbsolutePoint location="3184,3145" />
+      <AbsolutePoint location="3184,3098" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/start.do,success,/infoAdmin/workflow/start.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1483,2134" />
+      <AbsolutePoint location="1483,2143" />
+      <AbsolutePoint location="-129,2143" />
+      <AbsolutePoint location="-129,3924" />
+      <AbsolutePoint location="1352,3924" />
+      <AbsolutePoint location="1352,4150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageModelManage.do,pageModelEditForm,/infoAdmin/pageModel/pageModelEditForm.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3279,1534" />
+      <AbsolutePoint location="3279,1674" />
+      <AbsolutePoint location="3042,1674" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/require/excelImportInfo.do,success,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4747,2650" />
+      <AbsolutePoint location="4747,2619" />
+      <AbsolutePoint location="3755,2619" />
+      <AbsolutePoint location="3755,2685" />
+      <AbsolutePoint location="1666,2685" />
+      <AbsolutePoint location="1666,2782" />
+      <AbsolutePoint location="1850,2782" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/admin/pageModelNode.do,listPageModeNodes,/infoAdmin/workflow/workflowPageModelNode_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3931,934" />
+      <AbsolutePoint location="3931,1435" />
+      <AbsolutePoint location="2365,1435" />
+      <AbsolutePoint location="2365,2450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/idGenerator.do,success,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4777,1934" />
+      <AbsolutePoint location="4777,2442" />
+      <AbsolutePoint location="2082,2442" />
+      <AbsolutePoint location="2082,2773" />
+      <AbsolutePoint location="1879,2773" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/userOuterMangeAction.do,listUsers,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4904,1134" />
+      <AbsolutePoint location="4904,1340" />
+      <AbsolutePoint location="2386,1340" />
+      <AbsolutePoint location="2386,2430" />
+      <AbsolutePoint location="2130,2430" />
+      <AbsolutePoint location="2130,2794" />
+      <AbsolutePoint location="1879,2794" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userListMainTable.do,list,/infoAdmin/userExpand/user_list_table_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3898,134" />
+      <AbsolutePoint location="3898,395" />
+      <AbsolutePoint location="5157,395" />
+      <AbsolutePoint location="5157,1765" />
+      <AbsolutePoint location="4108,1765" />
+      <AbsolutePoint location="4108,1850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/taskPreAssign.do,success,/infoAdmin/workflow/assignTasklist.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3248,3202" />
+      <AbsolutePoint location="3475,3202" />
+      <AbsolutePoint location="3475,3250" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/noticeAction.do,success,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4117,1234" />
+      <AbsolutePoint location="4117,1244" />
+      <AbsolutePoint location="1848,1244" />
+      <AbsolutePoint location="1848,2776" />
+      <AbsolutePoint location="1850,2776" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pagePanelManage.do,pagePanelEditForm,/infoAdmin/pageModel/basePagePanel/pagePanelEditForm.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1200,1834" />
+      <AbsolutePoint location="1200,2235" />
+      <AbsolutePoint location="4138,2235" />
+      <AbsolutePoint location="4138,1998" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageModelExpandManage.do,listPageModel,/infoAdmin/pageModel/pageModel_listForExpand.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4526,134" />
+      <AbsolutePoint location="4526,229" />
+      <AbsolutePoint location="943,229" />
+      <AbsolutePoint location="943,1741" />
+      <AbsolutePoint location="5071,1741" />
+      <AbsolutePoint location="5071,3374" />
+      <AbsolutePoint location="4878,3374" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="error;6,null,/error.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="241,686" />
+      <AbsolutePoint location="241,786" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/userMainTablePanel.do,listPagePanel,/infoAdmin/pageModel/basePagePanel/userPanel_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4186,650" />
+      <AbsolutePoint location="4186,566" />
+      <AbsolutePoint location="-105,566" />
+      <AbsolutePoint location="-105,2174" />
+      <AbsolutePoint location="650,2174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemUserTableColumn.do,form,/infoAdmin/serviceItem/serviceItemUserTable_column_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1809,2934" />
+      <AbsolutePoint location="1809,3665" />
+      <AbsolutePoint location="2115,3665" />
+      <AbsolutePoint location="2115,4218" />
+      <AbsolutePoint location="4153,4218" />
+      <AbsolutePoint location="4153,4250" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageModelManage.do,pageModelPanelShow,/infoAdmin/pageModel/pageModelTemplate/data-json.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3308,1450" />
+      <AbsolutePoint location="3308,1141" />
+      <AbsolutePoint location="1144,1141" />
+      <AbsolutePoint location="1144,1150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/listTask.do,listAll,/infoAdmin/workflow/tasklistAll.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4800,334" />
+      <AbsolutePoint location="4800,590" />
+      <AbsolutePoint location="2085,590" />
+      <AbsolutePoint location="2085,1537" />
+      <AbsolutePoint location="3333,1537" />
+      <AbsolutePoint location="3333,1892" />
+      <AbsolutePoint location="3283,1892" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/roleAction.do,listRoles,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,2119" />
+      <AbsolutePoint location="1843,2119" />
+      <AbsolutePoint location="1843,2764" />
+      <AbsolutePoint location="1850,2764" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/reqTableAction.do,form,/infoAdmin/serviceItem/req_table_info.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4902,1292" />
+      <AbsolutePoint location="4912,1292" />
+      <AbsolutePoint location="4912,3874" />
+      <AbsolutePoint location="4836,3874" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pageModelExpandManage.do,pageModelPanelShow,/infoAdmin/pageModel/pageModelTemplate/data-json.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4504,134" />
+      <AbsolutePoint location="4504,152" />
+      <AbsolutePoint location="2349,152" />
+      <AbsolutePoint location="2349,1013" />
+      <AbsolutePoint location="1122,1013" />
+      <AbsolutePoint location="1122,1150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemUserTableAction.do,list,/infoAdmin/serviceItem/serviceItemUserTable_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1235,2934" />
+      <AbsolutePoint location="1235,3521" />
+      <AbsolutePoint location="2735,3521" />
+      <AbsolutePoint location="2735,4074" />
+      <AbsolutePoint location="2750,4074" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user/userTableSet.do,list,/user/user_table_column_def.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3050,2305" />
+      <AbsolutePoint location="2859,2305" />
+      <AbsolutePoint location="2859,2750" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userMainTable.do,list,/infoAdmin/userExpand/user_table_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="298,134" />
+      <AbsolutePoint location="298,182" />
+      <AbsolutePoint location="2379,182" />
+      <AbsolutePoint location="2379,913" />
+      <AbsolutePoint location="493,913" />
+      <AbsolutePoint location="493,950" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/configunit.do,success,/infoAdmin/workflow/configUnit.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,2292" />
+      <AbsolutePoint location="46,2292" />
+      <AbsolutePoint location="46,1440" />
+      <AbsolutePoint location="4372,1440" />
+      <AbsolutePoint location="4372,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/portalColumnTemplateAction.do,list,/components/portal/listPortalColumnTemplates.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3903,534" />
+      <AbsolutePoint location="3903,765" />
+      <AbsolutePoint location="2992,765" />
+      <AbsolutePoint location="2992,1065" />
+      <AbsolutePoint location="3050,1065" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/pagePanelManage.do,listPagePanel,/infoAdmin/pageModel/basePagePanel/pagePanel_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1186,1834" />
+      <AbsolutePoint location="1186,2374" />
+      <AbsolutePoint location="1850,2374" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user/userTableSetting.do,listColumns,/user/userColumn/user_table_setting_column.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="558,3341" />
+      <AbsolutePoint location="4105,3341" />
+      <AbsolutePoint location="4105,3303" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/jfreeChartAction.do,showpie,/user/jfreeChart/showpie.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4268,1734" />
+      <AbsolutePoint location="4268,1917" />
+      <AbsolutePoint location="2961,1917" />
+      <AbsolutePoint location="2961,2846" />
+      <AbsolutePoint location="754,2846" />
+      <AbsolutePoint location="754,2798" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="unknown-error;6,null,/WEB-INF/jsp/struts/Error.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="359,397" />
+      <AbsolutePoint location="359,497" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/login.do,login,/login.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2758,1890" />
+      <AbsolutePoint location="2978,1890" />
+      <AbsolutePoint location="2978,2671" />
+      <AbsolutePoint location="1289,2671" />
+      <AbsolutePoint location="1289,2750" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/config/econfigItemAction.do,view,/user/config/view.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2932,734" />
+      <AbsolutePoint location="2932,1065" />
+      <AbsolutePoint location="2685,1065" />
+      <AbsolutePoint location="2685,1274" />
+      <AbsolutePoint location="2750,1274" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysExtTableColumn.do,extForm,/infoAdmin/system/sys_exttable_column_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4193,2349" />
+      <AbsolutePoint location="4959,2349" />
+      <AbsolutePoint location="4959,3613" />
+      <AbsolutePoint location="1095,3613" />
+      <AbsolutePoint location="1095,3650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/endprocess.do,success,/workflow/listprocess.do,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2655,1450" />
+      <AbsolutePoint location="2655,1034" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysTableQuery.do,detail,/infoAdmin/system/sys_table_query_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3350,1713" />
+      <AbsolutePoint location="3000,1713" />
+      <AbsolutePoint location="3000,2712" />
+      <AbsolutePoint location="2025,2712" />
+      <AbsolutePoint location="2025,3050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/userOuterMangeAction.do,userDetail,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4735,1134" />
+      <AbsolutePoint location="4735,1144" />
+      <AbsolutePoint location="1846,1144" />
+      <AbsolutePoint location="1846,2779" />
+      <AbsolutePoint location="1850,2779" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="login;6,null,/login.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2450,393" />
+      <AbsolutePoint location="2440,393" />
+      <AbsolutePoint location="2440,2818" />
+      <AbsolutePoint location="1289,2818" />
+      <AbsolutePoint location="1289,2797" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userMainTableColumn.do,form,/infoAdmin/userExpand/user_table_column_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2416,134" />
+      <AbsolutePoint location="2416,813" />
+      <AbsolutePoint location="1720,813" />
+      <AbsolutePoint location="1720,950" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userMainTable.do,export,/infoAdmin/userExpand/user_table_cir_data.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,92" />
+      <AbsolutePoint location="-75,92" />
+      <AbsolutePoint location="-75,2613" />
+      <AbsolutePoint location="2309,2613" />
+      <AbsolutePoint location="2309,2850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userMainTable.do,extform,/infoAdmin/userExpand/user_table_extcolumn_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,62" />
+      <AbsolutePoint location="-135,62" />
+      <AbsolutePoint location="-135,1613" />
+      <AbsolutePoint location="3309,1613" />
+      <AbsolutePoint location="3309,1874" />
+      <AbsolutePoint location="3350,1874" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/jfreeChartAction.do,showline,/user/jfreeChart/showline.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4141,1650" />
+      <AbsolutePoint location="4141,1640" />
+      <AbsolutePoint location="574,1640" />
+      <AbsolutePoint location="574,2774" />
+      <AbsolutePoint location="564,2774" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sysManage/userViewStyle.do,success,,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1523,2330" />
+      <AbsolutePoint location="1523,2718" />
+      <AbsolutePoint location="1722,2718" />
+      <AbsolutePoint location="1722,2773" />
+      <AbsolutePoint location="1850,2773" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/assginAndAddMark.do,success,/infoAdmin/workflow/configUnit.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4519,534" />
+      <AbsolutePoint location="4519,787" />
+      <AbsolutePoint location="4853,787" />
+      <AbsolutePoint location="4853,1017" />
+      <AbsolutePoint location="4372,1017" />
+      <AbsolutePoint location="4372,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/reassign.do,success,/infoAdmin/workflow/reassign.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,2098" />
+      <AbsolutePoint location="-123,2098" />
+      <AbsolutePoint location="-123,4515" />
+      <AbsolutePoint location="2864,4515" />
+      <AbsolutePoint location="2864,4203" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/serviceItemProcessAction.do,list,/infoAdmin/serviceItem/serviceItemProcess_list.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,2902" />
+      <AbsolutePoint location="46,2902" />
+      <AbsolutePoint location="46,4113" />
+      <AbsolutePoint location="2319,4113" />
+      <AbsolutePoint location="2319,4098" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/userMainTableColumn.do,extform,/infoAdmin/userExpand/user_table_extcolumn_detail.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2416,50" />
+      <AbsolutePoint location="2416,-85" />
+      <AbsolutePoint location="5097,-85" />
+      <AbsolutePoint location="5097,1813" />
+      <AbsolutePoint location="3529,1813" />
+      <AbsolutePoint location="3529,1850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="accessDenied;6,null,/accessDenied.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1939,1222" />
+      <AbsolutePoint location="1939,1232" />
+      <AbsolutePoint location="640,1232" />
+      <AbsolutePoint location="640,2873" />
+      <AbsolutePoint location="650,2873" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/pageModel/userMainTablePanel.do,pagePanelShow,/infoAdmin/pageModel/basePagePanel/pageData-json.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4201,734" />
+      <AbsolutePoint location="4201,995" />
+      <AbsolutePoint location="4515,995" />
+      <AbsolutePoint location="4515,2013" />
+      <AbsolutePoint location="3848,2013" />
+      <AbsolutePoint location="3848,2050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/jfreeChartAction.do,showtable,/user/jfreeChart/showtable.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4141,1734" />
+      <AbsolutePoint location="4141,1782" />
+      <AbsolutePoint location="3344,1782" />
+      <AbsolutePoint location="3344,2172" />
+      <AbsolutePoint location="3510,2172" />
+      <AbsolutePoint location="3510,2750" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/login.do,logout,/logout.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2758,1876" />
+      <AbsolutePoint location="3022,1876" />
+      <AbsolutePoint location="3022,2734" />
+      <AbsolutePoint location="-69,2734" />
+      <AbsolutePoint location="-69,3674" />
+      <AbsolutePoint location="350,3674" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/listTask.do,success,/infoAdmin/workflow/tasklist.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4795,334" />
+      <AbsolutePoint location="4795,544" />
+      <AbsolutePoint location="3232,544" />
+      <AbsolutePoint location="3232,740" />
+      <AbsolutePoint location="4978,740" />
+      <AbsolutePoint location="4978,1790" />
+      <AbsolutePoint location="5152,1790" />
+      <AbsolutePoint location="5152,4025" />
+      <AbsolutePoint location="1959,4025" />
+      <AbsolutePoint location="1959,4150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="global-signon;6,null,/WEB-INF/jsp/struts/SignonForm.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="777,397" />
+      <AbsolutePoint location="777,497" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/preassign.do,success,/infoAdmin/workflow/preassign.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1023,2034" />
+      <AbsolutePoint location="1023,2213" />
+      <AbsolutePoint location="-105,2213" />
+      <AbsolutePoint location="-105,4473" />
+      <AbsolutePoint location="1068,4473" />
+      <AbsolutePoint location="1068,4203" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/account/myAccount.do,dcit,/user/account/myAccountList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="4729,1734" />
+      <AbsolutePoint location="4729,1794" />
+      <AbsolutePoint location="3348,1794" />
+      <AbsolutePoint location="3348,2244" />
+      <AbsolutePoint location="5208,2244" />
+      <AbsolutePoint location="5208,4074" />
+      <AbsolutePoint location="4776,4074" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysTableRole.do,listColumns,/infoAdmin/system/sys_table_role_column.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3904,2554" />
+      <AbsolutePoint location="3904,2969" />
+      <AbsolutePoint location="4911,2969" />
+      <AbsolutePoint location="4911,3565" />
+      <AbsolutePoint location="3196,3565" />
+      <AbsolutePoint location="3196,3650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+</FlowViewLayout>
+
