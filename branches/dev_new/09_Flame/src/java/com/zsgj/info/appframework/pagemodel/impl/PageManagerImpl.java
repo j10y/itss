@@ -71,6 +71,7 @@ public class PageManagerImpl implements PageManager {
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	private Map<SystemMainTable,Integer> getMainTableSorted(PagePanel pagePanel){
 		Map<SystemMainTable,Integer> map = new HashMap<SystemMainTable,Integer>();
 		SystemMainTable panelSmt = pagePanel.getSystemMainTable();
@@ -94,7 +95,7 @@ public class PageManagerImpl implements PageManager {
 									Object currentObject){
 		
 		if(list.size()<=1){//说明panel不是grid panel
-			String tableName = subSmt.getTableName();
+//			String tableName = subSmt.getTableName();
 			List<PagePanelTableRelation> ptrs = pagePanelService.findPanelTableRelBySub(pagePanel, subSmt);
 			for(PagePanelTableRelation ptr : ptrs){
 				SystemMainTable parentTable = ptr.getForeignTable();
@@ -103,8 +104,8 @@ public class PageManagerImpl implements PageManager {
 				Class parentTableClass = null;
 				SystemMainTableColumn parentTableColumn = ptr.getForeignTableColumn();
 				String stcPropName = parentTableColumn.getPropertyName();
-				PropertyType stcPt = parentTableColumn.getPropertyType();
-				String propTypeName = stcPt.getPropertyTypeName();
+//				PropertyType stcPt = parentTableColumn.getPropertyType();
+//				String propTypeName = stcPt.getPropertyTypeName();
 				try {
 					parentTableClass = Class.forName(parentTableClassname);
 				} catch (Exception e) {
@@ -192,12 +193,12 @@ public class PageManagerImpl implements PageManager {
 		}
 		Map<String,List<Map<String,Object>>> allResult = new HashMap<String,List<Map<String,Object>>>();
 		
-		Map<String,Object> result = new HashMap<String,Object>();
+//		Map<String,Object> result = new HashMap<String,Object>();
 		
 		//存储主表和遍历过的panel中的对象
 		Map<SystemMainTable,Object> loopedTableObject = new HashMap<SystemMainTable,Object>();
-		Map<SystemMainTable,Object> notLoopedTableObject = new HashMap<SystemMainTable,Object>();
-		Map<PagePanel,Object> loopedPanels = new HashMap<PagePanel,Object>();
+//		Map<SystemMainTable,Object> notLoopedTableObject = new HashMap<SystemMainTable,Object>();
+//		Map<PagePanel,Object> loopedPanels = new HashMap<PagePanel,Object>();
 		
 		PageModel pageModel = pageModelService.findPageModel(model);
 		if(pageModel==null) {
@@ -227,7 +228,7 @@ public class PageManagerImpl implements PageManager {
 		if(pagePanelType==null){
 			throw new ServiceException(mainPanel.getName()+" must select panel type");
 		}
-		String xtypeName = pagePanelType.getName();
+//		String xtypeName = pagePanelType.getName();
 		
 		//存放主panel中的数据
 		List<Map<String,Object>> panelList = new ArrayList<Map<String,Object>>();
@@ -334,7 +335,7 @@ public class PageManagerImpl implements PageManager {
 			List<Map<String,Object>> parentPanelList = new ArrayList<Map<String,Object>>();
 			
 			PagePanelType ppt = parentPagePanel.getXtype();
-			String xtype = ppt.getName();
+//			String xtype = ppt.getName();
 			if(ppt==null){
 				throw new ServiceException("pagePanelType cannot null");
 			}
@@ -344,14 +345,14 @@ public class PageManagerImpl implements PageManager {
 			SystemMainTableColumn subPanelTableFColumn = item.getSubPanelTableFColumn();
 			String subPanelTableFPropName = subPanelTableFColumn.getPropertyName();
 			
-			SystemMainTableColumn parentPk = item.getParentPanelTablePColumn();
-			String parentPkName = parentPk.getPropertyName();
+//			SystemMainTableColumn parentPk = item.getParentPanelTablePColumn();
+//			String parentPkName = parentPk.getPropertyName();
 			
-			String parentPanelClassName = parentPanelTable.getClassName();
-			Class parentPanelClass = null;
+//			String parentPanelClassName = parentPanelTable.getClassName();
+//			Class parentPanelClass = null;
 			panelList = null;
 			try {
-				parentPanelClass = Class.forName(parentPanelClassName);
+//				parentPanelClass = Class.forName(parentPanelClassName);
 				//先通过外键获取子panel的数据
 				Object subTableObject = loopedTableObject.get(modelMainTable);
 				BeanWrapper subObjWrapper = new BeanWrapperImpl(subTableObject);
@@ -383,12 +384,12 @@ public class PageManagerImpl implements PageManager {
 		}
 		Map<String,List<Map<String,Object>>> allResult = new HashMap<String,List<Map<String,Object>>>();
 		
-		Map<String,Object> result = new HashMap<String,Object>();
+//		Map<String,Object> result = new HashMap<String,Object>();
 		
 		//存储主表和遍历过的panel中的对象
 		Map<SystemMainTable,Object> loopedTableObject = new HashMap<SystemMainTable,Object>();
-		Map<SystemMainTable,Object> notLoopedTableObject = new HashMap<SystemMainTable,Object>();
-		Map<PagePanel,Object> loopedPanels = new HashMap<PagePanel,Object>();
+//		Map<SystemMainTable,Object> notLoopedTableObject = new HashMap<SystemMainTable,Object>();
+//		Map<PagePanel,Object> loopedPanels = new HashMap<PagePanel,Object>();
 		
 		PageModel pageModel = pageModelService.findPageModel(model);
 		if(pageModel==null) {
@@ -418,7 +419,7 @@ public class PageManagerImpl implements PageManager {
 		if(pagePanelType==null){
 			throw new ServiceException(mainPanel.getName()+" must select panel type");
 		}
-		String xtypeName = pagePanelType.getName();
+//		String xtypeName = pagePanelType.getName();
 		
 		//存放主panel中的数据
 		List<Map<String,Object>> panelList = new ArrayList<Map<String,Object>>();
@@ -522,7 +523,7 @@ public class PageManagerImpl implements PageManager {
 			List<Map<String,Object>> parentPanelList = new ArrayList<Map<String,Object>>();
 			
 			PagePanelType ppt = parentPagePanel.getXtype();
-			String xtype = ppt.getName();
+//			String xtype = ppt.getName();
 			if(ppt==null){
 				throw new ServiceException("pagePanelType cannot null");
 			}
@@ -532,14 +533,14 @@ public class PageManagerImpl implements PageManager {
 			SystemMainTableColumn subPanelTableFColumn = item.getSubPanelTableFColumn();
 			String subPanelTableFPropName = subPanelTableFColumn.getPropertyName();
 			
-			SystemMainTableColumn parentPk = item.getParentPanelTablePColumn();
-			String parentPkName = parentPk.getPropertyName();
+//			SystemMainTableColumn parentPk = item.getParentPanelTablePColumn();
+//			String parentPkName = parentPk.getPropertyName();
 			
-			String parentPanelClassName = parentPanelTable.getClassName();
-			Class parentPanelClass = null;
+//			String parentPanelClassName = parentPanelTable.getClassName();
+//			Class parentPanelClass = null;
 			panelList = null;
 			try {
-				parentPanelClass = Class.forName(parentPanelClassName);
+//				parentPanelClass = Class.forName(parentPanelClassName);
 				//先通过外键获取子panel的数据
 				Object subTableObject = loopedTableObject.get(modelMainTable);
 				BeanWrapper subObjWrapper = new BeanWrapperImpl(subTableObject);
@@ -717,14 +718,14 @@ public class PageManagerImpl implements PageManager {
 		for(PagePanelTableRelation pptr : pptrSubs){
 			//即方法参数传递过来的子表
 			SystemMainTable subTable = pptr.getSystemMainTable();
-			String subTableName = subTable.getTableName();
+//			String subTableName = subTable.getTableName();
 			String subTableClsName = subTable.getClassName();
 			Class subTableClass = null;
 			
 			SystemMainTable parentTable = pptr.getForeignTable();
 			String parentTableName = parentTable.getTableName();
-			String parnetTableClsName = parentTable.getClassName();
-			Class parentTableClass = null;
+//			String parnetTableClsName = parentTable.getClassName();
+//			Class parentTableClass = null;
 			
 			try {
 				subTableClass = Class.forName(subTableClsName);
@@ -755,7 +756,7 @@ public class PageManagerImpl implements PageManager {
 			objectMap.put(tableParentFKPropertyName, parentObjectIdValue);
 			tempMap.put(parentFKPropertyName, parentObjectIdValue);
 			
-			Object subObject = metaDataManager.saveEntityData(subTableClass, tempMap);
+			metaDataManager.saveEntityData(subTableClass, tempMap);
 			
 			
 		}
@@ -801,7 +802,7 @@ public class PageManagerImpl implements PageManager {
 				if(pObject!=null){
 					temp.put(fcName, pObject.getId());
 				}
-				Object subObject = metaDataManager.saveEntityData(subClass, temp);
+				metaDataManager.saveEntityData(subClass, temp);
 			}
 		}else if(subXtype.equalsIgnoreCase("editorgrid")){
 			for(Map<String, Object> subMap : subPanelList){
@@ -818,7 +819,7 @@ public class PageManagerImpl implements PageManager {
 				if(pObject!=null){
 					temp.put(fcName, pObject.getId());
 				}
-				Object subObject = metaDataManager.saveEntityData(subClass, temp);
+				metaDataManager.saveEntityData(subClass, temp);
 			}
 		}
 	}
@@ -1005,7 +1006,7 @@ public class PageManagerImpl implements PageManager {
 
 						}// end遍历子面板
 						// ******************************************
-						List<PageModelPanelTable> pmptParents = pageModelService.findPageModelPanelTableBySub(pageModel, null,null);
+//						List<PageModelPanelTable> pmptParents = pageModelService.findPageModelPanelTableBySub(pageModel, null,null);
 					}
 				}
 
@@ -1204,7 +1205,7 @@ public class PageManagerImpl implements PageManager {
 						
 					}//end遍历子面板
 					//******************************************
-					List<PageModelPanelTable> pmptParents = pageModelService.findPageModelPanelTableBySub(pageModel, null,null);
+//					List<PageModelPanelTable> pmptParents = pageModelService.findPageModelPanelTableBySub(pageModel, null,null);
 				}
 				
 			}else if(xtype.equalsIgnoreCase("editorgrid")){//主panel的类型是editorgrid，则只保存自己即可
@@ -1239,21 +1240,21 @@ public class PageManagerImpl implements PageManager {
 			Map<String, Object> columnDataMap) {
 		Object mainObject = null;
 		
-		PageModel pageModel = pageModelService.findPageModel(model);
-		SystemMainTable modelMainTable = pageModel.getSystemMainTable();
+//		PageModel pageModel = pageModelService.findPageModel(model);
+//		SystemMainTable modelMainTable = pageModel.getSystemMainTable();
 		
 		//获取model的主面板
-		PagePanel mainPanel = null;
-		List<PageModelPanel> pmps = pageModelPanelService.findPageModelPanelByPageModel(pageModel);
-		for(PageModelPanel pmp : pmps){ 
-			//遍历一个panel, 如 configItemPanel
-			PagePanel pagePanel = pmp.getPagePanel(); //configItemPanel
-			SystemMainTable panelMainTable = pagePanel.getSystemMainTable();
-			if(panelMainTable==modelMainTable){
-				mainPanel = pagePanel;
-				break;
-			}
-		}
+//		PagePanel mainPanel = null;
+//		List<PageModelPanel> pmps = pageModelPanelService.findPageModelPanelByPageModel(pageModel);
+//		for(PageModelPanel pmp : pmps){ 
+//			//遍历一个panel, 如 configItemPanel
+//			PagePanel pagePanel = pmp.getPagePanel(); //configItemPanel
+//			SystemMainTable panelMainTable = pagePanel.getSystemMainTable();
+//			if(panelMainTable==modelMainTable){
+//				mainPanel = pagePanel;
+//				break;
+//			}
+//		}
 		
 		
 		PagePanel pagePanel = pagePanelService.findPagePanel(panel);
@@ -1299,7 +1300,7 @@ public class PageManagerImpl implements PageManager {
 					objectMap.put(propertyName, columnValue);
 				}
 			}
-			Object result = metaDataManager.saveEntityData(clazz, objectMap);
+			metaDataManager.saveEntityData(clazz, objectMap);
 			
 		}
 		return mainObject;
@@ -1346,15 +1347,15 @@ public class PageManagerImpl implements PageManager {
 		while(iter.hasNext()){//遍历每行记录，取出list中的实体BaseObject item
 			Map<String, Object> item = new HashMap<String, Object>(); //存储每个记录，相对一个实体对象
 			BaseObject object = (BaseObject) iter.next();
-			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
+//			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
 
 			for(PagePanelColumn ppc : ppcs){
 				Column column = ppc.getColumn();
 				SystemMainTable smt = column.getSystemMainTable();
 				String tableName = smt.getTableName();
 				Object propertyValue = null;
-				SystemMainTableColumnType mcType = column.getSystemMainTableColumnType();
-				String typeName = mcType.getColumnTypeName();
+//				SystemMainTableColumnType mcType = column.getSystemMainTableColumnType();
+//				String typeName = mcType.getColumnTypeName();
 				String propertyName = column.getPropertyName(); //当前主属性的名称				
 				String tableNameProperyName = tableName+"$"+ propertyName; //*****add***
 				ColumnDataWrapper columnDataWrapper = new ColumnDataWrapper(column);
@@ -1421,7 +1422,7 @@ public class PageManagerImpl implements PageManager {
 			throw new ServiceException("panel name not exist");
 		}
 		PagePanelType ppt = pagePanel.getXtype();
-		String xtype = ppt.getName();
+//		String xtype = ppt.getName();
 		if(ppt==null){
 			throw new ServiceException("pagePanelType cannot null");
 		}
@@ -1464,7 +1465,7 @@ public class PageManagerImpl implements PageManager {
 			throw new ServiceException("panel name not exist");
 		}
 		PagePanelType ppt = pagePanel.getXtype();
-		String xtype = ppt.getName();
+//		String xtype = ppt.getName();
 		if(ppt==null){
 			throw new ServiceException("pagePanelType cannot null");
 		}
@@ -1506,7 +1507,7 @@ public class PageManagerImpl implements PageManager {
 			throw new ServiceException("panel name not exist");
 		}
 		PagePanelType ppt = pagePanel.getXtype();
-		String xtype = ppt.getName();
+//		String xtype = ppt.getName();
 		if(ppt==null){
 			throw new ServiceException("pagePanelType cannot null");
 		}
@@ -1556,7 +1557,7 @@ public class PageManagerImpl implements PageManager {
 				SystemMainTableColumn column = stqc.getMainTableColumn();
 				
 				String propertyName = column.getPropertyName();
-				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
+//				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
 
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initList();
@@ -1594,9 +1595,9 @@ public class PageManagerImpl implements PageManager {
 				
 			}else if(columnType.getColumnTypeName().equalsIgnoreCase("select")){
 				
-				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
+//				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
 
-				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
+//				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				//columnWapper.initList();
 //				requestParams.put(tablePropertyName+"s", columnWapper.getList());
 //				if(fParentColumn!=null){//***********************************有问题*******88888
@@ -1654,7 +1655,7 @@ public class PageManagerImpl implements PageManager {
 				
 			}else if(columnType.getColumnTypeName().equalsIgnoreCase("extSelect")){
 				
-				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
+//				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
 
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initList();
