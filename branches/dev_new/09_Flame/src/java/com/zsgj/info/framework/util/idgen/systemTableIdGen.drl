@@ -40,15 +40,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Date;
-import com.digitalchina.info.framework.util.idgen.IdGenRuleMethodHelper;
-import com.digitalchina.info.framework.util.idgen.IdGenRuleHelper;
+import com.zsgj.info.framework.util.idgen.IdGenRuleMethodHelper;
+import com.zsgj.info.framework.util.idgen.IdGenRuleHelper;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-import com.digitalchina.info.framework.security.entity.Department;
+import com.zsgj.info.framework.security.entity.Department;
 
 #declare any global variables here
 
