@@ -10,7 +10,6 @@ import org.springframework.beans.BeanWrapperImpl;
 import com.zsgj.info.appframework.extjs.servlet.Validator;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumnType;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
 
 /**
@@ -48,7 +47,7 @@ public class CoderForHeadEditGrid {
 			String cnName = column.getColumnCnName();
 			String width = column.getLengthForPage();
 			String columnCnName = column.getColumnCnName();// 表头标题
-			Object value = dataMap.get(propertyName);
+//			Object value = dataMap.get(propertyName);
 			String displayField = "";
 			String valueField = "";
 			String foreignClazz = "";
@@ -191,7 +190,7 @@ public class CoderForHeadEditGrid {
 						values[i][1] = bw.getPropertyValue(beanColumnName)
 								.toString();
 					}
-					Object vId = dataMap.get(propertyName);
+//					Object vId = dataMap.get(propertyName);
 					values[i][2] = "";
 					c.setValue(values);
 					componentStr = ComponentGather.makeGridSelect(c);

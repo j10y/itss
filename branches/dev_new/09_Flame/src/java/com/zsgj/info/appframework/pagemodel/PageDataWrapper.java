@@ -152,10 +152,10 @@ public class PageDataWrapper {
 				Integer abstractFlag = mc.getAbstractFlag();
 				
 				if(abstractFlag!=null && abstractFlag.intValue()==1){
-					SystemMainTableColumn discColumn = mc.getDiscColumn();
-					SystemMainTable foreignDiscTable = mc.getForeignDiscTable();
-					String foreignDiscTableClassname = foreignDiscTable.getClassName();
-					Class foreignDiscTableClass = this.getClass(foreignDiscTableClassname);
+//					SystemMainTableColumn discColumn = mc.getDiscColumn();
+//					SystemMainTable foreignDiscTable = mc.getForeignDiscTable();
+//					String foreignDiscTableClassname = foreignDiscTable.getClassName();
+//					Class foreignDiscTableClass = this.getClass(foreignDiscTableClassname);
 					
 					
 				}else{ //正常的下来列表，不引用区分字段
@@ -183,8 +183,8 @@ public class PageDataWrapper {
 							fObjects = bs.findAll(clazz);
 						}else{
 							boolean isAsc = fColumnOrder.intValue()==1 ? true : false;
-							String propName =mc.getPropertyName();
-							String columnName = mc.getColumnCnName();
+//							String propName =mc.getPropertyName();
+//							String columnName = mc.getColumnCnName();
 							try {
 								if(!fClassName.equalsIgnoreCase("com.zsgj.info.framework.security.entity.UserInfo")
 										&& !fClassName.equals("com.zsgj.info.framework.security.entity.Department")){
@@ -238,7 +238,7 @@ public class PageDataWrapper {
 					String tableName = smt.getTableName();
 					throw new ServiceException(tableName+"的"+mc.getPropertyName()+"的外键引用表必须选择");
 				}
-				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
+//				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
 				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn(); //role.name
 				
 				//Set<Role>
@@ -263,8 +263,8 @@ public class PageDataWrapper {
 						fObjects = bs.findAll(clazz);
 					}else{
 						boolean isAsc = fColumnOrder.intValue()==1 ? true : false;
-						String propName =mc.getPropertyName();
-						String columnName = mc.getColumnCnName();
+//						String propName =mc.getPropertyName();
+//						String columnName = mc.getColumnCnName();
 						try {
 							fObjects = bs.findAllBy(clazz, fValueColumn.getPropertyName(), isAsc);
 									
@@ -287,7 +287,7 @@ public class PageDataWrapper {
 			} else if(columnTypenName.equalsIgnoreCase("multiSelect")){
 
 				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn();
-				SystemMainTableColumn fParentColumn = mc.getForeignTableParentColumn();
+//				SystemMainTableColumn fParentColumn = mc.getForeignTableParentColumn();
 				String fClassName = column.getForeignTable().getClassName();
 				Class clazz = null;
 				try {
@@ -408,10 +408,10 @@ public class PageDataWrapper {
 				}
 			}else if(extColumnTypenName.equalsIgnoreCase("multiSelect")){
 				SystemMainTable rtable = mc.getReferencedTable();
-				SystemMainTableColumn rtableKeyColumn = mc.getReferencedTableKeyColumn();
+//				SystemMainTableColumn rtableKeyColumn = mc.getReferencedTableKeyColumn();
 				SystemMainTableColumn rtableValueColumn = mc.getReferencedTableValueColumn();
 				Integer rtableValueColumnOrder = mc.getOrder();
-				String propertyName = mc.getPropertyName();
+//				String propertyName = mc.getPropertyName();
 				String rtableClassName = rtable.getClassName();
 				Class rtableClass = null;
 				try {
@@ -839,7 +839,7 @@ public class PageDataWrapper {
 				Integer rtableValueColumnOrder = mc.getReferencedTableValueColumnOrder();*/
 				//String propertyName = mc.getPropertyName();
 				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn();
-				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn();
+//				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn();
 				Object rObject = baseObjectWrapper.getPropertyValue(propertyName); //获取被引用对象的集合
 				if(rObject instanceof java.util.Collection){
 					Set sets=(Set) rObject;
@@ -857,19 +857,19 @@ public class PageDataWrapper {
 				
 			}else if(columnTypenName.equalsIgnoreCase("checkboxGroup")){
 				
-				SystemMainTable fTable = column.getForeignTable(); //role
-				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
-				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn(); //role.name
+//				SystemMainTable fTable = column.getForeignTable(); //role
+//				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
+//				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn(); //role.name
 				//SystemMainTableColumn fParentColumn = mc.getForeignTableParentColumn(); 
 				//Integer foreignTableValueColumnOrder = mc.getForeignTableValueColumnOrder();
 				
-				String fClassName = fTable.getClassName();
-				Class clazz = null;
-				try {
-					clazz = Class.forName(fClassName);
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
+//				String fClassName = fTable.getClassName();
+//				Class clazz = null;
+//				try {
+//					clazz = Class.forName(fClassName);
+//				} catch (ClassNotFoundException e1) {
+//					e1.printStackTrace();
+//				}
 				
 				
 				//fObject是一个Set<Role>
@@ -886,7 +886,7 @@ public class PageDataWrapper {
 	
 				
 			}else if(columnTypenName.equalsIgnoreCase("file")){
-				SystemMainTable fTable = mc.getReferencedTable();
+//				SystemMainTable fTable = mc.getReferencedTable();
 				SystemMainTableColumn ftableKeyColumn = mc.getForeignTableKeyColumn();
 				//逻辑文件名称对应的字段fileName
 				SystemMainTableColumn ftableValueColumn = mc.getForeignTableValueColumn();
@@ -895,13 +895,13 @@ public class PageDataWrapper {
 				SystemMainTableColumn fileNameColumn = mc.getFileNameColumn();
 				SystemMainTableColumn systemFileNameColumn = mc.getSystemFileNameColumn();*/
 				
-				String fClassName = column.getForeignTable().getClassName();
-				Class clazz = null;
-				try {
-					clazz = Class.forName(fClassName);
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
+//				String fClassName = column.getForeignTable().getClassName();
+//				Class clazz = null;
+//				try {
+//					clazz = Class.forName(fClassName);
+//				} catch (ClassNotFoundException e1) {
+//					e1.printStackTrace();
+//				}
 				
 				Object fObject = baseObjectWrapper.getPropertyValue(propertyName); //获取外键关联对象类型属性
 				//向请求发送此对象，页面可以在下拉列表遍历时根据关联对象的属性判断自动选择哪个条目
@@ -917,16 +917,16 @@ public class PageDataWrapper {
 						Object fObjectText = baseObjectWrapper.getPropertyValue(ftableValueColumn.getPropertyName());
 						this.text = String.valueOf(fObjectText.toString());
 						//获取关联对象附件的系统文件名链接
-						String uploadUrl = mc.getUploadUrl();
-						String fileNamePrefix = mc.getFileNamePrefix();
-						SystemMainTableColumn fileNameColumn = mc.getFileNameColumn();
+//						String uploadUrl = mc.getUploadUrl();
+//						String fileNamePrefix = mc.getFileNamePrefix();
+//						SystemMainTableColumn fileNameColumn = mc.getFileNameColumn();
 						SystemMainTableColumn systemFileNameColumn = mc.getSystemFileNameColumn();
 						
 						Object fObjectLink = baseObjectWrapper.getPropertyValue(systemFileNameColumn.getPropertyName());
 						String systemFileName = String.valueOf(fObjectLink.toString());
 						
-						String FSP = System.getProperty("file.separator");
-						String LSP = System.getProperty("line.separator");
+//						String FSP = System.getProperty("file.separator");
+//						String LSP = System.getProperty("line.separator");
 						
 						this.link = systemFileName;
 					}else if(fObject instanceof String){

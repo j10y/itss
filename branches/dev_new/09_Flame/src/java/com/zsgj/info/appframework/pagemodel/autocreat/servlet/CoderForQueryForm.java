@@ -15,18 +15,18 @@ public class CoderForQueryForm {
 	public static String encode(Map<String, Object> queryMap,List<UserTableQueryColumn> columns) {
 	       int labellen = 135;
 	       String itemlen = "200";
-	       int throulen = 530;
+//	       int throulen = 530;
 	       String json = "";
 		   String hiddenString ="";
 		for(UserTableQueryColumn utqc :columns) {		
 			Column column = utqc.getColumn();
 			@SuppressWarnings("unused")
 			String columnName = column.getColumnName();
-			String tableName=column.getSystemMainTable().getTableName();
+//			String tableName=column.getSystemMainTable().getTableName();
 			String propertyName = column.getPropertyName();
-			String tablePropertyName=tableName+"$"+propertyName;
+//			String tablePropertyName=tableName+"$"+propertyName;
 			String columnCnName = column.getColumnCnName();
-			String width = utqc.getLengthForPage(); 
+//			String width = utqc.getLengthForPage(); 
 			Integer isHiddenQueryItem = utqc.getIsHiddenItem();
 			boolean isHiddenQuery = isHiddenQueryItem!=null&& isHiddenQueryItem.intValue()==1;
 			String columnTypeName = column.getSystemMainTableColumnType().getColumnTypeName();

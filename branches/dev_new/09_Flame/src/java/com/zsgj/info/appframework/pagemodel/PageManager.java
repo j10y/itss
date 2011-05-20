@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
-import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
-import com.zsgj.info.framework.dao.BaseObject;
-import com.zsgj.info.framework.dao.support.Page;
 
 public interface PageManager {
 	/**

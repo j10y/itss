@@ -24,23 +24,20 @@ import com.zsgj.info.appframework.pagemodel.PageManager;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelType;
-import com.zsgj.info.appframework.pagemodel.service.PageModelPanelService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
 import com.zsgj.info.appframework.pagemodel.servlet.CoderForList;
-import com.zsgj.info.appframework.pagemodel.servlet.CoderForSave;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
-import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.HttpUtil;
-import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.servlet.BaseServlet;
 
+@SuppressWarnings("serial")
 public class ObjectData extends BaseServlet {
 	private PageManager pageManager =  (PageManager) ContextHolder.getBean("pageManager");
 	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
 	private PagePanelService pagePanelService=(PagePanelService) ContextHolder.getBean("pagePanelService");
-	private PageModelPanelService pageModelPanelService=(PageModelPanelService) ContextHolder.getBean("pageModelPanelService");
-	private Service service = (Service) ContextHolder.getBean("baseService");
+//	private PageModelPanelService pageModelPanelService=(PageModelPanelService) ContextHolder.getBean("pageModelPanelService");
+//	private Service service = (Service) ContextHolder.getBean("baseService");
 	
 	public ObjectData() {
 		super();
@@ -52,7 +49,7 @@ public class ObjectData extends BaseServlet {
 		response.setCharacterEncoding("utf-8");  
 		String msg = "";
 		String method = request.getParameter("method");
-		String model = request.getParameter("model");
+//		String model = request.getParameter("model");
 		
 		if (StringUtils.isBlank(method)) {
 			msg = "Error: no method parameter name specified.";
@@ -71,9 +68,10 @@ public class ObjectData extends BaseServlet {
 	}
 	
 	
+	@SuppressWarnings({ "unchecked" })
 	private String findPanelDataById(HttpServletRequest request) throws IOException {
 		String json = "";
-		String model=request.getParameter("modelName");
+//		String model=request.getParameter("modelName");
 		String panelName=request.getParameter("panelName");
 		PagePanel panel = this.pagePanelService.findPagePanel(panelName);
 		PagePanelType ppt = panel.getXtype();
@@ -135,6 +133,7 @@ public class ObjectData extends BaseServlet {
 	 * @return String
 	 * @throws IOException 
 	 */
+	@SuppressWarnings("unused")
 	private String savePanel(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		//String json = "{success:true}";
 		String info=request.getParameter("info");
@@ -172,6 +171,7 @@ public class ObjectData extends BaseServlet {
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private static Object[] getObjectArray4Json(String jsonString) {   
         JSONArray jsonArray = JSONArray.fromObject(jsonString);   
         return jsonArray.toArray();   
@@ -215,7 +215,7 @@ public class ObjectData extends BaseServlet {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private String query(HttpServletRequest request) {
 		String json = "";
 		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
@@ -251,7 +251,7 @@ public class ObjectData extends BaseServlet {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unused")
 	private String queryCobom(HttpServletRequest request) {
 		String json = "";
 
@@ -277,7 +277,6 @@ public class ObjectData extends BaseServlet {
 		return json;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {

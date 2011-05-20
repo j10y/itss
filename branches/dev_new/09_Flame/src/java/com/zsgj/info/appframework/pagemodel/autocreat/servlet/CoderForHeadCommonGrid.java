@@ -1,16 +1,9 @@
 package com.zsgj.info.appframework.pagemodel.autocreat.servlet;
 
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
-
-import com.zsgj.info.appframework.extjs.servlet.Validator;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumnType;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
 
 /**

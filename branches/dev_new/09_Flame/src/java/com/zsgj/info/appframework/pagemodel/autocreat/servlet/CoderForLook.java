@@ -34,7 +34,7 @@ public class CoderForLook {
 			SystemMainTable smt = column.getSystemMainTable();
 			String tableName = smt.getTableName();
 			String tablePropertyName = tableName + "$"+ propertyName;
-			String propertyNames = tablePropertyName + "s";
+//			String propertyNames = tablePropertyName + "s";
 			boolean isDisplay = uts.getIsDisplay().intValue() != 1;
 			
 	        boolean isUpdateItem = !(uts.getColumn().getIsUpdateItem() != null && uts
@@ -44,7 +44,7 @@ public class CoderForLook {
 			//Column column = uts.getColumn();
 			String cnName = column.getColumnCnName();
 			String width = column.getLengthForPage();
-			String columnCnName = column.getColumnCnName();// 表头标题
+//			String columnCnName = column.getColumnCnName();// 表头标题
 			Object value = dataMap.get(tablePropertyName);
 
 			String displayFiled = "";

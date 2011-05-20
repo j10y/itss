@@ -1,8 +1,5 @@
 package com.zsgj.info.appframework.pagemodel.autocreat.servlet;
 
-import java.util.Random;
-
-import com.zsgj.info.appframework.pagemodel.autocreat.servlet.Component;
 
 public class ButtonGather {
 	public static String createSaveForModel(ButtonParameter b) {

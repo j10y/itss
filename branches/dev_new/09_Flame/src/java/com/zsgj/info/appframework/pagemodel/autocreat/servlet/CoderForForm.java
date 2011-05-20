@@ -74,7 +74,7 @@ public class CoderForForm {
 			SystemMainTable smt = column.getSystemMainTable();
 			String tableName = smt.getTableName();
 			String tablePropertyName = tableName + "$"+ propertyName;
-			String propertyNames = tablePropertyName + "s";
+//			String propertyNames = tablePropertyName + "s";
 			boolean isDisplay = uts.getIsDisplay().intValue() != 1;
 			
 	        boolean isUpdateItem = !(uts.getColumn().getIsUpdateItem() != null && uts
@@ -345,17 +345,17 @@ public class CoderForForm {
 				
 			}else if (columnType.equalsIgnoreCase("file")) {
 				// 以下代码提供上传文件参考使用
-				String uploadUrl = column.getUploadUrl();
-				String fileNamePrefix = column.getFileNamePrefix();
-				SystemMainTableColumn fileNameColumn = column
-						.getFileNameColumn();
-				SystemMainTableColumn systemFileNameColumn = column
-						.getSystemFileNameColumn();
+//				String uploadUrl = column.getUploadUrl();
+//				String fileNamePrefix = column.getFileNamePrefix();
+//				SystemMainTableColumn fileNameColumn = column
+//						.getFileNameColumn();
+//				SystemMainTableColumn systemFileNameColumn = column
+//						.getSystemFileNameColumn();
 				// fileName
-				String fileNamePropertyName = fileNameColumn.getPropertyName();
+//				String fileNamePropertyName = fileNameColumn.getPropertyName();
 				// systemFileName
-				String sysFileNamePropertyName = systemFileNameColumn
-						.getPropertyName();
+//				String sysFileNamePropertyName = systemFileNameColumn
+//						.getPropertyName();
 				String text = "" + dataMap.get(propertyName + "Text");
 				String link = "" + dataMap.get(propertyName + "Link");
 				link = link.replaceAll("\\\\", "/");

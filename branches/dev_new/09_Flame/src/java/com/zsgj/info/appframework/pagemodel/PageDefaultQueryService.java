@@ -30,7 +30,7 @@ public class PageDefaultQueryService extends BaseDao implements PageQueryService
 
 	public Criteria before(String panelName, Map params, int pageNo, int pageSize, String orderProp, boolean isAsc) {
 		PagePanelService pagePanelService = (PagePanelService) ContextHolder.getBean("pagePanelService");
-		PagePanelTableService pagePanelTableService = (PagePanelTableService) ContextHolder.getBean("pagePanelTableService");
+//		PagePanelTableService pagePanelTableService = (PagePanelTableService) ContextHolder.getBean("pagePanelTableService");
 		
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
 		SystemMainTable smt = panel.getSystemMainTable();
@@ -46,8 +46,8 @@ public class PageDefaultQueryService extends BaseDao implements PageQueryService
 		//获取当前主表的所依赖的表和外键字段，以便主动抓取
 		List<PagePanelTableRelation> ptrs = pagePanelService.findPanelTableRelBySub(panel, smt);
 		for(PagePanelTableRelation item : ptrs){
-			SystemMainTable ftable = item.getForeignTable();
-			String tableName = ftable.getTableName();
+//			SystemMainTable ftable = item.getForeignTable();
+//			String tableName = ftable.getTableName();
 			SystemMainTableColumn fcolumn = item.getForeignTableColumn();
 			String fpropertyName = fcolumn.getPropertyName();
 			String aliasName = mainTableName+"$"+fpropertyName;
