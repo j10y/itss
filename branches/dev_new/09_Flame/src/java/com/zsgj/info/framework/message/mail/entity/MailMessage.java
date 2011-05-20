@@ -5,6 +5,11 @@ import org.springframework.mail.SimpleMailMessage;
 
 public class MailMessage extends SimpleMailMessage {
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -212549176077455348L;
+
 	private Long id;
 	
 	private String personName;

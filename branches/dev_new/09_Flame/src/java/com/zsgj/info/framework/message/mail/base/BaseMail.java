@@ -77,6 +77,7 @@ public class BaseMail {
 	 * @Methods Name getDefined
 	 * @Create In Mar 6, 2008 By zhangpeng 
 	 */
+	@SuppressWarnings("static-access")
 	private void getDefined(){
 		this.defaultSender = cx.getApplicationContext().getMessage("system.mail.defaultSender", new Object[0], cx.getLocal());
 		this.from = cx.getApplicationContext().getMessage("system.mail.from", new Object[0], cx.getLocal());

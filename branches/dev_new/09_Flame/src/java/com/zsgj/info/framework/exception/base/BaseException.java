@@ -17,6 +17,7 @@ import com.zsgj.info.framework.exception.ExceptionMessageFactory;
  * @Author zhangpeng
  * @Create In Mar 6, 2008
  */
+@SuppressWarnings("serial")
 public class BaseException extends RuntimeException {
 
 	protected long errorCode;
@@ -73,6 +74,7 @@ public class BaseException extends RuntimeException {
 	 * @param errorCode ´íÎóºÅ
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	private static String getMessage(long errorCode){
 		String message ;
 		String isDefault = cx.getApplicationContext().getMessage("system.isDefault", new Object[0], cx.getLocal());

@@ -14,6 +14,7 @@ public class ExceptionFrameWorkResource {
 	
 	private static ApplicationContext appContext;
 
+	@SuppressWarnings("static-access")
 	public ExceptionFrameWorkResource(){
 		appContext = ContextHolder.getInstance().getApplicationContext();
 	}
@@ -25,6 +26,7 @@ public class ExceptionFrameWorkResource {
 	 * @param Key 资源文件Key
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	public static String getFrameWorkMessage(String Key) {
 		return appContext.getMessage(Key, new Object[0], ContextHolder
 				.getInstance().getLocal());

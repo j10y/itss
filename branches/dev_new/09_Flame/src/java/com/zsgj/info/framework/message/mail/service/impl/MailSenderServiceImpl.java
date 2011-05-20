@@ -29,14 +29,13 @@ import com.zsgj.info.framework.message.mail.entity.MailMessage;
 import com.zsgj.info.framework.message.mail.service.MailSenderService;
 import com.zsgj.info.framework.security.dao.UserInfoDao;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.service.UserInfoService;
 import com.zsgj.info.framework.service.BaseService;
 import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.workflow.WorkflowConstants;
 public class MailSenderServiceImpl extends BaseService implements
 		MailSenderService {
 
-	private static final String DEFAULT_MAIL_FROM = "zhangpengf@digitalchina.com";
+//	private static final String DEFAULT_MAIL_FROM = "zhangpengf@digitalchina.com";
 	// 邮件发送对象
 	private JavaMailSender mailSender;
 
@@ -260,9 +259,9 @@ public class MailSenderServiceImpl extends BaseService implements
 		final String mailFrom = PropertiesUtil.getProperties(
 				"system.mail.sendmail.from", "zhangpengf@digitalchina.com");
 
-		final int errorLogFlag = Integer.valueOf(
-				PropertiesUtil.getProperties("system.mail.sendmail.logflag",
-						"1")).intValue();
+//		final int errorLogFlag = Integer.valueOf(
+//				PropertiesUtil.getProperties("system.mail.sendmail.logflag",
+//						"1")).intValue();
 		MimeMessagePreparator mimeMail = new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage)
 					throws MessagingException {
@@ -413,9 +412,9 @@ public class MailSenderServiceImpl extends BaseService implements
 		final String mailFrom = PropertiesUtil.getProperties(
 				"system.mail.sendmail.from", "zhangpengf@digitalchina.com");
 
-		final int errorLogFlag = Integer.valueOf(
-				PropertiesUtil.getProperties("system.mail.sendmail.logflag",
-						"1")).intValue();
+//		final int errorLogFlag = Integer.valueOf(
+//				PropertiesUtil.getProperties("system.mail.sendmail.logflag",
+//						"1")).intValue();
 		MimeMessagePreparator mimeMail = new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage)
 					throws MessagingException {
@@ -509,6 +508,7 @@ public class MailSenderServiceImpl extends BaseService implements
 	 * @param map
 	 * @return Map
 	 */
+	@SuppressWarnings("unchecked")
 	private Map buildAdviceMailInfo(Map map) {
 		String toActorIds = null, email = null, creator = null, thisNodeName = "Start",toNodeName = "Next", definationName = "workFlow";
 		Map newMap = new HashMap();
@@ -627,6 +627,7 @@ public class MailSenderServiceImpl extends BaseService implements
 	 * com.digitalchina.info.framework.message.mail.service.MailSenderService
 	 * #sendWorkFlowSimplyMail(java.util.Map)
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean sendWorkFlowSimplyMail(Map smap) {
 		// TODO Auto-generated method stub
 		Map map = buildAdviceMailInfo(smap);
