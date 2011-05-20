@@ -18,7 +18,8 @@ public class SystemMainTableColumn extends Column {
 	
 	private Long id;
 	private SystemMainTable systemMainTable;
-//	private SystemMainTable table; //冗余属性，只读，待框架优化彻底后去除
+	@SuppressWarnings("unused")
+	private SystemMainTable table; //冗余属性，只读，待框架优化彻底后去除
 	private String tableName;
 
 	private String propertyName; //注意文本域的高宽问题，文本域底部放置一个加号增加高度
