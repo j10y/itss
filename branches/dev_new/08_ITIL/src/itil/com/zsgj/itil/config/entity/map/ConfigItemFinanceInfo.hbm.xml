@@ -65,10 +65,10 @@
 		</property>
 		
 		
-		<many-to-one name="depressMode" class="com.zsgj.itil.config.entity.DepressMode">
+		<many-to-one name="depressMode" class="com.zsgj.itil.config.entity.DepressMode" not-found="ignore">
 			<column name="depressMode" ></column>
 		</many-to-one>
-		<many-to-one name="apportionMode" class="com.zsgj.itil.finance.entity.ApportionMode">
+		<many-to-one name="apportionMode" class="com.zsgj.itil.finance.entity.ApportionMode"  not-found="ignore">
 			<column name="apportionMode"></column>
 		</many-to-one>
 		

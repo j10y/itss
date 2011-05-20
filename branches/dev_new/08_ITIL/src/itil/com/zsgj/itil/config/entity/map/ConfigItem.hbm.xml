@@ -28,28 +28,28 @@
 			<column name="owner"></column>
 		</property>
 		
-		<many-to-one name="customer" class="com.zsgj.itil.actor.entity.Customer">
+		<many-to-one name="customer" class="com.zsgj.itil.actor.entity.Customer" not-found="ignore">
 			<column name="customer"></column>
 		</many-to-one>
 		
-		<many-to-one name="customerType" class="com.zsgj.itil.actor.entity.CustomerType">
-			<column name="customerType"></column>
+		<many-to-one name="customerType" class="com.zsgj.itil.actor.entity.CustomerType" not-found="ignore">
+			<column name="customerType" ></column>
 		</many-to-one>
 		
-		<many-to-one name="principal" class="com.zsgj.info.framework.security.entity.UserInfo">
-			<column name="principal"></column>
+		<many-to-one name="principal" class="com.zsgj.info.framework.security.entity.UserInfo" not-found="ignore">
+			<column name="principal" ></column>
 		</many-to-one>
 		
-		<many-to-one name="configItemStatus" class="com.zsgj.itil.config.entity.ConfigItemStatus">
-			<column name="configItemStatus"></column>
+		<many-to-one name="configItemStatus" class="com.zsgj.itil.config.entity.ConfigItemStatus" not-found="ignore">
+			<column name="configItemStatus" ></column>
 		</many-to-one>
 		
-		<many-to-one name="environment" class="com.zsgj.itil.config.entity.Environment">
-			<column name="environment"></column>
+		<many-to-one name="environment" class="com.zsgj.itil.config.entity.Environment" not-found="ignore">
+			<column name="environment" ></column>
 		</many-to-one>
 		<!-- begin configItemType -->
-		<many-to-one name="configItemType" class="com.zsgj.itil.config.entity.ConfigItemType" >
-			<column name="configItemType"></column>
+		<many-to-one name="configItemType" class="com.zsgj.itil.config.entity.ConfigItemType" not-found="ignore">
+			<column name="configItemType" ></column>
 		</many-to-one>
 		
 		<property name="typeTableId" type="long">
@@ -81,13 +81,13 @@
 		<property name="cisn" type="string">
 			<column name="cisn"></column>
 		</property>
-		<many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		<many-to-one name="createUser" class="com.zsgj.info.framework.security.entity.UserInfo" not-found="ignore" >
 		      <column name="createUser" />
 		</many-to-one>
 		<property name="createDate" type="timestamp">
 		  <column name="createDate"></column>
 		</property>
-		<many-to-one name="modifyUser" class="com.zsgj.info.framework.security.entity.UserInfo">
+		<many-to-one name="modifyUser" class="com.zsgj.info.framework.security.entity.UserInfo" not-found="ignore">
 	      <column name="modifyUser" />
 	    </many-to-one>
 		<property name="modifyDate" type="timestamp">
