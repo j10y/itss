@@ -11,6 +11,7 @@ import org.jbpm.graph.node.Decision;
  * ภเหตร๗ 
  */
 
+@SuppressWarnings("serial")
 public class DecisionEnterActionHandler implements ActionHandler{
 
 	public void execute(ExecutionContext executionContext) throws Exception {

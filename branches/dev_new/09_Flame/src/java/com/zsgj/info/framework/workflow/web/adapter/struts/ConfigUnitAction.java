@@ -30,6 +30,7 @@ import com.zsgj.info.framework.workflow.entity.ConfigUnitMailNodeSender;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitMailNodeSenderTable;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitTimer;
 
+@SuppressWarnings("serial")
 public class ConfigUnitAction extends BaseAction {
 	DefinitionService ds = (DefinitionService)ContextHolder.getBean("definitionService");
 	ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
@@ -183,8 +184,8 @@ public class ConfigUnitAction extends BaseAction {
 	public String showNodeTimer() throws Exception{
 		
 		String json = "";		
-		String nodeName = "";
-		String nodeDesc = "";
+//		String nodeName = "";
+//		String nodeDesc = "";
 		
 		String virtualDefinitionInfoId = super.getRequest().getParameter("virtualDefinitionInfoId");
 		String nodeId = super.getRequest().getParameter("nodeId");
@@ -282,8 +283,8 @@ public class ConfigUnitAction extends BaseAction {
 	 */
 	public String saveNodeMailMessage() throws Exception{
 		
-		String perName = "";
-		String perMail = "";
+//		String perName = "";
+//		String perMail = "";
 		/*****************************得到前台传输的必要参数***************************************/		
 		String nodeId = super.getRequest().getParameter("nodeId");
 		String virtualDefinitionInfoId = super.getRequest().getParameter("virtualDefinitionInfoId");
@@ -371,9 +372,9 @@ public class ConfigUnitAction extends BaseAction {
 						configUnitMail.setSubject(subject);
 						configUnitMail.setNodeId(Long.valueOf(nodeId));
 						configUnitMail.setVirtualProcessId(Long.valueOf(virtualDefinitionInfoId));
-						ConfigUnitMail UnitMail = null;
+						
 						try{
-							UnitMail = (ConfigUnitMail)super.getService().save(configUnitMail);
+							super.getService().save(configUnitMail);
 						}catch(Exception e){
 							new Exception("保存邮件主题时发生异常");	
 						}
@@ -397,10 +398,9 @@ public class ConfigUnitAction extends BaseAction {
 					conMail.setSubject(subject);
 					conMail.setNodeId(Long.valueOf(nodeId));
 					conMail.setVirtualProcessId(Long.valueOf(virtualDefinitionInfoId));
-					ConfigUnitMail UnitMail = null;
 					
 					try{
-						UnitMail = (ConfigUnitMail)super.getService().save(conMail);
+						super.getService().save(conMail);
 					}catch(Exception e){
 						new Exception("保存邮件主题时发生异常");						
 					}
@@ -582,7 +582,7 @@ public class ConfigUnitAction extends BaseAction {
 		try {
 			super.getResponse().setCharacterEncoding("utf-8");
 			super.getResponse().getWriter().write("{success:" + true + ",list:"+ json + "}");
-			String str ="{success:" + true + ",list:"+ json + "}";
+//			String str ="{success:" + true + ",list:"+ json + "}";
 			super.getResponse().getWriter().flush();						
 		} catch (IOException e) {			
 			e.printStackTrace(); 
@@ -607,7 +607,7 @@ public class ConfigUnitAction extends BaseAction {
 		try {
 			super.getResponse().setCharacterEncoding("utf-8");
 			super.getResponse().getWriter().write("{success:" + true + ",list:"+ json + "}");
-			String str ="{success:" + true + ",list:"+ json + "}";
+//			String str ="{success:" + true + ",list:"+ json + "}";
 			super.getResponse().getWriter().flush();						
 		} catch (IOException e) {			
 			e.printStackTrace(); 
@@ -883,9 +883,9 @@ public class ConfigUnitAction extends BaseAction {
 	 */
 	public void saveNoConbineMailNodeSenderMessage(String virtualId ,String nodeId, String nProduct)throws Exception{
 		
-		Map productMap = new HashMap();
+//		Map productMap = new HashMap();
 		String records = "";
-		List<String> UserMessage = new ArrayList<String>();
+//		List<String> UserMessage = new ArrayList<String>();
 //		String nodeId = super.getRequest().getParameter("nodeId");
 //		String virtualDefinitionInfoId = super.getRequest().getParameter("virtualDefinitionInfoId");
 		
@@ -914,7 +914,7 @@ public class ConfigUnitAction extends BaseAction {
 			records = records.substring(0, records.length()-1);
 		}
 		/**********************************保存相应的邮件单元数据数据*************************/
-		ConfigUnitMailNodeSenderTable senderTable = null;
+//		ConfigUnitMailNodeSenderTable senderTable = null;
 		ConfigUnitMailNodeSender mailNodeSender = cs.findMailNodeById(virtualId, nodeId);
 		if(mailNodeSender==null||"".equals(mailNodeSender)){
 			mailNodeSender = new ConfigUnitMailNodeSender();

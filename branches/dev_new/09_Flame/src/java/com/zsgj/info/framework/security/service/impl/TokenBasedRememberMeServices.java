@@ -60,7 +60,7 @@ public class TokenBasedRememberMeServices implements RememberMeServices,
 
 	private boolean alwaysRemember = false;
 
-	private static final int DEFAULT_ORDER = Integer.MAX_VALUE; // ~ default
+//	private static final int DEFAULT_ORDER = Integer.MAX_VALUE; // ~ default
 
 	private String cookieName = ACEGI_SECURITY_HASHED_REMEMBER_ME_COOKIE_KEY;
 
@@ -95,6 +95,7 @@ public class TokenBasedRememberMeServices implements RememberMeServices,
 		return true;
 	}
 
+	@SuppressWarnings("unused")
 	private void autoDetectAndUseAnyUserDetailsService(
 			ApplicationContext applicationContext) {
 		Map map = applicationContext.getBeansOfType(UserDetailsService.class);

@@ -46,6 +46,7 @@ public class UploadServlet extends HttpServlet
 		log.debug(buffer.toString());
 	}
 
+	@SuppressWarnings("deprecation")
 	private String handleRequest(HttpServletRequest request)
 	{
 		if (!FileUpload.isMultipartContent(request))

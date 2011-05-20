@@ -189,7 +189,7 @@ public class DepartmentServiceImpl extends BaseDao implements DepartmentService 
 		this.initChilden(parentDept);
 		Set result = new HashSet(); //存放所有的子部门对象
 		this.addChildByParentDept(result, parentDept);
-		Iterator iter = result.iterator();
+//		Iterator iter = result.iterator();
 		return null;
 	}
 
@@ -330,6 +330,7 @@ public class DepartmentServiceImpl extends BaseDao implements DepartmentService 
 		return deptName;
 	}
 
+	@SuppressWarnings("unused")
 	private Department getParentDept(Department dept){
 		Criteria c = createCriteria(Department.class);
 		c.add(Restrictions.eq("id", dept.getId()));
@@ -424,7 +425,7 @@ public class DepartmentServiceImpl extends BaseDao implements DepartmentService 
 	}
 
 	public List findRootDept(String deptCode) {
-		Department dept = null;
+//		Department dept = null;
 		Criteria c = super.getCriteria(Department.class);
 		c.add(Restrictions.eq("departCode", Long.valueOf(deptCode)));
 		List list = c.list();
@@ -436,7 +437,7 @@ public class DepartmentServiceImpl extends BaseDao implements DepartmentService 
 	 */
 	public void addChildDepartment(Long parentDeptId, String childDeptName) {
 		Department parentDept = null;
-		Long parentDeptCode = null;
+//		Long parentDeptCode = null;
 		Department childDept = new Department();
 		
 		if(parentDeptId.equals(new Long("0"))){//如果为根节点

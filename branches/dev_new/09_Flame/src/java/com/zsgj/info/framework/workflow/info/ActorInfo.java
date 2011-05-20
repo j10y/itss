@@ -1,6 +1,5 @@
 package com.zsgj.info.framework.workflow.info;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +16,10 @@ import com.zsgj.info.framework.workflow.entity.TaskPreAssign;
  * @Author yang
  * @Create In Nov 20, 2008
  */
+@SuppressWarnings("unchecked")
 public class ActorInfo{
 	
-	static private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//	static private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	private String actorId = null;
 	private List<ProxyInfo> proxies = new ArrayList();//目前为单一数据行
 	
@@ -123,6 +123,7 @@ public class ActorInfo{
 	 * @return 
 	 * @ReturnType Map<String,ActorInfo[]>
 	 */
+	@SuppressWarnings("deprecation")
 	public static Map<String,List<ActorInfo>> buildPreAssignMap(List<TaskPreAssign> preAssigns) {
 		Map<String,Map<String,ActorInfo>> mapPreAssign = new HashMap<String,Map<String,ActorInfo>>();
 		for(TaskPreAssign preAssign: preAssigns) {

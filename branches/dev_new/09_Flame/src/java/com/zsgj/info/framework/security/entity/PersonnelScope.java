@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Jul 22, 2009
  */
 public class PersonnelScope extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 6084840193526587369L;
 	private Long id;		//自动编号
 	private String personnelScopeCode;//人事子范围编号
 	private String name;	//名称

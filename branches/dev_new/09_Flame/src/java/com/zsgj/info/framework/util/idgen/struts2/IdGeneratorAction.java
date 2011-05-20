@@ -27,6 +27,7 @@ import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
 
+@SuppressWarnings("serial")
 public class IdGeneratorAction extends  BaseAction {
 	
 	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
@@ -233,7 +234,7 @@ public class IdGeneratorAction extends  BaseAction {
 	 * @return String
 	 * @throws IOException
 	 */
-	@SuppressWarnings( { "unused", "unchecked" })
+	@SuppressWarnings( { "unchecked" })
 	public String findDepartmentComboList() throws IOException {
 		try {
 			HttpServletRequest request = super.getRequest();
@@ -284,7 +285,7 @@ public class IdGeneratorAction extends  BaseAction {
 	 * @return String
 	 * @throws IOException
 	 */
-	@SuppressWarnings( { "unused", "unchecked" })
+	@SuppressWarnings( { "unchecked" })
 	public String findSystemMainTableComboList() throws IOException {
 		try {
 			HttpServletRequest request = super.getRequest();

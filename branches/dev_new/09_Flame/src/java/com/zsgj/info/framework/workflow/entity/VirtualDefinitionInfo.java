@@ -5,6 +5,10 @@ import com.zsgj.info.framework.security.entity.Department;
 import com.zsgj.info.framework.security.entity.Module;
 
 public class VirtualDefinitionInfo extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 8621696621895840055L;
 	private Long id;
 	private Long processDefinitionId;
 	private String realDefinitionName;

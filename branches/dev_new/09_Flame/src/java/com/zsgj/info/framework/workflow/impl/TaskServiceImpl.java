@@ -78,21 +78,21 @@ public class TaskServiceImpl extends BaseDao implements TaskService {
 			String comment = (String)jo.get(WorkflowConstants.COMMENT_FLAG);
 			
 			
-			Set<String> keySet = variables.keySet();
-			Set<String> nodeKeys = new HashSet();
+//			Set<String> keySet = variables.keySet();
+//			Set<String> nodeKeys = new HashSet();
 			//由于comment内的message长度限制，不能保存；暂时关闭下条语句
 			//清除预指派信息
 			taskInstance.addComment(jo.toString());
 			String rulePath=(String)ci.getVariable("rulePath");
 			//审批意见
 			Map mapParams=(Map)ci.getVariable(WorkflowConstants.BUSINESS_PARAM_KEY);
-			List repeateAuditFlag = (List)ci.getVariable("repeateAuditWorkflow");
+//			List repeateAuditFlag = (List)ci.getVariable("repeateAuditWorkflow");
 			Long processId=(Long)ci.getVariable("VIRTUALDEFINITIONINFO_ID");
-			String vProcessName = (String)ci.getVariable("VIRTUALDEFINITIONINFO_NAME");
-			String vProcessDesc = (String)ci.getVariable("VIRTUALDEFINITIONINFO_DESC");
+//			String vProcessName = (String)ci.getVariable("VIRTUALDEFINITIONINFO_NAME");
+//			String vProcessDesc = (String)ci.getVariable("VIRTUALDEFINITIONINFO_DESC");
 			Long nodeId=taskInstance.getTask().getTaskNode().getId();
 			String nodeName=taskInstance.getTask().getTaskNode().getName();
-			Integer version=taskInstance.getProcessInstance().getProcessDefinition().getVersion();
+//			Integer version=taskInstance.getProcessInstance().getProcessDefinition().getVersion();
 			String ruleName = this.findRuleConfigUnitByParam(nodeId, processId);
 			if(ruleName!=null&&!"".equals(ruleName)){
 			    mapParams.put("ruleName",ruleName);

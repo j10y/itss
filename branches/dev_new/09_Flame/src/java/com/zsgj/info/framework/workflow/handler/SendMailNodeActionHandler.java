@@ -6,23 +6,21 @@ import java.util.Map;
 
 import org.jbpm.JbpmException;
 import org.jbpm.context.exe.ContextInstance;
-import org.jbpm.graph.action.Script;
 import org.jbpm.graph.def.ActionHandler;
 import org.jbpm.graph.exe.ExecutionContext;
 import org.jbpm.graph.exe.Token;
-import org.jbpm.graph.node.Fork;
 
 import com.zsgj.info.framework.context.ContextHolder;
-import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.WorkFlowGoBackService;
 import com.zsgj.info.framework.workflow.WorkflowConstants;
 import com.zsgj.info.framework.workflow.web.adapter.struts.Mail;
 
 
 
+@SuppressWarnings("serial")
 public class SendMailNodeActionHandler implements ActionHandler {
 
-	private ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
+//	private ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
 	private WorkFlowGoBackService wfBack = (WorkFlowGoBackService) ContextHolder.getBean("workflowGoBackService");
 	
 	public void execute(ExecutionContext ec) throws Exception {

@@ -300,7 +300,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 		String json = "[";
 		// 通过节点名字nodeName判断节点类型NodeType，根据节点类型NodeType找到对应的配置单元ConfigUnit，根据配置单元ConfigUnit找到对应的url与name
 		try {
-			ProcessDefinition p = null;
+//			ProcessDefinition p = null;
 			if (virtualDefinitionInfoId != null
 					&& !"".equals(virtualDefinitionInfoId)) {
 				VirtualDefinitionInfo v = (VirtualDefinitionInfo) service
@@ -549,8 +549,8 @@ public class ProcessConfigAction extends BaseDispatchAction {
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		String processId = request.getParameter("processId");
-		String nodeId = request.getParameter("nodeId");
+//		String processId = request.getParameter("processId");
+//		String nodeId = request.getParameter("nodeId");
 		try {
 			String json = "{data:[";
 			/*
@@ -834,8 +834,8 @@ public class ProcessConfigAction extends BaseDispatchAction {
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		String processId = request.getParameter("processId");
-		String nodeId = request.getParameter("nodeId");
+//		String processId = request.getParameter("processId");
+//		String nodeId = request.getParameter("nodeId");
 
 		String 	json = "";	
 		int start = this.getInt(request, "start", 0);
@@ -865,7 +865,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 
 			for (PageModel model : pageModel) {
 
-				String dataStr = "";
+//				String dataStr = "";
 				json += "{id:" + model.getId() + ",name:'" + model.getName()
 						+ "'}";
 				json += ",";
@@ -956,7 +956,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 
 		String processId = request.getParameter("processId");
 		String ruleName = request.getParameter("ruleName");
-		String processType = request.getParameter("processType");
+//		String processType = request.getParameter("processType");
 		String dept = request.getParameter("department");
 		Long departcode = Long.valueOf(dept.substring(dept.indexOf("=") + 1));
 		Department de = (Department) service.findUnique(Department.class,
@@ -1027,44 +1027,45 @@ public class ProcessConfigAction extends BaseDispatchAction {
 		String nodeId = request.getParameter("nodeId");
 
 		String json = null;
-
+		response.setCharacterEncoding(this.getProperties(
+				"system.characterEncoding", "gbk"));
+		response.setContentType("text/plain");
+		PrintWriter out = response.getWriter();
 		try {
 			if (virtualDefinitionInfoId != null
 					&& !"".equals(virtualDefinitionInfoId)) {
 				VirtualDefinitionInfo v = (VirtualDefinitionInfo) service
 						.findUnique(VirtualDefinitionInfo.class, "id", Long
 								.valueOf(virtualDefinitionInfoId));
-				ProcessDefinition p = ds.getDefinitionById(v
-						.getProcessDefinitionId());
-				String processName = p.getName();
+//				ProcessDefinition p = ds.getDefinitionById(v
+//						.getProcessDefinitionId());
+//				String processName = p.getName();
 				String nodeName = null;
-				String nodeDesc = null;
+//				String nodeDesc = null;
 				List<VirtualNodeInfo> li = service.find(VirtualNodeInfo.class,
 						"virtualDefinitionInfo", v);
 				for (VirtualNodeInfo vn : li) {
 					if (Long.valueOf(nodeId).equals(vn.getNodeId())) {
 						nodeName = vn.getVirtualNodeName();
-						nodeDesc = vn.getVirtualNodeDesc();
+//						nodeDesc = vn.getVirtualNodeDesc();
+						break;
 					}
 				}
 				json = "{success:true,nodeName:'" + nodeName + "'}";
 			}
-			response.setCharacterEncoding(this.getProperties(
-					"system.characterEncoding", "gbk"));
-			response.setContentType("text/plain");
-			PrintWriter out = response.getWriter();
+			
 			out.println(json);
 			out.flush();
-			out.close();
 			return null;
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			response.setCharacterEncoding(this.getProperties(
-					"system.characterEncoding", "gbk"));
-			PrintWriter writer = response.getWriter();
-			writer.write("{success:false}");
-			writer.flush();
+			
+			out.write("{success:false}");
+			out.flush();
 			return null;
+		}finally{
+			if (out != null)
+				out.close();
 		}
 	}
 
@@ -1087,7 +1088,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 
 		String virtualDefinitionInfoId = request
 				.getParameter("virtualDefinitionInfoId");
-		String nodeId = request.getParameter("nodeId");
+//		String nodeId = request.getParameter("nodeId");
 
 		String json = null;
 
@@ -1133,6 +1134,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 	 * @throws Exception
 	 * ActionForward
 	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward uploadRuleFile(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -1173,18 +1175,18 @@ public class ProcessConfigAction extends BaseDispatchAction {
 				if (!item.isFormField() && item.getName() != null
 						&& !"".equals(item.getName())) {
 					String fileName = item.getName();
-					String appendix = "";
+//					String appendix = "";
 
 					// 考虑到out文件可能不以.out为后缀
-					int indexOfDot = fileName.lastIndexOf(".");
-					if (indexOfDot >= 0) {
-						appendix = fileName.substring(indexOfDot);
-					}
+//					int indexOfDot = fileName.lastIndexOf(".");
+//					if (indexOfDot >= 0) {
+//						appendix = fileName.substring(indexOfDot);
+//					}
 					String ruleName = fileName.substring(fileName
 							.lastIndexOf("\\") + 1);
 					// String systemFileName = "upload-"
 					// + System.currentTimeMillis() + appendix;
-					request.getRealPath("");
+//					request.getRealPath("");
 					String filePath = FSP + systemRulePath + FSP + ruleName;//"\\WEB-INF\\classes\\com\\digitalchina\\itil\\rules"
 					String realPath = request.getRealPath(FSP) + filePath;
 
@@ -1425,12 +1427,12 @@ public class ProcessConfigAction extends BaseDispatchAction {
 		String id = null;
 		if (virtualDefinitionInfoId != null
 				&& !"".equals(virtualDefinitionInfoId)) {
-			VirtualDefinitionInfo v = (VirtualDefinitionInfo) service
-					.findUnique(VirtualDefinitionInfo.class, "id", Long
-							.valueOf(virtualDefinitionInfoId));
-			ProcessDefinition p = ds.getDefinitionById(v
-					.getProcessDefinitionId());
-			int version = p.getVersion();
+//			VirtualDefinitionInfo v = (VirtualDefinitionInfo) service
+//					.findUnique(VirtualDefinitionInfo.class, "id", Long
+//							.valueOf(virtualDefinitionInfoId));
+//			ProcessDefinition p = ds.getDefinitionById(v
+//					.getProcessDefinitionId());
+//			int version = p.getVersion();
 			List<RuleConfigUnit> list = service.findAll(RuleConfigUnit.class);
 			for (RuleConfigUnit rc : list) {
 				if (rc.getNodeId() != null

@@ -301,7 +301,7 @@ public class DefinitionServiceImpl extends BaseDao implements DefinitionService,
 		}
 		List<DefinitionInfo> result = new ArrayList();
 		for(DefinitionInfo definitionInfo: definitionInfos) {
-			String desc = definitionInfo.getDescription().toLowerCase().trim();
+//			String desc = definitionInfo.getDescription().toLowerCase().trim();
 			String name = definitionInfo.getName().toLowerCase().trim();			
 			if(nameLike.equals("")||name.indexOf(nameLike)>=0) {
 				if(nameLike.equals("")||name.indexOf(nameLike)>=0) {

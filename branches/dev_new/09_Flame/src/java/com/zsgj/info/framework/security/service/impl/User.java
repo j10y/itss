@@ -30,11 +30,13 @@ public class User extends org.springframework.security.core.userdetails.User imp
 	 */
 	private UserInfo currentUserInfo;
 
+	@SuppressWarnings("deprecation")
 	public User(String username, String password, boolean enabled,
 			GrantedAuthority[] authorities) throws IllegalArgumentException {
 		super(username, password, enabled, true, true, true, authorities);
 	}
 
+	@SuppressWarnings("deprecation")
 	public User(String username, String password, boolean enabled,
 			boolean accountNonExpired, boolean credentialsNonExpired,
 			GrantedAuthority[] authorities) throws IllegalArgumentException {
@@ -42,6 +44,7 @@ public class User extends org.springframework.security.core.userdetails.User imp
 				credentialsNonExpired, true, authorities);
 	}
 
+	@SuppressWarnings("deprecation")
 	public User(String username, String password, boolean enabled,
 			boolean accountNonExpired, boolean credentialsNonExpired,
 			boolean accountNonLocked, GrantedAuthority[] authorities,
@@ -53,7 +56,8 @@ public class User extends org.springframework.security.core.userdetails.User imp
 
 	}
 	
-    public User(String username, String password, boolean enabled,
+    @SuppressWarnings("deprecation")
+	public User(String username, String password, boolean enabled,
             boolean accountNonExpired, boolean credentialsNonExpired,
             boolean accountNonLocked, GrantedAuthority[] authorities)
             throws IllegalArgumentException {

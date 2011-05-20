@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.Role;
  * @Create In 2008-12-12
  */
 public class WorkflowRoleMaping extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 375806058938445053L;
 	private Long id;
 	private Role role;
 	private WorkflowRole workflowRole;

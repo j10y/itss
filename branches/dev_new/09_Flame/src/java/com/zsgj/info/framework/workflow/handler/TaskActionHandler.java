@@ -54,8 +54,4 @@ public class TaskActionHandler extends BaseActionHandler implements ActionHandle
 		System.out.println(eventType+"**"+nodeName+"********TaskActionHandler");
 	}
 	
-	public static void main(String[] argv) {
-		TaskActionHandler nah = new TaskActionHandler();
-//		snah.getActions();
-	}
 }

@@ -7,6 +7,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class ConfigUnitMail extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 2965659679813095436L;
 	private Long id;
 	private String subject;
 	private String content;

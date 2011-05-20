@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In May 24, 2009
  */
 public class Province extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -1497302528287854135L;
 	private Long id;
 	private String name;
 	private String keyword;

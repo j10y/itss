@@ -3,6 +3,10 @@ package com.zsgj.info.framework.workflow.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class VirtualNodeInfo extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 1494380847523915268L;
 	private Long id;
 	private String virtualNodeName;
 	private String virtualNodeDesc;

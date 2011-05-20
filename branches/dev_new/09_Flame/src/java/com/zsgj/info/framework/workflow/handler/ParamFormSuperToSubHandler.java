@@ -1,7 +1,6 @@
 package com.zsgj.info.framework.workflow.handler;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.jbpm.context.exe.ContextInstance;
@@ -10,14 +9,12 @@ import org.jbpm.graph.exe.ExecutionContext;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.exe.Token;
 
-import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
-import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.workflow.WorkflowConstants;
-import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
 
+@SuppressWarnings("serial")
 public class ParamFormSuperToSubHandler implements ActionHandler {
-	private Service service = (Service) ContextHolder.getBean("baseService");
+//	private Service service = (Service) ContextHolder.getBean("baseService");
 	//这一步主要目的就是传参
 	public void execute(ExecutionContext ec) throws Exception {
 //		System.out.println("在子流程创建之后为子流程传参");
@@ -52,8 +49,8 @@ public class ParamFormSuperToSubHandler implements ActionHandler {
 		context.setVariable("rulePath", rulePath);
 		
 		//从父流程中的bizParam中根据子流程名字，得到子流程的一些业务参数
-		VirtualDefinitionInfo subProcessDefinition=(VirtualDefinitionInfo)service.findUnique(VirtualDefinitionInfo.class, "id", subProcessId);
-		String subName= subProcessDefinition.getVirtualDefinitionName();
+//		VirtualDefinitionInfo subProcessDefinition=(VirtualDefinitionInfo)service.findUnique(VirtualDefinitionInfo.class, "id", subProcessId);
+//		String subName= subProcessDefinition.getVirtualDefinitionName();
 		Map map = new HashMap();//子流程的实例上下文中的bizParam
 		if(subProcessParam!=null&&!"".equals(subProcessParam)){
 			String[] variables=subProcessParam.split(",");

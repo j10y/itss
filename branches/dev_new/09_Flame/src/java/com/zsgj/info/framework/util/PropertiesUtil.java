@@ -62,6 +62,7 @@ public class PropertiesUtil {
 	 * @param arg 需要替换的参数值，请按照资源文件中实际位置排序
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	public static String format(String source,Object[] arg){
 		MessageFormat formatter = new MessageFormat("");
 		formatter.setLocale(ContextHolder.getInstance().getLocal());

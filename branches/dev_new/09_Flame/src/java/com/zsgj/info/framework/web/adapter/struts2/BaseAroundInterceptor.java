@@ -94,6 +94,7 @@ public abstract class BaseAroundInterceptor implements Interceptor {
 	 *            д╛хопео╒
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	protected String getProperties(String Key, String defaultValue) {
 		ApplicationContext appContext = ContextHolder.getApplicationContext();
 		String message = "";

@@ -5,6 +5,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class ConfigUnitMailNodeSenderTable extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2345138116239552020L;
 	private Long id;
 	private ConfigUnitMailNodeSender mailNodeSender;
 	private UserInfo userInfo;

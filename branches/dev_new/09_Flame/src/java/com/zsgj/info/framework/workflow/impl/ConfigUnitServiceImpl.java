@@ -42,6 +42,7 @@ import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
 import com.zsgj.info.framework.workflow.entity.VirtualNodeInfo;
 import com.zsgj.info.framework.workflow.entity.WorkflowRecordTaskInfo;
 
+@SuppressWarnings("deprecation")
 public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 	/**
 	 * 根据流程名和节点名得到相应的timer数据
@@ -59,16 +60,16 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 	}
 
 	public Map showRole(String virProcessId, String nodeId) {
-		VirtualDefinitionInfo virtualDefinitionInfo = (VirtualDefinitionInfo)super.findUniqueBy(VirtualDefinitionInfo.class, "id", Long.valueOf(virProcessId));
+//		VirtualDefinitionInfo virtualDefinitionInfo = (VirtualDefinitionInfo)super.findUniqueBy(VirtualDefinitionInfo.class, "id", Long.valueOf(virProcessId));
 		//根据虚拟ID和节点ID唯一确定一个节点
-		Criteria criteria = super.getCriteria(VirtualNodeInfo.class);		
-		criteria.add(Restrictions.eq("virtualDefinitionInfo", virtualDefinitionInfo));
-		criteria.add(Restrictions.eq("nodeId", Long.valueOf(nodeId)));
-		VirtualNodeInfo virtualNodeInfo = (VirtualNodeInfo)criteria.uniqueResult();
+//		Criteria criteria = super.getCriteria(VirtualNodeInfo.class);		
+//		criteria.add(Restrictions.eq("virtualDefinitionInfo", virtualDefinitionInfo));
+//		criteria.add(Restrictions.eq("nodeId", Long.valueOf(nodeId)));
+//		VirtualNodeInfo virtualNodeInfo = (VirtualNodeInfo)criteria.uniqueResult();
 		
-		String desc = virtualDefinitionInfo.getVirtualDefinitionDesc();
-		String nodeName = virtualNodeInfo.getVirtualNodeName();
-		String nodeDesc = virtualNodeInfo.getVirtualNodeDesc();
+//		String desc = virtualDefinitionInfo.getVirtualDefinitionDesc();
+//		String nodeName = virtualNodeInfo.getVirtualNodeName();
+//		String nodeDesc = virtualNodeInfo.getVirtualNodeDesc();
 		
 		Criteria c = super.getCriteria(ConfigUnitRole.class);
 		c.add(Restrictions.eq("nodeId", Long.valueOf(nodeId)));
@@ -88,15 +89,15 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 
 	public ConfigUnitRole findConfigUnitRole(String virProcessId, String nodeId) {
 		
-		VirtualDefinitionInfo virtualDefinitionInfo = (VirtualDefinitionInfo)super.findUniqueBy(VirtualDefinitionInfo.class, "id", Long.valueOf(virProcessId));
-		Criteria criteria  = super.getCriteria(VirtualNodeInfo.class);
-		criteria.add(Restrictions.eq("virtualDefinitionInfo", virtualDefinitionInfo));
-		criteria.add(Restrictions.eq("nodeId", Long.valueOf(nodeId)));
-		VirtualNodeInfo virtualNodeInfo = (VirtualNodeInfo)criteria.uniqueResult();
+//		VirtualDefinitionInfo virtualDefinitionInfo = (VirtualDefinitionInfo)super.findUniqueBy(VirtualDefinitionInfo.class, "id", Long.valueOf(virProcessId));
+//		Criteria criteria  = super.getCriteria(VirtualNodeInfo.class);
+//		criteria.add(Restrictions.eq("virtualDefinitionInfo", virtualDefinitionInfo));
+//		criteria.add(Restrictions.eq("nodeId", Long.valueOf(nodeId)));
+//		VirtualNodeInfo virtualNodeInfo = (VirtualNodeInfo)criteria.uniqueResult();
 		
-		String desc = virtualDefinitionInfo.getVirtualDefinitionDesc();
-		String nodeName = virtualNodeInfo.getVirtualNodeName();
-		String nodeDesc = virtualNodeInfo.getVirtualNodeDesc();
+//		String desc = virtualDefinitionInfo.getVirtualDefinitionDesc();
+//		String nodeName = virtualNodeInfo.getVirtualNodeName();
+//		String nodeDesc = virtualNodeInfo.getVirtualNodeDesc();
 		
 		Criteria c = super.getCriteria(ConfigUnitRole.class);
 		c.add(Restrictions.eq("nodeId", Long.valueOf(nodeId)));
@@ -349,7 +350,6 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		String realName = (String)criteria.uniqueResult();
 		return realName;
 	}
-	
 	/**
 	 * 组装HTML邮件发送 ITIL专用
 	 * @Methods Name htmlContent

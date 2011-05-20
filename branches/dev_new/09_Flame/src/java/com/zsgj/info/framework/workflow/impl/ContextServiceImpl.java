@@ -164,7 +164,7 @@ public class ContextServiceImpl extends BaseDao implements ContextService {
 	 */
 	public void setVariableToBizParam(long taskId, String name, String value) {
 		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
-		Service service = (Service) ContextHolder.getBean("baseService");
+//		Service service = (Service) ContextHolder.getBean("baseService");
 		try {
 			log.debug("setVariableByTaskId");
 			TaskInstance taskInstance = jbpmContext.loadTaskInstance(taskId);

@@ -47,6 +47,7 @@ import com.zsgj.info.framework.workflow.entity.WorkflowRegressionParameters;
  * @author guangsa
  *create date 20100704
  */
+@SuppressWarnings("serial")
 public class CounterSignHandler implements ActionHandler{
 	private ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
 	private WorkFlowGoBackService wfBack = (WorkFlowGoBackService) ContextHolder.getBean("workflowGoBackService");
@@ -61,7 +62,7 @@ public class CounterSignHandler implements ActionHandler{
 	public void execute(ExecutionContext ec) throws Exception {
 
 		//保存当前节点的nodeName，以便于流程回退；
-		String paramId = "";
+//		String paramId = "";
 		ContextInstance ci = ec.getContextInstance();
 		Long processInstanceId = ec.getProcessInstance().getId();
 		Node node = ec.getNode();
@@ -856,6 +857,7 @@ public class CounterSignHandler implements ActionHandler{
 	 * @param mapParams(流程业务参数)
 	 * @param ci(流程上下文)
 	 */
+	@SuppressWarnings("unused")
 	private WorkflowRegressionParameters saveNodepParamMessage(Long virtaulProcessId,Long processInstanceId,Long nodeId,String virProcessName,String vProcessDesc,String nodeName,String nodeDesc,String nodeType,Map mapParams,ContextInstance ci,Long workflowNormalBackFlag){
 		/*************************首先判断是否第一次进入当前节点******************************************/
 		log.info(vProcessDesc+"(流程)"+nodeName+"(任务接点)"+"开始创建Timer.接下来有几方面的工作要做：");
@@ -899,13 +901,13 @@ public class CounterSignHandler implements ActionHandler{
 	public String findFromNodeName(List allNodeMessage , int flag){//此时flag分为1和0，1意味着已经把当前节点包含在其中了；而0则意味着没有把当前节点包含在其中
 		
 		String fromNodeName = "";
-		String fromParamId = "";
+//		String fromParamId = "";
 		if(flag==1){
 			allNodeMessage.remove(allNodeMessage.size()-1);//删除当前节点信息
 		}
 		String  fromNodeMessage = (String)allNodeMessage.get(allNodeMessage.size()-1);
 		String[] mutipleMessage = fromNodeMessage.split("\\+");
-		fromParamId = mutipleMessage[0];//上个节点参数Id
+//		fromParamId = mutipleMessage[0];//上个节点参数Id
 		fromNodeName = mutipleMessage[1];//节点名称为中文
 		allNodeMessage.remove(allNodeMessage.size()-1);//删除上一个节点信息
 		return fromNodeName;
@@ -968,6 +970,7 @@ public class CounterSignHandler implements ActionHandler{
 	 * @param taskInstance
 	 * @return
 	 */
+	@SuppressWarnings("static-access")
 	public Timer creatTimer(ExecutionContext ec,TaskInstance taskInstance){
 //		CreateTimerAction t = new CreateTimerAction();
 		Timer timer = new Timer(ec.getToken());	
@@ -1040,6 +1043,7 @@ public class CounterSignHandler implements ActionHandler{
 	 * @param node（流程节点）
 	 * @param nodeId（流程节点Id）
 	 */
+	@SuppressWarnings("unused")
 	private void sendMailMessage(String nodeName,String pageUrl,String dataId,String reqClass,String goStartState,Long processInstanceId,Long taskId,String applyType,String vDesc,Long virtualDefinintionId,String creator,Map bizParam,Node node,String nodeId,String[] auditPers,Map counterSignAuditMegs){
 		//保存当前节点的nodeName，以便于流程回退；
 		String virualDesc = "";
@@ -1049,6 +1053,9 @@ public class CounterSignHandler implements ActionHandler{
 		String content = null;
 		String[] ccEmail = null;//抄送人的email地址
 		String[] configEmail = null;//后台配置，如果有就复制进入，没有就为空值
+		String hurryFlag = (String) bizParam.get("hurryFlag");
+		UserInfo creatorMeg = (UserInfo) service.findUnique(UserInfo.class, "userName", creator);
+		
 		log.info(virualDesc+"在"+nodeName+"的进入事件中给指派的人审批发邮件!");
 //		Long nodeid = 0l;
 //		VirtualDefinitionInfo virtualDefinitionInfo = (VirtualDefinitionInfo) service.find(VirtualDefinitionInfo.class, String.valueOf(virtualDefinintionId));
@@ -1264,36 +1271,46 @@ public class CounterSignHandler implements ActionHandler{
 		//remove by lee for 去掉垃圾抄送 in 20091221 end
 		//add by guangsa for counterSignAuditTaskId in 20090729 begin
 		List auditUserEmail = new ArrayList();
+		
 		if(counterSignAuditMegs.size()!=0&&counterSignAuditMegs!=null&&!"".equals(counterSignAuditMegs)){
 			//如果为动态会签审批人时候
 			Set set = counterSignAuditMegs.keySet();
 			Iterator counterMegs = set.iterator();
 			while(counterMegs.hasNext()){
-				Long taskid = (Long)counterMegs.next();
-				String[] users = (String[])counterSignAuditMegs.get(taskid);
-				for(int i=0;i<users.length;i++){
-					UserInfo userInfo = (UserInfo)service.findUnique(UserInfo.class, "userName", users[i]);
-					auditUserEmail.add(userInfo.getEmail());
-				}
-				String[] auditEmail = (String[])auditUserEmail.toArray(new String[0]);
-				//String context = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskid,creator, vDesc, auditHis);
 				try{
-					//ms.sendMimeMail(auditEmail, ccEmail, null, subject, context, null);
+					Long taskid = (Long)counterMegs.next();
+					String[] users = (String[])counterSignAuditMegs.get(taskid);
+					for(int i=0;i<users.length;i++){
+						UserInfo userInfo = (UserInfo)service.findUnique(UserInfo.class, "userName", users[i]);
+						String userList = userInfo.getRealName() + "/" + userInfo.getUserName() ;
+						
+						String context = cs.htmlContent(virtualDefinintionId, nodeName,
+								pageUrl, applyType, dataId, reqClass, goStartState,
+								taskId, creatorMeg, vDesc, auditHis, hurryFlag, false,
+								userInfo);
+						
+						ms.sendMimeMail(userInfo.getEmail(), null, null, subject, context, null);
+					}
 				}catch(Exception e){
 					log.info(virualDesc+"(流程)在"+nodeName+"(节点)给三部分的审批人发送邮件时发生异常！");
 					e.printStackTrace();
 				}
 			}
 		}else{
-			//如果为其他指派发邮件时候
-			for(int i=0;i<auditPers.length;i++){
-				UserInfo userInfo = (UserInfo)service.findUnique(UserInfo.class, "userName", auditPers[i]);
-				auditUserEmail.add(userInfo.getEmail());
-			}
-			String[] auditEmail = (String[])auditUserEmail.toArray(new String[0]);
-			//String context = cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creator, vDesc, auditHis);
 			try{
-				//ms.sendMimeMail(auditEmail, ccEmail, null, subject, context, null);
+				//如果为其他指派发邮件时候
+				for(int i=0;i<auditPers.length;i++){
+					UserInfo userInfo = (UserInfo)service.findUnique(UserInfo.class, "userName", auditPers[i]);
+					String userList = userInfo.getRealName() + "/" + userInfo.getUserName() ;
+					
+					String context = cs.htmlContent(virtualDefinintionId, nodeName,
+							pageUrl, applyType, dataId, reqClass, goStartState,
+							taskId, creatorMeg, vDesc, auditHis, hurryFlag, false,
+							userInfo);
+					
+					ms.sendMimeMail(userInfo.getEmail(), null, null, subject, context, null);
+				}
+				
 			}catch(Exception e){
 				log.info(virualDesc+"(流程)在"+nodeName+"(节点)给三部分的审批人发送邮件时发生异常！");
 				e.printStackTrace();

@@ -531,8 +531,8 @@ public class UpdateWorkFlowAction extends BaseDispatchAction {
 			service.save(vd);
 			List<NodeInfo> list = ds.getTaskNodes(pd.getName());
 			// 先统一配同一个角色
-			WorkflowRole wr = (WorkflowRole) service.findUnique(
-					WorkflowRole.class, "id", Long.valueOf("50"));
+//			WorkflowRole wr = (WorkflowRole) service.findUnique(
+//					WorkflowRole.class, "id", Long.valueOf("50"));
 			for (NodeInfo tn : list) {
 				VirtualNodeInfo vn = new VirtualNodeInfo();
 				vn.setNodeId(tn.getId());
@@ -544,6 +544,7 @@ public class UpdateWorkFlowAction extends BaseDispatchAction {
 			PrintWriter writer = response.getWriter();
 			writer.write("{success:true}");
 			writer.flush();
+			writer.close();
 			return null;
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -551,6 +552,7 @@ public class UpdateWorkFlowAction extends BaseDispatchAction {
 			PrintWriter writer = response.getWriter();
 			writer.write("{success:false}");
 			writer.flush();
+			writer.close();
 			return null;
 		}
 

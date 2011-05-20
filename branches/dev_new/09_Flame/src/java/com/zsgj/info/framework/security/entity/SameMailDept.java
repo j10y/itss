@@ -12,6 +12,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Modify by lee for add date info in 20100419
  */
 public class SameMailDept extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2103730966766469625L;
 	private Long id;		//自动编号
 	private String name;	//部门名称
 	private Date startDate;	//起始时间

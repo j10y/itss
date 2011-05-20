@@ -124,6 +124,7 @@ public class FormHelper {
 		return formPath;
 	}
 	
+	@SuppressWarnings("static-access")
 	private static String getProperties(String Key, String defaultValue) {
 		ApplicationContext appContext = ContextHolder.getApplicationContext();
 		String message = "";

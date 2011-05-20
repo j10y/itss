@@ -6,11 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.node.TaskNode;
 import org.jbpm.taskmgmt.def.Task;
 
@@ -19,7 +16,6 @@ import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.dao.BaseDao;
 import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.entity.UserRole;
 import com.zsgj.info.framework.workflow.TaskPageModelService;
 import com.zsgj.info.framework.workflow.entity.PageModelConfigUnit;
 /**
@@ -30,18 +26,12 @@ import com.zsgj.info.framework.workflow.entity.PageModelConfigUnit;
  */
 public class TaskPageModelServiceImpl extends BaseDao implements TaskPageModelService{
 	
-	private static Log log;
-	static 
-	{
-		log = LogFactory.getLog(TaskPageModelServiceImpl.class);
-	}
-	
 	public PageModel getPageModel(Task task,Map mapVar) {
 		// TODO Auto-generated method stub
 		
 		TaskNode tn = task.getTaskNode();
 		Long virtulDefinitionId=(Long)mapVar.get("VIRTUALDEFINITIONINFO_ID");
-		ProcessDefinition p = tn.getProcessDefinition();
+//		ProcessDefinition p = tn.getProcessDefinition();
 		//List<VirtualDefinitionInfo> vd=this.getObjects(VirtualDefinitionInfo.class, "realDefinitionName", p.getName());
 		List<PageModelConfigUnit> list =this.getAll(PageModelConfigUnit.class);
 		PageModel pageModel=null;

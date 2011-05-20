@@ -139,7 +139,7 @@ public class RightAction extends BaseDispatchAction{
 		Right res = new Right();
 		res.setId(String.valueOf(id);*/
 		Right rig = (Right) BeanUtil.getObject(request, Right.class);
-		String moduleId = request.getParameter("moduleId");
+//		String moduleId = request.getParameter("moduleId");
 		
 		
 		Right right = sms.saveRight(rig);

@@ -28,7 +28,7 @@ public class NodeActionHandler extends BaseActionHandler implements ActionHandle
 	 * 最后执行配置单元的执行函数
 	 */
 	public void execute(ExecutionContext executionContext){
-		NodeInfo nodeInfo = new NodeInfo(executionContext.getNode());
+//		NodeInfo nodeInfo = new NodeInfo(executionContext.getNode());
 		//List
 		
 		
@@ -61,8 +61,5 @@ public class NodeActionHandler extends BaseActionHandler implements ActionHandle
 		}
 	}
 	
-	public static void main(String[] argv) {
-		NodeActionHandler nah = new NodeActionHandler();
-//		nah.getActions();
-	}
+
 }

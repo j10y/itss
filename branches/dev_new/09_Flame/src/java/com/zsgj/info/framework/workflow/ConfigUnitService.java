@@ -211,10 +211,10 @@ public interface ConfigUnitService {
 	 * @param reqClass
 	 * @param goStartState
 	 * @param taskId
-	 * @param creatorMeg
-	 * @param vDesc
-	 * @param auditHis
-	 * @param hurryFlag
+	 * @param creatorMeg 创建人--Userinfo
+	 * @param vDesc 虚拟流程描述
+	 * @param auditHis 审批历史List
+	 * @param hurryFlag 是否加急 1--是
 	 * @param browsePerson
 	 * @param userInfo 所需发送的用户实体
 	 * @return String 邮件内容
@@ -233,10 +233,10 @@ public interface ConfigUnitService {
 	 * @param reqClass
 	 * @param goStartState
 	 * @param taskId
-	 * @param creatorMeg
-	 * @param vDesc
-	 * @param auditHis
-	 * @param hurryFlag
+	 * @param creatorMeg 创建人--Userinfo
+	 * @param vDesc 虚拟流程描述
+	 * @param auditHis 审批历史List
+	 * @param hurryFlag 是否加急 1--是
 	 * @param browsePerson
 	 * @param userInfo 发送到的目的用户真实名称，可以是以','分割的多个用户
 	 * @return String 邮件内容

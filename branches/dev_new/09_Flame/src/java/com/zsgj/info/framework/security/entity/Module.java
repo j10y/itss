@@ -12,7 +12,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-3-5
  */
 public class Module extends BaseObject{
-	private static final Long serialVersionUID = -4990110851439538814L;
+	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -6797207706235837073L;
 
 	private Long id;
 	

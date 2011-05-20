@@ -26,6 +26,7 @@ public class UsernamePasswordAuthenticationTokenCust extends
 	 */
 	private UserInfo currentUserInfo;
 	
+	@SuppressWarnings("deprecation")
 	public UsernamePasswordAuthenticationTokenCust(Object principal,
 			Object credentials, GrantedAuthority[] authorities) {
 		super(principal, credentials, authorities);

@@ -78,6 +78,7 @@ public class RoleAction extends BaseDispatchAction{
 		}
 		return null;
 	}
+	@SuppressWarnings("unchecked")
 	public String convertListData2JsonString(List listData,Page page){
 		String js = "";
 		if(listData.size()==0){
@@ -141,6 +142,7 @@ public class RoleAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward addAuthorization(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -207,7 +209,6 @@ public class RoleAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
-	@SuppressWarnings("unchecked")
 	public ActionForward findRole(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -239,6 +240,7 @@ public class RoleAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward findDeptForCombo(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -255,8 +257,8 @@ public class RoleAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "departName");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String departName = request.getParameter("departName");
@@ -321,6 +323,7 @@ public class RoleAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward saveRoles(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -334,7 +337,7 @@ public class RoleAction extends BaseDispatchAction{
 		String dataViewProvince = request.getParameter("dataViewProvince");
 		//add by awen for add property on entity called 'role' on june 14 2009 end
 		String depertmentCode = request.getParameter("department");
-		String deptMenuTemplateId = request.getParameter("deptmt");
+//		String deptMenuTemplateId = request.getParameter("deptmt");
 		
 		String deptMenuId = request.getParameter("deptMenu");
 		
@@ -409,7 +412,10 @@ public class RoleAction extends BaseDispatchAction{
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			out.close();
+			
+		}finally{
+			if(out != null)
+				out.close();
 		}
 		
 		return null;
@@ -440,7 +446,7 @@ public class RoleAction extends BaseDispatchAction{
 		String dataViewProvince = request.getParameter("dataViewProvince");
 		String province = request.getParameter("provinceName");
 		String depertmentCode = request.getParameter("department");
-		String deptMenuTemplateId = request.getParameter("deptmt");
+//		String deptMenuTemplateId = request.getParameter("deptmt");
 		String deptMenuId = request.getParameter("deptMenu");
 		if(depertmentCode!=null&&!depertmentCode.trim().equals("")) {
 			if(StringUtils.isNumeric(depertmentCode)){
@@ -591,8 +597,8 @@ public class RoleAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "platformName");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String platformName = request.getParameter("platformName");
@@ -644,8 +650,8 @@ public class RoleAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "name");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String regionName = request.getParameter("name");
@@ -697,8 +703,8 @@ public class RoleAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "name");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String provinceName = request.getParameter("name");

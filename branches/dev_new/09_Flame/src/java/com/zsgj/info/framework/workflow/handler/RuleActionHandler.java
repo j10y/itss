@@ -232,13 +232,13 @@ public class RuleActionHandler extends BaseActionHandler implements ActionHandle
 	public void nodeTypeSaveException(ContextInstance ci,Token token){
 		
 		String fromNodeName = "";
-		String fromParamId = "";
+//		String fromParamId = "";
 		//把记录每一个节点的参数删除掉
 		List allNodeMessage = (List)ci.getVariable("goBack");//List中每一个对象就是一个String，格式为paramId+nodeName；
 		//allNodeMessage.remove(allNodeMessage.size()-1);
 		String  fromNodeMessage = (String)allNodeMessage.get(allNodeMessage.size()-1);
 		String[] mutipleMessage = fromNodeMessage.split("\\+");
-		fromParamId = mutipleMessage[0];//上个节点参数Id
+//		fromParamId = mutipleMessage[0];//上个节点参数Id
 		fromNodeName = mutipleMessage[1];//节点名称为中文，这里无法用到nodeDesc（api限制）
 		allNodeMessage.remove(allNodeMessage.size()-1);
 		//开始回退了
@@ -260,13 +260,13 @@ public class RuleActionHandler extends BaseActionHandler implements ActionHandle
 	 */
 	public void nodeTypeRuleException(ContextInstance ci,Token token,List allNodeMessage){
 		String fromNodeName = "";
-		String fromParamId = "";
+//		String fromParamId = "";
 		//把记录每一个节点的参数删除掉
 		//List allNodeMessage = (List)ci.getVariable("goBack");//List中每一个对象就是一个String，格式为paramId+nodeName；
 		allNodeMessage.remove(allNodeMessage.size()-1);
 		String  fromNodeMessage = (String)allNodeMessage.get(allNodeMessage.size()-1);
 		String[] mutipleMessage = fromNodeMessage.split("\\+");
-		fromParamId = mutipleMessage[0];//上个节点参数Id
+//		fromParamId = mutipleMessage[0];//上个节点参数Id
 		fromNodeName = mutipleMessage[1];//节点名称为中文，这里无法用到nodeDesc（api限制）
 		allNodeMessage.remove(allNodeMessage.size()-1);
 		//开始回退了
@@ -287,11 +287,11 @@ public class RuleActionHandler extends BaseActionHandler implements ActionHandle
 	 */
 	public void fromTaskToNodeTypeRuleException(ContextInstance ci,Token token,List allNodeMessage){
 		String fromNodeName = "";
-		String fromParamId = "";
+//		String fromParamId = "";
 		//把记录每一个节点的参数删除掉
 		String  fromNodeMessage = (String)allNodeMessage.get(allNodeMessage.size()-1);
 		String[] mutipleMessage = fromNodeMessage.split("\\+");
-		fromParamId = mutipleMessage[0];//上个节点参数Id
+//		fromParamId = mutipleMessage[0];//上个节点参数Id
 		fromNodeName = mutipleMessage[1];//节点名称为中文，这里无法用到nodeDesc（api限制）
 		allNodeMessage.remove(allNodeMessage.size()-1);
 		//开始回退了

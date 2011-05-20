@@ -11,6 +11,11 @@ import org.springframework.security.ldap.userdetails.LdapUserDetails;
 public class UserDetailsLdapImpl implements LdapUserDetails {
 
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -470187330939532374L;
+
 	public Attributes getAttributes() {
 		// TODO Auto-generated method stub
 		return null;

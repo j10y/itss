@@ -340,7 +340,7 @@ public class TimeTool {
 	*/
 	public static String getSystemOfDateByFormat( String p_format ) {
 	   long time = System.currentTimeMillis();
-	   Date d2 = new Date();
+//	   Date d2 = new Date();
 	   Date d = new Date( time );
 	   SimpleDateFormat sdf = new SimpleDateFormat( p_format );
 	   String dateStr = sdf.format( d );
@@ -353,6 +353,7 @@ public class TimeTool {
 	* @return ÌìÊý
 	* @author zhuqx
 	*/
+	@SuppressWarnings("static-access")
 	public static long getDayOfMonth( Date p_date ) throws ParseException {
 	   int year = getYearOfDate(p_date);
 	   int month = getMonthOfDate( p_date )-1;

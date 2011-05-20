@@ -3,6 +3,7 @@ package com.zsgj.info.framework.workflow.handler;
 import org.jbpm.graph.def.ActionHandler;
 import org.jbpm.graph.exe.ExecutionContext;
 
+@SuppressWarnings("serial")
 public class SubTwoAction implements ActionHandler {
 
 	public void execute(ExecutionContext executionContext) throws Exception {

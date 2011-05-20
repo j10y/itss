@@ -20,6 +20,7 @@ import com.zsgj.info.framework.workflow.WorkflowConstants;
 import com.zsgj.info.framework.workflow.entity.SubProcessConfigUnit;
 import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
 
+@SuppressWarnings("serial")
 public class CreateSubProcessActionHandler implements ActionHandler {
 	
 	private ProcessService ps = (ProcessService) ContextHolder.getBean("processService");

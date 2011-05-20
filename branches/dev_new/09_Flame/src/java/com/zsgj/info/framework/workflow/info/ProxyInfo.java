@@ -31,6 +31,7 @@ public class ProxyInfo {
 	public void setProxyId(String proxyId) {
 		this.proxyId = proxyId;
 	}
+	@SuppressWarnings("deprecation")
 	public Date dateProxyBegin() {
 		if(proxyBegin==null||proxyBegin.trim().equals("")) {
 			return null;
@@ -52,6 +53,7 @@ public class ProxyInfo {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public Date dateProxyEnd() {
 		if(proxyEnd==null||proxyEnd.trim().equals("")) {
 			return null;

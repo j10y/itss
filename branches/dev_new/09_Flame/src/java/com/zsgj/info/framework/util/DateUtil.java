@@ -54,7 +54,8 @@ public class DateUtil {
         return (returnValue);
     }
     
-    public   static   Date   getLastDayOfMonth(Date   sDate1)   {   
+    @SuppressWarnings("deprecation")
+	public   static   Date   getLastDayOfMonth(Date   sDate1)   {   
         Calendar   cDay1   =   Calendar.getInstance();   
         cDay1.setTime(sDate1);   
         final   int   lastDay   =   cDay1.getActualMaximum(Calendar.DAY_OF_MONTH);   
@@ -63,7 +64,8 @@ public class DateUtil {
         return   lastDate;   
 	}   
     
-    public   static   Date   getFirstDayOfMonth(Date   sDate1)   {   
+    @SuppressWarnings("deprecation")
+	public   static   Date   getFirstDayOfMonth(Date   sDate1)   {   
         Calendar   cDay1   =   Calendar.getInstance();   
         cDay1.setTime(sDate1);   
         final   int   lastDay   =   cDay1.getActualMinimum(Calendar.DAY_OF_MONTH);   

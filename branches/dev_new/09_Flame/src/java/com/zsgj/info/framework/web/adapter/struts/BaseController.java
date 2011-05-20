@@ -22,6 +22,7 @@ import com.zsgj.info.framework.util.PropertiesUtil;
  * @Create In 2008-3-3
  */
 
+@SuppressWarnings("serial")
 public class BaseController extends org.apache.struts.action.ActionServlet {
 	/**
 	 * 服务层日志记录器

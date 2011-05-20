@@ -19,6 +19,7 @@ import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
 import com.zsgj.info.framework.workflow.entity.VirtualNodeInfo;
 import com.zsgj.info.framework.workflow.info.NodeInfo;
 
+@SuppressWarnings("serial")
 public class ConfigUnitMailServlet extends HttpServlet{
 
 	DefinitionService ds = (DefinitionService)ContextHolder.getBean("definitionService");
@@ -30,7 +31,7 @@ public class ConfigUnitMailServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request ,HttpServletResponse response)throws ServletException, IOException {
 		
 		String nodeName = "";
-		String nodeDesc = "";
+//		String nodeDesc = "";
 		
 		String virtualDefinitionInfoId = request.getParameter("virtualDefinitionInfoId");
 		String nodeId = request.getParameter("nodeId");
@@ -39,13 +40,14 @@ public class ConfigUnitMailServlet extends HttpServlet{
 		//得到虚拟流程和真实流程
 		String processName = p.getName();
 		String virtualDesc = vitual.getVirtualDefinitionDesc();
-		
-		List<VirtualNodeInfo> virturalNodes = service.find(VirtualNodeInfo.class,"virtualDefinitionInfo", vitual);
 		//得到所有的虚拟节点
+		List<VirtualNodeInfo> virturalNodes = service.find(VirtualNodeInfo.class,"virtualDefinitionInfo", vitual);
+		
 		for (VirtualNodeInfo node : virturalNodes) {
 			if (Long.valueOf(nodeId).equals(node.getNodeId())) {
 				nodeName = node.getVirtualNodeName();
-				nodeDesc = node.getVirtualNodeDesc();
+//				nodeDesc = node.getVirtualNodeDesc();
+				break;
 			}
 		}
 		String url= "/infoAdmin/workflow/configPage/configUnitMail.jsp";

@@ -37,7 +37,6 @@ import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.DefinitionService;
 import com.zsgj.info.framework.workflow.TaskAssignService;
-import com.zsgj.info.framework.workflow.TaskService;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitRole;
 import com.zsgj.info.framework.workflow.entity.DefinitionPreAssign;
 import com.zsgj.info.framework.workflow.entity.TaskPreAssign;
@@ -50,11 +49,11 @@ import com.zsgj.info.framework.workflow.info.NodeInfo;
 public class PreAssignAction extends BaseDispatchAction {
 	private Service bs = getService();
 	//private MetaDataService ms = (MetaDataService) getBean("metaDataService");
-	private boolean showListSearchTitle = true;
+//	private boolean showListSearchTitle = true;
 	private MetaDataManager metaDataManager = (MetaDataManager) getBean("metaDataManager");
 	private ConfigUnitService configUnitService = (ConfigUnitService)ContextHolder.getBean("configUnitService");
 	private DefinitionService ds = (DefinitionService)ContextHolder.getBean("definitionService");
-	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
+//	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private TaskAssignService tas = (TaskAssignService) super.getBean("taskAssignService");
 	private DepartmentService deptserv = (DepartmentService) super.getBean("deptService");
 
@@ -70,6 +69,7 @@ public class PreAssignAction extends BaseDispatchAction {
  * @throws Exception 
  * @ReturnType ActionForward
  */
+	@SuppressWarnings("unchecked")
 	public ActionForward forAdd(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -158,6 +158,7 @@ public class PreAssignAction extends BaseDispatchAction {
 		Map<String, Object> dataMap = null;
 
 		if (StringUtils.isNotBlank(id)) {
+			@SuppressWarnings("unused")
 			Object detail = (Object) bs.find(clazz, id, true);// 此行保留，删除则无效
 			dataMap = metaDataManager.getEntityDataForEdit(clazz, id);
 			json = CoderForSave.encode(dataMap, columns, true);
@@ -214,6 +215,7 @@ public class PreAssignAction extends BaseDispatchAction {
 	 * @throws Exception 
 	 * @ReturnType ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward getAllWorkflowRole(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -239,6 +241,7 @@ public class PreAssignAction extends BaseDispatchAction {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward getWorkflowRoleByRole(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -294,7 +297,7 @@ public class PreAssignAction extends BaseDispatchAction {
 		try {
 			String json = "{success:true}";
 			String info = request.getParameter("info");
-			String preAssignId = request.getParameter("defPreAssignId");
+//			String preAssignId = request.getParameter("defPreAssignId");
 			info = HttpUtil.ConverUnicode(info);
 			HashMap infoMap = new HashMap();
 			JSONObject jo = JSONObject.fromObject(info);
@@ -329,8 +332,8 @@ public class PreAssignAction extends BaseDispatchAction {
 			infoMap.put("departmentName", department.getDepartName());	
 //			
 
-			TaskPreAssign taskPreAssign = null;
-			taskPreAssign = (TaskPreAssign) metaDataManager.saveEntityData(TaskPreAssign.class, infoMap);
+//			TaskPreAssign taskPreAssign = null;
+			metaDataManager.saveEntityData(TaskPreAssign.class, infoMap);
 
 			response.setCharacterEncoding("gbk");
 			PrintWriter writer = response.getWriter();
@@ -427,6 +430,7 @@ public class PreAssignAction extends BaseDispatchAction {
 	 * @throws Exception 
 	 * @ReturnType ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward proxies(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -463,7 +467,8 @@ public class PreAssignAction extends BaseDispatchAction {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+
+	@SuppressWarnings("unused")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {
@@ -497,6 +502,7 @@ public class PreAssignAction extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward getUserInfoWorkmates(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -579,6 +585,7 @@ public class PreAssignAction extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward saveUserInfoWorkmates(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -615,7 +622,10 @@ public class PreAssignAction extends BaseDispatchAction {
 				out.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
-				out.close();
+				
+			}finally{
+				if(out != null)
+					out.close();
 			}
 		}else{
 			for(int i=0;i<userInfoNames.length;i++){
@@ -646,7 +656,10 @@ public class PreAssignAction extends BaseDispatchAction {
 				out.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
-				out.close();
+				
+			}finally{
+				if(out != null)
+					out.close();
 			}
 		}
 		return null;
@@ -660,6 +673,7 @@ public class PreAssignAction extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward showAllUserInfoWorkmates(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)	throws Exception {
 		String json = "";
@@ -778,6 +792,7 @@ public class PreAssignAction extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward modifyUserInfoWorkmates(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String realName = "";
@@ -818,7 +833,10 @@ public class PreAssignAction extends BaseDispatchAction {
 				out.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
-				out.close();
+				
+			}finally{
+				if(out != null)
+					out.close();
 			}
 		}else{
 			for(int i=0;i<userInfoNames.length;i++){
@@ -848,7 +866,10 @@ public class PreAssignAction extends BaseDispatchAction {
 				out.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
-				out.close();
+				
+			}finally{
+				if(out != null)
+					out.close();
 			}
 		}
 		return null;
@@ -862,6 +883,7 @@ public class PreAssignAction extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward getUserInfoProcessDefinition(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
@@ -916,7 +938,7 @@ public class PreAssignAction extends BaseDispatchAction {
 				}
 				VirtualDefinitionInfo[] searchValue = searchUserName.toArray(new VirtualDefinitionInfo[0]);
 				for(int i=pageNo*pageSize-10;i<length;i++){
-					Long id = searchValue[i].getId();
+//					Long id = searchValue[i].getId();
 					String virtualName = searchValue[i].getVirtualDefinitionDesc();
 					
 					json += "{id:" + i +",processName:'"+virtualName+"'},";
@@ -931,7 +953,7 @@ public class PreAssignAction extends BaseDispatchAction {
 				}
 				VirtualDefinitionInfo[] userAllValue = userNameSet.toArray(new VirtualDefinitionInfo[0]);
 				for(int i=pageNo*pageSize-10;i<length;i++){
-					Long id = userAllValue[i].getId();
+//					Long id = userAllValue[i].getId();
 					String virtualName = userAllValue[i].getVirtualDefinitionDesc();
 					
 					json += "{id:" + i +",processName:'"+virtualName+"'},";

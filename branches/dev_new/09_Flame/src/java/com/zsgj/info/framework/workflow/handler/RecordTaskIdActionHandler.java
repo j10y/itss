@@ -2,6 +2,7 @@ package com.zsgj.info.framework.workflow.handler;
 
 import org.jbpm.graph.def.ActionHandler;
 import org.jbpm.graph.exe.ExecutionContext;
+@SuppressWarnings("serial")
 public class RecordTaskIdActionHandler implements ActionHandler{
 
 	public void execute(ExecutionContext ec) throws Exception {

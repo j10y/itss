@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.zsgj.info.framework.context.ContextHolder;
-import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 import com.zsgj.info.framework.workflow.ProcessService;
 import com.zsgj.info.framework.workflow.TaskService;
@@ -20,7 +19,7 @@ import com.zsgj.info.framework.workflow.info.TaskInfo;
 public class ListHistoryAction extends BaseDispatchAction {
 	ProcessService ps = (ProcessService)ContextHolder.getBean("processService");
 	TaskService ts = (TaskService)ContextHolder.getBean("taskService");
-	private Service bs = getService();
+//	private Service bs = getService();
 	public ActionForward list(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {

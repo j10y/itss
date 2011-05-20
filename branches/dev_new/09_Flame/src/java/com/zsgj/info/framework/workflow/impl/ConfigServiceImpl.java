@@ -15,8 +15,6 @@ public class ConfigServiceImpl implements ConfigService {
 	}
 
 	public List listNodeTypes() {
-		String nodeType1 = "";
-		
 		return null;
 	}
 

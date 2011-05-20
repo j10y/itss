@@ -19,6 +19,7 @@ import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.security.entity.UserRole;
 
 
+@SuppressWarnings("deprecation")
 public class UserDaoImpl extends BaseDao implements UserInfoDao {
 
 	public void clearUser(UserInfo userInfo) {
@@ -66,7 +67,6 @@ public class UserDaoImpl extends BaseDao implements UserInfoDao {
 		return list;
 	}
 
-	@SuppressWarnings({ "deprecation", "deprecation" })
 	public List selectUserByRight(Right right) {
 		String hql="select auth.id from Authorization auth where auth.right=?";
 		Query query = super.createQuery(hql, new Object[]{right});

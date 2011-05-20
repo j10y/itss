@@ -7,14 +7,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.StatelessSession;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
 import com.zsgj.info.framework.dao.BaseDao;
 import com.zsgj.info.framework.security.dao.AcegiRoleDao;
@@ -27,6 +26,7 @@ import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.RoleAuthoriz;
 import com.zsgj.info.framework.security.entity.UserInfo;
 
+@SuppressWarnings("deprecation")
 public class AcegiRoleDaoImpl extends BaseDao implements AcegiRoleDao {
 	
 	
@@ -224,7 +224,7 @@ public class AcegiRoleDaoImpl extends BaseDao implements AcegiRoleDao {
 
 
 	public List selectFunctionNames() {
-		List funcs = new ArrayList();
+//		List funcs = new ArrayList();
 
 		StringBuffer buff=new StringBuffer();
 		buff.append("select res from Resource res ");

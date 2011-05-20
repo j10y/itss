@@ -421,6 +421,7 @@ public class ProcessServiceImpl extends BaseDao  implements ProcessService,Workf
 	}
 	
 	//从actorInfo列表中以精简形式获得字符串用于工作流在上下文中的存储
+	@SuppressWarnings("unused")
 	private String getShortJson(List<ActorInfo> actorInfos){
 		String str = "";
 		JSONArray ja = JSONArray.fromObject(actorInfos);
@@ -539,7 +540,7 @@ public class ProcessServiceImpl extends BaseDao  implements ProcessService,Workf
 				}
 				if(nodeName.indexOf("MailNode")==0){
 					
-					MailNode mailNode = new MailNode();
+//					MailNode mailNode = new MailNode();
 					Event event = new Event(Event.EVENTTYPE_NODE_ENTER);
 					Action testOne = DelegationFactory.getAction(DelegationFactory.JPDL_MAILNODE_ACTION);
 					event.addAction(testOne);
@@ -556,7 +557,7 @@ public class ProcessServiceImpl extends BaseDao  implements ProcessService,Workf
 	@SuppressWarnings("unchecked")
 	public ProcessDefinition formatDefinition(ProcessDefinition pd) {
 		
-		String specailTaskName = PropertiesUtil.getProperties("workflow.specailTaskName", "账号管理员处理");
+//		String specailTaskName = PropertiesUtil.getProperties("workflow.specailTaskName", "账号管理员处理");
 		List ln = null;
 		try{
 			ln = pd.getNodes();
@@ -600,8 +601,8 @@ public class ProcessServiceImpl extends BaseDao  implements ProcessService,Workf
 	 * @param value void
 	 */
 	private void setVariableValue(Map mapParams,String name, String value) {
-		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
-		Service service = (Service) ContextHolder.getBean("baseService");
+//		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
+//		Service service = (Service) ContextHolder.getBean("baseService");
 		try {
 			log.debug("setVariableByTaskId");
 			

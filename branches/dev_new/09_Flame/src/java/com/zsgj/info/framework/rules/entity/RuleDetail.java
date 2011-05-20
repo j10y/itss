@@ -11,8 +11,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-4-14
  */
 public class RuleDetail extends BaseObject{
-	private static final Long serialVersionUID = -7094151506604177790L;
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -5342166576073220726L;
 	public static Integer RULE_DETAIL_TYPE_ENTITY = new Integer(0);
 	public static Integer RULE_DETAIL_TYPE_WORKFLOW = new Integer(1);
 	

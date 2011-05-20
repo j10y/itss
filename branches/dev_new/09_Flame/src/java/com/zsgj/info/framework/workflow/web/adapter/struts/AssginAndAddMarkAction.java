@@ -1,6 +1,5 @@
 package com.zsgj.info.framework.workflow.web.adapter.struts;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.jbpm.JbpmContext;
 
-import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.UserInfo;
@@ -21,10 +18,7 @@ import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
-import com.zsgj.info.framework.workflow.DefinitionService;
-import com.zsgj.info.framework.workflow.ProcessService;
 import com.zsgj.info.framework.workflow.TaskService;
-import com.zsgj.info.framework.workflow.base.JbpmContextFactory;
 
 /** 
  * @author ÑîÌÎ E-mail: yangtao@info.com
@@ -33,13 +27,13 @@ import com.zsgj.info.framework.workflow.base.JbpmContextFactory;
  */
 
 public class AssginAndAddMarkAction extends BaseDispatchAction {
-	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder
-			.getBean("metaDataManager");
+//	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder
+//			.getBean("metaDataManager");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ProcessService processService = (ProcessService) ContextHolder.getBean("processService");
+//	private ProcessService processService = (ProcessService) ContextHolder.getBean("processService");
 	
-	private ConfigUnitService configUnitService = (ConfigUnitService)ContextHolder.getBean("configUnitService");
-	private DefinitionService ds = (DefinitionService) ContextHolder.getBean("definitionService");
+//	private ConfigUnitService configUnitService = (ConfigUnitService)ContextHolder.getBean("configUnitService");
+//	private DefinitionService ds = (DefinitionService) ContextHolder.getBean("definitionService");
 	private TaskService tm = (TaskService) ContextHolder.getBean("taskService");
 	private ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
 	/**
@@ -162,6 +156,7 @@ public class AssginAndAddMarkAction extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward getUserNames(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -253,6 +248,7 @@ public class AssginAndAddMarkAction extends BaseDispatchAction {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private String encodeForCombo(String propertyName,
 			List<Map<String, Object>> listData, Long total) {
 		String json = "";
@@ -285,7 +281,6 @@ public class AssginAndAddMarkAction extends BaseDispatchAction {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	public Class getClass(String className) {
 		Class clazz = null;
 		try {

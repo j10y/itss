@@ -1,6 +1,5 @@
 package com.zsgj.info.framework.workflow.web.adapter.struts;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +31,6 @@ import org.jbpm.identity.mail.IdentityAddressResolver;
 import org.jbpm.jpdl.el.ELException;
 import org.jbpm.jpdl.el.VariableResolver;
 import org.jbpm.jpdl.el.impl.JbpmExpressionEvaluator;
-import org.jbpm.util.ClassLoaderUtil;
 import org.jbpm.util.XmlUtil;
 
 import com.zsgj.info.framework.context.ContextHolder;
@@ -68,7 +66,7 @@ public class Mail implements ActionHandler {
 	}
 
 	public void execute(ExecutionContext ec) {
-		this.executionContext = executionContext;
+		this.executionContext = ec;
 		send(this.getSmtpProps(), this.getFromAddress(), this.getRecipients(ec) , this.getSubject(ec), this.getContent(ec), getUser(), getPassword());
 	}
 	
@@ -81,8 +79,8 @@ public class Mail implements ActionHandler {
 		
 		Long virtualDefinintionId = (Long)ec.getContextInstance().getVariable("VIRTUALDEFINITIONINFO_ID");
 		NodeInfo nodeInfo = new NodeInfo(ec.getNode());
-		String NodeDesc = nodeInfo.getDesc();
-		String NodeName = nodeInfo.getNodeName();
+//		String NodeDesc = nodeInfo.getDesc();
+//		String NodeName = nodeInfo.getNodeName();
 		Long nodeId = nodeInfo.getId();
 		
 		ConfigUnitMailNodeSender mailSender = cs.findConfigUnitMailNodeSenderById(String.valueOf(virtualDefinintionId), String.valueOf(nodeId));
@@ -243,6 +241,7 @@ public class Mail implements ActionHandler {
 		//getRecipients()getSubject(), getText()
 	}
 
+	@SuppressWarnings("static-access")
 	public  void send(Properties mailServerProperties,String fromAddress, String recipients, String subject, String text ,String user,String password) {//List recipients
 		
 		if ((recipients == null) || (recipients.length()==0)) {
@@ -290,6 +289,7 @@ public class Mail implements ActionHandler {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected List tokenize(String text) {
 		if (text == null) {
 			return null;
@@ -302,6 +302,7 @@ public class Mail implements ActionHandler {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected Collection resolveAddresses(List actorIds) {
 		List emailAddresses = new ArrayList();
 		Iterator iter = actorIds.iterator();
@@ -395,6 +396,7 @@ public class Mail implements ActionHandler {
 	static Map templates = null;
 	static Map templateVariables = null;
 
+	@SuppressWarnings("unchecked")
 	synchronized Properties getMailTemplateProperties(String templateName) {
 		if (templates == null) {
 			templates = new HashMap();

@@ -8,6 +8,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 public class WorkflowRegressionParameters extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2072451785389998563L;
 	private Long id;
 	private Long virtualProcessId;
 	private Long processInstanceId;

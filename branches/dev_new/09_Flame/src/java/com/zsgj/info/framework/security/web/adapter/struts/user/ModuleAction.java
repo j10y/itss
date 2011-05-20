@@ -132,7 +132,7 @@ public class ModuleAction extends BaseDispatchAction{
 		return HttpUtil.redirect("moduleManage.do?methodCall=listModules");*/
 		
 		Module module = new Module();
-		String moduleId = request.getParameter("id");
+//		String moduleId = request.getParameter("id");
 		String name = request.getParameter("name");
 		String serviceKeyName = request.getParameter("serviceKeyName");
 		String url = request.getParameter("url");

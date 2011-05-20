@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,18 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource;
 
-import com.zsgj.info.appframework.extjs.servlet.CoderForList;
-import com.zsgj.info.appframework.metadata.MetaDataManager;
-import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
-import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.Department;
 import com.zsgj.info.framework.security.entity.Platform;
@@ -36,11 +29,12 @@ import com.zsgj.info.framework.security.service.PlatformService;
 import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.HttpUtil;
+import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 
 
 public class UserManageAction extends BaseDispatchAction{
-	private MetaDataManager metaDataManager = (MetaDataManager) getBean("metaDataManager");
+//	private MetaDataManager metaDataManager = (MetaDataManager) getBean("metaDataManager");
 	private Service service = (Service) getBean("baseService");
 	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	private DepartmentService deptService = (DepartmentService) getBean("deptService");
@@ -107,6 +101,7 @@ public class UserManageAction extends BaseDispatchAction{
 		}
 		return null;
 	}
+	@SuppressWarnings("unchecked")
 	public ActionForward queryAllLockUserByParameter(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {	
@@ -229,7 +224,6 @@ public class UserManageAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
-	@SuppressWarnings("unchecked")
 	public ActionForward findRolesByUserId(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -284,14 +278,16 @@ public class UserManageAction extends BaseDispatchAction{
 		List<UserInfo> userInfoList=sms.findUserByQueryParams(userName, realName);
 		if (userInfoList.size() > 0) {
 			if (userInfoList.get(0).getIsLock() == 1) {
-				httpServletResponse.setCharacterEncoding("gbk");
+				httpServletResponse.setCharacterEncoding(PropertiesUtil.getProperties("system.characterEncoding","gbk"));
+				out = httpServletResponse.getWriter();
 				out.write("{success:" + true + ",flagSign':exitIsLock',"
 						+ "userNameTring:'" + "真实姓名为：<font color=red>"
 						+ realName + "</font>用户名为:<font color=red>" + userName
 						+ "</font>'}");
 				return null;
 			} else {
-				httpServletResponse.setCharacterEncoding("gbk");
+				httpServletResponse.setCharacterEncoding(PropertiesUtil.getProperties("system.characterEncoding","gbk"));
+				out = httpServletResponse.getWriter();
 				out.write("{success:" + true + ",flagSign':exit',"
 						+ "userNameTring:'" + "真实姓名为：<font color=red>"
 						+ realName + "</font>用户名为:<font color=red>" + userName
@@ -339,7 +335,10 @@ public class UserManageAction extends BaseDispatchAction{
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			out.close();
+			
+		}finally{
+			if(out != null)
+				out.close();
 		}
 		return null;
 	}
@@ -385,6 +384,7 @@ public class UserManageAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward modifyUser(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -432,8 +432,8 @@ public class UserManageAction extends BaseDispatchAction{
 				user.setMobilePhone(mobilePhone);
 				user.setTelephone(telephone);
 				
-				Set<Role> roleSet = user.getRoles();
-				Iterator it=roleSet.iterator();
+//				Set<Role> roleSet = user.getRoles();
+//				Iterator it=roleSet.iterator();
 //				while(it.hasNext()){
 //					sms.removeRoleFromUser(user, (String)it.next());
 //				}
@@ -500,6 +500,7 @@ public class UserManageAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward findDeptForCombo(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -516,8 +517,8 @@ public class UserManageAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "departName");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String departName = request.getParameter("departName");
@@ -554,6 +555,7 @@ public class UserManageAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward findPlatForCombo(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -570,8 +572,8 @@ public class UserManageAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "flatName");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String platName = request.getParameter("platName");

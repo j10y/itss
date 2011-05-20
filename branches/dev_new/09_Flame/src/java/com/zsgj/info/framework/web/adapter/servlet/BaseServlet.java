@@ -16,6 +16,7 @@ import com.zsgj.info.framework.exception.ServiceException;
  * @Author sa
  * @Create In 2008-8-31
  */
+@SuppressWarnings("serial")
 public class BaseServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

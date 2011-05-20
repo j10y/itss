@@ -11,6 +11,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Feb 23, 2009
  */
 public class ConfigUnitRole extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 6326215283344478733L;
 	private Long id;
 	private String definitionName;
 	private String nodeDesc;

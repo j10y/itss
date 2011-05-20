@@ -19,6 +19,7 @@ import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
 import com.zsgj.info.framework.workflow.entity.VirtualNodeInfo;
 import com.zsgj.info.framework.workflow.info.NodeInfo;
 
+@SuppressWarnings("serial")
 public class ConfigUnitTimerServlet extends HttpServlet{
 
 	DefinitionService ds = (DefinitionService)ContextHolder.getBean("definitionService");
@@ -31,7 +32,7 @@ public class ConfigUnitTimerServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request ,HttpServletResponse response)throws ServletException, IOException {
 		
 		String nodeName = "";
-		String nodeDesc = "";
+//		String nodeDesc = "";
 		
 		String virtualDefinitionInfoId = request.getParameter("virtualDefinitionInfoId");
 		String nodeId = request.getParameter("nodeId");
@@ -46,7 +47,8 @@ public class ConfigUnitTimerServlet extends HttpServlet{
 		for (VirtualNodeInfo node : virturalNodes) {
 			if (Long.valueOf(nodeId).equals(node.getNodeId())) {
 				nodeName = node.getVirtualNodeName();
-				nodeDesc = node.getVirtualNodeDesc();
+//				nodeDesc = node.getVirtualNodeDesc();
+				break;
 			}
 		}
 		String url= "/infoAdmin/workflow/configPage/configUnitTimer.jsp";

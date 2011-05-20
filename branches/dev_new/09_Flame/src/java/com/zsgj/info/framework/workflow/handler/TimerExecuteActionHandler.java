@@ -10,6 +10,7 @@ import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitTimer;
 
+@SuppressWarnings("serial")
 public class TimerExecuteActionHandler  implements ActionHandler {
 	
 	ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");

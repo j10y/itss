@@ -14,11 +14,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Author peixf
  * @Create In 2008-3-5
  */
+@SuppressWarnings("serial")
 public class Resource extends BaseObject {
-	private static final Long serialVersionUID = -7009425391300130055L;
 	
-	private static final String RES_TYPE_URL = "URL";
-	private static final String RES_TYPE_FUNCTION = "FUNCTION";
+//	private static final String RES_TYPE_URL = "URL";
+//	private static final String RES_TYPE_FUNCTION = "FUNCTION";
 	
 	private Long id;
 	private String name;

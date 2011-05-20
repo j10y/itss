@@ -4,6 +4,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 
 public class WorkflowRecordTaskInfo extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 4923290044505959116L;
 	private Long id;
 	private Long dataId;//唯一标示
 	private Long processInstanceId;//这个是流程实例ID

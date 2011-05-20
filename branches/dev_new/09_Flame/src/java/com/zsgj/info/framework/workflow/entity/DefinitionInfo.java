@@ -12,6 +12,10 @@ import com.zsgj.info.framework.workflow.info.BaseInfo;
  * @Create In 2008-6-10
  */
 public class DefinitionInfo extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -3804985076489644044L;
 	Long id;
 	Long processDefinitionId;
 	String name;

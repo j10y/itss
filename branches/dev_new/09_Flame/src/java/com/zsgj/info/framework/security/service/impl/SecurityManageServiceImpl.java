@@ -477,7 +477,7 @@ public class SecurityManageServiceImpl extends BaseDao implements SecurityManage
 	public List findUserByIdForPage(String userId){
 		UserInfo result = null;
 		List<Object> returnList = new ArrayList<Object>();
-		Set roles = null;
+//		Set roles = null;
 		result = securityManageDao.selectUserById(Long.valueOf(userId));
 		HashMap<String,Object> hm = new HashMap<String,Object>();
 		hm.put("id", result.getId() != null ? result.getId() : 0);

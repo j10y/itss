@@ -297,6 +297,7 @@ public class BaseService implements Service {
 	 *            资源文件Key
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	protected String getProperties(String Key) {
 		ApplicationContext appContext = ContextHolder.getApplicationContext();
 		
@@ -315,6 +316,7 @@ public class BaseService implements Service {
 	 *            默认信息
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	protected String getProperties(String Key, String defaultValue) {
 		ApplicationContext appContext = ContextHolder.getApplicationContext();
 		String message = "";

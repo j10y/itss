@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Feb 11, 2009
  */
 public class Handler extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -4942240508522798607L;
 	private Long id;
 	private String name;
 	private String clazz;

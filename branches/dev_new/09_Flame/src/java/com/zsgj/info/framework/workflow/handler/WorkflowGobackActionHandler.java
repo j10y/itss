@@ -12,6 +12,7 @@ import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
 import com.zsgj.info.framework.workflow.WorkFlowGoBackService;
 import com.zsgj.info.framework.workflow.base.JbpmContextFactory;
+@SuppressWarnings("serial")
 public class WorkflowGobackActionHandler extends BaseAction implements ActionHandler{
 
 	private WorkFlowGoBackService wfBack = (WorkFlowGoBackService) ContextHolder.getBean("workflowGoBackService");

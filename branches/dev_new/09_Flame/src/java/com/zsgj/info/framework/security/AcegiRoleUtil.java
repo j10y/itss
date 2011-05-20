@@ -34,6 +34,7 @@ public class AcegiRoleUtil {
 	}
 	
 	
+	@SuppressWarnings({ "deprecation", "unused" })
 	private static UserDetails getUserDetailsFromUser(UserInfo user) {
 		GrantedAuthority[] authorities = role2authorities(user.getRoles());
 		UserDetails ud = new org.springframework.security.core.userdetails.User(user.getUserName(), user

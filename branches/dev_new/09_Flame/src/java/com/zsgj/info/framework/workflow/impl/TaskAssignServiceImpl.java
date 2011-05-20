@@ -3,11 +3,9 @@ package com.zsgj.info.framework.workflow.impl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.Order;
@@ -30,11 +28,8 @@ import com.zsgj.info.framework.workflow.entity.WorkflowRoleMaping;
 import com.zsgj.info.framework.workflow.info.NodeInfo;
 
 public class TaskAssignServiceImpl extends BaseDao implements TaskAssignService {
-	private static Logger log;
-	static 
-	{
-		log = Logger.getLogger("workflowlog");
-	}
+//	private static Logger log = Logger.getLogger("workflowlog");
+	
 	//DefinitionPreAssign这个实体是相当于给每个流程指定部门,这个方法的作用就是进行流程的预支派（把当前流程的流程名，流程描述，节点信息）
 	//一个流程的所有信息都放到DefinitionPreAssign里面了
 	public List<DefinitionPreAssign> addDefinitionPreAssign(String definitionName, String definitionDesc,String departmentCode,List<NodeInfo> nodes) {		
@@ -94,6 +89,7 @@ public class TaskAssignServiceImpl extends BaseDao implements TaskAssignService 
 	}
 
 	//begin by peixf
+	@SuppressWarnings("deprecation")
 	public List<UserInfo> findUserInfoByWorkflowRoleAndDepartment(WorkflowRole workFlowRole, Department dept) {
 		//取出WorkflowRole对应的所有系统角色Role的id，置入集合roleIds
 		String hql = "select wfrm.role from WorkflowRoleMaping wfrm where wfrm.workflowRole=?";

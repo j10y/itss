@@ -8,6 +8,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class ConfigUnitMailNodeSender extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 8070722933061482214L;
 	private Long id;
 	private String template;
 	private String subject;

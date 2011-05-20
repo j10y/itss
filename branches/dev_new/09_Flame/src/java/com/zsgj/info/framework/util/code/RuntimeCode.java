@@ -124,8 +124,8 @@ public class RuntimeCode {
 	 * @throws IOException
 	 */
 	public synchronized static File compile(String classPath, String className, String code) throws IOException {
-		String LSP = System.getProperty("line.separator");
-		com.sun.tools.javac.Main javac = new com.sun.tools.javac.Main();
+//		String LSP = System.getProperty("line.separator");
+//		com.sun.tools.javac.Main javac = new com.sun.tools.javac.Main();
 		
 		File file;
 		// 在用户当前文件目录创建一个临时代码文件
@@ -136,8 +136,8 @@ public class RuntimeCode {
 		// 当虚拟机退出时,删除此临时java源文件
 		//file.deleteOnExit();
 		// 获得文件名和类名字
-		String filename = file.getName();
-		String classname = getClassName(filename);
+//		String filename = file.getName();
+//		String classname = getClassName(filename);
 		// 将代码输出到文件
 		PrintWriter out = new PrintWriter(new FileOutputStream(file));
 		//out.println(code);
@@ -153,19 +153,19 @@ public class RuntimeCode {
 		
 		//classPath = classPath.replace("/", LSP);
 		//{"-classpath","c:\\foo\\bar.jar;.","-d","c:\\","c:\\Some.java"}，
-		String[] args = new String[] {
-				"-classpath", classPath+";.",
-				"-d", System.getProperty("user.dir"), filename };//
+//		String[] args = new String[] {
+//				"-classpath", classPath+";.",
+//				"-d", System.getProperty("user.dir"), filename };//
 		// 返回编译的状态代码
-		int status = javac.compile(args);
+//		int status = javac.compile(args);
 		// 处理编译状态
 		return file;
 	}
 
 	
 	public static void fileCopy(File sfile, String targetDir){
-		String FSP = System.getProperty("file.separator");
-		String LSP = System.getProperty("line.separator");
+//		String FSP = System.getProperty("file.separator");
+//		String LSP = System.getProperty("line.separator");
 		String filename = sfile.getName();
 		try {
 			//targetDir = targetDir.replace("/", targetDir).replace("\\", targetDir);

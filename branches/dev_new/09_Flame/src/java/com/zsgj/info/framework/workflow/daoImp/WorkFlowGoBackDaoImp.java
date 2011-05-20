@@ -14,8 +14,8 @@ public class WorkFlowGoBackDaoImp extends HibernateDaoSupport implements WorkFlo
 		int updateRow = 0;
 		//END=new Date();
 		String endCurrentTaskHql = "update org.jbpm.taskmgmt.exe.TaskInstance ti set ti.isOpen=false ,ti.isSignalling=false, ti.end=? where ti.processInstance.id=? and ti.end is null";
-		String startOldTaskHql = "update org.jbpm.taskmgmt.exe.TaskInstance ti set ti.isOpen=true ,ti.isSignalling=true ,ti.end=null where ti.processInstance.id=? and ti.name=?";
-		String completeTokenHql = "update org.jbpm.graph.exe.Token t set t.node.id=? where t.processInstance.id=?";
+//		String startOldTaskHql = "update org.jbpm.taskmgmt.exe.TaskInstance ti set ti.isOpen=true ,ti.isSignalling=true ,ti.end=null where ti.processInstance.id=? and ti.name=?";
+//		String completeTokenHql = "update org.jbpm.graph.exe.Token t set t.node.id=? where t.processInstance.id=?";
 		
 		try {
 			//先终止当前任务
@@ -28,14 +28,11 @@ public class WorkFlowGoBackDaoImp extends HibernateDaoSupport implements WorkFlo
 			//放token节点Id
 //			Object[] tParams = new Object[]{nodeId,processInstanceId};
 //			updateRow = this.getHibernateTemplate().bulkUpdate(completeTokenHql, tParams);
+			System.out.println(updateRow);
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-
 	}
 
 }

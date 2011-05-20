@@ -171,7 +171,7 @@ public class UserRoleAction extends BaseDispatchAction{
 		
 		UserInfo user = (UserInfo) BeanUtil.getObject(request, UserInfo.class);
 		String[] role_check_name = request.getParameterValues("role_check_name");
-		Set changedRoles = new HashSet();
+//		Set changedRoles = new HashSet();
 		if(role_check_name!=null&& role_check_name.length>0){
 			Set rolesSet = new HashSet();
 			for(int i=0; i<role_check_name.length; i++){

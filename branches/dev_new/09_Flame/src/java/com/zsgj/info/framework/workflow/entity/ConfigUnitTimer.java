@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Mar 4, 2009
  */
 public class ConfigUnitTimer extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 2663021558088972382L;
 	private Long id;
 	private String processName;
 	private String nodeName;

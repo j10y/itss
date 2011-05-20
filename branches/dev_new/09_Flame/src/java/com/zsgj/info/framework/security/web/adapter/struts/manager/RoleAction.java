@@ -61,8 +61,8 @@ public class RoleAction extends BaseDispatchAction{
 		Role role = sms.findRoleById(roleId);
 		request.setAttribute("role", role);
 		
-		Set deptTmps = new HashSet();
-		Department dept = role.getDepartment();
+//		Set deptTmps = new HashSet();
+//		Department dept = role.getDepartment();
 		/*if(dept!=null){
 			deptTmps = dtms.findDeptMenuTemplate(dept);
 			Department deptDc = ds.findDepartmentById(Long.valueOf(50000075L));
@@ -115,7 +115,7 @@ public class RoleAction extends BaseDispatchAction{
 			HttpServletResponse httpServletResponse) throws Exception {
 		
 		Role role = (Role) BeanUtil.getObject(request, Role.class);
-		String[] au_checks = request.getParameterValues("au_check");
+//		String[] au_checks = request.getParameterValues("au_check");
 		String[] au_check_name = request.getParameterValues("au_check_name");
 		Set auSet = new HashSet();
 		for(int i=0; i<au_check_name.length; i++){

@@ -31,6 +31,7 @@ import com.zsgj.info.framework.workflow.entity.DefinitionInfo;
 import com.zsgj.info.framework.workflow.info.HistoryInfo;
 import com.zsgj.info.framework.workflow.info.TaskInfo;
 
+@SuppressWarnings("serial")
 public class RequireManagerAction extends BaseAction{
 	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService)ContextHolder.getBean("parameterService");
@@ -57,9 +58,9 @@ public class RequireManagerAction extends BaseAction{
 		//definitionName=StringUtils.substringAfter(definitionName, "$");
 		//definitionName = definitionName.substring(8);
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
-		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+//		String dataId = super.getRequest().getParameter("dataId");//主数据id
+//		String departmentCode = super.getRequest().getParameter("deptcode");
+//		String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -140,7 +141,6 @@ public class RequireManagerAction extends BaseAction{
 	 * @throws Exception String
 	 */
 	public String tasks() throws Exception{
-		@SuppressWarnings("unused")
 		HttpServletRequest request = super.getRequest();
 		//需要的参数
 		String actor = request.getParameter("actorId");
@@ -175,7 +175,7 @@ public class RequireManagerAction extends BaseAction{
 			str += strBizParams+",";
 			str += "comments:'"+toBlank(taskInfo.getComments().getValue("comment"))+"'";
 			str = "{"+str+"},";
-			String defname = taskInfo.getDefinitionName();
+//			String defname = taskInfo.getDefinitionName();
 			if("rproject".equals(type)){
 				json += str;
 				rowCount++;

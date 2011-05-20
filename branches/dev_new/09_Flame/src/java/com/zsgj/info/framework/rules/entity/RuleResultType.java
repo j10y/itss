@@ -4,6 +4,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 
 public class RuleResultType extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 882905262950403001L;
 	private Long id;
 	private String ruleResultTypeName;
 	private RuleResultType parentRuleResultType;

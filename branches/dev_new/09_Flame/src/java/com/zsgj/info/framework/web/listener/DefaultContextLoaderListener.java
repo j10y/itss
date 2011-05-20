@@ -25,6 +25,7 @@ public class DefaultContextLoaderListener extends ContextLoaderListener {
 
 	private final Log logger = LogFactory.getLog(getClass());
 	
+	@SuppressWarnings("static-access")
 	public void contextInitialized(ServletContextEvent event) {
 		
 		super.contextInitialized(event);

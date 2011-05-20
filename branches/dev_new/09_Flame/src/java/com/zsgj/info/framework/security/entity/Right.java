@@ -12,8 +12,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-3-11
  */
 public class Right extends BaseObject{
-	private static final Long serialVersionUID = -7059543983604108297L;
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 6348285983767777119L;
 	private Long id;
 	private String name;
 	private String keyName;

@@ -179,7 +179,9 @@ public class ResourceAction extends BaseDispatchAction{
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			out.close();
+		}finally{
+			if(out != null)
+				out.close();
 		}
 		return null;
 		//return HttpUtil.redirect("resourceManage.do?methodCall=listResources");
@@ -227,7 +229,7 @@ public class ResourceAction extends BaseDispatchAction{
 			res.setModule(module);
 		}
 
-		Resource resource = sms.saveResource(res);
+		sms.saveResource(res);
 		try {
 			httpServletResponse.getWriter().write("{success:" + true + "}");
 		} catch (IOException e) {

@@ -2,61 +2,24 @@ package com.zsgj.info.framework.workflow.web.adapter.struts;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.jbpm.graph.def.Node;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.jbpm.JbpmContext;
-import org.jbpm.graph.def.ProcessDefinition;
 
-
-import com.zsgj.info.appframework.extjs.servlet.CoderForList;
-import com.zsgj.info.appframework.extjs.servlet.CoderForSave;
-import com.zsgj.info.appframework.metadata.MetaDataManager;
-import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
-import com.zsgj.info.appframework.pagemodel.entity.PageModel;
-import com.zsgj.info.framework.context.ContextHolder;
-import com.zsgj.info.framework.context.UserContext;
-import com.zsgj.info.framework.dao.support.Page;
-import com.zsgj.info.framework.security.entity.Department;
-import com.zsgj.info.framework.security.entity.Role;
-import com.zsgj.info.framework.service.Service;
-import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
-import com.zsgj.info.framework.workflow.DefinitionService;
-import com.zsgj.info.framework.workflow.base.JbpmConfig;
 import com.zsgj.info.framework.workflow.base.JbpmContextFactory;
-import com.zsgj.info.framework.workflow.entity.ActionConfigUnit;
-import com.zsgj.info.framework.workflow.entity.ConfigModel;
-import com.zsgj.info.framework.workflow.entity.ConfigUnit;
-import com.zsgj.info.framework.workflow.entity.ConfigUnitRole;
-import com.zsgj.info.framework.workflow.entity.ConfigUnitRoleTable;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitTimer;
-import com.zsgj.info.framework.workflow.entity.DefinitionInfo;
-import com.zsgj.info.framework.workflow.entity.DefinitionType;
-import com.zsgj.info.framework.workflow.entity.NodeType;
-import com.zsgj.info.framework.workflow.entity.PageModelConfigUnit;
-import com.zsgj.info.framework.workflow.entity.RuleConfigUnit;
-import com.zsgj.info.framework.workflow.info.NodeInfo;
 
 /**
  * 流程配置里面涉及到的action
@@ -67,7 +30,7 @@ import com.zsgj.info.framework.workflow.info.NodeInfo;
  */
 public class ConfigUnitTimerAction extends BaseDispatchAction {
 
-	private Service service = (Service) ContextHolder.getBean("baseService");
+//	private Service service = (Service) ContextHolder.getBean("baseService");
 	JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
 	static final String FSP = System.getProperty("file.separator");
 	static final String LSP = System.getProperty("line.separator");
@@ -79,6 +42,7 @@ public class ConfigUnitTimerAction extends BaseDispatchAction {
 	 * @return
 	 * @throws Exception String
 	 */
+	@SuppressWarnings("deprecation")
 	public ActionForward uploadTimerClass(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)throws Exception {
 
@@ -97,12 +61,12 @@ public class ConfigUnitTimerAction extends BaseDispatchAction {
 				FileItem item = (FileItem) iter.next();
 				if (!item.isFormField()) {
 					String fileName = item.getName();
-					String appendix = "";
+//					String appendix = "";
 					// 考虑到out文件可能不以.out为后缀
-					int indexOfDot = fileName.lastIndexOf(".");
-					if (indexOfDot >= 0) {
-						appendix = fileName.substring(indexOfDot);
-					}
+//					int indexOfDot = fileName.lastIndexOf(".");
+//					if (indexOfDot >= 0) {
+//						appendix = fileName.substring(indexOfDot);
+//					}
 					String timeName = fileName.substring(fileName.lastIndexOf("\\") + 1);										
 					String filePath = FSP
 							+ "\\WEB-INF\\classes\\com\\zsgj\\itil\\timerClass"
@@ -119,10 +83,11 @@ public class ConfigUnitTimerAction extends BaseDispatchAction {
 					}
 					if (p2 >= p1 && p2 >= 0) {
 						fileName = fileName.substring(p2 + 1);
-					}					
-				}else{
-					String name=item.getFieldName();					
+					}		
 				}
+//				}else{
+////					String name=item.getFieldName();					
+//				}
 			}
 			configUnitTimer.setTimerPath(timePath)	;	
 			super.getService().save(configUnitTimer);

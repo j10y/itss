@@ -4,6 +4,7 @@ import org.dom4j.Element;
 import org.jbpm.graph.def.ActionHandler;
 import org.jbpm.graph.exe.ExecutionContext;
 
+@SuppressWarnings("serial")
 public class MailSenderHandler implements ActionHandler {
 
 	public void execute(ExecutionContext executionContext) throws Exception {

@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.Role;
  * @Create In Feb 24, 2009
  */
 public class ConfigUnitRoleTable extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -6383854263926708965L;
 	private Long id;
 	private ConfigUnitRole configUnitRole;
 	private Role role;//配置单元中角色

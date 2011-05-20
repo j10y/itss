@@ -11,6 +11,10 @@ import com.zsgj.info.framework.workflow.info.NodeInfo;
  * @Create In Feb 11, 2009
  */
 public class TaskProc extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -4141307594802912726L;
 	private Long id;
 	private NodeInfo nodeInfo;
 	private String actorId;

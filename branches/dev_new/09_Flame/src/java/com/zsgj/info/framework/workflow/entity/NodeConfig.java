@@ -1,7 +1,5 @@
 package com.zsgj.info.framework.workflow.entity;
 
-import com.zsgj.info.appframework.pagemodel.entity.PageModel;
-import com.zsgj.info.framework.security.entity.Role;
 /**
  * NodeConfig这个实体其实是提取了相应的配置模型（ConfigModel）的信息？
  * @Class Name NodeConfig

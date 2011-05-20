@@ -94,18 +94,5 @@ public  abstract class TaskAction extends BaseAction{
 		return map;
 	}
 	
-	public static void main(String[] ar) {
-		String s = "to:admin";		
-		String[] ss = s.split(";");
-		
-		s = "to:admin;";	
-		ss = s.split(";");
-		
-		s = ";to:admin;";	
-		ss = s.split(";");
-		
-		s = "to:admin;from:kk;";	
-		ss = s.split(";");
-		
-	}
+	
 }

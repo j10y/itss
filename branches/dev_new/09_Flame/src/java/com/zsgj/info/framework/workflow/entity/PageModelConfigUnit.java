@@ -1,6 +1,5 @@
 package com.zsgj.info.framework.workflow.entity;
 
-import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.framework.dao.BaseObject;
 
 /**
@@ -10,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Feb 11, 2009
  */
 public class PageModelConfigUnit extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -7538214928948283128L;
 	private Long id;
 	private Long nodeId;
 	private String nodeName;

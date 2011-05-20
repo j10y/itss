@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Jul 22, 2009
  */
 public class WorkSpace extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -1184625366764125347L;
 	private Long id;
 	private String name;
 	private String  mailServer;

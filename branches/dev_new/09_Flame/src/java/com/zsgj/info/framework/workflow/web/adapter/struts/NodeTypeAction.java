@@ -25,6 +25,7 @@ import com.zsgj.info.framework.workflow.entity.ConfigModel;
 import com.zsgj.info.framework.workflow.entity.ConfigUnit;
 import com.zsgj.info.framework.workflow.entity.NodeType;
 
+@SuppressWarnings("serial")
 public class NodeTypeAction extends BaseAction {
 	
 	DefinitionService ds = (DefinitionService)ContextHolder.getBean("definitionService");

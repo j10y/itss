@@ -9,6 +9,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Jul 22, 2009
  */
 public class UserType extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7012345589399716377L;
+
 	private Long id;
 	
 	private String userTypeCode;

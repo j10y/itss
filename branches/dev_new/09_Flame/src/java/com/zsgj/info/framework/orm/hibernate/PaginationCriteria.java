@@ -20,6 +20,7 @@ import com.zsgj.info.framework.util.Page;
  * @author xiaofeng
  * @Create In 2007-10-30
  */
+@SuppressWarnings("deprecation")
 public class PaginationCriteria {
 
     private static Log log = LogFactory.getLog(PaginationCriteria.class);

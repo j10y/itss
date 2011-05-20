@@ -23,6 +23,7 @@ import com.zsgj.info.framework.security.service.LogUserActionService;
  * @Author ’≈≈Ù
  * @Create In 2009-7-27
  */
+@SuppressWarnings("serial")
 public class BaseController extends BaseAroundInterceptor {
 
 	/*

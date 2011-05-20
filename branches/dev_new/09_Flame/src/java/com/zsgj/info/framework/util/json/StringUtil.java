@@ -35,7 +35,7 @@ public class StringUtil {
 	
 	public static String randPassword(){
 		Random random = new Random();
-		long timeMillis=System.currentTimeMillis();
+//		long timeMillis=System.currentTimeMillis();
 		//System.out.println(timeMillis);
 		String password=(Math.abs(random.nextInt())%1000000)+"";
 		return password;

@@ -52,6 +52,7 @@ public class JbpmConfig implements WorkflowConstants{
 	 *            д╛хопео╒
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	private static String getProperties(String Key, String defaultValue) {
 		ApplicationContext appContext = ContextHolder.getApplicationContext();
 		String message = "";

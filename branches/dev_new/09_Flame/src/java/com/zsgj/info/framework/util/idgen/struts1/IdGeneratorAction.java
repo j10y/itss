@@ -3,17 +3,11 @@ package com.zsgj.info.framework.util.idgen.struts1;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -22,39 +16,15 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.jbpm.graph.def.ProcessDefinition;
 
-import com.zsgj.info.appframework.extjs.servlet.CoderForList;
-import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableIdBuilder;
-import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
-import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.framework.context.ContextHolder;
-import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.Department;
-import com.zsgj.info.framework.security.entity.Module;
-import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.service.Service;
-import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
-import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.DefinitionService;
-import com.zsgj.info.framework.workflow.UpdateWorkflowService;
-import com.zsgj.info.framework.workflow.entity.ActionConfigUnit;
-import com.zsgj.info.framework.workflow.entity.ConfigModel;
-import com.zsgj.info.framework.workflow.entity.ConfigUnit;
-import com.zsgj.info.framework.workflow.entity.ConfigUnitRole;
-import com.zsgj.info.framework.workflow.entity.ConfigUnitRoleTable;
-import com.zsgj.info.framework.workflow.entity.DefinitionInfo;
-import com.zsgj.info.framework.workflow.entity.DefinitionType;
-import com.zsgj.info.framework.workflow.entity.PageModelConfigUnit;
-import com.zsgj.info.framework.workflow.entity.RuleConfigUnit;
-import com.zsgj.info.framework.workflow.entity.SubProcessConfigUnit;
-import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
-import com.zsgj.info.framework.workflow.entity.VirtualNodeInfo;
-import com.zsgj.info.framework.workflow.info.NodeInfo;
 
 /**
  * 编号生成器Action
@@ -68,14 +38,14 @@ public class IdGeneratorAction extends BaseDispatchAction {
 			.getBean("definitionService");
 
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder
-			.getBean("metaDataManager");
+//	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder
+//			.getBean("metaDataManager");
 	static final String FSP = System.getProperty("file.separator");
 	static final String LSP = System.getProperty("line.separator");
-	private UpdateWorkflowService updateWorkflowService = (UpdateWorkflowService) ContextHolder
-			.getBean("updateWorkflowService");
-	private ConfigUnitService cs = (ConfigUnitService) ContextHolder
-			.getBean("configUnitService");
+//	private UpdateWorkflowService updateWorkflowService = (UpdateWorkflowService) ContextHolder
+//			.getBean("updateWorkflowService");
+//	private ConfigUnitService cs = (ConfigUnitService) ContextHolder
+//			.getBean("configUnitService");
 	
 	/**
 	 * 保存数据
@@ -83,6 +53,7 @@ public class IdGeneratorAction extends BaseDispatchAction {
 	 * @Author zhangzy
 	 * @Create In 04 02, 2010
 	 */	
+	@SuppressWarnings("deprecation")
 	public ActionForward save(ActionMapping mapping,
 			ActionForm actionForm,HttpServletRequest request,
 			HttpServletResponse response)throws Exception{

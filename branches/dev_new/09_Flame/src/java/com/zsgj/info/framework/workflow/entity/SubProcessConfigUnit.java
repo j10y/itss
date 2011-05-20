@@ -9,7 +9,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 
 public class SubProcessConfigUnit extends BaseObject{
-  private Long id;
+  /**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 5502639874623946588L;
+private Long id;
   private Long superProcessId;//主流程的id(虚拟流程）
   private Long subProcessId;//子流程的id(虚拟流程）
   private Long nodeId;//节点的id

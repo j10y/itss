@@ -7,8 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +17,7 @@ import org.springframework.orm.hibernate3.support.OpenSessionInViewFilter;
 
 public class DefaultOpenSessionInViewFilter extends OpenSessionInViewFilter {
 	
-	private final Log logger = LogFactory.getLog(getClass());
+//	private final Log logger = LogFactory.getLog(getClass());
 	
 	protected void closeSession(Session session, SessionFactory sessionFactory) {
 		//System.out.println("------------------------- closeSession------------------------- ");

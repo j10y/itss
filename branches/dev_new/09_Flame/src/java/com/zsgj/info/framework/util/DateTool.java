@@ -2,12 +2,9 @@ package com.zsgj.info.framework.util;
 
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import org.apache.log4j.Logger;
 	/**
 	* @Functionality: 有关日期工具类
 	*/
@@ -15,11 +12,11 @@ import org.apache.log4j.Logger;
 	/**
 	* Logger for this class
 	*/
-	private static final Logger     logger = Logger.getLogger( DateUtil.class );
+//	private static final Logger     logger = Logger.getLogger( DateUtil.class );
 
 
 	/** 日期转化 */
-	private static final SimpleDateFormat sdf   = new SimpleDateFormat( "yyyy-MM-dd" );
+//	private static final SimpleDateFormat sdf   = new SimpleDateFormat( "yyyy-MM-dd" );
 
 	/**
 	* @Functionality: 构造函数

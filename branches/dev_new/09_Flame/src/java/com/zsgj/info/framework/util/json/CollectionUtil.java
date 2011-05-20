@@ -33,6 +33,7 @@ public class CollectionUtil {
 		return collectionUtil;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static/* synchronized */List transList(List arg0) {
 		if (arg0 == null) {
 			return null;
@@ -74,6 +75,7 @@ public class CollectionUtil {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Map transRequestParametersMap(Map map) {
 		if (map == null || "".equals(map)) {
 			return null;
@@ -163,7 +165,7 @@ public class CollectionUtil {
 	 * 如果存在key,同时存在value 则返回object
 	 */
 	public Object getMapValueByKey(Map map, Object key) {
-		Object o = null;
+//		Object o = null;
 		if (null == key) {
 			return null;
 		}

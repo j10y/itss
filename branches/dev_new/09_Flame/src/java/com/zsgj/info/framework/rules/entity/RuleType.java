@@ -9,8 +9,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-4-14
  */
 public class RuleType extends BaseObject{
-	private static final Long serialVersionUID = -3210336051711665518L;
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 2765292445914490370L;
 	private Long id;
 	private String roleTypeName;
 	private RuleType parentRuleType;

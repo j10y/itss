@@ -23,6 +23,7 @@ import com.zsgj.info.framework.workflow.rules.ProcessRuleHelper;
  * ภเหตร๗ 
  */
 
+@SuppressWarnings("serial")
 public class DecisionActionHander implements DecisionHandler{
 	
 	private Service service = (Service) ContextHolder.getBean("baseService");

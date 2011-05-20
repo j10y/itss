@@ -70,11 +70,12 @@ public class SecurityManageDaoImpl extends BaseDao implements SecurityManageDao 
 	public List selectResourcesByType(String type) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Resource.class);
 		if(type.equalsIgnoreCase(Constants.RESOURCE_FUNCTION)){
-			
+			dc.add(Restrictions.eq("type", Constants.RESOURCE_FUNCTION));
 		}else if(type.equalsIgnoreCase(Constants.RESOURCE_URL)){
-			
+			dc.add(Restrictions.eq("type", Constants.RESOURCE_URL));
 		}
-		return null;
+		List list = getDaoSupport().selectByCriteria(dc);
+		return list;
 	}
 
 	public void deleteResourceById(Long id) {
@@ -179,7 +180,7 @@ public class SecurityManageDaoImpl extends BaseDao implements SecurityManageDao 
 
 	public void saveSystemTableRoleColumnToUser(UserInfo userInfo, SystemTableRole str) {
 		SystemMainTable smt = str.getSystemMainTable();
-		Role role = str.getRole();
+//		Role role = str.getRole();
 		Integer settingType = str.getSettingType();
 				
 		DetachedCriteria csts = DetachedCriteria.forClass(SystemTableRoleColumn.class);
@@ -200,7 +201,7 @@ public class SecurityManageDaoImpl extends BaseDao implements SecurityManageDao 
 				c.addOrder(Order.asc("order"));
 				if(column instanceof SystemMainTableColumn){
 					c.add(Restrictions.eq("mainTableColumn", (SystemMainTableColumn)column));
-					Long cid = column.getId();
+//					Long cid = column.getId();
 					//System.out.println("cid: "+ cid);
 				}
 //				else if(column instanceof SystemMainTableExtColumn){
@@ -245,9 +246,9 @@ public class SecurityManageDaoImpl extends BaseDao implements SecurityManageDao 
 	}
 	
 	public UserInfo saveUserInfoStyleWithRoles(UserInfo userInfo) {
-		boolean isAdd = false;
+//		boolean isAdd = false;
 		if(userInfo.getId()==null){
-			isAdd = true;
+//			isAdd = true;
 			String hql="select count(*) from UserInfo u where u.userName=? ";
 			Long ucount = (Long) getDaoSupport().selectForObject(hql, new Object[]{userInfo.getUserName()});
 			if(ucount.intValue()>01){
@@ -274,7 +275,7 @@ public class SecurityManageDaoImpl extends BaseDao implements SecurityManageDao 
 		//设置用户的角色可见字段，注意此时同步的用户可见字段优先于后面的，而且要避免重复记录产生
 		
 		//begin
-		Set roles = userInfo.getRoles();
+//		Set roles = userInfo.getRoles();
 
 		
 		//初始化部门管理员类型的用户菜单模板

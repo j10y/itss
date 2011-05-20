@@ -20,10 +20,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource;
 
 import com.zsgj.info.appframework.metadata.MetaDataManager;
-import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.Department;
 import com.zsgj.info.framework.security.entity.Role;
@@ -154,6 +152,7 @@ public class UserRoleAction extends BaseDispatchAction{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward findRoleByDept(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -194,6 +193,7 @@ public class UserRoleAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward saveUsers(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -243,11 +243,15 @@ public class UserRoleAction extends BaseDispatchAction{
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			out.close();
+			
+		}finally{
+			if(out != null)
+				out.close();
 		}
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward addRolesToUser(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -317,6 +321,7 @@ public class UserRoleAction extends BaseDispatchAction{
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward removeRolesFromUser(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -363,6 +368,7 @@ public class UserRoleAction extends BaseDispatchAction{
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward modifyUser(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -562,6 +568,7 @@ public class UserRoleAction extends BaseDispatchAction{
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ActionForward findAllDept(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -587,6 +594,7 @@ public class UserRoleAction extends BaseDispatchAction{
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String convertListData2JsonString(List listData,Page page){
 		String js = "";
 		if(listData.size()==0){
@@ -644,6 +652,7 @@ public class UserRoleAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception ActionForward
 	 */
+	@SuppressWarnings("unchecked")
 	public ActionForward findDeptForCombo(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse httpServletResponse) throws Exception {
@@ -660,8 +669,8 @@ public class UserRoleAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "departName");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String departName = request.getParameter("departName");

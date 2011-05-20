@@ -6,6 +6,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class ConfigUnitMailCC extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 375919303865611811L;
 	private Long id;
 	private ConfigUnitMail configUnitMail;
 	private UserInfo userInfo;

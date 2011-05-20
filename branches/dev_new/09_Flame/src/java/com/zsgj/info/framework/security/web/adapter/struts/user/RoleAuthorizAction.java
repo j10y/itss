@@ -108,8 +108,8 @@ public class RoleAuthorizAction extends BaseDispatchAction{
 		
 		Role role = (Role) BeanUtil.getObject(request, Role.class);
 		String id = request.getParameter("id");
-		String name = request.getParameter("name");
-		String[] au_checks = request.getParameterValues("au_check");
+//		String name = request.getParameter("name");
+//		String[] au_checks = request.getParameterValues("au_check");
 		String[] au_check_name = request.getParameterValues("au_check_name");
 		Set auSet = new HashSet();
 		for(int i=0; i<au_check_name.length; i++){

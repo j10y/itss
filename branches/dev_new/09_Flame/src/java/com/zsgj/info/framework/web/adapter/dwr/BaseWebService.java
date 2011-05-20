@@ -80,6 +80,7 @@ public abstract class BaseWebService {
 	 *            д╛хопео╒
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	protected String getProperties(String Key, String defaultValue) {
 		ApplicationContext appContext = ContextHolder.getApplicationContext();
 		String message = "";

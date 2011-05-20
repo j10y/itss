@@ -33,6 +33,7 @@ import com.zsgj.info.framework.util.Page;
  * @author xiaofeng
  * @Create In 2007-10-30
  */
+@SuppressWarnings("deprecation")
 public class DaoSupportHibernate3Imp extends HibernateDaoSupport implements DaoSupport {
 	
 
@@ -56,7 +57,7 @@ public class DaoSupportHibernate3Imp extends HibernateDaoSupport implements DaoS
 	public String getIdName(Class clazz) {
 		Assert.notNull(clazz);
 		ClassMetadata meta = getSessionFactory().getClassMetadata(clazz);
-		Map allMetas = getSessionFactory().getAllCollectionMetadata();
+//		Map allMetas = getSessionFactory().getAllCollectionMetadata();
 		
 		Assert.notNull(meta, "Class " + clazz + " not define in hibernate session factory.");
 		String idName = meta.getIdentifierPropertyName();

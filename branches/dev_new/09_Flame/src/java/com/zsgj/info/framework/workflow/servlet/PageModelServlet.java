@@ -2,10 +2,7 @@ package com.zsgj.info.framework.workflow.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.jbpm.graph.node.TaskNode;
 import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
@@ -22,8 +18,6 @@ import com.zsgj.info.appframework.pagemodel.entity.PageModel;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.entity.UserRole;
-import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.ContextService;
 import com.zsgj.info.framework.workflow.TaskPageModelService;
@@ -36,10 +30,11 @@ import com.zsgj.info.framework.workflow.entity.ConfigUnitRole;
  * @version 创建时间：Feb 25, 2009 3:10:19 PM 类说明
  */
 
+@SuppressWarnings("serial")
 public class PageModelServlet extends HttpServlet {
 
 	private TaskService ts = (TaskService) ContextHolder.getBean("taskService");
-	private Service service = (Service) ContextHolder.getBean("baseService");
+//	private Service service = (Service) ContextHolder.getBean("baseService");
 	private TaskPageModelService pageModelService = (TaskPageModelService) ContextHolder.getBean("taskPageModelService");
 	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
 	private ConfigUnitService cs = (ConfigUnitService) ContextHolder.getBean("configUnitService");
@@ -132,7 +127,7 @@ public class PageModelServlet extends HttpServlet {
 				String taskName = task.getName();
 				PageModel pageModel = pageModelService.getPageModel(task,mapVar);
 				//add by guangsa for specialAuditPersonInRole in 20090823 begin
-				UserInfo u = UserContext.getUserInfo();
+//				UserInfo u = UserContext.getUserInfo();
 				Boolean browsePerson = this.auditPersonInRole(task,mapVar);
 				if(browsePerson){
 					browseFlag = "1";//表明是查看人，不是审批人

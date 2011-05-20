@@ -54,8 +54,4 @@ public class TaskTimerHandler extends BaseActionHandler implements ActionHandler
 		System.out.println(eventType+"**"+nodeName+"********TaskActionHandler");
 	}
 	
-	public static void main(String[] argv) {
-		TaskTimerHandler nah = new TaskTimerHandler();
-//		snah.getActions();
-	}
 }

@@ -127,6 +127,7 @@ public class SynchronousAction implements Runnable {
 	 * @param nodeId
 	 *            （流程节点Id）
 	 */
+	@SuppressWarnings("static-access")
 	private void sendMailMessage(String nodeName, String pageUrl,
 			String dataId, String reqClass, String goStartState,
 			Long processInstanceId, Long taskId, String applyType,
@@ -135,12 +136,12 @@ public class SynchronousAction implements Runnable {
 			Map counterSignAuditMegs, String[] browsePers) {
 		// 保存当前节点的nodeName，以便于流程回退；
 		String virualDesc = "";
-		String nowNodeDesc = "";
-		String nowNodeName = "";
+//		String nowNodeDesc = "";
+//		String nowNodeName = "";
 		String subject = null;
 		String content = null;
-		String[] ccEmail = null;// 抄送人的email地址
-		String[] configEmail = null;// 后台配置，如果有就复制进入，没有就为空值
+//		String[] ccEmail = null;// 抄送人的email地址
+//		String[] configEmail = null;// 后台配置，如果有就复制进入，没有就为空值
 		/********************************* 后台配置相应邮件模板的固有“类型名称”和“类型编号” ********************************************************************/
 		String typeNum = (String) bizParam.get("eventCisn");// eventCisn
 		String subTypeName = (String) bizParam.get("eventName");// eventName
@@ -150,7 +151,7 @@ public class SynchronousAction implements Runnable {
 		/********************************* 后台配置相应邮件模板的固有“类型名称”和“类型编号” ********************************************************************/
 		log.info(virualDesc + "在" + nodeName + "的进入事件中给指派的人审批发邮件!");
 		// add by guangsa for sendComplexMail in 2009-07-15 begin
-		String auditMeg = "点击此链接，查看仔细并请审批！链接：----------------------------";
+//		String auditMeg = "点击此链接，查看仔细并请审批！链接：----------------------------";
 		String workflowEntity = (String) bizParam.get("workflowHistory");
 		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity,
 				processInstanceId);// 查找出来的是所有的按流程顺序排列的节点信息
@@ -159,7 +160,7 @@ public class SynchronousAction implements Runnable {
 		/************************* 再次调用其他方法 *****************************************/
 		Map<String, String> auditUserEmail = new HashMap<String, String>();
 		Map<String, String> browseUserEmail = new HashMap<String, String>();
-		int f = 0;
+//		int f = 0;
 		if (counterSignAuditMegs.size() != 0 && counterSignAuditMegs != null
 				&& !"".equals(counterSignAuditMegs)) {
 			// 如果为动态会签审批人时候
@@ -355,6 +356,7 @@ public class SynchronousAction implements Runnable {
 	 *            （流程节点Id）
 	 * @author gaowen 2009-11-27 ITIL 邮件发送样式
 	 */
+	@SuppressWarnings("static-access")
 	private void sendMailMessageToITIL(String nodeName, String pageUrl,
 			String dataId, String reqClass, String goStartState,
 			Long processInstanceId, Long taskId, String applyType,
@@ -363,12 +365,12 @@ public class SynchronousAction implements Runnable {
 			Map counterSignAuditMegs, String[] browsePers) {
 		// 保存当前节点的nodeName，以便于流程回退；
 		String virualDesc = "";
-		String nowNodeDesc = "";
-		String nowNodeName = "";
+//		String nowNodeDesc = "";
+//		String nowNodeName = "";
 		String subject = null;
 		String content = null;
 		String ccEmail = null;// 抄送人的email地址
-		String[] configEmail = null;// 后台配置，如果有就复制进入，没有就为空值
+//		String[] configEmail = null;// 后台配置，如果有就复制进入，没有就为空值
 		/********************************* 后台配置相应邮件模板的固有“类型名称”和“类型编号” ********************************************************************/
 		String typeNum = (String) bizParam.get("eventCisn");// eventCisn
 		String subTypeName = (String) bizParam.get("eventName");// eventName
@@ -382,7 +384,7 @@ public class SynchronousAction implements Runnable {
 		/********************************* 后台配置相应邮件模板的固有“类型名称”和“类型编号” ********************************************************************/
 		log.info(virualDesc + "在" + nodeName + "的进入事件中给指派的人审批发邮件!");
 		// add by guangsa for sendComplexMail in 2009-07-15 begin
-		String auditMeg = "点击此链接，查看仔细并请审批！链接：----------------------------";
+//		String auditMeg = "点击此链接，查看仔细并请审批！链接：----------------------------";
 		String workflowEntity = (String) bizParam.get("workflowHistory");
 		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity,
 				processInstanceId);// 查找出来的是所有的按流程顺序排列的节点信息
@@ -399,7 +401,7 @@ public class SynchronousAction implements Runnable {
 		// add by guangsa for counterSignAuditTaskId in 20090729 begin
 		// List auditUserEmail = new ArrayList();
 		// List browseUserEmail = new ArrayList();
-		int f = 0;
+//		int f = 0;
 		if (counterSignAuditMegs.size() != 0 && counterSignAuditMegs != null
 				&& !"".equals(counterSignAuditMegs)) {
 			// 如果为动态会签审批人时候
@@ -456,10 +458,15 @@ public class SynchronousAction implements Runnable {
 					// String context =
 					// cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskid,creatorMeg,
 					// vDesc, auditHis,hurryFlag,false,userInfo);
-					String context = cs.htmlContent(virtualDefinintionId,
-							nodeName, pageUrl, applyType, dataId, reqClass,
-							goStartState, taskid, creatorMeg, vDesc, auditHis,
-							hurryFlag, false, userInfo);
+					String context = "";
+					if(content != null && !"".equalsIgnoreCase(content)){
+						context = content;
+					}else{
+						context = cs.htmlContent(virtualDefinintionId,
+								nodeName, pageUrl, applyType, dataId, reqClass,
+								goStartState, taskid, creatorMeg, vDesc, auditHis,
+								hurryFlag, false, userInfo);
+					}
 					try {
 						ms.sendMimeMail(auditUserEmail, ccEmail, null, subject,
 								context, null);
@@ -514,9 +521,6 @@ public class SynchronousAction implements Runnable {
 					subject = "IT温馨提示:" + userMeg + "提交了" + reqFlag + vDesc
 							+ "，请您及时审批。";// "审批通知";
 				}
-				// if(content==null||"".equals(content)){
-				// content=auditMeg;//"ITIL项目中有一个需求需要您审批";
-				// }String context
 
 			}
 			// add by guangsa for 节点特定格式 in 20090827 end
@@ -524,16 +528,18 @@ public class SynchronousAction implements Runnable {
 				UserInfo userInfo = (UserInfo) service.findUnique(
 						UserInfo.class, "userName", auditPers[i]);
 				String auditUserEmail = userInfo.getEmail();
-				// content =
-				// cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg,
-				// vDesc, auditHis,hurryFlag,false,userInfo);
-				String context = cs.htmlContent(virtualDefinintionId, nodeName,
+				String context = "";
+				if(content != null && !"".equalsIgnoreCase(content)){
+					context = content;
+				}else{
+					context  = cs.htmlContent(virtualDefinintionId, nodeName,
 						pageUrl, applyType, dataId, reqClass, goStartState,
 						taskId, creatorMeg, vDesc, auditHis, hurryFlag, false,
 						userInfo);
+				}
 				try {
 					ms.sendMimeMail(auditUserEmail, ccEmail, null, subject,
-							content, null);
+							context, null);
 				} catch (Exception e) {
 					log.info(virualDesc + "(流程)在" + nodeName
 							+ "(节点)给三部分的审批人发送邮件时发生异常！");
@@ -549,16 +555,18 @@ public class SynchronousAction implements Runnable {
 					UserInfo browseUser = (UserInfo) service.findUnique(
 							UserInfo.class, "userName", browsePers[j]);
 					String browseUserEmail = browseUser.getEmail();
-					// String browseContext =
-					// cs.htmlContent(nodeName,pageUrl,applyType,dataId,reqClass,goStartState,taskId,creatorMeg,
-					// vDesc, auditHis,hurryFlag,true,browseUser);
-					String context = cs.htmlContent(virtualDefinintionId,
+					String context = "";
+					if(content != null && !"".equalsIgnoreCase(content)){
+						context = content;
+					}else{
+						context = cs.htmlContent(virtualDefinintionId,
 							nodeName, pageUrl, applyType, dataId, reqClass,
 							goStartState, taskId, creatorMeg, vDesc, auditHis,
 							hurryFlag, false, browseUser);
+					}
 					try {
 						ms.sendMimeMail(browseUserEmail, ccEmail, null,
-								subject, content, null);
+								subject, context, null);
 					} catch (Exception e) {
 						log.info(virualDesc + "(流程)在" + nodeName
 								+ "(节点)给三部分的审批人发送邮件时发生异常！");

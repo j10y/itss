@@ -2,8 +2,6 @@ package com.zsgj.info.framework.workflow.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,17 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jbpm.graph.def.ProcessDefinition;
-import org.jbpm.graph.node.TaskNode;
-import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 import com.zsgj.info.framework.context.ContextHolder;
-import com.zsgj.info.framework.context.UserContext;
-import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.service.Service;
-import com.zsgj.info.framework.workflow.ContextService;
-import com.zsgj.info.framework.workflow.DefinitionService;
 import com.zsgj.info.framework.workflow.TaskService;
 
 /**PageModelServlet
@@ -30,11 +20,12 @@ import com.zsgj.info.framework.workflow.TaskService;
  * @version 创建时间：Feb 25, 2009 3:10:19 PM 类说明
  */
 
+@SuppressWarnings("serial")
 public class WorkflowPageServlet extends HttpServlet {
 
 	private TaskService ts = (TaskService) ContextHolder.getBean("taskService");
-	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
+//	private Service service = (Service) ContextHolder.getBean("baseService");
+//	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
 
 
 	/**
@@ -91,7 +82,7 @@ public class WorkflowPageServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String taskId = request.getParameter("taskId");
-		Map mapVar = vm.listVariablesByTaskId(Long.valueOf(taskId));
+//		Map mapVar = vm.listVariablesByTaskId(Long.valueOf(taskId));
 		TaskInstance t = ts.getTaskById(Long.valueOf(taskId));//得到当前任务实例
 		String nodeDesc = t.getToken().getNode().getDescription();
 		String formurl = "";

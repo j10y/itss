@@ -168,7 +168,8 @@ public class BaseAction extends ActionSupport implements RequestAware, SessionAw
 	 * @param defaultValue  д╛хопео╒      
 	 * @return String
 	 */
-    public String getProperties(String Key, String defaultValue) {
+    @SuppressWarnings("static-access")
+	public String getProperties(String Key, String defaultValue) {
 		ApplicationContext appContext = ContextHolder.getApplicationContext();
 		String message = "";
 		try{

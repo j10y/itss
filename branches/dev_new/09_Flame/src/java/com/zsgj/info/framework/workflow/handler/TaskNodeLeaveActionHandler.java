@@ -12,6 +12,7 @@ import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.WorkflowConstants;
 import com.zsgj.info.framework.workflow.entity.WorkflowRecordTaskInfo;
+@SuppressWarnings("serial")
 public class TaskNodeLeaveActionHandler implements ActionHandler{
 	
 	private ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
