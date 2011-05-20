@@ -2,11 +2,8 @@ package com.zsgj.info.appframework.pagemodel.web.servlet;
 
 import java.util.List;
 
-//import com.digitalchina.info.appframework.metadata.entity.SystemMainTableExtColumn;
-//import com.digitalchina.info.appframework.metadata.service.SystemExtColumnServcie;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
-import com.zsgj.info.appframework.metadata.service.SystemColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
@@ -28,7 +25,7 @@ public class PagePanelManager {
 	private PagePanelService pps = (PagePanelService) getBean("pagePanelService");
 	private PagePanelColumnService ppcs = (PagePanelColumnService) getBean("pagePanelColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
-	private SystemColumnService scs=(SystemColumnService) getBean("systemColumnService");
+//	private SystemColumnService scs=(SystemColumnService) getBean("systemColumnService");
 	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");	
 	private PagePanelRelationService pprs=(PagePanelRelationService)getBean("pagePanelRelationService");
 	/**
@@ -128,6 +125,7 @@ public class PagePanelManager {
 	 * @param pageModelId
 	 * @return boolean
 	 */	
+	@SuppressWarnings("unchecked")
 	public boolean ajaxTestRepeatePanel(String parentId,String pagePanelId) {
 		List<PagePanelRelation> list =null;
 		try{	
