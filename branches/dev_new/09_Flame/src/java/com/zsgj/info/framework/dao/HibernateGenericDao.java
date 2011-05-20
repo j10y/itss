@@ -91,7 +91,6 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 	 * @Create In 2008-11-26 By peixf
 	 * @return SessionFactory
 	 */
-	@SuppressWarnings("static-access")
 	protected SessionFactory getHibernateSessionFactory(){
 //		Proxy  proxy = (Proxy) ContextHolder.getBean("pmcSessionFactory");
 //		InvocationHandler handler = proxy.getInvocationHandler(proxy);
