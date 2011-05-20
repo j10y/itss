@@ -11,6 +11,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 public class Operator extends BaseObject {
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7372676444844502340L;
+
 	public final static String OPERATOR_EQ = "=";
 
 	public final static String OPERATOR_NE = "!=";

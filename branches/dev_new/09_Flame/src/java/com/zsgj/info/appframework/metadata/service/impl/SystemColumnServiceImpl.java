@@ -2,19 +2,12 @@ package com.zsgj.info.appframework.metadata.service.impl;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-//import com.digitalchina.info.appframework.metadata.service.SystemExtColumnServcie;
+
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.ExtData;
-import com.zsgj.info.appframework.metadata.entity.ExtOptionData;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
@@ -22,12 +15,32 @@ import com.zsgj.info.appframework.metadata.service.SystemMainAndExtColumnService
 import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.framework.dao.BaseDao;
-import com.zsgj.info.framework.util.BeanUtil;
 
 public class SystemColumnServiceImpl extends BaseDao implements SystemColumnService {
 	
 	private SystemMainTableService systemMainTableService;
 	private SystemMainColumnService systemMainColumnService;
+	/**
+	 * @Return the SystemMainTableService systemMainTableService
+	 */
+	public SystemMainTableService getSystemMainTableService() {
+		return systemMainTableService;
+	}
+
+	/**
+	 * @Return the SystemMainColumnService systemMainColumnService
+	 */
+	public SystemMainColumnService getSystemMainColumnService() {
+		return systemMainColumnService;
+	}
+
+	/**
+	 * @Return the SystemMainAndExtColumnService systemMainAndExtColumnService
+	 */
+	public SystemMainAndExtColumnService getSystemMainAndExtColumnService() {
+		return systemMainAndExtColumnService;
+	}
+
 	//private SystemExtColumnServcie systemExtColumnService;	
 	private SystemMainAndExtColumnService systemMainAndExtColumnService;
 	

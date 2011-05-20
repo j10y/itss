@@ -12,20 +12,19 @@ import com.zsgj.info.framework.context.ContextHolder;
 public class CoderForLook {
 	private static SystemColumnService systemColumnService = (SystemColumnService) ContextHolder.getBean("systemColumnService");
 	// for save
-	@SuppressWarnings("unchecked")
 	public static String encode(Map<String, Object> dataMap,
 			List<UserTableSetting> columns, boolean forEdit) {
 		String json = "";
 		for (UserTableSetting uts : columns) {
 			SystemMainTable smt = uts.getColumn().getSystemMainTable();
 			String tableName = smt.getTableName();
-			String className = smt.getClassName();
+			//String className = smt.getClassName();
 			String propertyName = uts.getPropertyName();
 			String propertyNames = propertyName + "s";
 			boolean isDisplay = uts.getIsDisplay().intValue() != 1;
 					//|| uts.getIsHiddenItem().intValue() == 1;
-			boolean isUpdateItem = uts.getIsUpdateItem() != null
-					&& uts.getIsUpdateItem().intValue() != 0;
+//			boolean isUpdateItem = uts.getIsUpdateItem() != null
+//					&& uts.getIsUpdateItem().intValue() != 0;
 			Integer isMustInput = null;
 
 			String cnName = uts.getColumnCnName();
@@ -99,7 +98,7 @@ public class CoderForLook {
 			} else if (columnType.equalsIgnoreCase("dateText")) {
 				componentStr = ComponentCoder.makeHtml(c);
 			} else if (columnType.equalsIgnoreCase("yesNoSelect")) {// 数据模型存储于map中
-				Integer extSelectType = column.getExtSelectType();
+//				Integer extSelectType = column.getExtSelectType();
 				Map vMap = (Map) dataMap.get(propertyNames);
 				String[][] values = new String[2][3];
 				for (int i = 0; i < 2; i++) {

@@ -1,8 +1,6 @@
 package com.zsgj.info.appframework.metadata.service;
 
-import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.framework.dao.support.Page;
-import com.zsgj.info.framework.security.entity.Department;
 
 public interface IdGeneratorService {
 

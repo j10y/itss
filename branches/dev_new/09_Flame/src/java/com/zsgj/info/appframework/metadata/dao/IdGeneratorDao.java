@@ -1,12 +1,6 @@
 package com.zsgj.info.appframework.metadata.dao;
 
-import java.util.List;
-
-import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
-import com.zsgj.info.framework.dao.Dao;
 import com.zsgj.info.framework.dao.support.Page;
-import com.zsgj.info.framework.exception.DaoException;
-import com.zsgj.info.framework.security.entity.Department;
 
 
 public interface IdGeneratorDao{

@@ -1,10 +1,8 @@
 package com.zsgj.info.appframework.metadata.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTableIdBuilder;
 import com.zsgj.info.framework.dao.support.Page;
 
 /**

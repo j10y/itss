@@ -22,8 +22,8 @@ import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.security.service.DepartmentService;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
-import com.zsgj.info.framework.web.json.JsonUtil;
 
+@SuppressWarnings("serial")
 public class MenuAciton extends BaseAction{
 
 	private MenuService menuService;
@@ -39,7 +39,7 @@ public class MenuAciton extends BaseAction{
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String userId = request.getParameter("userId");
-		String parentId = request.getParameter("parentId");
+//		String parentId = request.getParameter("parentId");
 		UserInfo user = null;
 		if(StringUtils.isNotBlank(userId)){
 			user = (UserInfo) this.getService().find(UserInfo.class, userId);
@@ -190,7 +190,7 @@ public class MenuAciton extends BaseAction{
 	 * @return String
 	 */
 	public String listDeptMenus(){
-		HttpServletRequest request = super.getRequest();
+//		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		List<DeptMenu> deptMenus = menuService.findAllDeptMenus();
 		StringBuffer sb = new StringBuffer();
@@ -211,6 +211,7 @@ public class MenuAciton extends BaseAction{
 		}
 		return null;
 	}
+	@SuppressWarnings("unchecked")
 	public String findDepartmentComboList(){
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();

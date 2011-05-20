@@ -6,6 +6,7 @@ package com.zsgj.info.appframework.menu.entity;
  * @Author lee
  * @Create In Aug 17, 2010
  */
+@SuppressWarnings("serial")
 public class TempMenuItem  extends TemplateMenuItem{
 	public static Integer ENABLE = 1;
 	public static Integer DISABLE = 0;

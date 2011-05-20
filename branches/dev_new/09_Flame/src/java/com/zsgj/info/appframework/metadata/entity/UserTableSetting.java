@@ -4,7 +4,11 @@ import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class UserTableSetting extends Column {
 
-	private static final Long serialVersionUID = 2781399575809234181L;	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 1403423759475329210L;
+	
 	public static final Integer LIST = new Integer(1);
 	public static final Integer INPUT = new Integer(2);
 	public static final Integer QUERY = new Integer(3);

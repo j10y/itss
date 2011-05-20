@@ -31,20 +31,20 @@ public class CoderForEdit {
 			String columnType = column.getSystemMainTableColumnType().getColumnTypeName();
 			//String columnType = column.systemMainTableColumnType.columnTypeName
 			propertyName = column.getPropertyName();
-			String type = column.getValidateType()==null?"":column.getValidateType().getValidateTypeName();
+//			String type = column.getValidateType()==null?"":column.getValidateType().getValidateTypeName();
 			isMustInput = column.getIsMustInput();
 			
 			//必填项		
-			String mustInput = "";
-			if(isMustInput.intValue()==1) {//必填
-				mustInput = "true";
-			}
-			else{//选填					
-			}
+//			String mustInput = "";
+//			if(isMustInput.intValue()==1) {//必填
+//				mustInput = "true";
+//			}
+//			else{//选填					
+//			}
 			
 			//校验器		
-			String validator = "";
-			validator = Validator.get(type);				
+//			String validator = "";
+//			validator = Validator.get(type);				
 			isDisplay = isDisplay||columnType.equalsIgnoreCase("hidden");				
 
 			//组件编码
@@ -78,9 +78,9 @@ public class CoderForEdit {
 				componentStr = ComponentCoder.makeDateText(c);
 			}
 			else if(columnType.equalsIgnoreCase("yesNoSelect")) {//数据模型存储于map中
-				Integer extSelectType = column.getExtSelectType();
+//				Integer extSelectType = column.getExtSelectType();
 				List vList = (List)editMap.get(propertyNames);
-				String vId = (String)editMap.get(propertyName);
+//				String vId = (String)editMap.get(propertyName);
 				String[][] values = new String[vList.size()][3];
 				for(int i=0;i<vList.size();i++) {
 					Map vMap = (Map)vList.get(i);						
@@ -122,7 +122,7 @@ public class CoderForEdit {
 					}
 					else {//不引用外部数据
 						vList.get(i).getClass();
-						Object vMap = vList.get(i);	
+//						Object vMap = vList.get(i);	
 						BeanWrapper bw = new BeanWrapperImpl(vList.get(i));
 						values[i][0] = bw.getPropertyValue("id").toString();
 						String beanColumnName = uts.getForeignTableValueColumn().getColumnName();

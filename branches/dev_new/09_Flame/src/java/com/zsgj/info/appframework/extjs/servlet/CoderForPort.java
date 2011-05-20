@@ -14,7 +14,7 @@ public class CoderForPort {
 		for(Map<String,Object> item :listData) {
 			String dataItem = "";
 			for(UserTableSetting uts : userVisibleColumns) {
-				String columnCnName = uts.getColumn().getColumnCnName();//表头标题
+//				String columnCnName = uts.getColumn().getColumnCnName();//表头标题
 				SystemMainTableColumn mainTableColumn = uts.getMainTableColumn();			
 				if(mainTableColumn.getIsExtColumn()==SystemMainTableColumn.isMain) {//主表
 					String propertyName = mainTableColumn.getPropertyName();//
@@ -34,7 +34,7 @@ public class CoderForPort {
 					}
 					else if(columnTypeName.equalsIgnoreCase("select")) {
 						//?????
-						String foreignPropertyName = uts.getMainTableColumn().getForeignTableValueColumn().getPropertyName();
+//						String foreignPropertyName = uts.getMainTableColumn().getForeignTableValueColumn().getPropertyName();
 						Object value = item.get(propertyName);
 						dataItem += ""+propertyName+":'"+value+"',";
 	//	value				${item[column.mainTableColumn.propertyName]}
@@ -77,7 +77,7 @@ public class CoderForPort {
 			SystemMainTableColumn mainTableColumn = uts.getMainTableColumn();
 			if(mainTableColumn.getIsExtColumn()==SystemMainTableColumn.isMain) {//主表
 				String propertyName = mainTableColumn.getPropertyName();//
-				String columnTypeName = mainTableColumn.getSystemMainTableColumnType().getColumnTypeName();
+//				String columnTypeName = mainTableColumn.getSystemMainTableColumnType().getColumnTypeName();
 				json += "{header:'"+columnCnName+"',dataIndex:'"+propertyName+"'},";
 			}
 			

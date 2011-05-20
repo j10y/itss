@@ -14,8 +14,11 @@ import com.zsgj.info.framework.security.entity.Module;
  * @Create In 2008-3-17
  */
 public class SystemMainTable extends BaseObject {
-	private static final Long serialVersionUID = 7673636161154727389L;
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 2228351374653277036L;
 	private Long id;
 	private String tableName;
 	private String tableCnName;
@@ -47,7 +50,7 @@ public class SystemMainTable extends BaseObject {
 	private Set userTableSettings = new HashSet();
 
 	public String getShortClassMName(){
-		String result = "";
+//		String result = "";
 		String systemShortName = "knowledge";
 		int dotIndex = this.className.indexOf(systemShortName);
 		if(dotIndex!=-1){

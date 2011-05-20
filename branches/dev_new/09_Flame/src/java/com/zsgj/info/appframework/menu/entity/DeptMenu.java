@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.Department;
  * @Create In Aug 12, 2010
  */
 public class DeptMenu extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 3946265837080404790L;
 	private Long id;		//自动编号
 	private Department dept;//对应部门
 	private String name;	//该项在部门菜单是否有效

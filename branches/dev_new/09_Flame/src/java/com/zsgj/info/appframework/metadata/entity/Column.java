@@ -12,6 +12,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-7-1
  */
 public abstract class Column extends BaseObject /*implements IColumn*/{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -4349341603737352818L;
+
 	public Integer getBigFlag() {
 		return null;
 	}

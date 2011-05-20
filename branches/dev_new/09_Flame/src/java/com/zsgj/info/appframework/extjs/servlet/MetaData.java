@@ -17,11 +17,11 @@ import com.zsgj.info.appframework.metadata.entity.UserTableQueryColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
-import com.zsgj.info.framework.service.Service;
 
+@SuppressWarnings("serial")
 public class MetaData extends HttpServlet {
 	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
-	private Service service = (Service) ContextHolder.getBean("baseService");
+	//private Service service = (Service) ContextHolder.getBean("baseService");
 
 	public MetaData() {
 		super();
@@ -122,7 +122,7 @@ public class MetaData extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private String forAdd(HttpServletRequest request) {
 		String json = "";
 		String pClazz = request.getParameter("clazz");
@@ -143,6 +143,7 @@ public class MetaData extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unused")
 	private String forEdit(HttpServletRequest request) {
 		String json = "";
 		String id = request.getParameter("id");
@@ -263,7 +264,6 @@ public class MetaData extends HttpServlet {
 		return json;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {
@@ -290,6 +290,7 @@ public class MetaData extends HttpServlet {
 	 * @param request
 	 * @return TODO
 	 */
+	@SuppressWarnings("unchecked")
 	private String forHtmlQuery(HttpServletRequest request) {
 		String json = "";
 		String className = request.getParameter("clazz");

@@ -86,6 +86,7 @@ public class SystemMainColumnServiceImpl extends BaseDao implements SystemMainCo
 		return meta;
 	}
 	
+	@SuppressWarnings("unused")
 	private StandardProperty[] getEntityProperties(String entityClass){
 		StandardProperty[] sps = null;
 		Map map = this.getHibernateTemplate().getSessionFactory().getAllClassMetadata();
@@ -129,9 +130,9 @@ public class SystemMainColumnServiceImpl extends BaseDao implements SystemMainCo
 				for(int i=0; i<sps.length; i++){
 					StandardProperty item = sps[i];
 					String propertyName = item.getName();
-					String nodeName = item.getNode();
-					Type propertyType = item.getType();
-					String typeName = propertyType.getName();
+//					String nodeName = item.getNode();
+//					Type propertyType = item.getType();
+//					String typeName = propertyType.getName();
 					if(propertyName.equalsIgnoreCase(columnName)){
 						sp = item;
 						break;
@@ -149,6 +150,7 @@ public class SystemMainColumnServiceImpl extends BaseDao implements SystemMainCo
 		return ptobj;
 	}
 	
+	@SuppressWarnings("unused")
 	private PropertyType getPropertyTypeByName(String propertyTypeName){
 		Criteria c = this.getCriteria(PropertyType.class);
 		c.add(Restrictions.like("propertyTypeName", propertyTypeName, MatchMode.EXACT).ignoreCase());
@@ -203,8 +205,8 @@ public class SystemMainColumnServiceImpl extends BaseDao implements SystemMainCo
 					
 					StandardProperty stp = this.getEntityProperty(smt.getClassName(), columnName);
 					if(stp!=null){
-						String propertyName = stp.getName();
-						String nodeName = stp.getNode();
+//						String propertyName = stp.getName();
+//						String nodeName = stp.getNode();
 						Type ptype = stp.getType();
 						String ptypename = ptype.getName();
 						Class ptclass = ptype.getClass();
@@ -361,6 +363,7 @@ public class SystemMainColumnServiceImpl extends BaseDao implements SystemMainCo
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private int getUserTableSettingMaxOrder(SystemMainTable sysMainTable, UserInfo userInfo, Integer settingType) {
 		Criteria dcMaxOrder = this.getCriteria(UserTableSetting.class);
 		dcMaxOrder.add(Restrictions.eq("settingType", settingType));

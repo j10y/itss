@@ -234,7 +234,7 @@ public class ColumnDataWrapper {
 					String tableName = smt.getTableName();
 					throw new ServiceException(tableName+"的"+mc.getPropertyName()+"的外键引用表必须选择");
 				}
-				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
+//				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
 				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn(); //role.name
 
 				if(fValueColumn==null){
@@ -257,9 +257,9 @@ public class ColumnDataWrapper {
 					if(fColumnOrder==null){//2期框架暂时注释
 						fObjects = bs.findAll(clazz);
 					}else{
-						boolean isAsc = fColumnOrder.intValue()==1 ? true : false;
-						String propName =mc.getPropertyName();
-						String columnName = mc.getColumnCnName();
+//						boolean isAsc = fColumnOrder.intValue()==1 ? true : false;
+//						String propName =mc.getPropertyName();
+//						String columnName = mc.getColumnCnName();
 						try {
 							fObjects = bs.findAll(clazz);		
 						} catch (Exception e) {
@@ -273,7 +273,7 @@ public class ColumnDataWrapper {
 			} else if(columnTypenName.equalsIgnoreCase("multiSelect")){
 
 				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn();
-				SystemMainTableColumn fParentColumn = mc.getForeignTableParentColumn();
+//				SystemMainTableColumn fParentColumn = mc.getForeignTableParentColumn();
 				String fClassName = column.getForeignTable().getClassName();
 				Class clazz = null;
 				try {
@@ -813,7 +813,7 @@ public class ColumnDataWrapper {
 				
 			}else if(columnTypenName.equalsIgnoreCase("multiSelect")){
 				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn();
-				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn();
+//				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn();
 				Object rObject = baseObjectWrapper.getPropertyValue(propertyName); //获取被引用对象的集合
 				if(rObject instanceof java.util.Collection){
 					Set sets=(Set) rObject;
@@ -831,17 +831,17 @@ public class ColumnDataWrapper {
 				
 			}else if(columnTypenName.equalsIgnoreCase("checkboxGroup")||columnTypenName.equalsIgnoreCase("checkbox")){
 				
-				SystemMainTable fTable = column.getForeignTable(); //role
-				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
+//				SystemMainTable fTable = column.getForeignTable(); //role
+//				SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn(); //role.id
 				SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn(); //role.name
 
-				String fClassName = fTable.getClassName();
-				Class clazz = null;
-				try {
-					clazz = Class.forName(fClassName);
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
+//				String fClassName = fTable.getClassName();
+//				Class clazz = null;
+//				try {
+//					clazz = Class.forName(fClassName);
+//				} catch (ClassNotFoundException e1) {
+//					e1.printStackTrace();
+//				}
 
 				Object fObject = baseObjectWrapper.getPropertyValue(propertyName); //获取外键关联对象类型属性
 				Set roles = (Set) fObject;
@@ -857,18 +857,18 @@ public class ColumnDataWrapper {
 				}
 
 			}else if(columnTypenName.equalsIgnoreCase("file")){
-				SystemMainTable fTable = mc.getReferencedTable();
+//				SystemMainTable fTable = mc.getReferencedTable();
 				SystemMainTableColumn ftableKeyColumn = mc.getForeignTableKeyColumn();
 				//逻辑文件名称对应的字段fileName
 				SystemMainTableColumn ftableValueColumn = mc.getForeignTableValueColumn();
 
-				String fClassName = column.getForeignTable().getClassName();
-				Class clazz = null;
-				try {
-					clazz = Class.forName(fClassName);
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
+//				String fClassName = column.getForeignTable().getClassName();
+//				Class clazz = null;
+//				try {
+//					clazz = Class.forName(fClassName);
+//				} catch (ClassNotFoundException e1) {
+//					e1.printStackTrace();
+//				}
 				
 				Object fObject = baseObjectWrapper.getPropertyValue(propertyName); //获取外键关联对象类型属性
 				//向请求发送此对象，页面可以在下拉列表遍历时根据关联对象的属性判断自动选择哪个条目
@@ -884,16 +884,16 @@ public class ColumnDataWrapper {
 						Object fObjectText = baseObjectWrapper.getPropertyValue(ftableValueColumn.getPropertyName());
 						this.text = String.valueOf(fObjectText.toString());
 						//获取关联对象附件的系统文件名链接
-						String uploadUrl = mc.getUploadUrl();
-						String fileNamePrefix = mc.getFileNamePrefix();
-						SystemMainTableColumn fileNameColumn = mc.getFileNameColumn();
+//						String uploadUrl = mc.getUploadUrl();
+//						String fileNamePrefix = mc.getFileNamePrefix();
+//						SystemMainTableColumn fileNameColumn = mc.getFileNameColumn();
 						SystemMainTableColumn systemFileNameColumn = mc.getSystemFileNameColumn();
 						
 						Object fObjectLink = baseObjectWrapper.getPropertyValue(systemFileNameColumn.getPropertyName());
 						String systemFileName = String.valueOf(fObjectLink.toString());
 						
-						String FSP = System.getProperty("file.separator");
-						String LSP = System.getProperty("line.separator");
+//						String FSP = System.getProperty("file.separator");
+//						String LSP = System.getProperty("line.separator");
 						
 						this.link = systemFileName;
 					}else if(fObject instanceof String){

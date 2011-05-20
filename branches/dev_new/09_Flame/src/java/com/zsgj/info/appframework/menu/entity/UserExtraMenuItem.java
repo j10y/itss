@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In Aug 12, 2010
  */
 public class UserExtraMenuItem extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -191810083107104266L;
 	private Long id;	//自动编号
 	private UserInfo userInfo;	//对应部门菜单
 	private TemplateMenuItem templateMenuItem;	//模板菜单项

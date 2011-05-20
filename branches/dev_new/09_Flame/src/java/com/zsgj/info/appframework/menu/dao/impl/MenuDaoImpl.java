@@ -2,7 +2,6 @@ package com.zsgj.info.appframework.menu.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -50,6 +49,7 @@ public class MenuDaoImpl extends BaseDao implements MenuDao{
 		return newTemplateMenuItem;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<DeptMenu> findAllDeptMenus() {
 		List<DeptMenu> list = new ArrayList();
 		Criteria c = super.createCriteria(DeptMenu.class);
@@ -68,6 +68,7 @@ public class MenuDaoImpl extends BaseDao implements MenuDao{
 		return deptMenu; 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<TemplateMenuItem> findTemplateMenuItemInDeptMenu(
 			DeptMenu deptmenu) {
 		List<DeptMenuItem> deptMenuItems = new ArrayList();

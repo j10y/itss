@@ -4,7 +4,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Criteria;
@@ -13,11 +12,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.type.Type;
 
-//import com.digitalchina.info.appframework.metadata.entity.SystemMainTableExtColumn;
-import com.zsgj.info.appframework.metadata.Constants;
 import com.zsgj.info.appframework.metadata.dao.MetaDataDao;
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
@@ -27,7 +22,6 @@ import com.zsgj.info.appframework.metadata.entity.SystemTableQuery;
 import com.zsgj.info.appframework.metadata.entity.SystemTableQueryColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableQueryColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
-import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.info.framework.exception.DaoException;
 import com.zsgj.info.framework.orm.BaseDao;
 import com.zsgj.info.framework.orm.JdbcMetaDataAware;
@@ -121,7 +115,7 @@ public class MetaDataDaoImpl extends BaseDao implements MetaDataDao {
 		SystemMainTable smt = (SystemMainTable) getDaoSupport().select(SystemMainTable.class, id);
 		if(smt!=null){
 			getDaoSupport().delete(smt);
-			Set<SystemMainTableColumn> columns = smt.getColumns();
+//			Set<SystemMainTableColumn> columns = smt.getColumns();
 //			for(SystemMainTableColumn c : columns){
 //				getDaoSupport().delete(c);
 //				getDaoSupport().flush();
@@ -214,7 +208,7 @@ public class MetaDataDaoImpl extends BaseDao implements MetaDataDao {
 
 	public SystemMainTableColumn insertOrUpdateMainColumn(SystemMainTableColumn mainColumn) {
 		SystemMainTableColumn result = (SystemMainTableColumn) getDaoSupport().insertOrUpdate(mainColumn);
-		boolean isAdd = result.getId()==null;
+//		boolean isAdd = result.getId()==null;
 
 		//新增或修改的字段被新设置为查询项
 		if(mainColumn.getIsSearchItem()!=null&& mainColumn.getIsSearchItem().intValue()==1){
@@ -384,11 +378,11 @@ public class MetaDataDaoImpl extends BaseDao implements MetaDataDao {
 			try {
 				for(int i=1; i<=rsmd.getColumnCount(); i++){
 					String columnName = rsmd.getColumnName(i);
-					String typeName = rsmd.getColumnTypeName(i);
+//					String typeName = rsmd.getColumnTypeName(i);
 					rsmd.getCatalogName(i);
 					rsmd.getColumnClassName(i);
 					rsmd.getColumnLabel(i);
-					int length = rsmd.getPrecision(i);
+//					int length = rsmd.getPrecision(i);
 					//判断此字段是否已在表结构定义表中存在
 					SystemMainTableColumn tdfod = this.getTableDefByTableName(tableName, columnName);
 					if(tdfod!=null){
@@ -1001,6 +995,7 @@ public class MetaDataDaoImpl extends BaseDao implements MetaDataDao {
 //	}
 	
 	//保存用户字段显示设置数据
+	@SuppressWarnings("unused")
 	private void saveUserTableSettingByType(UserTableSetting uts, Integer settingType){
 		uts.setSettingType(settingType);
 		getDaoSupport().insertOrUpdate(uts);

@@ -6,6 +6,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * 页面设置类型：列表，输入还是导出。
  */
 public class TableSettingType extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -3749342123952159276L;
 	private Long id;
 	private String name;
 	public Long getId() {

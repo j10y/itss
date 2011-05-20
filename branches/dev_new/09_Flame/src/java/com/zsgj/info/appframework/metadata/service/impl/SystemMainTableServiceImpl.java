@@ -242,13 +242,8 @@ public class SystemMainTableServiceImpl extends BaseDao implements SystemMainTab
 		SystemMainTable saveResult = (SystemMainTable) super.save(smt);
 		return saveResult;
 	}
-
-	private StandardProperty[] getEntityProperties(){
-		StandardProperty[] sps = null;
-		
-		return sps;
-	}
 	
+	@SuppressWarnings("unused")
 	private SystemMainTableColumn findColumn(SystemMainTable smt, String columnName){
 		Criteria c = this.getCriteria(SystemMainTableColumn.class);
 		c.add(Restrictions.eq("systemMainTable", smt));
@@ -289,18 +284,18 @@ public class SystemMainTableServiceImpl extends BaseDao implements SystemMainTab
 //				System.out.println("packageName: "+packageName);
 //				System.out.println("clazzName: "+clazzName);
 				ClassMetadata classMetadata = (ClassMetadata) map.get(classname);
-				Class entityClass = classMetadata.getClass();
+//				Class entityClass = classMetadata.getClass();
 				org.hibernate.persister.entity.SingleTableEntityPersister step=null;
 				step = (SingleTableEntityPersister) classMetadata;
 				String tableName = step.getTableName();
 				//Table table = cfg.getClassMapping(entityClass).getTable();
 				
 				
-				String entityName = classMetadata.getEntityName();
-				String idname = classMetadata.getIdentifierPropertyName();
-				
-				
-				Type idType = classMetadata.getIdentifierType();
+//				String entityName = classMetadata.getEntityName();
+//				String idname = classMetadata.getIdentifierPropertyName();
+//				
+//				
+//				Type idType = classMetadata.getIdentifierType();
 				Criteria c = this.getCriteria(SystemMainTable.class);
 				c.add(Restrictions.eq("className", classname));
 				SystemMainTable smt = (SystemMainTable) c.uniqueResult();

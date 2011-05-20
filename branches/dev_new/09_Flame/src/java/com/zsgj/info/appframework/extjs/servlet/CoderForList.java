@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.zsgj.info.appframework.metadata.entity.Column;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 
@@ -17,7 +16,7 @@ public class CoderForList {
 		for(Map<String,Object> item :listData) {
 			String dataItem = "";
 			for(UserTableSetting uts : userVisibleColumns) {
-				String columnCnName = uts.getColumn().getColumnCnName();//表头标题
+//				String columnCnName = uts.getColumn().getColumnCnName();//表头标题
 				//SystemMainTableColumn mainTableColumn = uts.getMainTableColumn();	
 				Column column=uts.getColumn();
 				
@@ -142,8 +141,8 @@ public class CoderForList {
 	                            }
 								
 								else {//其他
-									Class fclazz = Class.forName(type);
-	 	                        	Object object = clazz.newInstance();
+//									Class fclazz = Class.forName(type);
+//	 	                        	Object object = clazz.newInstance();
 									
 									
 									Object value = item.get(propertyName);
@@ -175,7 +174,7 @@ public class CoderForList {
 		for(Map<String,Object> item :listData) {
 			String dataItem = "";
 			for(UserTableSetting uts : userVisibleColumns) {
-				String columnCnName = uts.getColumn().getColumnCnName();//表头标题
+//				String columnCnName = uts.getColumn().getColumnCnName();//表头标题
 				//SystemMainTableColumn mainTableColumn = uts.getMainTableColumn();	
 				Column column=uts.getColumn();
 				
@@ -262,7 +261,7 @@ public class CoderForList {
 			String dataItem = "";
 
 			for(SystemMainTableColumn column : visibleColumns) {
-				String columnCnName = column.getColumnCnName();//表头标题
+//				String columnCnName = column.getColumnCnName();//表头标题
 				//SystemMainTableColumn mainTableColumn = uts.getMainTableColumn();	
 				//Column column=uts.getColumn();
 				

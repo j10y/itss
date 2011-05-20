@@ -76,6 +76,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 	}
 
 	// 查最大的值
+	@SuppressWarnings("unused")
 	private Long findMaxNumberByOrder(Class clazz, String propertyName) {
 		Criteria c = this.createCriteria(clazz);
 		c.setProjection(Projections.projectionList().add(
@@ -89,6 +90,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 	}
 
 	// 查最大的配置项编号，注意是字符串类型的
+	@SuppressWarnings("unused")
 	private String findMaxCINumberByOrder(Class clazz, String propertyName) {
 		Criteria c = this.createCriteria(clazz);
 		c.setProjection(Projections.projectionList().add(
@@ -124,15 +126,15 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 	public synchronized Object saveMainAndExtData(Class clazz, Map requestParams) {
 		// start add by tongjp 2009-09-15 test why event have saved twice,to
 		// make sure whether this method's bug
-		Set sets=requestParams.keySet();
-		Iterator it=sets.iterator();
-		String testst="";
-		while(it.hasNext()){
-			Object ob=it.next();
-			Object st=requestParams.get(ob);
+//		Set sets=requestParams.keySet();
+//		Iterator it=sets.iterator();
+//		String testst="";
+//		while(it.hasNext()){
+//			Object ob=it.next();
+//			Object st=requestParams.get(ob);
 			//remove by zhangzy for st 空指针异常 in 2009 11 24
 			//testst=testst+ob.toString()+":"+st.toString()+"==";
-		}
+//		}
 		//System.out.println(testst+"----------------------------------");
 		// end
 		Object newObject  = BeanUtil.getObject(requestParams, clazz);
@@ -217,17 +219,18 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 		
 					}
 						
-				}else{// end
-					Long id = ((BaseObject) newObject).getId();
-					if(id!=null){// update
-						Object newPropertyValue = bwNew.getPropertyValue(propertyName);
-						Object oldObject = this.getObject(clazz, id, true);
-						boolean isNewNull = (newPropertyValue==null|| 
-								newPropertyValue!=null&& newPropertyValue.toString()!=null
-								&& newPropertyValue.toString().equals("null"));		
-					}
-					
 				}
+//				else{// end
+//					Long id = ((BaseObject) newObject).getId();
+//					if(id!=null){// update
+//						Object newPropertyValue = bwNew.getPropertyValue(propertyName);
+//						Object oldObject = this.getObject(clazz, id, true);
+//						boolean isNewNull = (newPropertyValue==null|| 
+//								newPropertyValue!=null&& newPropertyValue.toString()!=null
+//								&& newPropertyValue.toString().equals("null"));		
+//					}
+					
+//				}
 				if(smtctName.equalsIgnoreCase("multiFile")){
 					if(requestParams.get(propertyName)!=null){
 						String nowtime = (String) requestParams.get(propertyName);
@@ -484,8 +487,8 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 			// 以后修改字段后级联修改此表
 
 		} else {
-			List<SystemMainTableColumn> mainColumns = systemMainColumnService
-					.findSystemMainTableColumns(mainTable);
+//			List<SystemMainTableColumn> mainColumns = systemMainColumnService
+//					.findSystemMainTableColumns(mainTable);
 			List<Long> ids = new ArrayList();
 			for (SystemTableSetting sts : list) {
 				// mainColumns.remove(sts.getMainTableColumn());
@@ -566,8 +569,8 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 				// 目标flag
 				Integer targetOrderFlagLong = Integer.valueOf(targetOrderFlag);
 				// 目标查询字段
-				SystemTableRoleColumn stqcTarget = findSystemTableRoleColumn(
-						str, settingType, targetOrderFlagLong);
+//				SystemTableRoleColumn stqcTarget = findSystemTableRoleColumn(
+//						str, settingType, targetOrderFlagLong);
 
 				if (targetOrderFlagLong > currentSourceOrderFlag) { // 目标排序在源排序的下面
 					StringBuffer bf = new StringBuffer();
@@ -584,7 +587,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stqc.setOrder(targetOrderFlagLong);
 					this.save(stqc);
@@ -606,7 +609,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stqc.setOrder(targetOrderFlagLong + 1);
 					this.save(stqc);
@@ -680,6 +683,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 		return result;
 	}
 
+	@SuppressWarnings("unused")
 	private StandardProperty getEntityProperty(String entityClass,
 			String columnName) {
 		StandardProperty sp = null;
@@ -700,9 +704,9 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 				for (int i = 0; i < sps.length; i++) {
 					StandardProperty item = sps[i];
 					String propertyName = item.getName();
-					String nodeName = item.getNode();
-					Type propertyType = item.getType();
-					String typeName = propertyType.getName();
+//					String nodeName = item.getNode();
+//					Type propertyType = item.getType();
+//					String typeName = propertyType.getName();
 					if (propertyName.equalsIgnoreCase(columnName)) {
 						sp = item;
 						break;
@@ -734,7 +738,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 				SystemMainTableColumn smtc = (SystemMainTableColumn) iter
 						.next();// 系统主表
 				if (smtc.getIsSearchItem().intValue() == 1) {
-					String properyName = smtc.getPropertyName();
+//					String properyName = smtc.getPropertyName();
 					SystemTableQueryColumn stqc = new SystemTableQueryColumn();
 					stqc.setSystemTableQuery(utq);
 					stqc.setSystemMainTable(mainTable);
@@ -823,6 +827,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 
 	}
 
+	@SuppressWarnings("unused")
 	private SystemTableQueryColumn findSystemTableQueryColumn(
 			SystemTableQuery stq, Integer orderFlag) {
 		Criteria c = this.getCriteria(SystemTableQueryColumn.class);
@@ -850,8 +855,8 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 				// 目标flag
 				Integer targetOrderFlagLong = Integer.valueOf(targetOrderFlag);
 				// 目标查询字段
-				SystemTableQueryColumn stqcTarget = findSystemTableQueryColumn(
-						stq, targetOrderFlagLong);
+//				SystemTableQueryColumn stqcTarget = findSystemTableQueryColumn(
+//						stq, targetOrderFlagLong);
 
 				if (targetOrderFlagLong > currentSourceOrderFlag) { // 目标排序在源排序的下面
 					StringBuffer bf = new StringBuffer();
@@ -866,7 +871,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stqc.setOrder(targetOrderFlagLong);
 					this.save(stqc);
@@ -886,7 +891,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stqc.setOrder(targetOrderFlagLong + 1);
 					this.save(stqc);
@@ -913,6 +918,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 
 	}
 
+	@SuppressWarnings("unused")
 	private SystemTableSetting findSystemTableSettingColumn(
 			SystemMainTable smt, Integer settingType, Integer orderFlag) {
 		Criteria c = this.getCriteria(SystemTableSetting.class);
@@ -925,6 +931,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 	}
 
 	// 此出有疑问
+	@SuppressWarnings("unused")
 	private UserTableSetting findUserTableSettingColumn(SystemMainTable smt,
 			Integer settingType, Integer orderFlag) {
 		Criteria c = this.getCriteria(UserTableSetting.class);
@@ -937,6 +944,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 
 	}
 
+	@SuppressWarnings({ "unused" })
 	private SystemTableRoleColumn findSystemTableRoleColumn(
 			SystemTableRole smt, Integer settingType, Integer orderFlag) {
 		Criteria c = this.getCriteria(SystemTableRoleColumn.class);
@@ -986,7 +994,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 			String isMustInput = params.get("isMustInput" + utsId);
 			String hiddenValue = params.get("hiddenValue" + utsId);
 			StringTokenizer token = new StringTokenizer(isDisplayPara, "|");
-			String itemId = token.nextToken();
+//			String itemId = token.nextToken();
 			String trueOrFalse = token.nextToken();
 			sts.setIsDisplay(Integer.valueOf(trueOrFalse));
 			sts.setLengthForPage(lengthForPage);
@@ -1023,8 +1031,8 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 				// 目标flag
 				Integer targetOrderFlagLong = Integer.valueOf(targetOrderFlag);
 				// 目标查询字段
-				SystemTableSetting stqcTarget = findSystemTableSettingColumn(
-						smt, settingType, targetOrderFlagLong);
+//				SystemTableSetting stqcTarget = findSystemTableSettingColumn(
+//						smt, settingType, targetOrderFlagLong);
 
 				if (targetOrderFlagLong > currentSourceOrderFlag) { // 目标排序在源排序的下面
 					StringBuffer bf = new StringBuffer();
@@ -1041,7 +1049,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stsSource.setOrder(targetOrderFlagLong);
 					this.save(stsSource);
@@ -1063,7 +1071,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stsSource.setOrder(targetOrderFlagLong + 1);
 					this.save(stsSource);
@@ -1098,8 +1106,8 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 				// 目标flag
 				Integer targetOrderFlagLong = Integer.valueOf(targetOrderFlag);
 				// 目标查询字段
-				UserTableSetting stqcTarget = findUserTableSettingColumn(smt,
-						settingType, targetOrderFlagLong);
+//				UserTableSetting stqcTarget = findUserTableSettingColumn(smt,
+//						settingType, targetOrderFlagLong);
 
 				if (targetOrderFlagLong > currentSourceOrderFlag) { // 目标排序在源排序的下面
 					StringBuffer bf = new StringBuffer();
@@ -1117,7 +1125,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stsSource.setOrder(targetOrderFlagLong);
 					this.save(stsSource);
@@ -1140,7 +1148,7 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 					// SystemTableQueryColumn stqcTarget =
 					// findSystemTableQueryColumn(stq, targetOrderFlagLong);
 					// 目标查询字段的order
-					Integer targetOrder = stqcTarget.getOrder();
+//					Integer targetOrder = stqcTarget.getOrder();
 					// 源查询字段排序标记修改
 					stsSource.setOrder(targetOrderFlagLong + 1);
 					this.save(stsSource);
@@ -1484,8 +1492,8 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 		// 删除此主表的所有系统查询字段？？？？？？？？？？？
 		// super.executeUpdate("delete from SystemTableQueryColumn stqc where
 		// stqc.systemMainTable=?", smt);
-		List<SystemMainTableColumn> mainColumns = systemMainColumnService
-				.findSystemMainTableColumns(smt);
+//		List<SystemMainTableColumn> mainColumns = systemMainColumnService
+//				.findSystemMainTableColumns(smt);
 		/*
 		 * int i=1; for(SystemMainTableColumn fmtc: mainColumns){
 		 * if(fmtc.getIsSearchItem().intValue()==1){ //字段是查询项才初始化到系统查询字段
@@ -1911,18 +1919,19 @@ public class UserColumnServiceImpl extends BaseDao implements UserColumnService 
 
 					}
 
-				} else {// end
-					Long id = ((BaseObject) newObject).getId();
-					if (id != null) {// update
-						Object newPropertyValue = bwNew
-								.getPropertyValue(propertyName);
-						Object oldObject = this.getObject(clazz, id, true);
-						boolean isNewNull = (newPropertyValue == null || newPropertyValue != null
-								&& newPropertyValue.toString() != null
-								&& newPropertyValue.toString().equals("null"));
-					}
-
-				}
+				} 
+//				else {// end
+//					Long id = ((BaseObject) newObject).getId();
+//					if (id != null) {// update
+//						Object newPropertyValue = bwNew
+//								.getPropertyValue(propertyName);
+//						Object oldObject = this.getObject(clazz, id, true);
+//						boolean isNewNull = (newPropertyValue == null || newPropertyValue != null
+//								&& newPropertyValue.toString() != null
+//								&& newPropertyValue.toString().equals("null"));
+//					}
+//
+//				}
 				if (smtctName.equalsIgnoreCase("multiFile")) {
 					if (requestParams.get(propertyName) != null) {
 						String nowtime = (String) requestParams

@@ -1,22 +1,11 @@
 package com.zsgj.info.appframework.metadata.service;
 
 import java.util.List;
-import java.util.Map;
 
-import org.hibernate.criterion.Criterion;
-
-//import com.digitalchina.info.appframework.metadata.entity.SystemMainTableExtColumn;
-//import com.digitalchina.info.appframework.metadata.entity.SystemExtTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
-import com.zsgj.info.appframework.metadata.entity.SystemTableQuery;
-import com.zsgj.info.appframework.metadata.entity.SystemTableQueryColumn;
 import com.zsgj.info.appframework.metadata.entity.SystemTableSetting;
-import com.zsgj.info.appframework.metadata.entity.UserTableQueryColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
-import com.zsgj.info.appframework.metadata.type.MetaType;
-import com.zsgj.info.framework.dao.BaseObject;
-import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.UserInfo;
 
 public interface MetaDataService {

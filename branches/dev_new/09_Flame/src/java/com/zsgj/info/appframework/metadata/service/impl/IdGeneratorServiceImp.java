@@ -1,10 +1,8 @@
 package com.zsgj.info.appframework.metadata.service.impl;
 
 import com.zsgj.info.appframework.metadata.dao.IdGeneratorDao;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.service.IdGeneratorService;
 import com.zsgj.info.framework.dao.support.Page;
-import com.zsgj.info.framework.security.entity.Department;
 import com.zsgj.info.framework.service.BaseService;
 
 public class IdGeneratorServiceImp extends BaseService implements IdGeneratorService {

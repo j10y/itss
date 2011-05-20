@@ -3,7 +3,11 @@ package com.zsgj.info.appframework.metadata.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class ExtData extends BaseObject{
-	private static final Long serialVersionUID = -1021390386911002253L;
+
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -4242697614638734769L;
 	private Long id;
 	private Integer extendTableId;//扩展字段id编号
 	private Integer mainTableRowID;//主表实体数据的行号，对应实体的第几条数据

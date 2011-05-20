@@ -4,7 +4,11 @@ import com.zsgj.info.framework.dao.BaseObject;
 
 public class ValidateType extends BaseObject {
 	
-	private static final Long serialVersionUID = -6931856090748197866L;
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -514122582516635046L;
+	
 	private Long id;
 	private String validateTypeName;
 	private String validateTypeCnName;

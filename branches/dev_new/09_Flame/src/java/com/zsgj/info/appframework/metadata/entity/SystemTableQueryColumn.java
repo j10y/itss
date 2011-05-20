@@ -10,9 +10,12 @@ import java.util.Set;
  * @Create In 2008-4-16
  */
 public class SystemTableQueryColumn extends Column {
-	private static final Long serialVersionUID = -2888258840469197260L;
 	
-
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 2695718627793903957L;
+	
 	public static final Integer MATCH_MODE_ANYWHERE = new Integer(1);
 	public static final Integer MATCH_MODE_EXACT = new Integer(2);
 	public static final Integer MATCH_MODE_START = new Integer(3);

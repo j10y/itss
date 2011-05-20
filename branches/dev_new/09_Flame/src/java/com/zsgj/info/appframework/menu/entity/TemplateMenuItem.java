@@ -12,6 +12,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Aug 12, 2010
  */
 public class TemplateMenuItem extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 6959061255720154773L;
 	private Long id;
 	private String menuName;	//菜单名称
 	private String menuUrl;		//菜单链接

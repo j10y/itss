@@ -26,6 +26,7 @@ import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.DateUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 
+@SuppressWarnings("serial")
 public class DataAction extends HttpServlet {
 	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
 	private Service service = (Service) ContextHolder.getBean("baseService");
@@ -74,6 +75,7 @@ public class DataAction extends HttpServlet {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private String save(HttpServletRequest request) {
 		String json = "{success:true}";
 		String pClazz = request.getParameter("clazz");
@@ -122,8 +124,8 @@ public class DataAction extends HttpServlet {
 
 		//Page page = metaDataManager.query(clazz, requestParams, 
 		Map requestParams = HttpUtil.requestParam2Map(request);
-		Map<Object, Object> queryParamValues = metaDataManager.genQueryParams(
-				clazz, requestParams);
+//		Map<Object, Object> queryParamValues = metaDataManager.genQueryParams(
+//				clazz, requestParams);
 	
 		Page page = metaDataManager.query(clazz, requestParams,
 				pageNo, pageSize, orderBy, isAsc);
@@ -158,8 +160,8 @@ public class DataAction extends HttpServlet {
 		Class clazz = getClass(pClazz);
 		Map requestParams = HttpUtil.requestParam2Map(request);
 		
-		Map<Object, Object> queryParamValues = metaDataManager.genQueryParams(
-				clazz, requestParams);
+//		Map<Object, Object> queryParamValues = metaDataManager.genQueryParams(
+//				clazz, requestParams);
 		Page page = metaDataManager.queryForUser(clazz, requestParams, pageNo, pageSize, orderBy, isAsc,propertyName);
 		Long total = page.getTotalCount();
 		List queryList = page.list();
@@ -169,7 +171,6 @@ public class DataAction extends HttpServlet {
 //		json = json.replaceAll("\\\\", "\\\\\\\\");
 		return json;
 	}
-	@SuppressWarnings("unchecked")
 	private String queryCobom(HttpServletRequest request) {
 		String json = "";
 		
@@ -210,7 +211,6 @@ public class DataAction extends HttpServlet {
 		return json;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {

@@ -9,8 +9,12 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In 2008-4-16
  */
 public class UserTableQueryColumn extends Column {
-	private static final Long serialVersionUID = -2888258840469197260L;
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -4572716654431783497L;
+
 	private Long id;
 	
 	private SystemTableQueryColumn sysTableQueryColumn; //对应的系统可见查询字段

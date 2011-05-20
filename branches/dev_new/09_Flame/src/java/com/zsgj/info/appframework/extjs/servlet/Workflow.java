@@ -30,11 +30,9 @@ import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 import com.zsgj.info.appframework.pagemodel.entity.PageModel;
-import com.zsgj.info.appframework.pagemodel.service.PageModelService;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.exception.RuleFileException;
-import com.zsgj.info.framework.message.mail.service.MailSenderService;
 import com.zsgj.info.framework.security.entity.Department;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.service.Service;
@@ -165,6 +163,7 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType List<TaskPreAssign>
 	 */
+	@SuppressWarnings({ "unchecked", "unused" })
 	private List<TaskPreAssign> sumTaskPreAssign(
 			Map<DefinitionPreAssign, List<UserInfo>> mapAssign,
 			List<TaskPreAssign> proxies, String userAssign) {
@@ -265,6 +264,7 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType Map<WorkflowRole,List<UserInfo>>
 	 */
+	@SuppressWarnings({ "unchecked", "unused" })
 	private Map<DefinitionPreAssign, List<UserInfo>> getPreAssignByDef(
 			String definitionName, String departmentCode) {
 		// 需要的参数
@@ -310,6 +310,7 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unused")
 	private String getEmptyRoles(
 			Map<DefinitionPreAssign, List<UserInfo>> mapPreAssign) {
 		String json = "";
@@ -345,6 +346,7 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unchecked")
 	private String next(HttpServletRequest request) {
 		// 需要的参数
 		String taskId = request.getParameter("taskid");
@@ -406,16 +408,15 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
-	@SuppressWarnings("unchecked")
 	private String apply(HttpServletRequest request) {
 		String json = "";
 		// 虚拟流程名
 		String definitionName = request.getParameter("defname");
 		String buzzParameters = request.getParameter("bzparam");// 在ajax当中已经把js对象变成了json字符串
-		String dataId = request.getParameter("dataId");// 主数据id
+//		String dataId = request.getParameter("dataId");// 主数据id
 		//
-		String departmentCode = request.getParameter("deptcode");
-		String userAssign = request.getParameter("userAssign");
+//		String departmentCode = request.getParameter("deptcode");
+//		String userAssign = request.getParameter("userAssign");
 		
 		Map<String, String> mapBizz = new HashMap<String, String>();
 		if (buzzParameters != null && !buzzParameters.equals("")) {
@@ -450,6 +451,7 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unchecked")
 	private String audit(HttpServletRequest request) {
 		
 		String json = "";
@@ -507,15 +509,15 @@ public class Workflow extends HttpServlet {
 			}
 			Map bizParam = vm.listBizVariablesByTaskId(taskId);//得到相应的业务参
 			Map map = tm.getNextNodeInfo(taskId);
-			ProcessInstance pi = null;
+//			ProcessInstance pi = null;
 			JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
 			try{
 				TaskInstance taskInstance = null;
-				ContextInstance ci = null;
+//				ContextInstance ci = null;
 				try{
 					taskInstance = jbpmContext.loadTaskInstance(taskId);
-					ci = taskInstance.getContextInstance();
-					pi = ci.getProcessInstance();
+//					ci = taskInstance.getContextInstance();
+//					pi = ci.getProcessInstance();
 				}catch(Exception e){
 					json = "{success:true,Exception:'" + "流程审批时，流程加载任务实例是发生异常，请您让管理员检查" + "'}";
 					return json;
@@ -628,7 +630,7 @@ public class Workflow extends HttpServlet {
 				String remainSingerUsers="";
 				String singerUser = (String) bizParam.get("signerUser");
 				remainSingerUsers=singerUser;
-				String nowUserName=UserContext.getUserInfo().getUserName();//得到当前登陆人的英文名
+//				String nowUserName=UserContext.getUserInfo().getUserName();//得到当前登陆人的英文名
 				/** ****************************** */
 				if (nextnodeType.indexOf("EndState") == 0) {// 下一个节点是结束节点(nodeType表示下一个节点)
 					try{
@@ -721,7 +723,6 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
-	@SuppressWarnings("unchecked")
 	private String tasks(HttpServletRequest request) {
 
 		// 需要的参数,列出当前用户的用户名
@@ -797,6 +798,7 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unchecked")
 	private String getUserRealNameByName(String userName) {
 		String userRealNames = "";
 		String[] userNames = null;
@@ -829,11 +831,12 @@ public class Workflow extends HttpServlet {
 	 * @return
 	 * @throws Exception 
 	 */
+	@SuppressWarnings("unchecked")
 	private String getWorkFlowGoBack(HttpServletRequest request) throws Exception{
 		
 		Long fromNodeId = null;
 		String fromNodeName = "";
-		String fromParamId = "";
+//		String fromParamId = "";
 		String fromNodeType = "";
 		String json = "";
 		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
@@ -862,7 +865,7 @@ public class Workflow extends HttpServlet {
 			for(int i=0;i<goBackLength;i++){
 				String  fromNodeMessage = (String)allNodeMessage.get(allNodeMessage.size()-1);
 				String[] mutipleMessage = fromNodeMessage.split("\\+");
-				fromParamId = mutipleMessage[0];//上个节点参数Id
+				//fromParamId = mutipleMessage[0];//上个节点参数Id
 				fromNodeName = mutipleMessage[1];//节点名称为中文，这里无法用到nodeDesc（api限制）
 				allNodeMessage.remove(allNodeMessage.size()-1);
 				fromNode = processInstance.getProcessDefinition().getNode(fromNodeName);//这里不用考虑流程版本导致的节点名称重复问题，因为用的是当前的流程实例；
@@ -932,11 +935,12 @@ public class Workflow extends HttpServlet {
 	 * @param request
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private String getWorkFlowSkipGoBack(HttpServletRequest request){
 		//前期参数准备
 		boolean mark = false;
 		String fromNodeName = "";
-		String fromParamId = "";
+//		String fromParamId = "";
 		String fromNodeType = "";
 		Long fromNodeId = null;
 		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
@@ -950,7 +954,7 @@ public class Workflow extends HttpServlet {
 		Map bizParam = (Map)ti.getContextInstance().getVariable(WorkflowConstants.BUSINESS_PARAM_KEY);
 		String creator= (String)ti.getContextInstance().getVariable(WorkflowConstants.PROCESS_CREATOR_FLAG);
 		String dataId = (String)bizParam.get("dataId");
-		String nowNodeName = ti.getToken().getNode().getName();//当前节点名称
+//		String nowNodeName = ti.getToken().getNode().getName();//当前节点名称
 		Long tokenId = ti.getToken().getId();
 		Long processId = ti.getContextInstance().getProcessInstance().getId();
 		Node fromNode = ti.getContextInstance().getProcessInstance().getProcessDefinition().getNode(fromNodeName);
@@ -1030,6 +1034,7 @@ public class Workflow extends HttpServlet {
 	 * @param request
 	 * @return String
 	 */
+	@SuppressWarnings("unchecked")
 	private String getDataFromPage(HttpServletRequest request) {
 //		String json = "";
 //		// 不能使用框架提供的转码，否则不能从request里面取出特定的参数
@@ -1061,7 +1066,7 @@ public class Workflow extends HttpServlet {
 		Map bizParam = (Map)vm.getVariableByTaskId(taskId, WorkflowConstants.BUSINESS_PARAM_KEY);
 		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
 		try{
-			String nodeName = ti.getNodeName();
+//			String nodeName = ti.getNodeName();
 			String userList = request.getParameter("users");
 			//add by guangsa for avoidRepeateAddParam in 20090807 begin
 			String realUserList = "";
@@ -1168,6 +1173,7 @@ public class Workflow extends HttpServlet {
 	 * @param request
 	 * @return String
 	 */
+	@SuppressWarnings("unchecked")
 	private String getData(HttpServletRequest request) {
 		boolean flag = false;
 		String json = "";
@@ -1181,7 +1187,7 @@ public class Workflow extends HttpServlet {
 		Map bizParam = (Map)vm.getVariableByTaskId(taskId, WorkflowConstants.BUSINESS_PARAM_KEY);
 		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
 		try{
-			String nodeName = ti.getNodeName();
+//			String nodeName = ti.getNodeName();
 			String userList = request.getParameter("users");
 			//add by guangsa for avoidRepeateAddParam in 20090807 begin
 			String realUserList = "";
@@ -1333,7 +1339,7 @@ public class Workflow extends HttpServlet {
 			taskId = Long.parseLong(strTaskId);
 		}
 		TaskInfo ti = tm.getTaskInfo(taskId);
-		String nodeName = ti.getNodeName();
+//		String nodeName = ti.getNodeName();
 
 		Map mapVar = vm.listBizVariablesByTaskId(taskId);
 		String oldMarkUsers=(String)mapVar.get("addMarkUsers");//原来的加签人
@@ -1391,7 +1397,7 @@ public class Workflow extends HttpServlet {
 			taskId = Long.parseLong(strTaskId);
 		}
 		TaskInfo ti = tm.getTaskInfo(taskId);
-		String nodeName = ti.getNodeName();
+//		String nodeName = ti.getNodeName();
 
 		Map mapVar = vm.listBizVariablesByTaskId(taskId);
 		String oldMarkUsers=(String)mapVar.get("addMarkUsers");//原来的加签人
@@ -1439,7 +1445,7 @@ public class Workflow extends HttpServlet {
 			taskId = Long.parseLong(strTaskId);
 		}
 		TaskInfo ti = tm.getTaskInfo(taskId);
-		String nodeName = ti.getNodeName();
+//		String nodeName = ti.getNodeName();
 
 		Map mapVar = vm.listBizVariablesByTaskId(taskId);
 		String oldMarkUsers=(String)mapVar.get("addMarkUsersToNextNode");//原来的加签人
@@ -1495,7 +1501,7 @@ public class Workflow extends HttpServlet {
 			taskId = Long.parseLong(strTaskId);
 		}
 		TaskInfo ti = tm.getTaskInfo(taskId);
-		String nodeName = ti.getNodeName();
+//		String nodeName = ti.getNodeName();
 		/*****************************************************************************************/
 		Map mapVar = vm.listBizVariablesByTaskId(taskId);
 		String oldMarkUsers=(String)mapVar.get("addMarkUsersToNextNode");//原来的加签人
@@ -1547,8 +1553,8 @@ public class Workflow extends HttpServlet {
 		if (strTaskId != null && !strTaskId.equals("")) {
 			taskId = Long.parseLong(strTaskId);
 		}
-		TaskInfo ti = tm.getTaskInfo(taskId);
-		String nodeName = ti.getNodeName();
+//		TaskInfo ti = tm.getTaskInfo(taskId);
+//		String nodeName = ti.getNodeName();
 		Map mapVar = vm.listBizVariablesByTaskId(taskId);
 		String addMarkUsers = (String) mapVar.get("addMarkUsers");
 		if (addMarkUsers != null && !"".equals(addMarkUsers)) {
@@ -1609,8 +1615,8 @@ public class Workflow extends HttpServlet {
 		if (strTaskId != null && !strTaskId.equals("")) {
 			taskId = Long.parseLong(strTaskId);
 		}
-		TaskInfo ti = tm.getTaskInfo(taskId);
-		String nodeName = ti.getNodeName();
+//		TaskInfo ti = tm.getTaskInfo(taskId);
+//		String nodeName = ti.getNodeName();
 		Map mapVar = vm.listBizVariablesByTaskId(taskId);
 		String addMarkUsers = (String) mapVar.get("addMarkUsersToNextNode");
 		if (addMarkUsers != null && !"".equals(addMarkUsers)) {
@@ -1769,7 +1775,7 @@ public class Workflow extends HttpServlet {
 		String dataId = (String)bizParam.get("dataId");
 		String reqClass = (String)bizParam.get("reqClass");
 		String goStartState = (String)bizParam.get("goStartState");
-		String workflowEntity = (String)bizParam.get("workflowHistory");
+//		String workflowEntity = (String)bizParam.get("workflowHistory");
 		String processId = (String)bizParam.get("processId");
 		String applyType = (String)bizParam.get("applyType");
 		Node node=(Node) service.find(Node.class, nodeId.toString());
@@ -2157,13 +2163,13 @@ public class Workflow extends HttpServlet {
 		String dataId = (String)bizParam.get("dataId");
 		String reqClass = (String)bizParam.get("reqClass");
 		String goStartState = (String)bizParam.get("goStartState");
-		String workflowEntity = (String)bizParam.get("workflowHistory");
+//		String workflowEntity = (String)bizParam.get("workflowHistory");
 		String processId = (String)bizParam.get("processId");
 		String applyType = (String)bizParam.get("applyType");
 		Node node=(Node) service.find(Node.class, nodeId.toString());
 
 		//add by gaowen in 20091125 for 新邮件审批格式
-		UserInfo creatorMeg = (UserInfo)service.findUnique(UserInfo.class, "userName", creator);
+//		UserInfo creatorMeg = (UserInfo)service.findUnique(UserInfo.class, "userName", creator);
 		//add by guangsa in 20090720 for sendMailContext end
 		String addMarkUsers = (String) bizParam.get("addMarkUsers");//存在bizParam中的加签人
 		//加签的格式addMarkUsers: taskId:userId+顺序+类型,userId+顺序+类型,userId+顺序+类型
@@ -2289,6 +2295,7 @@ public class Workflow extends HttpServlet {
 	 * @param request
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private String getAllNodeMessagek(HttpServletRequest request){
 		
 		String json = "";
@@ -2325,7 +2332,7 @@ public class Workflow extends HttpServlet {
 		
 		String json = "";
 		try{
-			JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
+//			JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
 			String vProcessId = request.getParameter("vProcessId");
 			String processId = request.getParameter("processId");
 			ps.endProcess(Long.valueOf(processId));
@@ -2343,6 +2350,7 @@ public class Workflow extends HttpServlet {
 	 * @param request
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private String StartStateAfreshSubmit(HttpServletRequest request){
 		String json = "";
 		try{

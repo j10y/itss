@@ -21,7 +21,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-//import com.digitalchina.info.appframework.metadata.entity.SystemMainTableExtColumn;
 import com.zsgj.info.appframework.metadata.ColumnDataWrapper;
 import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.appframework.metadata.QueryService;
@@ -120,7 +119,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 
 					SystemMainTable fTable = column.getForeignTable();
 					String fClassName = fTable.getClassName();
-					SystemMainTableColumn fValueColumn = smtc.getForeignTableValueColumn();
+//					SystemMainTableColumn fValueColumn = smtc.getForeignTableValueColumn();
 					SystemMainTableColumn fParentColumn = smtc.getForeignTableParentColumn();
 					
 					//取类别属性（如tradeWay
@@ -264,12 +263,12 @@ public class MetaDataManagerImpl implements MetaDataManager {
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> genPropParams(Class clazz, Map<String, Object> requestParams) {
-		MetaDataService ms = (MetaDataService)ContextHolder.getBean("metaDataService");
+//		MetaDataService ms = (MetaDataService)ContextHolder.getBean("metaDataService");
 		Map<String,Object> queryParamValue = new HashMap<String,Object>();
 		
 		SystemMainTable smt = systemMainTableService.findSystemMainTableByClazz(clazz);
 		
-		SystemTableQuery stq = userColumnService.findSystemTableQuery(smt); //通过系统主表获取系统表查询
+//		SystemTableQuery stq = userColumnService.findSystemTableQuery(smt); //通过系统主表获取系统表查询
 		//List list = ms.findUserQueryColumn(stq, true);
 		//通过系统查询获取当前用户的所有查询字段
 		List<Column> list = systemColumnService.findSystemTableColumns(smt);
@@ -277,10 +276,10 @@ public class MetaDataManagerImpl implements MetaDataManager {
 			Column column = (Column) list.get(i);
 			SystemMainTableColumn columnMainOrExt=(SystemMainTableColumn)column;
 			if(columnMainOrExt.getIsExtColumn()==SystemMainTableColumn.isMain){
-				boolean isMatchModeBetween = false;
-				SystemMainTableColumnType ct = column.getSystemMainTableColumnType();//主字段类型
+//				boolean isMatchModeBetween = false;
+//				SystemMainTableColumnType ct = column.getSystemMainTableColumnType();//主字段类型
 				PropertyType pt = column.getPropertyType();
-				String columnTypeName = ct.getColumnTypeName();
+//				String columnTypeName = ct.getColumnTypeName();
 				String propertyTypeName = pt.getPropertyTypeName();
 				String propertyName = column.getPropertyName(); //搜索参数名称
 				//System.out.println("propertyName: "+ propertyName);
@@ -463,7 +462,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 					Object queryParamValueEnd = requestParams.get(propertyNameEnd);
 					
 					if(queryParamValueBegin!=null&& !queryParamValueBegin.toString().equals("")){
-						isMatchModeBetween = true;
+//						isMatchModeBetween = true;
 						
 						if(propertyTypeName.equalsIgnoreCase("Date")){
 							if(queryParamValueBegin instanceof java.util.Date){
@@ -493,7 +492,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 					
 					}
 					if(queryParamValueEnd!=null&& !queryParamValueEnd.toString().equals("")){
-						isMatchModeBetween = true;
+//						isMatchModeBetween = true;
 						
 						if(propertyTypeName.equalsIgnoreCase("Date")){
 							if(queryParamValueEnd instanceof java.util.Date){
@@ -526,12 +525,12 @@ public class MetaDataManagerImpl implements MetaDataManager {
 			}
 			else if(columnMainOrExt.getIsExtColumn()==SystemMainTableColumn.isExt){
 				SystemMainTableColumnType ct = column.getSystemMainTableColumnType();//主字段类型
-				PropertyType pt = column.getPropertyType();
+//				PropertyType pt = column.getPropertyType();
 				String columnTypeName = ct.getColumnTypeName();
 				//String propertyTypeName = pt.getPropertyTypeName();
 				String propertyName = column.getPropertyName(); //搜索参数名称
 				//String propertyValue = null; //搜索参数的值
-				boolean isMatchModeBetween = false;
+//				boolean isMatchModeBetween = false;
 				
 				Object columnQueryValue = requestParams.get(propertyName);
 				if(columnQueryValue!=null&& !columnQueryValue.toString().equals("")){
@@ -544,7 +543,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 					Object queryParamValueEnd = requestParams.get(propertyNameEnd);
 					
 					if(queryParamValueBegin!=null&& !queryParamValueBegin.toString().equals("")){
-						isMatchModeBetween = true;
+//						isMatchModeBetween = true;
 						
 						if(columnTypeName.equalsIgnoreCase("dateText")){
 							if(queryParamValueBegin instanceof java.util.Date){
@@ -574,7 +573,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 					
 					}
 					if(queryParamValueEnd!=null&& !queryParamValueEnd.toString().equals("")){
-						isMatchModeBetween = true;
+//						isMatchModeBetween = true;
 						
 						if(columnTypeName.equalsIgnoreCase("dateText")){
 							if(queryParamValueEnd instanceof java.util.Date){
@@ -746,7 +745,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 
 						}else if(typeName.equalsIgnoreCase("multiSelect")){
 							SystemMainTableColumn fValueColumn = mc.getForeignTableValueColumn();
-							SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn();
+//							SystemMainTableColumn fKeyColumn = mc.getForeignTableKeyColumn();
 							Object rObject = bwMain.getPropertyValue(pmainPropName); //获取被引用对象的集合
 							if(rObject instanceof java.util.Collection){
 								Set sets=(Set) rObject;
@@ -793,7 +792,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 						SystemMainTableColumnType mcType = mc.getSystemMainTableColumnType();
 						String typeName = mcType.getColumnTypeName();
 						String pextPropName = mc.getPropertyName(); //当前扩展属性的名称
-						String columnCnName = mc.getColumnCnName();
+//						String columnCnName = mc.getColumnCnName();
 					    Integer selectTypeName=mc.getExtSelectType();//当前扩展字段源自主表或扩展表
 					    Map map=this.getEntityDataForEdit(clazz, mainTableRowId.toString());
 					    
@@ -805,7 +804,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 								SystemMainTableColumn foreignKeyColumn = mc.getForeignTableKeyColumn();
 								String foreignKeyColumnName = foreignKeyColumn.getPropertyName();
 								List<Object> list=(List) map.get(pextPropName+"s");
-								SystemMainTable foreiTable = mc.getForeignTable();
+//								SystemMainTable foreiTable = mc.getForeignTable();
 								for(Object extObject:list ){
 									BeanWrapper bwExt = new BeanWrapperImpl(extObject);
 									String foreignKey=bwExt.getPropertyValue(foreignKeyColumnName).toString();
@@ -832,7 +831,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 								SystemMainTableColumn foreignKeyColumn = mc.getForeignTableKeyColumn();
 								String foreignKeyColumnName = foreignKeyColumn.getPropertyName();
 								List<Object> list=(List) map.get(pextPropName+"s");
-								SystemMainTable foreiTable = mc.getForeignTable();
+//								SystemMainTable foreiTable = mc.getForeignTable();
 								for(Object extObject:list ){
 									BeanWrapper bwExt = new BeanWrapperImpl(extObject);
 									String foreignKey=bwExt.getPropertyValue(foreignKeyColumnName).toString();
@@ -859,7 +858,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 								SystemMainTableColumn foreignKeyColumn = mc.getForeignTableKeyColumn();
 								String foreignKeyColumnName = foreignKeyColumn.getPropertyName();
 								List<Object> list=(List) map.get(pextPropName+"s");
-								SystemMainTable foreiTable = mc.getForeignTable();
+//								SystemMainTable foreiTable = mc.getForeignTable();
 								for(Object extObject:list ){
 									BeanWrapper bwExt = new BeanWrapperImpl(extObject);
 									String foreignKey=bwExt.getPropertyValue(foreignKeyColumnName).toString();
@@ -886,7 +885,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 								SystemMainTableColumn foreignKeyColumn = mc.getForeignTableKeyColumn();
 								String foreignKeyColumnName = foreignKeyColumn.getPropertyName();
 								List<Object> list=(List) map.get(pextPropName+"s");
-								SystemMainTable foreiTable = mc.getForeignTable();
+//								SystemMainTable foreiTable = mc.getForeignTable();
 								for(Object extObject:list ){
 									BeanWrapper bwExt = new BeanWrapperImpl(extObject);
 									String foreignKey=bwExt.getPropertyValue(foreignKeyColumnName).toString();
@@ -1026,7 +1025,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				columnWapper.initList();
 				requestParams.put(propertyName+"s", columnWapper.getMap());
 		    }else if(columnType.getColumnTypeName().equalsIgnoreCase("extSelect")){
-				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
+//				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				Map map=new HashMap();
 				requestParams.put(propertyName+"s", map);
 		    }
@@ -1212,8 +1211,8 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initDataAndList(object);
 
-				Object value = columnWapper.getValue();
-				Long key = columnWapper.getKey();
+//				Object value = columnWapper.getValue();
+//				Long key = columnWapper.getKey();
 				List allList = columnWapper.getAllList();
 				List list = columnWapper.getList();
 				List parentList = columnWapper.getParentList();
@@ -1343,7 +1342,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				requestParams.put(propertyName, columnWapper.getKey());
 						
 			}else if(columnTypenName.equalsIgnoreCase("select")){
-				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
+//				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initData(object);
 				requestParams.put(propertyName, columnWapper.getKey()); 
@@ -1445,7 +1444,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initDataAndList(object);
 
-				Object value = columnWapper.getValue();
+//				Object value = columnWapper.getValue();
 				List allList = columnWapper.getAllList();
 				List list = columnWapper.getList();
 				List parentList = columnWapper.getParentList();
@@ -1575,8 +1574,8 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initDataAndList(object);
 
-				Object value = columnWapper.getValue();
-				Long key = columnWapper.getKey();
+//				Object value = columnWapper.getValue();
+//				Long key = columnWapper.getKey();
 				List allList = columnWapper.getAllList();
 				List list = columnWapper.getList();
 				List parentList = columnWapper.getParentList();
@@ -1702,7 +1701,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initDataAndList(object);
 
-				Object value = columnWapper.getValue();
+//				Object value = columnWapper.getValue();
 				List allList = columnWapper.getAllList();
 				List list = columnWapper.getList();
 				List parentList = columnWapper.getParentList();
@@ -1750,27 +1749,27 @@ public class MetaDataManagerImpl implements MetaDataManager {
 
 		SystemMainTable smt = this.systemMainTableService.findSystemMainTableByClazz(clazz);
 		List sysMainColumns =this.systemMainAndExtColumnService.findColumnByIsExtAndSysMainTable(SystemMainTableColumn.isMain, smt);
-		List sysExtColumns=this.systemMainAndExtColumnService.findColumnByIsExtAndSysMainTable(SystemMainTableColumn.isExt, smt);
+//		List sysExtColumns=this.systemMainAndExtColumnService.findColumnByIsExtAndSysMainTable(SystemMainTableColumn.isExt, smt);
 
 		List<Object> mapList = new ArrayList<Object>();
 		Iterator iter = mainList.iterator();
 		while(iter.hasNext()){//遍历每行记录，取出list中的实体BaseObject item
 
 			BaseObject object = (BaseObject) iter.next();
-			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
+//			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
 
 			//取出实体的主字段
 		
 			for(int i=0; i<sysMainColumns.size(); i++){
-				Object propertyValue = null;
+//				Object propertyValue = null;
 				SystemMainTableColumn mc = (SystemMainTableColumn) sysMainColumns.get(i);
-				SystemMainTableColumnType mcType = mc.getSystemMainTableColumnType();
-				String typeName = mcType.getColumnTypeName();
-				String propertyName = mc.getPropertyName(); //当前主属性的名称
+//				SystemMainTableColumnType mcType = mc.getSystemMainTableColumnType();
+//				String typeName = mcType.getColumnTypeName();
+//				String propertyName = mc.getPropertyName(); //当前主属性的名称
 				
 				ColumnDataWrapper columnDataWrapper = new ColumnDataWrapper(mc);
 				columnDataWrapper.initData(object);
-				propertyValue = columnDataWrapper.getText();
+//				propertyValue = columnDataWrapper.getText();
 				//multiSelect不显示
 			
 			}
@@ -1794,7 +1793,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 		while(iter.hasNext()){//遍历每行记录，取出list中的实体BaseObject item
 			Map<String, Object> item = new HashMap<String, Object>(); //存储每个记录，相对一个实体对象
 			BaseObject object = (BaseObject) iter.next();
-			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
+//			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
 
 			//取出实体的主字段
 		
@@ -1834,8 +1833,8 @@ public class MetaDataManagerImpl implements MetaDataManager {
 			for(int i=0; i<sysExtColumns.size(); i++){
 				Object propertyValue = null;
 				SystemMainTableColumn mtec = (SystemMainTableColumn) sysExtColumns.get(i);
-				SystemMainTableColumnType mcType = mtec.getSystemMainTableColumnType();
-				String typeName = mcType.getColumnTypeName();
+//				SystemMainTableColumnType mcType = mtec.getSystemMainTableColumnType();
+//				String typeName = mcType.getColumnTypeName();
 				String propertyName = mtec.getPropertyName(); //当前主属性的名称
 				
 				ColumnDataWrapper columnDataWrapper = new ColumnDataWrapper(mtec);
@@ -1861,15 +1860,15 @@ public class MetaDataManagerImpl implements MetaDataManager {
 		while(iter.hasNext()){//遍历每行记录，取出list中的实体BaseObject item
 			Map<String, Object> item = new HashMap<String, Object>(); //存储每个记录，相对一个实体对象
 			BaseObject object = (BaseObject) iter.next();
-			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
+//			Long mainTableRowId = object.getId(); //主表当前记录的id（行号）
 
 			//取出实体的主字段
 		
 			for(int i=0; i<sysMainColumns.size(); i++){
 				Object propertyValue = null;
 				SystemMainTableColumn mc = (SystemMainTableColumn) sysMainColumns.get(i);
-				SystemMainTableColumnType mcType = mc.getSystemMainTableColumnType();
-				String typeName = mcType.getColumnTypeName();
+//				SystemMainTableColumnType mcType = mc.getSystemMainTableColumnType();
+//				String typeName = mcType.getColumnTypeName();
 				String propertyName = mc.getPropertyName(); //当前主属性的名称				
 				String tableNameProperyName = tableName+"$"+ propertyName; //*****add***
 				ColumnDataWrapper columnDataWrapper = new ColumnDataWrapper(mc);
@@ -1886,8 +1885,8 @@ public class MetaDataManagerImpl implements MetaDataManager {
 			for(int i=0; i<sysExtColumns.size(); i++){
 				Object propertyValue = null;
 				SystemMainTableColumn mtec = (SystemMainTableColumn) sysExtColumns.get(i);
-				SystemMainTableColumnType mcType = mtec.getSystemMainTableColumnType();
-				String typeName = mcType.getColumnTypeName();
+//				SystemMainTableColumnType mcType = mtec.getSystemMainTableColumnType();
+//				String typeName = mcType.getColumnTypeName();
 				String propertyName = mtec.getPropertyName(); //当前主属性的名称
 				String tableNameProperyName = tableName+"$"+ propertyName;//*****add***
 				
@@ -1969,7 +1968,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 				SystemMainTableColumn column = stqc.getMainTableColumn();
 				
 				String propertyName = column.getPropertyName();
-				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
+//				SystemMainTableColumn fParentColumn = column.getForeignTableParentColumn();
 
 				ColumnDataWrapper columnWapper = new ColumnDataWrapper(column);
 				columnWapper.initList();

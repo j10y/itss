@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2009-2-12
  */
 public class SystemTableColumnCondition extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -6430578056848204622L;
 	public static Integer LOGIC_TYPE_AND = 1;
 	public static Integer LOGIC_TYPE_OR = 0;
 	public static Integer LOGIC_TYPE_NOT = -1;

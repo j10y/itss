@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2009-1-22
  */
 public class SystemTableSettingVersion extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -8543311916532431217L;
 	private Long id;
 	private SystemMainTable systemMainTable;
 	private Integer settingType;

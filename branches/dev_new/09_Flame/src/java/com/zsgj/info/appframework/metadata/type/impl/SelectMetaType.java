@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.type.Type;
 
-import com.zsgj.info.appframework.metadata.service.MetaDataService;
 import com.zsgj.info.appframework.metadata.type.AbstractMetaType;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.service.Service;

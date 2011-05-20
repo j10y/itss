@@ -89,6 +89,7 @@ public class SystemTableIdGenServiceImpl extends BaseDao implements
 		return null;
 	}
 	
+	@SuppressWarnings("unused")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {

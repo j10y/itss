@@ -23,6 +23,7 @@ import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.util.HttpUtil;
 
+@SuppressWarnings("serial")
 public class ComboDataAction extends HttpServlet {
 	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder
 			.getBean("metaDataManager");
@@ -122,7 +123,6 @@ public class ComboDataAction extends HttpServlet {
 		
 		String isAbstract= request.getParameter("isAbstract");
 		if(isAbstract!=null&& isAbstract.equals("true")){
-			@SuppressWarnings("unused")
 			String discValue = (String) request.getSession(true).getAttribute("discValue");
 			if(StringUtils.isNotBlank(discValue)){
 				String fdiscTable = request.getParameter("fdiscTable");
@@ -158,7 +158,6 @@ public class ComboDataAction extends HttpServlet {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {

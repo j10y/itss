@@ -22,9 +22,9 @@ public class ExtHtmlBuilder {
 		for(UserTableQueryColumn utqc :columns) {			
 			Column column = utqc.getColumn();
 			String propertyName = column.getPropertyName();
-			String columnName = column.getColumnName();
+//			String columnName = column.getColumnName();
 			String columnCnName = column.getColumnCnName();
-			String width = utqc.getLengthForPage(); 
+//			String width = utqc.getLengthForPage(); 
 			//begin by peixf
 			Integer isHiddenQueryItem = utqc.getIsHiddenItem();
 			boolean isHiddenQuery = isHiddenQueryItem!=null&& isHiddenQueryItem.intValue()==1;

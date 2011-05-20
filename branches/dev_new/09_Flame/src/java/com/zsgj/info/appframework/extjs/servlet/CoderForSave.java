@@ -2,31 +2,23 @@ package com.zsgj.info.appframework.extjs.servlet;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 
 import com.zsgj.info.appframework.metadata.entity.Column;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
-import com.zsgj.info.appframework.pagemodel.servlet.ContextFilter;
 import com.zsgj.info.framework.context.ContextHolder;
-import com.zsgj.info.framework.util.PropertiesUtil;
 
 public class CoderForSave {
 	private static SystemColumnService systemColumnService = (SystemColumnService) ContextHolder.getBean("systemColumnService");
 	// for save
-	@SuppressWarnings("unchecked")
 	public static String encode(Map<String, Object> dataMap,
 			List<UserTableSetting> columns, boolean forEdit) {
 		String json = "";
 		for (UserTableSetting uts : columns) {
 			SystemMainTable smt = uts.getColumn().getSystemMainTable();
 			String tableName = smt.getTableName();
-			String className = smt.getClassName();
+//			String className = smt.getClassName();
 			String propertyName = uts.getPropertyName();
 			String propertyNames = propertyName + "s";
 			boolean isDisplay = uts.getIsDisplay().intValue() != 1;
@@ -106,7 +98,7 @@ public class CoderForSave {
 			} else if (columnType.equalsIgnoreCase("dateText")) {
 				componentStr = ComponentCoder.makeDateText(c);
 			} else if (columnType.equalsIgnoreCase("yesNoSelect")) {// 数据模型存储于map中
-				Integer extSelectType = column.getExtSelectType();
+//				Integer extSelectType = column.getExtSelectType();
 				Map vMap = (Map) dataMap.get(propertyNames);
 				String[][] values = new String[2][3];
 				for (int i = 0; i < 2; i++) {
@@ -123,7 +115,7 @@ public class CoderForSave {
 				c.setValue(values);
 				componentStr = ComponentCoder.makeSelect(c);// 同普通的select
 			} else if (columnType.equalsIgnoreCase("sexSelect")) {// 数据模型存储于map中
-				Integer extSelectType = column.getExtSelectType();
+//				Integer extSelectType = column.getExtSelectType();
 				Map vMap = (Map) dataMap.get(propertyNames);
 				String[][] values = new String[2][3];
 				for (int i = 0; i < 2; i++) {
@@ -179,17 +171,17 @@ public class CoderForSave {
 				
 			} else if (columnType.equalsIgnoreCase("file")) {
 				// 以下代码提供上传文件参考使用
-				String uploadUrl = column.getUploadUrl();
-				String fileNamePrefix = column.getFileNamePrefix();
-				SystemMainTableColumn fileNameColumn = column
-						.getFileNameColumn();
-				SystemMainTableColumn systemFileNameColumn = column
-						.getSystemFileNameColumn();
+//				String uploadUrl = column.getUploadUrl();
+//				String fileNamePrefix = column.getFileNamePrefix();
+//				SystemMainTableColumn fileNameColumn = column
+//						.getFileNameColumn();
+//				SystemMainTableColumn systemFileNameColumn = column
+//						.getSystemFileNameColumn();
 				// fileName
-				String fileNamePropertyName = fileNameColumn.getPropertyName();
+//				String fileNamePropertyName = fileNameColumn.getPropertyName();
 				// systemFileName
-				String sysFileNamePropertyName = systemFileNameColumn
-						.getPropertyName();
+//				String sysFileNamePropertyName = systemFileNameColumn
+//						.getPropertyName();
 				String text = "" + dataMap.get(propertyName + "Text");
 				String link = "" + dataMap.get(propertyName + "Link");
 				link = link.replaceAll("\\\\", "/");

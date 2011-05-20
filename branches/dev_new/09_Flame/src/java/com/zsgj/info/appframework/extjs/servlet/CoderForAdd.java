@@ -31,20 +31,20 @@ public class CoderForAdd {
 			String columnType = column.getSystemMainTableColumnType().getColumnTypeName();
 			//String columnType = column.systemMainTableColumnType.columnTypeName
 			propertyName = column.getPropertyName();
-			String type = column.getValidateType()==null?"":column.getValidateType().getValidateTypeName();
+//			String type = column.getValidateType()==null?"":column.getValidateType().getValidateTypeName();
 			isMustInput = column.getIsMustInput();
 			
 			//必填项		
-			String mustInput = "";
-			if(isMustInput.intValue()==1) {//必填
-				mustInput = "true";
-			}
-			else{//选填					
-			}
+//			String mustInput = "";
+//			if(isMustInput.intValue()==1) {//必填
+//				mustInput = "true";
+//			}
+//			else{//选填					
+//			}
 			
 			//校验器		
-			String validator = "";
-			validator = Validator.get(type);				
+//			String validator = "";
+//			validator = Validator.get(type);				
 			isDisplay = isDisplay||columnType.equalsIgnoreCase("hidden");				
 
 			//组件编码
@@ -83,7 +83,7 @@ public class CoderForAdd {
 			else if(columnType.equalsIgnoreCase("select")||columnType.equalsIgnoreCase("radio")) {
 				Integer extSelectType = column.getExtSelectType();
 				List vList = (List)addMap.get(propertyNames);
-				String vId = (String)addMap.get(propertyName);
+//				String vId = (String)addMap.get(propertyName);
 				String[][] values = new String[vList.size()][3];
 									
 				for(int i=0;i<vList.size();i++) {

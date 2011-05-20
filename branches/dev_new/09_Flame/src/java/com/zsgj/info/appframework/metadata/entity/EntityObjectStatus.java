@@ -12,6 +12,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2009-2-23
  */
 public class EntityObjectStatus extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -198354101147239117L;
 	private Long id;
 	private String name;
 //	是否记历史标志，如提交，删除

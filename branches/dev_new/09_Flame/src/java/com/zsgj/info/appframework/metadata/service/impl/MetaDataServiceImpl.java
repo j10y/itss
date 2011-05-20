@@ -400,7 +400,7 @@ public class MetaDataServiceImpl extends BaseDao implements MetaDataService {
 		SystemTableQuery result = null;
 		result = (SystemTableQuery) save(utq); 
 		//插入主表查询后初始化所有的默认查询字段到主表查询字段表中，包括扩展字段和主字段
-		int order = 0;
+//		int order = 0;
 		if(isInsert && utq.getQueryType().intValue()==1){ //如果是单表查询
 			SystemMainTable smt = utq.getSystemMainTable();
 			metaDataDao.insertRelateTableColumnToQuery(utq, smt);

@@ -10,8 +10,11 @@ import com.zsgj.info.framework.security.entity.Role;
  */
 public class SystemTableSetting extends Column {
 
-	private static final Long serialVersionUID = 2781399575809234181L;
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7282224281911640248L;
 	public static final Integer LIST = new Integer(1);
 	public static final Integer INPUT = new Integer(2);
 	public static final Integer QUERY = new Integer(3);
@@ -38,6 +41,18 @@ public class SystemTableSetting extends Column {
 	private String hiddenValue;
 	private Integer bigFlag; //是否长字段标记
 	
+	/**
+	 * @Return the Integer bigFlag
+	 */
+	public Integer getBigFlag() {
+		return bigFlag;
+	}
+	/**
+	 * @Param Integer bigFlag to set
+	 */
+	public void setBigFlag(Integer bigFlag) {
+		this.bigFlag = bigFlag;
+	}
 	public Column getColumn(){
 		if(this.getMainTableColumn()!=null){
 			return this.getMainTableColumn();

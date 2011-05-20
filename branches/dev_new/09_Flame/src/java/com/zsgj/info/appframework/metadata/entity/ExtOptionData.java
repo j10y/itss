@@ -3,7 +3,11 @@ package com.zsgj.info.appframework.metadata.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class ExtOptionData extends BaseObject{
-	private static final Long serialVersionUID = -1021390386911002253L;
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 4941306618627199522L;
+	
 	private Long id;
 	private Integer extColumnId;//扩展字段id编号
 	private String extOptionValue;//存放下拉列表或多选的数据

@@ -466,7 +466,7 @@ public abstract class ColumnQueryService extends BaseDao implements QueryService
 		
 		if(ptName.equalsIgnoreCase("BaseObject")){
 			SystemMainTable ftable = smtc.getForeignTable();
-			SystemMainTableColumn fvc = smtc.getForeignTableValueColumn();
+//			SystemMainTableColumn fvc = smtc.getForeignTableValueColumn();
 			String ftableClass = ftable.getClassName();
 			Class fclass = this.getClass(ftableClass);
 			result = super.getObject(fclass, value, true);
@@ -515,7 +515,7 @@ public abstract class ColumnQueryService extends BaseDao implements QueryService
 				PropertyType pt = mainTableColumn.getPropertyType();
 				
 				String value = condit.getValue();
-				Integer logicType = condit.getLogicType();
+//				Integer logicType = condit.getLogicType();
 				if(value!=null){
 					if(operator.getName().equalsIgnoreCase(Operator.OPERATOR_EQ)){
 						critea.add(Restrictions.eq(mainTableColumn.getPropertyName(), getValue(mainTableColumn, pt, value)));

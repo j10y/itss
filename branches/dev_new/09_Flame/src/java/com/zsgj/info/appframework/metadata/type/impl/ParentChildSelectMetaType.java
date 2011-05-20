@@ -2,7 +2,6 @@ package com.zsgj.info.appframework.metadata.type.impl;
 
 import java.util.List;
 
-import com.zsgj.info.appframework.metadata.service.MetaDataService;
 import com.zsgj.info.appframework.metadata.type.AbstractMetaType;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.service.Service;
