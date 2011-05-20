@@ -33,8 +33,8 @@ public class ServiceItemManagerAction extends BaseAction{
 	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService)ContextHolder.getBean("parameterService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
-	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
+//	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
+//	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
 	private ProcessService ps = (ProcessService)ContextHolder.getBean("processService");
 	
 	/**
@@ -53,8 +53,8 @@ public class ServiceItemManagerAction extends BaseAction{
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+//		String departmentCode = super.getRequest().getParameter("deptcode");
+//		String userAssign = super.getRequest().getParameter("userAssign");
 //			//需要进入上下文的业务参数
 			Map<String,String> mapBizz = new HashMap<String,String>();
 			if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -102,7 +102,6 @@ public class ServiceItemManagerAction extends BaseAction{
 	 * @throws Exception String
 	 */
 	public String tasks() throws Exception{
-		@SuppressWarnings("unused")
 		HttpServletRequest request = super.getRequest();
 		//需要的参数
 		String actor = request.getParameter("actorId");
@@ -160,6 +159,7 @@ public class ServiceItemManagerAction extends BaseAction{
 	 * @return 
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unused")
 	private String next() throws Exception{
 		//需要的参数
 		String taskId = super.getRequest().getParameter("taskid");	 

@@ -14,6 +14,10 @@ import com.zsgj.itil.service.entity.ServiceItem;
  * @Create In 2009-2-11
  */
 public class CIRelationShipItem extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -1544714651616696936L;
 	public static Integer TYPE_CID = 1;
 	public static Integer TYPE_SCID = 0;
 	private Long id;

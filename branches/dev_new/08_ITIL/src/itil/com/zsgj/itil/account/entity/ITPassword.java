@@ -4,6 +4,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.itil.require.entity.AccountApplyMainTable;
 
 public class ITPassword  extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 9019294242694977444L;
 	private Long id;
 	private Integer mailType;
 	private String webMail;

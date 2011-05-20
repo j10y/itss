@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-11-9
  */
 public class DepressMode extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 3866020567009860061L;
 	private Long id;
 	private String name;
 	public Long getId() {

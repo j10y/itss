@@ -40,7 +40,7 @@ public class ServiceItemTypeAction extends BaseDispatchAction{
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		String id=request.getParameter("id");
 		if(id!=null&&id.length()>0){
 			ServiceItemType scit=serviceItemTypeService.findServiceItemTypeById(id);
@@ -54,7 +54,7 @@ public class ServiceItemTypeAction extends BaseDispatchAction{
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		ServiceItemType scit=(ServiceItemType) BeanUtil.getObject(request, ServiceItemType.class);
 		ServiceItemType serviceItemType=serviceItemTypeService.saveServiceItemType(scit);
 		request.setAttribute("serviceItemType", serviceItemType);

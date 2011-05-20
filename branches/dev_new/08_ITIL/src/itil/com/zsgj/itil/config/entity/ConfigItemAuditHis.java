@@ -6,6 +6,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class ConfigItemAuditHis extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 6559046147594522717L;
 	private Long id;
 	private ConfigItem configItem ;
 	//private ConfigItemApply configItemApply;

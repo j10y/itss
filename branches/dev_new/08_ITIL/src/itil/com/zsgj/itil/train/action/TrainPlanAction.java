@@ -70,7 +70,7 @@ public class TrainPlanAction extends BaseAction{
 	}
 	public String saveCourseAndSurvey() throws Exception{
 		HttpServletRequest request = super.getRequest();
-		HttpServletResponse response = super.getResponse();
+//		HttpServletResponse response = super.getResponse();
 		String cId = request.getParameter("cId");
 		String dataId = request.getParameter("dataId");
 		Map map = new HashMap();
@@ -712,7 +712,6 @@ public class TrainPlanAction extends BaseAction{
 	  */
 	public String saveQuestResult() throws Exception {
 		//String radio = super.getRequest().getParameter("4_radio");
-			@SuppressWarnings("unused")
 			UserInfo userInfo = UserContext.getUserInfo();
 //			Map map = new HashMap();
 			String dataId = (String) super.getRequest().getParameter("courseId");
@@ -1126,7 +1125,7 @@ public class TrainPlanAction extends BaseAction{
 
 				for (TrainCourse course : CourseList) {
 
-					String dataStr = "";
+//					String dataStr = "";
 					json += "{trainCourse:" + course.getId() + ",name:'" + course.getCourseName()
 							+ "'}";
 					json += ",";
@@ -1185,7 +1184,7 @@ public class TrainPlanAction extends BaseAction{
 
 				for (UserInfo user : UserList) {
 
-					String dataStr = "";
+//					String dataStr = "";
 					json += "{signupUser:" + user.getId() + ",name:'" + user.getRealName()
 							+ "'}";
 					json += ",";

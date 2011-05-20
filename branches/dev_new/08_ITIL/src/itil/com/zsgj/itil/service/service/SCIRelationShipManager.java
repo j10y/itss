@@ -111,7 +111,7 @@ public class SCIRelationShipManager {
 	 * @return String
 	 */
 	public String ajaxTestMove(String id, String oldParentId, String newParentId, String nodeIndex){
-		SCIRelationShip oldParent = scirss.findSCIRelationShipById(oldParentId);
+//		SCIRelationShip oldParent = scirss.findSCIRelationShipById(oldParentId);
 		SCIRelationShip newParent = scirss.findSCIRelationShipById(newParentId);
 		SCIRelationShip curRelationShip = scirss.findSCIRelationShipById(id);
 		String curType = curRelationShip.getTypeFlag();

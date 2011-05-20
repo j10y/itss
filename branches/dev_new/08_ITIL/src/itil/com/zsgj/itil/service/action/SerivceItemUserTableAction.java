@@ -106,9 +106,9 @@ public class SerivceItemUserTableAction extends BaseDispatchAction{
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		String id = request.getParameter("id");
-		String serviceItemId = request.getParameter("serviceItem");
+//		String serviceItemId = request.getParameter("serviceItem");
 		if(StringUtils.isNotBlank(id)&&!"".endsWith(id)){
 			ServiceItemUserTable siut =siuts.findServiceItemUserTableById(id);
 			request.setAttribute("siut", siut);
@@ -136,7 +136,7 @@ public class SerivceItemUserTableAction extends BaseDispatchAction{
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		String serviceItemId = request.getParameter("serviceItemId");
 		ServiceItem serviceItem = serviceItemService.findServiceItemById(serviceItemId);
 		request.setAttribute("serviceItem", serviceItem);
@@ -219,7 +219,7 @@ public class SerivceItemUserTableAction extends BaseDispatchAction{
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 	
-		String id = request.getParameter("id"); 
+//		String id = request.getParameter("id"); 
         String systemMainTableId = request.getParameter("systemMainTable");
         String serviceItemId= request.getParameter("serviceItem");
         
@@ -318,11 +318,11 @@ public class SerivceItemUserTableAction extends BaseDispatchAction{
 		
 		SystemMainTable smt = siut.getSystemMainTable();
 		//smt = (SystemMainTable) super.getService().find(SystemMainTable.class, String.valueOf(smt.getId()));
-		String tableName = smt.getTableName();
-		String className = smt.getClassName();
-		int lastDot = className.lastIndexOf(".");
-		String sourcePkg = className.substring(0, lastDot);
-		String sourceClass = className.substring(lastDot+1);
+//		String tableName = smt.getTableName();
+//		String className = smt.getClassName();
+//		int lastDot = className.lastIndexOf(".");
+//		String sourcePkg = className.substring(0, lastDot);
+//		String sourceClass = className.substring(lastDot+1);
 		
 		this.siuts.saveSystemMainTableDeploy(scid, smt);
 		

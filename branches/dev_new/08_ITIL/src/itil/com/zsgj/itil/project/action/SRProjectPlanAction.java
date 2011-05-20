@@ -29,8 +29,8 @@ import com.zsgj.itil.project.service.SRProjectPlanService;
 public class SRProjectPlanAction extends BaseAction{
 	private MetaDataManager metaDataManager = (MetaDataManager) super.getBean("metaDataManager");
 	private SRProjectPlanService planService = (SRProjectPlanService)getBean("SRprojectPlanService");
-	private PagePanelService pagePanelService = (PagePanelService) getBean("pagePanelService");
-	private PageManager pageManager = (PageManager) getBean("pageManager");
+//	private PagePanelService pagePanelService = (PagePanelService) getBean("pagePanelService");
+//	private PageManager pageManager = (PageManager) getBean("pageManager");
 	/**
 	 * 为项目计划树状列表提供数据
 	 * @Methods Name getGridTreeData

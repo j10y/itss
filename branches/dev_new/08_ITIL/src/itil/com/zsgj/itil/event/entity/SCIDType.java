@@ -32,5 +32,17 @@ public class SCIDType extends BaseObject {
 	public void setTypeFlag(Integer typeFlag) {
 		this.typeFlag = typeFlag;
 	}
+	/**
+	 * @Param ConfigItem configItem to set
+	 */
+	public void setConfigItem(ConfigItem configItem) {
+		this.configItem = configItem;
+	}
+	/**
+	 * @Return the ConfigItem configItem
+	 */
+	public ConfigItem getConfigItem() {
+		return configItem;
+	}
 	
 }

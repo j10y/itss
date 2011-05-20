@@ -37,7 +37,7 @@ public class RemoteAccessAccountJob extends QuartzJobBean{
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		String accountType="VPNAccount";
-		String accountVPNType="TempVPNAccount";
+//		String accountVPNType="TempVPNAccount";
 		Date curDate=DateUtil.getCurrentDate();
 		calendar.setTime(curDate);
 		Long nowTime=calendar.getTimeInMillis();
@@ -61,7 +61,7 @@ public class RemoteAccessAccountJob extends QuartzJobBean{
 			}
 		 }
 		System.out.println("远程接入帐号到期催办任务调度开始发邮件【"+i1+"】============");
-		int i2 = 1;
+//		int i2 = 1;
 		List<SpecialAccount> specailAccount=accountService.findSpecailAccountByType(accountType);
 		  for(SpecialAccount account:specailAccount){
 				UserInfo user=account.getAccountNowUser();
@@ -83,7 +83,7 @@ public class RemoteAccessAccountJob extends QuartzJobBean{
 	//邮件格式  accountHtmlContent
 	private String accountHtmlContent(UserInfo creator, String url) {
         StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

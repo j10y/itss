@@ -22,8 +22,8 @@ public class CCTelInfoServicImpl extends BaseService implements ICCTelInfoServic
 	public String htmlContent(String url) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
 		sb.append("<html>");
 		sb.append("	<head>");

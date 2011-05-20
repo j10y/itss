@@ -12,6 +12,10 @@ import com.zsgj.itil.finance.entity.ApportionMode;
  * @Create In 2008-11-9
  */
 public class ConfigItemFinanceInfo extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 4386282195031372L;
 	public static final Integer ASSETFLAG_YES=1;
 	public static final Integer ASSETFLAG_NO=0;
 	public static final Integer LEVELFLAG_YES=1;

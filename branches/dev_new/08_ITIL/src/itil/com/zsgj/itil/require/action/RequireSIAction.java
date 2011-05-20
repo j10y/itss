@@ -88,7 +88,6 @@ public class RequireSIAction extends BaseAction {
 		if (sCIRelationShipId.equals("-1")) {
 			UserInfo userInfo = UserContext.getUserInfo();
 			List custIds = requireSIService.findCustIdByUser(userInfo);
-			@SuppressWarnings("unused")
 			List<ServiceCatalogue> servicecataLogue = requireSIService.findServiceCatalogueByCust(custIds);
 			List<SCIRelationShip> list = requireSIService.findSCIRelationShipByService(servicecataLogue);
 			List<SCIRelationShip> storeServiceCatalogue = new ArrayList<SCIRelationShip>();
@@ -216,7 +215,6 @@ public class RequireSIAction extends BaseAction {
 	@SuppressWarnings("unchecked")
 	public String selectDeseData() {
 		String treeDeseID = super.getRequest().getParameter("treeDeseID");
-		@SuppressWarnings("unused")
 		SCIRelationShip sCIRelationShip = requireSIService.findServiceCatalogueByRelationId(treeDeseID);
 
 		String json = "{\"servicemessage\":[{";
@@ -318,7 +316,7 @@ public class RequireSIAction extends BaseAction {
 		ServiceItem serviceItem = null;
 		if (SCIRelationShip.SCI_TYPE_ITEM.equals(sciRelationShip.getTypeFlag())) {
 			serviceItem = sciRelationShip.getServiceItem();
-			String serviceItemName = serviceItem.getName();
+//			String serviceItemName = serviceItem.getName();
 			ServiceItemUserTable siut = serviceItemUserTableService.findServiceItemUserTableByServiceItem(serviceItem);
 			//modify by lee for process entry in 20090522 begin
 			if (siut.getPageListPanel() == null) {
@@ -332,7 +330,7 @@ public class RequireSIAction extends BaseAction {
 			}
 			String listPanelName = siut.getPageListPanel().getName();
 			String tableName = siut.getSystemMainTable().getTableName();
-			String clazz = siut.getClassName();
+//			String clazz = siut.getClassName();
 			request.setAttribute("serviceItemId", serviceItem.getId());
 			request.setAttribute("serviceItemName", serviceItem.getName());
 			request.setAttribute("processTypeSum", processTypeSum);
@@ -351,7 +349,7 @@ public class RequireSIAction extends BaseAction {
 		ServiceItem serviceItem = null;
 		if (SCIRelationShip.SCI_TYPE_ITEM.equals(sciRelationShip.getTypeFlag())) {
 			serviceItem = sciRelationShip.getServiceItem();
-			String serviceItemName = serviceItem.getName();
+//			String serviceItemName = serviceItem.getName();
 			ServiceItemUserTable siut = serviceItemUserTableService.findServiceItemUserTableByServiceItem(serviceItem);
 			//modify by lee for process entry in 20090522 begin
 			if (siut.getPageListPanel() == null) {
@@ -365,7 +363,7 @@ public class RequireSIAction extends BaseAction {
 			}
 			String listPanelName = siut.getPageListPanel().getName();
 			String tableName = siut.getSystemMainTable().getTableName();
-			String clazz = siut.getClassName();
+//			String clazz = siut.getClassName();
 			request.setAttribute("serviceItemId", serviceItem.getId());
 			request.setAttribute("serviceItemName", serviceItem.getName());
 			request.setAttribute("processTypeSum", processTypeSum);
@@ -388,11 +386,11 @@ public class RequireSIAction extends BaseAction {
 		String id = request.getParameter("id");
 		if (id != null && !"".equals(id)) {
 			ServiceItem serviceItem = serviceItemService.findServiceItemById(id);
-			String serviceItemName = serviceItem.getName();
+//			String serviceItemName = serviceItem.getName();
 			ServiceItemUserTable siut = serviceItemUserTableService.findServiceItemUserTableByServiceItem(serviceItem);
 			String listPanelName = siut.getPageListPanel().getName();
 			String tableName = siut.getSystemMainTable().getTableName();
-			String clazz = siut.getClassName();
+//			String clazz = siut.getClassName();
 			request.setAttribute("serviceItemId", serviceItem.getId());
 			request.setAttribute("serviceItemName", serviceItem.getName());
 			request.setAttribute("gridName", listPanelName);
@@ -414,11 +412,11 @@ public class RequireSIAction extends BaseAction {
 		String id = request.getParameter("id");
 		if (id != null && !"".equals(id)) {
 			ServiceItem serviceItem = serviceItemService.findServiceItemById(id);
-			String serviceItemName = serviceItem.getName();
+//			String serviceItemName = serviceItem.getName();
 			ServiceItemUserTable siut = serviceItemUserTableService.findServiceItemUserTableByServiceItem(serviceItem);
 			String listPanelName = siut.getPageListPanel().getName();
 			String tableName = siut.getSystemMainTable().getTableName();
-			String clazz = siut.getClassName();
+//			String clazz = siut.getClassName();
 			request.setAttribute("serviceItemId", serviceItem.getId());
 			request.setAttribute("serviceItemName", serviceItem.getName());
 			request.setAttribute("gridName", listPanelName);
@@ -539,8 +537,8 @@ public class RequireSIAction extends BaseAction {
 		//可以在这之前操纵查询数据，过滤出listData数据来，
 		//#######################################################
 		//String panelName = request.getParameter("panelName");
-		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		List<PagePanelColumn> pagePanelColumns = pageManager.getUserPagePanelColumn(panelName);
+//		PagePanel panel = pagePanelService.findPagePanel(panelName);
+//		List<PagePanelColumn> pagePanelColumns = pageManager.getUserPagePanelColumn(panelName);
 		//######################################################
 		SystemMainTable smt=systemMainTableService.findSystemMainTableByClazz(toClass(className));
 		List<SystemMainTableColumn> utss = systemColumnService.findSystemTableColumns(smt);
@@ -699,10 +697,10 @@ public class RequireSIAction extends BaseAction {
 	 * @return String
 	 */
 	public String getQuerry() {
-		HttpServletRequest request = super.getRequest();
-		String clazz = request.getParameter("clazz");
-		String procesId = request.getParameter("processId");
-		String state = request.getParameter("state");
+//		HttpServletRequest request = super.getRequest();
+//		String clazz = request.getParameter("clazz");
+//		String procesId = request.getParameter("processId");
+//		String state = request.getParameter("state");
 
 		return null;
 	}
@@ -713,12 +711,12 @@ public class RequireSIAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		//String className= request.getParameter("clazz");
 		String panelName = request.getParameter("panelName");
-		PagePanel pagePanel = pagePanelService.findPagePanel(panelName);
-		String className = pagePanel.getSystemMainTable().getClassName();
-		List<UserTableSetting> utss = mdm.getUserColumnForList(getClass(className));
+//		PagePanel pagePanel = pagePanelService.findPagePanel(panelName);
+//		String className = pagePanel.getSystemMainTable().getClassName();
+//		List<UserTableSetting> utss = mdm.getUserColumnForList(getClass(className));
 		//    	######################################################
 		//String panelName = request.getParameter("panelName");
-		PagePanel panel = pagePanelService.findPagePanel(panelName);
+//		PagePanel panel = pagePanelService.findPagePanel(panelName);
 		List<PagePanelColumn> pagePanelColumns = pageManager.getUserPagePanelColumn(panelName);
 		//    	######################################################
 		String json = "{name:'rootGrid'},";
@@ -947,8 +945,8 @@ public class RequireSIAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String serviceTypeStr = request.getParameter("serviceType");
-		int start = HttpUtil.getInt(request, "start",1);
-		int pageSize = HttpUtil.getInt(request, "pageSize",20);
+//		int start = HttpUtil.getInt(request, "start",1);
+//		int pageSize = HttpUtil.getInt(request, "pageSize",20);
 		
 		ServiceType serviceType = null;
 		if(StringUtils.isNotBlank(serviceTypeStr)){
@@ -1013,8 +1011,8 @@ public class RequireSIAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String serviceItems = request.getParameter("fastSiIds");
-		int start = HttpUtil.getInt(request, "start",1);
-		int pageSize = HttpUtil.getInt(request, "pageSize",20);
+//		int start = HttpUtil.getInt(request, "start",1);
+//		int pageSize = HttpUtil.getInt(request, "pageSize",20);
 		String[] ids = serviceItems.split(",");
 		List<Long> idlist = new ArrayList<Long>();
 		for(int i=0;i<ids.length;i++){
@@ -1090,8 +1088,8 @@ public class RequireSIAction extends BaseAction {
 		String strServiceItemType = request.getParameter("serviceItemType");
 		String strServiceType = request.getParameter("serviceType");
 		String strServiceItemName = request.getParameter("serviceItemName");
-		int pageNo = HttpUtil.getInt(request, "start",1);
-		int pageSize = HttpUtil.getInt(request, "pageSize",20);
+//		int pageNo = HttpUtil.getInt(request, "start",1);
+//		int pageSize = HttpUtil.getInt(request, "pageSize",20);
 		
 		ServiceItemType serviceItemType = null;
 		ServiceType serviceType = null;

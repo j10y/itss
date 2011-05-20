@@ -41,8 +41,8 @@ public class RequireManagerAction extends BaseAction{
 	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService)ContextHolder.getBean("parameterService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
-	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
+//	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
+//	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
 	private ProcessService ps = (ProcessService)ContextHolder.getBean("processService");
 	private RequireService rs = (RequireService)ContextHolder.getBean("requireService");
 	
@@ -64,7 +64,7 @@ public class RequireManagerAction extends BaseAction{
 		//definitionName=StringUtils.substringAfter(definitionName, "$");
 		//definitionName = definitionName.substring(8);
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
-		String dataId = super.getRequest().getParameter("dataId");//主数据id
+//		String dataId = super.getRequest().getParameter("dataId");//主数据id
 
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
@@ -137,7 +137,7 @@ public class RequireManagerAction extends BaseAction{
 		String className = siut.getClassName();		
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-		RequireApplyDefaultAudit flat = null;
+//		RequireApplyDefaultAudit flat = null;
 		Integer status = (Integer) bWrapper.getPropertyValue("status");
 		String reqName = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("reqName", reqName);
@@ -280,12 +280,12 @@ public class RequireManagerAction extends BaseAction{
 			String financialManagerName = "admin";//本部财务审批人
 			String groupFinanceAuditName = "admin";//集团财务审批人
 			String cadreBizAuditName = "admin";//本部审批人
-			String itAuditName = "admin";//客户IT经理
+//			String itAuditName = "admin";//客户IT经理
 			UserInfo businessAudit = flat.getCadreBusinessAudit();
 			UserInfo financeAudit = flat.getCadreFinanceAudit();
 			UserInfo groupFinanceAudit = flat.getGroupFinanceAudit();
 			UserInfo cadreBizAudit = flat.getCadreBizAudit();
-			UserInfo itAudit = flat.getClientItManager();
+//			UserInfo itAudit = flat.getClientItManager();
 			if(className.equals("com.zsgj.itil.require.entity.ERP_NormalNeed")&&isErpXZ){			
 				if(businessAudit != null){
 					financialManagerName = (String)businessAudit.getUserName();
@@ -303,9 +303,9 @@ public class RequireManagerAction extends BaseAction{
 			if(cadreBizAudit!=null){
 				cadreBizAuditName = cadreBizAudit.getUserName();
 			}
-			if(itAudit!=null){
-				itAuditName = itAudit.getUserName();
-			}
+//			if(itAudit!=null){
+//				itAuditName = itAudit.getUserName();
+//			}
 			userListStr += "confirmByFinancialManager:" + financialManagerName+
 							"$confirmByGroupFinance:" + groupFinanceAuditName+
 							"$confirmByCadre:" + cadreBizAuditName+
@@ -453,7 +453,6 @@ public class RequireManagerAction extends BaseAction{
 	 * @throws Exception String
 	 */
 	public String tasks() throws Exception{
-		@SuppressWarnings("unused")
 		HttpServletRequest request = super.getRequest();
 		//需要的参数
 		String actor = request.getParameter("actorId");
@@ -625,6 +624,7 @@ public class RequireManagerAction extends BaseAction{
 		return json;		
 	}
 	
+	@SuppressWarnings("unused")
 	private String toBlank(Object o){
 		return o==null?"":(String)o;		
 	}

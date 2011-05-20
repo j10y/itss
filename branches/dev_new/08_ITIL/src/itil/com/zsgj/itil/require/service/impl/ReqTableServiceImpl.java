@@ -36,7 +36,7 @@ import com.zsgj.itil.require.service.ReqTableService;
 
 public class ReqTableServiceImpl extends BaseDao implements ReqTableService{
 	private CustomerTableService customerTableService;
-	private SystemColumnService systemColumnService;
+//	private SystemColumnService systemColumnService;
 	private SystemMainColumnService systemMainColumnService;
 	private SystemMainTableService systemMainTableService;
 	String FSP = System.getProperty("file.separator");
@@ -477,7 +477,7 @@ public class ReqTableServiceImpl extends BaseDao implements ReqTableService{
 		propType = super.get(PropertyType.class, Long.valueOf(propType.getId()));
 		
 		
-		String tableName = smt.getTableName();
+//		String tableName = smt.getTableName();
 		String columnName = smtc.getColumnName();
 		columnName=Character.toLowerCase(columnName.charAt(0))+columnName.substring(1);
 		smtc.setColumnName(columnName);
@@ -647,14 +647,14 @@ public class ReqTableServiceImpl extends BaseDao implements ReqTableService{
 
 			String columnName = smtc.getColumnName();
 			if(!pkcname.equalsIgnoreCase(columnName)){
-				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
+//				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
 				PropertyType pt = smtc.getPropertyType();
 				if(pt==null){
 					throw new ServiceException(smt.getTableCnName()+"的"+smtc.getPropertyName()+"字段的属性类型不可以为null");
 				}
 				String ptName = pt.getPropertyTypeName();
 			
-				String columnTypeName = smtcType.getColumnTypeName();
+//				String columnTypeName = smtcType.getColumnTypeName();
 				Integer length = smtc.getLength();
 				if(length==null|| length.intValue()==0){
 					length = 200;
@@ -688,34 +688,34 @@ public class ReqTableServiceImpl extends BaseDao implements ReqTableService{
 			
 		}//新增字段增加完毕
 		
-		String className = smt.getClassName();
-		int lastDot = className.lastIndexOf(".");
-		String sourcePkg = className.substring(0, lastDot);
-		String sourceClass = className.substring(lastDot+1);
+//		String className = smt.getClassName();
+//		int lastDot = className.lastIndexOf(".");
+//		String sourcePkg = className.substring(0, lastDot);
+//		String sourceClass = className.substring(lastDot+1);
 		
-		String targetClassName = null;
-		if(sourcePkg.equalsIgnoreCase("com.zsgj.itil.require.entity")){
-			targetClassName = "com.zsgj.itil.require.entity.RequireTableTemplate";
-		}else{
-			targetClassName = className;
-		}
+//		String targetClassName = null;
+//		if(sourcePkg.equalsIgnoreCase("com.zsgj.itil.require.entity")){
+//			targetClassName = "com.zsgj.itil.require.entity.RequireTableTemplate";
+//		}else{
+//			targetClassName = className;
+//		}
 		
 	}
 	public void saveTableEntity(String sourcePkg, String sourceClassName, String targetClass){
-		SessionFactory ssf = super.getHibernateSessionFactory();
+//		SessionFactory ssf = super.getHibernateSessionFactory();
 		Configuration config = super.getConfiguration();
 		String newClassName = sourcePkg+"."+ sourceClassName;
 		//通过类全路径获取持久化类
 		PersistentClass model = config.getClassMapping(newClassName);   
-		if(model==null){ 
-			//第一次发布主表，持久化类不存在，故新建持久化类
-			String tablePrefix = PropertiesUtil.getProperties("system.config.scitable.prefix", "itil_sci_");
-			SystemMainTable smt = customerTableService.genPersistentClass(model, sourcePkg, sourceClassName, targetClass, tablePrefix);
-		
-		}else{
+//		if(model==null){ 
+//			//第一次发布主表，持久化类不存在，故新建持久化类
+//			String tablePrefix = PropertiesUtil.getProperties("system.config.scitable.prefix", "itil_sci_");
+//			SystemMainTable smt = customerTableService.genPersistentClass(model, sourcePkg, sourceClassName, targetClass, tablePrefix);
+//			
+//		}else{
 			//将发布后新增的字段保存到扩展字段里，并更新相关系统主表和面板
 			saveExtendProps(sourceClassName, model);
-		}
+//		}
 	}
 	private void saveExtendProps(String sourceClassName, PersistentClass model) {
 		this.customerTableService.saveExtendProps(sourceClassName, model);

@@ -28,7 +28,7 @@ public class AssignAction extends BaseAction{
 	 * @throws Exception String
 	 */
 	public String showMyWorkmates()	throws Exception {
-		HttpServletRequest request = super.getRequest();
+//		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String json = "";
 		List<TaskPreAssign> taskPreAssign = super.getService().findAll(TaskPreAssign.class);

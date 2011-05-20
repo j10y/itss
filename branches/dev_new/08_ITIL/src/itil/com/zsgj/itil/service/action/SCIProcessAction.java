@@ -188,7 +188,7 @@ public class SCIProcessAction extends BaseAction{
 		HttpServletResponse response = super.getResponse();
 		String servcieItemId = request.getParameter("serviceItemId");
 		String info = request.getParameter("info");
-		ServiceItem serviceItem = sis.findServiceItemById(servcieItemId);
+//		ServiceItem serviceItem = sis.findServiceItemById(servcieItemId);
 		JSONObject panelJO = JSONObject.fromObject(info);
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		Iterator columnIter = panelJO.keys();

@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In Jun 1, 2009
  */
 public class AccountSBUOfficer extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -5010561921396505447L;
 	private Long id;
 	private String processNameDescription;		//流程名中文描述(如：BI帐号申请)
 	private String nodeName;		//流程节点名

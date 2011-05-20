@@ -73,12 +73,12 @@ public class RequireSIServiceImpl extends BaseDao implements RequireSIService{
 				Criteria c = super.getCriteria(Customer.class);
 				c.add(Restrictions.eq("department", deptItem));
 				//System.out.println("deptname:"+ deptItem.getDepartName());
-				List<Customer> list2 = c.list();
-				if(!list2.isEmpty()){
-					Customer customerIn = list2.iterator().next();
-					//System.out.print("custIn id:"+ customerIn.getId());
-					//System.out.println(", custIn name:"+ customerIn.getCustomerName());
-				}
+//				List<Customer> list2 = c.list();
+//				if(!list2.isEmpty()){
+//					Customer customerIn = list2.iterator().next();
+//					//System.out.print("custIn id:"+ customerIn.getId());
+//					//System.out.println(", custIn name:"+ customerIn.getCustomerName());
+//				}
 				
 				c.setProjection(Projections.property("this.id"));
 				List<Long> list = c.list();
@@ -190,7 +190,7 @@ public class RequireSIServiceImpl extends BaseDao implements RequireSIService{
  * 根据服务关系id获取子服务目录关系数据
  * By sujs
  * */
-@SuppressWarnings({ "unchecked", "unchecked" })
+@SuppressWarnings({ "unchecked" })
 public List<SCIRelationShip> findSCIRelationShipById(String relationShipId,Map storeData,String serviceTypeKeyWord) {
 	
 	Long compareID=Long.parseLong(relationShipId);

@@ -76,20 +76,6 @@ public class ServiceCatalogueServiceImpl extends BaseDao implements ServiceCatal
 		
 	}
 
-	private void removeChildSc(SCIRelationShip parent){
-		Criteria c = super.getCriteria(SCIRelationShip.class);
-		c.add(Restrictions.eq("rootServiceCatalogue", parent.getRootServiceCatalogue()));
-		c.add(Restrictions.eq("parentRelationShip", parent));
-		List<SCIRelationShip> childShip = c.list();
-		if(!childShip.isEmpty()){
-			for(SCIRelationShip item : childShip){
-				
-			}
-		}
-		super.remove(parent);
-		
-	}
-
 	public SCIRelationShip saveSCIRelationShip(SCIRelationShip sciRelationShip) {
 		// TODO Auto-generated method stub
 		return null;

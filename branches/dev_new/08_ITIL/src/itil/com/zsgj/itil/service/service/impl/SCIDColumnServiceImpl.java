@@ -30,7 +30,7 @@ public class SCIDColumnServiceImpl extends BaseDao implements SCIDColumnService{
 		String json = "";
 		for (SCIDColumn scidColumn : columns) {
 			String propertyName = scidColumn.getColumnName();
-			String propertyNames = propertyName + "s";
+//			String propertyNames = propertyName + "s";
 			boolean isDisplay = true;
 			boolean isUpdateItem = scidColumn.getIsUpdateItem() != null
 					&& scidColumn.getIsUpdateItem().intValue() != 0;

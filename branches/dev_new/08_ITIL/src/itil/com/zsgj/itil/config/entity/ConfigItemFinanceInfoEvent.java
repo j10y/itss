@@ -12,6 +12,10 @@ import com.zsgj.itil.finance.entity.ApportionMode;
  * @Create In 2008-11-9
  */
 public class ConfigItemFinanceInfoEvent extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 3869259106246151991L;
 	public static int CIF_DELETE = -1;// ÒÑÉ¾³ý(Âß¼­É¾³ý)
 	private Long id;
 	private ConfigItemEvent configItemEvent;

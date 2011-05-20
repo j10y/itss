@@ -18,7 +18,9 @@ import com.zsgj.itil.require.entity.RequireFactoryInfo;
 
 public class SAPExecute {
 	//SAP
+	@SuppressWarnings("unused")
 	private IRepository repository;
+	@SuppressWarnings("unused")
 	private Service service = (Service) ContextHolder.getBean("baseService");
 	
 	public SAPExecute(){

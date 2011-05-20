@@ -16,6 +16,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 
 public class ConfigItemType extends CIBaseType{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -1082044318650029237L;
 	public static final Integer DEPLOYFLAG_YES=1;
 	public static final Integer DEPLOYFLAG_NO=0;
 	public static final Long  DELIVERYTEAM_ID = 105L; //交付团队id是105
@@ -27,6 +31,30 @@ public class ConfigItemType extends CIBaseType{
 	private ConfigItemType parentConfigItemType;
 	private Integer serviceFlag;//服务标识
 	
+	/**
+	 * @Return the Integer serviceFlag
+	 */
+	public Integer getServiceFlag() {
+		return serviceFlag;
+	}
+	/**
+	 * @Param Integer serviceFlag to set
+	 */
+	public void setServiceFlag(Integer serviceFlag) {
+		this.serviceFlag = serviceFlag;
+	}
+	/**
+	 * @Return the String pid
+	 */
+	public String getPid() {
+		return pid;
+	}
+	/**
+	 * @Param String pid to set
+	 */
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
 	private String pid;
 	
 	private String className;

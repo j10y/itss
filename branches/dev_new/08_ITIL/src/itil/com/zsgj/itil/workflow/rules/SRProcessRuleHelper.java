@@ -47,6 +47,7 @@ public class SRProcessRuleHelper{
 	SRService srService=(SRService)ContextHolder.getBean("srService");
 	
 /***************************************************************************************************************************************/
+	@SuppressWarnings("unused")
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {
@@ -286,7 +287,7 @@ public class SRProcessRuleHelper{
 	public String requireRemarkFlag(String dataId,String serviceItemId ,String nodeId,String nodeName,String processId,String result,String comment){
 		  SRGroupFinanceInfo financeInfo = srService.findGroupGinanceInfo(dataId);
 		  RequirementFinanceType financeType = financeInfo.getFinanceType();
-		  BatchType batchType = financeInfo.getBatchType();
+//		  BatchType batchType = financeInfo.getBatchType();
 		  if(financeType.getId()==3){
 		   return "Y";
 		  }else{
@@ -372,9 +373,9 @@ public class SRProcessRuleHelper{
 	}
 	public void eventStartFlag(String dataId, String nodeId, String nodeName, String processId)throws Exception{		
 		EventStatus dealingStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "dealing");
-		EventStatus reAssignStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "confirm");
-		EventStatus endStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "finish");
-		EventStatus userconfirmStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "userconfirm");
+//		EventStatus reAssignStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "confirm");
+//		EventStatus endStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "finish");
+//		EventStatus userconfirmStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "userconfirm");
 		Event event = (Event)service.find(Event.class, dataId,true);
 		event.setEventStatus(dealingStatus);
 		this.saveEventHis(nodeId, nodeName, processId, "", "", event);
@@ -441,9 +442,9 @@ public class SRProcessRuleHelper{
 		Event event = (Event)service.find(Event.class, dataId);
 		//…Ë÷√Event◊¥Ã¨
 		EventStatus dealingStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "dealing");
-		EventStatus reAssignStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "confirm");
+//		EventStatus reAssignStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "confirm");
 		EventStatus endStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "finish");
-		EventStatus userconfirmStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "userconfirm");
+//		EventStatus userconfirmStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "userconfirm");
 		if(result.equals("over")){
 			event.setEventStatus(endStatus);
 		}else{

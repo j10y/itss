@@ -26,6 +26,7 @@ public class NumberUtil {
 	 * @param num
 	 * @return TODO
 	 */
+	@SuppressWarnings("unused")
 	private static String numberToPercent(String num){
 		String strNum = "";
 		DecimalFormat format = new DecimalFormat("##.##%");
@@ -40,6 +41,7 @@ public class NumberUtil {
 	 * @param strNum
 	 * @return TODO
 	 */
+	@SuppressWarnings("unused")
 	private static String percentToNumber(String strNum){
 		if(strNum.indexOf("%")==-1){
 			return null;

@@ -46,7 +46,7 @@ public class UserSelfManagerAction extends BaseAction{
 	
 	public String applyTasks(){
 		String json = "";
-		int rowCount = 0;
+//		int rowCount = 0;
 		HttpServletRequest request = super.getRequest();
 		String actorId = request.getParameter("actorId");
 	  	List<TaskInfo> list = new ArrayList();
@@ -82,8 +82,8 @@ public class UserSelfManagerAction extends BaseAction{
 			str += "'defDesc':'"+defDesc+"'";
 			str = "{"+str+"},";
 			
-			String applyUserItCode = (String)bizParams.get("applyUser");//获取流程提交人ITCOD
-			String curUser = UserContext.getUserInfo()==null?"":UserContext.getUserInfo().getUserName();	//获取当前用户
+//			String applyUserItCode = (String)bizParams.get("applyUser");//获取流程提交人ITCOD
+//			String curUser = UserContext.getUserInfo()==null?"":UserContext.getUserInfo().getUserName();	//获取当前用户
 			json += str;
 		}		
 		json = deleteComma(json);
@@ -101,7 +101,7 @@ public class UserSelfManagerAction extends BaseAction{
 	}
 	public String auditTasks(){
 		String json = "";
-		int rowCount = 0;
+//		int rowCount = 0;
 		HttpServletRequest request = super.getRequest();
 		String actorId = request.getParameter("actorId");
 	  	List<TaskInfo> list = new ArrayList();
@@ -142,7 +142,7 @@ public class UserSelfManagerAction extends BaseAction{
 			str = "{"+str+"},";
 			
 			
-			String curUser = UserContext.getUserInfo()==null?"":UserContext.getUserInfo().getUserName();	//获取当前用户
+//			String curUser = UserContext.getUserInfo()==null?"":UserContext.getUserInfo().getUserName();	//获取当前用户
 			json += str;
 		}		
 		json = deleteComma(json);
@@ -195,8 +195,8 @@ public class UserSelfManagerAction extends BaseAction{
 			str += "'comments':'"+toBlank(taskInfo.getComments().getValue("comment"))+"'";
 			str = "{"+str+"},";
 			
-			String applyUserItCode = (String)bizParams.get("applyUser");//获取流程提交人ITCOD
-			String curUser = UserContext.getUserInfo()==null?"":UserContext.getUserInfo().getUserName();	//获取当前用户
+//			String applyUserItCode = (String)bizParams.get("applyUser");//获取流程提交人ITCOD
+//			String curUser = UserContext.getUserInfo()==null?"":UserContext.getUserInfo().getUserName();	//获取当前用户
 //			if(curUser.equals(applyUserItCode)){
 			json += str;
 //				rowCount++;
@@ -224,7 +224,7 @@ public class UserSelfManagerAction extends BaseAction{
 	 */
 	public String showMeThePage(){
 		HttpServletRequest request = super.getRequest();
-		HttpServletResponse response = super.getResponse();
+//		HttpServletResponse response = super.getResponse();
 		
 		String dataId = request.getParameter("dataId");		//获取申请主实体ID
 		String applyType = request.getParameter("applyType");//获取流程类型
@@ -363,18 +363,7 @@ public class UserSelfManagerAction extends BaseAction{
 		}
 		return json;
 	}
-	/**
-	 * 为需求管理提供入口页面链接
-	 * @Methods Name getUrlForReq
-	 * @Create In Sep 2, 2009 By lee
-	 * @param dataId
-	 * @param serviceItemId
-	 * @return String
-	 */
-	private String getUrlForReq(String dataId, String serviceItemId){
-		
-		return null;
-	}
+
 	public String getForwardUrl() {
 		return forwardUrl;
 	}

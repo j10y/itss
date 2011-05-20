@@ -7,6 +7,10 @@ import com.zsgj.itil.config.extlist.entity.B2BbusinessType;
 
 public class B2Binterface extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2101591793847905607L;
 	private Long id;
 	private String cisn;//编号生成器
 	private String name;//接口实例名称,定义规则：”对方名称缩写+业务描述缩写“，如IBM采购

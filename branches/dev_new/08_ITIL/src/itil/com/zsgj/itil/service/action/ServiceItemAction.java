@@ -161,7 +161,7 @@ public class ServiceItemAction  extends BaseAction{
 			}else{
 				//ServiceItem curItem = serviceItemService.save(serviceItem);
 				//ServiceItem curItem = (ServiceItem) metaDataManager.saveEntityData(ServiceItem.class, recordMap);
-				ServiceItem curItem = serviceItemService.save(recordMap);
+				serviceItemService.save(recordMap);
 			}
 		}else{
 			//ServiceItem curItem = serviceItemService.save(serviceItem);

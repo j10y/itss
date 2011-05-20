@@ -409,8 +409,8 @@ public class RequireProcessRuleHelper {
 			List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息			
 			//新建工厂审批人发信
 			if (bw.isReadableProperty("flat")) {
-				RequireApplyDefaultAudit flat = (RequireApplyDefaultAudit) bw.getPropertyValue("flat"); //得到SBU范围
-				String flatId = flat.getId().toString();
+//				RequireApplyDefaultAudit flat = (RequireApplyDefaultAudit) bw.getPropertyValue("flat"); //得到SBU范围
+//				String flatId = flat.getId().toString();
 				if(StringUtils.isNotBlank(sbuMailRoleId)){//如果满足触发要求
 					Role role = (Role) service.find(Role.class, sbuMailRoleId);
 					String sendMailTatle = "IT温馨提示："+applyUser.getUserName()+"/"+applyUser.getRealName()+"提交的需求(需求号："+reqCode+"，需求名称："+reqName+")已通过测试";
@@ -685,7 +685,7 @@ public class RequireProcessRuleHelper {
 			Set<List<String>> mapSet = dataMap.keySet();
 			for(List<String> list : mapSet){
 				if(list.contains(smaillTypeId)){
-					String roleId = dataMap.get(list);
+//					String roleId = dataMap.get(list);
 					Role role = (Role) service.find(Role.class, sbuMailRoleId);
 					if(role!=null){
 						Set<UserInfo> mailUsers = role.getUserInfos();
@@ -752,7 +752,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 	
 		Object obj = this.findObjectByClassName(reqClass, dataId);// 获取当前申请主实体
 		BeanWrapper bw = new BeanWrapperImpl(obj);
-		UserInfo applyUser = (UserInfo) bw.getPropertyValue("createUser");
+//		UserInfo applyUser = (UserInfo) bw.getPropertyValue("createUser");
 		ServiceEngineer sei = (ServiceEngineer) bw.getPropertyValue("mainEngineer");
 		String email = "";
 		UserInfo engineerInfo = null;
@@ -875,7 +875,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		// add by lee for 记录项目真实上线时间 in 20091110 begin
 		if (bw.isReadableProperty("realFinishDate")) {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			bw.setPropertyValue("realFinishDate", new Date());
 		}
 		// add by lee for 记录项目真实上线时间 in 20091110 end
@@ -931,7 +931,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		BeanWrapper bw = new BeanWrapperImpl(obj);
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		if (bw.isReadableProperty("realFinishDate")) {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			bw.setPropertyValue("realFinishDate", new Date());
 		}
 		
@@ -1034,7 +1034,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			String reqName,String reqCode,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -1084,8 +1084,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
 				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
 				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
-				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
+//				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
+//				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
 				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 				String timeString  = dateFormats.format(approverDate);
 				String auditMeg=null;
@@ -1144,7 +1144,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			String reqName,String reqCode,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -1194,8 +1194,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
 				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
 				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
-				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
+//				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
+//				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
 				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 				String timeString  = dateFormats.format(approverDate);
 				String auditMeg=null;
@@ -1256,7 +1256,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			String reqName,String reqCode,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -1304,8 +1304,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
 				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
 				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
-				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
+//				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
+//				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
 				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 				String timeString  = dateFormats.format(approverDate);
 				String auditMeg=null;
@@ -1363,7 +1363,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			String reqName,String reqCode,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -1615,7 +1615,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 //		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 //				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
 		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
@@ -1648,7 +1648,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		//add by liuying for 当员工离职时删除DC通讯录信息 in 20100423 end
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String context = this.htmlContent(applyUser, realUrl,auditHis,definitionName);
 		try {
@@ -1703,7 +1703,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		ServiceItemProcess sip = (ServiceItemProcess) bw
 				.getPropertyValue("serviceItemProcess");
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
@@ -1744,7 +1744,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String definitionName=sip.getDefinitionName();
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String context = this.htmlContent(applyUser, realUrl,auditHis,definitionName);
 		try {
@@ -1802,18 +1802,18 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			if (mail != null) {
 				mail.setAccountState("0");
 				mail.setStopDate(currentDate);
-				MailForwardApply stop = (MailForwardApply) service.save(mail);
+				service.save(mail);
 			} else {
 				personAccount.setAccountState("1");
 				personAccount.setCreateDate(currentDate);
-				MailForwardApply pa = (MailForwardApply) service.save(personAccount);
+				service.save(personAccount);
 			}
 		}
 		BeanWrapper bw = new BeanWrapperImpl(object);
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		ServiceItemProcess sip = (ServiceItemProcess) bw
 				.getPropertyValue("serviceItemProcess");
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
@@ -1826,7 +1826,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String definitionName=sip.getDefinitionName();
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
 		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
@@ -1884,19 +1884,19 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			MailGroup oldAccount = account.getOldApply();
 			if (oldAccount != null) {
 				oldAccount.setAccountState("0");
-				MailGroup pa = (MailGroup) service.save(oldAccount);
+				service.save(oldAccount);
 				account.setAccountState("1");
-				MailGroup newAccount = (MailGroup) service.save(account);
+				service.save(account);
 			} else {
 				account.setAccountState("1");
-				MailGroup pa = (MailGroup) service.save(account);
+				service.save(account);
 			}
 		}
 		BeanWrapper bw = new BeanWrapperImpl(object);
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		ServiceItemProcess sip = (ServiceItemProcess) bw
 				.getPropertyValue("serviceItemProcess");
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
@@ -1908,7 +1908,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
 		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
 		String definitionName=sip.getDefinitionName();
@@ -1966,14 +1966,14 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		for (MailGroup account : accounts) {
 			MailGroup oldAccount = account.getOldApply();
 			oldAccount.setAccountState("0");
-			MailGroup pa = (MailGroup) service.save(oldAccount);
+			service.save(oldAccount);
 
 		}
 		BeanWrapper bw = new BeanWrapperImpl(object);
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		ServiceItemProcess sip = (ServiceItemProcess) bw
 				.getPropertyValue("serviceItemProcess");
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
@@ -1985,7 +1985,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String definitionName=sip.getDefinitionName();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
@@ -2060,8 +2060,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		PersonFormalAccount oldApplyAccount = account.getOlodApplyAccount();
 		if (oldApplyAccount != null) {
 			oldApplyAccount.setAccountState("0");
-			PersonFormalAccount ac = (PersonFormalAccount) service
-					.save(oldApplyAccount);
+			service.save(oldApplyAccount);
 		}
 		BeanWrapper bw = new BeanWrapperImpl(object);
 		ServiceItemProcess sip = (ServiceItemProcess) bw
@@ -2083,7 +2082,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
 		if (applyUser == null) {
 			applyUser = (UserInfo) bw.getPropertyValue("delegateApplyUser");// 获取申请人
@@ -2093,7 +2092,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String definitionName=sip.getDefinitionName();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
@@ -2182,9 +2181,9 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 					acc.setAccountState("0");
 				}
 				oldAccount.setAccountState("0");
-				SpecialAccount oa = (SpecialAccount) service.save(oldAccount);
+				service.save(oldAccount);
 			}
-			SpecialAccount pa = (SpecialAccount) service.save(acc);
+			service.save(acc);
 			if(sip.getId().compareTo(184L)==0){
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.modifyTempUserManager(acc.getAccountName(),acc.getAccountNowUser().getItcode());
@@ -2211,7 +2210,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
 		if (applyUser == null) {
 			applyUser = (UserInfo) bw.getPropertyValue("delegateApplyUser");// 获取申请人
@@ -2221,7 +2220,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String definitionName=sip.getDefinitionName();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
@@ -2289,7 +2288,9 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		for (SpecialAccount acc : account) {
 			SpecialAccount oldApplyAccount = acc.getOlodApplyAccount();
 			oldApplyAccount.setAccountState("0");
-			SpecialAccount ac = (SpecialAccount) service.save(oldApplyAccount);
+			
+			service.save(oldApplyAccount);
+			
 			if(sip.getId().compareTo(248L)==0){
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				String mes=ssUtil.removeTempUser(acc.getAccountName());
@@ -2315,7 +2316,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
 		if (applyUser == null) {
 			applyUser = (UserInfo) bw.getPropertyValue("delegateApplyUser");// 获取申请人
@@ -2325,7 +2326,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String definitionName=sip.getDefinitionName();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
@@ -2384,15 +2385,15 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		for (SpecialAccount acc : account) {
 			SpecialAccount oldApplyAccount = acc.getOlodApplyAccount();
 			oldApplyAccount.setAccountState("0");
-			SpecialAccount ac = (SpecialAccount) service.save(oldApplyAccount);
+			service.save(oldApplyAccount);
 			acc.setAccountState("1");
-			SpecialAccount newAccountApply = (SpecialAccount) service.save(acc);
+			service.save(acc);
 		}
 		BeanWrapper bw = new BeanWrapperImpl(object);
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		ServiceItemProcess sip = (ServiceItemProcess) bw
 				.getPropertyValue("serviceItemProcess");
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
@@ -2404,7 +2405,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String definitionName=sip.getDefinitionName();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
@@ -2525,7 +2526,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
 		BaseObject oldObject = (BaseObject) requireService.getOldApplyObject(
 				className, object);// 拿到原实体
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		
 		if (applyUser == null) {
 			applyUser = (UserInfo) bw.getPropertyValue("delegateApplyUser");// 获取申请人
@@ -2535,7 +2536,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String definitionName=sip.getDefinitionName();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "处理完成";
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
@@ -2609,7 +2610,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		}
 		
 
-		String email = applyUser.getEmail();
+//		String email = applyUser.getEmail();
 		PageModel pageModel = sip.getEndPageModel();
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
@@ -2719,7 +2720,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		
 		for (PersonFormalAccount acc : account) {
 			acc.setAccountState("1");
-			Object obj = service.save(acc);
+			service.save(acc);
 			if (acc.getAccountType().getAccountType().equals("MailAccount")) {
 				attachment = acc.getAttachment();
 				if (attachment != null) {
@@ -2779,7 +2780,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			requireService.saveEntityToEvent(className, oldObject);
 		} else {
 			service.save(object);
-			UserInfo curUser = UserContext.getUserInfo();
+//			UserInfo curUser = UserContext.getUserInfo();
 			this.saveRequireHis(dataId, nodeId, processId, nodeName, className,
 					"Y", "", null, serviceItem);
 			requireService.saveEntityToEvent(className, object);
@@ -2920,7 +2921,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String filePath = null;
 		for (SpecialAccount acc : account) {
 			acc.setAccountState("1");
-			Object obj = service.save(acc);
+			service.save(acc);
 			if (acc.getAccountType().getAccountType().equals("TempMailAccount")) {
 				attachment = acc.getAttachment();
 				List<SystemFile> sysFile = service.find(SystemFile.class,
@@ -3018,7 +3019,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String filePath = "";
 		for (SpecialAccount acc : account) {
 			acc.setAccountState("1");
-			Object obj = service.save(acc);
+			service.save(acc);
 			attachment = acc.getAttachment();
 			List<SystemFile> sysFile = service.find(SystemFile.class,
 					"nowtime", attachment);
@@ -3129,7 +3130,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//		String combinEmail = applyUser.getEmail();
 		String subject = "IT温馨提示：您提交的" +definitionName+ "未通过审批";
 		String context = this.htmlContentAccountBack(applyUser, realUrl,auditHis,definitionName);
 		try {
@@ -3346,14 +3347,14 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 	public String isHRJob(String dataId, String serviceItemId,
 			String processName, String hrJob) throws Exception {
 		String tran = "N";
-		ServiceItem serviceItem = (ServiceItem) service.find(ServiceItem.class,
-				serviceItemId);
-		ServiceItemUserTable siut = (ServiceItemUserTable) service.findUnique(
-				ServiceItemUserTable.class, "serviceItem", serviceItem);
-		String className = siut.getClassName();
-		Object object = this.findObjectByClassName(className, dataId);
-		BeanWrapper bw = new BeanWrapperImpl(object);
-		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
+//		ServiceItem serviceItem = (ServiceItem) service.find(ServiceItem.class,
+//				serviceItemId);
+//		ServiceItemUserTable siut = (ServiceItemUserTable) service.findUnique(
+//				ServiceItemUserTable.class, "serviceItem", serviceItem);
+//		String className = siut.getClassName();
+//		Object object = this.findObjectByClassName(className, dataId);
+//		BeanWrapper bw = new BeanWrapperImpl(object);
+//		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
 		if (hrJob != null) {
 			tran = "Y";
 		}
@@ -3372,7 +3373,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 	private String htmlContent(UserInfo creator, String url,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -3426,8 +3427,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
 				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
 				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
-				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
+//  String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
+//		String comment=(String)baseObjectWrapper.getPropertyValue("comment");
 				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 				String timeString  = dateFormats.format(approverDate);
 				String auditMeg=null;
@@ -3485,7 +3486,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 	private String htmlContentForEB(UserInfo creator, String url,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -3539,8 +3540,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
 				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
 				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
-				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
+//		String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
+//		String comment=(String)baseObjectWrapper.getPropertyValue("comment");
 				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 				String timeString  = dateFormats.format(approverDate);
 				String auditMeg=null;
@@ -3597,7 +3598,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 	private String htmlContentAccountBack(UserInfo creator, String url,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -3720,7 +3721,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				dataId);
 		BeanWrapper bw = new BeanWrapperImpl(object);
 		bw.setPropertyValue("status", Constants.STATUS_FINISHED);
-		Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
+//Integer processType = (Integer) bw.getPropertyValue("processType");// 得到流程类型
 		ServiceItemProcess sip = (ServiceItemProcess) bw
 				.getPropertyValue("serviceItemProcess");
 		UserInfo applyUser = (UserInfo) bw.getPropertyValue("applyUser");
@@ -3732,7 +3733,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String url = pageModel.getPagePath(); // 获取页面路径
 		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
 		String realUrl = rootPath + url + "?dataId=" + dataId; // 得到真实连接（全路径）
-		String combinEmail = applyUser.getEmail();
+//String combinEmail = applyUser.getEmail();
 		String definitionName=sip.getDefinitionName();
 		List<PersonFormalAccount> accounts = service.find(
 				PersonFormalAccount.class, "applyId", object); // 获取关联实体
@@ -3756,7 +3757,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			PersonFormalAccount oldApplyAccount = account.getOlodApplyAccount();
 			if (oldApplyAccount != null) {
 				oldApplyAccount.setAccountState("0");
-				PersonFormalAccount ac = (PersonFormalAccount) service
+				service
 				.save(oldApplyAccount);
 			}
 			if(definitionName.equals("座机所有者变更申请")&&oldApplyAccount!=null){
@@ -3786,8 +3787,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		String workflowEntity = "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis";		
 		List auditHis = cs.findAllWorkflowHistoryMessage(workflowEntity, Long.parseLong(processId));//查找出来的是所有的按流程顺序排列的节点信息
 		String context = this.htmlContent(applyUser, realUrl,auditHis,definitionName);
-		String contextEB = this.htmlContentForEB(applyUser, realUrl,auditHis,definitionName);
-		String subjectEB = "IT温馨提示："+applyUser.getRealName()+"/"+applyUser.getUserName()+"提交的" +definitionName+ "已处理完成,请查看!";
+//		String contextEB = this.htmlContentForEB(applyUser, realUrl,auditHis,definitionName);
+//		String subjectEB = "IT温馨提示："+applyUser.getRealName()+"/"+applyUser.getUserName()+"提交的" +definitionName+ "已处理完成,请查看!";
 	
 		try {
 			ms.sendMimeMail(email, null, null, subject, context, null);
@@ -4077,7 +4078,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 	private String vpnHtmlContent(UserInfo creator, String url,List auditHis,String definitionName,String pingCode) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -4131,8 +4132,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
 				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
 				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
-				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
+//		String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
+//		String comment=(String)baseObjectWrapper.getPropertyValue("comment");
 				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 				String timeString  = dateFormats.format(approverDate);
 				String auditMeg=null;
@@ -4192,7 +4193,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		
 			Object obj = this.findObjectByClassName(reqClass, dataId);// 获取当前申请主实体
 			BeanWrapper bw = new BeanWrapperImpl(obj);
-			UserInfo applyUser = (UserInfo) bw.getPropertyValue("createUser");
+//	UserInfo applyUser = (UserInfo) bw.getPropertyValue("createUser");
 			ServiceEngineer sei = (ServiceEngineer) bw.getPropertyValue("mainEngineer");
 			UserInfo mainEngineer = sei.getUserInfo();
 			Map propertysNameAndValue = new HashMap();
@@ -4238,8 +4239,8 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			this.saveRequireHis(dataId, nodeId, processId, nodeName, reqClass,
 					result, comment, curUser, serviceItem);
 			if("Y".equals(result)){	//如果交付经理填写实施方案后审批同意 
-					SpecialRequirement sr = (SpecialRequirement)service.find(SpecialRequirement.class, dataId);
-					SpecialRequirementInfo sri = (SpecialRequirementInfo) service.findUnique(SpecialRequirementInfo.class, "specialRequire", sr);
+//			SpecialRequirement sr = (SpecialRequirement)service.find(SpecialRequirement.class, dataId);
+//			SpecialRequirementInfo sri = (SpecialRequirementInfo) service.findUnique(SpecialRequirementInfo.class, "specialRequire", sr);
 					String subject="IT温馨提示：需求：(需求号："+reqCode+"，需求名称："+reqName+")的方案已经确定，工程师已将方案&计划发给客户确认，请关注！";
 					ms.sendMimeMail(email, null, null, subject, this.mailToTechnicManager(
 							approver,mainEngineer, curUrl, reqName,reqCode,auditHis,definitionName), null);
@@ -4262,7 +4263,7 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 			String reqName,String reqCode,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

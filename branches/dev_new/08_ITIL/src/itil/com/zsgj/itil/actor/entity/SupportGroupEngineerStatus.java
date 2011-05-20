@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In 2009-3-19
  */
 public class SupportGroupEngineerStatus extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -7271031178946106702L;
 	public static String STATUS_IDLE = "idle"; //¿ÕÏÐ
 	public static String STATUS_BUSY = "busy"; //Ã¦Âµ
 	

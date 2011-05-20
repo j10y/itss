@@ -108,8 +108,8 @@ public class UserOutManageAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderProp = HttpUtil.getString(request, "orderBy", "departName");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String departName = request.getParameter("departName");
@@ -277,61 +277,65 @@ public class UserOutManageAction extends BaseDispatchAction{
 		String externalFlag = request.getParameter("externalFlag");
 		//判断是否存在当前新建的用户
 		List<UserInfo> userInfoList=sms.findUserByQueryParams(userName, realName);
+
+		
 		if (userInfoList.size() > 0) {
+			httpServletResponse.setCharacterEncoding("gbk");
+			out = httpServletResponse.getWriter();
+			
 			if (userInfoList.get(0).getIsLock() == 1) {
-				httpServletResponse.setCharacterEncoding("gbk");
 				out.write("{success:" + true + ",flagSign':exitIsLock',"
 						+ "userNameTring:'" + "真实姓名为：<font color=red>"
 						+ realName + "</font>用户名为:<font color=red>" + userName
 						+ "</font>'}");
-				return null;
 			} else {
-				httpServletResponse.setCharacterEncoding("gbk");
 				out.write("{success:" + true + ",flagSign':exit',"
 						+ "userNameTring:'" + "真实姓名为：<font color=red>"
 						+ realName + "</font>用户名为:<font color=red>" + userName
 						+ "</font>'}");
-				return null;
 			}
-		}
-		
-		Department dept = deptService.findDepartmentById(Long.valueOf(deptCode));
-		user.setDepartCode(Long.valueOf(deptCode));
-		user.setDepartment(dept);
-		user.setRealName(realName);
-		user.setUserName(userName);
-		user.setPassword(password);
-		user.setEmail(email);
-		user.setTelephone(telephone);
-		user.setMobilePhone(mobilePhone);
-		user.setEnabled(new Integer(enabled));
-		user.setIsLock((int)Long.parseLong(isLock));
-		user.setSpecialUser(Integer.valueOf(specialUserStr));
-		user.setUserViewStyle("ext-all");  //默认页面样式
-		user.setExternalFlag(Integer.parseInt(externalFlag));
-		String[] roleIds = request.getParameterValues("roleId");
-		Set rolesSet = new HashSet();
-		if(roleIds!=null && roleIds.length>0){
-			for(int i=0; i<roleIds.length; i++){
-				String roleId = roleIds[i];
-				if(!"".equals(roleId)){
-					Role role = sms.findRoleById(roleId);
-					rolesSet.add(role);
-				}
-		    }
-			user.setRoles(rolesSet);
-		}
-		sms.saveUserInfoWithRoles(user);	
-		
-		Customer customerOut = (Customer) getService().find(Customer.class, deptCode);
-		customerOutUserService.saveCustomerOutUserInfo(customerOut, user);
-				
-		try {
-			out = httpServletResponse.getWriter();
-			out.write("{success:" +true+ "}");
 			out.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
+			out.close();
+			return null;
+		}else{
+			Department dept = deptService.findDepartmentById(Long.valueOf(deptCode));
+			user.setDepartCode(Long.valueOf(deptCode));
+			user.setDepartment(dept);
+			user.setRealName(realName);
+			user.setUserName(userName);
+			user.setPassword(password);
+			user.setEmail(email);
+			user.setTelephone(telephone);
+			user.setMobilePhone(mobilePhone);
+			user.setEnabled(new Integer(enabled));
+			user.setIsLock((int)Long.parseLong(isLock));
+			user.setSpecialUser(Integer.valueOf(specialUserStr));
+			user.setUserViewStyle("ext-all");  //默认页面样式
+			user.setExternalFlag(Integer.parseInt(externalFlag));
+			String[] roleIds = request.getParameterValues("roleId");
+			Set rolesSet = new HashSet();
+			if(roleIds!=null && roleIds.length>0){
+				for(int i=0; i<roleIds.length; i++){
+					String roleId = roleIds[i];
+					if(!"".equals(roleId)){
+						Role role = sms.findRoleById(roleId);
+						rolesSet.add(role);
+					}
+			    }
+				user.setRoles(rolesSet);
+			}
+			sms.saveUserInfoWithRoles(user);	
+			
+			Customer customerOut = (Customer) getService().find(Customer.class, deptCode);
+			customerOutUserService.saveCustomerOutUserInfo(customerOut, user);
+			
+			httpServletResponse.setCharacterEncoding("gbk");
+			out = httpServletResponse.getWriter();
+			out.write("{success:" + true + ",flagSign':exitIsLock',"
+					+ "userNameTring:'" + "真实姓名为：<font color=red>"
+					+ realName + "</font>用户名为:<font color=red>" + userName
+					+ "</font>'}");
+			out.flush();
 			out.close();
 		}
 		return null;
@@ -442,13 +446,13 @@ public class UserOutManageAction extends BaseDispatchAction{
 			user.setMobilePhone(mobilePhone);
 			user.setTelephone(telephone);
 			
-			Set<Role> roleSet = user.getRoles();
-			Iterator it=roleSet.iterator();
+//			Set<Role> roleSet = user.getRoles();
+//			Iterator it=roleSet.iterator();
 //				while(it.hasNext()){
 //					sms.removeRoleFromUser(user, (String)it.next());
 //				}
 			String[] roleIds = request.getParameterValues("roleId");
-			Set rolesSet = new HashSet();
+			Set rolesSet = user.getRoles();
 			if(roleIds!=null && roleIds.length>0){
 				for(int i=0; i<roleIds.length; i++){
 					String roleId = roleIds[i];
@@ -526,8 +530,8 @@ public class UserOutManageAction extends BaseDispatchAction{
 		int pageNo = start / pageSize + 1;
 		String orderBy = HttpUtil.getString(request, "orderBy", "departName");
 		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-		String pClazz = request.getParameter("clazz");
-		Class clazz = Department.class;
+//		String pClazz = request.getParameter("clazz");
+//		Class clazz = Department.class;
 		Long total = 0L;
 		List queryList = new ArrayList();
 		String departName = request.getParameter("departName");

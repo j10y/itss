@@ -92,7 +92,7 @@ public class SRAction extends BaseAction{
 	private RequireService  requireService=(RequireService)getBean("requireService");
 	private SRService srs = (SRService) getBean("srService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private SRServiceItemService srsis = (SRServiceItemService) getBean("srServiceItemService");
+//	private SRServiceItemService srsis = (SRServiceItemService) getBean("srServiceItemService");
 	private SRProjectPlanService projectPlanService = (SRProjectPlanService) getBean("SRprojectPlanService");
 	/**
  	 * 保存个性化需求主实体
@@ -106,7 +106,7 @@ public class SRAction extends BaseAction{
 		String param = request.getParameter("info");
 		Map map = getMapFormPanelJson(param);
 		SpecialRequirement sr = (SpecialRequirement) metaDataManager.saveEntityData(SpecialRequirement.class, map);
-		String name = sr.getName();
+//		String name = sr.getName();
 
 		//add by lee for 返回服务商负责人ID，用于节点审批人指派时用 in 20091126 begin
 		DeliveryTeam deliveryTeam = sr.getDeliveryTeam();
@@ -191,7 +191,7 @@ public class SRAction extends BaseAction{
 		String param = request.getParameter("info");
 		ERP_NormalNeed sr=(ERP_NormalNeed)super.getService().find(ERP_NormalNeed.class, reqId);
 		Map map = getMapFormPanelJson(param);
-		Enumeration en = request.getParameterNames();//HttpUtil.requestParam2Map(request);
+//		Enumeration en = request.getParameterNames();//HttpUtil.requestParam2Map(request);
 		
 		map.put("erpNeed", sr);
 		BASISEngineerFeedback sp =(BASISEngineerFeedback) metaDataManager.saveEntityData(BASISEngineerFeedback.class, map);
@@ -441,7 +441,7 @@ public class SRAction extends BaseAction{
 		SpecialRequirement sr = (SpecialRequirement) getService().find(SpecialRequirement.class, reqId);
 		product = HttpUtil.ConverUnicode(product);
 		JSONArray ja = JSONArray.fromObject("[" + product + "]");
-		SRTestReport srTestReport = null;
+//		SRTestReport srTestReport = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap productMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -452,9 +452,9 @@ public class SRAction extends BaseAction{
 //				if(key.equals("code")&&value=="null"){
 //					questOption = null;
 //				}
-				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
-					srTestReport = (SRTestReport) super.getService().find(SRTestReport.class, value);
-				}
+//				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
+//					srTestReport = (SRTestReport) super.getService().find(SRTestReport.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				productMap.put(key, value);
@@ -462,7 +462,7 @@ public class SRAction extends BaseAction{
 			//productMap.put("requirementId", reqId);
 			//productMap.put("requirementClass", reqCls);
 			productMap.put("specialRequire",sr);
-			srTestReport =(SRTestReport) metaDataManager.saveEntityData(SRTestReport.class, productMap);
+			metaDataManager.saveEntityData(SRTestReport.class, productMap);
 //			projectTestReport = (ProjectTestReport) BeanUtil.getObject(productMap, ProjectTestReport.class);
 //			super.getService().save(projectTestReport);
 		}
@@ -531,7 +531,7 @@ public class SRAction extends BaseAction{
 		String reqId = super.getRequest().getParameter("reqId");
 		info = HttpUtil.ConverUnicode(info);
 		JSONArray ja = JSONArray.fromObject("[" + info + "]");
-		SRExpendPlan srep = null;
+//		SRExpendPlan srep = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap dataMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -539,16 +539,16 @@ public class SRAction extends BaseAction{
 			while (itProduct.hasNext()) {
 				String key = (String) itProduct.next();
 				String value = opl.getString(key);
-				if(("SRExpendPlan$id").equals(key)&&value!="null"){
-					srep = (SRExpendPlan) super.getService().find(SRExpendPlan.class, value);
-				}
+//				if(("SRExpendPlan$id").equals(key)&&value!="null"){
+//					srep = (SRExpendPlan) super.getService().find(SRExpendPlan.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				dataMap.put(key, value);
 			}
 			dataMap.put("specialRequire", reqId);
 			dataMap.put("isFinish", Integer.valueOf(0));//add by lee for buinessAccount in 20090909
-			srep =(SRExpendPlan) metaDataManager.saveEntityData(SRExpendPlan.class, dataMap);
+			metaDataManager.saveEntityData(SRExpendPlan.class, dataMap);
 		}
 		return null;
 	}
@@ -563,7 +563,7 @@ public class SRAction extends BaseAction{
 		String reqId = super.getRequest().getParameter("reqId");
 		info = HttpUtil.ConverUnicode(info);
 		JSONArray ja = JSONArray.fromObject("[" + info + "]");
-		SRIncomePlan srip = null;
+//		SRIncomePlan srip = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap dataMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -571,16 +571,16 @@ public class SRAction extends BaseAction{
 			while (itProduct.hasNext()) {
 				String key = (String) itProduct.next();
 				String value = opl.getString(key);
-				if(("SRIcomePlan$id").equals(key)&&value!="null"){
-					srip = (SRIncomePlan) super.getService().find(SRIncomePlan.class, value);
-				}
+//				if(("SRIcomePlan$id").equals(key)&&value!="null"){
+//					srip = (SRIncomePlan) super.getService().find(SRIncomePlan.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				dataMap.put(key, value);
 			}
 			dataMap.put("specialRequire", reqId);
 			dataMap.put("isFinish", Integer.valueOf(0));//add by lee for buinessAccount in 20090909
-			srip =(SRIncomePlan) metaDataManager.saveEntityData(SRIncomePlan.class, dataMap);
+			metaDataManager.saveEntityData(SRIncomePlan.class, dataMap);
 		}
 		return null;
 	}
@@ -660,7 +660,7 @@ public class SRAction extends BaseAction{
 		if(request.getParameter("taskId") != null){
 			taskId = Long.parseLong(request.getParameter("taskId"));
 		}
-		UserInfo userInfo = UserContext.getUserInfo();
+//		UserInfo userInfo = UserContext.getUserInfo();
 		List<Quest> questList = requireService.findQuest(surveyId);
 		Iterator<Quest> iter = questList.iterator();
 		Map map = new LinkedHashMap();//linkedHashMap按set进去先后顺序排序的
@@ -1001,7 +1001,7 @@ public class SRAction extends BaseAction{
 	public String saveReqEngineerForReq(){
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String id= request.getParameter("id");
+//		String id= request.getParameter("id");
 		String requireId= request.getParameter("reqId");
 		String mainManagerId = request.getParameter("mainManager");
 		String assistantEngineerId = request.getParameter("assistantEngineer");
@@ -1406,7 +1406,7 @@ public class SRAction extends BaseAction{
 			HttpServletRequest request = super.getRequest();
 			HttpServletResponse response = super.getResponse();
 			String dataId = request.getParameter("reqId");
-			SpecialRequirement sr=(SpecialRequirement)super.getService().find(SpecialRequirement.class, dataId);
+//			SpecialRequirement sr=(SpecialRequirement)super.getService().find(SpecialRequirement.class, dataId);
 			SRProjectPlan projectPlan = projectPlanService.findRootProjectPlanByReq(dataId);
 			String projectPlanId = "0";
 			if(projectPlan!=null){
@@ -1922,7 +1922,7 @@ public class SRAction extends BaseAction{
 				e.printStackTrace();
 			} 
 			Date createDate = new Date();
-			String newDataId = "";
+//			String newDataId = "";
 			NewNotice notice = null;
 			if(dataId=="0"||dataId==null||dataId==""||"0".equals(dataId)){
 				NewNotice newNotice = new NewNotice();
@@ -1936,7 +1936,7 @@ public class SRAction extends BaseAction{
 				newNotice.setNewNoticeType(newNoticeType);//add by lee for 记录公告类型 in 20091102
 				newNotice.setAuditflag(Integer.valueOf(auditflag));
 				notice=(NewNotice) super.getService().save(newNotice);
-				newDataId = notice.getId().toString();
+//				newDataId = notice.getId().toString();
 			}else{
 				NewNotice newNotice = (NewNotice) super.getService().find(NewNotice.class, dataId);
 				newNotice.setTitle(title);
@@ -1949,7 +1949,7 @@ public class SRAction extends BaseAction{
 				newNotice.setNewNoticeType(newNoticeType);//add by lee for 记录公告类型 in 20091102
 				newNotice.setAuditflag(Integer.valueOf(auditflag));
 				notice=(NewNotice) super.getService().save(newNotice);
-				newDataId = dataId;
+//				newDataId = dataId;
 			}
 			if(StringUtils.isBlank(dataId)||"0".equals(dataId)){
 				SRProjectNotice projectNotice = new SRProjectNotice();
@@ -2266,7 +2266,7 @@ public class SRAction extends BaseAction{
 		String dataId = request.getParameter("dataId");
 		ServerManage serverManage = (ServerManage) service.find(ServerManage.class, dataId, true);
 		ServerManageInfoOne one = (ServerManageInfoOne) service.findUnique(ServerManageInfoOne.class, "serverManage", serverManage);
-		ServerManageInfoTwo two = (ServerManageInfoTwo) service.findUnique(ServerManageInfoTwo.class, "serverManage", serverManage);
+//		ServerManageInfoTwo two = (ServerManageInfoTwo) service.findUnique(ServerManageInfoTwo.class, "serverManage", serverManage);
 		ConfigItem configItem = serverManage.getConfigItem();		//获取申请关联配置项
 		SystemMainTable serverTable = systemMainTableService.findSystemMainTableByClazz(Server.class);
 		String serverClassName = serverTable.getClassName();
@@ -2305,7 +2305,7 @@ public class SRAction extends BaseAction{
 			ConfigItemExtendInfo ciExtendInfo = (ConfigItemExtendInfo) service.findUnique(ConfigItemExtendInfo.class, "configItem", configItem);	//获取配置项服务器实体关系
 			Long serverId = ciExtendInfo.getExtendDataId();
 			Server server = (Server) service.find(Server.class, serverId.toString(), true);	//获取服务器实体
-			String lalasfslal = Server.class.toString();
+//			String lalasfslal = Server.class.toString();
 			configItem.setConfigItemType(cofigItemType);//配置项类型为物理服务器
 			configItem.setName(serverManage.getServerName());	//初始化配置项名称
 			server.setName(serverManage.getServerName());		//初始化服务器名称
@@ -2318,7 +2318,7 @@ public class SRAction extends BaseAction{
 			//server.setModifyDate(DateUtil.getCurrentDate());	//初始化修改时间
 			Map data = metaDataManager.getEntityDataForEdit(server);
 			Server newServer = (Server) metaDataManager.saveEntityData(Server.class, data);	//保存物理服务器实体(调用编号生成器的保存必须用此方法)
-			Long newServerId = newServer.getId();
+//			Long newServerId = newServer.getId();
 			String cisn = newServer.getCisn();		//获取生成配置项编号
 			configItem.setCisn(cisn);				//将配置项编号给配置项主实体
 			service.save(configItem);				//保存配置项
@@ -2346,9 +2346,9 @@ public class SRAction extends BaseAction{
 	public String saveServerConfigItem(){
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String ciId = request.getParameter("dataId");
+//		String ciId = request.getParameter("dataId");
 		String configItemInfo = request.getParameter("configItemInfo");
-		String serverInfo = request.getParameter("serverInfo");
+//		String serverInfo = request.getParameter("serverInfo");
 		//保存配置项
 		JSONArray cijsonArray = JSONArray.fromObject(configItemInfo);   
 		Object[] ciDataArrays = cijsonArray.toArray();
@@ -2557,7 +2557,7 @@ public class SRAction extends BaseAction{
 	 */
 	public String reAssignAudit(){
 		HttpServletRequest request = super.getRequest();
-		HttpServletResponse response = super.getResponse();
+//		HttpServletResponse response = super.getResponse();
 		
 		String taskId = request.getParameter("taskId");			
 		UserInfo ui = UserContext.getUserInfo();
@@ -2601,19 +2601,19 @@ public class SRAction extends BaseAction{
 		map.put("erpNeed", sr);
 		ErpEngineerFeedback sp =(ErpEngineerFeedback) metaDataManager.saveEntityData(ErpEngineerFeedback.class, map);
 
-		String tempProduct = "";
-		if (!"".equals(product) ) {
-			byte[] bt1;
-			try {
-				bt1 = product.getBytes("ISO8859_1");
-				tempProduct = new String(bt1,"GBK");//用GBK进行解码，构建1个新的字符串  
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}//用ISO8859_1进行编码			
-		}		
+//		String tempProduct = "";
+//		if (!"".equals(product) ) {
+//			byte[] bt1;
+//			try {
+//				bt1 = product.getBytes("ISO8859_1");
+//				tempProduct = new String(bt1,"GBK");//用GBK进行解码，构建1个新的字符串  
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}//用ISO8859_1进行编码			
+//		}		
 		JSONArray ja = JSONArray.fromObject("[" + product + "]");
-		RequireFactoryInfo rfi = null;
+//		RequireFactoryInfo rfi = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap productMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -2622,16 +2622,16 @@ public class SRAction extends BaseAction{
 				String key = (String) itProduct.next();
 				String value = opl.getString(key);
 
-				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
-					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
-				}
+//				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
+//					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				productMap.put(key, value);				
 			}
 
 			productMap.put("requireData",sr);
-			rfi =(RequireFactoryInfo) metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
+			metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
 		}				
 		
 		String json= "{success:true,id:"+sp.getId()+"}";
@@ -2662,7 +2662,7 @@ public class SRAction extends BaseAction{
 
 		String product = request.getParameter("product");
 		JSONArray ja = JSONArray.fromObject("[" + product + "]");
-		RequireFactoryInfo rfi = null;
+//		RequireFactoryInfo rfi = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap productMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -2671,16 +2671,16 @@ public class SRAction extends BaseAction{
 				String key = (String) itProduct.next();
 				String value = opl.getString(key);
 
-				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
-					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
-				}
+//				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
+//					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				productMap.put(key, value);				
 			}
 
 			productMap.put("requireData",sr);
-			rfi =(RequireFactoryInfo) metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
+			metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
 		}				
 		
 		String json= "{success:true,id:"+reqId+"}";

@@ -10,6 +10,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-10-20
  */
 public class ConfigItemStatus extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -3899384899153366552L;
 	public static final String CONFIGITEMSTATUS_STANDBY = "standby";//备用
 	public static final String CONFIGITEMSTATUS_DISABLED = "Disabled";//禁用
 	public static final String CONFIGITEMSTATUS_ARCHIVED = "Archived";//已归档

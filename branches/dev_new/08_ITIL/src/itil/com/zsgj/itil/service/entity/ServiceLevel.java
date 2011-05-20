@@ -13,6 +13,42 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 public class ServiceLevel extends BaseObject {
 	private Long id;
+	/**
+	 * @Return the Long id
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * @Param Long id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+	/**
+	 * @Return the String level
+	 */
+	public String getLevel() {
+		return level;
+	}
+	/**
+	 * @Param String level to set
+	 */
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	/**
+	 * @Return the Integer solveHour
+	 */
+	public Integer getSolveHour() {
+		return solveHour;
+	}
+	/**
+	 * @Param Integer solveHour to set
+	 */
+	public void setSolveHour(Integer solveHour) {
+		this.solveHour = solveHour;
+	}
 	//服务的水平
 	private String level;
 	//解决问题需要的小时数

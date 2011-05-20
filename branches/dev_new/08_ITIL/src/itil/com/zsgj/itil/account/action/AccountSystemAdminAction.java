@@ -8,22 +8,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.SameMailDept;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.security.entity.WorkSpace;
-import com.zsgj.info.framework.util.DateUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
-import com.zsgj.itil.account.entity.AccountModifyDesc;
 import com.zsgj.itil.account.entity.AccountSBUOfficer;
-import com.zsgj.itil.account.entity.AccountType;
-import com.zsgj.itil.account.entity.DeviceType;
-import com.zsgj.itil.account.entity.SpecialAccount;
-import com.zsgj.itil.account.entity.SystemAppAdmin;
-import com.zsgj.itil.account.entity.Win7PlatForm;
-import com.zsgj.itil.account.service.AccountService;
 import com.zsgj.itil.account.service.AccountSystemAdminService;
 import com.zsgj.itil.actor.entity.RAndBUserList;
 import com.zsgj.itil.config.extlist.entity.MailGroup;
@@ -31,6 +22,7 @@ import com.zsgj.itil.config.extlist.entity.MobileTelAllowance;
 import com.zsgj.itil.config.extlist.entity.PlatFormHRCountSign;
 import com.zsgj.itil.config.extlist.entity.TelephoneCountSign;
 
+@SuppressWarnings("serial")
 public class AccountSystemAdminAction extends BaseAction{
 	private AccountSystemAdminService accountSystemAdminService = (AccountSystemAdminService) getBean("accountSystemAdminService");
 	/**

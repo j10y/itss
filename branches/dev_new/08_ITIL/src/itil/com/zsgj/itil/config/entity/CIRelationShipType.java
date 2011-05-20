@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-10-20
  */
 public class CIRelationShipType extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 5354238562071428855L;
 	private Long id;
 	private String name;
 	private Integer attachFlag;

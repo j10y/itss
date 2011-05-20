@@ -370,13 +370,13 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 	
 	private String readRowforaddemail(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
-		String value2="";//员工编号
+//		String value2="";//员工编号
 		String value3="";//成本中心编号
-		Long value4=null;//部门名称对应的部门号
-		Long value5=null;//邮件等价名部门名称
-		Long value6=null;//工作地点
+//		Long value4=null;//部门名称对应的部门号
+//		Long value5=null;//邮件等价名部门名称
+//		Long value6=null;//工作地点
 		String value7="";//邮件服务器
 		Long value8=null;//帐号类型
 		String value9="";//帐号名
@@ -385,35 +385,35 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		Integer value12=1;//零一标志位
 		//Integer orderFlag = null;
 		String value13="";//操作说明
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
-		WorkSpace ws=null;
+//		WorkSpace ws=null;
 		SameMailDept smd=null;
 		Department dp=null;
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo us=(UserInfo) list.get(0);
 				user=us;
-				userId=us.getId();
+//				userId=us.getId();
 			}
 		}
-		HSSFCell cell2 = row.getCell((short) 2);
-		if(cell2!=null){
-			 value2 = this.getCellStringValue(cell2);
-		}
+//		HSSFCell cell2 = row.getCell((short) 2);
+//		if(cell2!=null){
+//			 value2 = this.getCellStringValue(cell2);
+//		}
 		HSSFCell cell3 = row.getCell((short) 3);
 		if(cell3!=null){
 			 value3 = this.getCellStringValue(cell3);
@@ -426,7 +426,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				dp=(Department) list.get(0);
-				value4=dp.getDepartCode();
+//				value4=dp.getDepartCode();
 			}
 		}
 		HSSFCell cell5 = row.getCell((short) 5);
@@ -437,7 +437,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				smd=(SameMailDept) list.get(0);
-				value5=smd.getId();
+//				value5=smd.getId();
 			}
 		}
 //		HSSFCell cell6 = row.getCell((short) 6);
@@ -527,11 +527,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 				 amr.setModifyDate(new Date());
 				 amr.setAccountManger(UserContext.getUserInfo().getItcode());
 				 this.save(amr);
-//				hql = "insert into itil_ac_PersonFormalAccount (accountName,accountType,accountowner,accountState,createDate,rightsDesc,remarkDesc,workSpace,mailServer,department,costCenterCode,sameMailDept) " +
-//				"Values('"+value9+"',"+value8+","+userId+","+value12+",'"+applyDate+"','"+value10+"','"+value11+"',"+value6+",'"+value7+"',"+value4+",'"+value3+"',"+value5+")";
-//				 errors="插入"+errors+user.getRealName()+user.getItcode()+"的帐号名为"+value9+"的"+actype.getName()+"已存在！同一类型帐号只能申请一次!";
-//				 System.out.println("插入"+user.getRealName()+user.getItcode()+"的帐号名为"+value9+"的"+actype.getName()+"已存在！同一类型帐号只能申请一次");
-			 }
+			}
 		}else if(value8==14||value8==17 ){
 			Criteria c = super.getCriteria(SpecialAccount.class);
 			 c.add(Restrictions.eq("accountName", value9));
@@ -571,55 +567,46 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 				 amr.setModifyDate(new Date());
 				 amr.setAccountManger(UserContext.getUserInfo().getItcode());
 				 this.save(amr);
-//			hql = "insert into itil_ac_SpecialAccount (accountName,accountType,accountNowUser,accountState,createDate,rightsDesc,remarkDesc,workSpace,mailServer,department,costCenterCode,sameMailDept) " +
-//			"Values('"+value9+"',"+value8+","+userId+","+value12+",'"+applyDate+"','"+value10+"','"+value11+"',"+value6+",'"+value7+"',"+value4+",'"+value3+"',"+value5+")";
-			 }
+			}
 		}else{
 			errors=errors+"模板出错，与你选择的导入类型不匹配";
 		}
-//	        try {
-//				Connection conn = super.getSession().connection();
-//				Statement stmt = conn.createStatement();
-//				stmt.executeUpdate(hql);
-//				conn.commit();
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
+
 			return errors;
 		}	
 	private String readRowforupdataemail(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
-		Long value4=null;//邮箱大小
+//		Long value4=null;//邮箱大小
 		String value5="";//备注
 		Integer value6=1;//零一标志位
 		String value7="";//操作说明
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
-		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
+//		Long userId=null;//用户Id
+//		Date da=DateUtil.getCurrentDate();
+//		String applyDate=DateUtil.convertDateToString(da);
 		MailVolume mv=null;
-		HSSFCell cell0 = row.getCell((short) 0);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -648,7 +635,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 			 List list=c.list();
 				if(list!=null&&!list.isEmpty()){
 					mv=(MailVolume) list.get(0);
-					value4=mv.getId();
+//					value4=mv.getId();
 				}
 		}
 		HSSFCell cell5 = row.getCell((short) 5);
@@ -741,7 +728,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 	
 	private String readRowforBi(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -751,27 +738,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		String value7="";//是否涉及薪酬
 		String value8="";//操作说明
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -893,7 +880,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 	
 	private String readRowforELog(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -901,27 +888,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		String value5="";//备注
 		Integer value6=1;//零一标志位
 		String value7="";//操作说明
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -1031,7 +1018,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		}
 	private String readRowforSCM(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -1040,27 +1027,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		Integer value6=1;//零一标志位
 		String value7="";//操作说明
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -1170,7 +1157,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 	
 	private String readRowforPushMail(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -1178,27 +1165,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		String value5="";//备注
 		Integer value6=1;//零一标志位
 		String value7="";//操作说明
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -1235,7 +1222,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		if(cell7!=null){//
 			 value7 = this.getCellStringValue(cell7);
 		}
-		String hql=null;
+//		String hql=null;
 		if(value2==11){
 			 Criteria c = super.getCriteria(PersonFormalAccount.class);
 			// c.add(Restrictions.eq("accountName", value3));
@@ -1309,7 +1296,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		}
 	private String readRowforEB(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -1319,27 +1306,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		String value7="";//手机号码
 		String value8="";//操作说明
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -1517,7 +1504,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		}
 	private String readRowforERP(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -1527,27 +1514,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		String value7="";//ERP名
 		String value8="";//操作说明
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -1588,7 +1575,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		if(cell8!=null){//
 			 value8 = this.getCellStringValue(cell8);
 		}
-		String hql=null;
+//		String hql=null;
 		if(value2==7){
 			 Criteria c = super.getCriteria(PersonFormalAccount.class);
 			// c.add(Restrictions.eq("accountName", value3));
@@ -1727,7 +1714,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 	
 	private String readRowforMSN(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -1736,27 +1723,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		Integer value6=1;//零一标志位
 		String value7="";
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -1793,7 +1780,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		if(cell7!=null){//
 			 value7 = this.getCellStringValue(cell7);
 		}
-		String hql=null;
+//		String hql=null;
 		if(value2==4){
 			 Criteria c = super.getCriteria(PersonFormalAccount.class);
 			// c.add(Restrictions.eq("accountName", value3));
@@ -1928,36 +1915,36 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 	
 	private String readRowforWWW(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
-		Long value4=null;//额度
+//		Long value4=null;//额度
 		String value5="";//备注
 		Integer value6=1;//零一标志位
 		String value7="";
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		WWWScanType wwwType=null;
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -1986,7 +1973,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 			 List list=c.list();
 				if(list!=null&&!list.isEmpty()){
 					WWWScanType at=(WWWScanType) list.get(0);
-					value4=at.getId();
+//					value4=at.getId();
 					wwwType=at;
 				}
 		}
@@ -2002,7 +1989,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		if(cell7!=null){//
 			 value7 = this.getCellStringValue(cell7);
 		}
-		String hql=null;
+//		String hql=null;
 		if(value2==3){
 			 Criteria c = super.getCriteria(PersonFormalAccount.class);
 			// c.add(Restrictions.eq("accountName", value3));
@@ -2746,7 +2733,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 	
 	private String readRowforRemote(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -2757,27 +2744,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		String value8="";//操作说明
 		String value9="";//到期日期
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		Date endDate=null;
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -2925,14 +2912,14 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
-		Long value4=null;//领卡地点
+//		Long value4=null;//领卡地点
 		String value5="";//备注
 		Integer value6=1;//零一标志位
 		String value7="";//令牌卡号
 		
 		String value8="";//到期日期
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		
 		
 		UserInfo user=null; 
@@ -2943,14 +2930,14 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -2979,7 +2966,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 			 List list=c.list();
 				if(list!=null&&!list.isEmpty()){
 					AR_DrawSpace ds=(AR_DrawSpace) list.get(0);
-					value4=ds.getId();
+//					value4=ds.getId();
 					drawSpace=ds;
 				}
 		}
@@ -3094,7 +3081,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		}
 	private String readRowforDomain(HSSFRow row) throws Exception{
 		String errors="";
-		String value0="";// 姓名
+//		String value0="";// 姓名
 		String value1="";//itcode
 		Long value2=null;//帐号类型
 		String value3="";//帐号名
@@ -3103,27 +3090,27 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		Integer value6=1;//零一标志位
 		String value7="";
 		//Integer orderFlag = null;
-		Long userId=null;//用户Id
+//		Long userId=null;//用户Id
 		Date da=DateUtil.getCurrentDate();
-		String applyDate=DateUtil.convertDateToString(da);
-		HSSFCell cell0 = row.getCell((short) 0);
+//		String applyDate=DateUtil.convertDateToString(da);
+//		HSSFCell cell0 = row.getCell((short) 0);
 		UserInfo user=null; 
 		AccountType actype=null;
 		
-		if(cell0!=null){
-			 value0 = this.getCellStringValue(cell0);
-		}
+//		if(cell0!=null){
+//			 value0 = this.getCellStringValue(cell0);
+//		}
 		HSSFCell cell1 = row.getCell((short) 1);
 		if(cell1!=null){
 			value1=this.getCellStringValue(cell1);
-			String valueid=this.getCellStringValue(cell1);
+//			String valueid=this.getCellStringValue(cell1);
 			Criteria c = super.getCriteria(UserInfo.class);
 			c.add(Restrictions.eq("itcode", value1).ignoreCase());
 			List list=c.list();
 			if(list!=null&&!list.isEmpty()){
 				UserInfo dp=(UserInfo) list.get(0);
 				user=dp;
-				userId=dp.getId();
+//				userId=dp.getId();
 			}
 		}
 		
@@ -3271,7 +3258,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao{
 		}
 		return cellValue;
 	}
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {

@@ -14,6 +14,10 @@ import com.zsgj.itil.service.entity.ServiceItemType;
  */
 public class CIRelationShip extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -7396008551189343516L;
 	public static final Integer DELETE_STATUS  = -1;//已删除
 	public static final Integer VALID_STATUS = 1;//正式
 	public static final Integer HISTORY_STATUS= 3;//申请历史

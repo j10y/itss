@@ -26,6 +26,10 @@ import com.zsgj.itil.actor.entity.CustomerType;
  * @deprecated deprecated by duxh in 09-11-19
  */
 public class CIRelationShipPic extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -8868287903445103029L;
 	public static final String NAME_zsgj="中商国际";
 	private Long id;
 	//配置项关系名称

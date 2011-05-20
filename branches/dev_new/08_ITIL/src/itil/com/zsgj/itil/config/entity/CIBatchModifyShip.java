@@ -15,6 +15,11 @@ public class CIBatchModifyShip extends BaseObject{
 	
 	
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 2020907115557634793L;
+
 	private Long id;			//×Ô¶¯±àºÅ
 	
 //	private Event event;

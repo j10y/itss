@@ -58,6 +58,7 @@ import com.zsgj.itil.config.service.ConfigItemService;
 import com.zsgj.itil.service.entity.ServiceItem;
 import com.zsgj.itil.service.entity.ServiceItemType;
 
+@SuppressWarnings("serial")
 public class ConfigItemAction extends BaseAction {
 	private ConfigItemService configItemService;
 	private MetaDataManager metaDataManager;
@@ -1021,7 +1022,7 @@ public class ConfigItemAction extends BaseAction {
 				infoMap.put(key, value);
 			}
 			
-			UserInfo user=UserContext.getUserInfo();
+//			UserInfo user=UserContext.getUserInfo();
 			infoMap.put("applyUser", UserContext.getUserInfo());
 			infoMap.put("applyDate", new Date());
 			infoMap.put("status", CIBatchModify.STATUS_DRAFT);

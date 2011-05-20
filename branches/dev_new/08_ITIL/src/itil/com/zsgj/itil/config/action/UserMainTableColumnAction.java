@@ -47,7 +47,7 @@ public class UserMainTableColumnAction extends BaseDispatchAction{
 	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
 	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	private CustomerTableService cts = (CustomerTableService)getBean("customerTableService");
 //	private SystemExtColumnServcie secs = (SystemExtColumnServcie) getBean("systemExtColumnService");
 	

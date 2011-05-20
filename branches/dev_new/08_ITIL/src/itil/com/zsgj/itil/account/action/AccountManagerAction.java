@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,6 @@ import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
-import com.zsgj.info.framework.workflow.ContextService;
 import com.zsgj.info.framework.workflow.ParameterService;
 import com.zsgj.info.framework.workflow.ProcessService;
 import com.zsgj.info.framework.workflow.TaskService;
@@ -52,12 +50,13 @@ import com.zsgj.itil.service.entity.ServiceItemUserTable;
  * @Author lee
  * @Create In May 25, 2009
  */
+@SuppressWarnings("serial")
 public class AccountManagerAction extends BaseAction{
 	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService)ContextHolder.getBean("parameterService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
-	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
+	//private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
+	//private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
 	private ProcessService ps = (ProcessService)ContextHolder.getBean("processService");
 	private AccountService as = (AccountService) ContextHolder.getBean("accountService");
 	
@@ -78,8 +77,8 @@ public class AccountManagerAction extends BaseAction{
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -147,8 +146,8 @@ public class AccountManagerAction extends BaseAction{
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -215,8 +214,8 @@ public class AccountManagerAction extends BaseAction{
 		String processNameDescription = super.getRequest().getParameter("description");//判断SBU审批人
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		String drawSpace=super.getRequest().getParameter("drawSpace");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
@@ -452,7 +451,7 @@ public class AccountManagerAction extends BaseAction{
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String department=super.getRequest().getParameter("department");
+		//String department=super.getRequest().getParameter("department");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -521,8 +520,8 @@ public class AccountManagerAction extends BaseAction{
 		String wwwValue=super.getRequest().getParameter("wwwValue");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -634,9 +633,9 @@ public class AccountManagerAction extends BaseAction{
 		String processNameDescription = super.getRequest().getParameter("description");//判断SBU审批人
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String userInfo = super.getRequest().getParameter("userInfo");//申请人
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String userInfo = super.getRequest().getParameter("userInfo");//申请人
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -838,9 +837,9 @@ public class AccountManagerAction extends BaseAction{
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId=super.getRequest().getParameter("dataId");//主数据id
-		String userInfo =super.getRequest().getParameter("userInfo");//申请人
+		//String userInfo =super.getRequest().getParameter("userInfo");//申请人
 		String workSpace=super.getRequest().getParameter("workSpace");//申请人
-		UserInfo applyUser=(UserInfo) getService().find(UserInfo.class, userInfo);
+		//UserInfo applyUser=(UserInfo) getService().find(UserInfo.class, userInfo);
         List<TelephoneAudit> audit= getService().find(TelephoneAudit.class, "workSpace", workSpace);
         String accountManger="liuqz";
         if(audit!=null){
@@ -878,7 +877,7 @@ public class AccountManagerAction extends BaseAction{
 		String dynCounterSignStr="confirmByAM:";
 		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
 		List<PersonFormalAccount> account=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
-		Set user2=new HashSet();
+		//Set user2=new HashSet();
 		for (PersonFormalAccount acc : account) {
 		if(acc.getAccountType().getAccountType().equals("Telephone")){
 			dynCounterSignStr+="1"+"+";
@@ -952,8 +951,8 @@ public class AccountManagerAction extends BaseAction{
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
 		String userInfo = super.getRequest().getParameter("userInfo");//申请人
 		UserInfo applyUser=(UserInfo) getService().find(UserInfo.class, userInfo);
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -1044,8 +1043,8 @@ public class AccountManagerAction extends BaseAction{
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
 		String userInfo = super.getRequest().getParameter("userInfo");//申请人
 		UserInfo applyUser=(UserInfo) getService().find(UserInfo.class, userInfo);
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -1112,8 +1111,8 @@ public class AccountManagerAction extends BaseAction{
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -1220,8 +1219,8 @@ public class AccountManagerAction extends BaseAction{
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -1277,12 +1276,12 @@ public class AccountManagerAction extends BaseAction{
 		//需要的参数
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
-		String processNameDescription = super.getRequest().getParameter("description");
+		//String processNameDescription = super.getRequest().getParameter("description");
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
 		String userInfo = super.getRequest().getParameter("userInfo");//申请人
 		UserInfo applyUser=(UserInfo) getService().find(UserInfo.class, userInfo);
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		String  drawSpace=super.getRequest().getParameter("workSpace");
 		AR_DrawSpace space=null;
 		if(drawSpace!=null&&StringUtils.isNotBlank(drawSpace)){
@@ -1407,7 +1406,7 @@ public class AccountManagerAction extends BaseAction{
 		
 		int rowCount = 0;
 	  	List<TaskInfo> list = ts.listTasks(actor);
-	  	List<TaskInfo> list1 =new ArrayList();
+	  	List<TaskInfo> list1 =new ArrayList<TaskInfo> ();
 	  	for(TaskInfo taskInfo:list) {
 	  		Map bizParams = pms.listVariablesByProcessId(taskInfo.getProcessId());
 	  		String type = (String)bizParams.get("applyType");
@@ -1429,7 +1428,7 @@ public class AccountManagerAction extends BaseAction{
 			if(accountName == null || "null".equalsIgnoreCase(accountName)){
 				bizParams.put("accountName", "未命名");
 			}
-			String type = (String)bizParams.get("applyType");
+			//String type = (String)bizParams.get("applyType");
 			String dataId=(String)bizParams.get("dataId");
 			String serviceItemId = (String)bizParams.get("serviceItemId");
 //			
@@ -1472,7 +1471,7 @@ public class AccountManagerAction extends BaseAction{
 			str += strBizParams+",";
 			str += "comments:'"+toBlank(taskInfo.getComments().getValue("comment"))+"'";
 			str = "{"+str+"},";
-			String defname = taskInfo.getDefinitionName();
+			//String defname = taskInfo.getDefinitionName();
 //			if("acproject".equals(type)){
 				json += str;
 				rowCount++;
@@ -1525,8 +1524,8 @@ public class AccountManagerAction extends BaseAction{
 		String processNameDescription = super.getRequest().getParameter("description");//判断SBU审批人
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		String drawSpace=super.getRequest().getParameter("drawSpace");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
@@ -1623,8 +1622,8 @@ public class AccountManagerAction extends BaseAction{
 		String processNameDescription = super.getRequest().getParameter("description");//判断SBU审批人
 		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
 		String platForm=super.getRequest().getParameter("platForm");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();

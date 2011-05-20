@@ -11,6 +11,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Jan 15, 2010
  */
 public class AccountModifyRecord extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -3064566844151261465L;
 	private Long id;
 	private String comment;		//修改描述
 	private String itCode;		//帐号所有者ITCODE

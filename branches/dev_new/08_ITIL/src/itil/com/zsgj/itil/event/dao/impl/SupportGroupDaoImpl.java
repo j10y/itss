@@ -41,7 +41,7 @@ public class SupportGroupDaoImpl extends BaseDao<SupportGroup> implements
 			 			.setProjection(Property.forName("supportGroup"))
 			 			.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			List l=c.list();
-			return c.list();
+			return l;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException(e.getMessage());

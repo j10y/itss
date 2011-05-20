@@ -13,6 +13,11 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  */
 public class CIRelationShipDisplay extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -6017622192939820593L;
+
 	private Long id;
 	
 	private String parentItem;

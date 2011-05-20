@@ -292,7 +292,7 @@ public class KnowledgeAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		HttpServletRequest request = super.getRequest();
 		String KnowledgeTypeID = request.getParameter("KnowledgeTypeID");
-		String pagePanelString = request.getParameter("pagePanelString");
+//		String pagePanelString = request.getParameter("pagePanelString");
 		String resolvent = request.getParameter("resolvent");
 		String info = request.getParameter("panelTypeParam");
 		if (KnowledgeTypeID == null || KnowledgeTypeID.equals("")) {//知识类型为解决方案
@@ -910,7 +910,7 @@ public class KnowledgeAction extends BaseAction {
 			String key = (String) itInfo.next();
 			String[] keyString = key.split("\\$");
 			String value = jo.getString(key);
-			KnowContract kc=new KnowContract();
+//			KnowContract kc=new KnowContract();
 			myinfoMap.put(keyString[1], value);
 		}
 		if(KnowContract.STATUS_FINISHED.toString().equals(myinfoMap.get("status"))){//合同变更
@@ -1274,7 +1274,8 @@ public class KnowledgeAction extends BaseAction {
 		String resolvent = request.getParameter("resolvent");
 		Map myinfoMap= this.getMapFormPanelJson(info);
 		myinfoMap.put("resolvent", resolvent);
-		Knowledge knowledge=(Knowledge) metaDataManager.saveEntityData(Knowledge.class, myinfoMap);
+		
+		metaDataManager.saveEntityData(Knowledge.class, myinfoMap);
 	    String json = "{success:true}";
 		try {
 			PrintWriter writer = response.getWriter();
@@ -1296,7 +1297,8 @@ public class KnowledgeAction extends BaseAction {
 		String descn = request.getParameter("descn");
 		Map myinfoMap= this.getMapFormPanelJson(info);
 		myinfoMap.put("descn", descn);
-		KnowFile knowFile=(KnowFile) metaDataManager.saveEntityData(KnowFile.class, myinfoMap);
+
+		metaDataManager.saveEntityData(KnowFile.class, myinfoMap);
 		String json = "{success:true}";
 		try {
 			PrintWriter writer = response.getWriter();
@@ -1316,7 +1318,8 @@ public class KnowledgeAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		String info = request.getParameter("knowContractParam");
 		Map myinfoMap= this.getMapFormPanelJson(info);
-		KnowContract knowContract=(KnowContract) metaDataManager.saveEntityData(KnowContract.class, myinfoMap);
+
+		metaDataManager.saveEntityData(KnowContract.class, myinfoMap);
 		String json = "{success:true}";
 		try {
 			PrintWriter writer = response.getWriter();

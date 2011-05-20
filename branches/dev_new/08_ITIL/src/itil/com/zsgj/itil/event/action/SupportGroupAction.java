@@ -567,7 +567,7 @@ public class SupportGroupAction extends BaseAction {
 	 * @return String
 	 */
 	public String isSupportEngineer() {
-		HttpServletRequest request = super.getRequest();
+//		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		UserInfo userInfo = UserContext.getUserInfo();
 		String json = "";

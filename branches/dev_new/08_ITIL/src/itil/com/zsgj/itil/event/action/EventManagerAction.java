@@ -42,7 +42,7 @@ public class EventManagerAction extends BaseAction {
 	private TaskService ts = (TaskService) ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService) ContextHolder.getBean("parameterService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
+//	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
 	private ProcessService ps = (ProcessService) ContextHolder.getBean("processService");
 	//2010-06-04 add by huzh begin
 	private MailSenderService ms = (MailSenderService) ContextHolder.getBean("mailSenderService");
@@ -107,15 +107,15 @@ public class EventManagerAction extends BaseAction {
 		}
 		if(creator==null)
 			creator = UserContext.getUserInfo().getUserName();
-		Long instanceId = null;
-		String meg = "";
+//		Long instanceId = null;
+//		String meg = "";
 		//2010-06-04 modified by huzh for 启动流程改为异步，若出现异常给创建人和管理员发邮件 begin
 		try {
 //			 throw new Exception();  
 			StartEventProcess startThread =new StartEventProcess(definitionName, creator, mapBizz);
 			Thread st = new Thread(startThread);
 		    st.start();
-		    json = "{success:true,id:2012}";
+		    json = "{success:true,id:" + st.getId() + "}";
 //			instanceId = ps.createProcess(definitionName, creator, mapBizz);
 //			json = "{success:true,id:'" + instanceId + "'}";
 		} catch (Exception e) {
@@ -150,7 +150,6 @@ public class EventManagerAction extends BaseAction {
 	 *             String
 	 */
 	public String tasks() throws Exception {
-		@SuppressWarnings("unused")
 		HttpServletRequest request = super.getRequest();
 		// 需要的参数
 		String actor = request.getParameter("actorId");
@@ -173,7 +172,7 @@ public class EventManagerAction extends BaseAction {
 			str += "startDate:'" + toBlank(taskInfo.getStart()) + "',";
 			Map bizParams = pms.listVariablesByProcessId(taskInfo.getProcessId());
 			String eventName = (String) bizParams.get("eventName");
-			String eventCisn = (String) bizParams.get("eventCisn");
+//			String eventCisn = (String) bizParams.get("eventCisn");
 			//2010-05-04 delete by huzh for 没用 begin
 //			String eventSubmitUser = (String) bizParams.get("eventSubmitUser");
 //			String eventSubmitDate = (String) bizParams.get("eventSubmitDate");
@@ -283,6 +282,7 @@ public class EventManagerAction extends BaseAction {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unused")
 	private String next() throws Exception {
 		// 需要的参数
 		String taskId = super.getRequest().getParameter("taskid");
@@ -392,7 +392,7 @@ public class EventManagerAction extends BaseAction {
 	private String eventHtmlContent(UserInfo creator, String url,Event event) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -435,7 +435,7 @@ public class EventManagerAction extends BaseAction {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议，可以发送邮件到it-manage@zsgj.com，或者拨打IT服务建议及投诉热线7888-0。"); 
+		sb.append("<br>感谢您使用IT服务，如果您对我们有任何意见和建议，可以发送邮件到it-manage@zsgj.com，或者拨打IT服务建议及投诉热线7888-0。"); 
 		sb.append("</td>");	
 		sb.append("</tr>");
 		sb.append("<tr>");
@@ -450,7 +450,7 @@ public class EventManagerAction extends BaseAction {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
-		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
+		sb.append("<br>本邮件由IT服务系统（ITSS）自动发送，请勿直接回复。");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("			</table>");

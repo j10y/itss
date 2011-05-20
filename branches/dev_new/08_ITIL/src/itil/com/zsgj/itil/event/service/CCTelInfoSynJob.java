@@ -207,7 +207,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 	private String eventHtmlSatContent(UserInfo creator, String url,Event event) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -356,7 +356,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 	private String eventNoSatHtmlContent(UserInfo creator, String url,Event event) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

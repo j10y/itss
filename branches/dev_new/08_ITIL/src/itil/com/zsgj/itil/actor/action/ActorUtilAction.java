@@ -26,6 +26,7 @@ import com.zsgj.itil.actor.service.ActorUtilService;
  * @Author lee
  * @Create In Dec 15, 2009
  */
+@SuppressWarnings("serial")
 public class ActorUtilAction extends BaseAction{
 	
 	private ActorUtilService actorUtilService = (ActorUtilService) getBean("actorUtilService");
@@ -44,8 +45,8 @@ public class ActorUtilAction extends BaseAction{
 		int pageSize = 10;
 		int start = HttpUtil.getInt(request, "start", 0);
 		int pageNo = start / pageSize + 1;
-		String orderBy = HttpUtil.getString(request, "orderBy", "id");
-		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", true);
+//		String orderBy = HttpUtil.getString(request, "orderBy", "id");
+//		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", true);
 		String userName = HttpUtil.getString(request, "userName", "");
 		String curId = HttpUtil.getString(request, "id", "");
 		if(curId!=null&&curId!=""){

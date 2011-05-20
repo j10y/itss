@@ -78,7 +78,7 @@ public class BusinessAccountAction extends BaseAction{
 		List queryList = page.list();
 		PagePanel panel = pps.findPagePanel(panelName);
 		List<PagePanelColumn> columns = ppcs.findColumnByPanel(panel);
-		SystemMainTable smt = (SystemMainTable) getService().find(SystemMainTable.class, panel.getSystemMainTable().getId().toString());
+//		SystemMainTable smt = (SystemMainTable) getService().find(SystemMainTable.class, panel.getSystemMainTable().getId().toString());
 		String tableName = "SpecialRequirement";//smt.getName();
 		List<Map<String, Object>> listData = metaDataManager.getEntityMapDataForList(SpecialRequirement.class, queryList,tableName);
 		json = CoderForList.encode(columns, listData, total);
@@ -117,7 +117,7 @@ public class BusinessAccountAction extends BaseAction{
 		List queryList = page.list();
 		PagePanel panel = pps.findPagePanel(panelName);
 		List<PagePanelColumn> columns = ppcs.findColumnByPanel(panel);
-		SystemMainTable smt = (SystemMainTable) getService().find(SystemMainTable.class, panel.getSystemMainTable().getId().toString());
+//		SystemMainTable smt = (SystemMainTable) getService().find(SystemMainTable.class, panel.getSystemMainTable().getId().toString());
 		String tableName = "SpecialRequirement";//smt.getName();
 		List<Map<String, Object>> listData = metaDataManager.getEntityMapDataForList(SpecialRequirement.class, queryList,tableName);
 		json = CoderForList.encode(columns, listData, total);
@@ -295,8 +295,9 @@ public class BusinessAccountAction extends BaseAction{
 	 * @Methods Name getIncomeUpdatePlanHis
 	 * @Create In Sep 9, 2009 By lee
 	 * @return String
+	 * @throws IOException 
 	 */
-	public String getIncomeUpdatePlanHis() {
+	public String getIncomeUpdatePlanHis() throws IOException {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		response.setContentType("text/plain");
@@ -331,10 +332,12 @@ public class BusinessAccountAction extends BaseAction{
 			printWriter = response.getWriter();
 			printWriter.write(jsonString);
 		} catch (IOException e) {
+			printWriter = response.getWriter();
 			printWriter.write("{success:false,message:'服务器错误，请联系管理员'}");
+		}finally{
+			printWriter.flush();
+			printWriter.close();
 		}
-		printWriter.flush();
-		printWriter.close();
 		return null;
 	}
 	/**
@@ -342,8 +345,9 @@ public class BusinessAccountAction extends BaseAction{
 	 * @Methods Name getExpendUpdatePlanHis
 	 * @Create In Sep 9, 2009 By lee
 	 * @return String
+	 * @throws IOException 
 	 */
-	public String getExpendUpdatePlanHis() {
+	public String getExpendUpdatePlanHis() throws IOException {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		response.setContentType("text/plain");
@@ -378,10 +382,12 @@ public class BusinessAccountAction extends BaseAction{
 			printWriter = response.getWriter();
 			printWriter.write(jsonString);
 		} catch (IOException e) {
+			printWriter = response.getWriter();
 			printWriter.write("{success:false,message:'服务器错误，请联系管理员'}");
+		}finally{
+			printWriter.flush();
+			printWriter.close();
 		}
-		printWriter.flush();
-		printWriter.close();
 		return null;
 	}
 	/**
@@ -461,8 +467,9 @@ public class BusinessAccountAction extends BaseAction{
 	 * @Methods Name getIncomeInfo
 	 * @Create In Sep 9, 2009 By lee
 	 * @return String
+	 * @throws IOException 
 	 */
-	public String getIncomeInfo(){
+	public String getIncomeInfo() throws IOException{
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		PrintWriter printWriter = null;
@@ -490,15 +497,18 @@ public class BusinessAccountAction extends BaseAction{
 		jsonString += "plan$balance:'" + format.format(baService.getIncomeBalanceByPlanId(plan.getId().toString())) + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter out;
+		
 		try {
 			printWriter = response.getWriter();
 			printWriter.write(jsonString);
 		} catch (Exception e) {
+			printWriter = response.getWriter();
 			printWriter.write("{success:false,message:'查询失败。请联系管理员'}");
 			e.printStackTrace();
+		}finally{
+			printWriter.flush();
+			printWriter.close();
 		}
-		printWriter.flush();
 		return null;
 	}
 	/**
@@ -506,8 +516,9 @@ public class BusinessAccountAction extends BaseAction{
 	 * @Methods Name getExtendInfo
 	 * @Create In Sep 1, 2009 By lee
 	 * @return String
+	 * @throws IOException 
 	 */
-	public String getExtendInfo(){
+	public String getExtendInfo() throws IOException{
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		PrintWriter printWriter = null;
@@ -535,15 +546,18 @@ public class BusinessAccountAction extends BaseAction{
 		jsonString += "plan$balance:'" + format.format(baService.getExpendBalanceByPlanId(plan.getId().toString())) + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter out;
+		
 		try {
 			printWriter = response.getWriter();
 			printWriter.write(jsonString);
 		} catch (Exception e) {
+			printWriter = response.getWriter();
 			printWriter.write("{success:false,message:'查询失败。请联系管理员'}");
 			e.printStackTrace();
+		}finally{
+			printWriter.flush();
+			printWriter.close();
 		}
-		printWriter.flush();
 		return null;
 	}
 	
@@ -1037,7 +1051,7 @@ public class BusinessAccountAction extends BaseAction{
 	 */
 	public String toIncomeApplyPage(){
 		HttpServletRequest request = super.getRequest();
-		HttpServletResponse response = super.getResponse();
+//		HttpServletResponse response = super.getResponse();
 		String planIds = request.getParameter("planIds");
 		String requireId = request.getParameter("requireId");
 
@@ -1202,7 +1216,7 @@ public class BusinessAccountAction extends BaseAction{
 	 */
 	public String toExpendApplyPage(){
 		HttpServletRequest request = super.getRequest();
-		HttpServletResponse response = super.getResponse();
+//		HttpServletResponse response = super.getResponse();
 		String planIds = request.getParameter("planIds");
 		String requireId = request.getParameter("requireId");
 

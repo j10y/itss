@@ -37,7 +37,7 @@ public class CopyOfServiceItemAction  extends BaseAction{
 	private ServiceItemService serviceItemService = (ServiceItemService) getBean("serviceItemService");
 	private SCIColumnService sCIColumnService = (SCIColumnService) getBean("sCIColumnService");
 	private SCIDColumnService sCIDColumnService = (SCIDColumnService) getBean("sCIDColumnService");
-	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
+//	private MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
 	/**
 	 * 获取服务项数据列表
 	 * @Methods Name list

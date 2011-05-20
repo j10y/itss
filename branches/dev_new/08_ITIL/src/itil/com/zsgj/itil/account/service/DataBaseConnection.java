@@ -15,7 +15,7 @@ import com.zsgj.info.framework.exception.DaoException;
 import com.zsgj.info.framework.util.PropertiesUtil;
 
 public class DataBaseConnection {
-	private static Connection conforOracle=null;
+//	private static Connection conforOracle=null;
 	/**
 	 * 获取Oracle连接
 	 * 

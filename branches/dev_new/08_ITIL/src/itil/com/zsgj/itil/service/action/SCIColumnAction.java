@@ -30,7 +30,7 @@ public class SCIColumnAction extends BaseDispatchAction{
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		
 		
 		return mapping.findForward("list");

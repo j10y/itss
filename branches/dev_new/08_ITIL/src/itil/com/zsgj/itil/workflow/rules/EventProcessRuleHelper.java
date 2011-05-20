@@ -149,7 +149,7 @@ public class EventProcessRuleHelper {
 		
 		//2010-08-11 add by huzh for 添加2个工作日后用户未确认事件自动解决的规则后，用户确认邮件格式修改后再此处发送 begin
 		if(result.equals("touserconfirm")){//审批历史保存后再发送邮件
-			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
+//			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
 			String subject="IT温馨提示:您提交的"+event.getSummary()+"（事件编号为"+event.getEventCisn()+"）已处理完毕,请确认并反馈满意度。谢谢!";
 			String url = PropertiesUtil.getProperties("system.web.url","itss.zsgj.com") + "/user/event/transactionFlow/userconfirm.jsp?dataId="+dataId+"&processId="+processId;
 			SendMailThred mthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), "", null, subject, this.eventNoSatHtmlContent(event.getCreateUser(), url, event,processId), null);
@@ -231,7 +231,7 @@ public class EventProcessRuleHelper {
 		
 		//2010-08-11 add by huzh for 添加2个工作日后用户未确认事件自动解决的规则后，用户确认邮件格式修改后再此处发送 begin
 		if(result.equals("touserconfirm")){//审批历史保存后在发送邮件
-			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
+//			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
 			String subject="IT温馨提示:您提交的"+event.getSummary()+"（事件编号为"+event.getEventCisn()+"）已处理完毕，请确认并反馈满意度。谢谢！";
 			String url = PropertiesUtil.getProperties("system.web.url","itss.zsgj.com") + "/user/event/transactionFlow/userconfirm.jsp?dataId="+dataId+"&processId="+processId;
 			SendMailThred mthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), "", null, subject, this.eventNoSatHtmlContent(event.getCreateUser(), url, event,processId), null);
@@ -433,7 +433,7 @@ public class EventProcessRuleHelper {
 	
 	private String eventNoSatHtmlContent(UserInfo creator, String url,Event event,String processId) {
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

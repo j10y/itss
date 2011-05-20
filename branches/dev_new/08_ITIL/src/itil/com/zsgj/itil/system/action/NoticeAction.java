@@ -53,7 +53,7 @@ public class NoticeAction extends BaseDispatchAction {
 	private MetaDataService ms = (MetaDataService) getBean("metaDataService");
 	private boolean showListSearchTitle = true;
 	private MetaDataManager metaDataManager = (MetaDataManager) getBean("metaDataManager");
-	private QueryService queryService = (QueryService) getBean("columnQueryServiceDefaultImpl");
+//	private QueryService queryService = (QueryService) getBean("columnQueryServiceDefaultImpl");
 //	private TrainPlanService trainPlanService = (TrainPlanService) getBean("trainPlanService");
 	public ActionForward query(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse httpServletResponse)
@@ -63,10 +63,10 @@ public class NoticeAction extends BaseDispatchAction {
 				.findSystemMainTableByName("Notice");
 		request.setAttribute("sysMainTable", systemMainTable);
 
-		Map params = HttpUtil.requestParam2Map(request);
+//		Map params = HttpUtil.requestParam2Map(request);
 		
 		// 获取查询返回的主数据，使用request中的查询参数值，查询客户，并按照name升序进行排序。true表示升序，否则降序
-		List queryList = queryService.queryByParams(Notice.class, params, null, "name", true);
+//		List queryList = queryService.queryByParams(Notice.class, params, null, "name", true);
 		/*List queryList = MetaDataUtil.getDataListByEntityAndParam(request,
 				"Notice", Notice.class, "name", true);*/
 
@@ -79,7 +79,7 @@ public class NoticeAction extends BaseDispatchAction {
 		request.setAttribute("columnsVisible", columnsVisible);
 
 		// 获取扩展数据，false表示不用map表示集合中的数据
-		List mapList = metaDataManager.getEntityDataForList(Notice.class, queryList);
+//		List mapList = metaDataManager.getEntityDataForList(Notice.class, queryList);
 		/*request.setAttribute("list", MetaDataUtil.getExtendDatas(queryList,
 				"Notice", true));*/
 
@@ -130,7 +130,7 @@ public class NoticeAction extends BaseDispatchAction {
 			Set keySet = data.keySet();
 			Iterator it = keySet.iterator();
 			String jss = "";
-			String enabled = (String) data.get("enabled");
+//			String enabled = (String) data.get("enabled");
 			while (it.hasNext()) {
 				String key = (String) it.next();
 				if ("enabled".equals(key)) {
@@ -260,7 +260,10 @@ public class NoticeAction extends BaseDispatchAction {
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			out.close();
+			
+		}finally{
+			if(out != null)
+				out.close();
 		}
 		return null;
 		// return HttpUtil.redirect("noticeManage.do?methodCall=list");
@@ -301,7 +304,7 @@ public class NoticeAction extends BaseDispatchAction {
 				.findSystemMainTableByName("Notice");
 		request.setAttribute("sysMainTable", systemMainTable);
 
-		UserInfo userInfo = UserContext.getUserInfo();
+//		UserInfo userInfo = UserContext.getUserInfo();
 
 		/*List columnsVisible = ms.findTableAllColumns(userInfo, systemMainTable,
 				UserTableSetting.LIST, true);
@@ -383,7 +386,7 @@ public class NoticeAction extends BaseDispatchAction {
 		if(StringUtils.isEmpty(content)){
 			content="";
 		}
-		String contentHtml = HttpUtil.ConverHtml(content);
+//		String contentHtml = HttpUtil.ConverHtml(content);
 		//System.out.println("contentHtml :" + contentHtml);
 		Integer enabled = notice.getEnabled();
 		boolean checked = false;
@@ -436,7 +439,7 @@ public class NoticeAction extends BaseDispatchAction {
 			for(NewNotice notice : noticList){
 				Date edDate = notice.getEndDate();
 				Date bgDate = notice.getBeginDate();
-				String context = HttpUtil.htmlEncode(notice.getContent());
+//				String context = HttpUtil.htmlEncode(notice.getContent());
 				if(date.after(bgDate)&&date.before(edDate)){
 					String jsonString = "{\"id\":" + notice.getId() + ",\"title\":" + "\"" + notice.getTitle()
 					+ "\"" + ",\"createUser\":" + "\""

@@ -15,6 +15,10 @@ import com.zsgj.itil.service.entity.ServiceType;
  * @Create In 2008-10-20
  */
 public class ConfigItemEvent extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2265154414074439701L;
 	public static int STATUS_DRAFT = 0;// 草稿
 	public static int STATUS_FINISHED = 1;// 通过
 	public static int STATUS_APPROVING = 2;// 提交审批中

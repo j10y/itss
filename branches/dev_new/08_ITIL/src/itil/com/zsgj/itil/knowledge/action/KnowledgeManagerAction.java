@@ -39,8 +39,8 @@ public class KnowledgeManagerAction extends BaseAction {
 	private TaskService ts = (TaskService) ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService) ContextHolder.getBean("parameterService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
-	private TaskService tm = (TaskService) ContextHolder.getBean("taskService");
+//	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
+//	private TaskService tm = (TaskService) ContextHolder.getBean("taskService");
 	private ProcessService ps = (ProcessService) ContextHolder.getBean("processService");
 	private KnowledgeService knowService = (KnowledgeService) getBean("KnowledgeService");
 
@@ -60,8 +60,8 @@ public class KnowledgeManagerAction extends BaseAction {
 		String definitionName = super.getRequest().getParameter("defname");
 		String buzzParameters = super.getRequest().getParameter("bzparam");// 在ajax当中已经把js对象变成了json字符串
 		String dataId = super.getRequest().getParameter("dataId");// 主数据id
-		String departmentCode = super.getRequest().getParameter("deptcode");
-		String userAssign = super.getRequest().getParameter("userAssign");
+//		String departmentCode = super.getRequest().getParameter("deptcode");
+//		String userAssign = super.getRequest().getParameter("userAssign");
 		String createUser = super.getRequest().getParameter("createUser");
 		BaseObject baseObject = null;
 		Class classInstance = null;
@@ -232,7 +232,6 @@ public class KnowledgeManagerAction extends BaseAction {
 	 *             String
 	 */
 	public String tasks() throws Exception {
-		@SuppressWarnings("unused")
 		HttpServletRequest request = super.getRequest();
 		// 需要的参数
 		String actor = request.getParameter("actorId");
@@ -326,6 +325,7 @@ public class KnowledgeManagerAction extends BaseAction {
 	 * @return
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unused")
 	private String next() throws Exception {
 		// 需要的参数
 		String taskId = super.getRequest().getParameter("taskid");

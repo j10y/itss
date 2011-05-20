@@ -27,21 +27,5 @@ public class FirstTestHello{
 		map = (Map) call.invoke(new Object[] { submitUserItcode ,customerItcode,callId,callPhone});
 		return map.get("message").toString();
 	}
-	public static void main(String[] args) {
-		try {
-			Map map = new HashMap();
-			String endpoint =  "http://localhost:8080/services/CCLoginItilWs" ; 
-			Service service = new Service();
-			Call call =null;
-			  call = (Call) service.createCall();
-			call.setOperationName(new QName(endpoint, "login"));
-			call.setTargetEndpointAddress(new java.net.URL(endpoint));
-			map = (Map) call.invoke(new Object[] { "xiehuia" ,"changyu","xiehuia","3","1591000"});
-			System.out.println(map.get("message")); 
-			Process process = Runtime.getRuntime().exec("cmd.exe /c start "+map.get("message")); 	
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
 
 }

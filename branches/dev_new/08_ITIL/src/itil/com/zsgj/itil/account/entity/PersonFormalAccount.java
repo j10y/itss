@@ -12,6 +12,10 @@ import com.zsgj.itil.require.entity.AccountApplyMainTable;
  * 
  */
 public class PersonFormalAccount extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -617515541763274286L;
 	private Long id;
 	private java.lang.String accountName; // ’À∫≈√˚≥∆
 	private java.lang.String password; // ’À∫≈√‹¬Î

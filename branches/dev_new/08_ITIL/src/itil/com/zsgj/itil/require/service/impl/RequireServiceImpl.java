@@ -80,7 +80,7 @@ public class RequireServiceImpl extends BaseDao implements RequireService {
 
 		ServiceItemUserTable siut = (ServiceItemUserTable) super.findUniqueBy(
 				ServiceItemUserTable.class, "serviceItem", serviceItem);
-		SystemMainTable smt = siut.getSystemMainTable();
+//		SystemMainTable smt = siut.getSystemMainTable();
 		PagePanel panel = siut.getPagePanel();
 
 		List<PageModelPanel> pageModelPanels = new ArrayList<PageModelPanel>();
@@ -143,7 +143,7 @@ public class RequireServiceImpl extends BaseDao implements RequireService {
 			String dataItem = "";
 			dataItem += "process:'',";
 			for (UserTableSetting uts : userVisibleColumns) {
-				String columnCnName = uts.getColumn().getColumnCnName();// 表头标题
+//				String columnCnName = uts.getColumn().getColumnCnName();// 表头标题
 				// SystemMainTableColumn mainTableColumn =
 				// uts.getMainTableColumn();
 				Column column = uts.getColumn();

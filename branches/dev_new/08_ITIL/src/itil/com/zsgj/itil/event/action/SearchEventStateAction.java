@@ -43,8 +43,8 @@ public class SearchEventStateAction extends BaseAction {
 		String supportGroup = HttpUtil.getString(request, "supportGroup","");
 		String createUser = HttpUtil.getString(request, "createUser","");
 		String dealuser = HttpUtil.getString(request, "dealUser","");
-		String submitUser = HttpUtil.getString(request, "submitUser","");
-		String eventCisn = HttpUtil.getString(request, "eventCisn","");
+//		String submitUser = HttpUtil.getString(request, "submitUser","");
+//		String eventCisn = HttpUtil.getString(request, "eventCisn","");
 		
 		Page page = searchEventStateService.getSearchEventStateGridInfo(summary, eventStatus, supportGroup, createUser, dealuser, pageNo, pageSize);
 		List dataList = page.list();

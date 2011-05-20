@@ -136,6 +136,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 	 * @param model
 	 * @return List<Property>
 	 */
+	@SuppressWarnings("unused")
 	private List<Property> getPropertyByPersistentClass(PersistentClass model){
 		List<Property> list = new ArrayList<Property>();
 		if(model!=null){
@@ -181,7 +182,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 			SystemMainTableColumn smtc = smtcs.get(i);
 			Long smtcId = smtc.getId();
 			String columnCnName = smtc.getColumnCnName();
-			SystemMainTableColumnType smtctype = smtc.getSystemMainTableColumnType();
+//			SystemMainTableColumnType smtctype = smtc.getSystemMainTableColumnType();
 			
 			//如果不是隐藏域才导出字段
 			//if(smtctype!=null&& !smtctype.getColumnTypeName().equalsIgnoreCase("hidden")){
@@ -208,7 +209,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 			SystemMainTableColumn smtc = smtcs.get(i);
 			Long smtcId = smtc.getId();
 			String columnCnName = smtc.getColumnCnName();
-			SystemMainTableColumnType smtctype = smtc.getSystemMainTableColumnType();
+//			SystemMainTableColumnType smtctype = smtc.getSystemMainTableColumnType();
 			
 //			如果不是隐藏域才导出字段
 		//	if(smtctype!=null&& !smtctype.getColumnTypeName().equalsIgnoreCase("hidden")){
@@ -263,6 +264,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 	}
 
 	//是否需要增加新的属性进入持久化类
+	@SuppressWarnings("unused")
 	private boolean needAddProperty2PersistClass(PersistentClass model, Column column){
 		boolean result = true; //默认需要增加
 		Iterator<Property> iter = model.getPropertyIterator();
@@ -285,7 +287,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 	 * 主要需要进一步完事
 	 */
 	public void saveTableEntity(ServiceItem scid, String sourcePkg, String sourceClassName, String targetClass) {
-		SessionFactory ssf = super.getHibernateSessionFactory();
+//		SessionFactory ssf = super.getHibernateSessionFactory();
 		Configuration config = super.getConfiguration();
 		String newClassName = sourcePkg+"."+ sourceClassName;
 		//通过类全路径获取持久化类
@@ -305,7 +307,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 		
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {
@@ -322,6 +324,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 	}
 
 	//在配置项类型的面板没有的情况下，直接保存会默认生成
+	@SuppressWarnings("unused")
 	private void genTablePanels(SystemMainTable smt) {
 		PagePanel panel = new PagePanel();
 		panel.setName("panel_"+smt.getTableCnName()+"Panel");
@@ -345,7 +348,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 
 //	保存一个用户主表后自动生成对应的面板
 	public void saveServiceItemUserTablePanel_backup(ServiceItem scid, SystemMainTable smt, int deployFlag){
-		String className = smt.getClassName();
+//		String className = smt.getClassName();
 		String tableName = smt.getTableName();
 		String tableCnName = smt.getTableCnName();
 		String ppcount = "select count(*) from PagePanel ppc where ppc.systemMainTable=?";
@@ -375,7 +378,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 			super.save(pptble);
 			
 //			取系统主表的所有字段，初始化系统可见字段
-			int order = 1;
+//			int order = 1;
 			List<Column> columns = systemColumnService.findSystemTableColumns(smt);
 			for(Column column : columns){
 				//初始化输入系统可见字段
@@ -554,7 +557,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 	
 //	保存一个用户主表后自动生成对应的面板
 	public PagePanel saveSCIDPanel(ServiceItem scid, SystemMainTable smt, int settingType, int deployFlag){
-		String className = smt.getClassName();
+//		String className = smt.getClassName();
 		String tableName = smt.getTableName();
 		String tableCnName = smt.getTableCnName();
 		String ppcount = "select count(*) from PagePanel ppc where ppc.systemMainTable=? and ppc.settingType=?";
@@ -588,7 +591,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 			super.save(pptble);
 			
 //			取系统主表的所有字段，初始化系统可见字段
-			int order = 1;
+//			int order = 1;
 			List<Column> columns = systemColumnService.findSystemTableColumns(smt);
 			for(Column column : columns){
 				//初始化输入系统可见字段
@@ -974,14 +977,14 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 
 			String columnName = smtc.getColumnName();
 			if(!pkcname.equalsIgnoreCase(columnName)){
-				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
+//				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
 				PropertyType pt = smtc.getPropertyType();
 				if(pt==null){
 					throw new ServiceException(smt.getTableCnName()+"的"+smtc.getPropertyName()+"字段的属性类型不可以为null");
 				}
 				String ptName = pt.getPropertyTypeName();
 			
-				String columnTypeName = smtcType.getColumnTypeName();
+//				String columnTypeName = smtcType.getColumnTypeName();
 				Integer length = smtc.getLength();
 				if(length==null|| length.intValue()==0){
 					length = 200;
@@ -1590,7 +1593,7 @@ public class ServiceItemUserTableServiceImpl extends BaseDao implements ServiceI
 		propType = super.get(PropertyType.class, Long.valueOf(propType.getId()));
 		
 		
-		String tableName = smt.getTableName();
+//		String tableName = smt.getTableName();
 		String columnName = smtc.getColumnName();
 		columnName=Character.toLowerCase(columnName.charAt(0))+columnName.substring(1);
 		smtc.setColumnName(columnName);

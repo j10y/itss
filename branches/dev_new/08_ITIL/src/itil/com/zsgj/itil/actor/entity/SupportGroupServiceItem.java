@@ -10,6 +10,10 @@ import com.zsgj.itil.service.entity.ServiceItem;
  * @Create In 2009-3-16
  */
 public class SupportGroupServiceItem extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 3458781248770421095L;
 	private Long id;
 	private SupportGroup supportGroup;
 	private ServiceItem serviceItem;

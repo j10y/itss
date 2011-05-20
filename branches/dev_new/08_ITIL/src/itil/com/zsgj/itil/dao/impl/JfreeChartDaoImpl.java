@@ -19,7 +19,7 @@ public class JfreeChartDaoImpl extends BaseDao implements JfreeChartDao{
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ResultSetMetaData meta = null;
+//		ResultSetMetaData meta = null;
 		List list=new ArrayList();
 		try {
 			conn = getJdbcTemplate().getDataSource().getConnection();
@@ -73,7 +73,7 @@ public class JfreeChartDaoImpl extends BaseDao implements JfreeChartDao{
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ResultSetMetaData meta = null;
+//		ResultSetMetaData meta = null;
 		List list=new ArrayList();
 		try {
 			conn = getJdbcTemplate().getDataSource().getConnection();

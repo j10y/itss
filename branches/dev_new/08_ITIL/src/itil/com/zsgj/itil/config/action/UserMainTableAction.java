@@ -20,11 +20,9 @@ import com.zsgj.info.appframework.metadata.service.SystemColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
-import com.zsgj.info.appframework.pagemodel.service.PageModelGenService;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.exception.ApplicationException;
 import com.zsgj.info.framework.security.entity.Module;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -46,9 +44,9 @@ public class UserMainTableAction extends BaseDispatchAction{
 	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
 	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	private CustomerTableService cts=(CustomerTableService) getBean("customerTableService");
-	private PageModelGenService pmgs = (PageModelGenService) super.getBean("pageModelGenService");
+//	private PageModelGenService pmgs = (PageModelGenService) super.getBean("pageModelGenService");
 
 	public ActionForward list(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
@@ -59,7 +57,7 @@ public class UserMainTableAction extends BaseDispatchAction{
 		
 		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		String moduleId = request.getParameter("module");
-		String duxh = request.getParameter("duxh");
+//		String duxh = request.getParameter("duxh");
 		String tableName = request.getParameter("tableName");
 		Module module = null;
 		if(StringUtils.isNotBlank(moduleId)){
@@ -374,11 +372,11 @@ public class UserMainTableAction extends BaseDispatchAction{
 		//pmgs.generatePageModelCode("configItemFinanceMix");
 		SystemMainTable smt = (SystemMainTable) BeanUtil.getObject(request, SystemMainTable.class);
 		smt = (SystemMainTable) super.getService().find(SystemMainTable.class, String.valueOf(smt.getId()));
-		String tableName = smt.getTableName();
-		String className = smt.getClassName();
-		int lastDot = className.lastIndexOf(".");
-		String sourcePkg = className.substring(0, lastDot);
-		String sourceClass = className.substring(lastDot+1);
+//		String tableName = smt.getTableName();
+//		String className = smt.getClassName();
+//		int lastDot = className.lastIndexOf(".");
+//		String sourcePkg = className.substring(0, lastDot);
+//		String sourceClass = className.substring(lastDot+1);
 		this.cts.saveSystemMainTableDeploy(smt);
 		
 		SystemMainTable smtEvent = cts.findUserTableEvent(smt);

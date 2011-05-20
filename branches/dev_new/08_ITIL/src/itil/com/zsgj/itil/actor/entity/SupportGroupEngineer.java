@@ -11,6 +11,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In 2008-11-10
  */
 public class SupportGroupEngineer extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -6361585980992856142L;
 	private Long id;	
 	private SupportGroup supportGroup; 
 	private UserInfo userInfo;
@@ -21,6 +25,18 @@ public class SupportGroupEngineer extends BaseObject {
 //	private ServiceProviderType serviceProviderType;
 //	private Long serviceProvider;
 
+	/**
+	 * @Return the SupportGroupEngineerStatus busyStatus
+	 */
+	public SupportGroupEngineerStatus getBusyStatus() {
+		return busyStatus;
+	}
+	/**
+	 * @Param SupportGroupEngineerStatus busyStatus to set
+	 */
+	public void setBusyStatus(SupportGroupEngineerStatus busyStatus) {
+		this.busyStatus = busyStatus;
+	}
 	public String getNowtime() {
 		return nowtime;
 	}

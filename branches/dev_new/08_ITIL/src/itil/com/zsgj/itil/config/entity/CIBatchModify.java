@@ -14,6 +14,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  */
 public class CIBatchModify extends BaseObject {
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -7772644553593379857L;
 	public final static Integer STATUS_DRAFT = 0;// 草稿
 	public final static Integer STATUS_PROCESSING = 2;// 提交处理中
 	public final static Integer STATUS_PASSED = 1;// 通过

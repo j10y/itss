@@ -39,7 +39,7 @@ public class ProcessRuleHelper {
 	ProcessService ps = (ProcessService) ContextHolder.getBean("processService");
 	Service service = (Service) ContextHolder.getBean("baseService");
 	SCIRelationShipService sciRelationShipService = (SCIRelationShipService) ContextHolder.getBean("sciRelationShipService");
-	private EventService eventService = (EventService) ContextHolder.getBean("EventService");
+//	private EventService eventService = (EventService) ContextHolder.getBean("EventService");
 	private MailSenderService ms = (MailSenderService) ContextHolder.getBean("mailSenderService");
 
 	/** **********************************************************问题与事件流程*************************************************************** */
@@ -67,12 +67,12 @@ public class ProcessRuleHelper {
 			String processId) throws Exception {
 		EventStatus dealingStatus = (EventStatus) service.findUnique(
 				EventStatus.class, "keyword", "dealing");
-		EventStatus reAssignStatus = (EventStatus) service.findUnique(
-				EventStatus.class, "keyword", "confirm");
-		EventStatus endStatus = (EventStatus) service.findUnique(
-				EventStatus.class, "keyword", "finish");
-		EventStatus userconfirmStatus = (EventStatus) service.findUnique(
-				EventStatus.class, "keyword", "userconfirm");
+//		EventStatus reAssignStatus = (EventStatus) service.findUnique(
+//				EventStatus.class, "keyword", "confirm");
+//		EventStatus endStatus = (EventStatus) service.findUnique(
+//				EventStatus.class, "keyword", "finish");
+//		EventStatus userconfirmStatus = (EventStatus) service.findUnique(
+//				EventStatus.class, "keyword", "userconfirm");
 		Event event = (Event) service.find(Event.class, dataId, true);
 		event.setEventStatus(dealingStatus);
 		this.saveEventHis(nodeId, nodeName, processId, "", "", event);
@@ -165,15 +165,15 @@ public class ProcessRuleHelper {
 		// 设置Event状态
 		EventStatus dealingStatus = (EventStatus) service.findUnique(
 				EventStatus.class, "keyword", "dealing");
-		EventStatus reAssignStatus = (EventStatus) service.findUnique(
-				EventStatus.class, "keyword", "confirm");
+//		EventStatus reAssignStatus = (EventStatus) service.findUnique(
+//				EventStatus.class, "keyword", "confirm");
 		EventStatus endStatus = (EventStatus) service.findUnique(
 				EventStatus.class, "keyword", "finish");
-		EventStatus userconfirmStatus = (EventStatus) service.findUnique(
-				EventStatus.class, "keyword", "userconfirm");
-		String url = PropertiesUtil.getProperties("cc.web.endUrl");// 获取邮件页面
-		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
-		String realUrl = rootPath + url + "?dataId=" + dataId + "&isExist=s";
+//		EventStatus userconfirmStatus = (EventStatus) service.findUnique(
+//				EventStatus.class, "keyword", "userconfirm");
+//		String url = PropertiesUtil.getProperties("cc.web.endUrl");// 获取邮件页面
+//		String rootPath = PropertiesUtil.getProperties("system.web.url");// 获取项目根路径
+//		String realUrl = rootPath + url + "?dataId=" + dataId + "&isExist=s";
 		if (result.equals("over")) {
 			event.setEventStatus(endStatus);
 			// delete by guoxl in 2009/09/02 begin 此处不发邮件了，已经在工程师处理完毕后发过邮件了
@@ -546,7 +546,7 @@ public class ProcessRuleHelper {
 	private String eventHtmlContent(UserInfo creator, String url, Event event) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String dateString = dateFormat.format(date);
@@ -632,10 +632,11 @@ public class ProcessRuleHelper {
 
 	// 邮件格式2
 
+	@SuppressWarnings("unused")
 	private String eventEndHtmlContent(UserInfo creator, String url, Event event) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String dateString = dateFormat.format(new Date());
 		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");

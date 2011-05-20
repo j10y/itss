@@ -45,7 +45,7 @@ import com.zsgj.itil.service.service.ServicePortfolioService;
 public class SCIRelationShipAction  extends BaseAction{
 	private SCIRelationShipService sciRelationShipService = (SCIRelationShipService) getBean("sciRelationShipService");
 	private ServiceCatalogueService serviceCatalogueService = (ServiceCatalogueService) getBean("serviceCatalogueService");
-	private ServicePortfolioService servicePortfolioService = (ServicePortfolioService) getBean("servicePortfolioService");
+//	private ServicePortfolioService servicePortfolioService = (ServicePortfolioService) getBean("servicePortfolioService");
 	/**
 	 * 保存服务目录同时生成服务目录对应的根服务目录关系
 	 * @Methods Name saveRootSCIRelationShip
@@ -56,7 +56,7 @@ public class SCIRelationShipAction  extends BaseAction{
 	public String saveRootSCIRelationShip() throws Exception {
 		HttpServletRequest request = super.getRequest();
 		String id = request.getParameter("id");
-		String servicePortfolioId = request.getParameter("sp");
+//		String servicePortfolioId = request.getParameter("sp");
 		String name = request.getParameter("name");
 		String descn = request.getParameter("descn");
 		String valid = request.getParameter("validDate");
@@ -65,7 +65,7 @@ public class SCIRelationShipAction  extends BaseAction{
 		String customer = request.getParameter("customer");
 		String customerType = request.getParameter("customerType");
 		String oldCatalogueId = request.getParameter("oldCatalogueId");
-		String status = request.getParameter("status");
+//		String status = request.getParameter("status");
 		String flag = request.getParameter("flag");
 		//ServicePortfolio sp = servicePortfolioService.findServicePortfolioById(servicePortfolioId);//remove by lee for 废弃属性 in 20091121
 		SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd");
@@ -142,7 +142,7 @@ public class SCIRelationShipAction  extends BaseAction{
 			textRS = newRS;
 		}
 		String curId = serviceCatalogue.getId().toString();
-		String rootId = textRS.getId().toString();
+//		String rootId = textRS.getId().toString();
 		//++++++++++++++++sujs增加的保存服务目录合同的代码begin++++++++++++++++++++
 		if(!curId.equals("")){
 			sciRelationShipService.saveServiceCatalogueIdToContract(curId);
@@ -169,7 +169,7 @@ public class SCIRelationShipAction  extends BaseAction{
 		HttpServletRequest request = super.getRequest();
 		String id = request.getParameter("id");//此id铁定为空，因为要保存一条新的记录
 		String oldId = request.getParameter("oldId");//原id
-		String servicePortfolioId = request.getParameter("sp");
+//		String servicePortfolioId = request.getParameter("sp");
 		String name = request.getParameter("name");
 		String descn = request.getParameter("descn");
 		String valid = request.getParameter("validDate");
@@ -177,7 +177,7 @@ public class SCIRelationShipAction  extends BaseAction{
 		String end = request.getParameter("endDate");
 		String customer = request.getParameter("customer");
 		String customerType = request.getParameter("customerType");
-		String status = request.getParameter("status");
+//		String status = request.getParameter("status");
 		String flag = request.getParameter("flag");
 		//ServicePortfolio sp = servicePortfolioService.findServicePortfolioById(servicePortfolioId);//remove by lee for 废弃属性 in 20091121
 		SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd");
@@ -266,7 +266,7 @@ public class SCIRelationShipAction  extends BaseAction{
 		}
 		
 		String curId = serviceCatalogue.getId().toString();
-		String rootId = textRS.getId().toString();
+//		String rootId = textRS.getId().toString();
 		//++++++++++++++++sujs增加的保存服务目录合同的代码begin++++++++++++++++++++
 		if(!curId.equals("")){
 			sciRelationShipService.saveServiceCatalogueIdToContract(curId);
@@ -586,7 +586,7 @@ public class SCIRelationShipAction  extends BaseAction{
  * @throws Exception
  */
 	public String listRelationShips() throws Exception {
-		@SuppressWarnings("unused")
+		
 		String json="";
 		String serviceCatalogueId = super.getRequest().getParameter("serviceCatalogueId");
 		if(serviceCatalogueId==null){
@@ -609,7 +609,7 @@ public class SCIRelationShipAction  extends BaseAction{
 	}
 	
 	public String removeRelationShip() throws Exception {
-		String dataId = super.getRequest().getParameter("dataId");
+//		String dataId = super.getRequest().getParameter("dataId");
 		
 		return null;
 	}
@@ -685,7 +685,7 @@ public class SCIRelationShipAction  extends BaseAction{
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String rootCataId = request.getParameter("rootCataId");
-		String typeFlag = request.getParameter("type");
+//		String typeFlag = request.getParameter("type");
 		ServiceCatalogue rootCata = serviceCatalogueService.findServiceCatalogueById(rootCataId);
 		SCIRelationShip rootRelationShip = sciRelationShipService.findRootRelationShipByRootCata(rootCata);
 		String rootId = rootRelationShip.getId().toString();
@@ -831,7 +831,7 @@ public class SCIRelationShipAction  extends BaseAction{
 		ServiceCatalogue serviceCatalogue1 = (ServiceCatalogue) super.getService().findUnique(ServiceCatalogue.class, "oldCatalogueId", Long.valueOf(rootCataId));
 		if(serviceCatalogue1==null){
 		//String oldCataId = request.getParameter("oldSerCataId");
-		String typeFlag = request.getParameter("type");
+//		String typeFlag = request.getParameter("type");
 		ServiceCatalogue rootCata = serviceCatalogueService.findServiceCatalogueById(rootCataId);
 		List<SCIRelationShip> sciReList = sciRelationShipService.findServiceCataShipByRoot(rootCata);//得到根下面得所有子服务目录
 		
@@ -984,7 +984,7 @@ public class SCIRelationShipAction  extends BaseAction{
 	public String findChildForEdit() throws Exception{
 		HttpServletRequest request = super.getRequest();
 		String childId = request.getParameter("childId");
-		String target = request.getParameter("target");
+//		String target = request.getParameter("target");
 		SCIRelationShip childRelationShip = sciRelationShipService.findSCIRelationShipById(childId);
 		String typeFlag = childRelationShip.getTypeFlag();
 		String json="{";
@@ -1184,7 +1184,7 @@ public class SCIRelationShipAction  extends BaseAction{
 		String serviceItemName = null;
 		ServiceItem serviceItem = null;
 		ServiceItemSatisfaction satisfaction = null;
-		 MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
+//		 MetaDataManager metaDataManager = (MetaDataManager) ContextHolder.getBean("metaDataManager");
 		 HttpServletRequest request = super.getRequest();
 		 String serviceCataInfo = request.getParameter("info");
 		 String serviceCataId = request.getParameter("serviceCataId");
@@ -1306,7 +1306,6 @@ public class SCIRelationShipAction  extends BaseAction{
 	 * @return String
 	 */
 	public String listMyServiceCata() {
-		@SuppressWarnings("unused")
 		UserInfo curUser = UserContext.getUserInfo();
 		String json = sciRelationShipService.getUserServiceCataJson(curUser);
 		try {

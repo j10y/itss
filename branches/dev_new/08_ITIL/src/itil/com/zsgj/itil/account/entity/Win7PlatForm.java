@@ -3,6 +3,10 @@ package com.zsgj.itil.account.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class Win7PlatForm extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -7964600367369966310L;
 	private java.lang.Long id;
 	private java.lang.String Name;
 	private java.lang.String manager;

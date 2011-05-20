@@ -34,8 +34,8 @@ public class BuinessAccountManagerAction extends BaseAction{
 	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService)ContextHolder.getBean("parameterService");
 	private Service service = (Service) ContextHolder.getBean("baseService");
-	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
-	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
+//	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
+//	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
 	private ProcessService ps = (ProcessService)ContextHolder.getBean("processService");
 	
 	/**
@@ -97,7 +97,6 @@ public class BuinessAccountManagerAction extends BaseAction{
 		return null;				
 	}
 	public String tasks() throws Exception{
-		@SuppressWarnings("unused")
 		HttpServletRequest request = super.getRequest();
 		//需要的参数
 		String actor = request.getParameter("actorId");
@@ -137,7 +136,7 @@ public class BuinessAccountManagerAction extends BaseAction{
 			str += strBizParams+",";
 			str += "comments:'"+toBlank(taskInfo.getComments().getValue("comment"))+"'";
 			str = "{"+str+"},";
-			String defname = taskInfo.getDefinitionName();
+//			String defname = taskInfo.getDefinitionName();
 			if("baproject".equals(type)){
 				json += str;
 				rowCount++;

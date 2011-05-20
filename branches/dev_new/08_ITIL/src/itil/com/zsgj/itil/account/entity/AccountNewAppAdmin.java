@@ -12,6 +12,10 @@ import com.zsgj.itil.require.entity.AccountApplyMainTable;
  * @Create In Oct 14, 2009
  */
 public class AccountNewAppAdmin extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7163032517877560957L;
 	private Long id;
 	private AccountApplyMainTable amt;
 	private UserInfo newUser;

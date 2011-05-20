@@ -12,6 +12,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In Aug 24, 2009
  */
 public class CIBatchModifyAuditHis extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7349162655599752503L;
 	private Long id;
 	private CIBatchModify modify;
 	private String comment;

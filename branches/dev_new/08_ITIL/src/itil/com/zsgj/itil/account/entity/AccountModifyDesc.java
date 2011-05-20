@@ -5,6 +5,10 @@ import java.util.Date;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class AccountModifyDesc extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7079681455286666590L;
 	private Long id;
 	private String comment;		//–ﬁ∏ƒ√Ë ˆ
 	private String accountId;		//’ ∫≈ID

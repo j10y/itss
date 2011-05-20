@@ -3,6 +3,10 @@ package com.zsgj.itil.actor.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class RAndBUserList extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -7361052613398779953L;
 	private java.lang.Long id;
 	private java.lang.String userName;
 	private java.lang.String type;//0表示红 1表示黑

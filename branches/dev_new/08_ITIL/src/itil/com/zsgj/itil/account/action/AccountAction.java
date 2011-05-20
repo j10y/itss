@@ -2,9 +2,6 @@ package com.zsgj.itil.account.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.RemoteException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,7 +12,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.rpc.ServiceException;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -32,13 +28,10 @@ import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
-import com.zsgj.info.appframework.pagemodel.PageManager;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanel;
-import com.zsgj.info.appframework.pagemodel.entity.PagePanelColumn;
 import com.zsgj.info.appframework.pagemodel.entity.PagePanelTableRelation;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelService;
 import com.zsgj.info.appframework.pagemodel.service.PagePanelTableRelationService;
-import com.zsgj.info.appframework.pagemodel.service.PagePanelTableService;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.dao.BaseObject;
@@ -55,7 +48,6 @@ import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.DateUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
-import com.zsgj.info.framework.workflow.DefinitionService;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitRole;
 import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
 import com.zsgj.itil.account.entity.AccountModifyDesc;
@@ -70,9 +62,6 @@ import com.zsgj.itil.account.entity.SpecialAccount;
 import com.zsgj.itil.account.entity.SystemAppAdmin;
 import com.zsgj.itil.account.entity.Win7PlatForm;
 import com.zsgj.itil.account.service.AccountService;
-import com.zsgj.itil.account.webservice.HrInfoService;
-import com.zsgj.itil.account.webservice.HrInfoServiceLocator;
-import com.zsgj.itil.account.webservice.HrInfoServiceSoap_PortType;
 import com.zsgj.itil.account.webservice.SenseServicesUitl;
 import com.zsgj.itil.config.extlist.entity.AR_DrawSpace;
 import com.zsgj.itil.config.extlist.entity.HRSOperationScope;
@@ -100,12 +89,16 @@ import com.zsgj.itil.service.service.ServiceItemService;
  * @Author gaowen
  * @Create In May 20, 2009
  */
+@SuppressWarnings("serial")
 public class AccountAction extends BaseAction {
-	private PageManager pageManager = (PageManager) ContextHolder.getBean("pageManager");
-	private MetaDataManager mdm = (MetaDataManager) super.getBean("metaDataManager");
+//	private PageManager pageManager = (PageManager) ContextHolder
+//			.getBean("pageManager");
+	private MetaDataManager mdm = (MetaDataManager) super
+			.getBean("metaDataManager");
 	private PagePanelService pagePanelService = (PagePanelService) getBean("pagePanelService");
 	private MetaDataManager metaDataManager = (MetaDataManager) getBean("metaDataManager");
-	private PagePanelTableService ppts = (PagePanelTableService) getBean("pagePanelTableService");
+	// private PagePanelTableService ppts = (PagePanelTableService)
+	// getBean("pagePanelTableService");
 	private PagePanelTableRelationService pptrs = (PagePanelTableRelationService) getBean("pagePanelTableRelationService");
 	private SystemColumnService systemColumnService = (SystemColumnService) getBean("systemColumnService");
 	private AccountService accountService = (AccountService) getBean("accountService");
@@ -113,8 +106,11 @@ public class AccountAction extends BaseAction {
 	private SystemMainTableService systemMainTableService = (SystemMainTableService) getBean("systemMainTableService");
 	private ServiceItemService serviceItemService = (ServiceItemService) getBean("serviceItemService");
 	private RequireSIService requireSIService = (RequireSIService) getBean("requireSIService");
-	private static Service baseBervice = (Service) ContextHolder.getBean("baseService");
-	private DefinitionService ds = (DefinitionService) ContextHolder.getBean("definitionService");
+	private static Service baseBervice = (Service) ContextHolder
+			.getBean("baseService");
+
+	// private DefinitionService ds = (DefinitionService)
+	// ContextHolder.getBean("definitionService");
 
 	// ///////////////////////////////////////////个人帐号申请START//////////////////////////////////
 	/**
@@ -124,6 +120,7 @@ public class AccountAction extends BaseAction {
 	 * @Create In May 20, 2009 By gaowen
 	 * @return String
 	 */
+	@SuppressWarnings("unchecked")
 	public String initNewApplyData() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
@@ -138,19 +135,22 @@ public class AccountAction extends BaseAction {
 		Date curDate = DateUtil.getCurrentDate();
 		BeanWrapper bWrapper = new BeanWrapperImpl(object);
 		bWrapper.setPropertyValue("applyDate", curDate);
-        try {
-        	//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+		try {
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
-			if (StringUtils.isNotBlank(mobileTelephone)&&StringUtils.isBlank(telephone)) {
+			if (StringUtils.isNotBlank(mobileTelephone)
+					&& StringUtils.isBlank(telephone)) {
 				bWrapper.setPropertyValue("delegateApplyTel", mobileTelephone);
-			}  else if (StringUtils.isNotBlank(telephone)&&StringUtils.isBlank(mobileTelephone)) {
+			} else if (StringUtils.isNotBlank(telephone)
+					&& StringUtils.isBlank(mobileTelephone)) {
 				bWrapper.setPropertyValue("delegateApplyTel", telephone);
-			}  else if (StringUtils.isNotBlank(telephone)&&StringUtils.isNotBlank(mobileTelephone)) {
+			} else if (StringUtils.isNotBlank(telephone)
+					&& StringUtils.isNotBlank(mobileTelephone)) {
 				bWrapper.setPropertyValue("delegateApplyTel", telephone + "/"
 						+ mobileTelephone);
 			} else {
@@ -166,9 +166,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> dataMap = metaDataManager.getFormDataForEdit(
 				object, tableName);
 
-		//JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -200,47 +199,53 @@ public class AccountAction extends BaseAction {
 			String costCenter = user.getCostCenterCode();
 			String employeeCode = user.getEmployeeCode();
 			String itCode = user.getItcode();
-			String titleCode="";
+			String titleCode = "";
 			Double allowance = 0.00;
-			if(user.getTitleCode()!=null){
+			if (user.getTitleCode() != null) {
 				titleCode = user.getTitleCode().toString();
 				MobileTelAllowance mobileTelAllowance = (MobileTelAllowance) getService()
-				.findUnique(MobileTelAllowance.class, "postCode", titleCode);
+						.findUnique(MobileTelAllowance.class, "postCode",
+								titleCode);
 				if (mobileTelAllowance != null) {
 					allowance = mobileTelAllowance.getAllowance();
 				}
 			}
 			String postName = user.getPostName();
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
-			StringBuilder result=new StringBuilder();
-		    if(telephone!=null&&telephone.trim().length()!=0&&mobileTelephone!=null&&mobileTelephone.trim().length()!=0){
-		      result.append(telephone);
-		      result.append("/");
-		      result.append(mobileTelephone);
-		     }else if((telephone==null||telephone.trim().length()==0)&&mobileTelephone!=null&&mobileTelephone.trim().length()!=0)
-		     {   
-		    	 result.append(mobileTelephone);
-		      }
-		     else if (telephone!=null&&telephone.trim().length()!=0&&(mobileTelephone==null||mobileTelephone.trim().length()==0))
-		      {result.append(telephone);
-		      
-		      }
-		    Long userType=null;
-		    try{
-			   userType = user.getUserType().getId();
-		    }catch(Exception e){
-		    	System.out.println("初始化员工类别失败");
-		    }
-			Long PersonScope=null;
-			try{
-			PersonScope = user.getPersonnelScope().getId();
-			}catch (Exception e) {
+			StringBuilder result = new StringBuilder();
+			if (telephone != null && telephone.trim().length() != 0
+					&& mobileTelephone != null
+					&& mobileTelephone.trim().length() != 0) {
+				result.append(telephone);
+				result.append("/");
+				result.append(mobileTelephone);
+			} else if ((telephone == null || telephone.trim().length() == 0)
+					&& mobileTelephone != null
+					&& mobileTelephone.trim().length() != 0) {
+				result.append(mobileTelephone);
+			} else if (telephone != null
+					&& telephone.trim().length() != 0
+					&& (mobileTelephone == null || mobileTelephone.trim()
+							.length() == 0)) {
+				result.append(telephone);
+
+			}
+			Long userType = null;
+			try {
+				userType = user.getUserType().getId();
+			} catch (Exception e) {
+				System.out.println("初始化员工类别失败");
+			}
+			Long PersonScope = null;
+			try {
+				PersonScope = user.getPersonnelScope().getId();
+			} catch (Exception e) {
 				System.out.println("初始化用户人事子范围失败");
 			}
 			String departMent = user.getDepartment().getDepartName();
@@ -253,10 +258,10 @@ public class AccountAction extends BaseAction {
 			String json = "{success:" + true + ",userType:" + userType
 					+ ",PersonScope:" + PersonScope + ",costCenter:'"
 					+ costCenter + "',employeeCode:'" + employeeCode
-					+ "',departMent:'" + departMent + "',telephone:'" + result.toString()
-					+ "',titleCode:'" + titleCode + "',postName:'" + postName
-					+ "',mailServer:'" + mailServer + "',allowance:'"
-					+ allowance + "'}";
+					+ "',departMent:'" + departMent + "',telephone:'"
+					+ result.toString() + "',titleCode:'" + titleCode
+					+ "',postName:'" + postName + "',mailServer:'" + mailServer
+					+ "',allowance:'" + allowance + "'}";
 
 			response.setContentType("text/plain");
 			response.setCharacterEncoding("UTF-8");
@@ -273,8 +278,7 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
-	
-	
+
 	/**
 	 * 初始化账号管理申请人及相关数据
 	 * 
@@ -291,34 +295,38 @@ public class AccountAction extends BaseAction {
 		try {
 			String costCenter = user.getCostCenterCode();
 			String employeeCode = user.getEmployeeCode();
-			String itCode = user.getItcode();
+			// String itCode = user.getItcode();
 			Long titleCode = user.getTitleCode();
 			String postName = user.getPostName();
-		    String telephone = user.getTelephone();
+			String telephone = user.getTelephone();
 			String mobileTelephone = user.getMobilePhone();
-			StringBuilder result=new StringBuilder();
-		    if(telephone!=null&&telephone.trim().length()!=0&&mobileTelephone!=null&&mobileTelephone.trim().length()!=0){
-		      result.append(telephone);
-		      result.append("/");
-		      result.append(mobileTelephone);
-		     }else if((telephone==null||telephone.trim().length()==0)&&mobileTelephone!=null&&mobileTelephone.trim().length()!=0)
-		     {   
-		    	 result.append(mobileTelephone);
-		      }
-		     else if (telephone!=null&&telephone.trim().length()!=0&&(mobileTelephone==null||mobileTelephone.trim().length()==0))
-		      {
-		    	 result.append(telephone);
-		      }
-		    Long userType=null;
-		    try{
-			   userType = user.getUserType().getId();
-		    }catch(Exception e){
-		    	System.out.println("初始化员工类别失败");
-		    }
-			Long PersonScope=null;
-			try{
-			PersonScope = user.getPersonnelScope().getId();
-			}catch (Exception e) {
+			StringBuilder result = new StringBuilder();
+			if (telephone != null && telephone.trim().length() != 0
+					&& mobileTelephone != null
+					&& mobileTelephone.trim().length() != 0) {
+				result.append(telephone);
+				result.append("/");
+				result.append(mobileTelephone);
+			} else if ((telephone == null || telephone.trim().length() == 0)
+					&& mobileTelephone != null
+					&& mobileTelephone.trim().length() != 0) {
+				result.append(mobileTelephone);
+			} else if (telephone != null
+					&& telephone.trim().length() != 0
+					&& (mobileTelephone == null || mobileTelephone.trim()
+							.length() == 0)) {
+				result.append(telephone);
+			}
+			Long userType = null;
+			try {
+				userType = user.getUserType().getId();
+			} catch (Exception e) {
+				System.out.println("初始化员工类别失败");
+			}
+			Long PersonScope = null;
+			try {
+				PersonScope = user.getPersonnelScope().getId();
+			} catch (Exception e) {
 				System.out.println("初始化用户人事子范围失败");
 			}
 			String departMent = user.getDepartment().getDepartName();
@@ -331,9 +339,10 @@ public class AccountAction extends BaseAction {
 			String json = "{success:" + true + ",userType:" + userType
 					+ ",PersonScope:" + PersonScope + ",costCenter:'"
 					+ costCenter + "',employeeCode:'" + employeeCode
-					+ "',departMent:'" + departMent + "',telephone:'" + result.toString()
-					+ "',titleCode:'" + titleCode + "',postName:'" + postName
-					+ "',mailServer:'" + mailServer  + "'}";
+					+ "',departMent:'" + departMent + "',telephone:'"
+					+ result.toString() + "',titleCode:'" + titleCode
+					+ "',postName:'" + postName + "',mailServer:'" + mailServer
+					+ "'}";
 
 			response.setContentType("text/plain");
 			response.setCharacterEncoding("UTF-8");
@@ -358,6 +367,7 @@ public class AccountAction extends BaseAction {
 	 * @Create In AUG 20, 2009 By gaowen
 	 * @return String
 	 */
+	@SuppressWarnings("unchecked")
 	public String initDeptChangeUser() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
@@ -375,11 +385,11 @@ public class AccountAction extends BaseAction {
 		String itCode = curUser.getItcode();
 		DCContacts employee = null;
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			if (telephone.equals("")) {
@@ -407,9 +417,8 @@ public class AccountAction extends BaseAction {
 		dataMap.putAll(dcMap);
 		dataMap.put("itil_ac_DCContacts$department", dept.getDepartName());
 
-		//JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -465,8 +474,8 @@ public class AccountAction extends BaseAction {
 			newAccount.setIfHold(Integer.valueOf(ifHold));
 			newAccount.setRemarkDesc(remark);
 			newAccount.setAccountState("0");
-			PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-					.save(newAccount);
+
+			getService().save(newAccount);
 		} else {
 			account.setIfHold(Integer.valueOf(ifHold));
 			account.setRemarkDesc(remark);
@@ -507,11 +516,12 @@ public class AccountAction extends BaseAction {
 		List<PersonFormalAccount> accounts = getService().find(
 				PersonFormalAccount.class, "applyId", mainObj);
 		UserInfo curUser = mainObj.getApplyUser();
-		//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-		//DCContacts employee = (DCContacts) getService().findUnique(
-		//		DCContacts.class, "itcode", itCode);
-		DCContacts employee = accountService.saveOrGetContacts(curUser.getItcode());
-		//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+		// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+		// DCContacts employee = (DCContacts) getService().findUnique(
+		// DCContacts.class, "itcode", itCode);
+		DCContacts employee = accountService.saveOrGetContacts(curUser
+				.getItcode());
+		// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 		Map<String, Object> dataMap = metaDataManager.getFormDataForEdit(
 				mainObj, tableName);
 
@@ -531,9 +541,8 @@ public class AccountAction extends BaseAction {
 		dataMap.putAll(userMap);
 		dataMap.putAll(paMap);
 		dataMap.put("itil_ac_DCContacts$department", dept.getDepartName());
-		//JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -555,6 +564,7 @@ public class AccountAction extends BaseAction {
 	 * @Create In Jun 20, 2009 By gaowen
 	 * @return String
 	 */
+	@SuppressWarnings("unchecked")
 	public String initPersonAccountApplyData() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
@@ -570,14 +580,14 @@ public class AccountAction extends BaseAction {
 		bWrapper.setPropertyValue("applyDate", curDate);
 		bWrapper.setPropertyValue("applyUser", curUser);
 		bWrapper.setPropertyValue("delegateApplyUser", curUser);
-		bWrapper.setPropertyValue("mail",curUser.getEmail());
+		bWrapper.setPropertyValue("mail", curUser.getEmail());
 		String itCode = curUser.getItcode();
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			if (StringUtils.isBlank(telephone)) {
@@ -586,7 +596,8 @@ public class AccountAction extends BaseAction {
 			} else if (StringUtils.isBlank(mobileTelephone)) {
 				bWrapper.setPropertyValue("delegateApplyTel", telephone);
 				bWrapper.setPropertyValue("applyUserTel", telephone);
-			} else if (StringUtils.isBlank(telephone) && StringUtils.isBlank(mobileTelephone)) {
+			} else if (StringUtils.isBlank(telephone)
+					&& StringUtils.isBlank(mobileTelephone)) {
 				bWrapper.setPropertyValue("delegateApplyTel", "");
 				bWrapper.setPropertyValue("applyUserTel", "");
 			} else {
@@ -604,25 +615,24 @@ public class AccountAction extends BaseAction {
 
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
-		//modify by liuying for 处理加载用户titleCode时为空时抛异常 at 20100422 start
+		// modify by liuying for 处理加载用户titleCode时为空时抛异常 at 20100422 start
 		String postCode = "";
-		MobileTelAllowance allowance =null;
-		if(curUser.getTitleCode()!=null){
-			postCode=curUser.getTitleCode().toString();
-			allowance = (MobileTelAllowance) getService()
-			.findUnique(MobileTelAllowance.class, "postCode", postCode);
+		MobileTelAllowance allowance = null;
+		if (curUser.getTitleCode() != null) {
+			postCode = curUser.getTitleCode().toString();
+			allowance = (MobileTelAllowance) getService().findUnique(
+					MobileTelAllowance.class, "postCode", postCode);
 		}
-		//modify by liuying for 处理加载用户titleCode时为空时抛异常 at 20100422 end
+		// modify by liuying for 处理加载用户titleCode时为空时抛异常 at 20100422 end
 		if (allowance != null) {
 			dataMap.put("itil_ac_MobileTelephoneApply$allowance", allowance
 					.getAllowance());
 		}
-		UserType ut = curUser.getUserType();
+		// UserType ut = curUser.getUserType();
 		dataMap.putAll(userMap);
 
-		//JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -659,14 +669,14 @@ public class AccountAction extends BaseAction {
 		bWrapper.setPropertyValue("applyDate", curDate);
 		// bWrapper.setPropertyValue("applyUser", curUser);
 		bWrapper.setPropertyValue("delegateApplyUser", curUser);
-		bWrapper.setPropertyValue("mail",curUser.getEmail());
+		bWrapper.setPropertyValue("mail", curUser.getEmail());
 		String itCode = curUser.getItcode();
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			if (telephone.equals("")) {
@@ -687,9 +697,8 @@ public class AccountAction extends BaseAction {
 		// Map<String, Object> userMap =
 		// metaDataManager.getFormDataForEdit(curUser,"sUserInfos");
 		// dataMap.putAll(userMap);
-		//JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -729,11 +738,11 @@ public class AccountAction extends BaseAction {
 		bWrapper.setPropertyValue("userOwner", curUser.getItcode());
 		String itCode = curUser.getItcode();
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			if (telephone.equals("")) {
@@ -756,9 +765,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		//JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -780,6 +788,7 @@ public class AccountAction extends BaseAction {
 	 * @Create In May 20, 2009 By gaowen
 	 * @return String
 	 */
+	@SuppressWarnings("unchecked")
 	public String saveApplyDraft() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
@@ -801,7 +810,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -840,10 +852,13 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
-		List<PagePanelTableRelation> relations = pptrs
-				.findRelationsByPanel(panel);
-		List<SystemMainTable> ftables = new ArrayList();
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
+		// List<PagePanelTableRelation> relations =
+		// pptrs.findRelationsByPanel(panel);
+		// List<SystemMainTable> ftables = new ArrayList();
 		AccountType at = (AccountType) getService().findUnique(
 				AccountType.class, "name", accountType);
 
@@ -868,10 +883,12 @@ public class AccountAction extends BaseAction {
 		temp.put("applyId", mainObject);
 		temp.put("accountowner", acUser);
 
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -913,45 +930,45 @@ public class AccountAction extends BaseAction {
 		for (PersonFormalAccount acc : account) {
 			if (acc.getAccountType().getAccountType().equals("VPNAccount")) {
 				String rights = acc.getRemarkDesc();
-				if(rights!=null&&rights.trim().length()!=0){
-				String rightsDesc = rights.substring(1, rights.length() - 1);
-				String[] right = rightsDesc.split(",");
-				for (String r : right) {
-					String s = r.substring(1, r.length() - 1);
-					if (s.equals("访问SAP系统")) {
-						dataMap.put("sap", 1);
+				if (rights != null && rights.trim().length() != 0) {
+					String rightsDesc = rights
+							.substring(1, rights.length() - 1);
+					String[] right = rightsDesc.split(",");
+					for (String r : right) {
+						String s = r.substring(1, r.length() - 1);
+						if (s.equals("访问SAP系统")) {
+							dataMap.put("sap", 1);
 
-					} else if (s.equals("使用IPsoftphone")) {
-						dataMap.put("iPsoftphone", 1);
+						} else if (s.equals("使用IPsoftphone")) {
+							dataMap.put("iPsoftphone", 1);
 
-					} else if (s.equals("常用办公")) {
-						dataMap.put("office", 1);
-					} else {
-						dataMap.put("office", 1);
+						} else if (s.equals("常用办公")) {
+							dataMap.put("office", 1);
+						} else {
+							dataMap.put("office", 1);
+						}
 					}
-				  }
 				}
 			}
 			Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
 					acc, "itil_ac_PersonFormalAccount");
-			//add by liuying at 20100528 for 修改VPN显示权限json错误的问题 start
-			if(acc.getAccountType().getAccountType().equals("VPNAccount")){
+			// add by liuying at 20100528 for 修改VPN显示权限json错误的问题 start
+			if (acc.getAccountType().getAccountType().equals("VPNAccount")) {
 				tempMap.put("itil_ac_PersonFormalAccount$remarkDesc", "");//
 			}
-			//add by liuying at 20100528 for 修改VPN显示权限json错误的问题 end
+			// add by liuying at 20100528 for 修改VPN显示权限json错误的问题 end
 
 			dataMap.putAll(tempMap);
 
 		}
-		Map<String, Object> userMap = new HashMap();
+		Map<String, Object> userMap = new HashMap<String, Object>();
 		if (applyUser != null) {
 			userMap = metaDataManager.getFormDataForEdit(applyUser,
 					"sUserInfos");
 		}
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -1000,9 +1017,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				applyUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -1039,9 +1055,9 @@ public class AccountAction extends BaseAction {
 				PersonFormalAccount.class, "applyId", aam);
 		for (PersonFormalAccount personAccount : account) {
 			personAccount.setAccountName(user.getItcode().toLowerCase());
-			if(pw!=null&&!"".equals(pw)){
+			if (pw != null && !"".equals(pw)) {
 				personAccount.setPassword(pw);
-			}else{
+			} else {
 				personAccount.setPassword("123");
 			}
 			personAccount.setCreateDate(currentDate);
@@ -1049,8 +1065,7 @@ public class AccountAction extends BaseAction {
 			// personAccount.setAccountState("1");
 			personAccount.setIfHold(1);
 			personAccount.setCardState(1);
-			PersonFormalAccount pa = (PersonFormalAccount) getService().save(
-					personAccount);
+			getService().save(personAccount);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -1082,21 +1097,21 @@ public class AccountAction extends BaseAction {
 		String userInfo = request.getParameter("userInfo");
 		String cardNumber = request.getParameter("cardNumber");
 		String rightDesc = request.getParameter("rightDesc");
-		Date endDate=null;
-		String pingCode="";
+		Date endDate = null;
+		String pingCode = "";
 		Date currentDate = DateUtil.getCurrentDate();
 		UserInfo user = (UserInfo) getService().find(UserInfo.class, userInfo);
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
 		List<PersonFormalAccount> account = getService().find(
 				PersonFormalAccount.class, "applyId", aam);
-		if(vpnType.equals("1")){
+		if (vpnType.equals("1")) {
 			String attachmentFlag = request.getParameter("attachmentFlag");
 			aam.setAttachment(attachmentFlag);
 			getService().save(aam);
 			pingCode = request.getParameter("pingCode");
-			endDate=DateUtil.convertStringToDate("9999-12-31");
-		}else{
+			endDate = DateUtil.convertStringToDate("9999-12-31");
+		} else {
 			String end = request.getParameter("endDate");
 			endDate = DateUtil.convertStringToDate(end);
 		}
@@ -1110,10 +1125,10 @@ public class AccountAction extends BaseAction {
 			personAccount.setIfHold(1);
 			personAccount.setCardState(1);
 			personAccount.setVpnType(vpnType);
-			if(vpnType.equals("1")){
+			if (vpnType.equals("1")) {
 				personAccount.setPingCode(pingCode);
 			}
-			 getService().save(personAccount);
+			getService().save(personAccount);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -1128,47 +1143,49 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-//		HttpServletRequest request = super.getRequest();
-//		HttpServletResponse response = super.getResponse();
-//		
-//		String userInfo = request.getParameter("userInfo");
-//		String dataId = request.getParameter("dataId");
-//		String end = request.getParameter("endDate");
-//		Date endDate = DateUtil.convertStringToDate(end);
-//		String cardNumber = request.getParameter("cardNumber");
-//		String rightDesc = request.getParameter("rightDesc");
-//		Date currentDate = DateUtil.getCurrentDate();
-//		UserInfo user = (UserInfo) getService().find(UserInfo.class, userInfo);
-//		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
-//				AccountApplyMainTable.class, dataId);
-//		List<PersonFormalAccount> account = getService().find(
-//				PersonFormalAccount.class, "applyId", aam);
-//		for (PersonFormalAccount personAccount : account) {
-//			personAccount.setCardNumber(cardNumber);
-//			personAccount.setAccountName(user.getItcode().toLowerCase());
-//			personAccount.setPassword("123");
-//			personAccount.setCreateDate(currentDate);
-//			personAccount.setRightsDesc(rightDesc);
-//			personAccount.setEndDate(endDate);
-//			// personAccount.setAccountState("1");
-//			personAccount.setIfHold(1);
-//			personAccount.setCardState(1);
-//			PersonFormalAccount pa = (PersonFormalAccount) getService().save(
-//					personAccount);
-//		}
-//		String json = "{success:true}";
-//		response.setContentType("text/plain");
-//		response.setCharacterEncoding("UTF-8");
-//		PrintWriter out;
-//		try {
-//			out = response.getWriter();
-//			out.println(json);
-//			out.flush();
-//			out.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
+		// HttpServletRequest request = super.getRequest();
+		// HttpServletResponse response = super.getResponse();
+		//		
+		// String userInfo = request.getParameter("userInfo");
+		// String dataId = request.getParameter("dataId");
+		// String end = request.getParameter("endDate");
+		// Date endDate = DateUtil.convertStringToDate(end);
+		// String cardNumber = request.getParameter("cardNumber");
+		// String rightDesc = request.getParameter("rightDesc");
+		// Date currentDate = DateUtil.getCurrentDate();
+		// UserInfo user = (UserInfo) getService().find(UserInfo.class,
+		// userInfo);
+		// AccountApplyMainTable aam = (AccountApplyMainTable)
+		// getService().find(
+		// AccountApplyMainTable.class, dataId);
+		// List<PersonFormalAccount> account = getService().find(
+		// PersonFormalAccount.class, "applyId", aam);
+		// for (PersonFormalAccount personAccount : account) {
+		// personAccount.setCardNumber(cardNumber);
+		// personAccount.setAccountName(user.getItcode().toLowerCase());
+		// personAccount.setPassword("123");
+		// personAccount.setCreateDate(currentDate);
+		// personAccount.setRightsDesc(rightDesc);
+		// personAccount.setEndDate(endDate);
+		// // personAccount.setAccountState("1");
+		// personAccount.setIfHold(1);
+		// personAccount.setCardState(1);
+		// PersonFormalAccount pa = (PersonFormalAccount) getService().save(
+		// personAccount);
+		// }
+		// String json = "{success:true}";
+		// response.setContentType("text/plain");
+		// response.setCharacterEncoding("UTF-8");
+		// PrintWriter out;
+		// try {
+		// out = response.getWriter();
+		// out.println(json);
+		// out.flush();
+		// out.close();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// return null;
 	}
 
 	/**
@@ -1191,34 +1208,34 @@ public class AccountAction extends BaseAction {
 			UserInfo user = (UserInfo) getService().find(UserInfo.class,
 					userInfo);
 			String itCode = user.getItcode();
-			String employeeCode=user.getEmployeeCode();
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// String employeeCode=user.getEmployeeCode();
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
-			if(employee!=null){
-			employee.setTelephone(number);
-			Object dcUser = getService().save(employee);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			if (employee != null) {
+				employee.setTelephone(number);
+				getService().save(employee);
 			}
-//			DCAddressList dc=(DCAddressList) getService().findUnique(
-//					DCAddressList.class, "employeeCode", employeeCode);
-//			if(dc!=null){
-//				dc.setTelephone(number);
-//				dc.setVoip(voip);
-//				getService().save(dc);
-//			}
-//			else{
-//				DCAddressList dcAddressList=new DCAddressList();
-//				dcAddressList.setEmployeeCode(employeeCode);
-//				dcAddressList.setTelephone(number);
-//				dcAddressList.setVoip(voip);
-//				dcAddressList.setUserName(user.getUserName());
-//				dcAddressList.setDepartment(user.getDepartment());
-//				dcAddressList.setItcode(user.getItcode());
-//				dcAddressList.setRealName(user.getRealName());
-//				getService().save(dcAddressList);
-//			}
+			// DCAddressList dc=(DCAddressList) getService().findUnique(
+			// DCAddressList.class, "employeeCode", employeeCode);
+			// if(dc!=null){
+			// dc.setTelephone(number);
+			// dc.setVoip(voip);
+			// getService().save(dc);
+			// }
+			// else{
+			// DCAddressList dcAddressList=new DCAddressList();
+			// dcAddressList.setEmployeeCode(employeeCode);
+			// dcAddressList.setTelephone(number);
+			// dcAddressList.setVoip(voip);
+			// dcAddressList.setUserName(user.getUserName());
+			// dcAddressList.setDepartment(user.getDepartment());
+			// dcAddressList.setItcode(user.getItcode());
+			// dcAddressList.setRealName(user.getRealName());
+			// getService().save(dcAddressList);
+			// }
 		}
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
@@ -1232,15 +1249,13 @@ public class AccountAction extends BaseAction {
 			// personAccount.setAccountState("1");
 			personAccount.setIfHold(1);
 			personAccount.setCardState(1);
-            if (userInfo != null && StringUtils.isNotBlank(userInfo)) {
-            	personAccount.setDepartTelephone("0");
-			}else{
+			if (userInfo != null && StringUtils.isNotBlank(userInfo)) {
+				personAccount.setDepartTelephone("0");
+			} else {
 				personAccount.setAccountowner(aam.getDelegateApplyUser());
 				personAccount.setDepartTelephone("1");
 			}
-			PersonFormalAccount pa = (PersonFormalAccount) getService().save(
-					personAccount);
-			
+			getService().save(personAccount);
 
 		}
 		String json = "{success:true}";
@@ -1286,11 +1301,11 @@ public class AccountAction extends BaseAction {
 		bWrapper.setPropertyValue("applyDate", curDate);
 		bWrapper.setPropertyValue("applyUser", curUser);
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			if (telephone.equals("")) {
@@ -1326,9 +1341,13 @@ public class AccountAction extends BaseAction {
 
 		dataMap.putAll(accountMap);
 		dataMap.putAll(userMap);
-		dataMap.put("itil_ac_PersonFormalAccount$remarkDesc", "");//add by liuying at 20100528 for 修改VPN显示权限json错误的问题
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		dataMap.put("itil_ac_PersonFormalAccount$remarkDesc", "");// add by
+																	// liuying
+																	// at
+																	// 20100528
+																	// for
+																	// 修改VPN显示权限json错误的问题
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -1355,8 +1374,8 @@ public class AccountAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		String panelName = request.getParameter("panelName");// 得到主面板名称
 		String serviceItemId = request.getParameter("serviceItemId");
-		//ServiceItem serviceItem = (ServiceItem) getService().find(
-				//ServiceItem.class, serviceItemId);
+		// ServiceItem serviceItem = (ServiceItem) getService().find(
+		// ServiceItem.class, serviceItemId);
 		UserInfo curUser = UserContext.getUserInfo();
 		String userInfo = request.getParameter("userInfo");
 		if (userInfo != null) {
@@ -1366,13 +1385,10 @@ public class AccountAction extends BaseAction {
 		String info = request.getParameter("info");
 		String processType = request.getParameter("processType");
 		String processInfoId = request.getParameter("processInfoId");
-		String applyReason = request.getParameter("applyReason");
-		String wwwValue = request.getParameter("wwwValue");
-		WWWScanType wwwst = null;
-		if (wwwValue != null) {
-			wwwst = (WWWScanType) getService()
-					.find(WWWScanType.class, wwwValue);
-		}
+		// String applyReason = request.getParameter("applyReason");
+		// String wwwValue = request.getParameter("wwwValue");
+		// WWWScanType wwwst = (wwwValue != null ? (WWWScanType)
+		// getService().find(WWWScanType.class, wwwValue) : null);
 
 		ServiceItemProcess serviceItemProcess = serviceItemProcessService
 				.findServiceItemProcessById(processInfoId);
@@ -1386,7 +1402,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -1420,7 +1439,10 @@ public class AccountAction extends BaseAction {
 			acUser = mainMap.get("applyUser");
 		}
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		PersonFormalAccount accounts = accountService.findPersonAccount(
 				accountType, curUser);
 		AccountType at = (AccountType) getService().findUnique(
@@ -1454,17 +1476,17 @@ public class AccountAction extends BaseAction {
 		temp.put("accountowner", acUser);
 		temp.put("olodApplyAccount", accounts);
 
-		//add by liuying at 20100222 for 保存座机帐号信息 start
-		if(at.getAccountType().equals("Telephone")){
+		// add by liuying at 20100222 for 保存座机帐号信息 start
+		if (at.getAccountType().equals("Telephone")) {
 			temp.put("departTelephone", accounts.getDepartTelephone());
 			temp.put("telephoneNumber", accounts.getTelephoneNumber());
 			temp.put("voip", accounts.getVoip());
 		}
-		//add by liuying at 20100222 for 保存座机帐号信息 end 
-		//add by liuying at 20100226 for 保存VPN帐号信息 start
-		if(at.getAccountType().equals("VPNAccount")){
-			String s=(String) temp.get("remarkDesc");
-			if("".equals(s)){
+		// add by liuying at 20100222 for 保存座机帐号信息 end
+		// add by liuying at 20100226 for 保存VPN帐号信息 start
+		if (at.getAccountType().equals("VPNAccount")) {
+			String s = (String) temp.get("remarkDesc");
+			if ("".equals(s)) {
 				temp.put("remarkDesc", "[\"\",\"\"]");
 			}
 			temp.put("drawSpace", accounts.getDrawSpace());
@@ -1472,13 +1494,15 @@ public class AccountAction extends BaseAction {
 			temp.put("cardNumber", accounts.getCardNumber());
 			temp.put("pingCode", accounts.getPingCode());
 			temp.put("vpnType", accounts.getVpnType());
-			
-		}
-		//add by liuying at 20100226 for 保存VPN帐号信息 end 
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		}
+		// add by liuying at 20100226 for 保存VPN帐号信息 end
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
+
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -1496,8 +1520,8 @@ public class AccountAction extends BaseAction {
 	}
 
 	/**
-	 * 保存账号申请初始草稿
-	 * 座机移机申请
+	 * 保存账号申请初始草稿 座机移机申请
+	 * 
 	 * @Methods Name saveTelephoneTransferDraft
 	 * @Create In 11 9, 2009 By gaowen
 	 * @return String
@@ -1507,20 +1531,20 @@ public class AccountAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		String panelName = request.getParameter("panelName");// 得到主面板名称
 		String serviceItemId = request.getParameter("serviceItemId");
-//		ServiceItem serviceItem = (ServiceItem) getService().find(
-//				ServiceItem.class, serviceItemId);
-//		UserInfo curUser = UserContext.getUserInfo();
-//		String userInfo = request.getParameter("userInfo");
-//		String telephoneNumber = request.getParameter("telephoneNumber");
-//		if (userInfo != null && StringUtils.isNotBlank(userInfo)) {
-//			curUser = (UserInfo) getService().find(UserInfo.class, userInfo);
-//		}
+		// ServiceItem serviceItem = (ServiceItem) getService().find(
+		// ServiceItem.class, serviceItemId);
+		// UserInfo curUser = UserContext.getUserInfo();
+		// String userInfo = request.getParameter("userInfo");
+		// String telephoneNumber = request.getParameter("telephoneNumber");
+		// if (userInfo != null && StringUtils.isNotBlank(userInfo)) {
+		// curUser = (UserInfo) getService().find(UserInfo.class, userInfo);
+		// }
 		String accountType = request.getParameter("accountType");
-		/*PersonFormalAccount accounts = accountService.findTelephoneAccount(
-				accountType, telephoneNumber);
-		if (accounts == null) {
-			throw new RuntimeException();
-		}*/
+		/*
+		 * PersonFormalAccount accounts = accountService.findTelephoneAccount(
+		 * accountType, telephoneNumber); if (accounts == null) { throw new
+		 * RuntimeException(); }
+		 */
 		String info = request.getParameter("info");
 		String processType = request.getParameter("processType");
 		String processInfoId = request.getParameter("processInfoId");
@@ -1536,7 +1560,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -1572,7 +1599,10 @@ public class AccountAction extends BaseAction {
 			mainMap.put("delegateApplyUser", acUser);
 		}
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 
 		AccountType at = (AccountType) getService().findUnique(
 				AccountType.class, "name", accountType);
@@ -1603,14 +1633,18 @@ public class AccountAction extends BaseAction {
 		temp.put("ifHold", 1);
 		temp.put("cardState", 1);
 		temp.put("accountowner", acUser);
-		/*temp.put("yearMoney", accounts.getYearMoney());
-		temp.put("departTelephone", accounts.getDepartTelephone());//add by liuying at 20100202
-		temp.put("olodApplyAccount", accounts);*/
+		/*
+		 * temp.put("yearMoney", accounts.getYearMoney());
+		 * temp.put("departTelephone", accounts.getDepartTelephone());//add by
+		 * liuying at 20100202 temp.put("olodApplyAccount", accounts);
+		 */
 
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -1660,9 +1694,8 @@ public class AccountAction extends BaseAction {
 				applyUser, "sUserInfos");
 
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -1702,23 +1735,23 @@ public class AccountAction extends BaseAction {
 				PersonFormalAccount.class, "applyId", mainObj); // 获取关联实体
 		for (PersonFormalAccount acc : account) {
 			String rights = acc.getRemarkDesc();
-			if(rights!=null&&!"".equals(rights)){
+			if (rights != null && !"".equals(rights)) {
 				String rightsDesc = rights.substring(1, rights.length() - 1);
 				String[] right = rightsDesc.split(",");
 				for (String r : right) {
 					String s = r.substring(1, r.length() - 1);
 					if (s.equals("访问SAP系统")) {
 						dataMap.put("sap", 1);
-						
+
 					} else if (s.equals("使用IPsoftphone")) {
 						dataMap.put("iPsoftphone", 1);
-						
+
 					} else if (s.equals("物流权限")) {
 						dataMap.put("wuliu", 1);
-						
+
 					} else if (s.equals("网段/服务器权限")) {
 						dataMap.put("netWork", 1);
-						
+
 					} else {
 						dataMap.put("other", s);
 					}
@@ -1728,16 +1761,20 @@ public class AccountAction extends BaseAction {
 			Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
 					acc, "itil_ac_PersonFormalAccount");
 			dataMap.putAll(tempMap);
-			dataMap.put("itil_ac_PersonFormalAccount$remarkDesc", "");//add by liuying at 20100528 for 修改vpn权限变更字符串的问题
+			dataMap.put("itil_ac_PersonFormalAccount$remarkDesc", "");// add by
+																		// liuying
+																		// at
+																		// 20100528
+																		// for
+																		// 修改vpn权限变更字符串的问题
 		}
 
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				applyUser, "sUserInfos");
 
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -1763,12 +1800,12 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		// String userInfo=request.getParameter("userInfo");
-//		String erpUserName = request.getParameter("erpUserName");
+		// String erpUserName = request.getParameter("erpUserName");
 		String dataId = request.getParameter("dataId");
 		String rightDesc = request.getParameter("rightDesc");
 		String yearMoney = request.getParameter("yearMoney");
 		String beyondMoney = request.getParameter("beyondMoney");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		// UserInfo user=(UserInfo) getService().find(UserInfo.class, userInfo);
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
@@ -1780,7 +1817,7 @@ public class AccountAction extends BaseAction {
 			// PersonFormalAccount ac = (PersonFormalAccount) getService().save(
 			// oldApplyAccount);
 			acc.setRightsDesc(rightDesc);
-//			acc.setErpUserName(erpUserName);
+			// acc.setErpUserName(erpUserName);
 			acc.setIfHold(1);
 			acc.setCardState(1);
 			acc.setCreateDate(DateUtil.getCurrentDate());
@@ -1791,8 +1828,7 @@ public class AccountAction extends BaseAction {
 			if (yearMoney != null && StringUtils.isNotBlank(yearMoney)) {
 				acc.setYearMoney(Double.valueOf(yearMoney));
 			}
-			PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-					.save(acc);
+			getService().save(acc);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -1843,7 +1879,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -1882,7 +1921,10 @@ public class AccountAction extends BaseAction {
 
 		AccountType at = (AccountType) getService().findUnique(
 				AccountType.class, "name", accountType);
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 
 		SpecialAccount specailAccounts = accountService
 				.findSpecailAccountByAccountName(at.getAccountType(),
@@ -1914,18 +1956,19 @@ public class AccountAction extends BaseAction {
 		specailAccount.put("olodApplyAccount", specailAccounts);
 		specailAccount.put("vpnType", specailAccounts.getVpnType());
 		specailAccount.put("pingCode", specailAccounts.getPingCode());
-		if(at.getAccountType().equals("TempVPNAccount")){
-			String s=(String) specailAccount.get("remarkDesc");
-			if("常用办公".equals(s)){
+		if (at.getAccountType().equals("TempVPNAccount")) {
+			String s = (String) specailAccount.get("remarkDesc");
+			if ("常用办公".equals(s)) {
 				specailAccount.put("remarkDesc", "[\"常用办公\",\"\",\"\"]");
 			}
-			
-			
-		}
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, specailAccount);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		}
+		metaDataManager.saveEntityData(account, specailAccount);// 保存关联实体
+
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -1982,8 +2025,7 @@ public class AccountAction extends BaseAction {
 				acc.setCardState(1);
 				acc.setCreateDate(currentDate);
 			}
-			SpecialAccount newAccountApply = (SpecialAccount) getService()
-					.save(acc);
+			getService().save(acc);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -2029,11 +2071,11 @@ public class AccountAction extends BaseAction {
 		bWrapper.setPropertyValue("applyUser", curUser);
 		bWrapper.setPropertyValue("delegateApplyUser", curUser);
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			if (telephone.equals("")) {
@@ -2063,9 +2105,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -2113,7 +2154,7 @@ public class AccountAction extends BaseAction {
 		// accountMap.put("itil_ac_PersonFormalAccount$applyReason", "");
 		// dataMap.putAll(accountMap);
 
-		//JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
 		String json = "";
 		if (!account.isEmpty()) {
 			json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
@@ -2178,13 +2219,13 @@ public class AccountAction extends BaseAction {
 		bWrapper.setPropertyValue("applyDate", curDate);
 		bWrapper.setPropertyValue("applyUser", curUser);
 		bWrapper.setPropertyValue("delegateApplyUser", curUser);
-		bWrapper.setPropertyValue("mail",curUser.getEmail());
+		bWrapper.setPropertyValue("mail", curUser.getEmail());
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			if (telephone.equals("")) {
@@ -2214,9 +2255,8 @@ public class AccountAction extends BaseAction {
 
 		dataMap.putAll(userMap);
 
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -2261,7 +2301,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -2298,7 +2341,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 
 		AccountType at = (AccountType) getService().findUnique(
 				AccountType.class, "name", accountType);
@@ -2324,10 +2370,12 @@ public class AccountAction extends BaseAction {
 		specailAccount.put("applyId", mainObject);
 		specailAccount.put("accountOldUser", acUser);
 		specailAccount.put("accountNowUser", acUser);
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, specailAccount);// 保存关联实体
+		metaDataManager.saveEntityData(account, specailAccount);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -2394,15 +2442,15 @@ public class AccountAction extends BaseAction {
 			}
 			Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
 					acc, "itil_ac_SpecialAccount");
-			 //add by liuying at 20100528 for 修改临时VPN显示权限json错误的问题 start
-			if(acc.getAccountType().getAccountType().equals("TempVPNAccount")){
+			// add by liuying at 20100528 for 修改临时VPN显示权限json错误的问题 start
+			if (acc.getAccountType().getAccountType().equals("TempVPNAccount")) {
 				tempMap.put("itil_ac_SpecialAccount$remarkDesc", "");
 			}
-			if(acc.getAccountType().getAccountType().equals("Win7")){
+			if (acc.getAccountType().getAccountType().equals("Win7")) {
 				tempMap.put("itil_ac_SpecialAccount$remarkDesc", "");
 			}
 			dataMap.putAll(tempMap);
-			//add by liuying at 20100528 for 修改临时VPN显示权限json错误的问题 end
+			// add by liuying at 20100528 for 修改临时VPN显示权限json错误的问题 end
 
 		}
 
@@ -2410,10 +2458,9 @@ public class AccountAction extends BaseAction {
 				applyUser, "sUserInfos");
 
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
 
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -2453,29 +2500,29 @@ public class AccountAction extends BaseAction {
 				"applyId", mainObj); // 获取关联实体
 		for (SpecialAccount acc : fObj) {
 			String rights = acc.getRemarkDesc();
-				String rightsDesc = rights.substring(1, rights.length() - 1);
-				String[] right = rightsDesc.split(",");
-				
-				for (String r : right) {
-					String s = r.substring(1, r.length() - 1);
-					if (s.equals("访问SAP系统")) {
-						dataMap.put("sap", 1);
-						
-					} else if (s.equals("使用IPsoftphone")) {
-						dataMap.put("iPsoftphone", 1);
-						
-					} else {
-						dataMap.put("other", s);
-					}
+			String rightsDesc = rights.substring(1, rights.length() - 1);
+			String[] right = rightsDesc.split(",");
+
+			for (String r : right) {
+				String s = r.substring(1, r.length() - 1);
+				if (s.equals("访问SAP系统")) {
+					dataMap.put("sap", 1);
+
+				} else if (s.equals("使用IPsoftphone")) {
+					dataMap.put("iPsoftphone", 1);
+
+				} else {
+					dataMap.put("other", s);
 				}
+			}
 
 			Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
 					acc, "itil_ac_SpecialAccount");
-			  //add by liuyng at 20100528 for 修改临时VPN显示权限json错误的问题 start
-			if(acc.getAccountType().getAccountType().equals("TempVPNAccount")){
+			// add by liuyng at 20100528 for 修改临时VPN显示权限json错误的问题 start
+			if (acc.getAccountType().getAccountType().equals("TempVPNAccount")) {
 				tempMap.put("itil_ac_SpecialAccount$remarkDesc", "");
 			}
-			//add by liuying at 20100528 for 修改临时VPN显示权限json错误的问题 end
+			// add by liuying at 20100528 for 修改临时VPN显示权限json错误的问题 end
 			dataMap.putAll(tempMap);
 		}
 
@@ -2483,10 +2530,9 @@ public class AccountAction extends BaseAction {
 				applyUser, "sUserInfos");
 
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
 
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -2538,9 +2584,9 @@ public class AccountAction extends BaseAction {
 				acc.setIfHold(1);
 				acc.setAttachment(attachment);
 			} else {
-				if(password!=null&&!"".equals(password)){
+				if (password != null && !"".equals(password)) {
 					acc.setPassword(password);
-				}else{
+				} else {
 					acc.setPassword("123");
 				}
 				acc.setCreateDate(currentDate);
@@ -2549,23 +2595,24 @@ public class AccountAction extends BaseAction {
 				acc.setIfHold(1);
 				acc.setCardState(1);
 				// acc.setAttachment(attachment);
-				//add by liuying at 20100531 for 增加保存临时VPN帐号的类型 start
-				if(acc.getAccountType().getAccountType().equals("TempVPNAccount")){
+				// add by liuying at 20100531 for 增加保存临时VPN帐号的类型 start
+				if (acc.getAccountType().getAccountType().equals(
+						"TempVPNAccount")) {
 					acc.setVpnType("0");
 				}
-				//add by liuying at 20100531 for 增加保存临时VPN帐号的类型 end
+				// add by liuying at 20100531 for 增加保存临时VPN帐号的类型 end
 			}
 			if (accountName != null) {
 				acc.setAccountName(accountName);
-			}else{
-				if(acc.getAccountType().getAccountType().equals("Win7")){
+			} else {
+				if (acc.getAccountType().getAccountType().equals("Win7")) {
 					acc.setAccountName(acc.getId().toString());
 					acc.setConfirmUser(acc.getAccountNowUser());
 				}
 			}
 			acc.setRightsDesc(rightDesc);
 			// acc.setAccountState("1");
-			SpecialAccount pa = (SpecialAccount) getService().save(acc);
+			getService().save(acc);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -2597,7 +2644,7 @@ public class AccountAction extends BaseAction {
 		// String userInfo=request.getParameter("userInfo");
 		String dataId = request.getParameter("dataId");
 		// String rightDesc=request.getParameter("rightDesc");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		// UserInfo user=(UserInfo) getService().find(UserInfo.class, userInfo);
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
@@ -2617,22 +2664,25 @@ public class AccountAction extends BaseAction {
 			// }
 			// }
 			oldApplyAccount.setIfHold(0);
-			PersonFormalAccount ac = (PersonFormalAccount) getService().save(
-					oldApplyAccount);
-			PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-					.save(acc);
+
+			getService().save(oldApplyAccount);
+			getService().save(acc);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter out;
+		PrintWriter out = null;
 		try {
 			out = response.getWriter();
 			out.println(json);
 			out.flush();
-			out.close();
+
 		} catch (IOException e) {
 			e.printStackTrace();
+			this.logger.error(e.getMessage());
+		} finally {
+			if (out != null)
+				out.close();
 		}
 		return null;
 	}
@@ -2647,16 +2697,16 @@ public class AccountAction extends BaseAction {
 	public String savePersonAccountAllDeleteInfo() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String dataId = request.getParameter("dataId");
+		// String dataId = request.getParameter("dataId");
 		String erpIfHold = request.getParameter("erpIfHold");
-//		String accountTypes = request.getParameter("accountType");
-        String gParam1 = request.getParameter("gParam1");
+		// String accountTypes = request.getParameter("accountType");
+		String gParam1 = request.getParameter("gParam1");
 		JSONArray jsonArray = JSONArray.fromObject(gParam1);
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		UserInfo curUser = UserContext.getUserInfo();
 		Object[] panelDataArrays = jsonArray.toArray();
-		PersonFormalAccount account=null;
-		String rightsDesc=null;
+		PersonFormalAccount account = null;
+		String rightsDesc = null;
 		for (int i = 0; i < panelDataArrays.length; i++) {
 			JSONObject record = (JSONObject) panelDataArrays[i];
 			Iterator columnIter = record.keys();
@@ -2664,30 +2714,34 @@ public class AccountAction extends BaseAction {
 				String columnName = (String) columnIter.next();
 				String columnValue = record.getString(columnName);
 				if (columnName.equals("id")) {
-					    account = (PersonFormalAccount) getService()
-								.find(PersonFormalAccount.class, columnValue);
-						String accountType = account.getAccountType()
-								.getAccountType();
-						Role role = account.getAccountType().getRole();
-						Set<UserInfo> userinfos = role.getUserInfos();
-						if (userinfos.contains(curUser)) {
-							if (accountType.equals("ERPAccount")&& erpIfHold.equals("1")) {
-								PersonFormalAccount oldApplyAccount = account.getOlodApplyAccount();
-								oldApplyAccount.setAccountowner(account.getAccountowner());
-								oldApplyAccount.setIfHold(1);
-								getService().save(oldApplyAccount);
-							} else {
-								PersonFormalAccount oldApplyAccount = account.getOlodApplyAccount();
-								oldApplyAccount.setAccountState("0");
-								oldApplyAccount.setIfHold(0);
-								getService().save(oldApplyAccount);
-							}
+					account = (PersonFormalAccount) getService().find(
+							PersonFormalAccount.class, columnValue);
+					String accountType = account.getAccountType()
+							.getAccountType();
+					Role role = account.getAccountType().getRole();
+					Set<UserInfo> userinfos = role.getUserInfos();
+					if (userinfos.contains(curUser)) {
+						if (accountType.equals("ERPAccount")
+								&& erpIfHold.equals("1")) {
+							PersonFormalAccount oldApplyAccount = account
+									.getOlodApplyAccount();
+							oldApplyAccount.setAccountowner(account
+									.getAccountowner());
+							oldApplyAccount.setIfHold(1);
+							getService().save(oldApplyAccount);
+						} else {
+							PersonFormalAccount oldApplyAccount = account
+									.getOlodApplyAccount();
+							oldApplyAccount.setAccountState("0");
+							oldApplyAccount.setIfHold(0);
+							getService().save(oldApplyAccount);
 						}
+					}
 				}
 				if (columnName.equals("rightsDesc")) {
-					 rightsDesc=columnValue;
+					rightsDesc = columnValue;
 				}
-				
+
 			}
 			account.setRightsDesc(rightsDesc);
 			getService().save(account);
@@ -2725,9 +2779,13 @@ public class AccountAction extends BaseAction {
 		String panelName = request.getParameter("panelName");// 得到主面板名称
 		String mailServer = request.getParameter("mailServer");
 		String workSpace = request.getParameter("workSpace");
-		String sameMailDept=request.getParameter("sameMailDept");
-		
-		if (mailServer != null && workSpace != null&&StringUtils.isNotBlank(mailServer)&&StringUtils.isNotBlank(workSpace)) {//modify by liuying at 20100607 for 部门变更申请不变更平台时提交失败的BUG
+		String sameMailDept = request.getParameter("sameMailDept");
+
+		if (mailServer != null && workSpace != null
+				&& StringUtils.isNotBlank(mailServer)
+				&& StringUtils.isNotBlank(workSpace)) {// modify by liuying at
+														// 20100607 for
+														// 部门变更申请不变更平台时提交失败的BUG
 			WorkSpace depart = (WorkSpace) getService().find(WorkSpace.class,
 					workSpace);
 			MailServer mail = (MailServer) getService().findUnique(
@@ -2735,8 +2793,9 @@ public class AccountAction extends BaseAction {
 			curUser.setWorkSpace(depart);
 			curUser.setMailServer(mail);
 		}
-		if(sameMailDept!=null&&StringUtils.isNotBlank(sameMailDept)){
-			SameMailDept mailDept=(SameMailDept) getService().find(SameMailDept.class, sameMailDept);
+		if (sameMailDept != null && StringUtils.isNotBlank(sameMailDept)) {
+			SameMailDept mailDept = (SameMailDept) getService().find(
+					SameMailDept.class, sameMailDept);
 			curUser.setSameMailDept(mailDept);
 			getService().save(curUser);
 		}
@@ -2758,7 +2817,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -2830,7 +2892,7 @@ public class AccountAction extends BaseAction {
 		String accountName = request.getParameter("accountName");
 		String accountType = request.getParameter("accountType");
 		AR_DrawSpace drawSpace = null;
-		String processInfoId = request.getParameter("processInfoId");
+		// String processInfoId = request.getParameter("processInfoId");
 		AccountApplyMainTable aa = null;
 		if (applyId != null && !applyId.equals("")) {
 			aa = (AccountApplyMainTable) getService().find(
@@ -2856,8 +2918,7 @@ public class AccountAction extends BaseAction {
 					.find(AR_DrawSpace.class, ds);
 			newAccount.setDrawSpace(drawSpace);
 		}
-		SpecialAccount newAccountApply = (SpecialAccount) getService().save(
-				newAccount);
+		getService().save(newAccount);
 
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
@@ -2884,62 +2945,62 @@ public class AccountAction extends BaseAction {
 	public String listSpecailAccount() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String panelName = request.getParameter("panelName");
-		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到面板主表
-		String tableName = mainTable.getTableName(); // 得到面板主表名
-		Class clazz = this.toClass(mainTable.getClassName()); // 得到面板主实体类
-		Object object = BeanUtils.instantiateClass(clazz);
+		// String panelName = request.getParameter("panelName");
+		// PagePanel panel = pagePanelService.findPagePanel(panelName);
+		// SystemMainTable mainTable = panel.getSystemMainTable(); // 得到面板主表
+		// String tableName = mainTable.getTableName(); // 得到面板主表名
+		// Class clazz = this.toClass(mainTable.getClassName()); // 得到面板主实体类
+		// Object object = BeanUtils.instantiateClass(clazz);
 		UserInfo curUser = UserContext.getUserInfo();
 		String userInfo = request.getParameter("userInfo");
 		if (userInfo != null) {
 			curUser = (UserInfo) getService().find(UserInfo.class, userInfo);
 		}
 		String accountType = request.getParameter("accountType");
-		//modify by liuying at 20100121 for 页面调整start
-		List<SpecialAccount> account=new ArrayList();
-		if(accountType.equals("临时人员邮件/域帐号")){
-			account = accountService.findSpecailAccount(
-					accountType, curUser);
-			List<SpecialAccount> wwwaccount=accountService.findSpecailAccount("临时人员WWW帐号", curUser);
-			List<SpecialAccount> vpnaccount=accountService.findSpecailAccount("临时人员远程接入帐号", curUser);
-			List<SpecialAccount> msnaccount=accountService.findSpecailAccount("临时人员MSN帐号", curUser);
-			List<SpecialAccount> temp=new ArrayList();
-			for(SpecialAccount sa:account){
-				String saName=sa.getAccountName();
-				if(wwwaccount!=null){
-					for(SpecialAccount sawww:wwwaccount){
-						if(saName.equals(sawww.getAccountName())){
+		// modify by liuying at 20100121 for 页面调整start
+		List<SpecialAccount> account = new ArrayList();
+		if (accountType.equals("临时人员邮件/域帐号")) {
+			account = accountService.findSpecailAccount(accountType, curUser);
+			List<SpecialAccount> wwwaccount = accountService
+					.findSpecailAccount("临时人员WWW帐号", curUser);
+			List<SpecialAccount> vpnaccount = accountService
+					.findSpecailAccount("临时人员远程接入帐号", curUser);
+			List<SpecialAccount> msnaccount = accountService
+					.findSpecailAccount("临时人员MSN帐号", curUser);
+			List<SpecialAccount> temp = new ArrayList();
+			for (SpecialAccount sa : account) {
+				String saName = sa.getAccountName();
+				if (wwwaccount != null) {
+					for (SpecialAccount sawww : wwwaccount) {
+						if (saName.equals(sawww.getAccountName())) {
 							temp.add(sawww);
 						}
 					}
 				}
-				if(vpnaccount!=null){
-					for(SpecialAccount savpn:vpnaccount){
-						if(saName.equals(savpn.getAccountName())){
+				if (vpnaccount != null) {
+					for (SpecialAccount savpn : vpnaccount) {
+						if (saName.equals(savpn.getAccountName())) {
 							temp.add(savpn);
 						}
 					}
 				}
-				if(msnaccount!=null){
-					for(SpecialAccount samsn:msnaccount){
-						if(saName.equals(samsn.getAccountName())){
+				if (msnaccount != null) {
+					for (SpecialAccount samsn : msnaccount) {
+						if (saName.equals(samsn.getAccountName())) {
 							temp.add(samsn);
 						}
 					}
 				}
 			}
 			account.addAll(temp);
-			
-			
-		}else{
-		 account = accountService.findSpecailAccount(
-				accountType, curUser);
-		 }
-		//modify by liuying at 20100121 for 页面调整end
+
+		} else {
+			account = accountService.findSpecailAccount(accountType, curUser);
+		}
+		// modify by liuying at 20100121 for 页面调整end
 		Integer total = account.size();// 这是查询出所有的记录
 		StringBuilder json = new StringBuilder();
-		String jsons="";
+		String jsons = "";
 		for (SpecialAccount acc : account) {
 			Long id = acc.getId();
 			String accountName = acc.getAccountName();
@@ -2947,9 +3008,15 @@ public class AccountAction extends BaseAction {
 			UserInfo accountOwner = acc.getAccountNowUser();
 			UserInfo accountManger = acc.getConfirmUser();
 			String cadreBizAuditStr = "--";
-			String accType=acc.getAccountType().getName();//add by liuying at 20100121 for 页面调整
-			String accTypeEN=acc.getAccountType().getAccountType();//add by liuying at 20100121 for 页面调整
-			String vpnType="";
+			String accType = acc.getAccountType().getName();// add by liuying at
+															// 20100121 for 页面调整
+			String accTypeEN = acc.getAccountType().getAccountType();// add by
+																		// liuying
+																		// at
+																		// 20100121
+																		// for
+																		// 页面调整
+			String vpnType = "";
 			if (accountOwner != null) {
 				cadreBizAuditStr = accountOwner.getItcode() + "/"
 						+ accountOwner.getRealName();
@@ -2959,23 +3026,29 @@ public class AccountAction extends BaseAction {
 				cadreFinanceAuditStr = accountManger.getItcode() + "/"
 						+ accountManger.getRealName();
 			}
-			if(acc.getApplyReason()!=null){
-				applyReason=acc.getApplyReason();
+			if (acc.getApplyReason() != null) {
+				applyReason = acc.getApplyReason();
 			}
 
-			if(acc.getVpnType()!=null){
-				vpnType=acc.getVpnType();
+			if (acc.getVpnType() != null) {
+				vpnType = acc.getVpnType();
 			}
-			json.append( "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
-					+ "\",\"applyReason\":\"" + applyReason
-					+ "\",\"vpnType\":\"" + vpnType
-					+ "\",\"accType\":\"" + accType//add by liuying at 20100121 for 页面调整
-					+ "\",\"accTypeEN\":\"" + accTypeEN//add by liuying at 20100121 for 页面调整
-					+ "\",\"accountNowUser\":\"" + cadreBizAuditStr
-					+ "\",\"accountManger\":\"" + cadreFinanceAuditStr + "\"},");
+			json
+					.append("{\"id\":\"" + id + "\",\"accountName\":\""
+							+ accountName + "\",\"applyReason\":\""
+							+ applyReason + "\",\"vpnType\":\""
+							+ vpnType
+							+ "\",\"accType\":\""
+							+ accType// add by liuying at 20100121 for 页面调整
+							+ "\",\"accTypeEN\":\""
+							+ accTypeEN// add by liuying at 20100121 for 页面调整
+							+ "\",\"accountNowUser\":\"" + cadreBizAuditStr
+							+ "\",\"accountManger\":\"" + cadreFinanceAuditStr
+							+ "\"},");
 		}
 		if (json.length() == 0) {
-			jsons = "{success:true,rowCount:" + "1" + ",data:["+ json.substring(0, json.length()) + "]}";
+			jsons = "{success:true,rowCount:" + "1" + ",data:["
+					+ json.substring(0, json.length()) + "]}";
 		} else {
 			jsons = "{success:true,rowCount:" + total + ",data:["
 					+ json.substring(0, json.length() - 1) + "]}";
@@ -3008,7 +3081,7 @@ public class AccountAction extends BaseAction {
 				"applyId", aa);
 		Integer total = account.size();// 这是查询出所有的记录
 		String json = "";
-		StringBuilder jsons=new StringBuilder();
+		StringBuilder jsons = new StringBuilder();
 		for (SpecialAccount acc : account) {
 			Long id = acc.getId();
 			String accountName = acc.getAccountName();
@@ -3016,9 +3089,15 @@ public class AccountAction extends BaseAction {
 			UserInfo accountOwner = acc.getAccountNowUser();
 			UserInfo accountManger = acc.getConfirmUser();
 			String cadreBizAuditStr = "--";
-			String vpnType="";
-			String accType=acc.getAccountType().getName();//add by liuying at 20100121 for 页面调整
-			String accTypeEN=acc.getAccountType().getAccountType();//add by liuying at 20100121 for 页面调整
+			String vpnType = "";
+			String accType = acc.getAccountType().getName();// add by liuying at
+															// 20100121 for 页面调整
+			String accTypeEN = acc.getAccountType().getAccountType();// add by
+																		// liuying
+																		// at
+																		// 20100121
+																		// for
+																		// 页面调整
 			if (accountOwner != null) {
 				cadreBizAuditStr = accountOwner.getItcode() + "/"
 						+ accountOwner.getRealName();
@@ -3028,20 +3107,25 @@ public class AccountAction extends BaseAction {
 				cadreFinanceAuditStr = accountManger.getItcode() + "/"
 						+ accountManger.getRealName();
 			}
-			if(acc.getApplyReason()!=null){
-				applyReason=acc.getApplyReason();
+			if (acc.getApplyReason() != null) {
+				applyReason = acc.getApplyReason();
 			}
 
-			if(acc.getVpnType()!=null){
-				vpnType=acc.getVpnType();
+			if (acc.getVpnType() != null) {
+				vpnType = acc.getVpnType();
 			}
-			jsons.append("{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
-					+ "\",\"applyReason\":\"" + applyReason
-					+ "\",\"vpnType\":\"" + vpnType
-					+ "\",\"accType\":\"" + accType//add by liuying at 20100121 for 页面调整
-					+ "\",\"accTypeEN\":\"" + accTypeEN//add by liuying at 20100121 for 页面调整
-					+ "\",\"accountNowUser\":\"" + cadreBizAuditStr
-					+ "\",\"accountManger\":\"" + cadreFinanceAuditStr + "\"},");
+			jsons
+					.append("{\"id\":\"" + id + "\",\"accountName\":\""
+							+ accountName + "\",\"applyReason\":\""
+							+ applyReason + "\",\"vpnType\":\""
+							+ vpnType
+							+ "\",\"accType\":\""
+							+ accType// add by liuying at 20100121 for 页面调整
+							+ "\",\"accTypeEN\":\""
+							+ accTypeEN// add by liuying at 20100121 for 页面调整
+							+ "\",\"accountNowUser\":\"" + cadreBizAuditStr
+							+ "\",\"accountManger\":\"" + cadreFinanceAuditStr
+							+ "\"},");
 		}
 		if (jsons.length() == 0) {
 			json = "{success:true,rowCount:" + "1" + ",data:["
@@ -3074,26 +3158,27 @@ public class AccountAction extends BaseAction {
 		// String userInfo=request.getParameter("userInfo");
 		String dataId = request.getParameter("dataId");
 		String rightDesc = request.getParameter("rightDesc");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		// UserInfo user=(UserInfo) getService().find(UserInfo.class, userInfo);
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
 		List<SpecialAccount> account = getService().find(SpecialAccount.class,
 				"applyId", aam);
 		for (SpecialAccount acc : account) {
-			 SpecialAccount oldApplyAccount = acc.getOlodApplyAccount();
-			 String accountType=oldApplyAccount.getAccountType().getAccountType();
-			 if(accountType.equals("DeptMail")||accountType.equals("TempMailAccount")){
-				 String accountName=acc.getAccountName();
-					DCContacts employee = (DCContacts)getService().findUnique(
-							DCContacts.class, "userNames", accountName);
-					if (employee != null) {
-						getService().remove(employee);
-					} 
-			 }
+			SpecialAccount oldApplyAccount = acc.getOlodApplyAccount();
+			String accountType = oldApplyAccount.getAccountType()
+					.getAccountType();
+			if (accountType.equals("DeptMail")
+					|| accountType.equals("TempMailAccount")) {
+				String accountName = acc.getAccountName();
+				DCContacts employee = (DCContacts) getService().findUnique(
+						DCContacts.class, "userNames", accountName);
+				if (employee != null) {
+					getService().remove(employee);
+				}
+			}
 			acc.setRightsDesc(rightDesc);
-			SpecialAccount newAccountApply = (SpecialAccount) getService()
-					.save(acc);
+			getService().save(acc);
 
 		}
 		String json = "{success:true}";
@@ -3142,7 +3227,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -3179,7 +3267,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		AccountType at = (AccountType) getService().findUnique(
 				AccountType.class, "name", accountType);
 		SystemMainTable msmt = systemMainTableService
@@ -3199,10 +3290,10 @@ public class AccountAction extends BaseAction {
 				// domain.put(propertyName, columnValue);
 			}
 		}
-		//modify by liuying at 20100113 for 临时邮件账号初始容量为50M start
+		// modify by liuying at 20100113 for 临时邮件账号初始容量为50M start
 		temp.put("mailValue", 1);
-		//temp.put("mailValue", 2);
-		//modify by liuying at 20100113 for 临时邮件账号初始容量为50M end
+		// temp.put("mailValue", 2);
+		// modify by liuying at 20100113 for 临时邮件账号初始容量为50M end
 		temp.put("accountState", "0");
 		temp.put("accountType", at);
 		temp.put("applyId", mainObject);
@@ -3214,13 +3305,16 @@ public class AccountAction extends BaseAction {
 		// domain.put("applyId", mainObject);
 		// domain.put("accountOldUser", acUser);
 		// domain.put("accountNowUser", acUser);
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
+
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
 		// BaseObject domainAccount = (BaseObject)
 		// metaDataManager.saveEntityData(
 		// account, domain);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -3262,7 +3356,8 @@ public class AccountAction extends BaseAction {
 			acc.setRightsDesc(rightDesc);
 			acc.setAttachment(attachment);
 			acc.setAccountName(accountName);
-			SpecialAccount pa = (SpecialAccount) getService().save(acc);
+
+			getService().save(acc);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -3322,7 +3417,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -3347,12 +3445,12 @@ public class AccountAction extends BaseAction {
 		mainMap.put("serviceItem", serviceItemId);
 		mainMap.put("detagateApplyUser", serviceItemId);
 		mainMap.put("serviceItemProcess", serviceItemProcess);
-		Object acUser = null;
-		if (mainMap.containsKey("useUser")) {
-			acUser = mainMap.get("useUser");
-		} else {
-			acUser = mainMap.get("applyUser");
-		}
+		// Object acUser = null;
+		// if (mainMap.containsKey("useUser")) {
+		// acUser = mainMap.get("useUser");
+		// } else {
+		// acUser = mainMap.get("applyUser");
+		// }
 
 		BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
 				mainClass, mainMap);// 保存被关联主实体
@@ -3372,8 +3470,9 @@ public class AccountAction extends BaseAction {
 		newAccount.setTelephoneNumber(telephoneNumber);
 		newAccount.setAccountState("0");
 		newAccount.setDrawSpace(drawSpace);
-		PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-				.save(newAccount);
+
+		getService().save(newAccount);
+
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -3427,7 +3526,7 @@ public class AccountAction extends BaseAction {
 			}
 		}
 
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
 		String json = "{success:" + true + ",id:" + dataId + ",form:"
 				+ mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
@@ -3470,9 +3569,8 @@ public class AccountAction extends BaseAction {
 			dataMap.putAll(tempMap);
 		}
 
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -3526,9 +3624,8 @@ public class AccountAction extends BaseAction {
 			dataMap.putAll(tempMap);
 		}
 
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -3570,18 +3667,18 @@ public class AccountAction extends BaseAction {
 			String accountType = at.getName();
 			String remarkDesc = acc.getRemarkDesc();
 			String rightsDesc = "--";
-			String vpnType=acc.getVpnType();
-			//if (rightsDesc == null) {
-			//	rightsDesc = "--";
-			//}
-			if(vpnType==null){
-				vpnType="";
+			String vpnType = acc.getVpnType();
+			// if (rightsDesc == null) {
+			// rightsDesc = "--";
+			// }
+			if (vpnType == null) {
+				vpnType = "";
 			}
 
 			json += "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
 					+ "\",\"accountType\":\"" + accountType
-					+ "\",\"vpnType\":\"" + vpnType
-					+ "\",\"ifHold\":\"" + ifHold + "\",\"remarkDesc\":\"" + ""
+					+ "\",\"vpnType\":\"" + vpnType + "\",\"ifHold\":\""
+					+ ifHold + "\",\"remarkDesc\":\"" + remarkDesc
 					+ "\",\"userRight\":\"" + "" + "\",\"rightsDesc\":\""
 					+ rightsDesc + "\"},";
 		}
@@ -3712,8 +3809,8 @@ public class AccountAction extends BaseAction {
 	public String listSpecailERPAccount() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		UserInfo curUser = UserContext.getUserInfo();
-		String userInfo = request.getParameter("userInfo");
+		// UserInfo curUser = UserContext.getUserInfo();
+		// String userInfo = request.getParameter("userInfo");
 		String dataId = request.getParameter("dataId");
 		List<SpecialAccount> account = null;
 		String json = "";
@@ -3782,8 +3879,8 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 
-		UserInfo curUser = UserContext.getUserInfo();
-		String userInfo = request.getParameter("userInfo");
+		// UserInfo curUser = UserContext.getUserInfo();
+		// String userInfo = request.getParameter("userInfo");
 		String dataId = request.getParameter("dataId");
 		List<SpecialAccount> account = null;
 		String json = "";
@@ -3851,12 +3948,12 @@ public class AccountAction extends BaseAction {
 	public String listPersonAccountDeptChange() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String panelName = request.getParameter("panelName");
-		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到面板主表
-		String tableName = mainTable.getTableName(); // 得到面板主表名
-		Class clazz = this.toClass(mainTable.getClassName()); // 得到面板主实体类
-		Object object = BeanUtils.instantiateClass(clazz);
+		// String panelName = request.getParameter("panelName");
+		// PagePanel panel = pagePanelService.findPagePanel(panelName);
+		// SystemMainTable mainTable = panel.getSystemMainTable(); // 得到面板主表
+		// String tableName = mainTable.getTableName(); // 得到面板主表名
+		// Class clazz = this.toClass(mainTable.getClassName()); // 得到面板主实体类
+		// Object object = BeanUtils.instantiateClass(clazz);
 		UserInfo curUser = UserContext.getUserInfo();
 		String userInfo = request.getParameter("userInfo");
 		if (userInfo != null) {
@@ -3890,7 +3987,7 @@ public class AccountAction extends BaseAction {
 			json += "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
 					+ "\",\"accountType\":\"" + accountType
 					+ "\",\"ifHold\":\"" + ifHold + "\",\"userRight\":\"" + ""
-					+ "\",\"rightsDesc\":\"" + "" + "\"},";
+					+ "\",\"rightsDesc\":\"" + cadreBizAuditStr + "\"},";
 		}
 		if (json.length() == 0) {
 			json = "{success:true,rowCount:" + "1" + ",data:["
@@ -3918,7 +4015,7 @@ public class AccountAction extends BaseAction {
 	 * @return String
 	 */
 	public String listPersonAccountSummary() {
-		HttpServletRequest request = super.getRequest();
+		// HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		UserInfo curUser = UserContext.getUserInfo();
 
@@ -3930,18 +4027,18 @@ public class AccountAction extends BaseAction {
 			Long id = acc.getId();
 			String accountState = acc.getAccountState();
 
-			String accountName = acc.getAccountName();
+			// String accountName = acc.getAccountName();
 			AccountType at = acc.getAccountType();
 			String accountType = at.getName();
-			String type = at.getAccountType();
+			// String type = at.getAccountType();
 
 			String remarkDesc = acc.getRemarkDesc();
 			String cadreBizAuditStr = "--";
 			json += "{\"id\":\"" + id + "\",\"accountType\":\"" + accountType
 					+ "\",\"accountState\":\"" + accountState
 					+ "\",\"remarkDesc\":\"" + cadreBizAuditStr
-					+ "\",\"userRight\":\"" + "" + "\",\"rightsDesc\":\"" + ""
-					+ "\"},";
+					+ "\",\"userRight\":\"" + "" + "\",\"rightsDesc\":\""
+					+ remarkDesc + "\"},";
 		}
 
 		if (json.length() == 0) {
@@ -3972,14 +4069,14 @@ public class AccountAction extends BaseAction {
 	public String listUserAccount() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String panelName = request.getParameter("panelName");
+		// String panelName = request.getParameter("panelName");
 		String dataId = request.getParameter("dataId");
 		AccountApplyMainTable aa = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
 		List<PersonFormalAccount> account = getService().find(
 				PersonFormalAccount.class, "applyId", aa);
 		Integer total = account.size();// 这是查询出所有的记录
-		StringBuilder json=new StringBuilder();
+		StringBuilder json = new StringBuilder();
 		String jsons = "";
 		for (PersonFormalAccount acc : account) {
 			Long id = acc.getId();
@@ -3988,50 +4085,50 @@ public class AccountAction extends BaseAction {
 			AccountType at = acc.getAccountType();
 			String accountType = at.getName();
 			String remarkDesc = "--";
-			//add by liuying at 20100204 for 修正页面BUG start
-			String rightsDesc=acc.getRightsDesc();
-			String vpnType=acc.getVpnType();
-			//add by liuying at 20100727 for 增加页面显示远程接入帐号类型卡号 start
-			
-			if(accountType.equals("远程接入帐号")){
-				if(vpnType.equals("1")){
-					remarkDesc="软令牌/"+acc.getCardNumber();
-				}else{
-					remarkDesc="硬令牌/"+acc.getCardNumber();
+			// add by liuying at 20100204 for 修正页面BUG start
+			String rightsDesc = acc.getRightsDesc();
+			String vpnType = acc.getVpnType();
+			// add by liuying at 20100727 for 增加页面显示远程接入帐号类型卡号 start
+
+			if (accountType.equals("远程接入帐号")) {
+				if (vpnType.equals("1")) {
+					remarkDesc = "软令牌/" + acc.getCardNumber();
+				} else {
+					remarkDesc = "硬令牌/" + acc.getCardNumber();
 				}
 			}
-			//add by liuying at 20100727 for 增加页面显示远程接入帐号类型卡号 end
-//			if(remarkDesc==null){
-//				remarkDesc="";
-//			}else{
-//				if(remarkDesc.startsWith("[")){
-//					remarkDesc=remarkDesc.substring(1,remarkDesc.length()-1);
-//					String[] s=remarkDesc.split(",");
-//					String temp="";
-//					for(int i=0;i<s.length;i++){
-//						s[i]=s[i].substring(1, s[i].length()-1);
-//						temp=temp+"+"+s[i];
-//					}
-//					if(temp.startsWith("+")){
-//						remarkDesc=temp.substring(1);
-//					}
-//					
-//				}
-//			}
-			if(rightsDesc==null){
-				rightsDesc="";
+			// add by liuying at 20100727 for 增加页面显示远程接入帐号类型卡号 end
+			// if(remarkDesc==null){
+			// remarkDesc="";
+			// }else{
+			// if(remarkDesc.startsWith("[")){
+			// remarkDesc=remarkDesc.substring(1,remarkDesc.length()-1);
+			// String[] s=remarkDesc.split(",");
+			// String temp="";
+			// for(int i=0;i<s.length;i++){
+			// s[i]=s[i].substring(1, s[i].length()-1);
+			// temp=temp+"+"+s[i];
+			// }
+			// if(temp.startsWith("+")){
+			// remarkDesc=temp.substring(1);
+			// }
+			//					
+			// }
+			// }
+			if (rightsDesc == null) {
+				rightsDesc = "";
 			}
-			if(vpnType==null){
-				vpnType="";
+			if (vpnType == null) {
+				vpnType = "";
 			}
-			json.append("{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
-					+ "\",\"accountType\":\"" + accountType
-					+ "\",\"vpnType\":\"" + vpnType
-					+ "\",\"ifHold\":\"" + ifHold + "\",\"remarkDesc\":\"" + remarkDesc
-					+ "\",\"userRight\":\"" + "" + "\",\"rightsDesc\":\"" + rightsDesc
-					+ "\"},");
+			json.append("{\"id\":\"" + id + "\",\"accountName\":\""
+					+ accountName + "\",\"accountType\":\"" + accountType
+					+ "\",\"vpnType\":\"" + vpnType + "\",\"ifHold\":\""
+					+ ifHold + "\",\"remarkDesc\":\"" + remarkDesc
+					+ "\",\"userRight\":\"" + "" + "\",\"rightsDesc\":\""
+					+ rightsDesc + "\"},");
 		}
-		//add by liuying at 20100204 for 修正页面BUG end
+		// add by liuying at 20100204 for 修正页面BUG end
 		// MobileTelephoneApply mobile=(MobileTelephoneApply)
 		// getService().findUnique(
 		// MobileTelephoneApply.class, "applyId", aa);
@@ -4076,7 +4173,8 @@ public class AccountAction extends BaseAction {
 		UserInfo user = UserContext.getUserInfo();
 		String userInfo = request.getParameter("userInfo");
 
-		if (userInfo != null&&!userInfo.equals("")) {//modify by liuying at 20100510 for 增加判断
+		if (userInfo != null && !userInfo.equals("")) {// modify by liuying at
+														// 20100510 for 增加判断
 			user = (UserInfo) getService().find(UserInfo.class, userInfo);
 		}
 		UserType type = user.getUserType();
@@ -4102,10 +4200,11 @@ public class AccountAction extends BaseAction {
 				}
 				Double yearValue = account.getYearMoney();
 				Integer card = account.getCardState();
-				String telnum=account.getTelephoneNumber();
+				String telnum = account.getTelephoneNumber();
 				json = "{success:true" + ",id:" + id + ",card:" + card
-						+ ",userType:'" + userType + "',yearValue:" + yearValue+ ",telnum:'" + telnum
-						+ "',telephoneType:'" + telephoneType + "'}";
+						+ ",userType:'" + userType + "',yearValue:" + yearValue
+						+ ",telnum:'" + telnum + "',telephoneType:'"
+						+ telephoneType + "'}";
 			} else {
 				json = "{success:false" + ",userType:'" + userType
 						+ "',telephoneType:'" + telephoneType + "'}";
@@ -4147,7 +4246,7 @@ public class AccountAction extends BaseAction {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
 		String json = "";
-		String telephoneType = "";
+		// String telephoneType = "";
 		try {
 
 			MobileTelephoneApply account = (MobileTelephoneApply) accountService
@@ -4203,7 +4302,7 @@ public class AccountAction extends BaseAction {
 				if (telephoneType != null) {
 					type = account.getTelephoneType().getId();
 				}
-				String number = account.getTelephoneNumber();
+				// String number = account.getTelephoneNumber();
 				Double yearValue = account.getYearMoney();
 				json = "{success:true" + ",id:" + id + ",card:" + card
 						+ ",yearValue:" + yearValue + ",type:" + type + "}";
@@ -4327,12 +4426,13 @@ public class AccountAction extends BaseAction {
 		String json = "";
 		try {
 
-			List<SpecialAccount> account = accountService.findAllSpecailAccount(user);
-			String sb=new String();
+			List<SpecialAccount> account = accountService
+					.findAllSpecailAccount(user);
+			String sb = new String();
 			if (!account.isEmpty()) {
-				for(SpecialAccount sp:account){
-					sb+=sp.getAccountName();
-					
+				for (SpecialAccount sp : account) {
+					sb += sp.getAccountName();
+
 				}
 				json = "{success:true}";
 			} else {
@@ -4365,14 +4465,14 @@ public class AccountAction extends BaseAction {
 		String info = request.getParameter("info");
 		String processType = request.getParameter("processType");
 		String userInfo = request.getParameter("userInfo");
-//		String workSpace = request.getParameter("workSpace");
+		// String workSpace = request.getParameter("workSpace");
 		UserInfo applyUser = (UserInfo) getService().find(UserInfo.class,
 				userInfo);
-//		WorkSpace space = (WorkSpace) getService().find(WorkSpace.class,
-//				workSpace);
-//		
-//		applyUser.setWorkSpace(space);
-//		getService().save(applyUser);
+		// WorkSpace space = (WorkSpace) getService().find(WorkSpace.class,
+		// workSpace);
+		//		
+		// applyUser.setWorkSpace(space);
+		// getService().save(applyUser);
 		String erpIfHold = request.getParameter("erpIfHold");
 		String accountownUser = request.getParameter("accountownUser");
 		String processInfoId = request.getParameter("processInfoId");
@@ -4388,7 +4488,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -4413,12 +4516,12 @@ public class AccountAction extends BaseAction {
 		mainMap.put("serviceItem", serviceItemId);
 		mainMap.put("serviceItemProcess", serviceItemProcess);
 
-		Object acUser = null;
-		if (mainMap.containsKey("useUser")) {
-			acUser = mainMap.get("useUser");
-		} else {
-			acUser = mainMap.get("applyUser");
-		}
+		// Object acUser = null;
+		// if (mainMap.containsKey("useUser")) {
+		// acUser = mainMap.get("useUser");
+		// } else {
+		// acUser = mainMap.get("applyUser");
+		// }
 
 		BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
 				mainClass, mainMap);// 保存被关联主实体
@@ -4447,9 +4550,10 @@ public class AccountAction extends BaseAction {
 		if (personAccount.isEmpty()) {
 			for (PersonFormalAccount acc : account) {
 				String accountType = acc.getAccountType().getAccountType();
-				PersonFormalAccount newAccounts = (PersonFormalAccount) getService()
-						.findUnique(PersonFormalAccount.class,
-								"olodApplyAccount", acc);
+				// PersonFormalAccount newAccounts = (PersonFormalAccount)
+				// getService()
+				// .findUnique(PersonFormalAccount.class,
+				// "olodApplyAccount", acc);
 
 				if ((accountType.equals("ERPAccount")) && erpIfHold.equals("1")) {
 					UserInfo accountOwner = (UserInfo) getService().find(
@@ -4462,8 +4566,7 @@ public class AccountAction extends BaseAction {
 					newAccount.setAccountState("0");
 					newAccount.setAccountowner(accountOwner);
 					newAccount.setIfHold(1);
-					PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-							.save(newAccount);
+					getService().save(newAccount);
 
 				} else {
 
@@ -4474,8 +4577,7 @@ public class AccountAction extends BaseAction {
 					newAccount.setIfHold(0);
 					newAccount.setApplyId((AccountApplyMainTable) mainObject);
 					newAccount.setAccountState("0");
-					PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-							.save(newAccount);
+					getService().save(newAccount);
 				}
 			}
 
@@ -4507,12 +4609,12 @@ public class AccountAction extends BaseAction {
 	public String listSAOwnerChangeAccount() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String panelName = request.getParameter("panelName");
-		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到面板主表
-		String tableName = mainTable.getTableName(); // 得到面板主表名
-		Class clazz = this.toClass(mainTable.getClassName()); // 得到面板主实体类
-		Object object = BeanUtils.instantiateClass(clazz);
+		// String panelName = request.getParameter("panelName");
+		// PagePanel panel = pagePanelService.findPagePanel(panelName);
+		// SystemMainTable mainTable = panel.getSystemMainTable(); // 得到面板主表
+		// String tableName = mainTable.getTableName(); // 得到面板主表名
+		// Class clazz = this.toClass(mainTable.getClassName()); // 得到面板主实体类
+		// Object object = BeanUtils.instantiateClass(clazz);
 		UserInfo curUser = UserContext.getUserInfo();
 		String userInfo = request.getParameter("userInfo");
 		if (userInfo != null) {
@@ -4530,12 +4632,12 @@ public class AccountAction extends BaseAction {
 			UserInfo accountOwner = acc.getAccountNowUser();
 			UserInfo accountManger = acc.getConfirmUser();
 			String cadreBizAuditStr = "--";
-			//add by liuying at 20100310 for 保存修改信息 start
-//			String res=acc.getApplyReason();
-//			if(res!=null){
-//				applyReason=acc.getApplyReason();
-//			}
-			//add by liuying at 20100310 for 保存修改信息 end
+			// add by liuying at 20100310 for 保存修改信息 start
+			// String res=acc.getApplyReason();
+			// if(res!=null){
+			// applyReason=acc.getApplyReason();
+			// }
+			// add by liuying at 20100310 for 保存修改信息 end
 			if (accountOwner != null) {
 				cadreBizAuditStr = accountOwner.getItcode() + "/"
 						+ accountOwner.getRealName();
@@ -4583,7 +4685,7 @@ public class AccountAction extends BaseAction {
 		String acountId = request.getParameter("id");// 得到主面板名称
 		String applyReason = request.getParameter("applyReason");
 		String applyId = request.getParameter("curId");
-		String gParam1 = request.getParameter("gParam1");
+		// String gParam1 = request.getParameter("gParam1");
 		String accountNewOwner = request.getParameter("accountNewOwner");
 		String telephone = request.getParameter("telephone");
 		String accountName = request.getParameter("accountName");
@@ -4607,11 +4709,12 @@ public class AccountAction extends BaseAction {
 			newAccount.setTelephone(telephone);
 			newAccount.setApplyReason(applyReason);
 			newAccount.setAccountState("0");
-			SpecialAccount newAccountApply = (SpecialAccount) getService()
-					.save(newAccount);
-		}else{
-			//add by liuying at 20100621 for 保存Win7所有者变更草稿 start
-			account =(SpecialAccount) getService().find(SpecialAccount.class, acountId);
+
+			getService().save(newAccount);
+		} else {
+			// add by liuying at 20100621 for 保存Win7所有者变更草稿 start
+			account = (SpecialAccount) getService().find(SpecialAccount.class,
+					acountId);
 			if (account != null) {
 				SpecialAccount newAccount = new SpecialAccount();
 				String[] ignoreProperties = { "id" };
@@ -4623,10 +4726,10 @@ public class AccountAction extends BaseAction {
 				newAccount.setTelephone(telephone);
 				newAccount.setApplyReason(applyReason);
 				newAccount.setAccountState("0");
-				SpecialAccount newAccountApply = (SpecialAccount) getService()
-						.save(newAccount);
+
+				getService().save(newAccount);
 			}
-			//add by liuying at 20100621 for 保存Win7所有者变更草稿 end
+			// add by liuying at 20100621 for 保存Win7所有者变更草稿 end
 		}
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
@@ -4656,32 +4759,34 @@ public class AccountAction extends BaseAction {
 		String id = request.getParameter("id");
 		String right = request.getParameter("rights");
 		String wwwValue = request.getParameter("wwwValue");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		UserInfo curUser = UserContext.getUserInfo();
 		PersonFormalAccount acc = (PersonFormalAccount) getService().find(
 				PersonFormalAccount.class, id);
 		if (acc.getIfHold() == 0) {
 			PersonFormalAccount pa = acc.getOlodApplyAccount();
 			pa.setAccountState("0");
-			Object ac = getService().save(pa);
+			getService().save(pa);
 		} else {
-			AccountType accountType=acc.getAccountType();
-            Role role=accountType.getRole();
-            Set userInfo=role.getUserInfos();
+			AccountType accountType = acc.getAccountType();
+			Role role = accountType.getRole();
+			Set userInfo = role.getUserInfos();
 			if (accountType.getAccountType().equals("WWWAccount")
-					&& wwwValue != null&&userInfo.contains(curUser)) {
+					&& wwwValue != null && userInfo.contains(curUser)) {
 				WWWScanType type = (WWWScanType) getService().find(
 						WWWScanType.class, wwwValue);
 				PersonFormalAccount pa = acc.getOlodApplyAccount();
 				acc.setRightsDesc(right);
 				pa.setWwwAccountValue(type);
-				Object ac = getService().save(pa);
-				Object account = getService().save(acc);
+
+				getService().save(pa);
+				getService().save(acc);
 			} else {
 				PersonFormalAccount pa = acc.getOlodApplyAccount();
 				acc.setRightsDesc(right);
-				Object ac = getService().save(pa);
-				Object account = getService().save(acc);
+
+				getService().save(pa);
+				getService().save(acc);
 			}
 		}
 
@@ -4728,13 +4833,15 @@ public class AccountAction extends BaseAction {
 			String accountType = at.getName();
 			String remarkDesc = acc.getRemarkDesc();
 			String rightsDescs = acc.getRightsDesc();
-			//modify by liuying at 20100406 for 部门变更时在结束页面显示权限描述信息 管理员处理时不显示 start
-			if(acc.getAccountState().equals("0")){
+			// modify by liuying at 20100406 for 部门变更时在结束页面显示权限描述信息 管理员处理时不显示
+			// start
+			if (acc.getAccountState().equals("0")) {
 				if (rightsDescs == null) {
 					rightsDescs = "";
 				}
 			}
-			//modify by liuying at 20100406 for 部门变更时在结束页面显示权限描述信息 管理员处理时不显示 end
+			// modify by liuying at 20100406 for 部门变更时在结束页面显示权限描述信息 管理员处理时不显示
+			// end
 			String cadreBizAuditStr = "--";
 			if (remarkDesc != null) {
 				cadreBizAuditStr = remarkDesc;
@@ -4779,7 +4886,7 @@ public class AccountAction extends BaseAction {
 		List<SpecialAccount> account = getService().find(SpecialAccount.class,
 				"applyId", aa);
 		Integer total = account.size();// 这是查询出所有的记录
-		StringBuilder json=new StringBuilder();
+		StringBuilder json = new StringBuilder();
 		String jsons = "";
 		for (SpecialAccount acc : account) {
 			Long id = acc.getId();
@@ -4799,10 +4906,12 @@ public class AccountAction extends BaseAction {
 						+ accountManger.getRealName();
 			}
 
-			json.append("{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
-					+ "\",\"applyReason\":\"" + applyReason
-					+ "\",\"accountNowUser\":\"" + cadreBizAuditStr
-					+ "\",\"accountManger\":\"" + cadreFinanceAuditStr + "\"},");
+			json
+					.append("{\"id\":\"" + id + "\",\"accountName\":\""
+							+ accountName + "\",\"applyReason\":\""
+							+ applyReason + "\",\"accountNowUser\":\""
+							+ cadreBizAuditStr + "\",\"accountManger\":\""
+							+ cadreFinanceAuditStr + "\"},");
 		}
 		if (json.length() == 0) {
 			jsons = "{success:true,rowCount:" + "1" + ",data:["
@@ -4867,41 +4976,43 @@ public class AccountAction extends BaseAction {
 	 * @return String
 	 */
 	public String listSpecailAccountName() {
-		    HttpServletRequest request = super.getRequest();
-		    HttpServletResponse response = super.getResponse();
-		    String accountType = request.getParameter("accountType");
-		    UserInfo user = UserContext.getUserInfo();
-		    String userInfo = request.getParameter("userInfo");
-			if (userInfo != null&&!userInfo.equals("")) {
-				user = (UserInfo) getService().find(UserInfo.class, userInfo);
-			}
-		    int pageSize = 10;//每页行数
-		    int start = HttpUtil.getInt(request, "start", 0);
-		    int pageNo = start / pageSize + 1;
-		    Page page = accountService.findSpecailAccountByUser(accountType, user, pageNo, pageSize);
-		    List<SpecialAccount> account = page.list();
-	        Long total = page.getTotalCount();// 这是查询出所有的记录
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String accountType = request.getParameter("accountType");
+		UserInfo user = UserContext.getUserInfo();
+		String userInfo = request.getParameter("userInfo");
+		if (userInfo != null && !userInfo.equals("")) {
+			user = (UserInfo) getService().find(UserInfo.class, userInfo);
+		}
+		int pageSize = 10;// 每页行数
+		int start = HttpUtil.getInt(request, "start", 0);
+		int pageNo = start / pageSize + 1;
+		Page page = accountService.findSpecailAccountByUser(accountType, user,
+				pageNo, pageSize);
+		List<SpecialAccount> account = page.list();
+		Long total = page.getTotalCount();// 这是查询出所有的记录
 
-		
 		String json = "";
-		if(accountType!=null&&!"".equals(accountType)&&accountType.equals("Win7")){
+		if (accountType != null && !"".equals(accountType)
+				&& accountType.equals("Win7")) {
 			for (SpecialAccount acc : account) {
 				Long id = acc.getId();
 				String accountName = acc.getAccountName();
 				String deviceId = "--";
-				if(acc.getDeviceType()!=null){
-					deviceId=acc.getDeviceType().getDeviceName();
+				if (acc.getDeviceType() != null) {
+					deviceId = acc.getDeviceType().getDeviceName();
 				}
 				String hardwareId = acc.getHardwareId();
-				json += "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName+"/"+deviceId+"/"+hardwareId
+				json += "{\"id\":\"" + id + "\",\"accountName\":\""
+						+ accountName + "/" + deviceId + "/" + hardwareId
 						+ "\" },";
 			}
-		}else{
+		} else {
 			for (SpecialAccount acc : account) {
 				Long id = acc.getId();
 				String accountName = acc.getAccountName();
-				json += "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
-				+ "\" },";
+				json += "{\"id\":\"" + id + "\",\"accountName\":\""
+						+ accountName + "\" },";
 			}
 		}
 		if (json.length() == 0) {
@@ -4921,7 +5032,6 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
-	
 
 	/**
 	 * 从帐号清单中获取个人帐号所有者信息
@@ -4931,7 +5041,7 @@ public class AccountAction extends BaseAction {
 	 * @return String
 	 */
 	public String listPersonAccountOwner() {
-		HttpServletRequest request = super.getRequest();
+		// HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		List<DCContacts> user = getService().findAll(DCContacts.class);
 		Integer total = user.size();// 这是查询出所有的记录
@@ -4983,11 +5093,11 @@ public class AccountAction extends BaseAction {
 		bWrapper.setPropertyValue("applyUser", curUser);
 		String itCode = curUser.getItcode();
 		try {
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-			//DCContacts employee = (DCContacts) getService().findUnique(
-			//		DCContacts.class, "itcode", itCode);
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+			// DCContacts employee = (DCContacts) getService().findUnique(
+			// DCContacts.class, "itcode", itCode);
 			DCContacts employee = accountService.saveOrGetContacts(itCode);
-			//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+			// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 			String telephone = employee.getTelephone();
 			String mobileTelephone = employee.getMobilePhone();
 			bWrapper.setPropertyValue("applyUserTel", telephone + "/"
@@ -5001,9 +5111,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -5045,7 +5154,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -5084,7 +5196,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		SystemMainTable msmt = systemMainTableService
 				.findSystemMainTableByClazz(MailForwardApply.class); // 获取被关联表
 		String msmtName = msmt.getTableName();
@@ -5104,10 +5219,13 @@ public class AccountAction extends BaseAction {
 		temp.put("accountState", "0");
 		temp.put("applyId", mainObject);
 		temp.put("accountOwner", acUser);
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
+
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -5134,22 +5252,26 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String json = "";
-		
-		int pageSize = 10;//每页行数
+
+		int pageSize = 10;// 每页行数
 		int start = HttpUtil.getInt(request, "start", 0);
 		int pageNo = start / pageSize + 1;
 		String name = request.getParameter("accountName");
 		String curId = request.getParameter("id");
-		if(curId!=null&&curId!=""){
-			MailForwardApply mfa=(MailForwardApply) getService().find(MailForwardApply.class, curId);
-			json+="{id:'"+mfa.getId()+"',accountName:'"+mfa.getAccountName()+"'}";
-			json = "{success: true, rowCount:'1',data:["+json+"]}";
-		}else{
-			Page page = accountService.getAllMailForward(name, pageNo, pageSize);
+		if (curId != null && curId != "") {
+			MailForwardApply mfa = (MailForwardApply) getService().find(
+					MailForwardApply.class, curId);
+			json += "{id:'" + mfa.getId() + "',accountName:'"
+					+ mfa.getAccountName() + "'}";
+			json = "{success: true, rowCount:'1',data:[" + json + "]}";
+		} else {
+			Page page = accountService
+					.getAllMailForward(name, pageNo, pageSize);
 			Long total = page.getTotalCount();
 			List<MailForwardApply> queryList = page.list();
-			for(MailForwardApply pfa : queryList){
-				json+="{id:'"+pfa.getId()+"',accountName:'"+pfa.getAccountName()+"'},";
+			for (MailForwardApply pfa : queryList) {
+				json += "{id:'" + pfa.getId() + "',accountName:'"
+						+ pfa.getAccountName() + "'},";
 			}
 			if (json.length() == 0) {
 				json = "{success:true,rowCount:" + "1" + ",data:["
@@ -5159,7 +5281,7 @@ public class AccountAction extends BaseAction {
 						+ json.substring(0, json.length() - 1) + "]}";
 			}
 		}
-	
+
 		try {
 			response.setCharacterEncoding("utf-8");
 			PrintWriter pw = response.getWriter();
@@ -5168,7 +5290,7 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 
 	/**
@@ -5201,7 +5323,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -5240,7 +5365,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 
 		SystemMainTable msmt = systemMainTableService
 				.findSystemMainTableByClazz(MailForwardApply.class); // 获取被关联表
@@ -5263,10 +5391,13 @@ public class AccountAction extends BaseAction {
 		temp.put("oldApply", stop);
 		temp.put("accountName", stop.getAccountName());
 		temp.put("accountOwner", acUser);
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
+
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -5314,9 +5445,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -5342,7 +5472,7 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String groupNewName = request.getParameter("groupNewName");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		MailGroup accounts = accountService.findMailGroupByName(groupNewName);
 		String groupManger = accounts.getChangeGroupManger();
 		String json = "{success:true,groupManger:'" + groupManger + "'}";
@@ -5393,20 +5523,20 @@ public class AccountAction extends BaseAction {
 		String sameDeptMail = request.getParameter("sameDeptMail");
 
 		UserInfo userInfo = (UserInfo) getService().find(UserInfo.class, user);
-		Department dept = userInfo.getDepartment();
+		// Department dept = userInfo.getDepartment();
 		WorkSpace ws = (WorkSpace) getService()
 				.find(WorkSpace.class, workSpace);
-		userInfo.setWorkSpace(ws);	//更新用户工作地点
+		userInfo.setWorkSpace(ws); // 更新用户工作地点
 		SameMailDept sd = (SameMailDept) getService().find(SameMailDept.class,
 				sameDeptMail);
 
-		userInfo.setSameMailDept(sd);	//更新用户邮件等价名部门
+		userInfo.setSameMailDept(sd); // 更新用户邮件等价名部门
 
 		MailServer ms = (MailServer) getService().findUnique(MailServer.class,
 				"name", mailServer);
-		userInfo.setMailServer(ms);		//更新用户邮件服务器
+		userInfo.setMailServer(ms); // 更新用户邮件服务器
 
-		Object us = getService().save(userInfo);
+		getService().save(userInfo);
 
 		Date currentDate = DateUtil.getCurrentDate();
 		JSONObject panelJO = JSONObject.fromObject(info);
@@ -5418,7 +5548,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
@@ -5458,7 +5591,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		SystemMainTable msmt = systemMainTableService
 				.findSystemMainTableByClazz(PersonFormalAccount.class); // 获取被关联表
 		String msmtName = msmt.getTableName(); // 获取被关联表英文表名
@@ -5495,10 +5631,8 @@ public class AccountAction extends BaseAction {
 		domain.put("accountType", "2");
 		domain.put("accountowner", acUser);
 
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
-		BaseObject domianObject = (BaseObject) metaDataManager.saveEntityData(
-				account, domain);// 保存关联实体
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
+		metaDataManager.saveEntityData(account, domain);// 保存关联实体
 
 		if (wwwValue != null && wwwValue != "") {
 			www.put("accountState", "0");
@@ -5508,8 +5642,8 @@ public class AccountAction extends BaseAction {
 			www.put("accountowner", acUser);
 			www.put("wwwAccountValue", wwwValue);
 			www.put("applyReason", applyReason);
-			BaseObject wwwObject = (BaseObject) metaDataManager.saveEntityData(
-					account, www);// 保存关联实体
+
+			metaDataManager.saveEntityData(account, www);// 保存关联实体
 
 		}
 
@@ -5522,11 +5656,14 @@ public class AccountAction extends BaseAction {
 			telephone.put("yearMoney", yearMoney);
 			telephone.put("telephoneType", telephoneType);
 			telephone.put("stationNumber", stationNumber);
-			BaseObject telephoneObject = (BaseObject) metaDataManager
-					.saveEntityData(account, telephone);// 保存关联实体
+
+			metaDataManager.saveEntityData(account, telephone);// 保存关联实体
 		}
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -5541,9 +5678,7 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
-	
-	
-	
+
 	/**
 	 * 获取个新员工账号申请 页面主面板数据 new
 	 * 
@@ -5586,7 +5721,7 @@ public class AccountAction extends BaseAction {
 					.equals("Telephone")) {
 				telephone = "1";
 				Role role = acc.getAccountType().getRole();
-				String name = role.getName();
+				// String name = role.getName();
 				Set<UserInfo> userinfos = role.getUserInfos();
 				if (userinfos.contains(user)) {
 					te = "1";
@@ -5603,7 +5738,7 @@ public class AccountAction extends BaseAction {
 			} else if (acc.getAccountType().getAccountType().equals(
 					"MailAccount")) {
 				Role role = acc.getAccountType().getRole();
-				String name = role.getName();
+				// String name = role.getName();
 				Set<UserInfo> userinfos = role.getUserInfos();
 				Long mailValue = acc.getMailValue().getId();
 				String mailServer = acc.getMailServer();
@@ -5619,7 +5754,6 @@ public class AccountAction extends BaseAction {
 			} else {
 				valueMap.put("domainRightsDesc", acc.getRightsDesc());
 			}
-			
 
 			Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
 					acc, "itil_ac_PersonFormalAccount");
@@ -5631,16 +5765,16 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		//modify by liuying for 修改新员工入职申请时草稿提交失败 at 20100426 start
-		//dataMap.put("AccountApplyMainTable$applyUser", curUser.getRealName()+"/"+curUser.getUserName()+"/"+curUser.getDepartment().getDepartName());
-		//modify by liuying for 修改新员工入职申请时草稿提交失败 at 20100426 end
+		// modify by liuying for 修改新员工入职申请时草稿提交失败 at 20100426 start
+		// dataMap.put("AccountApplyMainTable$applyUser",
+		// curUser.getRealName()+"/"+curUser.getUserName()+"/"+curUser.getDepartment().getDepartName());
+		// modify by liuying for 修改新员工入职申请时草稿提交失败 at 20100426 end
 		dataMap.put("www", www);
 		dataMap.put("te", te);
 		dataMap.put("mail", mail);
 		dataMap.put("telephone", telephone);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -5697,7 +5831,7 @@ public class AccountAction extends BaseAction {
 					.equals("Telephone")) {
 				telephone = "1";
 				Role role = acc.getAccountType().getRole();
-				String name = role.getName();
+				// String name = role.getName();
 				Set<UserInfo> userinfos = role.getUserInfos();
 				if (userinfos.contains(user)) {
 					te = "1";
@@ -5714,7 +5848,7 @@ public class AccountAction extends BaseAction {
 			} else if (acc.getAccountType().getAccountType().equals(
 					"MailAccount")) {
 				Role role = acc.getAccountType().getRole();
-				String name = role.getName();
+				// String name = role.getName();
 				Set<UserInfo> userinfos = role.getUserInfos();
 				Long mailValue = acc.getMailValue().getId();
 				String mailServer = acc.getMailServer();
@@ -5730,7 +5864,6 @@ public class AccountAction extends BaseAction {
 			} else {
 				valueMap.put("domainRightsDesc", acc.getRightsDesc());
 			}
-			
 
 			Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
 					acc, "itil_ac_PersonFormalAccount");
@@ -5746,9 +5879,8 @@ public class AccountAction extends BaseAction {
 		dataMap.put("te", te);
 		dataMap.put("mail", mail);
 		dataMap.put("telephone", telephone);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -5809,8 +5941,9 @@ public class AccountAction extends BaseAction {
 				valueMap.put("telephoneRightsDesc", acc.getRightsDesc());
 				valueMap.put("itil_ac_PersonFormalAccount$telephoneNumber", acc
 						.getTelephoneNumber());
-				if(acc.getVoip()!=null){
-					valueMap.put("itil_ac_PersonFormalAccount$voip", acc.getVoip());
+				if (acc.getVoip() != null) {
+					valueMap.put("itil_ac_PersonFormalAccount$voip", acc
+							.getVoip());
 				}
 			}
 
@@ -5843,9 +5976,8 @@ public class AccountAction extends BaseAction {
 		if (number != null || number != "") {
 			dataMap.put("itil_ac_PersonFormalAccount$telephoneNumber", number);
 		}
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -5875,11 +6007,13 @@ public class AccountAction extends BaseAction {
 		UserInfo applyUser = (UserInfo) getService().find(UserInfo.class,
 				userInfo);
 		String itCode = applyUser.getItcode();
-		//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
-		//DCContacts employee = (DCContacts) getService().findUnique(
-		//		DCContacts.class, "itcode", itCode);
-		DCContacts employee = accountService.saveOrGetContacts(itCode);
-		//modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
+		// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 begin
+		// DCContacts employee = (DCContacts) getService().findUnique(
+		// DCContacts.class, "itcode", itCode);
+
+		accountService.saveOrGetContacts(itCode);
+
+		// modify by lee for 解决同步数据未进入通讯录表的BUG in 20100119 end
 		Date currentDate = DateUtil.getCurrentDate();
 		String domainRightsDesc = request.getParameter("domainRightsDesc");
 		String mailRightsDesc = request.getParameter("mailRightsDesc");
@@ -5899,11 +6033,9 @@ public class AccountAction extends BaseAction {
 			Set<UserInfo> userinfos = role.getUserInfos();
 			String accountType = acc.getAccountType().getAccountType();
 			// add by liuying on 20100729 for 所有人都可以上传id文件 start
-			if ((accountType.equals("MailAccount"))
-					&& (!attachment.equals(""))) {
+			if ((accountType.equals("MailAccount")) && (!attachment.equals(""))) {
 				acc.setAttachment(attachment);
-				PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-						.save(acc);
+				getService().save(acc);
 			}
 			// add by liuying on 20100729 for 所有人都可以上传id文件 end
 			if (userinfos.contains(curUser)) {
@@ -5912,19 +6044,19 @@ public class AccountAction extends BaseAction {
 					acc.setAccountName(applyUser.getItcode().toLowerCase());
 					acc.setCreateDate(currentDate);
 					acc.setIfHold(1);
-					PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-							.save(acc);
+
+					getService().save(acc);
 				}
 				if ((accountType.equals("MailAccount"))
 						&& (!attachment.equals(""))) {
-					
+
 					acc.setRightsDesc(mailRightsDesc);
 					acc.setAccountName(applyUser.getItcode().toLowerCase());
 					acc.setAttachment(attachment);
 					acc.setIfHold(1);
 					acc.setCreateDate(currentDate);
-					PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-							.save(acc);
+
+					getService().save(acc);
 
 				}
 				if ((accountType.equals("WWWAccount"))) {
@@ -5932,8 +6064,8 @@ public class AccountAction extends BaseAction {
 					acc.setAccountName(applyUser.getItcode().toLowerCase());
 					acc.setIfHold(1);
 					acc.setCreateDate(currentDate);
-					PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-							.save(acc);
+
+					getService().save(acc);
 
 				}
 				if (accountType.equals("Telephone")
@@ -5945,9 +6077,8 @@ public class AccountAction extends BaseAction {
 					acc.setIfHold(1);
 					acc.setDepartTelephone("0");
 					acc.setCreateDate(currentDate);
-					PersonFormalAccount newAccountApply = (PersonFormalAccount) getService()
-							.save(acc);
-				
+
+					getService().save(acc);
 				}
 			}
 
@@ -5983,7 +6114,7 @@ public class AccountAction extends BaseAction {
 		String processType = request.getParameter("processType");
 		String processInfoId = request.getParameter("processInfoId");
 		String groupName = request.getParameter("groupName");
-		String groupManger=request.getParameter("groupManger");
+		String groupManger = request.getParameter("groupManger");
 		String[] group = groupName.split(";");
 		ServiceItemProcess serviceItemProcess = serviceItemProcessService
 				.findServiceItemProcessById(processInfoId);
@@ -5997,7 +6128,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -6035,7 +6169,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		SystemMainTable msmt = systemMainTableService
 				.findSystemMainTableByClazz(MailGroup.class); // 获取被关联表
 		String msmtName = msmt.getTableName();
@@ -6059,11 +6196,14 @@ public class AccountAction extends BaseAction {
 			temp.put("changeGroupManger", groupManger);
 			temp.put("applyId", mainObject);
 			temp.put("accountowner", acUser);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					account, temp);// 保存关联实体
+
+			metaDataManager.saveEntityData(account, temp);// 保存关联实体
 		}
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6108,7 +6248,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -6146,7 +6289,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		SystemMainTable msmt = systemMainTableService
 				.findSystemMainTableByClazz(MailGroup.class); // 获取被关联表
 		String msmtName = msmt.getTableName();
@@ -6172,11 +6318,14 @@ public class AccountAction extends BaseAction {
 
 			temp.put("applyId", mainObject);
 			temp.put("accountowner", acUser);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					account, temp);// 保存关联实体
+
+			metaDataManager.saveEntityData(account, temp);// 保存关联实体
 		}
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6192,10 +6341,9 @@ public class AccountAction extends BaseAction {
 		return null;
 	}
 
-	
-	
 	/**
 	 * 保存邮件群组名称变更申请初始草稿
+	 * 
 	 * @Methods Name saveMailGroupNameChangeDraft
 	 * @Create In Jan 29, 2010 By liuying
 	 * @return String
@@ -6209,8 +6357,8 @@ public class AccountAction extends BaseAction {
 		String processType = request.getParameter("processType");
 		String processInfoId = request.getParameter("processInfoId");
 		String groupName = request.getParameter("groupName");
-		String groupNewName=request.getParameter("groupNewName");
-		String[] groupNewNames=groupNewName.split(";");
+		String groupNewName = request.getParameter("groupNewName");
+		String[] groupNewNames = groupNewName.split(";");
 		String[] group = groupName.split(";");
 		ServiceItemProcess serviceItemProcess = serviceItemProcessService
 				.findServiceItemProcessById(processInfoId);
@@ -6224,7 +6372,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -6262,7 +6413,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		SystemMainTable msmt = systemMainTableService
 				.findSystemMainTableByClazz(MailGroup.class); // 获取被关联表
 		String msmtName = msmt.getTableName();
@@ -6288,11 +6442,14 @@ public class AccountAction extends BaseAction {
 			temp.put("groupNewName", groupNewNames[i]);
 			temp.put("applyId", mainObject);
 			temp.put("accountowner", acUser);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					account, temp);// 保存关联实体
+
+			metaDataManager.saveEntityData(account, temp);// 保存关联实体
 		}
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6337,7 +6494,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -6375,7 +6535,10 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		SystemMainTable msmt = systemMainTableService
 				.findSystemMainTableByClazz(MailGroup.class); // 获取被关联表
 		String msmtName = msmt.getTableName();
@@ -6401,11 +6564,14 @@ public class AccountAction extends BaseAction {
 			temp.put("groupManger", mg.getGroupManger());
 			temp.put("applyId", mainObject);
 			temp.put("accountowner", acUser);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					account, temp);// 保存关联实体
+
+			metaDataManager.saveEntityData(account, temp);// 保存关联实体
 		}
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6443,8 +6609,8 @@ public class AccountAction extends BaseAction {
 		List<MailGroup> account = getService().find(MailGroup.class, "applyId",
 				mainObj); // 获取关联实体
 		StringBuffer sb = new StringBuffer();
-		//modify by liuying at 20100129 for 页面调整 start
-		StringBuffer sb2=new StringBuffer();
+		// modify by liuying at 20100129 for 页面调整 start
+		StringBuffer sb2 = new StringBuffer();
 		for (MailGroup acc : account) {
 			sb.append(acc.getGroupName());
 			sb.append(";");
@@ -6454,16 +6620,18 @@ public class AccountAction extends BaseAction {
 					acc, "MailGroup");
 			dataMap.putAll(tempMap);
 		}
-		dataMap.put("MailGroup$groupName", sb.substring(0, sb.lastIndexOf(";")));
-		dataMap.put("MailGroup$groupNewName", sb2.substring(0, sb2.lastIndexOf(";")));
-		//modify by liuying at 20100129 for 页面调整 end
+		dataMap
+				.put("MailGroup$groupName", sb
+						.substring(0, sb.lastIndexOf(";")));
+		dataMap.put("MailGroup$groupNewName", sb2.substring(0, sb2
+				.lastIndexOf(";")));
+		// modify by liuying at 20100129 for 页面调整 end
 		UserInfo curUser = ((AccountApplyMainTable) mainObj).getApplyUser();
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -6489,7 +6657,7 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String dataId = request.getParameter("dataId");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
 		List account = getService().find(MailGroup.class, "applyId", aam);
@@ -6497,7 +6665,8 @@ public class AccountAction extends BaseAction {
 			MailGroup personAccount = (MailGroup) account.get(i);
 			// personAccount.setCreateDate(currentDate);
 			personAccount.setAccountState("1");
-			MailGroup pa = (MailGroup) getService().save(personAccount);
+
+			getService().save(personAccount);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -6522,7 +6691,7 @@ public class AccountAction extends BaseAction {
 	 * @return String
 	 */
 	public String listUserEmail() {
-		HttpServletRequest request = super.getRequest();
+		// HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		List<UserInfo> user = getService().findAll(UserInfo.class);
 		Integer total = user.size();// 这是查询出所有的记录
@@ -6578,7 +6747,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -6618,7 +6790,10 @@ public class AccountAction extends BaseAction {
 		String name = mainObject.getName();// 得到申请编号
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, id);
-		/** *******************************保存账号实体START************************************************* */
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
 		String fileId = request.getParameter("fileId");
 		String dcMail = request.getParameter("dcMail");
 		String webMail = request.getParameter("webMail");
@@ -6633,8 +6808,11 @@ public class AccountAction extends BaseAction {
 		noteId.setWebMail(webMail);
 		noteId.setApplyId(aam);
 		noteId.setNoPassword(noPassword);
-		Object file = getService().save(noteId);
-		/** *******************************保存账号实体END************************************************* */
+		getService().save(noteId);
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6677,7 +6855,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -6702,17 +6883,20 @@ public class AccountAction extends BaseAction {
 		mainMap.put("accountState", "0");
 		mainMap.put("serviceItem", serviceItemId);
 		mainMap.put("serviceItemProcess", serviceItemProcess);
-		Object acUser = null;
-		if (mainMap.containsKey("useUser")) {
-			acUser = mainMap.get("useUser");
-		} else {
-			acUser = mainMap.get("applyUser");
-		}
+		// Object acUser = null;
+		// if (mainMap.containsKey("useUser")) {
+		// acUser = mainMap.get("useUser");
+		// } else {
+		// acUser = mainMap.get("applyUser");
+		// }
 		BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
 				mainClass, mainMap);// 保存被关联主实体
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6758,7 +6942,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -6785,17 +6972,20 @@ public class AccountAction extends BaseAction {
 		mainMap.put("serviceItem", serviceItemId);
 		mainMap.put("serviceItemProcess", serviceItemProcess);
 		mainMap.put("oldApply", hrs);
-		Object acUser = null;
-		if (mainMap.containsKey("useUser")) {
-			acUser = mainMap.get("useUser");
-		} else {
-			acUser = mainMap.get("applyUser");
-		}
+		// Object acUser = null;
+		// if (mainMap.containsKey("useUser")) {
+		// acUser = mainMap.get("useUser");
+		// } else {
+		// acUser = mainMap.get("applyUser");
+		// }
 		BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
 				mainClass, mainMap);// 保存被关联主实体
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6835,9 +7025,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -6878,7 +7067,9 @@ public class AccountAction extends BaseAction {
 			aam.setCreateDate(currentDate);
 			aam.setModifyDate(currentDate);
 		}
-		HRSAccountApply hrs = (HRSAccountApply) getService().save(aam);
+
+		getService().save(aam);
+
 		String json = "{success:true}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -6905,18 +7096,17 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		UserInfo curUser = UserContext.getUserInfo();
-		int pageSize = 10;//每页行数
+		int pageSize = 10;// 每页行数
 		int start = HttpUtil.getInt(request, "start", 0);
 		int pageNo = start / pageSize + 1;
-		
-		Page page = accountService.findByPageQueryHRSAccount(curUser,
-				pageNo, pageSize);
+
+		Page page = accountService.findByPageQueryHRSAccount(curUser, pageNo,
+				pageSize);
 		List<HRSAccountApply> account = page.list();
 
 		Long total = page.getTotalCount();// 这是查询出所有的记录
 		String json = "";
 
-		
 		for (HRSAccountApply acc : account) {
 			Long id = acc.getId();
 			String accountName = acc.getAccountName();
@@ -6949,18 +7139,19 @@ public class AccountAction extends BaseAction {
 	 * @return String
 	 */
 	public String listMialGroupName() {
-	
+
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String name=request.getParameter("accountName");
-		int pageSize = 10;//每页行数
+		String name = request.getParameter("accountName");
+		int pageSize = 10;// 每页行数
 		int start = HttpUtil.getInt(request, "start", 0);
 		int pageNo = start / pageSize + 1;
-		Page page = accountService.findByPageQueryMailGroup(name, pageNo, pageSize);
+		Page page = accountService.findByPageQueryMailGroup(name, pageNo,
+				pageSize);
 		List<MailGroup> account = page.list();
-        Long total = page.getTotalCount();// 这是查询出所有的记录
-	    String json = "";
-		
+		Long total = page.getTotalCount();// 这是查询出所有的记录
+		String json = "";
+
 		for (MailGroup acc : account) {
 			Long id = acc.getId();
 			String accountName = acc.getGroupNewName();
@@ -7015,7 +7206,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -7042,18 +7236,21 @@ public class AccountAction extends BaseAction {
 		mainMap.put("oldApply", account);
 		mainMap.put("accountName", accountName);
 		mainMap.put("serviceItemProcess", serviceItemProcess);
-		Object acUser = null;
-		if (mainMap.containsKey("useUser")) {
-			acUser = mainMap.get("useUser");
-		} else {
-			acUser = mainMap.get("applyUser");
-		}
+		// Object acUser = null;
+		// if (mainMap.containsKey("useUser")) {
+		// acUser = mainMap.get("useUser");
+		// } else {
+		// acUser = mainMap.get("applyUser");
+		// }
 
 		BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
 				mainClass, mainMap);// 保存被关联主实体
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -7080,12 +7277,14 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String dataId = request.getParameter("dataId");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		HRSAccountApply aam = (HRSAccountApply) getService().find(
 				HRSAccountApply.class, dataId);
 		HRSAccountApply oldApply = aam.getOldApply();
 		oldApply.setAccountState("0");
-		HRSAccountApply hrs = (HRSAccountApply) getService().save(oldApply);
+
+		getService().save(oldApply);
+
 		String json = "{success:true}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -7112,14 +7311,16 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String dataId = request.getParameter("dataId");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		HRSAccountApply aam = (HRSAccountApply) getService().find(
 				HRSAccountApply.class, dataId);
 		aam.setAccountState("1");
 		HRSAccountApply oldApply = aam.getOldApply();
 		oldApply.setAccountState("0");
-		HRSAccountApply hrs = (HRSAccountApply) getService().save(oldApply);
-		HRSAccountApply newApply = (HRSAccountApply) getService().save(aam);
+
+		getService().save(oldApply);
+		getService().save(aam);
+
 		String json = "{success:true}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -7210,9 +7411,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -7226,7 +7426,7 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 获取IT密码申请 页面主面板数据 new
 	 * 
@@ -7248,18 +7448,17 @@ public class AccountAction extends BaseAction {
 		UserInfo curUser = mainObj.getApplyUser();
 		Map<String, Object> dataMap = metaDataManager.getFormDataForEdit(
 				mainObj, tableName);
-		ITPassword account = (ITPassword) getService().findUnique(ITPassword.class,
-				"applyId", mainObj); // 获取关联实体
-	    Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
-	    		account, "itil_ac_ITPassword");
-			dataMap.putAll(tempMap);
+		ITPassword account = (ITPassword) getService().findUnique(
+				ITPassword.class, "applyId", mainObj); // 获取关联实体
+		Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
+				account, "itil_ac_ITPassword");
+		dataMap.putAll(tempMap);
 
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -7273,7 +7472,6 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
-
 
 	/**
 	 * 保存IT密码申请草稿
@@ -7305,7 +7503,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -7363,10 +7564,8 @@ public class AccountAction extends BaseAction {
 		temp.put("mailType", value);
 		temp.put("webMail", webMail);
 		temp.put("dcMail", dc);
-		
 
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
 
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
@@ -7394,15 +7593,15 @@ public class AccountAction extends BaseAction {
 	public String getMailServer() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		UserInfo user = UserContext.getUserInfo();
+		// UserInfo user = UserContext.getUserInfo();
 		String workSpace = request.getParameter("workSpace");
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
 
 		try {
-			WorkSpace space = (WorkSpace) getService().find(
-					WorkSpace.class, workSpace);
+			WorkSpace space = (WorkSpace) getService().find(WorkSpace.class,
+					workSpace);
 			String mailServer = space.getMailServer();
 			String json = "{success:true,mailServer:'" + mailServer + "'}";
 			out = response.getWriter();
@@ -7449,9 +7648,9 @@ public class AccountAction extends BaseAction {
 		// 可以在这之前操纵查询数据，过滤出listData数据来，
 		// #######################################################
 		// String panelName = request.getParameter("panelName");
-		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		List<PagePanelColumn> pagePanelColumns = pageManager
-				.getUserPagePanelColumn(panelName);
+		// PagePanel panel = pagePanelService.findPagePanel(panelName);
+		// List<PagePanelColumn> pagePanelColumns = pageManager
+		// .getUserPagePanelColumn(panelName);
 		// ######################################################
 		// //modify by tongjp getcloumn from SystemTableColumn
 		SystemMainTable smt = systemMainTableService
@@ -7642,7 +7841,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -7681,10 +7883,13 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
-		List<PagePanelTableRelation> relations = pptrs
-				.findRelationsByPanel(panel);
-		List<SystemMainTable> ftables = new ArrayList();
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
+		// List<PagePanelTableRelation> relations = pptrs
+		// .findRelationsByPanel(panel);
+		// List<SystemMainTable> ftables = new ArrayList();
 		AccountType at = (AccountType) getService().findUnique(
 				AccountType.class, "name", accountType);
 
@@ -7708,10 +7913,12 @@ public class AccountAction extends BaseAction {
 		temp.put("applyId", mainObject);
 		temp.put("accountowner", acUser);
 
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -7759,9 +7966,8 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				applyUser, "sUserInfos");
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -7786,30 +7992,35 @@ public class AccountAction extends BaseAction {
 	public String saveMobileTelephoneInfo() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String userInfo = request.getParameter("userInfo");
+		// String userInfo = request.getParameter("userInfo");
 		String dataId = request.getParameter("dataId");
 		String rightDesc = request.getParameter("rightDesc");
 		Date currentDate = DateUtil.getCurrentDate();
-		UserInfo user = (UserInfo) getService().find(UserInfo.class, userInfo);
+		// UserInfo user = (UserInfo) getService().find(UserInfo.class,
+		// userInfo);
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
-		List<MobileTelephoneApply> account = getService().find(MobileTelephoneApply.class, "applyId",
-				aam);
-		for (MobileTelephoneApply mobile:account) {
-			
+		List<MobileTelephoneApply> account = getService().find(
+				MobileTelephoneApply.class, "applyId", aam);
+		for (MobileTelephoneApply mobile : account) {
+
 			mobile.setCreateDate(currentDate);
 			mobile.setRightsDesc(rightDesc);
 			mobile.setAccountState("1");
-			MobileTelephoneApply pa = (MobileTelephoneApply) getService().save(
-					mobile);
-			//add by lee for 更新通讯录手机信息 in 20100127 begin
-			UserInfo accountOwner = (UserInfo) this.getService().find(UserInfo.class, mobile.getAccountowner().getId().toString());
-			DCContacts employee = (DCContacts)this.getService().findUnique(
+			getService().save(mobile);
+
+			// add by lee for 更新通讯录手机信息 in 20100127 begin
+			UserInfo accountOwner = (UserInfo) this.getService()
+					.find(UserInfo.class,
+							mobile.getAccountowner().getId().toString());
+			DCContacts employee = (DCContacts) this.getService().findUnique(
 					DCContacts.class, "itcode", accountOwner.getItcode());
 			employee.setMobilePhone(mobile.getTelephone());
 			employee = (DCContacts) this.getService().save(employee);
-			this.updateDCContacts(accountOwner.getEmployeeCode(),employee.getTelephone(),employee.getMobilePhone(),employee.getVoipPhone(),false);
-			//add by lee for 更新通讯录手机信息 in 20100127 end
+			this.updateDCContacts(accountOwner.getEmployeeCode(), employee
+					.getTelephone(), employee.getMobilePhone(), employee
+					.getVoipPhone(), false);
+			// add by lee for 更新通讯录手机信息 in 20100127 end
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -7859,7 +8070,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -7898,10 +8112,13 @@ public class AccountAction extends BaseAction {
 		String id = mainObject.getId().toString();// 得到主实体ID
 		String name = mainObject.getName();// 得到申请编号
 
-		/** *******************************保存账号实体START************************************************* */
-		List<PagePanelTableRelation> relations = pptrs
-				.findRelationsByPanel(panel);
-		List<SystemMainTable> ftables = new ArrayList();
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
+		// List<PagePanelTableRelation> relations = pptrs
+		// .findRelationsByPanel(panel);
+		// List<SystemMainTable> ftables = new ArrayList();
 		AccountType at = (AccountType) getService().findUnique(
 				AccountType.class, "name", accountType);
 
@@ -7926,10 +8143,12 @@ public class AccountAction extends BaseAction {
 		temp.put("oldApply", mobileTelephone);
 		temp.put("accountowner", acUser);
 
-		BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-				account, temp);// 保存关联实体
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
 
-		/** *******************************保存账号实体END************************************************* */
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -7955,31 +8174,37 @@ public class AccountAction extends BaseAction {
 	public String saveMobileTelephoneChangeInfo() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String userInfo = request.getParameter("userInfo");
+		// String userInfo = request.getParameter("userInfo");
 		String dataId = request.getParameter("dataId");
 		String rightDesc = request.getParameter("rightDesc");
 		Date currentDate = DateUtil.getCurrentDate();
-		UserInfo user = (UserInfo) getService().find(UserInfo.class, userInfo);
+		// UserInfo user = (UserInfo) getService().find(UserInfo.class,
+		// userInfo);
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
-		List<MobileTelephoneApply> account = getService().find(MobileTelephoneApply.class, "applyId",
-				aam);
-		for (MobileTelephoneApply personAccount:account) {
-            MobileTelephoneApply telephone = personAccount.getOldApply();
+		List<MobileTelephoneApply> account = getService().find(
+				MobileTelephoneApply.class, "applyId", aam);
+		for (MobileTelephoneApply personAccount : account) {
+			MobileTelephoneApply telephone = personAccount.getOldApply();
 			if (personAccount.getDeptAllowance() != null) {
 				telephone.setDeptAllowance(personAccount.getDeptAllowance());
 			}
 			if (personAccount.getTelephone() != null) {
 				telephone.setTelephone(personAccount.getTelephone());
-				//add by lee for 更新通讯录手机信息 in 20100127 begin
-				UserInfo accountOwner = (UserInfo) this.getService().find(UserInfo.class, personAccount.getAccountowner().getId().toString());
-				DCContacts employee = (DCContacts)this.getService().findUnique(
-						DCContacts.class, "itcode", accountOwner.getItcode());
+				// add by lee for 更新通讯录手机信息 in 20100127 begin
+				UserInfo accountOwner = (UserInfo) this.getService().find(
+						UserInfo.class,
+						personAccount.getAccountowner().getId().toString());
+				DCContacts employee = (DCContacts) this.getService()
+						.findUnique(DCContacts.class, "itcode",
+								accountOwner.getItcode());
 				employee.setMobilePhone(personAccount.getTelephone());
 				employee = (DCContacts) this.getService().save(employee);
-				this.updateDCContacts(accountOwner.getEmployeeCode(),employee.getTelephone(),employee.getMobilePhone(),employee.getVoipPhone(),false);
-				//add by lee for 更新通讯录手机信息 in 20100127 end
-				
+				this.updateDCContacts(accountOwner.getEmployeeCode(), employee
+						.getTelephone(), employee.getMobilePhone(), employee
+						.getVoipPhone(), false);
+				// add by lee for 更新通讯录手机信息 in 20100127 end
+
 			}
 			if (personAccount.getOldTelephone() != null) {
 				telephone.setOldTelephone(personAccount.getOldTelephone());
@@ -8000,13 +8225,12 @@ public class AccountAction extends BaseAction {
 
 			telephone.setCreateDate(currentDate);
 			telephone.setRightsDesc(rightDesc);
-			//add by liuying for 增加结束页面显示管理员处理意见 at 20100414 start 
+			// add by liuying for 增加结束页面显示管理员处理意见 at 20100414 start
 			personAccount.setRightsDesc(rightDesc);
 			getService().save(personAccount);
-			//add by liuying for 增加结束页面显示管理员处理意见 at 20100414 end
-			MobileTelephoneApply pa = (MobileTelephoneApply) getService().save(
-					telephone);
-			
+			// add by liuying for 增加结束页面显示管理员处理意见 at 20100414 end
+			getService().save(telephone);
+
 		}
 
 		String json = "{success:true}";
@@ -8052,7 +8276,7 @@ public class AccountAction extends BaseAction {
 
 		List<PersonFormalAccount> account = accountService
 				.findAllPersonAccount(curUser);
-		Integer total = account.size();// 这是查询出所有的记录
+		// Integer total = account.size();// 这是查询出所有的记录
 		String json = "";
 		Map<String, Object> accountMap = new HashMap();
 		for (PersonFormalAccount acc : account) {
@@ -8102,13 +8326,14 @@ public class AccountAction extends BaseAction {
 			if (acc.getAccountType().getAccountType().equals("VPNAccount")) {
 				accountMap.put("vpn$id", acc.getId());
 				accountMap.put("vpn$accountState", acc.getAccountState());
-				if(acc.getVpnType().equals("1")){
-					String desc="令牌类型：软 启动密码："+acc.getPingCode();
+				if (acc.getVpnType().equals("1")) {
+					String desc = "令牌类型：软 启动密码：" + acc.getPingCode();
 					accountMap.put("vpn$rightsDesc", desc);
-				}else{
+				} else {
 					accountMap.put("vpn$rightsDesc", "令牌类型：硬");
 				}
-				accountMap.put("vpn$endDate", DateUtil.convertDateToString(acc.getEndDate()));
+				accountMap.put("vpn$endDate", DateUtil.convertDateToString(acc
+						.getEndDate()));
 				accountMap.put("vpn$cardNumber", acc.getCardNumber());
 
 			}
@@ -8135,13 +8360,16 @@ public class AccountAction extends BaseAction {
 				accountMap.put("scm$remarkDesc", acc.getRemarkDesc());
 
 			}
-			/*if (acc.getAccountType().getAccountType().equals("PushMailAccount")) {
-				accountMap.put("pushMail$id", acc.getId());
-				accountMap.put("pushMail$accountState", acc.getAccountState());
-				accountMap.put("pushMail$rightsDesc", acc.getRightsDesc());
-				accountMap.put("pushMail$remarkDesc", acc.getRemarkDesc());
-
-			}*/
+			/*
+			 * if
+			 * (acc.getAccountType().getAccountType().equals("PushMailAccount"))
+			 * { accountMap.put("pushMail$id", acc.getId());
+			 * accountMap.put("pushMail$accountState", acc.getAccountState());
+			 * accountMap.put("pushMail$rightsDesc", acc.getRightsDesc());
+			 * accountMap.put("pushMail$remarkDesc", acc.getRemarkDesc());
+			 * 
+			 * }
+			 */
 			if (acc.getAccountType().getAccountType().equals("TravelerAccount")) {
 				accountMap.put("pushMail$id", acc.getId());
 				accountMap.put("pushMail$accountState", acc.getAccountState());
@@ -8149,16 +8377,17 @@ public class AccountAction extends BaseAction {
 				accountMap.put("pushMail$remarkDesc", acc.getRemarkDesc());
 
 			}
-			if (acc.getAccountType().getAccountType().equals("Telephone")&&acc.getDepartTelephone().equals("0")) {
+			if (acc.getAccountType().getAccountType().equals("Telephone")
+					&& acc.getDepartTelephone().equals("0")) {
 				accountMap.put("telephone$id", acc.getId());
 				accountMap.put("telephone$accountState", acc.getAccountState());
 				accountMap.put("telephone$yearMoney", acc.getYearMoney());
-				//modify by liuying for 增加号码为空时的验证 at 20100504 start
-				if(acc.getTelephoneNumber()!=null){
+				// modify by liuying for 增加号码为空时的验证 at 20100504 start
+				if (acc.getTelephoneNumber() != null) {
 					accountMap.put("telephone$telephoneNumber", acc
 							.getTelephoneNumber().toString());
 				}
-				if(acc.getVoip()!=null){
+				if (acc.getVoip() != null) {
 					accountMap.put("telephone$voip", acc.getVoip().toString());
 				}
 
@@ -8169,16 +8398,17 @@ public class AccountAction extends BaseAction {
 						.getAccountState());
 				accountMap.put("mobileTelephone$rightsDesc", acc
 						.getRightsDesc());
-				if(acc.getTelephone()!=null){
+				if (acc.getTelephone() != null) {
 					accountMap.put("mobileTelephone$mobileTelephone", acc
 							.getTelephone().toString());
 				}
-				//modify by liuying for 增加号码为空时的验证 at 20100504 end
+				// modify by liuying for 增加号码为空时的验证 at 20100504 end
 			}
 		}
-		//add by liuying at 20100312 for 简要表显示手机信息 start
-		MobileTelephoneApply mobileTelephone=accountService.findMobileTelephone("手机", curUser);
-		if(mobileTelephone!=null){
+		// add by liuying at 20100312 for 简要表显示手机信息 start
+		MobileTelephoneApply mobileTelephone = accountService
+				.findMobileTelephone("手机", curUser);
+		if (mobileTelephone != null) {
 			accountMap.put("mobileTelephone$id", mobileTelephone.getId());
 			accountMap.put("mobileTelephone$accountState", mobileTelephone
 					.getAccountState());
@@ -8187,10 +8417,10 @@ public class AccountAction extends BaseAction {
 			accountMap.put("mobileTelephone$mobileTelephone", mobileTelephone
 					.getTelephone().toString());
 		}
-		//add by liuying at 20100312 for 简要表显示手机信息 end
+		// add by liuying at 20100312 for 简要表显示手机信息 end
 		userMap.putAll(accountMap);
 		userMap.put("account$comment", comment);
-		JSONArray jsonObject = JSONArray.fromObject(userMap);
+		// JSONArray jsonObject = JSONArray.fromObject(userMap);
 		json = "{success:" + true + ",form:" + mapToJson(userMap) + "}";
 
 		response.setContentType("text/plain");
@@ -8214,16 +8444,17 @@ public class AccountAction extends BaseAction {
 	 * @Create In Aug 20, 2009 By gaowen
 	 * @return String
 	 */
+	@SuppressWarnings("static-access")
 	public String savePersonSummaryData() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String info = request.getParameter("info");			//获取简要表信息
-		
-		//记录简要表修改信息
-		Date currentDate = DateUtil.getCurrentDate();		//获取当前时间
-		UserInfo curUser = UserContext.getUserInfo();		//当前登录人，用户记录修改的管理员
-		String userid = request.getParameter("userid");		//帐号所有者ID
-		String comment = request.getParameter("comment"); 	//简要表修改原因描述
+		String info = request.getParameter("info"); // 获取简要表信息
+
+		// 记录简要表修改信息
+		Date currentDate = DateUtil.getCurrentDate(); // 获取当前时间
+		UserInfo curUser = UserContext.getUserInfo(); // 当前登录人，用户记录修改的管理员
+		String userid = request.getParameter("userid"); // 帐号所有者ID
+		String comment = request.getParameter("comment"); // 简要表修改原因描述
 		UserInfo user = (UserInfo) getService().find(UserInfo.class, userid);
 		String itCode = user.getItcode();
 		String accountName = user.getItcode().toLowerCase();
@@ -8243,8 +8474,8 @@ public class AccountAction extends BaseAction {
 			record.setAccountManger(curUser.getItcode());
 			getService().save(record);
 		}
-		
-		//获取简要表信息
+
+		// 获取简要表信息
 		JSONObject panelJO = JSONObject.fromObject(info);
 		Map<String, Object> domainMap = new HashMap<String, Object>();
 		Map<String, Object> msnMap = new HashMap<String, Object>();
@@ -8357,63 +8588,62 @@ public class AccountAction extends BaseAction {
 
 			}
 		}
-		//保存域账号信息
+		// 保存域账号信息
 		String domainId = (String) domainMap.get("id");
 		String domainstate = (String) domainMap.get("accountState");
 		if (domainId.equals("") && domainstate.equals("1")) {
 			domainMap.put("accountowner", userid);
 			domainMap.put("accountName", accountName);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, domainMap);// 保存关联实体
+
+			metaDataManager
+					.saveEntityData(PersonFormalAccount.class, domainMap);// 保存关联实体
+
 		} else if (!domainId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, domainId);
 			ac.setAccountState(domainstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存MSN帐号信息
+		// 保存MSN帐号信息
 		String msnId = (String) msnMap.get("id");
 		String msnstate = (String) msnMap.get("accountState");
 		if (msnId.equals("") && msnstate.equals("1")) {
 			msnMap.put("accountowner", userid);
 			msnMap.put("accountName", accountName);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, msnMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, msnMap);// 保存关联实体
 		} else if (!msnId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, msnId);
 			ac.setAccountState(msnstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存ERP帐号信息
+		// 保存ERP帐号信息
 		String erpId = (String) erpMap.get("id");
 		String erpstate = (String) erpMap.get("accountState");
 		if (erpId.equals("") && erpstate.equals("1")) {
 			erpMap.put("accountowner", userid);
 			erpMap.put("accountName", accountName);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, erpMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, erpMap);// 保存关联实体
 		} else if (!erpId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, erpId);
 			ac.setAccountState(erpstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存EL帐号信息
+		// 保存EL帐号信息
 		String elId = (String) elMap.get("id");
 		String elstate = (String) elMap.get("accountState");
 		if (elId.equals("") && elstate.equals("1")) {
 			elMap.put("accountowner", userid);
 			elMap.put("accountName", accountName);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, elMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, elMap);// 保存关联实体
 		} else if (!elId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, elId);
 			ac.setAccountState(elstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存EB帐号信息
+		// 保存EB帐号信息
 		String ebId = (String) ebMap.get("id");
 		String ebstate = (String) ebMap.get("accountState");
 		String telephone = (String) ebMap.get("telephone");
@@ -8421,106 +8651,114 @@ public class AccountAction extends BaseAction {
 			ebMap.put("accountowner", userid);
 			ebMap.put("accountName", accountName);
 			ebMap.put("telephone", telephone);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, ebMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, ebMap);// 保存关联实体
+
 		} else if (!ebId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, ebId);
 			ac.setAccountState(ebstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存SCM帐号信息
+		// 保存SCM帐号信息
 		String scmId = (String) scmMap.get("id");
 		String scmstate = (String) scmMap.get("accountState");
 		if (scmId.equals("") && scmstate.equals("1")) {
 			scmMap.put("accountowner", userid);
 			scmMap.put("accountName", accountName);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, scmMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, scmMap);// 保存关联实体
 		} else if (!scmId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, scmId);
 			ac.setAccountState(scmstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存pushmail帐号信息
+		// 保存pushmail帐号信息
 		String pushMailId = (String) pushMailMap.get("id");
 		String pushMailstate = (String) pushMailMap.get("accountState");
 		if (pushMailId.equals("") && pushMailstate.equals("1")) {
 			pushMailMap.put("accountowner", userid);
 			pushMailMap.put("accountName", accountName);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, pushMailMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class,
+					pushMailMap);// 保存关联实体
 		} else if (!pushMailId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, pushMailId);
 			ac.setAccountState(pushMailstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存座机帐号信息
+		// 保存座机帐号信息
 		String telephoneId = (String) telephoneMap.get("id");
 		String telephonestate = (String) telephoneMap.get("accountState");
 		String yearMoney = (String) telephoneMap.get("yearMoney");
 		String telephoneNumber = (String) telephoneMap.get("telephoneNumber");
 		String voip = (String) telephoneMap.get("voip");
 		if (telephoneId.equals("") && telephonestate.equals("1")) {
-//			telephoneMap.put("accountowner", userid);
-//			telephoneMap.put("accountName", accountName);
-//			telephoneMap.put("yearMoney", yearMoney);
-//			telephoneMap.put("telephoneNumber", telephoneNumber);
-//			telephoneMap.put("voip", voip);
-//
-//			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-//					PersonFormalAccount.class, telephoneMap);// 保存关联实体
+			// telephoneMap.put("accountowner", userid);
+			// telephoneMap.put("accountName", accountName);
+			// telephoneMap.put("yearMoney", yearMoney);
+			// telephoneMap.put("telephoneNumber", telephoneNumber);
+			// telephoneMap.put("voip", voip);
+			//
+			// BaseObject object = (BaseObject) metaDataManager.saveEntityData(
+			// PersonFormalAccount.class, telephoneMap);// 保存关联实体
 		} else if (!telephoneId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, telephoneId);
-			//ac.setAccountState(telephonestate);
+			// ac.setAccountState(telephonestate);
 			ac.setVoip(voip);
 			ac.setTelephoneNumber(telephoneNumber);
-			if(yearMoney!=null&&!yearMoney.equals("")){
-			ac.setYearMoney(Double.parseDouble(yearMoney));
+			if (yearMoney != null && !yearMoney.equals("")) {
+				ac.setYearMoney(Double.parseDouble(yearMoney));
 			}
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
+
 			user.setTelephone(telephoneNumber);
-			UserInfo userinfo=(UserInfo)getService().save(user);
-			DCContacts employee = (DCContacts)this.getService().findUnique(
+			UserInfo userinfo = (UserInfo) getService().save(user);
+			DCContacts employee = (DCContacts) this.getService().findUnique(
 					DCContacts.class, "itcode", userinfo.getItcode());
 			employee.setTelephone(telephoneNumber);
 			employee.setVoipPhone(voip);
 			employee = (DCContacts) this.getService().save(employee);
-			this.updateDCContacts(userinfo.getEmployeeCode(),employee.getTelephone(),employee.getMobilePhone(),employee.getVoipPhone(),false);
-			
+			this.updateDCContacts(userinfo.getEmployeeCode(), employee
+					.getTelephone(), employee.getMobilePhone(), employee
+					.getVoipPhone(), false);
+
 		}
-		//保存手机帐号信息
+		// 保存手机帐号信息
 		String mobileTelephoneId = (String) mobileTelephoneMap.get("id");
-		String mobileTelephonestate = (String) mobileTelephoneMap.get("accountState");
-		String mobileTelephonerightDesc = (String) mobileTelephoneMap.get("rightsDesc");
-		String mobileTelephoneNumber=(String)mobileTelephoneMap.get("mobileTelephone");
+		String mobileTelephonestate = (String) mobileTelephoneMap
+				.get("accountState");
+		String mobileTelephonerightDesc = (String) mobileTelephoneMap
+				.get("rightsDesc");
+		String mobileTelephoneNumber = (String) mobileTelephoneMap
+				.get("mobileTelephone");
 		if (mobileTelephoneId.equals("") && mobileTelephonestate.equals("1")) {
-//			mobileTelephoneMap.put("accountowner", userid);
-//			mobileTelephoneMap.put("telephone", mobileTelephoneNumber);
-//			mobileTelephoneMap.put("rightsDesc", mobileTelephonerightDesc);
-//
-//			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-//					MobileTelephoneApply.class, mobileTelephoneMap);// 保存关联实体
+			// mobileTelephoneMap.put("accountowner", userid);
+			// mobileTelephoneMap.put("telephone", mobileTelephoneNumber);
+			// mobileTelephoneMap.put("rightsDesc", mobileTelephonerightDesc);
+			//
+			// BaseObject object = (BaseObject) metaDataManager.saveEntityData(
+			// MobileTelephoneApply.class, mobileTelephoneMap);// 保存关联实体
 		} else if (!mobileTelephoneId.equals("")) {
 			MobileTelephoneApply ac = (MobileTelephoneApply) getService().find(
 					MobileTelephoneApply.class, mobileTelephoneId);
-			//ac.setAccountState(mobileTelephonestate);
+			// ac.setAccountState(mobileTelephonestate);
 			ac.setRightsDesc(mobileTelephonerightDesc);
 			ac.setTelephone(mobileTelephoneNumber);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
+
 			user.setMobilePhone(mobileTelephoneNumber);
-			UserInfo userinfo=(UserInfo)getService().save(user);
-			DCContacts employee = accountService.saveOrGetContacts(userinfo.getItcode());
+			UserInfo userinfo = (UserInfo) getService().save(user);
+			DCContacts employee = accountService.saveOrGetContacts(userinfo
+					.getItcode());
 			employee.setMobilePhone(mobileTelephoneNumber);
 			employee = (DCContacts) this.getService().save(employee);
-			this.updateDCContacts(userinfo.getEmployeeCode(),employee.getTelephone(),employee.getMobilePhone(),employee.getVoipPhone(),false);
-			
-			
+			this.updateDCContacts(userinfo.getEmployeeCode(), employee
+					.getTelephone(), employee.getMobilePhone(), employee
+					.getVoipPhone(), false);
+
 		}
-		//保存WWW帐号信息
+		// 保存WWW帐号信息
 		String wwwId = (String) wwwMap.get("id");
 		String wwwstate = (String) wwwMap.get("accountState");
 		String wwwAccountValue = (String) wwwMap.get("wwwAccountValue");
@@ -8529,21 +8767,20 @@ public class AccountAction extends BaseAction {
 			wwwMap.put("accountowner", userid);
 			wwwMap.put("accountName", accountName);
 			wwwMap.put("wwwAccountValue", wwwAccountValue);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, wwwMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, wwwMap);// 保存关联实体
 		} else if (!wwwId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, wwwId);
 			ac.setAccountState(wwwstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
-		//保存远程接入账号信息
+		// 保存远程接入账号信息
 		String vpnId = (String) vpnMap.get("id");
 		String vpnstate = (String) vpnMap.get("accountState");
 		String cardNumber = (String) vpnMap.get("cardNumber");
-		String vpnEndDateStr = (String) vpnMap.get("endDate"); 
+		String vpnEndDateStr = (String) vpnMap.get("endDate");
 		Date vpnEndDate = null;
-		if(StringUtils.isNotBlank(vpnEndDateStr)){
+		if (StringUtils.isNotBlank(vpnEndDateStr)) {
 			vpnEndDate = DateUtil.convertStringToDate(vpnEndDateStr);
 		}
 		if (vpnId.equals("") && vpnstate.equals("1")) {
@@ -8551,18 +8788,17 @@ public class AccountAction extends BaseAction {
 			vpnMap.put("accountName", accountName);
 			vpnMap.put("cardNumber", cardNumber);
 			vpnMap.put("endDate", vpnEndDate);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, vpnMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, vpnMap);// 保存关联实体
 		} else if (!vpnId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, vpnId);
 			ac.setAccountState(vpnstate);
-			//add by lee for 补充遗漏信息 in 20100115begin
+			// add by lee for 补充遗漏信息 in 20100115begin
 			ac.setCardNumber(cardNumber);
 			ac.setAccountName(accountName);
 			ac.setEndDate(vpnEndDate);
-			//add by lee for 补充遗漏信息 in 20100115 end
-			BaseObject object = (BaseObject) getService().save(ac);
+			// add by lee for 补充遗漏信息 in 20100115 end
+			getService().save(ac);
 		}
 
 		String biId = (String) biMap.get("id");
@@ -8572,13 +8808,12 @@ public class AccountAction extends BaseAction {
 			biMap.put("accountowner", userid);
 			biMap.put("accountName", accountName);
 			biMap.put("referSalary", referSalary);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, biMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, biMap);// 保存关联实体
 		} else if (!biId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, biId);
 			ac.setAccountState(bistate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
 
 		String mailId = (String) mailMap.get("id");
@@ -8590,13 +8825,12 @@ public class AccountAction extends BaseAction {
 			mailMap.put("accountName", accountName);
 			mailMap.put("mailValue", mailValue);
 
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					PersonFormalAccount.class, mailMap);// 保存关联实体
+			metaDataManager.saveEntityData(PersonFormalAccount.class, mailMap);// 保存关联实体
 		} else if (!mailId.equals("")) {
 			PersonFormalAccount ac = (PersonFormalAccount) getService().find(
 					PersonFormalAccount.class, mailId);
 			ac.setAccountState(mailstate);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
 
 		String json = "{success:true}";
@@ -8648,10 +8882,9 @@ public class AccountAction extends BaseAction {
 			System.out.println("用户HR帐号信息错误或不存在");
 
 		}
-		JSONArray jsonObject = JSONArray.fromObject(userMap);
+		// JSONArray jsonObject = JSONArray.fromObject(userMap);
 
-		String json = "{success:" + true + ",form:" + mapToJson(userMap)
-				+ "}";
+		String json = "{success:" + true + ",form:" + mapToJson(userMap) + "}";
 
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -8678,9 +8911,9 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String info = request.getParameter("info");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		String userid = request.getParameter("userid");
-		UserInfo user = (UserInfo) getService().find(UserInfo.class, userid);
+		// UserInfo user = (UserInfo) getService().find(UserInfo.class, userid);
 		JSONObject panelJO = JSONObject.fromObject(info);
 		Map<String, Object> accountMap = new HashMap<String, Object>();
 		Iterator columnIter = panelJO.keys();
@@ -8698,13 +8931,12 @@ public class AccountAction extends BaseAction {
 		String accountState = (String) accountMap.get("accountState");
 		if (id.equals("")) {
 			accountMap.put("userOwner", userid);
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					HRSAccountApply.class, accountMap);// 保存关联实体
+			metaDataManager.saveEntityData(HRSAccountApply.class, accountMap);// 保存关联实体
 		} else if (!id.equals("")) {
 			HRSAccountApply ac = (HRSAccountApply) getService().find(
 					HRSAccountApply.class, id);
 			ac.setAccountState(accountState);
-			BaseObject object = (BaseObject) getService().save(ac);
+			getService().save(ac);
 		}
 
 		String json = "{success:true}";
@@ -8738,9 +8970,8 @@ public class AccountAction extends BaseAction {
 				userInfo);
 		Map<String, Object> userMap = metaDataManager.getFormDataForEdit(
 				curUser, "sUserInfos");
-		JSONArray jsonObject = JSONArray.fromObject(userMap);
-		String json = "{success:" + true + ",form:" + mapToJson(userMap)
-				+ "}";
+		// JSONArray jsonObject = JSONArray.fromObject(userMap);
+		String json = "{success:" + true + ",form:" + mapToJson(userMap) + "}";
 
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -8781,9 +9012,9 @@ public class AccountAction extends BaseAction {
 			String telephone = "--";
 			String rightsDesc = "--";
 			String remarkDesc = "--";
-			//add by liuying at 20100126 for 页面调整 start
-			String accountName=acc.getAccountName();
-			//add by liuying at 20100126 for 页面调整 end
+			// add by liuying at 20100126 for 页面调整 start
+			String accountName = acc.getAccountName();
+			// add by liuying at 20100126 for 页面调整 end
 			Long id = acc.getId();
 			String type = acc.getAccountType().getAccountType();
 			String accountType = acc.getAccountType().getName();
@@ -8813,10 +9044,15 @@ public class AccountAction extends BaseAction {
 				rightsDesc = "--";
 			}
 
-			json += "{\"id\":\"" + id + "\",\"accountType\":\"" + accountType
-					+ "\",\"accountState\":\"" + accountState
-					+ "\",\"cardNumber\":\"" + cardNumber
-					+ "\",\"accountName\":\"" + accountName//add by liuying at 20100126 for 页面调整 
+			json += "{\"id\":\"" + id
+					+ "\",\"accountType\":\""
+					+ accountType
+					+ "\",\"accountState\":\""
+					+ accountState
+					+ "\",\"cardNumber\":\""
+					+ cardNumber
+					+ "\",\"accountName\":\""
+					+ accountName// add by liuying at 20100126 for 页面调整
 					+ "\",\"mailValue\":\"" + mailValue
 					+ "\",\"wwwAccountValue\":\"" + wwwAccountValue
 					+ "\",\"telephone\":\"" + telephone + "\",\"endDate\":\""
@@ -8852,7 +9088,7 @@ public class AccountAction extends BaseAction {
 	public String saveSpecailAccountSummary() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String accountType = request.getParameter("accountType");
+		// String accountType = request.getParameter("accountType");
 		String id = request.getParameter("id");
 		SpecialAccount sa = (SpecialAccount) getService().find(
 				SpecialAccount.class, id);
@@ -8874,19 +9110,19 @@ public class AccountAction extends BaseAction {
 		String telephone = request.getParameter("telephone");
 		String cardNumber = request.getParameter("cardNumber");
 		String endDate = request.getParameter("endDate");
-		//modify by liuying at 20100126 start
+		// modify by liuying at 20100126 start
 		String accountName = request.getParameter("accountName");
 		if (accountName != null) {
 			sa.setAccountName(accountName);
 		}
-		if(cardNumber!=null){
+		if (cardNumber != null) {
 			sa.setCardNumber(cardNumber);
 		}
-		if(!endDate.equals("--")){
+		if (!endDate.equals("--")) {
 			Date end = DateUtil.convertStringToDate(endDate);
 			sa.setEndDate(end);
 		}
-		//modify by liuying at 20100126 end
+		// modify by liuying at 20100126 end
 		String remarkDesc = request.getParameter("remarkDesc");
 
 		sa.setRightsDesc(rightsDesc);
@@ -8896,7 +9132,7 @@ public class AccountAction extends BaseAction {
 		sa.setErpUserName(erpUserName);
 		sa.setCardNumber(cardNumber);
 		sa.setAccountState(accountState);
-		Object account = getService().save(sa);
+		getService().save(sa);
 
 		String json = "(success:true)";
 
@@ -8922,9 +9158,9 @@ public class AccountAction extends BaseAction {
 	 * @return String
 	 */
 	public String listIDFileName() {
-		HttpServletRequest request = super.getRequest();
+		// HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		UserInfo curUser = UserContext.getUserInfo();
+		// UserInfo curUser = UserContext.getUserInfo();
 		List<DCContacts> contacts = getService().findAll(DCContacts.class);
 		Integer total = contacts.size();// 这是查询出所有的记录
 		String json = "";
@@ -8965,16 +9201,16 @@ public class AccountAction extends BaseAction {
 		String dataId = request.getParameter("dataId");
 		String attachmentFlag = request.getParameter("attachmentFlag");
 		String password = request.getParameter("password");
-		Date currentDate = DateUtil.getCurrentDate();
+		// Date currentDate = DateUtil.getCurrentDate();
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
-		
+
 		List idFiles = getService().find(NotesIDFile.class, "applyId", aam);
 		for (int i = 0; i < idFiles.size(); i++) {
 			NotesIDFile idFile = (NotesIDFile) idFiles.get(i);
 			idFile.setAttachment(attachmentFlag);
 			idFile.setPassword(password);
-			NotesIDFile pa = (NotesIDFile) getService().save(idFile);
+			getService().save(idFile);
 		}
 		String json = "{success:true}";
 		response.setContentType("text/plain");
@@ -9004,7 +9240,7 @@ public class AccountAction extends BaseAction {
 		String clazz = request.getParameter("clazzName");
 		String dataId = request.getParameter("dataId");
 		String columnName = request.getParameter("columnName");
-		String hiddenId = request.getParameter("hiddenId");
+		// String hiddenId = request.getParameter("hiddenId");
 		String columnid = request.getParameter("columnid");
 		Object ob1 = baseBervice.find(AccountApplyMainTable.class, dataId);
 		List oblist = baseBervice.find(this.toClass(clazz), "applyId", ob1);
@@ -9061,7 +9297,7 @@ public class AccountAction extends BaseAction {
 		String clazz = request.getParameter("clazzName");
 		String dataId = request.getParameter("dataId");
 		String columnName = request.getParameter("columnName");
-		String hiddenId = request.getParameter("hiddenId");
+		// String hiddenId = request.getParameter("hiddenId");
 		String columnid = request.getParameter("columnid");
 		Object ob1 = baseBervice.find(AccountApplyMainTable.class, dataId);
 		PersonFormalAccount ob = null;
@@ -9127,20 +9363,21 @@ public class AccountAction extends BaseAction {
 		String processType = request.getParameter("processType");
 		UserInfo user = UserContext.getUserInfo();
 		String userInfo = request.getParameter("userInfo");
-		if (userInfo != null&&!userInfo.equals("")) {//modify by liuying at 20100510 for 增加验证条件
+		if (userInfo != null && !userInfo.equals("")) {// modify by liuying at
+														// 20100510 for 增加验证条件
 			user = (UserInfo) getService().find(UserInfo.class, userInfo);
 		}
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
 		String json = "";
-		String telephoneType = null;
+		// String telephoneType = null;
 		try {
 
 			AccountApplyMainTable account = accountService.findUserApply(
 					serviceItemProcess, user, processType);
 			if (account != null) {
-				Long id = account.getId();
+				// Long id = account.getId();
 				json = "{success:true}";
 			} else {
 				json = "{success:false}";
@@ -9199,15 +9436,13 @@ public class AccountAction extends BaseAction {
 			newAccount.setApplyReason(applyReason);
 			newAccount.setIfHold(Integer.parseInt(ifHold));
 			newAccount.setAccountState("0");
-			SpecialAccount newAccountApply = (SpecialAccount) getService()
-					.save(newAccount);
+			getService().save(newAccount);
 		} else {
 			account.setAccountNowUser(newOwner);
 			account.setApplyReason(applyReason);
 			account.setIfHold(Integer.parseInt(ifHold));
 			account.setAccountState("0");
-			SpecialAccount newAccountApply = (SpecialAccount) getService()
-					.save(account);
+			getService().save(account);
 		}
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
@@ -9241,13 +9476,13 @@ public class AccountAction extends BaseAction {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
 		String json = "";
-		String telephoneType = null;
+		// String telephoneType = null;
 		try {
 
 			SpecialAccount account = accountService
 					.findSpecailAccountByAccountName(accountType, accountName);
 			if (account != null) {
-				Long id = account.getId();
+				// Long id = account.getId();
 				json = "{success:true}";
 			} else {
 				json = "{success:false}";
@@ -9263,7 +9498,6 @@ public class AccountAction extends BaseAction {
 
 	}
 
-	
 	/**
 	 * 判断申请人是否是系统级应用管理员
 	 * 
@@ -9276,7 +9510,7 @@ public class AccountAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		String user = request.getParameter("userInfo");
 		UserInfo userInfo = (UserInfo) getService().find(UserInfo.class, user);
-		String itCode=userInfo.getItcode().toLowerCase();
+		String itCode = userInfo.getItcode().toLowerCase();
 		List<SystemAppAdmin> administrators = getService().find(
 				SystemAppAdmin.class, "itCode", itCode);
 		String json = "{success:false}";
@@ -9293,9 +9527,7 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
-	
-	
-	
+
 	/**
 	 * 获取系统级应用管理员
 	 * 
@@ -9304,25 +9536,24 @@ public class AccountAction extends BaseAction {
 	 * @return String
 	 */
 	public String listSystemAppAdmin() {
-		int pageSize = 10;//每页行数
-		HttpServletRequest request = super.getRequest();//拿到request
-		String itcode = request.getParameter("itCode");//得到itCode
+		int pageSize = 10;// 每页行数
+		HttpServletRequest request = super.getRequest();// 拿到request
+		String itcode = request.getParameter("itCode");// 得到itCode
 		int start = HttpUtil.getInt(request, "start", 1);
-		int pageNo = start/pageSize+1;
-		
-		Page page = accountService.findSystemAppAdminByPage(itcode,
-				pageNo, pageSize);
+		int pageNo = start / pageSize + 1;
+
+		Page page = accountService.findSystemAppAdminByPage(itcode, pageNo,
+				pageSize);
 		List<SystemAppAdmin> list = page.list();
 
 		Long total = page.getTotalCount();// 这是查询出所有的记录
 		String json = "";
 		for (SystemAppAdmin admin : list) {
 			Long id = admin.getId();
-			String itCode=admin.getItCode();
-			String realName=admin.getRealName();
-			json += "{\"id\":\"" + id + "\",\"itCode\":\""
-					+ itCode + "\",\"realName\":\""
-					+ realName +  "\"},";
+			String itCode = admin.getItCode();
+			String realName = admin.getRealName();
+			json += "{\"id\":\"" + id + "\",\"itCode\":\"" + itCode
+					+ "\",\"realName\":\"" + realName + "\"},";
 		}
 		if (json.length() == 0) {
 			json = "{success:true,rowCount:" + "1" + ",data:["
@@ -9342,11 +9573,6 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
-	
-	
-
-
-	
 
 	/**
 	 * 根据流程类型及节点类型判断当前用户角色个数
@@ -9359,10 +9585,10 @@ public class AccountAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String applyId = request.getParameter("applyId");
-		String applyType = request.getParameter("applyType");
+		// String applyType = request.getParameter("applyType");
 		String taskName = request.getParameter("taskName");
-		String taskId = request.getParameter("taskId");
-		String defdesc = request.getParameter("defdesc");
+		// String taskId = request.getParameter("taskId");
+		// String defdesc = request.getParameter("defdesc");
 		String json = "{success:true}";
 		UserInfo curUser = UserContext.getUserInfo();
 		AccountApplyMainTable aa = (AccountApplyMainTable) getService().find(
@@ -9421,7 +9647,7 @@ public class AccountAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		String applyId = request.getParameter("applyId");
 		String taskName = request.getParameter("taskName");
-		UserInfo curUser = UserContext.getUserInfo();
+		// UserInfo curUser = UserContext.getUserInfo();
 		AccountApplyMainTable aa = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, applyId);
 		ServiceItemProcess sip = aa.getServiceItemProcess();
@@ -9467,45 +9693,49 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
+
 	/**
 	 * 查找申请人信息，如果本地未找到，去R3数据库找，若找到保存并返回。
+	 * 
 	 * @Methods Name findApplyUser
 	 * @Create In Dec 21, 2009 By duxh
 	 * @return String
 	 */
-	public String findApplyUser(){
+	public String findApplyUser() {
 		try {
-			String json="";
+			String json = "";
 			HttpServletRequest request = super.getRequest();
 			String itcode = request.getParameter("itcode").toUpperCase();
-			UserInfo userInfo=(UserInfo) getService().findUnique(UserInfo.class, "itcode", itcode);
-			if(userInfo==null){
-//				SAPExecute sap=new SAPExecute();
-//				Map userMap=sap.getUserInfo(null, itcode);
+			UserInfo userInfo = (UserInfo) getService().findUnique(
+					UserInfo.class, "itcode", itcode);
+			if (userInfo == null) {
+				// SAPExecute sap=new SAPExecute();
+				// Map userMap=sap.getUserInfo(null, itcode);
 				SenseServicesUitl ssUtil = new SenseServicesUitl();
 				Map userMap = ssUtil.getUserInfo(itcode);
-				if(userMap.isEmpty())
-					json="{success:false}";
-				else{
+				if (userMap.isEmpty())
+					json = "{success:false}";
+				else {
 					userMap.put("password", "000000");
 					userMap.put("enabled", 1);
 					userMap.put("isLock", 0);
 					userMap.put("specialUser", 0);
-					userInfo=(UserInfo) metaDataManager.saveEntityData(UserInfo.class, userMap);
+					userInfo = (UserInfo) metaDataManager.saveEntityData(
+							UserInfo.class, userMap);
 				}
 			}
-			if(userInfo!=null){
-				Department dept=(Department) getService().findUnique(Department.class, "departCode", userInfo.getDepartment().getId());
-				json="{success:true,userInfo:{" +
-						"id:'"+userInfo.getId()+"'," +
-						"info:'"+userInfo.getRealName()+"/"+
-								 userInfo.getItcode().toLowerCase()+"/"+
-								 dept.getDepartName()+
-					  "'}}";
+			if (userInfo != null) {
+				Department dept = (Department) getService().findUnique(
+						Department.class, "departCode",
+						userInfo.getDepartment().getId());
+				json = "{success:true,userInfo:{" + "id:'" + userInfo.getId()
+						+ "'," + "info:'" + userInfo.getRealName() + "/"
+						+ userInfo.getItcode().toLowerCase() + "/"
+						+ dept.getDepartName() + "'}}";
 			}
 			HttpServletResponse response = super.getResponse();
 			response.setCharacterEncoding("utf-8");
-			PrintWriter pw=response.getWriter();
+			PrintWriter pw = response.getWriter();
 			pw.write(json);
 			pw.flush();
 			pw.close();
@@ -9515,65 +9745,74 @@ public class AccountAction extends BaseAction {
 			throw new ApplicationException();
 		}
 	}
+
 	/**
 	 * 调用更新DC通讯录webservice
+	 * 
 	 * @Methods Name updateDCContacts
 	 * @Create In Jan 27, 2010 By lee
 	 * @param employeeCode
 	 * @param telephone
 	 * @param mobilePhone
 	 * @param isdelete
-	 * @param voipPhone void
+	 * @param voipPhone
+	 *            void
 	 */
-	private void updateDCContacts(String employeeCode,String telephone,String mobilePhone,String voipPhone,boolean isDelete){
-		UserInfo user=(UserInfo) getService().findUnique(UserInfo.class, "employeeCode",employeeCode);
-		if(user!=null){
+	private void updateDCContacts(String employeeCode, String telephone,
+			String mobilePhone, String voipPhone, boolean isDelete) {
+		UserInfo user = (UserInfo) getService().findUnique(UserInfo.class,
+				"employeeCode", employeeCode);
+		if (user != null) {
 			user.setTelephone(telephone);
 			user.setMobilePhone(mobilePhone);
 			getService().save(user);
 		}
-//		HrInfoService hs = new HrInfoServiceLocator();
-//		try {
-//			HrInfoServiceSoap_PortType hp = hs.getHrInfoServiceSoap();
-//			int reslut = hp.updatePhone(employeeCode,telephone,mobilePhone,voipPhone,isDelete);
-//			if(reslut==1){
-//				System.out.println("更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！");
-//			}else{
-//				System.out.println("更新HR更新通讯录"+employeeCode+"信息失败！");
-//				System.out.println("ERROR:"+(reslut==-1?"调用失败":"没有权限"));
-//			}
-//		} catch (ServiceException e) {
-//			System.out.println("创建HR更新通讯录webservice调用失败！");
-//			e.printStackTrace();
-//		} catch (RemoteException e) {
-//			System.out.println("运行HR更新通讯录webservice调用失败！");
-//			e.printStackTrace();
-//		}
+		// HrInfoService hs = new HrInfoServiceLocator();
+		// try {
+		// HrInfoServiceSoap_PortType hp = hs.getHrInfoServiceSoap();
+		// int reslut =
+		// hp.updatePhone(employeeCode,telephone,mobilePhone,voipPhone,isDelete);
+		// if(reslut==1){
+		// System.out.println("更新HR更新通讯录[员工编号："+employeeCode+" ][手机:"+mobilePhone+"][ 座机:"+telephone+" ][voip:"+voipPhone+"]信息成功！");
+		// }else{
+		// System.out.println("更新HR更新通讯录"+employeeCode+"信息失败！");
+		// System.out.println("ERROR:"+(reslut==-1?"调用失败":"没有权限"));
+		// }
+		// } catch (ServiceException e) {
+		// System.out.println("创建HR更新通讯录webservice调用失败！");
+		// e.printStackTrace();
+		// } catch (RemoteException e) {
+		// System.out.println("运行HR更新通讯录webservice调用失败！");
+		// e.printStackTrace();
+		// }
 	}
+
 	/**
 	 * 通过用户名得到员工编号
+	 * 
 	 * @Methods Name getEmployeeCode
 	 * @Create In Mar 25, 2010 By liuying
 	 * @return String
 	 */
-	public String getEmployeeCode(){
+	public String getEmployeeCode() {
 		try {
-		HttpServletRequest request = super.getRequest();
-		HttpServletResponse response = super.getResponse();
+			HttpServletRequest request = super.getRequest();
+			HttpServletResponse response = super.getResponse();
 			String username = request.getParameter("userName");
-			UserInfo userInfo=null;
-			if(username!=null&&!username.equals("")){
-				 userInfo=(UserInfo) getService().findUnique(UserInfo.class, "itcode", username.toUpperCase());
+			UserInfo userInfo = null;
+			if (username != null && !username.equals("")) {
+				userInfo = (UserInfo) getService().findUnique(UserInfo.class,
+						"itcode", username.toUpperCase());
 			}
-			String json="";
-			if(userInfo!=null){
-				String code=userInfo.getEmployeeCode();
-				json="{success:true,code:'"+code+"'}";
-			}else{
-				json="{success:false}";
+			String json = "";
+			if (userInfo != null) {
+				String code = userInfo.getEmployeeCode();
+				json = "{success:true,code:'" + code + "'}";
+			} else {
+				json = "{success:false}";
 			}
 			response.setCharacterEncoding("utf-8");
-			PrintWriter	pw = response.getWriter();
+			PrintWriter pw = response.getWriter();
 			pw.write(json);
 			pw.flush();
 			pw.close();
@@ -9583,35 +9822,41 @@ public class AccountAction extends BaseAction {
 			throw new ApplicationException();
 		}
 	}
+
 	/**
 	 * 列出所有座机帐号
+	 * 
 	 * @Methods Name listAllTelephoneAccount
 	 * @Create In Mar 25, 2010 By liuying
 	 * @return String
 	 */
-	
-	public String listAllTelephoneAccount(){
+
+	public String listAllTelephoneAccount() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		
+
 		String json = "";
 		int pageSize = 10;
 		int start = Integer.parseInt(request.getParameter("start"));
 		int pageNo = start / pageSize + 1;
-		//String orderBy = "id";
-		//boolean isAsc = true;
+		// String orderBy = "id";
+		// boolean isAsc = true;
 		String number = request.getParameter("number");
 		String curId = request.getParameter("id");
-		if(curId!=null&&curId!=""){
-			PersonFormalAccount pfa = (PersonFormalAccount) accountService.getAllTelephoneAccount("座机", number).get(0);
-			json+="{id:'"+pfa.getTelephoneNumber()+"',number:'"+pfa.getTelephoneNumber()+"'}";
-			json = "{success: true, rowCount:'1',data:["+json+"]}";
-		}else{
-			Page page = accountService.getAllTelephone(number, pageNo, pageSize);
+		if (curId != null && curId != "") {
+			PersonFormalAccount pfa = (PersonFormalAccount) accountService
+					.getAllTelephoneAccount("座机", number).get(0);
+			json += "{id:'" + pfa.getTelephoneNumber() + "',number:'"
+					+ pfa.getTelephoneNumber() + "'}";
+			json = "{success: true, rowCount:'1',data:[" + json + "]}";
+		} else {
+			Page page = accountService
+					.getAllTelephone(number, pageNo, pageSize);
 			Long total = page.getTotalCount();
 			List<PersonFormalAccount> queryList = page.list();
-			for(PersonFormalAccount pfa : queryList){
-				json+="{id:'"+pfa.getTelephoneNumber()+"',number:'"+pfa.getTelephoneNumber()+"'},";
+			for (PersonFormalAccount pfa : queryList) {
+				json += "{id:'" + pfa.getTelephoneNumber() + "',number:'"
+						+ pfa.getTelephoneNumber() + "'},";
 			}
 			if (json.length() == 0) {
 				json = "{success:true,rowCount:" + "1" + ",data:["
@@ -9629,41 +9874,45 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-	
+
 	}
+
 	/**
 	 * 得到帐号信息
+	 * 
 	 * @Methods Name getAccountInfo
 	 * @Create In Mar 25, 2010 By liuying
 	 * @return String
 	 */
-	public String getAccountInfo(){
+	public String getAccountInfo() {
 		try {
 			HttpServletRequest request = super.getRequest();
 			HttpServletResponse response = super.getResponse();
 			String number = request.getParameter("number");
-			List<PersonFormalAccount> accounts = accountService.getAllTelephoneAccount(
-					"座机", number);
+			List<PersonFormalAccount> accounts = accountService
+					.getAllTelephoneAccount("座机", number);
 
-			String json="";
-			if(accounts!=null){
-				String draw="";
-				String userName="";
-				if(accounts.get(0).getWorkSpace()!=null){
-					draw=accounts.get(0).getWorkSpace().getId().toString();
+			String json = "";
+			if (accounts != null) {
+				String draw = "";
+				String userName = "";
+				if (accounts.get(0).getWorkSpace() != null) {
+					draw = accounts.get(0).getWorkSpace().getId().toString();
 				}
-				UserInfo user=accounts.get(0).getAccountowner();
-				if(user!=null){
-					userName=user.getRealName()+"/"+user.getUserName()+"/"+user.getDepartment().getDepartName();
+				UserInfo user = accounts.get(0).getAccountowner();
+				if (user != null) {
+					userName = user.getRealName() + "/" + user.getUserName()
+							+ "/" + user.getDepartment().getDepartName();
 				}
-				
-				json="{success:true,drawspace:'"+draw+"',name:'"+userName+"',num:'"+accounts.size()+"'}";
-				
-			}else{
-				json="{success:false}";
+
+				json = "{success:true,drawspace:'" + draw + "',name:'"
+						+ userName + "',num:'" + accounts.size() + "'}";
+
+			} else {
+				json = "{success:false}";
 			}
 			response.setCharacterEncoding("utf-8");
-			PrintWriter	pw = response.getWriter();
+			PrintWriter pw = response.getWriter();
 			pw.write(json);
 			pw.flush();
 			pw.close();
@@ -9672,21 +9921,23 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 			throw new ApplicationException();
 		}
-		
+
 	}
+
 	/**
 	 * 保存座机所有者变更草稿
+	 * 
 	 * @Methods Name saveTelephoneOwnerChangeDraft
 	 * @Create In Mar 26, 2010 By liuying
 	 * @return String
 	 */
-	public String saveTelephoneOwnerChangeDraft(){
+	public String saveTelephoneOwnerChangeDraft() {
 
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		UserInfo curUser = UserContext.getUserInfo();
+		// UserInfo curUser = UserContext.getUserInfo();
 		String panelName = request.getParameter("panelName");// 得到主面板名称
-		
+
 		String serviceItemId = request.getParameter("serviceItemId");
 		// String accountType = request.getParameter("accountType");
 		String processInfoId = request.getParameter("processInfoId");
@@ -9704,7 +9955,10 @@ public class AccountAction extends BaseAction {
 			dataMap.put(columnName, columnValue);
 		}
 		PagePanel panel = pagePanelService.findPagePanel(panelName);
-		/** *******************************获取申请主实体数据************************************************* */
+		/**
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
+		 */
 		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
 		String mainTableName = mainTable.getTableName(); // 得到主表名
 		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
@@ -9736,26 +9990,29 @@ public class AccountAction extends BaseAction {
 		BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
 				mainClass, mainMap);// 保存被关联主实体
 		String id = mainObject.getId().toString();// 得到申请ID
-		List<PersonFormalAccount> accounts = getService().find(PersonFormalAccount.class,
-				"applyId", mainObject);
+		List<PersonFormalAccount> accounts = getService().find(
+				PersonFormalAccount.class, "applyId", mainObject);
 		if (accounts.size() >= 1) {
 			for (PersonFormalAccount account : accounts) {
 				getService().remove(account);
 			}
 		}
 		String name = mainObject.getName();// 得到申请编号
-		
-		String telNumber=(String) dataMap.get("itil_ac_PersonFormalAccount$telephoneNumber");
-		String reason=(String) dataMap.get("itil_ac_PersonFormalAccount$remarkDesc");
-		String applyuser=(String) dataMap.get("AccountApplyMainTable$applyUser");
-		
+
+		String telNumber = (String) dataMap
+				.get("itil_ac_PersonFormalAccount$telephoneNumber");
+		String reason = (String) dataMap
+				.get("itil_ac_PersonFormalAccount$remarkDesc");
+		String applyuser = (String) dataMap
+				.get("AccountApplyMainTable$applyUser");
+
 		List<PersonFormalAccount> pfas = accountService.getAllTelephoneAccount(
 				"座机", telNumber);
 		UserInfo newOwner = (UserInfo) getService().find(UserInfo.class,
 				applyuser);
-		if(pfas!=null){
-			for(PersonFormalAccount pfa:pfas){
-				PersonFormalAccount newpfa=new PersonFormalAccount();
+		if (pfas != null) {
+			for (PersonFormalAccount pfa : pfas) {
+				PersonFormalAccount newpfa = new PersonFormalAccount();
 				String[] ignoreProperties = { "id" };
 				BeanUtils.copyProperties(pfa, newpfa, ignoreProperties);
 				newpfa.setOlodApplyAccount(pfa);
@@ -9766,15 +10023,15 @@ public class AccountAction extends BaseAction {
 				newpfa.setAccountName(newOwner.getUserName());
 				PersonFormalAccount account = accountService.findPersonAccount(
 						"座机", newOwner);
-				if(account!=null){
+				if (account != null) {
 					newpfa.setDepartTelephone("1");
-				}else{
+				} else {
 					newpfa.setDepartTelephone("0");
 				}
 				getService().save(newpfa);
 			}
 		}
-		
+
 		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
@@ -9788,10 +10045,11 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-	
+
 	}
-	public String getTelOwnerChangeDraftData(){
-	     
+
+	public String getTelOwnerChangeDraftData() {
+
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String panelName = request.getParameter("panelName");
@@ -9805,8 +10063,8 @@ public class AccountAction extends BaseAction {
 		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
 		Map<String, Object> dataMap = metaDataManager.getFormDataForEdit(
 				mainObj, tableName);
-		List<PersonFormalAccount> fObj = getService().find(PersonFormalAccount.class,
-				"applyId", mainObj); // 获取关联实体
+		List<PersonFormalAccount> fObj = getService().find(
+				PersonFormalAccount.class, "applyId", mainObj); // 获取关联实体
 		for (PersonFormalAccount acc : fObj) {
 			Map<String, Object> tempMap = metaDataManager.getFormDataForEdit(
 					acc, "itil_ac_PersonFormalAccount");
@@ -9819,10 +10077,9 @@ public class AccountAction extends BaseAction {
 				applyUser, "sUserInfos");
 
 		dataMap.putAll(userMap);
-		JSONArray jsonObject = JSONArray.fromObject(dataMap);
+		// JSONArray jsonObject = JSONArray.fromObject(dataMap);
 
-		String json = "{success:" + true + ",form:" + mapToJson(dataMap)
-				+ "}";
+		String json = "{success:" + true + ",form:" + mapToJson(dataMap) + "}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -9835,41 +10092,44 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-	
+
 	}
+
 	/**
 	 * 通过dataId获得服务信息
+	 * 
 	 * @Methods Name getApplyInfo
 	 * @Create In Apr 6, 2010 By liuying
 	 * @return String
 	 */
-	public String getApplyInfo(){
+	public String getApplyInfo() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String dataId = request.getParameter("dataId");
-		
-		AccountApplyMainTable aamt = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);
-		
-		Integer processType=aamt.getProcessType();
-		String serviceItemId=aamt.getServiceItem().toString();
-		ServiceItemProcess serviceItemProcess=aamt.getServiceItemProcess();
-		String serviceItempro=serviceItemProcess.getId().toString();
-		
+
+		AccountApplyMainTable aamt = (AccountApplyMainTable) getService().find(
+				AccountApplyMainTable.class, dataId, true);
+
+		Integer processType = aamt.getProcessType();
+		String serviceItemId = aamt.getServiceItem().toString();
+		ServiceItemProcess serviceItemProcess = aamt.getServiceItemProcess();
+		String serviceItempro = serviceItemProcess.getId().toString();
+
 		Integer status = aamt.getStatus();
-		
-		VirtualDefinitionInfo virtualDefinitionInfo = serviceItemProcess.getProcessInfo();
+
+		VirtualDefinitionInfo virtualDefinitionInfo = serviceItemProcess
+				.getProcessInfo();
 		String vname = virtualDefinitionInfo.getVirtualDefinitionName();
 		String vdescription = virtualDefinitionInfo.getVirtualDefinitionDesc();
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
-		String json = "{serviceItemId:'"+serviceItemId+"',"+
-						"processType:'"+processType+"',"+
-						"serviceItemProcessId:'"+serviceItempro+"',"+
-						"processName:'"+vname+"',"+
-						"description:'"+vdescription+"',"+
-						"status:'"+status+"',"+
-						"dataId:'"+dataId+"'}";
+		String json = "{serviceItemId:'" + serviceItemId + "',"
+				+ "processType:'" + processType + "',"
+				+ "serviceItemProcessId:'" + serviceItempro + "',"
+				+ "processName:'" + vname + "'," + "description:'"
+				+ vdescription + "'," + "status:'" + status + "'," + "dataId:'"
+				+ dataId + "'}";
 		try {
 			out = response.getWriter();
 			out.println(json);
@@ -9880,38 +10140,42 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
+
 	/**
 	 * 根据座机号码判断这个号码是否有审批中的申请
+	 * 
 	 * @Methods Name getNumberApply
 	 * @Create In Jun 22, 2010 By liuying
 	 * @return String
 	 */
-	public String getNumberApply(){
+	public String getNumberApply() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String number = request.getParameter("number");
-		String serviceItemProcessId = request.getParameter("serviceItemProcess");
-		
-		List<PersonFormalAccount> accounts = accountService.findAllTelephoneAccount(
-				"座机", number);
-		
-		String json="{success:true}";
+		String serviceItemProcessId = request
+				.getParameter("serviceItemProcess");
 
-		if(accounts!=null){
-			for(PersonFormalAccount amt:accounts){
-				AccountApplyMainTable aamt=amt.getApplyId();
-				if(aamt!=null){
-					String sip=aamt.getServiceItemProcess().getId().toString();
-					String status=aamt.getStatus().toString();
-					if(sip.equals(serviceItemProcessId)&&status.equals("1")){
-						json="{success:false}";
+		List<PersonFormalAccount> accounts = accountService
+				.findAllTelephoneAccount("座机", number);
+
+		String json = "{success:true}";
+
+		if (accounts != null) {
+			for (PersonFormalAccount amt : accounts) {
+				AccountApplyMainTable aamt = amt.getApplyId();
+				if (aamt != null) {
+					String sip = aamt.getServiceItemProcess().getId()
+							.toString();
+					String status = aamt.getStatus().toString();
+					if (sip.equals(serviceItemProcessId) && status.equals("1")) {
+						json = "{success:false}";
 					}
 				}
 			}
 		}
 		try {
 			response.setCharacterEncoding("utf-8");
-			PrintWriter	pw = response.getWriter();
+			PrintWriter pw = response.getWriter();
 			pw.write(json);
 			pw.flush();
 			pw.close();
@@ -9920,22 +10184,25 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
+
 	/**
 	 * 获得ERP附件
+	 * 
 	 * @Methods Name getErpFiles
 	 * @Create In Jun 22, 2010 By liuying
 	 * @return String
 	 */
-	public String getErpFiles(){
+	public String getErpFiles() {
 
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String dataId = request.getParameter("dataId");
-		String columnName = request.getParameter("columnName");
+		// String columnName = request.getParameter("columnName");
 		String columnid = request.getParameter("columnid");
-		AccountApplyMainTable ob1 = (AccountApplyMainTable)baseBervice.find(AccountApplyMainTable.class, dataId);
+		AccountApplyMainTable ob1 = (AccountApplyMainTable) baseBervice.find(
+				AccountApplyMainTable.class, dataId);
 		Object value = ob1.getAttachment();
-		
+
 		String json = "";
 		List<SystemFile> systemfileList = baseBervice.find(SystemFile.class,
 				"nowtime", value);
@@ -9965,23 +10232,25 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-	
+
 	}
+
 	/**
 	 * 判断简要表修改座机帐号时是否系统中已存在这个号码
+	 * 
 	 * @Methods Name getTelAccount
 	 * @Create In May 17, 2010 By liuying
 	 * @return String
 	 */
-	public String getTelAccount(){
+	public String getTelAccount() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String telnum = request.getParameter("num");
-		List<PersonFormalAccount> accounts = accountService.getAllTelephoneAccount(
-				"座机", telnum);
-		String json="{success:true}";
-		if(accounts.size()!=0){
-			json="{success:false}";
+		List<PersonFormalAccount> accounts = accountService
+				.getAllTelephoneAccount("座机", telnum);
+		String json = "{success:true}";
+		if (accounts.size() != 0) {
+			json = "{success:false}";
 		}
 		try {
 			response.setCharacterEncoding("utf-8");
@@ -9993,33 +10262,35 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
+
 	/**
 	 * 判断用户提交的重新获取ID文件申请中的id文件是否有审批中的获取申请
+	 * 
 	 * @Methods Name getIDfileApply
 	 * @Create In May 24, 2010 By liuying
 	 * @return String
 	 */
-	public String getIDfileApply(){
+	public String getIDfileApply() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String idname = request.getParameter("idname");
 		List<NotesIDFile> ids = getService().find(NotesIDFile.class,
 				"fileName", idname);
-		
+
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
 		String json = "{success:false}";
-		if(ids.size()!=0){
-			for(NotesIDFile id:ids){
-				if(id.getApplyId().getStatus()==1){
+		if (ids.size() != 0) {
+			for (NotesIDFile id : ids) {
+				if (id.getApplyId().getStatus() == 1) {
 					json = "{success:true}";
 				}
 			}
-		}else{
+		} else {
 			json = "{success:false}";
 		}
-		
+
 		try {
 			out = response.getWriter();
 			out.println(json);
@@ -10030,56 +10301,59 @@ public class AccountAction extends BaseAction {
 		}
 		return null;
 	}
+
 	/**
 	 * 保存远程接入帐号的帐号类型
+	 * 
 	 * @Methods Name saveRemoteAccountType
 	 * @Create In May 26, 2010 By liuying
 	 * @return String
 	 */
-	public String saveRemoteAccountType(){
+	public String saveRemoteAccountType() {
 
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String dataId = request.getParameter("dataId");
 		String vpnType = request.getParameter("vpnType");
 		String drawSpace = request.getParameter("drawSpace");
-		String isSpAccount = request.getParameter("isSpAccount");//0为正式帐号 1为临时帐号
+		String isSpAccount = request.getParameter("isSpAccount");// 0为正式帐号
+																	// 1为临时帐号
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
 				AccountApplyMainTable.class, dataId);
-		List<PersonFormalAccount> accounts=new ArrayList();
-		List<SpecialAccount> spaccounts=new ArrayList();
-		if(isSpAccount.equals("0")){
-			 accounts = getService().find(
-					PersonFormalAccount.class, "applyId", aam);
-		}else{
-			spaccounts = getService().find(
-					SpecialAccount.class, "applyId", aam);
+		List<PersonFormalAccount> accounts = new ArrayList();
+		List<SpecialAccount> spaccounts = new ArrayList();
+		if (isSpAccount.equals("0")) {
+			accounts = getService().find(PersonFormalAccount.class, "applyId",
+					aam);
+		} else {
+			spaccounts = getService()
+					.find(SpecialAccount.class, "applyId", aam);
 		}
-		AR_DrawSpace space=(AR_DrawSpace) getService().find(AR_DrawSpace.class, drawSpace);
-		String confirmUser=space.getConfirmUser();
-		String[] usernames=confirmUser.split(",");
-		String signuser="";
-		for(int i=0;i<usernames.length;i++){
-			UserInfo s=(UserInfo) getService().findUnique(UserInfo.class, "userName",usernames[i]);
-			signuser=signuser+s.getId().toString()+",";
+		AR_DrawSpace space = (AR_DrawSpace) getService().find(
+				AR_DrawSpace.class, drawSpace);
+		String confirmUser = space.getConfirmUser();
+		String[] usernames = confirmUser.split(",");
+		String signuser = "";
+		for (int i = 0; i < usernames.length; i++) {
+			UserInfo s = (UserInfo) getService().findUnique(UserInfo.class,
+					"userName", usernames[i]);
+			signuser = signuser + s.getId().toString() + ",";
 		}
-		String signuserid=signuser.substring(0,signuser.length()-1 );
-		if(isSpAccount.equals("0")){
+		String signuserid = signuser.substring(0, signuser.length() - 1);
+		if (isSpAccount.equals("0")) {
 			for (PersonFormalAccount personAccount : accounts) {
 				personAccount.setVpnType(vpnType);
 				personAccount.setDrawSpace(space);
-				PersonFormalAccount pa = (PersonFormalAccount) getService().save(
-						personAccount);
+				getService().save(personAccount);
 			}
-		}else{
+		} else {
 			for (SpecialAccount personAccount : spaccounts) {
 				personAccount.setVpnType(vpnType);
 				personAccount.setDrawSpace(space);
-				SpecialAccount pa = (SpecialAccount) getService().save(
-						personAccount);
+				getService().save(personAccount);
 			}
 		}
-		String json = "{success:true,user:'"+signuserid+"'}";
+		String json = "{success:true,user:'" + signuserid + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
@@ -10092,27 +10366,28 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-	
+
 	}
+
 	/**
 	 * 判断远程接入帐号的类型
+	 * 
 	 * @Methods Name getVpnAccountType
 	 * @Create In May 27, 2010 By liuying
 	 * @return String
 	 */
-	public String getVpnAccountType(){
+	public String getVpnAccountType() {
 
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String userInfo = request.getParameter("userInfo");
-		
-		UserInfo user = (UserInfo) getService().find(
-				UserInfo.class, userInfo);
+
+		UserInfo user = (UserInfo) getService().find(UserInfo.class, userInfo);
 		PersonFormalAccount account = accountService.findPersonAccount(
 				"远程接入帐号", user);
-		String type=account.getVpnType();
+		String type = account.getVpnType();
 		String json = "{success:true}";
-		if(type.equals("1")){
+		if (type.equals("1")) {
 			json = "{success:false}";
 		}
 		response.setContentType("text/plain");
@@ -10127,906 +10402,980 @@ public class AccountAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return null;
-	
-	
+
 	}
-	
-		private String mapToJson(Map map){
+
+	private String mapToJson(Map map) {
 		String json = "";
-		if(map!=null){
+		if (map != null) {
 			Set keys = map.keySet();
-			for(Object key : keys){
-				json += "\""+key.toString() + "\":\"" + (map.get(key)==null?"":map.get(key).toString()) +"\",";
+			for (Object key : keys) {
+				json += "\"" + key.toString() + "\":\""
+						+ (map.get(key) == null ? "" : map.get(key).toString())
+						+ "\",";
 			}
-			if(json.length()>0){
+			if (json.length() > 0) {
 				json = json.substring(0, json.length() - 1);
 			}
-			json = "[{" + json +"}]";
+			json = "[{" + json + "}]";
 		}
 		return json;
 	}
-		/**
-		 * 保存临时远程接入帐号申请最终信息
-		 * @Methods Name saveTempVpnAccountInfo
-		 * @Create In May 31, 2010 By liuying
-		 * @return String
-		 */
-		public String saveTempVpnAccountInfo(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String vpnType = request.getParameter("vpnType");
-			String dataId = request.getParameter("dataId");
-			String userInfo = request.getParameter("userInfo");
-			String cardNumber = request.getParameter("cardNumber");
-			String rightDesc = request.getParameter("rightDesc");
-			Date endDate=null;
-			String pingCode="";
-			Date currentDate = DateUtil.getCurrentDate();
-			AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
-					AccountApplyMainTable.class, dataId);
-			List<SpecialAccount> account = getService().find(
-					SpecialAccount.class, "applyId", aam);
-			if(vpnType.equals("1")){
-				String attachmentFlag = request.getParameter("attachmentFlag");
-				aam.setAttachment(attachmentFlag);
-				getService().save(aam);
-				pingCode = request.getParameter("pingCode");
-				endDate=DateUtil.convertStringToDate("9999-12-31");
-			}else{
-				String end = request.getParameter("endDate");
-				endDate = DateUtil.convertStringToDate(end);
-			}
-			for (SpecialAccount personAccount : account) {
-				personAccount.setCardNumber(cardNumber);
-				personAccount.setPassword("123");
-				personAccount.setCreateDate(currentDate);
-				personAccount.setRightsDesc(rightDesc);
-				personAccount.setEndDate(endDate);
-				personAccount.setIfHold(1);
-				personAccount.setCardState(1);
-				personAccount.setVpnType(vpnType);
-				if(vpnType.equals("1")){
-					personAccount.setPingCode(pingCode);
-				}
-				 getService().save(personAccount);
-			}
-			String json = "{success:true}";
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-		/**
-		 * 判断临时帐号是否存在和是否有审批中的申请
-		 * @Methods Name getTempAccountApply
-		 * @Create In Jun 22, 2010 By liuying
-		 * @return String
-		 */
-		public String getTempAccountApply(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String accountName = request.getParameter("accountName");
-			String accountType = request.getParameter("accountType");
-			String serviceItemProcessId = request.getParameter("serviceItemProcess");
-		
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			String json = "";
-			String telephoneType = null;
-			try {
 
-				SpecialAccount account = accountService
-						.findSpecailAccountByAccountName(accountType, accountName);
-				if (account != null) {
-					json = "{success:true,type:'hasaccount'}";
-				} else {
-					json = "{success:false}";
-					List<SpecialAccount> accounts=accountService.findAllSpecailAccountByAccountName(accountType, accountName);
-					if(accounts.size()!=0){
-						for(SpecialAccount sa:accounts){
-							AccountApplyMainTable aamt=sa.getApplyId();
-							if(aamt!=null){
-								String sip=aamt.getServiceItemProcess().getId().toString();
-								String status=aamt.getStatus().toString();
-								if(sip.equals(serviceItemProcessId)&&status.equals("1")){
-									json="{success:true,type:'hasapply'}";
-								}
-							}
-						}
-					}
-				}
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		
+	/**
+	 * 保存临时远程接入帐号申请最终信息
+	 * 
+	 * @Methods Name saveTempVpnAccountInfo
+	 * @Create In May 31, 2010 By liuying
+	 * @return String
+	 */
+	public String saveTempVpnAccountInfo() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String vpnType = request.getParameter("vpnType");
+		String dataId = request.getParameter("dataId");
+		// String userInfo = request.getParameter("userInfo");
+		String cardNumber = request.getParameter("cardNumber");
+		String rightDesc = request.getParameter("rightDesc");
+		Date endDate = null;
+		String pingCode = "";
+		Date currentDate = DateUtil.getCurrentDate();
+		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
+				AccountApplyMainTable.class, dataId);
+		List<SpecialAccount> account = getService().find(SpecialAccount.class,
+				"applyId", aam);
+		if (vpnType.equals("1")) {
+			String attachmentFlag = request.getParameter("attachmentFlag");
+			aam.setAttachment(attachmentFlag);
+			getService().save(aam);
+			pingCode = request.getParameter("pingCode");
+			endDate = DateUtil.convertStringToDate("9999-12-31");
+		} else {
+			String end = request.getParameter("endDate");
+			endDate = DateUtil.convertStringToDate(end);
 		}
-		/**
-		 * 列出所有win7帐号
-		 * @Methods Name listAllWin7Account
-		 * @Create In Jun 22, 2010 By admin
-		 * @return String
-		 */
-		public String listAllWin7Account(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String ownerName=request.getParameter("ownerName");
-			String confirmUserName=request.getParameter("managerName");
-			int start = HttpUtil.getInt(request, "start", 0);
-			int pageSize = HttpUtil.getInt(request, "pageSize", 10);
-			int pageNo = start/pageSize +1;
-
-			Page page=accountService.findSpecailAccountByUsername("Win7",ownerName,confirmUserName,pageNo,pageSize);
-			String jsons="";
-			StringBuilder json=new StringBuilder();
-			Long total = page.getTotalCount();
-			List<SpecialAccount> sas = page.list();
-			for(SpecialAccount sa:sas){
-				UserInfo owner=sa.getAccountNowUser();
-				UserInfo manager=sa.getConfirmUser();
-				Win7PlatForm pf=sa.getWin7PaltForm();
-				String platformname="";
-				String pfId="";
-				String ownername="";
-				String ownerId="";
-				String managername="";
-				String managerId="";
-				
-				if(owner!=null){
-					ownername=owner.getUserName()+"/"+owner.getRealName();
-					ownerId=owner.getId().toString();
-				}
-				if(manager!=null){
-					managername=manager.getUserName()+"/"+manager.getRealName();
-					managerId=manager.getId().toString();
-				}
-				if(pf!=null){
-					platformname=pf.getName();
-					pfId=pf.getId().toString();
-				}
-				String remarkDesc="";
-				if(sa.getRemarkDesc()!=null){
-					remarkDesc=sa.getRemarkDesc();
-				}
-				String hardwareId="";
-				if(sa.getHardwareId()!=null){
-					hardwareId=sa.getHardwareId();
-				}
-				String deviceName="";
-				Long deviceId=null;
-				if(sa.getDeviceType()!=null){
-					deviceName=sa.getDeviceType().getDeviceName();
-					deviceId=sa.getDeviceType().getId();
-				}
-				json.append("{\"id\":\"" + sa.getId() + "\",\"accountNowUser\":\"" + ownername
-				 + "\",\"accountNowUserId\":\"" + ownerId + "\",\"hardwareId\":\"" + hardwareId
-				+ "\",\"accountManager\":\"" + managername+ "\",\"accountManagerId\":\"" + managerId
-				+ "\",\"deviceId\":\"" + deviceId+ "\",\"deviceName\":\"" + deviceName+ "\",\"platFormId\":\"" + pfId
-				+ "\",\"platForm\":\"" + platformname + "\",\"remarkDesc\":\"" + remarkDesc
-				+ "\",\"createDate\":\"" + sa.getCreateDate()+ "\",\"accountName\":\"" + sa.getAccountName()
-				+ "\"},");
+		for (SpecialAccount personAccount : account) {
+			personAccount.setCardNumber(cardNumber);
+			personAccount.setPassword("123");
+			personAccount.setCreateDate(currentDate);
+			personAccount.setRightsDesc(rightDesc);
+			personAccount.setEndDate(endDate);
+			personAccount.setIfHold(1);
+			personAccount.setCardState(1);
+			personAccount.setVpnType(vpnType);
+			if (vpnType.equals("1")) {
+				personAccount.setPingCode(pingCode);
 			}
-			
-			if (json.length() == 0) {
-				jsons = "{success:true,rowCount:" + "1" + ",data:["
-						+ json.substring(0, json.length()) + "]}";
+			getService().save(personAccount);
+		}
+		String json = "{success:true}";
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 判断临时帐号是否存在和是否有审批中的申请
+	 * 
+	 * @Methods Name getTempAccountApply
+	 * @Create In Jun 22, 2010 By liuying
+	 * @return String
+	 */
+	public String getTempAccountApply() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String accountName = request.getParameter("accountName");
+		String accountType = request.getParameter("accountType");
+		String serviceItemProcessId = request
+				.getParameter("serviceItemProcess");
+
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		String json = "";
+		// String telephoneType = null;
+		try {
+
+			SpecialAccount account = accountService
+					.findSpecailAccountByAccountName(accountType, accountName);
+			if (account != null) {
+				json = "{success:true,type:'hasaccount'}";
 			} else {
-				jsons = "{success:true,rowCount:" + total + ",data:["
-						+ json.substring(0, json.length() - 1) + "]}";
-			}
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println(jsons);
-				out.flush();
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return null;
-		}
-		/**
-		 * 修改win7帐号
-		 * @Methods Name modifyWin7Account
-		 * @Create In Jun 22, 2010 By liuying
-		 * @return String
-		 */
-		public String modifyWin7Account(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String owner=request.getParameter("owner");
-			String confirmUser=request.getParameter("confirmUser");
-			String Win7pf=request.getParameter("platform");
-			String deviceId=request.getParameter("deviceId");
-			String rightsDesc=request.getParameter("rightsDesc");
-			String accountid=request.getParameter("accountid");
-			String hardwardId=request.getParameter("hardwardId");
-			SpecialAccount sa=(SpecialAccount) getService().find(SpecialAccount.class, accountid);
-			String json = "{success:true}";
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-		
-			if(sa!=null){
-				UserInfo accountOwner=(UserInfo) getService().find(UserInfo.class, owner);
-				if(accountOwner!=null){
-					sa.setAccountNowUser(accountOwner);
-				}
-				UserInfo accountConfirmUser=(UserInfo) getService().find(UserInfo.class, confirmUser);
-				if(accountConfirmUser!=null){
-					sa.setConfirmUser(accountConfirmUser);
-				}
-				Win7PlatForm pf=(Win7PlatForm) getService().find(Win7PlatForm.class, Win7pf);
-				if(pf!=null){
-					sa.setWin7PaltForm(pf);
-				}
-				sa.setRemarkDesc(rightsDesc);
-				DeviceType deviceType=(DeviceType) getService().find(DeviceType.class, deviceId);
-				if(deviceType!=null){
-					sa.setDeviceType(deviceType);
-				}
-				sa.setHardwareId(hardwardId);
-				getService().save(sa);
-			}
-			
-			AccountModifyDesc amd=new AccountModifyDesc();
-			amd.setAccountFlag(AccountModifyDesc.SPECAILACCOUNT);
-			amd.setAccountId(accountid);
-			UserInfo curUser = UserContext.getUserInfo();
-			amd.setAccountManger(curUser.getItcode());
-			Date currentDate = DateUtil.getCurrentDateTime();
-			amd.setModifyDate(currentDate);
-			getService().save(amd);
-		
-			
-			
-			try {
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;	
-		}
-		/**
-		 * 保存win7帐号
-		 * @Methods Name addWin7Account
-		 * @Create In Jun 22, 2010 By liuying
-		 * @return String
-		 */
-		public String addWin7Account(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String owner=request.getParameter("owner");
-			String confirmUser=request.getParameter("confirmUser");
-			String win7pf=request.getParameter("platform");
-			String deviceId=request.getParameter("deviceId");
-			String rightsDesc=request.getParameter("rightsDesc");
-			String hardWareId=request.getParameter("hardwareId");
-			SpecialAccount sa=new SpecialAccount();
-			String json = "{success:true}";
-			
-			if("".equals(owner)||owner==null){
-				owner=confirmUser;
-			}
-				UserInfo accountOwner=(UserInfo) getService().find(UserInfo.class, owner);
-				if(accountOwner!=null){
-					sa.setAccountNowUser(accountOwner);
-				}
-				UserInfo accountConfirmUser=(UserInfo) getService().find(UserInfo.class, confirmUser);
-				if(accountConfirmUser!=null){
-					sa.setConfirmUser(accountConfirmUser);
-				}
-				Win7PlatForm pf=(Win7PlatForm) getService().find(Win7PlatForm.class, win7pf);
-				if(pf!=null){
-					sa.setWin7PaltForm(pf);
-				}
-				sa.setRemarkDesc(rightsDesc);
-				DeviceType deviceType=(DeviceType) getService().find(DeviceType.class, deviceId);
-				if(deviceType!=null){
-					sa.setDeviceType(deviceType);
-				}
-				sa.setAccountState("1");
-				AccountType at = (AccountType) getService().find(AccountType.class, "24");
-				sa.setAccountType(at);
-				Date currentDate = DateUtil.getCurrentDate();
-				sa.setCreateDate(currentDate);
-				sa.setHardwareId(hardWareId);
-				UserInfo curUser = UserContext.getUserInfo();
-				if(curUser!=null){
-					sa.setWriterItcode(curUser.getItcode());
-				}
-				sa=(SpecialAccount) getService().save(sa);
-				sa.setAccountName(sa.getId().toString());
-				getService().save(sa);
-			
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;	
-		}
-		/**
-		 * 根据帐号名判断该帐号是否有审批中的申请
-		 * @Methods Name getAccountNameApply
-		 * @Create In Jun 22, 2010 By liuying
-		 * @return String
-		 */
-		public String getAccountNameApply(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String accountId = request.getParameter("accountId");
-			SpecialAccount spa=(SpecialAccount) getService().find(SpecialAccount.class, accountId);
-			String accountName = spa.getAccountName();
-			String accountType = request.getParameter("accountType");
-			String serviceItemProcessId = request.getParameter("serviceItemProcess");
-		
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			String json = "";
-			String telephoneType = null;
-			try {
-				
 				json = "{success:false}";
-				List<SpecialAccount> accounts=accountService.findAllSpecailAccountByAccountName(accountType, accountName);
-				if(accounts.size()!=0){
-					for(SpecialAccount sa:accounts){
-						AccountApplyMainTable aamt=sa.getApplyId();
-						if(aamt!=null){
-							String sip=aamt.getServiceItemProcess().getId().toString();
-							String status=aamt.getStatus().toString();
-							if(sip.equals(serviceItemProcessId)&&status.equals("1")){
-								json="{success:true}";
+				List<SpecialAccount> accounts = accountService
+						.findAllSpecailAccountByAccountName(accountType,
+								accountName);
+				if (accounts.size() != 0) {
+					for (SpecialAccount sa : accounts) {
+						AccountApplyMainTable aamt = sa.getApplyId();
+						if (aamt != null) {
+							String sip = aamt.getServiceItemProcess().getId()
+									.toString();
+							String status = aamt.getStatus().toString();
+							if (sip.equals(serviceItemProcessId)
+									&& status.equals("1")) {
+								json = "{success:true,type:'hasapply'}";
 							}
 						}
 					}
 				}
-				
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
-			return null;
-		
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		/**
-		 * 列出用户名下的win7帐号
-		 * @Methods Name listWin7AccountName
-		 * @Create In Jun 22, 2010 By liuying
-		 * @return String
-		 */
-		public String listWin7AccountName() {
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			UserInfo user = UserContext.getUserInfo();
-			String accountIdStr = request.getParameter("id");
-			String userInfo = request.getParameter("userInfo");
-			if (userInfo != null&&!userInfo.equals("")) {
-				user = (UserInfo) getService().find(UserInfo.class, userInfo);
+		return null;
+
+	}
+
+	/**
+	 * 列出所有win7帐号
+	 * 
+	 * @Methods Name listAllWin7Account
+	 * @Create In Jun 22, 2010 By admin
+	 * @return String
+	 */
+	public String listAllWin7Account() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String ownerName = request.getParameter("ownerName");
+		String confirmUserName = request.getParameter("managerName");
+		int start = HttpUtil.getInt(request, "start", 0);
+		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
+		int pageNo = start / pageSize + 1;
+
+		Page page = accountService.findSpecailAccountByUsername("Win7",
+				ownerName, confirmUserName, pageNo, pageSize);
+		String jsons = "";
+		StringBuilder json = new StringBuilder();
+		Long total = page.getTotalCount();
+		List<SpecialAccount> sas = page.list();
+		for (SpecialAccount sa : sas) {
+			UserInfo owner = sa.getAccountNowUser();
+			UserInfo manager = sa.getConfirmUser();
+			Win7PlatForm pf = sa.getWin7PaltForm();
+			String platformname = "";
+			String pfId = "";
+			String ownername = "";
+			String ownerId = "";
+			String managername = "";
+			String managerId = "";
+
+			if (owner != null) {
+				ownername = owner.getUserName() + "/" + owner.getRealName();
+				ownerId = owner.getId().toString();
 			}
-			int pageSize = 10;//每页行数
-			int start = HttpUtil.getInt(request, "start", 0);
-			int pageNo = start / pageSize + 1;
-			Long accountId=null;
-			if(accountIdStr!=null&&accountIdStr.trim().length()!=0){
-				accountId=Long.valueOf(accountIdStr);
+			if (manager != null) {
+				managername = manager.getUserName() + "/"
+						+ manager.getRealName();
+				managerId = manager.getId().toString();
 			}
-			Page page = accountService.findWin7AccountByUser(accountId,user, pageNo, pageSize);
-			List<SpecialAccount> account = page.list();
-			Long total = page.getTotalCount();// 这是查询出所有的记录
-			
-			
-			String json = "";
-			for (SpecialAccount acc : account) {
-				Long id = acc.getId();
-				String accountName = acc.getAccountName();
-				String deviceId ="--";
-				if(acc.getDeviceType()!=null){
-					deviceId=acc.getDeviceType().getDeviceName();
+			if (pf != null) {
+				platformname = pf.getName();
+				pfId = pf.getId().toString();
+			}
+			String remarkDesc = "";
+			if (sa.getRemarkDesc() != null) {
+				remarkDesc = sa.getRemarkDesc();
+			}
+			String hardwareId = "";
+			if (sa.getHardwareId() != null) {
+				hardwareId = sa.getHardwareId();
+			}
+			String deviceName = "";
+			Long deviceId = null;
+			if (sa.getDeviceType() != null) {
+				deviceName = sa.getDeviceType().getDeviceName();
+				deviceId = sa.getDeviceType().getId();
+			}
+			json.append("{\"id\":\"" + sa.getId() + "\",\"accountNowUser\":\""
+					+ ownername + "\",\"accountNowUserId\":\"" + ownerId
+					+ "\",\"hardwareId\":\"" + hardwareId
+					+ "\",\"accountManager\":\"" + managername
+					+ "\",\"accountManagerId\":\"" + managerId
+					+ "\",\"deviceId\":\"" + deviceId + "\",\"deviceName\":\""
+					+ deviceName + "\",\"platFormId\":\"" + pfId
+					+ "\",\"platForm\":\"" + platformname
+					+ "\",\"remarkDesc\":\"" + remarkDesc
+					+ "\",\"createDate\":\"" + sa.getCreateDate()
+					+ "\",\"accountName\":\"" + sa.getAccountName() + "\"},");
+		}
+
+		if (json.length() == 0) {
+			jsons = "{success:true,rowCount:" + "1" + ",data:["
+					+ json.substring(0, json.length()) + "]}";
+		} else {
+			jsons = "{success:true,rowCount:" + total + ",data:["
+					+ json.substring(0, json.length() - 1) + "]}";
+		}
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(jsons);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/**
+	 * 修改win7帐号
+	 * 
+	 * @Methods Name modifyWin7Account
+	 * @Create In Jun 22, 2010 By liuying
+	 * @return String
+	 */
+	public String modifyWin7Account() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String owner = request.getParameter("owner");
+		String confirmUser = request.getParameter("confirmUser");
+		String Win7pf = request.getParameter("platform");
+		String deviceId = request.getParameter("deviceId");
+		String rightsDesc = request.getParameter("rightsDesc");
+		String accountid = request.getParameter("accountid");
+		String hardwardId = request.getParameter("hardwardId");
+		SpecialAccount sa = (SpecialAccount) getService().find(
+				SpecialAccount.class, accountid);
+		String json = "{success:true}";
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+
+		if (sa != null) {
+			UserInfo accountOwner = (UserInfo) getService().find(
+					UserInfo.class, owner);
+			if (accountOwner != null) {
+				sa.setAccountNowUser(accountOwner);
+			}
+			UserInfo accountConfirmUser = (UserInfo) getService().find(
+					UserInfo.class, confirmUser);
+			if (accountConfirmUser != null) {
+				sa.setConfirmUser(accountConfirmUser);
+			}
+			Win7PlatForm pf = (Win7PlatForm) getService().find(
+					Win7PlatForm.class, Win7pf);
+			if (pf != null) {
+				sa.setWin7PaltForm(pf);
+			}
+			sa.setRemarkDesc(rightsDesc);
+			DeviceType deviceType = (DeviceType) getService().find(
+					DeviceType.class, deviceId);
+			if (deviceType != null) {
+				sa.setDeviceType(deviceType);
+			}
+			sa.setHardwareId(hardwardId);
+			getService().save(sa);
+		}
+
+		AccountModifyDesc amd = new AccountModifyDesc();
+		amd.setAccountFlag(AccountModifyDesc.SPECAILACCOUNT);
+		amd.setAccountId(accountid);
+		UserInfo curUser = UserContext.getUserInfo();
+		amd.setAccountManger(curUser.getItcode());
+		Date currentDate = DateUtil.getCurrentDateTime();
+		amd.setModifyDate(currentDate);
+		getService().save(amd);
+
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 保存win7帐号
+	 * 
+	 * @Methods Name addWin7Account
+	 * @Create In Jun 22, 2010 By liuying
+	 * @return String
+	 */
+	public String addWin7Account() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String owner = request.getParameter("owner");
+		String confirmUser = request.getParameter("confirmUser");
+		String win7pf = request.getParameter("platform");
+		String deviceId = request.getParameter("deviceId");
+		String rightsDesc = request.getParameter("rightsDesc");
+		String hardWareId = request.getParameter("hardwareId");
+		SpecialAccount sa = new SpecialAccount();
+		String json = "{success:true}";
+
+		if ("".equals(owner) || owner == null) {
+			owner = confirmUser;
+		}
+		UserInfo accountOwner = (UserInfo) getService().find(UserInfo.class,
+				owner);
+		if (accountOwner != null) {
+			sa.setAccountNowUser(accountOwner);
+		}
+		UserInfo accountConfirmUser = (UserInfo) getService().find(
+				UserInfo.class, confirmUser);
+		if (accountConfirmUser != null) {
+			sa.setConfirmUser(accountConfirmUser);
+		}
+		Win7PlatForm pf = (Win7PlatForm) getService().find(Win7PlatForm.class,
+				win7pf);
+		if (pf != null) {
+			sa.setWin7PaltForm(pf);
+		}
+		sa.setRemarkDesc(rightsDesc);
+		DeviceType deviceType = (DeviceType) getService().find(
+				DeviceType.class, deviceId);
+		if (deviceType != null) {
+			sa.setDeviceType(deviceType);
+		}
+		sa.setAccountState("1");
+		AccountType at = (AccountType) getService().find(AccountType.class,
+				"24");
+		sa.setAccountType(at);
+		Date currentDate = DateUtil.getCurrentDate();
+		sa.setCreateDate(currentDate);
+		sa.setHardwareId(hardWareId);
+		UserInfo curUser = UserContext.getUserInfo();
+		if (curUser != null) {
+			sa.setWriterItcode(curUser.getItcode());
+		}
+		sa = (SpecialAccount) getService().save(sa);
+		sa.setAccountName(sa.getId().toString());
+		getService().save(sa);
+
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 根据帐号名判断该帐号是否有审批中的申请
+	 * 
+	 * @Methods Name getAccountNameApply
+	 * @Create In Jun 22, 2010 By liuying
+	 * @return String
+	 */
+	public String getAccountNameApply() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String accountId = request.getParameter("accountId");
+		SpecialAccount spa = (SpecialAccount) getService().find(
+				SpecialAccount.class, accountId);
+		String accountName = spa.getAccountName();
+		String accountType = request.getParameter("accountType");
+		String serviceItemProcessId = request
+				.getParameter("serviceItemProcess");
+
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		String json = "";
+		// String telephoneType = null;
+		try {
+
+			json = "{success:false}";
+			List<SpecialAccount> accounts = accountService
+					.findAllSpecailAccountByAccountName(accountType,
+							accountName);
+			if (accounts.size() != 0) {
+				for (SpecialAccount sa : accounts) {
+					AccountApplyMainTable aamt = sa.getApplyId();
+					if (aamt != null) {
+						String sip = aamt.getServiceItemProcess().getId()
+								.toString();
+						String status = aamt.getStatus().toString();
+						if (sip.equals(serviceItemProcessId)
+								&& status.equals("1")) {
+							json = "{success:true}";
+						}
+					}
 				}
-				String hardwareId = acc.getHardwareId();
-				json += "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName+"/"+deviceId+"/"+hardwareId
-				+ "\" },";
+			}
+
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	/**
+	 * 列出用户名下的win7帐号
+	 * 
+	 * @Methods Name listWin7AccountName
+	 * @Create In Jun 22, 2010 By liuying
+	 * @return String
+	 */
+	public String listWin7AccountName() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		UserInfo user = UserContext.getUserInfo();
+		String accountIdStr = request.getParameter("id");
+		String userInfo = request.getParameter("userInfo");
+		if (userInfo != null && !userInfo.equals("")) {
+			user = (UserInfo) getService().find(UserInfo.class, userInfo);
+		}
+		int pageSize = 10;// 每页行数
+		int start = HttpUtil.getInt(request, "start", 0);
+		int pageNo = start / pageSize + 1;
+		Long accountId = null;
+		if (accountIdStr != null && accountIdStr.trim().length() != 0) {
+			accountId = Long.valueOf(accountIdStr);
+		}
+		Page page = accountService.findWin7AccountByUser(accountId, user,
+				pageNo, pageSize);
+		List<SpecialAccount> account = page.list();
+		Long total = page.getTotalCount();// 这是查询出所有的记录
+
+		String json = "";
+		for (SpecialAccount acc : account) {
+			Long id = acc.getId();
+			String accountName = acc.getAccountName();
+			String deviceId = "--";
+			if (acc.getDeviceType() != null) {
+				deviceId = acc.getDeviceType().getDeviceName();
+			}
+			String hardwareId = acc.getHardwareId();
+			json += "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
+					+ "/" + deviceId + "/" + hardwareId + "\" },";
+		}
+		if (json.length() == 0) {
+			json = "{success:true,rowCount:" + "1" + ",data:["
+					+ json.substring(0, json.length()) + "]}";
+		} else {
+			json = "{success:true,rowCount:" + total + ",data:["
+					+ json.substring(0, json.length() - 1) + "]}";
+		}
+
+		try {
+			response.setCharacterEncoding("utf-8");
+			PrintWriter pw = response.getWriter();
+			pw.write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 列出所有部门座机帐号
+	 * 
+	 * @Methods Name listAllDeptTelephoneAccount
+	 * @Create In Mar 25, 2010 By liuying
+	 * @return String
+	 */
+
+	public String listAllDeptTelephoneAccount() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+
+		String json = "";
+		int pageSize = 10;
+		int start = Integer.parseInt(request.getParameter("start"));
+		int pageNo = start / pageSize + 1;
+		String number = request.getParameter("number");
+		String curId = request.getParameter("id");
+		if (curId != null && curId != "") {
+			PersonFormalAccount pfa = (PersonFormalAccount) accountService
+					.getAllDeptTelephoneAccount("座机", number).get(0);
+			json += "{id:'" + pfa.getTelephoneNumber() + "',number:'"
+					+ pfa.getTelephoneNumber() + "'}";
+			json = "{success: true, rowCount:'1',data:[" + json + "]}";
+		} else {
+			Page page = accountService.getAllDeptTelephone(number, pageNo,
+					pageSize);
+			Long total = page.getTotalCount();
+			List<PersonFormalAccount> queryList = page.list();
+			for (PersonFormalAccount pfa : queryList) {
+				json += "{id:'" + pfa.getTelephoneNumber() + "',number:'"
+						+ pfa.getTelephoneNumber() + "'},";
 			}
 			if (json.length() == 0) {
 				json = "{success:true,rowCount:" + "1" + ",data:["
-				+ json.substring(0, json.length()) + "]}";
+						+ json.substring(0, json.length()) + "]}";
 			} else {
 				json = "{success:true,rowCount:" + total + ",data:["
-				+ json.substring(0, json.length() - 1) + "]}";
+						+ json.substring(0, json.length() - 1) + "]}";
 			}
-			
-			try {
-				response.setCharacterEncoding("utf-8");
-				PrintWriter pw = response.getWriter();
-				pw.write(json);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
 		}
-		/**
-		 * 列出所有部门座机帐号
-		 * @Methods Name listAllDeptTelephoneAccount
-		 * @Create In Mar 25, 2010 By liuying
-		 * @return String
-		 */
-		
-		public String listAllDeptTelephoneAccount(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			
-			String json = "";
-			int pageSize = 10;
-			int start = Integer.parseInt(request.getParameter("start"));
-			int pageNo = start / pageSize + 1;
-			String number = request.getParameter("number");
-			String curId = request.getParameter("id");
-			if(curId!=null&&curId!=""){
-				PersonFormalAccount pfa = (PersonFormalAccount) accountService.getAllDeptTelephoneAccount("座机", number).get(0);
-				json+="{id:'"+pfa.getTelephoneNumber()+"',number:'"+pfa.getTelephoneNumber()+"'}";
-				json = "{success: true, rowCount:'1',data:["+json+"]}";
-			}else{
-				Page page = accountService.getAllDeptTelephone(number, pageNo, pageSize);
-				Long total = page.getTotalCount();
-				List<PersonFormalAccount> queryList = page.list();
-				for(PersonFormalAccount pfa : queryList){
-					json+="{id:'"+pfa.getTelephoneNumber()+"',number:'"+pfa.getTelephoneNumber()+"'},";
-				}
-				if (json.length() == 0) {
-					json = "{success:true,rowCount:" + "1" + ",data:["
-							+ json.substring(0, json.length()) + "]}";
-				} else {
-					json = "{success:true,rowCount:" + total + ",data:["
-							+ json.substring(0, json.length() - 1) + "]}";
-				}
-			}
-			try {
-				response.setCharacterEncoding("utf-8");
-				PrintWriter pw = response.getWriter();
-				pw.write(json);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		
+		try {
+			response.setCharacterEncoding("utf-8");
+			PrintWriter pw = response.getWriter();
+			pw.write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
+		return null;
+
+	}
+
+	/**
+	 * 保存座机删除草稿信息
+	 * 
+	 * @Methods Name saveTelephoneDeleteDraft
+	 * @Create In Jun 23, 2010 By liuying
+	 * @return String
+	 */
+	public String saveTelephoneDeleteDraft() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String panelName = request.getParameter("panelName");// 得到主面板名称
+		String serviceItemId = request.getParameter("serviceItemId");
+		String isDeptTel = request.getParameter("isdepttel");
+
+		getService().find(ServiceItem.class, serviceItemId);
+		String telephoneNumber = request.getParameter("telephoneNumber");
+		String accountType = request.getParameter("accountType");
+		PersonFormalAccount accounts = null;
+		if (isDeptTel.equals("0")) {
+			UserInfo curUser = null;
+			String userInfo = request.getParameter("userInfo");
+			if (userInfo != null && StringUtils.isNotBlank(userInfo)) {
+				curUser = (UserInfo) getService()
+						.find(UserInfo.class, userInfo);
+			}
+			accounts = accountService.findPersonAccount(accountType, curUser);
+		} else {
+			accounts = accountService.getAllDeptTelephoneAccount(accountType,
+					telephoneNumber).get(0);
+		}
+
+		if (accounts == null) {
+			throw new RuntimeException();
+		}
+		String info = request.getParameter("info");
+		String processType = request.getParameter("processType");
+		String processInfoId = request.getParameter("processInfoId");
+		// String applyReason = request.getParameter("applyReason");
+		ServiceItemProcess serviceItemProcess = serviceItemProcessService
+				.findServiceItemProcessById(processInfoId);
+		Date currentDate = DateUtil.getCurrentDate();
+		JSONObject panelJO = JSONObject.fromObject(info);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Iterator columnIter = panelJO.keys();
+		while (columnIter.hasNext()) {
+			String columnName = (String) columnIter.next();
+			String columnValue = panelJO.getString(columnName);
+			dataMap.put(columnName, columnValue);
+		}
+		PagePanel panel = pagePanelService.findPagePanel(panelName);
 		/**
-		 * 保存座机删除草稿信息
-		 * @Methods Name saveTelephoneDeleteDraft
-		 * @Create In Jun 23, 2010 By liuying
-		 * @return String
+		 * *******************************获取申请主实体数据*****************************
+		 * ********************
 		 */
-		public String saveTelephoneDeleteDraft() {
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String panelName = request.getParameter("panelName");// 得到主面板名称
-			String serviceItemId = request.getParameter("serviceItemId");
-			String isDeptTel = request.getParameter("isdepttel");
-			
-			ServiceItem serviceItem = (ServiceItem) getService().find(
-					ServiceItem.class, serviceItemId);
-			String telephoneNumber = request.getParameter("telephoneNumber");
-			String accountType = request.getParameter("accountType");
-			PersonFormalAccount accounts = null;
-			if(isDeptTel.equals("0")){
-				UserInfo curUser = null;
-				String userInfo = request.getParameter("userInfo");
-				if (userInfo != null && StringUtils.isNotBlank(userInfo)) {
-					curUser = (UserInfo) getService().find(UserInfo.class, userInfo);
-				}
-				accounts = accountService.findPersonAccount(accountType, curUser);
-			}else{
-				accounts = accountService.getAllDeptTelephoneAccount(
-						accountType, telephoneNumber).get(0);
-			}
-			
-			if (accounts == null) {
-				throw new RuntimeException();
-			}
-			String info = request.getParameter("info");
-			String processType = request.getParameter("processType");
-			String processInfoId = request.getParameter("processInfoId");
-			String applyReason = request.getParameter("applyReason");
-			ServiceItemProcess serviceItemProcess = serviceItemProcessService
-					.findServiceItemProcessById(processInfoId);
-			Date currentDate = DateUtil.getCurrentDate();
-			JSONObject panelJO = JSONObject.fromObject(info);
-			Map<String, Object> dataMap = new HashMap<String, Object>();
-			Iterator columnIter = panelJO.keys();
-			while (columnIter.hasNext()) {
-				String columnName = (String) columnIter.next();
-				String columnValue = panelJO.getString(columnName);
-				dataMap.put(columnName, columnValue);
-			}
-			PagePanel panel = pagePanelService.findPagePanel(panelName);
-			/** *******************************获取申请主实体数据************************************************* */
-			SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
-			String mainTableName = mainTable.getTableName(); // 得到主表名
-			Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
-			Map mainMap = new HashMap();
+		SystemMainTable mainTable = panel.getSystemMainTable(); // 得到申请主表
+		String mainTableName = mainTable.getTableName(); // 得到主表名
+		Class mainClass = this.toClass(mainTable.getClassName());// 得到申请主实体类
+		Map mainMap = new HashMap();
 
-			List<Column> mColumn = systemColumnService.findSystemTableColumns(panel
-					.getSystemMainTable());
-			for (Column column : mColumn) {
-				String propertyName = column.getPropertyName();
-				String tableColumnName = mainTableName + "$" + propertyName;
-				if (dataMap.containsKey(tableColumnName)) {
-					Object columnValue = dataMap.get(tableColumnName);
-					mainMap.put(propertyName, columnValue);
-				}
+		List<Column> mColumn = systemColumnService.findSystemTableColumns(panel
+				.getSystemMainTable());
+		for (Column column : mColumn) {
+			String propertyName = column.getPropertyName();
+			String tableColumnName = mainTableName + "$" + propertyName;
+			if (dataMap.containsKey(tableColumnName)) {
+				Object columnValue = dataMap.get(tableColumnName);
+				mainMap.put(propertyName, columnValue);
 			}
-			if ("".equals(mainMap.get("id"))) {
-				mainMap.put("createDate", currentDate);
-				mainMap.put("createUser", UserContext.getUserInfo());
-				mainMap.put("processType", processType);
-				mainMap.put("status", Constants.STATUS_DRAFT);
+		}
+		if ("".equals(mainMap.get("id"))) {
+			mainMap.put("createDate", currentDate);
+			mainMap.put("createUser", UserContext.getUserInfo());
+			mainMap.put("processType", processType);
+			mainMap.put("status", Constants.STATUS_DRAFT);
+		}
+		mainMap.put("serviceItem", serviceItemId);
+
+		mainMap.put("serviceItemProcess", serviceItemProcess);
+
+		Object acUser = null;
+		if (mainMap.containsKey("useUser")) {
+			acUser = mainMap.get("useUser");
+		} else {
+			acUser = mainMap.get("applyUser");
+		}
+		if (!mainMap.containsKey("delegateApplyUser")) {
+			mainMap.put("delegateApplyUser", acUser);
+		}
+
+		/**
+		 * *******************************保存账号实体START***************************
+		 * **********************
+		 */
+
+		AccountType at = (AccountType) getService().findUnique(
+				AccountType.class, "name", accountType);
+
+		SystemMainTable msmt = systemMainTableService
+				.findSystemMainTableByClazz(PersonFormalAccount.class); // 获取被关联表
+		String msmtName = msmt.getTableName();
+		Class account = this.toClass(msmt.getClassName());
+		Map temp = new HashMap();
+		List<Column> tempColumn = systemColumnService
+				.findSystemTableColumns(msmt);
+		for (Column column : tempColumn) {
+			String propertyName = column.getPropertyName();
+			String tableColumnName = msmtName + "$" + propertyName;
+			if (dataMap.containsKey(tableColumnName)) {
+				Object columnValue = dataMap.get(tableColumnName);
+				temp.put(propertyName, columnValue);
 			}
-			mainMap.put("serviceItem", serviceItemId);
+		}
+		BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
+				mainClass, mainMap);// 保存被关联主实体
+		String id = mainObject.getId().toString();// 得到主实体ID
+		String name = mainObject.getName();// 得到申请编号
+		temp.put("accountState", "0");
+		temp.put("accountType", at);
+		temp.put("createDate", currentDate);
+		temp.put("applyId", mainObject);
+		temp.put("ifHold", 1);
+		temp.put("cardState", 1);
+		temp.put("accountowner", acUser);
+		temp.put("yearMoney", accounts.getYearMoney());
+		temp.put("departTelephone", accounts.getDepartTelephone());// add by
+																	// liuying
+																	// at
+																	// 20100202
+		temp.put("olodApplyAccount", accounts);
 
-			mainMap.put("serviceItemProcess", serviceItemProcess);
+		metaDataManager.saveEntityData(account, temp);// 保存关联实体
 
-			Object acUser = null;
-			if (mainMap.containsKey("useUser")) {
-				acUser = mainMap.get("useUser");
+		/**
+		 * *******************************保存账号实体END*****************************
+		 * ********************
+		 */
+		String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String listAllActiveProcessInstance() {
+		// HttpServletRequest request = super.getRequest();
+		// HttpServletResponse response = super.getResponse();
+		// String ownerName=request.getParameter("ownerName");
+		// String confirmUserName=request.getParameter("managerName");
+		//			
+		// int start = HttpUtil.getInt(request, "start", 1);
+		// int pageSize = HttpUtil.getInt(request, "pageSize", 10);
+		// String json="";
+		// System.out.println(json+new Date().getTime());
+		// List<ProcessInfo> list= ds.getAllActiveProcessInstance();
+		// System.out.println(json+new Date().getTime());
+		// for(int i =0; i<1;i++){
+		// ProcessInfo pi = list.get(i);
+		// json += "{\"id\":\"" + pi.getId() + "\",\"auditper\":\"" +
+		// pi.getAuditper()
+		// // + "\",\"definitionName\":\"" + pi.getDefinitionName() +
+		// "\",\"name\":\"" + pi.getName()
+		// //+ "\",\"nodeDesc\":\"" + pi.getNodeDesc()
+		// + "\",\"nodeName\":\"" + pi.getNodeName()
+		// + "\",\"processCreator\":\"" + pi.getProcessCreator()+
+		// "\",\"taskId\":\"" + pi.getTaskid()
+		// + "\",\"virtualDefinitionDesc\":\"" + pi.getVirtualDefinitionDesc() +
+		// "\",\"dataId\":\"" + pi.getDataId()
+		// + "\",\"start\":\"" + pi.getStart()
+		// //+ "\",\"defVersion\":\"" + pi.getDefVersion()
+		// + "\"},";
+		// }
+		// int total = list.size();
+		//			
+		//			
+		// if (json.length() == 0) {
+		// json = "{success:true,rowCount:" + "1" + ",data:["
+		// + json.substring(0, json.length()) + "]}";
+		// } else {
+		// json = "{success:true,rowCount:" + total + ",data:["
+		// + json.substring(0, json.length() - 1) + "]}";
+		// }
+		// response.setContentType("text/plain");
+		// response.setCharacterEncoding("UTF-8");
+		// PrintWriter out;
+		// System.out.println(json+new Date().getTime());
+		// try {
+		// out = response.getWriter();
+		// out.println(json);
+		// System.out.println(json+new Date().getTime());
+		// out.flush();
+		// out.close();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		//			
+		return null;
+	}
+
+	/**
+	 * 获得win7平台名
+	 * 
+	 * @Methods Name listWin7PlatFormName
+	 * @Create In Aug 5, 2009 By liuying
+	 * @return String
+	 */
+	public String listWin7PlatFormName() {
+
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String name = request.getParameter("name");
+		String pfid = request.getParameter("id");
+		int pageSize = 10;// 每页行数
+		int start = HttpUtil.getInt(request, "start", 0);
+		int pageNo = start / pageSize + 1;
+
+		String json = "";
+		if (pfid != null && pfid != "") {
+			Win7PlatForm pfa = (Win7PlatForm) getService().find(
+					Win7PlatForm.class, pfid);
+			json += "{id:'" + pfa.getId() + "',name:'" + pfa.getName() + "'}";
+			json = "{success: true, rowCount:'1',data:[" + json + "]}";
+		} else {
+			Page page = accountService.findByPageQueryWin7PlatForm(name,
+					pageNo, pageSize);
+			List<Win7PlatForm> account = page.list();
+			Long total = page.getTotalCount();// 这是查询出所有的记录
+
+			for (Win7PlatForm acc : account) {
+				Long id = acc.getId();
+				String accountName = acc.getName();
+				json += "{\"id\":\"" + id + "\",\"name\":\"" + accountName
+						+ "\" },";
+			}
+			if (json.length() == 0) {
+				json = "{success:true,rowCount:" + "1" + ",data:["
+						+ json.substring(0, json.length()) + "]}";
 			} else {
-				acUser = mainMap.get("applyUser");
+				json = "{success:true,rowCount:" + total + ",data:["
+						+ json.substring(0, json.length() - 1) + "]}";
 			}
-			if (!mainMap.containsKey("delegateApplyUser")) {
-				mainMap.put("delegateApplyUser", acUser);
-			}
+		}
+		try {
+			response.setCharacterEncoding("utf-8");
+			PrintWriter pw = response.getWriter();
+			pw.write(json);
 
-			/** *******************************保存账号实体START************************************************* */
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-			AccountType at = (AccountType) getService().findUnique(
-					AccountType.class, "name", accountType);
+	/**
+	 * 获得win7平台名
+	 * 
+	 * @Methods Name listDeviceTypeName
+	 * @Create In Aug 5, 2009 By liuying
+	 * @return String
+	 */
+	public String listDeviceTypeName() {
 
-			SystemMainTable msmt = systemMainTableService
-					.findSystemMainTableByClazz(PersonFormalAccount.class); // 获取被关联表
-			String msmtName = msmt.getTableName();
-			Class account = this.toClass(msmt.getClassName());
-			Map temp = new HashMap();
-			List<Column> tempColumn = systemColumnService
-					.findSystemTableColumns(msmt);
-			for (Column column : tempColumn) {
-				String propertyName = column.getPropertyName();
-				String tableColumnName = msmtName + "$" + propertyName;
-				if (dataMap.containsKey(tableColumnName)) {
-					Object columnValue = dataMap.get(tableColumnName);
-					temp.put(propertyName, columnValue);
-				}
-			}
-			BaseObject mainObject = (BaseObject) metaDataManager.saveEntityData(
-					mainClass, mainMap);// 保存被关联主实体
-			String id = mainObject.getId().toString();// 得到主实体ID
-			String name = mainObject.getName();// 得到申请编号
-			temp.put("accountState", "0");
-			temp.put("accountType", at);
-			temp.put("createDate", currentDate);
-			temp.put("applyId", mainObject);
-			temp.put("ifHold", 1);
-			temp.put("cardState", 1);
-			temp.put("accountowner", acUser);
-			temp.put("yearMoney", accounts.getYearMoney());
-			temp.put("departTelephone", accounts.getDepartTelephone());//add by liuying at 20100202
-			temp.put("olodApplyAccount", accounts);
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String name = request.getParameter("name");
+		String pfid = request.getParameter("id");
+		int pageSize = 10;// 每页行数
+		int start = HttpUtil.getInt(request, "start", 0);
+		int pageNo = start / pageSize + 1;
 
-			BaseObject object = (BaseObject) metaDataManager.saveEntityData(
-					account, temp);// 保存关联实体
+		String json = "";
+		if (pfid != null && pfid != "") {
+			DeviceType pfa = (DeviceType) getService().find(DeviceType.class,
+					pfid);
+			json += "{id:'" + pfa.getId() + "',name:'" + pfa.getDeviceName()
+					+ "'}";
+			json = "{success: true, rowCount:'1',data:[" + json + "]}";
+		} else {
+			Page page = accountService.findByPageQueryDeviceType(name, pageNo,
+					pageSize);
+			List<DeviceType> account = page.list();
+			Long total = page.getTotalCount();// 这是查询出所有的记录
 
-			/** *******************************保存账号实体END************************************************* */
-			String json = "{success:true,id:" + id + ",applyId:'" + name + "'}";
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			for (DeviceType acc : account) {
+				Long id = acc.getId();
+				String accountName = acc.getDeviceName();
+				json += "{\"id\":\"" + id + "\",\"name\":\"" + accountName
+						+ "\" },";
 			}
-			return null;
+			if (json.length() == 0) {
+				json = "{success:true,rowCount:" + "1" + ",data:["
+						+ json.substring(0, json.length()) + "]}";
+			} else {
+				json = "{success:true,rowCount:" + total + ",data:["
+						+ json.substring(0, json.length() - 1) + "]}";
+			}
 		}
-		
-		public String listAllActiveProcessInstance(){
-//			HttpServletRequest request = super.getRequest();
-//			HttpServletResponse response = super.getResponse();
-//			String ownerName=request.getParameter("ownerName");
-//			String confirmUserName=request.getParameter("managerName");
-//			
-//			int start = HttpUtil.getInt(request, "start", 1);
-//			int pageSize = HttpUtil.getInt(request, "pageSize", 10);
-//			String json="";
-//			System.out.println(json+new Date().getTime());
-//			List<ProcessInfo> list= ds.getAllActiveProcessInstance();
-//			System.out.println(json+new Date().getTime());
-//			for(int i =0; i<1;i++){
-//				ProcessInfo pi = list.get(i);
-//				json += "{\"id\":\"" + pi.getId() + "\",\"auditper\":\"" + pi.getAuditper()
-//				// + "\",\"definitionName\":\"" + pi.getDefinitionName() + "\",\"name\":\"" + pi.getName()
-//				//+ "\",\"nodeDesc\":\"" + pi.getNodeDesc()
-//				+ "\",\"nodeName\":\"" + pi.getNodeName()
-//				+ "\",\"processCreator\":\"" + pi.getProcessCreator()+ "\",\"taskId\":\"" + pi.getTaskid()
-//				+ "\",\"virtualDefinitionDesc\":\"" + pi.getVirtualDefinitionDesc() + "\",\"dataId\":\"" + pi.getDataId()
-//				+ "\",\"start\":\"" + pi.getStart()
-//				//+ "\",\"defVersion\":\"" + pi.getDefVersion()
-//				+ "\"},";
-//			}
-//			int total = list.size();
-//			
-//			
-//			if (json.length() == 0) {
-//				json = "{success:true,rowCount:" + "1" + ",data:["
-//						+ json.substring(0, json.length()) + "]}";
-//			} else {
-//				json = "{success:true,rowCount:" + total + ",data:["
-//						+ json.substring(0, json.length() - 1) + "]}";
-//			}
-//			response.setContentType("text/plain");
-//			response.setCharacterEncoding("UTF-8");
-//			PrintWriter out;
-//			System.out.println(json+new Date().getTime());
-//			try {
-//				out = response.getWriter();
-//				out.println(json);
-//				System.out.println(json+new Date().getTime());
-//				out.flush();
-//				out.close();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			
-			return null;
+		try {
+			response.setCharacterEncoding("utf-8");
+			PrintWriter pw = response.getWriter();
+			pw.write(json);
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-		
-		/**
-		 * 获得win7平台名
-		 * 
-		 * @Methods Name listWin7PlatFormName
-		 * @Create In Aug 5, 2009 By liuying
-		 * @return String
-		 */
-		public String listWin7PlatFormName() {
-		
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String name=request.getParameter("name");
-			String pfid = request.getParameter("id");
-			int pageSize = 10;//每页行数
-			int start = HttpUtil.getInt(request, "start", 0);
-			int pageNo = start / pageSize + 1;
-			
-			String json = "";
-			if(pfid!=null&&pfid!=""){
-				Win7PlatForm pfa = (Win7PlatForm)  getService().find(Win7PlatForm.class, pfid);
-				json+="{id:'"+pfa.getId()+"',name:'"+pfa.getName()+"'}";
-				json = "{success: true, rowCount:'1',data:["+json+"]}";
-			}else{
-				Page page = accountService.findByPageQueryWin7PlatForm(name, pageNo, pageSize);
-				List<Win7PlatForm> account = page.list();
-		        Long total = page.getTotalCount();// 这是查询出所有的记录
-				
-				for (Win7PlatForm acc : account) {
-					Long id = acc.getId();
-					String accountName = acc.getName();
-					json += "{\"id\":\"" + id + "\",\"name\":\"" + accountName
-							+ "\" },";
-				}
-				if (json.length() == 0) {
-					json = "{success:true,rowCount:" + "1" + ",data:["
-							+ json.substring(0, json.length()) + "]}";
-				} else {
-					json = "{success:true,rowCount:" + total + ",data:["
-							+ json.substring(0, json.length() - 1) + "]}";
+		return null;
+	}
+
+	/**
+	 * 得到帐号修改的历史记录
+	 * 
+	 * @Methods Name getModifyDesc
+	 * @Create In Jun 30, 2010 By liuying
+	 * @return String
+	 */
+	public String getModifyDesc() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String accountId = request.getParameter("accountId");
+		List<AccountModifyDesc> list = accountService
+				.findModifyDescByAccountId(accountId, "2");
+		String json = "";
+		if (list != null && list.size() != 0) {
+			String his = "";
+			for (AccountModifyDesc amd : list) {
+				his += amd.getAccountManger() + " 于 " + amd.getModifyDate()
+						+ " 修改过此帐号。\\r\\n";
+			}
+			json = "{success:true,his:'" + his + "'}";
+		} else {
+			json = "{success:true,his:'无'}";
+		}
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 自动获得临时邮件帐号的帐号名
+	 * 
+	 * @Methods Name getTempAccountName
+	 * @Create In Aug 20, 2010 By liuying
+	 * @return String
+	 */
+	public String getTempAccountName() {
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String cnName = request.getParameter("cnName");
+		String tempName = request.getParameter("tempName");
+		String managerName = request.getParameter("managerName");
+		String accid = request.getParameter("accid");
+
+		SenseServicesUitl ssUtil = new SenseServicesUitl();
+		String itcode = ssUtil.initTempUser(cnName, tempName, managerName
+				.toUpperCase());
+		String json = "";
+		if (itcode != null && !"".equals(itcode)) {
+			if (accid != null && !"".equals(accid)) {
+				SpecialAccount sa = (SpecialAccount) getService().find(
+						SpecialAccount.class, accid);
+				if (sa != null) {
+					sa.setAccountName(itcode);
+					getService().save(sa);
 				}
 			}
-			try {
-				response.setCharacterEncoding("utf-8");
-				PrintWriter pw = response.getWriter();
-				pw.write(json);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
+			json = "{success:true,itcode:'" + itcode + "'}";
+		} else {
+			json = "{success:false}";
 		}
-		
-		
-		/**
-		 * 获得win7平台名
-		 * 
-		 * @Methods Name listDeviceTypeName
-		 * @Create In Aug 5, 2009 By liuying
-		 * @return String
-		 */
-		public String listDeviceTypeName() {
-		
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String name=request.getParameter("name");
-			String pfid = request.getParameter("id");
-			int pageSize = 10;//每页行数
-			int start = HttpUtil.getInt(request, "start", 0);
-			int pageNo = start / pageSize + 1;
-			
-			String json = "";
-			if(pfid!=null&&pfid!=""){
-				DeviceType pfa = (DeviceType)  getService().find(DeviceType.class, pfid);
-				json+="{id:'"+pfa.getId()+"',name:'"+pfa.getDeviceName()+"'}";
-				json = "{success: true, rowCount:'1',data:["+json+"]}";
-			}else{
-				Page page = accountService.findByPageQueryDeviceType(name, pageNo, pageSize);
-				List<DeviceType> account = page.list();
-		        Long total = page.getTotalCount();// 这是查询出所有的记录
-				
-				for (DeviceType acc : account) {
-					Long id = acc.getId();
-					String accountName = acc.getDeviceName();
-					json += "{\"id\":\"" + id + "\",\"name\":\"" + accountName
-							+ "\" },";
-				}
-				if (json.length() == 0) {
-					json = "{success:true,rowCount:" + "1" + ",data:["
-							+ json.substring(0, json.length()) + "]}";
-				} else {
-					json = "{success:true,rowCount:" + total + ",data:["
-							+ json.substring(0, json.length() - 1) + "]}";
-				}
-			}
-			try {
-				response.setCharacterEncoding("utf-8");
-				PrintWriter pw = response.getWriter();
-				pw.write(json);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		/**
-		 * 得到帐号修改的历史记录
-		 * @Methods Name getModifyDesc
-		 * @Create In Jun 30, 2010 By liuying
-		 * @return String
-		 */
-		public String getModifyDesc(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String accountId=request.getParameter("accountId");
-			List<AccountModifyDesc> list=accountService.findModifyDescByAccountId(accountId,"2");
-			String json="";
-			if(list!=null&&list.size()!=0){
-				String his="";
-				for(AccountModifyDesc amd:list){
-					his+=amd.getAccountManger()+" 于 "+amd.getModifyDate()+" 修改过此帐号。\\r\\n";
-				}
-				json="{success:true,his:'"+his+"'}";
-			}else{
-				json="{success:true,his:'无'}";
-			}
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-		/**
-		 * 自动获得临时邮件帐号的帐号名
-		 * @Methods Name getTempAccountName
-		 * @Create In Aug 20, 2010 By liuying
-		 * @return String
-		 */
-		public String getTempAccountName(){
-			HttpServletRequest request = super.getRequest();
-			HttpServletResponse response = super.getResponse();
-			String cnName=request.getParameter("cnName");
-			String tempName=request.getParameter("tempName");
-			String managerName=request.getParameter("managerName");
-			String accid=request.getParameter("accid");
-			
-			SenseServicesUitl ssUtil = new SenseServicesUitl();
-			String itcode=ssUtil.initTempUser(cnName,tempName,managerName.toUpperCase());
-			String json="";
-			if(itcode!=null&&!"".equals(itcode)){
-				if(accid!=null&&!"".equals(accid)){
-					SpecialAccount sa=(SpecialAccount) getService().find(SpecialAccount.class, accid);
-					if(sa!=null){
-						sa.setAccountName(itcode);
-						getService().save(sa);
-					}
-				}
-				json="{success:true,itcode:'"+itcode+"'}";
-			}else{
-				json="{success:false}";
-			}
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println(json);
-				out.flush();
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-//		public String findWWWDayDetail(){
-//			String calendar=getRequest().getParameter("calendar");
-//			int pageNo=HttpUtil.getInt(getRequest(), "pageNo",1);
-//			int pageSize=HttpUtil.getInt(getRequest(),"pageSize",20);
-//			Page page=accountService.findWWWDayDetail(calendar,pageNo, pageSize);
-//			getRequest().setAttribute("list", page.getResult());
-//			getRequest().setAttribute("totalCount",page.getTotalCount() );
-//			getRequest().setAttribute("pageCount", page.getTotalPageCount());
-//			getRequest().setAttribute("pageNo", page.getCurrentPageNo());
-//			getRequest().setAttribute("calendar", calendar);
-//			return	"toWWWDayDetail";
-//		}
-//		public String findWWWMonth(){
-//			long bytes=accountService.findWWWMonth();
-//			Integer limit=accountService.findWwwLimit(UserContext.getUserInfo().getUserName());
-//			if(limit==null){
-//				getRequest().setAttribute("errorMessage", "您还没有WWW帐号！");
-//				return "toNoWWWAccount";
-//			}
-//			double flux=bytes/1024/1024;
-//			double fee=flux*0.25;
-//			getRequest().setAttribute("limit", limit);
-//			getRequest().setAttribute("flux", flux);
-//			getRequest().setAttribute("balance", limit-fee);
-//			getRequest().setAttribute("fee", fee);
-//			DateFormat df=new SimpleDateFormat("yyyyMM");
-//			getRequest().setAttribute("yearAndMonth", df.format(new Date()));
-//			return "toWWWMonth";
-//			
-//		}
-//		public  String findWWWMonthDetail(){
-//			String yearAndMonth=getRequest().getParameter("yearAndMonth");
-//			List<Object[]> list=accountService.findWWWMonthDetail(yearAndMonth);
-//			getRequest().setAttribute("list", list);
-//			getRequest().setAttribute("yearAndMonth", yearAndMonth);
-//			return "toWWWMonthDetail";
-//		}
+		return null;
+	}
+	// public String findWWWDayDetail(){
+	// String calendar=getRequest().getParameter("calendar");
+	// int pageNo=HttpUtil.getInt(getRequest(), "pageNo",1);
+	// int pageSize=HttpUtil.getInt(getRequest(),"pageSize",20);
+	// Page page=accountService.findWWWDayDetail(calendar,pageNo, pageSize);
+	// getRequest().setAttribute("list", page.getResult());
+	// getRequest().setAttribute("totalCount",page.getTotalCount() );
+	// getRequest().setAttribute("pageCount", page.getTotalPageCount());
+	// getRequest().setAttribute("pageNo", page.getCurrentPageNo());
+	// getRequest().setAttribute("calendar", calendar);
+	// return "toWWWDayDetail";
+	// }
+	// public String findWWWMonth(){
+	// long bytes=accountService.findWWWMonth();
+	// Integer
+	// limit=accountService.findWwwLimit(UserContext.getUserInfo().getUserName());
+	// if(limit==null){
+	// getRequest().setAttribute("errorMessage", "您还没有WWW帐号！");
+	// return "toNoWWWAccount";
+	// }
+	// double flux=bytes/1024/1024;
+	// double fee=flux*0.25;
+	// getRequest().setAttribute("limit", limit);
+	// getRequest().setAttribute("flux", flux);
+	// getRequest().setAttribute("balance", limit-fee);
+	// getRequest().setAttribute("fee", fee);
+	// DateFormat df=new SimpleDateFormat("yyyyMM");
+	// getRequest().setAttribute("yearAndMonth", df.format(new Date()));
+	// return "toWWWMonth";
+	//			
+	// }
+	// public String findWWWMonthDetail(){
+	// String yearAndMonth=getRequest().getParameter("yearAndMonth");
+	// List<Object[]> list=accountService.findWWWMonthDetail(yearAndMonth);
+	// getRequest().setAttribute("list", list);
+	// getRequest().setAttribute("yearAndMonth", yearAndMonth);
+	// return "toWWWMonthDetail";
+	// }
 }

@@ -677,7 +677,7 @@ public class EventAction extends BaseAction {
 			List<QuestOption> list = trainPlanService.findQuestOption(quest);
 			map.put(quest, list);
 		}
-		Event event=(Event) this.service.findUnique(Event.class, "id", eventId);
+//		Event event=(Event) this.service.findUnique(Event.class, "id", eventId);
 		//2010-08-12 modified by huzh for 修改查询方法 begin
 //		List questResultList = questService.getResult(event.getSubmitUser(), survey.getId(), eventId);
 		List questResultList = questService.getResultBySurveyAndObjId(survey.getId(), eventId);
@@ -709,7 +709,7 @@ public class EventAction extends BaseAction {
 		if (request.getParameter("taskId") != null) {
 			taskId = Long.parseLong(request.getParameter("taskId"));
 		}
-		UserInfo userInfo = UserContext.getUserInfo();
+//		UserInfo userInfo = UserContext.getUserInfo();
 
 		List<Quest> questList = eventService.findQuest(surveyId);
 		Iterator<Quest> iter = questList.iterator();
@@ -1085,14 +1085,14 @@ public class EventAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		String currEventId = request.getParameter("eventId");
 		Event event = (Event) super.getService().find(Event.class, currEventId, true);
-		EventRelationType EventRelTypeA = (EventRelationType) super.getService().findUnique(EventRelationType.class,
-				"typeFlag", EventRelationType.SAME);// 同一事件
-		EventRelationType EventRelTypeC = (EventRelationType) super.getService().findUnique(EventRelationType.class,
-				"typeFlag", EventRelationType.CHILD);// 子事件
-		EventRelationType EventRelTypeB = (EventRelationType) super.getService().findUnique(EventRelationType.class,
-				"typeFlag", EventRelationType.PARENT);// 父事件
-		EventRelationType EventRelTypeD = (EventRelationType) super.getService().findUnique(EventRelationType.class,
-				"typeFlag", EventRelationType.RELATION);// 关联事件
+//		EventRelationType EventRelTypeA = (EventRelationType) super.getService().findUnique(EventRelationType.class,
+//				"typeFlag", EventRelationType.SAME);// 同一事件
+//		EventRelationType EventRelTypeC = (EventRelationType) super.getService().findUnique(EventRelationType.class,
+//				"typeFlag", EventRelationType.CHILD);// 子事件
+//		EventRelationType EventRelTypeB = (EventRelationType) super.getService().findUnique(EventRelationType.class,
+//				"typeFlag", EventRelationType.PARENT);// 父事件
+//		EventRelationType EventRelTypeD = (EventRelationType) super.getService().findUnique(EventRelationType.class,
+//				"typeFlag", EventRelationType.RELATION);// 关联事件
 		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
 		int start = HttpUtil.getInt(request, "start", 0);
 		int pageNo = start / pageSize + 1;
@@ -1324,7 +1324,7 @@ public class EventAction extends BaseAction {
 	 * @return String
 	 * @throws IOException
 	 */
-	@SuppressWarnings( { "unused", "unchecked" })
+	@SuppressWarnings( { "unchecked" })
 	public String findServiceItemType() throws IOException {
 		try {
 			int pageSize = HttpUtil.getInt(getRequest(), "pageSize", 10);
@@ -1362,7 +1362,7 @@ public class EventAction extends BaseAction {
 	 * @return String
 	 * @throws IOException
 	 */
-	@SuppressWarnings( { "unused", "unchecked" }) 
+	@SuppressWarnings( { "unchecked" }) 
 	public String findServiceItem() {
 		try {
 			int pageSize = HttpUtil.getInt(getRequest(), "pageSize", 10);
@@ -1438,9 +1438,9 @@ public class EventAction extends BaseAction {
 				Map paramgroup = new HashMap();
 				paramgroup.put("supportGroup", myinfoMap.get("supportGroup").toString());
 				Page page = metaDataManager.query(clazz, paramgroup, pageNo, pageSize, orderBy, isAsc);
-				Long total = page.getTotalCount();
+//				Long total = page.getTotalCount();
 				List cofigList = page.list();
-				int k = 1;
+//				int k = 1;
 				if (cofigList.size() != 0) {
 					service.save(event);//2010-07-21 add by huzh 保存支持组
 					eventService.modifyDealerOfEvent(para, null);
@@ -1682,7 +1682,7 @@ public class EventAction extends BaseAction {
 		String evid = request.getParameter("eventId");//eventRelation的id
 		Class clazz = EventRelation.class;
 		EventRelation event = (EventRelation) service.find(clazz, evid);
-		String ev = event.getEvent().getId().toString();//event的id
+//		String ev = event.getEvent().getId().toString();//event的id
 		String pev = event.getParentEvent().getId().toString(); //parentEvent的id
 		String pevalue = event.getParentEvent().getSummary();//parentEvent的summary
 		String eventReletion = event.getEventRelationType().getId().toString();//eventRelationType的id
@@ -2123,7 +2123,7 @@ public class EventAction extends BaseAction {
 	 * @return 
 	 * @Return String
 	 */
-	@SuppressWarnings( { "unused", "unchecked" })
+	@SuppressWarnings( { "unchecked" })
 	public String engineerSubmitEvent() {
 		StringBuilder json = new StringBuilder();
 		String info = getRequest().getParameter("panelparam");
@@ -2506,7 +2506,7 @@ public class EventAction extends BaseAction {
 		List engineers=page.list();
 		StringBuilder json = new StringBuilder("{success: true,rowCount:"+total+",data:[");
 		if(engineers!=null&&engineers.size()!=0){
-			int s=engineers.size();
+//			int s=engineers.size();
 			for(int i=0;i<engineers.size();i++){
 				UserInfo engineer=(UserInfo) engineers.get(i);
 				if (i != 0)
@@ -2990,7 +2990,9 @@ public class EventAction extends BaseAction {
 		UserInfo customer=(UserInfo) getService().findUnique(UserInfo.class, "itcode", customerItcode.toUpperCase());
 		Knowledge knowledge= (Knowledge) getService().find(Knowledge.class,knowledgeId);
 		knowledge.setUseTime(knowledge.getUseTime()+1);
-		Knowledge newKnowledge=(Knowledge) getService().save(knowledge);
+		
+		getService().save(knowledge);
+		
 		Map eventMap = new HashMap();
 		UserInfo engineer =UserContext.getUserInfo();
 		eventMap.put("summary", knowledge.getSummary());
@@ -3295,7 +3297,7 @@ public class EventAction extends BaseAction {
 	//2010-06-29 add by huzh for 发送解决方案邮件的格式
 	private String eventHtmlContent(UserInfo creator, String url,Event event) {
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -3366,7 +3368,7 @@ public class EventAction extends BaseAction {
 	private String eventHtmlSatisfyContent(UserInfo creator, String url,Event event) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -3438,7 +3440,7 @@ public class EventAction extends BaseAction {
 	private String KnowledgeHtmlContent(UserInfo submitUser, String url,
 			Event event,Knowledge knowledge) {
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

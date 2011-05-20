@@ -56,7 +56,10 @@ public class UserViewStyleAction extends BaseDispatchAction{
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-			out.close();
+		}finally{
+			if(out != null)
+				out.close();
+				
 		}
 		return null;
 	}

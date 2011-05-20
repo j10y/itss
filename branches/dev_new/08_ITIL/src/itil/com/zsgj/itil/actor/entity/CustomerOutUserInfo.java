@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In 2009-3-21
  */
 public class CustomerOutUserInfo extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -3402896029481718052L;
 	private Long id;
 	private Customer customerOut; //主要同一个用户的所属外部客户唯一
 	private UserInfo userInfo;

@@ -10,6 +10,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @deprecated deprecated by duxh in 09-11-19
  */
 public class CIRelationShipPicNode extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7475895537175045288L;
+
 	private Long id;
 
 	private CIRelationShipPic ciRelationShipPic;

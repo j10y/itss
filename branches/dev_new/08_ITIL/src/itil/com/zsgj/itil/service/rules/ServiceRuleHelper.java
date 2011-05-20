@@ -71,6 +71,7 @@ public class ServiceRuleHelper {
 	 * @param result
 	 * @param comment void
 	 */
+	@SuppressWarnings("static-access")
 	public String serviceCataAuditFlag(String dataId,String nodeId,String nodeName,String processId,String result,String comment,String alterFlag){	
 		
 	
@@ -162,6 +163,7 @@ public class ServiceRuleHelper {
 	 * @param result
 	 * @param comment void
 	 */
+	@SuppressWarnings("static-access")
 	public String serviceCataAlterAuditFlag(String dataId,String nodeId,String nodeName,String processId,String result,String comment,String alterFlag){	
 		
 		ServiceCatalogue serviceCatalogue = (ServiceCatalogue)service.find(ServiceCatalogue.class, dataId);

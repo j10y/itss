@@ -11,15 +11,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.jspsmart.upload.SmartUpload;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.exception.ApplicationException;
 import com.zsgj.info.framework.exception.ServiceException;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
-import com.zsgj.itil.account.entity.MobileTelephoneApply;
 import com.zsgj.itil.account.entity.PersonFormalAccount;
 import com.zsgj.itil.account.entity.SpecialAccount;
 import com.zsgj.itil.account.service.AccountService;
@@ -32,7 +29,7 @@ import com.zsgj.itil.account.service.AccountService;
  */
 public class ImportAccountDataAction extends BaseDispatchAction{
 	private AccountService as = (AccountService) ContextHolder.getBean("accountService");
-	private Service service = (Service) ContextHolder.getBean("baseService");
+	//private Service service = (Service) ContextHolder.getBean("baseService");
 	static final String FSP = System.getProperty("file.separator");
 	static final String LSP = System.getProperty("line.separator");
 	/**

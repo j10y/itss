@@ -65,14 +65,14 @@ public class nticeAction extends BaseAction{
 	 * @throws Exception String
 	 */
 	public String saveAlter() throws Exception {
-		HttpServletRequest request = super.getRequest();
+//		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		UserInfo userInfo = UserContext.getUserInfo();
 		String json="";
 		String info = super.getRequest().getParameter("info");
 		Map map = getMapFormPanelJson(info);
 		if(map.get("id")!=null){
-			Date date = new Date();
+//			Date date = new Date();
 			map.put("alterNoticeId", map.get("id"));
 			map.put("id", null);
 			map.put("auditflag", 0);

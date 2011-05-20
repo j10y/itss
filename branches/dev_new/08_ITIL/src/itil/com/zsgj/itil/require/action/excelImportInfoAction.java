@@ -37,7 +37,7 @@ import com.zsgj.itil.require.entity.RequireFactoryInfo;
 
 public class excelImportInfoAction extends BaseDispatchAction  {
 	
-	private Service service = (Service) ContextHolder.getBean("baseService");
+//	private Service service = (Service) ContextHolder.getBean("baseService");
 	private MetaDataManager metaDataManager = (MetaDataManager) getBean("metaDataManager");
 	static final String FSP = System.getProperty("file.separator");
 	static final String LSP = System.getProperty("line.separator");
@@ -112,7 +112,7 @@ public class excelImportInfoAction extends BaseDispatchAction  {
 	 * @author zhangzy
 	 * @Create In 04 05, 2010 TODO
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private Map parseXLSX(String filePath,String id)throws Exception{
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String msg = "";
@@ -386,6 +386,7 @@ public class excelImportInfoAction extends BaseDispatchAction  {
 	 * @Methods Name chansforFlodToCode
 	 * @return String
 	 */
+	@SuppressWarnings("unused")
 	private String chansforFlodToCode(String str)throws Exception{
 		if(null != str && str.indexOf(".") != -1 && str.indexOf("E") != -1) {
             DecimalFormat df = new DecimalFormat();

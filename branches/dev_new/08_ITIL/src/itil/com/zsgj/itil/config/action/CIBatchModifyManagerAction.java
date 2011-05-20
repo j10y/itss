@@ -28,6 +28,7 @@ import com.zsgj.info.framework.workflow.info.TaskInfo;
 import com.zsgj.itil.config.entity.CIBatchModify;
 import com.zsgj.itil.config.service.ConfigItemService;
 
+@SuppressWarnings("serial")
 public class CIBatchModifyManagerAction extends BaseAction{
 	private TaskService ts = (TaskService)ContextHolder.getBean("taskService");
 	private ParameterService pms = (ParameterService)ContextHolder.getBean("parameterService");
@@ -97,7 +98,6 @@ public class CIBatchModifyManagerAction extends BaseAction{
 	 * @throws Exception String
 	 */
 	public String tasks() throws Exception{
-		@SuppressWarnings("unused")
 		HttpServletRequest request = super.getRequest();
 		String actor = request.getParameter("actorId");
 		String json = "";
@@ -150,6 +150,7 @@ public class CIBatchModifyManagerAction extends BaseAction{
 	 * @return 
 	 * @ReturnType String
 	 */
+	@SuppressWarnings("unused")
 	private String next() throws Exception{
 		//需要的参数
 		String taskId = super.getRequest().getParameter("taskid");	 

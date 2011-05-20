@@ -34,7 +34,7 @@ public class DeptAccountJob extends QuartzJobBean{
 		String accountType="DeptMail";
 		Date curDate=DateUtil.getCurrentDate();
 		calendar.setTime(curDate);
-		int nowDate=calendar.get(Calendar.DATE);
+//		int nowDate=calendar.get(Calendar.DATE);
 		System.out.print("部门特殊邮件确认通知");
 		List<SpecialAccount> specialAccount=accountService.findSpecailAccountByType(accountType);
 		for(SpecialAccount account:specialAccount){
@@ -51,7 +51,7 @@ public class DeptAccountJob extends QuartzJobBean{
 	//邮件格式  accountHtmlContent
 	private String accountHtmlContent(SpecialAccount account,UserInfo creator, String url) {
         StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

@@ -7,6 +7,7 @@ import com.zsgj.info.framework.dao.BaseObject;
  * 帐号类型实体
  *
  */
+@SuppressWarnings("serial")
 public class AccountType extends BaseObject{
 	 private Long id;
 	 private String accountType;

@@ -37,10 +37,10 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao{
 				//用部门去获取内部客户
 				Criteria c = super.getCriteria(Customer.class);
 				c.add(Restrictions.eq("department", deptItem));
-				List<Customer> list2 = c.list();
-				if(!list2.isEmpty()){
-					Customer customerIn = list2.iterator().next();
-				}
+//				List<Customer> list2 = c.list();
+//				if(!list2.isEmpty()){
+//					Customer customerIn = list2.iterator().next();
+//				}
 				
 				c.setProjection(Projections.property("this.id"));
 				List<Long> list = c.list();

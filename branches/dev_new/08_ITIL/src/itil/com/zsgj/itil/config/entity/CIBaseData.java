@@ -4,6 +4,11 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.itil.event.entity.Event;
 
 public class CIBaseData extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -23408000769556754L;
+
 	@Override
 	public Long getId() {
 		// TODO Auto-generated method stub

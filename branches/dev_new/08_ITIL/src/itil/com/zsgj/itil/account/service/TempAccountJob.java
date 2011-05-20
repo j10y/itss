@@ -37,7 +37,7 @@ public class TempAccountJob extends QuartzJobBean{
 		for(PersonFormalAccount account:personFormalAccount){
 			UserInfo user=account.getAccountowner();
 			String email=user.getEmail();
-			Date endDate=account.getEndDate();
+//			Date endDate=account.getEndDate();
 			calendar.setTime(curDate);
 			int date=calendar.get(Calendar.DATE);
 			int dataValue=date-nowDate;
@@ -51,7 +51,7 @@ public class TempAccountJob extends QuartzJobBean{
 	//ÓÊ¼þ¸ñÊ½  accountHtmlContent
 	private String accountHtmlContent(UserInfo creator, String url) {
         StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

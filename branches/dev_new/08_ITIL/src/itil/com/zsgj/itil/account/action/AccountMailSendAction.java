@@ -1,7 +1,6 @@
 package com.zsgj.itil.account.action;
 
 import java.io.PrintWriter;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +19,6 @@ import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
-import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.ProcessService;
 import com.zsgj.info.framework.workflow.info.TaskInfo;
 import com.zsgj.itil.account.service.AccountService;
@@ -28,10 +26,11 @@ import com.zsgj.itil.require.entity.AccountApplyMainTable;
 import com.zsgj.itil.service.entity.ServiceItemApplyAuditHis;
 import com.zsgj.itil.service.entity.ServiceItemProcess;
 
+@SuppressWarnings("serial")
 public class AccountMailSendAction extends BaseAction {
 	private MailSenderService ms = (MailSenderService) ContextHolder.getBean("mailSenderService");
 	private AccountService accountService = (AccountService) getBean("accountService");
-	private ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
+	//private ConfigUnitService cs = (ConfigUnitService)ContextHolder.getBean("configUnitService");
 	private ProcessService ps = (ProcessService) ContextHolder.getBean("processService");
 	
 	/**
@@ -293,7 +292,7 @@ public class AccountMailSendAction extends BaseAction {
 	private String htmlContent(UserInfo creator, String url,List auditHis,String definitionName) {
 
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+		//NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);
@@ -347,8 +346,8 @@ public class AccountMailSendAction extends BaseAction {
 				String nodeMeg = (String)baseObjectWrapper.getPropertyValue("nodeName");
 				UserInfo user = (UserInfo)baseObjectWrapper.getPropertyValue("approver");
 				Date approverDate = (Date)baseObjectWrapper.getPropertyValue("approverDate");
-				String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
-				String comment=(String)baseObjectWrapper.getPropertyValue("comment");
+				//String resultFlag=(String)baseObjectWrapper.getPropertyValue("resultFlag");
+				//String comment=(String)baseObjectWrapper.getPropertyValue("comment");
 				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 				String timeString  = dateFormats.format(approverDate);
 				String auditMeg=null;
@@ -415,7 +414,7 @@ public class AccountMailSendAction extends BaseAction {
 		
 		
 		StringBuilder sb = new StringBuilder();
-		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+		//NumberFormat currencyFormat = NumberFormat.getNumberInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(); 
 		String dateString  = dateFormat.format(date);

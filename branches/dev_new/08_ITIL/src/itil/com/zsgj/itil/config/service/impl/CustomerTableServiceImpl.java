@@ -132,6 +132,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 		return list;
 	}
 
+	@SuppressWarnings("unused")
 	private List<Property> getPropertyByPersistentClass(PersistentClass model) {
 		List<Property> list = new ArrayList<Property>();
 		if (model != null) {
@@ -200,7 +201,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 		int i = 1;
 
 		for (ConfigItemType citype : citypes) {
-			SystemMainTable smt = citype.getSystemMainTable();
+//			SystemMainTable smt = citype.getSystemMainTable();
 
 			// 去当前类型的配置项数据
 			Criteria c = super.getCriteria(ConfigItem.class);
@@ -893,7 +894,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 		while (iter.hasNext()) {
 			Property item = iter.next();
 			String propertyName = item.getName();
-			Object value = item.getValue();
+//			Object value = item.getValue();
 			if (!column.getPropertyName().equalsIgnoreCase("id")) {
 				if (column.getPropertyName().equalsIgnoreCase(propertyName)) { // 只有持久化类里有了，就不再加入
 					result = false;
@@ -912,7 +913,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 																								 * Class
 																								 * targetClass
 																								 */) {
-		SessionFactory ssf = super.getHibernateSessionFactory();
+//		SessionFactory ssf = super.getHibernateSessionFactory();
 		Configuration config = super.getConfiguration();
 		String newClassName = sourcePkg + "." + sourceClassName;
 		// 通过类全路径获取持久化类
@@ -957,15 +958,15 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 		c.add(Restrictions.ilike("tableName", sourceClassName, MatchMode.EXACT));
 		List list = c.list();
 		SystemMainTable smt = null;
-		Class clazz = null;
+//		Class clazz = null;
 		if (!list.isEmpty()) {
 			smt = (SystemMainTable) list.iterator().next();
-			String className = smt.getClassName();
-			clazz = this.getClass(className);
+//			String className = smt.getClassName();
+//			clazz = this.getClass(className);
 		}
 
-		RenderClass rc = new RenderClass();
-		ArrayList rcolumns = new ArrayList();
+//		RenderClass rc = new RenderClass();
+//		ArrayList rcolumns = new ArrayList();
 
 		// 获取主表的所有字段
 		Criteria cc = super.getCriteria(SystemMainTableColumn.class);
@@ -1144,6 +1145,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 	}
 
 	// 在配置项类型的面板没有的情况下，直接保存会默认生成
+	@SuppressWarnings("unused")
 	private void genTablePanels(SystemMainTable smt) {
 		PagePanel panel = new PagePanel();
 		panel.setName("panel_" + smt.getTableCnName() + "Panel");
@@ -1253,8 +1255,8 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 					// begin
 					if (ptClassName.equals("java.util.Set")) {
 						SystemMainTable ftable = smtc.getForeignTable();
-						SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
-						SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
+//						SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
+//						SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
 						String fclassName = ftable.getClassName();
 
 						SystemMainTable refTable = smtc.getReferencedTable(); // 关联表userRole
@@ -1313,7 +1315,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 				} else {
 					SystemMainTable ftable = smtc.getForeignTable();
 					Integer userExtFlag = ftable.getUserExtFlag();
-					Integer userListFlag = ftable.getUserListFlag();
+//					Integer userListFlag = ftable.getUserListFlag();
 					Integer deployFlag = ftable.getDeployFlag();
 
 					if (userExtFlag != null && userExtFlag.intValue() == 1) {
@@ -1322,8 +1324,8 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 							this.saveSystemMainTableDeploy(ftable);
 						}
 					}
-					SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
-					SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
+//					SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
+//					SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
 					String fclassName = ftable.getClassName();
 					ptClassName = fclassName;
 					RenderProperty property = new RenderProperty();
@@ -1404,7 +1406,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 				// prefix);
 				rc.setClassName(sourcePkg + "." + sourceClassName);
 				rc.setTableName(tablePrefix + sourceClassName);
-				String tmp = System.getProperty("java.class.path");
+//				String tmp = System.getProperty("java.class.path");
 				String WEB_INF_CLASSES = this.getClass().getResource("/").toString().replace("/", "\\");
 				int fileLength = "file:\\".length();
 				WEB_INF_CLASSES = WEB_INF_CLASSES.substring(fileLength);
@@ -1449,7 +1451,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 
 	// 保存一个用户主表后自动生成对应的面板
 	public PagePanel saveConfigItemTablePanel(SystemMainTable smt, int deployFlag) {
-		String className = smt.getClassName();
+//		String className = smt.getClassName();
 		String tableName = smt.getTableName();
 		String tableCnName = smt.getTableCnName();
 		String ppcount = "select count(*) from PagePanel ppc where ppc.systemMainTable=?";
@@ -1479,7 +1481,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 			super.save(pptble);
 
 			// 取系统主表的所有字段，初始化系统可见字段
-			int order = 1;
+//			int order = 1;
 			List<Column> columns = systemColumnService.findSystemTableColumns(smt);
 			for (Column column : columns) {
 				// 初始化输入系统可见字段
@@ -1850,14 +1852,14 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 
 			String columnName = smtc.getColumnName();
 			if (!pkcname.equalsIgnoreCase(columnName)) {
-				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
+//				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
 				PropertyType pt = smtc.getPropertyType();
 				if (pt == null) {
 					throw new ServiceException(smt.getTableCnName() + "的" + smtc.getPropertyName() + "字段的属性类型不可以为null");
 				}
 				String ptName = pt.getPropertyTypeName();
 
-				String columnTypeName = smtcType.getColumnTypeName();
+//				String columnTypeName = smtcType.getColumnTypeName();
 				Integer length = smtc.getLength();
 				if (length == null || length.intValue() == 0) {
 					length = 200;
@@ -1908,6 +1910,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 
 	}
 
+	@SuppressWarnings("unused")
 	private void addCreateUserDate(SystemMainTable smt) {
 		String userUniqueColumn = PropertiesUtil.getProperties("system.user.uniquecolumn", "userName");
 
@@ -2268,7 +2271,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 		PropertyType propType = smtc.getPropertyType();
 		propType = super.get(PropertyType.class, Long.valueOf(propType.getId()));
 
-		String tableName = smt.getTableName();
+//		String tableName = smt.getTableName();
 		String columnName = smtc.getColumnName();
 		columnName = Character.toLowerCase(columnName.charAt(0)) + columnName.substring(1);
 		smtc.setColumnName(columnName);

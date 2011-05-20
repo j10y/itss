@@ -10,6 +10,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-11-24
  */
 public class ConfigItemExtendInfoEvent extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 4420617187608142025L;
 	private Long id;
 	private ConfigItemEvent configItemEvent;
 	private SystemMainTable systemMainTable; //对应系统主表id，如客户表

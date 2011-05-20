@@ -245,7 +245,7 @@ public class AccountServiceImpl extends BaseService implements AccountService{
 //		return accountDao.selectWWWMonth(df.format(new Date()));
 //	}
 	public Integer findWwwLimit(String itcode) {
-		String wwwLimit = "";
+//		String wwwLimit = "";
 		Long typeId = null;
 		PersonFormalAccount	personAccount = accountDao.findPersonAccount("WWW’ ∫≈",itcode);
 		if(personAccount!=null){

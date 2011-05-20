@@ -72,7 +72,7 @@ public class TrainPlanServiceImpl extends BaseDao implements TrainPlanService{
 
 	public List<TrainCourse> findAllCourse() {
 		// TODO Auto-generated method stub
-		TrainCourse trainCourse = null;
+//		TrainCourse trainCourse = null;
 		Criteria c = super.getCriteria(TrainCourse.class);
 		c.add(Restrictions.eq("deleteFlag", 0));
 		c.list();
@@ -125,7 +125,7 @@ public class TrainPlanServiceImpl extends BaseDao implements TrainPlanService{
 	public List<TrainCourseSurvey> findCourseSurveyByCourse(
 			TrainCourse trainCourse) {
 		// TODO Auto-generated method stub
-		TrainCourseSurvey trainCourseSurvey = null;
+//		TrainCourseSurvey trainCourseSurvey = null;
 		Criteria c = super.getCriteria(TrainCourseSurvey.class);
 		c.add(Restrictions.eq("trainCourse", trainCourse));
 		return c.list();

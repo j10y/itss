@@ -10,6 +10,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2009-3-16
  */
 public class SupportGroup extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -4185669872722216865L;
 	public static final Integer DELETEFLAG_DELETE=1;
 	public static final Integer DELETEFLAG_USEING=0;
 	private java.lang.Long id;

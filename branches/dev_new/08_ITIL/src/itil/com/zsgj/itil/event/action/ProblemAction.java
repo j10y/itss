@@ -89,7 +89,7 @@ public class ProblemAction extends BaseAction {
 				String problemStatus = eventProblem.getProblem().getStatus().getName();
 				String summary = eventProblem.getProblem().getSummary();
 				String contactUser = eventProblem.getProblem().getContactUser().getRealName();
-				String pa = eventProblem.getProblem().getContactEmail();
+//				String pa = eventProblem.getProblem().getContactEmail();
 				Date contactDate = eventProblem.getProblem().getClosedDate();
 				String closedDate = "";
 				if (contactDate != null) {
@@ -291,6 +291,7 @@ public class ProblemAction extends BaseAction {
 	 * @throws IOException
 	 *             String
 	 */
+	@SuppressWarnings("static-access")
 	public String findProblemEvent() throws IOException {
 		int pageSize = 10;
 		// 注意以后从设置中取出
@@ -317,7 +318,7 @@ public class ProblemAction extends BaseAction {
 		for (Map<String, Object> item : listData) {
 			String dataItem = "";
 			for (UserTableSetting uts : userVisibleColumns) {
-				String columnCnName = uts.getColumn().getColumnCnName();// 表头标题
+//				String columnCnName = uts.getColumn().getColumnCnName();// 表头标题
 				// SystemMainTableColumn mainTableColumn =
 				// uts.getMainTableColumn();
 				Column column = uts.getColumn();
@@ -910,7 +911,7 @@ public class ProblemAction extends BaseAction {
 		String eventName = "";
 		String relProblemRelType = "";
 		String problemStatus = "";
-		String dealUser = "";
+//		String dealUser = "";
 		String closeDate = "";
 
 		if (relList.size() > 0) {

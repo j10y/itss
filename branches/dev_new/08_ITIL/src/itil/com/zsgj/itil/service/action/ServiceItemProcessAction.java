@@ -155,7 +155,7 @@ public class ServiceItemProcessAction extends BaseDispatchAction{
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response)throws Exception{
 		String serviceItemId = request.getParameter("serviceItemId");
-		String s2=request.getParameter("pagePanel");
+//		String s2=request.getParameter("pagePanel");
 		ServiceItemProcess serviceItemProcess = (ServiceItemProcess) BeanUtil.getObject(request, ServiceItemProcess.class);
 		ServiceItem serviceItem = sis.findServiceItemById(serviceItemId);
 		serviceItemProcess.setServiceItem(serviceItem);
@@ -299,13 +299,13 @@ public class ServiceItemProcessAction extends BaseDispatchAction{
 			String className = serviceItemUserTable.getClassName();
 			Class clazz = null;
 			clazz = Class.forName(className);
-			Integer processType = serviceItemProcess.getSidProcessType();
+//			Integer processType = serviceItemProcess.getSidProcessType();
 			Integer status = Constants.STATUS_DRAFT;
 			if(StringUtils.isNotBlank(id)){
-			Object object= getService().find(clazz, id, true);
-			BeanWrapper bw = new BeanWrapperImpl(object);
-			processType = (Integer) bw.getPropertyValue("processType");
-			status = (Integer) bw.getPropertyValue("status");
+				Object object= getService().find(clazz, id, true);
+				BeanWrapper bw = new BeanWrapperImpl(object);
+//				processType = (Integer) bw.getPropertyValue("processType");
+				status = (Integer) bw.getPropertyValue("status");
 			}
 			//modify by lee for change serviceItemProcess to ORM in 200090707 begin
 //			String virtualDesc= serviceItemProcess.getDefinitionName();
@@ -315,8 +315,8 @@ public class ServiceItemProcessAction extends BaseDispatchAction{
 			VirtualDefinitionInfo virtualDefinitionInfo=serviceItemProcess.getProcessInfo();
 			//modify by lee for change serviceItemProcess to ORM in 200090707 end
 			String vname = virtualDefinitionInfo.getVirtualDefinitionName();
-			String vdescription = virtualDefinitionInfo.getVirtualDefinitionDesc();
-			String pagePanelName = serviceItemProcess.getPagePanel().getName();
+//			String vdescription = virtualDefinitionInfo.getVirtualDefinitionDesc();
+//			String pagePanelName = serviceItemProcess.getPagePanel().getName();
 //			request.setAttribute("serviceItemId", serviceItemId);
 //			request.setAttribute("processType", processType);
 //			request.setAttribute("pagePanel", pagePanelName);

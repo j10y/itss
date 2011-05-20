@@ -10,6 +10,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2009-4-10
  */
 public class SupportGroupRank extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 4650333100018696685L;
 	public static final String FIRST_RANK="first";//一级支持组
 	public static final String SECOND_RANK="second";//二级支持组
 	private java.lang.Long id;

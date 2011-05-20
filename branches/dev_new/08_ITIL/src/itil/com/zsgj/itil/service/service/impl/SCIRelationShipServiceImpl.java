@@ -766,8 +766,8 @@ public class SCIRelationShipServiceImpl extends BaseDao implements
 
 			// 删除SCIRelationShipType的老记录
 			// 删除根
-			List<SCIRelationShip> childsList = this
-					.getChildSCIRelationShipsByServiceCata(oldServiceCatalogue);// 得到子关系
+//			List<SCIRelationShip> childsList = this
+//					.getChildSCIRelationShipsByServiceCata(oldServiceCatalogue);// 得到子关系
 
 			if (oldChildRelationShips.size() > 0) {
 				// 就将其删除标记置为-1，记得保存
@@ -907,19 +907,7 @@ public class SCIRelationShipServiceImpl extends BaseDao implements
 		}
 		return map;
 	}
-	/**
-	 * 返回合并后的服务项
-	 * @Methods Name getINCSiMap
-	 * @Create In Nov 20, 2009 By lee
-	 * @param ships
-	 * @param custIds
-	 * @return Map<ServiceItem,Map<Long,SCIRelationShip>>
-	 */
-	private  List<SCIRelationShip> getINCSiMap(List<SCIRelationShip> ships,List<Long> custIds){
-		Map<ServiceItem,Map<Long,SCIRelationShip>> incMap = new HashMap<ServiceItem,Map<Long,SCIRelationShip>>();
-		
-		return null;
-	}
+
 	/**
 	 * 树的子递归
 	 * @Methods Name initSCIRelationShipChild

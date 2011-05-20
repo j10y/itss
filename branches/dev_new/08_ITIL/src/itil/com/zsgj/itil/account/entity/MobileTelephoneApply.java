@@ -14,6 +14,10 @@ import com.zsgj.itil.require.entity.AccountApplyMainTable;
  * 
  */
 public class MobileTelephoneApply extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -8582929271744410292L;
 	private Long id;
 	private com.zsgj.itil.account.entity.AccountType accountType;
 	private com.zsgj.info.framework.security.entity.UserInfo accountowner; //  π”√»À

@@ -3,6 +3,10 @@ package com.zsgj.itil.account.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class DeviceType extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -1138680204921162204L;
 	private java.lang.Long id;
 	private java.lang.String deviceName;
 

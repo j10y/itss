@@ -14,6 +14,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 public class Environment extends BaseObject {
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -723275348785546775L;
 	private Long id;
 	private String name;
 	public Long getId() {

@@ -85,10 +85,10 @@ public class RequireAction extends BaseAction {
 	private PageModelService pageModelService = (PageModelService) getBean("pageModelService");
 	private PagePanelService pagePanelService = (PagePanelService) getBean("pagePanelService");
 	private MetaDataManager metaDataManager = (MetaDataManager) getBean("metaDataManager");
-	private DefinitionService ds = (DefinitionService) ContextHolder.getBean("definitionService");
-	private ProcessService ps = (ProcessService) ContextHolder.getBean("processService");
+//	private DefinitionService ds = (DefinitionService) ContextHolder.getBean("definitionService");
+//	private ProcessService ps = (ProcessService) ContextHolder.getBean("processService");
 	private SRProjectPlanService projectPlanService = (SRProjectPlanService) getBean("SRprojectPlanService");
-	private AccountService accountService=(AccountService)getBean("accountService");
+//	private AccountService accountService=(AccountService)getBean("accountService");
 	private SAPExecute SAPExecute = (SAPExecute)getBean("SAPExecute");
 	private String forwardUrl;
 
@@ -103,7 +103,7 @@ public class RequireAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		String id = request.getParameter("serviceItemId");
 		ServiceItem serviceItem = serviceItemService.findServiceItemById(id);
-		String serviceItemName = serviceItem.getName();
+//		String serviceItemName = serviceItem.getName();
 		ServiceItemUserTable siut = serviceItemUserTableService
 				.findServiceItemUserTableByServiceItem(serviceItem);
 		if (siut.getPageListPanel() == null) {
@@ -117,7 +117,7 @@ public class RequireAction extends BaseAction {
 		}
 		String listPanelName = siut.getPageListPanel().getName();
 		String tableName = siut.getSystemMainTable().getTableName();
-		String clazz = siut.getClassName();
+//		String clazz = siut.getClassName();
 		request.setAttribute("serviceItemId", serviceItem.getId());
 		request.setAttribute("serviceItemName", serviceItem.getName());
 		request.setAttribute("processTypeSum", processTypeSum);
@@ -217,8 +217,8 @@ public class RequireAction extends BaseAction {
 		ServiceItem serviceItem = serviceItemService
 				.findServiceItemById(serviceItemId);
 		String json = "";
-		String modelName = request.getParameter("modelName");
-		String configItemTypeId = request.getParameter("configItemTypeId");
+//		String modelName = request.getParameter("modelName");
+//		String configItemTypeId = request.getParameter("configItemTypeId");
 		// 取出各个panel需要的id
 		// PageModel model = pageModelService.findPageModel(keyName);
 		List<PageModelPanel> pmps = (List<PageModelPanel>) requireService
@@ -428,7 +428,7 @@ public class RequireAction extends BaseAction {
 		ServiceItemUserTable serviceItemUserTable = serviceItemUserTableService
 				.findServiceItemUserTableByServiceItem(serviceItem);
 		String className = serviceItemUserTable.getClassName();
-		Class clazz = this.toClass(className);
+//		Class clazz = this.toClass(className);
 		Integer processType = Constants.RROCESS_TYPE_CANCLE;
 		Integer status = Constants.STATUS_DRAFT;
 		ServiceItemProcess serviceItemProcess = serviceItemProcessService
@@ -637,7 +637,7 @@ public class RequireAction extends BaseAction {
 		BaseObject object = (BaseObject) metaDataManager.saveEntityData(clazz,map);
 		String id = object.getId().toString();
 
-		String name = (String) map.get("name");
+//		String name = (String) map.get("name");
 		//add by lee for 添加用户要求返回信息 in 20091107 begin
 		String applyNum = "";
 		BeanWrapper bw = new BeanWrapperImpl(object);
@@ -699,8 +699,7 @@ public class RequireAction extends BaseAction {
 		} else {
 			projectPlan.setPlanName(name);
 			projectPlan.setSpecialRequire(sr);
-			SRProjectPlan curPlan = (SRProjectPlan) getService().save(
-					projectPlan);
+			getService().save(projectPlan);
 		}
 	}
 	/**
@@ -713,7 +712,7 @@ public class RequireAction extends BaseAction {
 	public String saveModifyDraft() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String param = request.getParameter("info");
+//		String param = request.getParameter("info");
 		String pagePanelName = request.getParameter("pagePanel");
 		PagePanel pagePanel = pagePanelService.findPagePanel(pagePanelName);
 		SystemMainTable smt = pagePanel.getSystemMainTable();
@@ -792,7 +791,7 @@ public class RequireAction extends BaseAction {
 	public String saveCancelDraft() {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String param = request.getParameter("info");
+//		String param = request.getParameter("info");
 		String pagePanelName = request.getParameter("pagePanel");
 		PagePanel pagePanel = pagePanelService.findPagePanel(pagePanelName);
 		SystemMainTable smt = pagePanel.getSystemMainTable();
@@ -860,12 +859,12 @@ public class RequireAction extends BaseAction {
 	public String saveDraft(){
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
-		String param = request.getParameter("info");	//获取主面板信息
+//		String param = request.getParameter("info");	//获取主面板信息
 		String serviceItemId = request.getParameter("serviceItemId");//获取关联服务项信息
 		String pagePanelName = request.getParameter("pagePanel");	//获取面板名称
 		String processType = request.getParameter("processType");	//获取申请类型（申请0/变更1/删除2）
 		String status = request.getParameter("status");				//获取申请状态（草稿0/处理1/结束2）
-		String serviceItemProcessId = request.getParameter("serviceItemProcessId");	//获取对应服务项申请流程ID
+//		String serviceItemProcessId = request.getParameter("serviceItemProcessId");	//获取对应服务项申请流程ID
 		
 		//保存申请面板主实体
 		PagePanel pagePanel = pagePanelService.findPagePanel(pagePanelName);
@@ -1104,7 +1103,7 @@ public class RequireAction extends BaseAction {
 		String serviceItemId = request.getParameter("serviceItemId");
 		String dataId = request.getParameter("dataId");
 		
-		UserInfo curUser = UserContext.getUserInfo();
+//		UserInfo curUser = UserContext.getUserInfo();
 //		if(processTypeStr.equals("1")){
 //            if(!accountService.findAccount(serviceItemId, curUser)){
 //        	return "noAccountPage";
@@ -1242,8 +1241,8 @@ public class RequireAction extends BaseAction {
 	 */
 	public String toOperatePageAccount() {
 		HttpServletRequest request = super.getRequest();
-		String processTypeStr = request.getParameter("processType");
-		String processInfoId = request.getParameter("processInfoId");
+//		String processTypeStr = request.getParameter("processType");
+//		String processInfoId = request.getParameter("processInfoId");
 		String serviceItemId = request.getParameter("serviceItemId");
 		String id = request.getParameter("dataId");
 		//String serviceItempro=request.getParameter("serviceItemProcess");
@@ -1310,7 +1309,7 @@ public class RequireAction extends BaseAction {
 		//add by lee for 添加用户协议 in 20091203 end
 			ServiceItem serviceItem = serviceItemProcess.getServiceItem();
 			String serviceItemId = serviceItem.getId().toString();
-			String processTypeStr = serviceItemProcess.getSidProcessType().toString();
+//			String processTypeStr = serviceItemProcess.getSidProcessType().toString();
 	
 			ServiceItemUserTable serviceItemUserTable = serviceItemUserTableService.findServiceItemUserTableByServiceItem(serviceItem);
 			String className = serviceItemUserTable.getClassName();
@@ -1379,7 +1378,7 @@ public class RequireAction extends BaseAction {
 	 */
 	public String toProcessEndPage() {
 		HttpServletRequest request = super.getRequest();
-		String id = request.getParameter("dataId");
+//		String id = request.getParameter("dataId");
 		String serviceItemId = request.getParameter("serviceItemId");
 		String processType = request.getParameter("processType");
 		String processInfoId = request.getParameter("processInfoId");
@@ -1419,11 +1418,11 @@ public class RequireAction extends BaseAction {
 	 */
 	public String toProcessEndPageAccount() {
 		HttpServletRequest request = super.getRequest();
-		String processTypeStr = request.getParameter("processType");
-		String serviceItemId = request.getParameter("serviceItemId");
-		String id = request.getParameter("dataId");
+//		String processTypeStr = request.getParameter("processType");
+//		String serviceItemId = request.getParameter("serviceItemId");
+//		String id = request.getParameter("dataId");
 		String serviceItempro=request.getParameter("serviceItemProcess");
-		ServiceItem serviceItem = serviceItemService.findServiceItemById(serviceItemId);
+//		ServiceItem serviceItem = serviceItemService.findServiceItemById(serviceItemId);
 		ServiceItemProcess serviceItemProcess = (ServiceItemProcess) getService().find(ServiceItemProcess.class, serviceItempro);
 		if(serviceItemProcess!=null){
 			PageModel endPageModel = serviceItemProcess.getEndPageModel();
@@ -1544,7 +1543,7 @@ public class RequireAction extends BaseAction {
 	public String toHisPage(){
 
 		HttpServletRequest request = super.getRequest();
-		HttpServletResponse response = super.getResponse();
+//		HttpServletResponse response = super.getResponse();
 		String reqId = request.getParameter("dataId");	//获取需求主实体ID
 		String siId = request.getParameter("serviceItemId");		//获取需求所属服务项ID
 		UserInfo curUser = UserContext.getUserInfo();	//获取当前用户
@@ -1631,7 +1630,7 @@ public class RequireAction extends BaseAction {
 	public String findRequireByName(){
 		try {
 			HttpServletRequest request = super.getRequest();
-			String requireId = request.getParameter("require");
+//			String requireId = request.getParameter("require");
 			String name = request.getParameter("name");
 			int pageSize = HttpUtil.getInt(super.getRequest(), "pageSize", 10);
 			int start = HttpUtil.getInt(super.getRequest(), "start", 0);
@@ -1746,7 +1745,7 @@ public class RequireAction extends BaseAction {
 					WorkflowRecordTaskInfo wrti = (WorkflowRecordTaskInfo) service.findUnique(WorkflowRecordTaskInfo.class, "taskId", Long.parseLong(taskId));
 					Long processId = wrti.getProcessInstanceId();
 					Long nodeId = wrti.getNodeId();
-					String strAuditUserInfos = wrti.getAuditUserInfos();//获取WorkflowRecordTaskInfo表中此任务的一个或多个审批人(用于比较当前用户是否是审批人中的一个，暂时未实现)
+//					String strAuditUserInfos = wrti.getAuditUserInfos();//获取WorkflowRecordTaskInfo表中此任务的一个或多个审批人(用于比较当前用户是否是审批人中的一个，暂时未实现)
 					ProcessLockInfo plif = new ProcessLockInfo();
 					plif.setProcessId(processId);
 					plif.setNodeId(nodeId);
@@ -1796,7 +1795,7 @@ public class RequireAction extends BaseAction {
 					return ;
 				}
 				Long tempId = pli.getId();
-				Long tempTaskId = pli.getTaskId();
+//				Long tempTaskId = pli.getTaskId();
 				if(tempId==null){					
 					return ;
 				}
@@ -2072,7 +2071,7 @@ public class RequireAction extends BaseAction {
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
 		String dataId = request.getParameter("dataId");
-		String weightAccount=  request.getParameter("weightAccount");
+//		String weightAccount=  request.getParameter("weightAccount");
 		String otherInfo=  request.getParameter("otherInfo");
 		String transferRequestNumber=  request.getParameter("transferRequestNumber");
 		String subOtherInfo="";
@@ -2183,7 +2182,8 @@ public class RequireAction extends BaseAction {
 		ERP_NormalNeed erp = (ERP_NormalNeed) getService().find(ERP_NormalNeed.class, id);
 		
 		JSONArray ja = JSONArray.fromObject("[" + tempProduct + "]");
-		RequireFactoryInfo rfi = null;
+		
+//		RequireFactoryInfo rfi = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap productMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -2192,15 +2192,15 @@ public class RequireAction extends BaseAction {
 				String key = (String) itProduct.next();
 				String value = opl.getString(key);
 
-				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
-					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
-				}
+//				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
+//					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				productMap.put(key, value);
 			}
 			productMap.put("requireData",erp);
-			rfi =(RequireFactoryInfo) metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
+			metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
 		}		
 		String json = "{success:true,id:" + id + ",reqName:'" + name + "',applyNum:'"+applyNum+"',applyDate:'"+applyDate+"'}";
 		response.setContentType("text/plain");
@@ -2229,22 +2229,22 @@ public class RequireAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		
 		String product = request.getParameter("product");
-		String tempProduct = "";
-		if (!"".equals(product) ) {
-			byte[] bt1;
-			try {
-				bt1 = product.getBytes("ISO8859_1");
-				tempProduct = new String(bt1,"GBK");//用GBK进行解码，构建1个新的字符串  
-			} catch (UnsupportedEncodingException e) {
+//		String tempProduct = "";
+//		if (!"".equals(product) ) {
+//			byte[] bt1;
+//			try {
+//				bt1 = product.getBytes("ISO8859_1");
+//				tempProduct = new String(bt1,"GBK");//用GBK进行解码，构建1个新的字符串  
+//			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}//用ISO8859_1进行编码			
-		}		
+//				e.printStackTrace();
+//			}//用ISO8859_1进行编码			
+//		}		
 		String id = request.getParameter("dataId");
 		ERP_NormalNeed erp = (ERP_NormalNeed) getService().find(ERP_NormalNeed.class, id);
 //		product = HttpUtil.ConverUnicode(product);
 		JSONArray ja = JSONArray.fromObject("[" + product + "]");
-		RequireFactoryInfo rfi = null;
+//		RequireFactoryInfo rfi = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap productMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -2253,9 +2253,9 @@ public class RequireAction extends BaseAction {
 				String key = (String) itProduct.next();
 				String value = opl.getString(key);
 
-				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
-					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
-				}
+//				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
+//					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				productMap.put(key, value);
@@ -2263,7 +2263,7 @@ public class RequireAction extends BaseAction {
 			}
 
 			productMap.put("requireData",erp);
-			rfi =(RequireFactoryInfo) metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
+			metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
 		}		
 		
 		
@@ -2362,7 +2362,7 @@ public class RequireAction extends BaseAction {
 		BaseObject object = (BaseObject) metaDataManager.saveEntityData(clazz,map);
 		String id = object.getId().toString();
 
-		String name = (String) map.get("name");
+//		String name = (String) map.get("name");
 		String applyNum = "";
 		BeanWrapper bw = new BeanWrapperImpl(object);
 		if(bw.isReadableProperty("applyNum")){
@@ -2370,21 +2370,21 @@ public class RequireAction extends BaseAction {
 		}
 		String applyDate = (String) map.get("applyDate");
 		String product = request.getParameter("product");
-		String tempProduct = "";
-		if (!"".equals(product) ) {
-			byte[] bt1;
-			try {
-				bt1 = product.getBytes("ISO8859_1");
-				tempProduct = new String(bt1,"GBK");//用GBK进行解码，构建1个新的字符串  
-			} catch (UnsupportedEncodingException e) {
+//		String tempProduct = "";
+//		if (!"".equals(product) ) {
+//			byte[] bt1;
+//			try {
+//				bt1 = product.getBytes("ISO8859_1");
+//				tempProduct = new String(bt1,"GBK");//用GBK进行解码，构建1个新的字符串  
+//			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}//用ISO8859_1进行编码			
-		}
+//				e.printStackTrace();
+//			}//用ISO8859_1进行编码			
+//		}
 		ERP_NormalNeed erp = (ERP_NormalNeed) getService().find(ERP_NormalNeed.class, id);
 		
 		JSONArray ja = JSONArray.fromObject("[" + product + "]");
-		RequireFactoryInfo rfi = null;
+//		RequireFactoryInfo rfi = null;
 		for (int i = 0; i < ja.size(); i++) {
 			HashMap productMap = new HashMap();
 			JSONObject opl = (JSONObject) ja.get(i);
@@ -2393,15 +2393,15 @@ public class RequireAction extends BaseAction {
 				String key = (String) itProduct.next();
 				String value = opl.getString(key);
 
-				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
-					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
-				}
+//				if(("flm_ProjectTestReport$id").equals(key)&&value!="null"){
+//					rfi = (RequireFactoryInfo) super.getService().find(RequireFactoryInfo.class, value);
+//				}
 				key = StringUtils.substringAfter(key, "$");
 				value = value.trim();
 				productMap.put(key, value);
 			}
 			productMap.put("requireData",erp);
-			rfi =(RequireFactoryInfo) metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
+			metaDataManager.saveEntityData(RequireFactoryInfo.class, productMap);
 		}		
 		String json = "{success:true,id:" + id + ",applyNum:'"+applyNum+"',applyDate:'"+applyDate+"'}";
 		response.setContentType("text/plain");
@@ -2430,7 +2430,7 @@ public class RequireAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		
 		String dataId = request.getParameter("dataId");		
-		Long requireId =0L;
+//		Long requireId =0L;
 		ERP_NormalNeed requireData = null;
 		if(!"".equals(dataId)){
 			 requireData = (ERP_NormalNeed) service.find(ERP_NormalNeed.class, dataId);
