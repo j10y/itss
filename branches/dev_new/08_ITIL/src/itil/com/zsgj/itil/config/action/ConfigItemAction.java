@@ -102,12 +102,15 @@ public class ConfigItemAction extends BaseAction {
 					}else{
 						//拥有配置-服务器管理员角色的用户
 						Role role=(Role) getService().findUnique(Role.class, "keyword", Server.ROLE_SERVERADMINISTRATOR);
-						Set<UserInfo> users=role.getUserInfos();
-						for(UserInfo user:users){
-							if(user.getId().compareTo(UserContext.getUserInfo().getId())==0){
-								displayServerPassword=true;
+						if(role!=null){
+							Set<UserInfo> users=role.getUserInfos();
+							for(UserInfo user:users){
+								if(user.getId().compareTo(UserContext.getUserInfo().getId())==0){
+									displayServerPassword=true;
+								}
 							}
 						}
+						
 					}
 				}
 			}
