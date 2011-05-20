@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.zsgj.info.appframework.metadata.entity.ExtOptionData;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
@@ -19,7 +18,6 @@ import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.security.entity.Module;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -37,7 +35,7 @@ public class SystemMainTableAction extends BaseDispatchAction{
 	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
 	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	
 	private SystemMainAndExtColumnService smecs=(SystemMainAndExtColumnService)getBean("systemMainAndExtColumnService");
 	

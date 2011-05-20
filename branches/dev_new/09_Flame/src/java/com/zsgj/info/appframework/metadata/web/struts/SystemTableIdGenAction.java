@@ -1,7 +1,6 @@
 package com.zsgj.info.appframework.metadata.web.struts;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,19 +10,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-//import com.digitalchina.info.appframework.metadata.service.SystemExtColumnServcie;
-import com.zsgj.info.appframework.extjs.servlet.CoderForList;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
-import com.zsgj.info.appframework.metadata.entity.SystemMainTableIdBuilder;
-import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 import com.zsgj.info.appframework.metadata.service.SystemColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
-import com.zsgj.info.appframework.metadata.service.SystemTableIdGenService;
 import com.zsgj.info.framework.dao.support.Page;
-import com.zsgj.info.framework.security.entity.Department;
 import com.zsgj.info.framework.security.entity.Module;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -40,30 +32,30 @@ public class SystemTableIdGenAction extends BaseDispatchAction{
 	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
 	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	//private SystemExtColumnServcie secs=(SystemExtColumnServcie)getBean("systemExtColumnService");
-	private SystemTableIdGenService stgs=(SystemTableIdGenService)getBean("systemTableIdGenService");
+//	private SystemTableIdGenService stgs=(SystemTableIdGenService)getBean("systemTableIdGenService");
 	
 	public ActionForward list(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String json = "";
-		int pageSize = 10;
-		int pageNo = HttpUtil.getInt(request, "start", 1);
-		String orderBy = HttpUtil.getString(request, "orderBy", "id");
-		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
-	
-		Map requestParams = HttpUtil.requestParam2Map(request);
+//		String json = "";
+//		int pageSize = 10;
+//		int pageNo = HttpUtil.getInt(request, "start", 1);
+//		String orderBy = HttpUtil.getString(request, "orderBy", "id");
+//		boolean isAsc = HttpUtil.getBoolean(request, "isAsc", false);
+//	
+//		Map requestParams = HttpUtil.requestParam2Map(request);
 		
-		Page page = stgs.findAllSystemMainTableIdBuilder(requestParams, pageNo, pageSize, orderBy, isAsc);
+//		Page page = stgs.findAllSystemMainTableIdBuilder(requestParams, pageNo, pageSize, orderBy, isAsc);
 		
-		Long total = page.getTotalCount();
-		List<SystemMainTableIdBuilder> queryList = page.list();
-		for(int i=0; i<queryList.size(); i++){
-			SystemMainTableIdBuilder s = queryList.get(i);
-			SystemMainTable smt = s.getSystemMainTable();
-			Department department = s.getDepartment();
-		}
+//		Long total = page.getTotalCount();
+//		List<SystemMainTableIdBuilder> queryList = page.list();
+//		for(int i=0; i<queryList.size(); i++){
+//			SystemMainTableIdBuilder s = queryList.get(i);
+//			SystemMainTable smt = s.getSystemMainTable();
+//			Department department = s.getDepartment();
+//		}
 		//***********************2ÆÚ*************************
 		
 //		List<Map<String, Object>> listData = metaDataManager

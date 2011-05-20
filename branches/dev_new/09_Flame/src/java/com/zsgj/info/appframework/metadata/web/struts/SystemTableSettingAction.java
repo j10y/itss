@@ -21,7 +21,6 @@ import com.zsgj.info.framework.exception.ApplicationException;
 import com.zsgj.info.framework.security.entity.Module;
 import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -40,7 +39,7 @@ public class SystemTableSettingAction extends BaseDispatchAction{
 	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
 	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	
 	/**
 	 * 系统可见字段
@@ -129,7 +128,7 @@ public class SystemTableSettingAction extends BaseDispatchAction{
 			if(isAllUserStr.equals("1")){
 				this.ucs.saveSystemTableSettingColumnToUser(smt, settingType);
 			}else if(isAllUserStr.equals("2")){
-				String role = request.getParameter("role");
+//				String role = request.getParameter("role");
 				
 				this.ucs.saveSystemTableSettingColumnToUser(smt, settingType);
 			}else{
@@ -241,7 +240,7 @@ public class SystemTableSettingAction extends BaseDispatchAction{
 		String ids = request.getParameter("id");
 		String smtId = request.getParameter("smtId");
 		String settingType = request.getParameter("settingType");
-		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
+//		int pageNo = HttpUtil.getInt(request, "pageNo", 1);
 		smts.removeSystemTableSetting(ids);
 		
 		return HttpUtil.redirect("sysTableSetting.do?methodCall=list&smtId="+smtId+"&settingType="+settingType);

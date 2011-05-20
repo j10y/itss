@@ -13,14 +13,10 @@ import org.apache.struts.action.ActionMapping;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemTableSetting;
 import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
-import com.zsgj.info.appframework.metadata.service.SystemColumnService;
-import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
-import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.appframework.metadata.service.UserColumnService;
 import com.zsgj.info.framework.exception.ApplicationException;
 import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 
@@ -34,10 +30,10 @@ import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 public class UserTableSettingAction extends BaseDispatchAction{
 	
 	private UserColumnService ucs = (UserColumnService) getBean("userColumnService");
-	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
-	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
-	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
+//	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
+//	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	
 	/**
 	 * 系统可见字段

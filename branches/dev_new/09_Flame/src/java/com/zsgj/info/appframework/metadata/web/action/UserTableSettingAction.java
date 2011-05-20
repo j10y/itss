@@ -17,7 +17,6 @@ import com.zsgj.info.appframework.metadata.entity.UserTableSetting;
 import com.zsgj.info.appframework.metadata.service.MetaDataService;
 import com.zsgj.info.framework.context.UserContext;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 
@@ -29,7 +28,7 @@ import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
  */
 public class UserTableSettingAction extends BaseDispatchAction{
 	private MetaDataService sds = (MetaDataService) getBean("metaDataService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	
 	
 	
@@ -66,8 +65,8 @@ public class UserTableSettingAction extends BaseDispatchAction{
 		String mainTableId = request.getParameter("mainTableId");
 		SystemMainTable systemMainTable = sds.findSystemMainTable(mainTableId);
 		
-		String isAllUser = request.getParameter("isAllUser");
-		String userInfo = request.getParameter("userInfo");
+//		String isAllUser = request.getParameter("isAllUser");
+//		String userInfo = request.getParameter("userInfo");
 		
 		sds.initColumnsToSysTableSetting(systemMainTable);
 		
@@ -100,7 +99,7 @@ public class UserTableSettingAction extends BaseDispatchAction{
 			Long utsId = sts.getId();
 			String isDisplayPara = request.getParameter("isDisplay"+utsId);
 			StringTokenizer token = new StringTokenizer(isDisplayPara, "|");
-			String itemId = token.nextToken();
+//			String itemId = token.nextToken();
 			String trueOrFalse = token.nextToken();
 			sts.setIsDisplay(Integer.valueOf(trueOrFalse));
 			//--------------------------
@@ -166,7 +165,7 @@ public class UserTableSettingAction extends BaseDispatchAction{
 		UserInfo userInfo = UserContext.getUserInfo();
 		String mainTableId = request.getParameter("mainTableId");
 		SystemMainTable systemMainTable = sds.findSystemMainTable(mainTableId);
-		String header = request.getHeader("referer");
+//		String header = request.getHeader("referer");
 		sds.saveNewColumnToUserTableSetting(userInfo, systemMainTable);
 		
 		return HttpUtil.redirect("columnsDef.do?methodCall=listAllColumns&mainTableId="+mainTableId);
@@ -250,7 +249,7 @@ public class UserTableSettingAction extends BaseDispatchAction{
 			Long utsId = uts.getId();
 			String isDisplayPara = request.getParameter("isDisplay"+utsId);
 			StringTokenizer token = new StringTokenizer(isDisplayPara, "|");
-			String itemId = token.nextToken();
+//			String itemId = token.nextToken();
 			String trueOrFalse = token.nextToken();
 			uts.setIsDisplay(Integer.valueOf(trueOrFalse));
 			//--------------------------

@@ -15,13 +15,10 @@ import com.zsgj.info.appframework.metadata.entity.MatchMode;
 import com.zsgj.info.appframework.metadata.entity.SystemMainTable;
 import com.zsgj.info.appframework.metadata.entity.SystemTableQuery;
 import com.zsgj.info.appframework.metadata.entity.SystemTableQueryColumn;
-import com.zsgj.info.appframework.metadata.service.SystemColumnService;
-import com.zsgj.info.appframework.metadata.service.SystemMainColumnService;
 import com.zsgj.info.appframework.metadata.service.SystemMainTableService;
 import com.zsgj.info.appframework.metadata.service.UserColumnService;
 import com.zsgj.info.framework.exception.ApplicationException;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.service.SecurityManageService;
 import com.zsgj.info.framework.util.BeanUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
@@ -36,10 +33,10 @@ import com.zsgj.info.framework.web.adapter.struts.BaseDispatchAction;
 public class SystemTableQueryAction extends BaseDispatchAction{
 	
 	private UserColumnService ucs = (UserColumnService) getBean("userColumnService");
-	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
+//	private SystemColumnService scs = (SystemColumnService) getBean("systemColumnService");
 	private SystemMainTableService smts = (SystemMainTableService) getBean("systemMainTableService");
-	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
-	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
+//	private SystemMainColumnService smcs = (SystemMainColumnService) getBean("systemMainColumnService");
+//	private SecurityManageService sms = (SecurityManageService) getBean("securityManageService");
 	
 	public ActionForward list(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
@@ -163,11 +160,11 @@ public class SystemTableQueryAction extends BaseDispatchAction{
 			String hiddenValue = request.getParameter("hiddenValue"+utsId);
 			String matchMode = request.getParameter("matchMode"+utsId);
 			StringTokenizer token = new StringTokenizer(isDisplayPara, "|");
-			String itemId = token.nextToken();
+//			String itemId = token.nextToken();
 			String trueOrFalse = token.nextToken();
 			if(isHiddenItem!=null){
 				StringTokenizer token1 = new StringTokenizer(isHiddenItem, "|");
-				String itemId1 = token1.nextToken();
+//				String itemId1 = token1.nextToken();
 				String trueOrFalse1 = token1.nextToken();
 				uts.setIsHiddenItem(Integer.valueOf(trueOrFalse1));
 			}
