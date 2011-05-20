@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-11-30
  */
 public class PagePanelBtn extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 3956632473417405743L;
 	private Long id;
 	private PagePanel pagePanel;
 	private PageBtnType btnType;

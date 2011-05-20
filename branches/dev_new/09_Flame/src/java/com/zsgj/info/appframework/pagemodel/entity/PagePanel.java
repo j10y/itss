@@ -19,9 +19,73 @@ import com.zsgj.info.framework.security.entity.Module;
  * @Create In 2008-11-12
  */
 public class PagePanel extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2678797149402048924L;
 	private Long id;
 	//panel关键字
 	private String name;
+	/**
+	 * @Return the Set<PagePanelBtn> btns
+	 */
+	public Set<PagePanelBtn> getBtns() {
+		return btns;
+	}
+	/**
+	 * @Param Set<PagePanelBtn> btns to set
+	 */
+	public void setBtns(Set<PagePanelBtn> btns) {
+		this.btns = btns;
+	}
+	/**
+	 * @Return the Set<PagePanelColumn> ppcs
+	 */
+	public Set<PagePanelColumn> getPpcs() {
+		return ppcs;
+	}
+	/**
+	 * @Param Set<PagePanelColumn> ppcs to set
+	 */
+	public void setPpcs(Set<PagePanelColumn> ppcs) {
+		this.ppcs = ppcs;
+	}
+	/**
+	 * @Return the Set<PagePanelRelation> pprs
+	 */
+	public Set<PagePanelRelation> getPprs() {
+		return pprs;
+	}
+	/**
+	 * @Param Set<PagePanelRelation> pprs to set
+	 */
+	public void setPprs(Set<PagePanelRelation> pprs) {
+		this.pprs = pprs;
+	}
+	/**
+	 * @Return the Set<PagePanelTable> ppts
+	 */
+	public Set<PagePanelTable> getPpts() {
+		return ppts;
+	}
+	/**
+	 * @Param Set<PagePanelTable> ppts to set
+	 */
+	public void setPpts(Set<PagePanelTable> ppts) {
+		this.ppts = ppts;
+	}
+	/**
+	 * @Return the Set<PagePanelTableRelation> pptrs
+	 */
+	public Set<PagePanelTableRelation> getPptrs() {
+		return pptrs;
+	}
+	/**
+	 * @Param Set<PagePanelTableRelation> pptrs to set
+	 */
+	public void setPptrs(Set<PagePanelTableRelation> pptrs) {
+		this.pptrs = pptrs;
+	}
 	//panel的标题
 	private String title;
 	//所属的module

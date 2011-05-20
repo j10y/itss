@@ -16,6 +16,10 @@ import com.zsgj.info.framework.security.entity.Module;
  * @Create In 2008-11-16
  */
 public class PageModel extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 2465759582873870268L;
 	private Long id;
 	//页面名字，程序使用，必须是英文
 	private String name;
@@ -46,6 +50,76 @@ public class PageModel extends BaseObject {
 	private String descn;
 	
 	private Set<PageModelBtn> btns = new HashSet<PageModelBtn>();
+	/**
+	 * @Return the Set<PageModelBtn> btns
+	 */
+	public Set<PageModelBtn> getBtns() {
+		return btns;
+	}
+
+	/**
+	 * @Param Set<PageModelBtn> btns to set
+	 */
+	public void setBtns(Set<PageModelBtn> btns) {
+		this.btns = btns;
+	}
+
+	/**
+	 * @Return the Set<PageModelNode> nodes
+	 */
+	public Set<PageModelNode> getNodes() {
+		return nodes;
+	}
+
+	/**
+	 * @Param Set<PageModelNode> nodes to set
+	 */
+	public void setNodes(Set<PageModelNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	/**
+	 * @Return the Set<PageModelPanel> pmpanels
+	 */
+	public Set<PageModelPanel> getPmpanels() {
+		return pmpanels;
+	}
+
+	/**
+	 * @Param Set<PageModelPanel> pmpanels to set
+	 */
+	public void setPmpanels(Set<PageModelPanel> pmpanels) {
+		this.pmpanels = pmpanels;
+	}
+
+	/**
+	 * @Return the Set<PageModelPanelTable> pmpts
+	 */
+	public Set<PageModelPanelTable> getPmpts() {
+		return pmpts;
+	}
+
+	/**
+	 * @Param Set<PageModelPanelTable> pmpts to set
+	 */
+	public void setPmpts(Set<PageModelPanelTable> pmpts) {
+		this.pmpts = pmpts;
+	}
+
+	/**
+	 * @Return the Set<PageGroupPanelTable> pgpts
+	 */
+	public Set<PageGroupPanelTable> getPgpts() {
+		return pgpts;
+	}
+
+	/**
+	 * @Param Set<PageGroupPanelTable> pgpts to set
+	 */
+	public void setPgpts(Set<PageGroupPanelTable> pgpts) {
+		this.pgpts = pgpts;
+	}
+
 	private Set<PageModelNode> nodes = new HashSet<PageModelNode>();
 	private Set<PageModelPanel> pmpanels = new HashSet<PageModelPanel>();
 	//private Set<PageModelPanelRelation> pmprs = new HashSet<PageModelPanelRelation>();

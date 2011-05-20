@@ -5,10 +5,27 @@ import com.zsgj.info.appframework.metadata.entity.SystemMainTableColumn;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class PagePanelTableRelation extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 8033293034792700847L;
 	private Long id;
 	private PagePanel pagePanel;
 	private SystemMainTable systemMainTable;
 	private SystemMainTableColumn systemMainTablePKColumn; //Áô´ýÀ©Õ¹
+	/**
+	 * @Return the SystemMainTableColumn systemMainTablePKColumn
+	 */
+	public SystemMainTableColumn getSystemMainTablePKColumn() {
+		return systemMainTablePKColumn;
+	}
+	/**
+	 * @Param SystemMainTableColumn systemMainTablePKColumn to set
+	 */
+	public void setSystemMainTablePKColumn(
+			SystemMainTableColumn systemMainTablePKColumn) {
+		this.systemMainTablePKColumn = systemMainTablePKColumn;
+	}
 	private SystemMainTableColumn foreignTableColumn;
 	private SystemMainTable foreignTable;
 	

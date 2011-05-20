@@ -3,6 +3,10 @@ package com.zsgj.info.appframework.pagemodel.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class PageModelParamIn extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 3767439099042341525L;
 	private Long id;
 	private PageModel pageModel;
 	private String paramName;

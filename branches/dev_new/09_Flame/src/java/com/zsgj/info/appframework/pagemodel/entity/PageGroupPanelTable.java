@@ -11,6 +11,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-12-5
  */
 public class PageGroupPanelTable extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 533581499569937878L;
 	private Long id;
 	private PagePanel pagePanel; 			//分组面板，如内部客户分组面板
 	

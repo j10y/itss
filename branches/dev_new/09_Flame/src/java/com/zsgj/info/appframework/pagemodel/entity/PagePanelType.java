@@ -3,6 +3,10 @@ package com.zsgj.info.appframework.pagemodel.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class PagePanelType extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7630899712603732393L;
 	private Long id;
 	private String name; //panel,tabpanel,treepanel
 	private String cnName;

@@ -9,6 +9,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In Apr 17, 2009
  */
 public class PagePanelFieldSet extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -5985604121142610774L;
 	private Long id;
 	private PagePanel pagePanel;
 	private PagePanelColumn pagePanelColumn;

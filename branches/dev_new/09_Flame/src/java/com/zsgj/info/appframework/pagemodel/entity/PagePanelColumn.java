@@ -16,6 +16,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-11-13
  */
 public class PagePanelColumn extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -5039310303216998602L;
 	public static Integer FIELD_SET_TRUE = 1;
 	public static Integer FIELD_SET_FALSE = 0;
 	private Long id;
@@ -33,6 +37,7 @@ public class PagePanelColumn extends BaseObject{
 	//长度
 	private String length;
 	//是否必显
+	@SuppressWarnings("unused")
 	private Integer isMustInput;
 	//查询模式
 	private MatchMode matchMode;

@@ -3,6 +3,10 @@ package com.zsgj.info.appframework.pagemodel.entity;
 import com.zsgj.info.framework.dao.BaseObject;
 
 public class PageModelNode extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2430248427817786200L;
 	private Long id;
 	private String nodeName;
 	private PageModel pageModel;

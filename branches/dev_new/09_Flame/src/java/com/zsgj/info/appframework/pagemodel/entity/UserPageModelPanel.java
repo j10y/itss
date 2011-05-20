@@ -7,6 +7,10 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class UserPageModelPanel extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -4180182873081388162L;
 	private Long id;
 	private UserInfo userInfo;
 	private PagePanel pagePanel;

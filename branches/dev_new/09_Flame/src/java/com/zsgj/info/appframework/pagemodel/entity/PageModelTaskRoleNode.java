@@ -5,10 +5,50 @@ import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.workflow.entity.WorkflowRole;
 
 public class PageModelTaskRoleNode extends BaseObject{
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 5120368872894774364L;
 	private Long id;
 	private String definitionName;//key
 	private String nodeName;
 	private WorkflowRole workflowRole;
+	/**
+	 * @Return the String email
+	 */
+	public String getEmail() {
+		return email;
+	}
+	/**
+	 * @Param String email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	/**
+	 * @Return the String webServiceURL
+	 */
+	public String getWebServiceURL() {
+		return webServiceURL;
+	}
+	/**
+	 * @Param String webServiceURL to set
+	 */
+	public void setWebServiceURL(String webServiceURL) {
+		this.webServiceURL = webServiceURL;
+	}
+	/**
+	 * @Return the String erpFun
+	 */
+	public String getErpFun() {
+		return erpFun;
+	}
+	/**
+	 * @Param String erpFun to set
+	 */
+	public void setErpFun(String erpFun) {
+		this.erpFun = erpFun;
+	}
 	private Role role;
 	private PageModel pageModel;
 	private String ruleFile; //规则文件路径

@@ -11,6 +11,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  * @Create In 2008-12-5
  */
 public class PageModelPanelTable extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 1448194752493628658L;
 	private Long id;
 	private PageModel pageModel; 			//configItemModel
 	
