@@ -131,6 +131,7 @@ public class PagePanelServiceImpl extends BaseDao implements PagePanelService {
 		return result;
 	}
 
+	@SuppressWarnings("unused")
 	private List<PageModelPanel> getChildPanels(PageModelPanel pmp){
 		Criteria c = super.getCriteria(PageModelPanel.class);
 		c.add(Restrictions.eq("pageModel", pmp.getPageModel()));
@@ -249,7 +250,7 @@ public class PagePanelServiceImpl extends BaseDao implements PagePanelService {
 		Long newParentId = Long.valueOf(newPid);
 		int nodeIndex = Integer.parseInt(nodeIndx);
 		PagePanel obj = this.get(PagePanel.class, menuId);
-		PagePanel newParent = super.get(PagePanel.class, newParentId);
+//		PagePanel newParent = super.get(PagePanel.class, newParentId);
 		int minIndex = 1/*obj.getMenuOrder().intValue()*/;
 		int maxIndex = Integer.valueOf(nodeIndex); //nodeIndex;
 		if(oldParentId.intValue() == newParentId.intValue() && minIndex != maxIndex){
@@ -466,30 +467,30 @@ public class PagePanelServiceImpl extends BaseDao implements PagePanelService {
 			if(column.getOrder()>maxOrder)
 				maxOrder=column.getOrder()+1;
 		}
-		String temp = "";
+//		String temp = "";
 		for(Column column:columns){
 			try {
-				temp = column.getPropertyName();
-			PagePanelColumn ppc = new PagePanelColumn();
-			ppc.setPagePanel(pp);
-			ppc.setSystemMainTable(smt);
-			ppc.setOrder(maxOrder++);
-			ppc.setIsDisplay(1);
-			ppc.setIsMustInput(0);
-//			if(column instanceof SystemMainTableColumn)
-				ppc.setMainTableColumn((SystemMainTableColumn)column);
-//			if(column instanceof SystemMainTableExtColumn)
-//				ppc.setExtendTableColumn((SystemMainTableExtColumn)column);
-			
-				if (column.getSystemMainTableColumnType() != null) {
-					SystemMainTableColumnType smtct = column
-							.getSystemMainTableColumnType();
-					if (smtct.getColumnTypeName().equals("hidden")) {
-						ppc.setIsMustInput(1);
+//				temp = column.getPropertyName();
+				PagePanelColumn ppc = new PagePanelColumn();
+				ppc.setPagePanel(pp);
+				ppc.setSystemMainTable(smt);
+				ppc.setOrder(maxOrder++);
+				ppc.setIsDisplay(1);
+				ppc.setIsMustInput(0);
+	//			if(column instanceof SystemMainTableColumn)
+					ppc.setMainTableColumn((SystemMainTableColumn)column);
+	//			if(column instanceof SystemMainTableExtColumn)
+	//				ppc.setExtendTableColumn((SystemMainTableExtColumn)column);
+				
+					if (column.getSystemMainTableColumnType() != null) {
+						SystemMainTableColumnType smtct = column
+								.getSystemMainTableColumnType();
+						if (smtct.getColumnTypeName().equals("hidden")) {
+							ppc.setIsMustInput(1);
+						}
 					}
-				}
-					
-			super.save(ppc);
+						
+				super.save(ppc);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}	
@@ -508,8 +509,8 @@ public class PagePanelServiceImpl extends BaseDao implements PagePanelService {
 		Criteria c = super.getCriteria(PagePanelTableRelation.class);
 		c.add(Restrictions.eq("pagePanel", panel));
 		c.add(Restrictions.eq("systemMainTable", subSmt));
-		String tableCnName = subSmt.getTableCnName();
-		String panelTitle = panel.getTitle();
+//		String tableCnName = subSmt.getTableCnName();
+//		String panelTitle = panel.getTitle();
 		List list = c.list();
 		return list;
 	}
@@ -731,6 +732,7 @@ public SystemMainTable findSystemMainTableByName(String tableName){
 		return pageGroupPanelTable;
 	}
 
+	@SuppressWarnings("static-access")
 	public PagePanelColumn savePagePanelColumn(PagePanel pagePanel, String index) {
 		PagePanelColumn pagePanelColumn = new PagePanelColumn();
 		pagePanelColumn.setPagePanel(pagePanel);
