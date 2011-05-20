@@ -17,6 +17,7 @@ import com.zsgj.info.framework.dao.BaseDao;
 import com.zsgj.info.framework.service.Service;
 import com.zsgj.info.framework.util.asm.render.FreemarkerRender;
 
+@SuppressWarnings("unused")
 public class PageModelGenServiceImpl extends BaseDao implements PageModelGenService {
 
 	private PageManager pageManager;
@@ -94,6 +95,7 @@ public class PageModelGenServiceImpl extends BaseDao implements PageModelGenServ
 			return null;
 		}
 
+	
 	private String genPagePanelJson(PageModelPanel pmp){
 		String json = "";
 		PagePanel panel = pmp.getPagePanel();

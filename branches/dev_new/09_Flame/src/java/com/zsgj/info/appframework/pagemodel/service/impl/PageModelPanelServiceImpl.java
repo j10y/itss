@@ -192,7 +192,7 @@ public class PageModelPanelServiceImpl extends BaseDao implements PageModelPanel
 			this.savePageModelPanel(panel);
 		}else if(oldPid.equals("-100") && oldPid.equals("-100")){
 			PageModelPanel panel = this.findPageModelPanelById(ppid);
-			Long newParentId = -100l;
+//			Long newParentId = -100l;
 			Long modelId = Long.valueOf(pmid);
 			int nodeIndex = Integer.parseInt(nodeIndx);
 			int minIndex = panel.getOrder();		
