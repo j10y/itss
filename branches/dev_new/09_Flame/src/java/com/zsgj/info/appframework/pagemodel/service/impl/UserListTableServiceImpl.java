@@ -94,7 +94,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 		if(smt.getDeployFlag()!=null&& smt.getDeployFlag()==1){
 			//throw new ServiceException("当前配置项类型处于发布状态不可以删除");
 		}
-		String hql="select cit from ConfigItemType cit where cit.systemMainTable=?";
+//		String hql="select cit from ConfigItemType cit where cit.systemMainTable=?";
 //		List<ConfigItemType> citypes = super.find(hql, smt);
 //		for(ConfigItemType cit : citypes){
 //			super.executeUpdate("delete from ConfigItem ci where ci.configItemType=?", cit);
@@ -287,7 +287,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 		propType = super.get(PropertyType.class, Long.valueOf(propType.getId()));
 		
 		
-		String tableName = smt.getTableName();
+//		String tableName = smt.getTableName();
 		String columnName = smtc.getColumnName();
 		columnName=Character.toLowerCase(columnName.charAt(0))+columnName.substring(1);
 		smtc.setColumnName(columnName);
@@ -419,11 +419,11 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 		String tablePrefix = PropertiesUtil.getProperties("system.userlist.table.prefix", "itil_lst_");
 		
 		if(dialectName.equalsIgnoreCase("org.hibernate.dialect.SQLServerDialect")){
-			buff.append("CREATE TABLE ").append(tablePrefix+ smt.getTableName()).append("(");
+			buff.append("CREATE TABLE ").append(tablePrefix+ tableName).append("(");
 			buff.append(" ID ").append(dialect.getTypeName(Types.BIGINT)).append(" identity primary key");
 			buff.append(");");
 		}else if(dialectName.equalsIgnoreCase("org.hibernate.dialect.OracleDialect")){
-			buff.append("CREATE TABLE ").append(tablePrefix+ smt.getTableName()).append("(");
+			buff.append("CREATE TABLE ").append(tablePrefix+ tableName).append("(");
 			buff.append(" ID ").append(dialect.getTypeName(Types.BIGINT)).append(" primary key");
 			buff.append(");");
 		}else if (dialectName.equalsIgnoreCase("org.hibernate.dialect.MySQLDialect")) {
@@ -452,7 +452,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 
 			String columnName = smtc.getColumnName();
 			if(!pkcname.equalsIgnoreCase(columnName)){
-				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
+//				SystemMainTableColumnType smtcType = smtc.getSystemMainTableColumnType();
 				//smtcType = super.get(SystemMainTableColumnType.class, Long.valueOf(smtcType.getId()));
 				PropertyType pt = smtc.getPropertyType();
 				if(pt==null){
@@ -460,7 +460,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 				}
 				String ptName = pt.getPropertyTypeName();
 				
-				String columnTypeName = smtcType.getColumnTypeName();
+//				String columnTypeName = smtcType.getColumnTypeName();
 				Integer length = smtc.getLength();
 				if(length==null|| length.intValue()==0){
 					length = 200;
@@ -523,7 +523,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 	}
 
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private Class getClass(String className) {
 		Class clazz = null;
 		try {
@@ -542,15 +542,15 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 		c.add(Restrictions.ilike("tableName", sourceClassName, MatchMode.EXACT));
 		List list = c.list();
 		SystemMainTable smt = null;
-		Class clazz = null;
+//		Class clazz = null;
 		if(!list.isEmpty()){
 			smt = (SystemMainTable) list.iterator().next();
-			String className = smt.getClassName();
-			clazz = this.getClass(className);
+//			String className = smt.getClassName();
+//			clazz = this.getClass(className);
 		}
 		
-		RenderClass rc = new RenderClass();
-		ArrayList rcolumns = new ArrayList();
+//		RenderClass rc = new RenderClass();
+//		ArrayList rcolumns = new ArrayList();
 		
 		
 		//获取主表的所有字段
@@ -723,7 +723,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 	
 	public void saveTableEntity(String sourcePkg, String sourceClassName,
 			Class targetClass) {
-		SessionFactory ssf = super.getHibernateSessionFactory();
+//		SessionFactory ssf = super.getHibernateSessionFactory();
 		Configuration config = super.getConfiguration();
 		String newClassName = sourcePkg+"."+ sourceClassName;
 		//通过类全路径获取持久化类
@@ -741,7 +741,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 	
 	private void saveTableEntity(String sourcePkg, String sourceClassName,
 			String targetClass) {
-		SessionFactory ssf = super.getHibernateSessionFactory();
+//		SessionFactory ssf = super.getHibernateSessionFactory();
 		Configuration config = super.getConfiguration();
 		String newClassName = sourcePkg+"."+ sourceClassName;
 		//通过类全路径获取持久化类
@@ -760,7 +760,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 
 	//保存一个用户主表后自动生成对应的面板
 	private void saveTablePanel(SystemMainTable smt){
-		String className = smt.getClassName();
+//		String className = smt.getClassName();
 		String tableName = smt.getTableName();
 		String tableCnName = smt.getTableCnName();
 		String ppcount = "select count(*) from PagePanel ppc where ppc.systemMainTable=?";
@@ -856,6 +856,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 	}
 	
 	//在配置项类型的面板没有的情况下，直接保存会默认生成
+	@SuppressWarnings("unused")
 	private void genTablePanels(SystemMainTable smt) {
 		PagePanel panel = new PagePanel();
 		panel.setName("panel_"+smt.getTableCnName()+"Panel");
@@ -952,8 +953,8 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 					//begin
 					if(ptClassName.equals("java.util.Set")){
 						SystemMainTable ftable = smtc.getForeignTable();
-						SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
-						SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
+//						SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
+//						SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
 						String fclassName = ftable.getClassName();
 						
 						SystemMainTable refTable = smtc.getReferencedTable(); //关联表userRole
@@ -1004,8 +1005,8 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 					
 				}else{
 					SystemMainTable ftable = smtc.getForeignTable();
-					SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
-					SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
+//					SystemMainTableColumn fkey = smtc.getForeignTableKeyColumn();
+//					SystemMainTableColumn fvalue = smtc.getForeignTableValueColumn();
 					String fclassName = ftable.getClassName();
 					ptClassName = fclassName;
 					
@@ -1082,7 +1083,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 				String tablePrefix = prefix;
 				rc.setTableName(tablePrefix + sourceClassName);
 				//rc.setTableName(sourceClassName);
-				String tmp = System.getProperty("java.class.path");
+//				String tmp = System.getProperty("java.class.path");
 				String WEB_INF_CLASSES = this.getClass().getResource("/").toString().replace("/", "\\");
 				int fileLength = "file:\\".length();
 				WEB_INF_CLASSES = WEB_INF_CLASSES.substring(fileLength);
@@ -1127,7 +1128,7 @@ public class UserListTableServiceImpl extends BaseDao implements UserListTableSe
 		while(iter.hasNext()){
 			Property item =  iter.next();
 			String propertyName = item.getName();
-			Object value = item.getValue();
+//			Object value = item.getValue();
 			if(column.getPropertyName().equalsIgnoreCase("id")){
 				if(column.getPropertyName().equalsIgnoreCase(propertyName)){ //只有持久化类里有了，就不再加入
 					result = false;
