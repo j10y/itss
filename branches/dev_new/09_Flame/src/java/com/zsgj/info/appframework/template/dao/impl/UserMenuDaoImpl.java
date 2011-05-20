@@ -22,7 +22,7 @@ public class UserMenuDaoImpl extends BaseDao implements UserMenuDao {
 		
 		List modulesAll = getDaoSupport().selectAll(Module.class);
 		for(int i=0; i<modulesAll.size(); i++){
-			Module module = (Module) modulesAll.get(i);
+//			Module module = (Module) modulesAll.get(i);
 			for(int j=0; j<usersAll.size(); j++){
 				UserInfo userInfo = (UserInfo) usersAll.get(j);
 				UserMenuSetting ums = new UserMenuSetting();
@@ -40,7 +40,7 @@ public class UserMenuDaoImpl extends BaseDao implements UserMenuDao {
 	public void insertAllModulesToUserMenuSettingByUser(UserInfo userInfo) {	
 		List modulesAll = getDaoSupport().selectAll(Module.class);
 		for(int i=0; i<modulesAll.size(); i++){
-			Module module = (Module) modulesAll.get(i);
+//			Module module = (Module) modulesAll.get(i);
 			UserMenuSetting ums = new UserMenuSetting();
 			///ums.setEnabled(new Integer(1));
 			ums.setMenuOrder(new Integer(i+1));

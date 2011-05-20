@@ -11,6 +11,10 @@ import com.zsgj.info.framework.security.entity.Department;
  */
 public class DeptMenuTemplate extends BaseObject {
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -3084472795183890833L;
 	private Long id;
 	private String templateName;
 	private SystemMenuTemplate systemMenuTemplate;

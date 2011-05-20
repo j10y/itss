@@ -12,6 +12,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  */
 public class UserMenu extends BaseObject{
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 6749356296696159038L;
 	private Long id;
 	private UserInfo userInfo;
 	private DeptMenuTemplate deptMenuTemplate;

@@ -13,6 +13,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 public class DeptMenuTemplateItem extends BaseObject {
 
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -79003726863808661L;
+
 	private Long id;
 	
 	private DeptMenuTemplate deptMenuTemplate;//所属部门模板

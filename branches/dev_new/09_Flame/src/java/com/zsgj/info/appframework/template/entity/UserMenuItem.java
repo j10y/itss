@@ -13,6 +13,11 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 public class UserMenuItem extends BaseObject {
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 4844325133814248427L;
+
 	private Long id;
 	
 	private UserMenu userMenu; //所属用户菜单/用户部门菜单模板

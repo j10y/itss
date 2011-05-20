@@ -10,6 +10,10 @@ import com.zsgj.info.framework.dao.BaseObject;
  */
 public class SystemMenuTemplate extends BaseObject {
 	
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = -2087738863308496993L;
 	private Long id;
 	private String templateName;
 	private String descn;

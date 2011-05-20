@@ -10,6 +10,10 @@ import com.zsgj.info.framework.security.entity.UserInfo;
  * @Create In 2008-8-22
  */
 public class UserMenuSetting extends BaseObject {
+	/**
+	 * @Field long serialVersionUID 
+	 */
+	private static final long serialVersionUID = 7761179491321290982L;
 	private Long id;
 	private UserInfo userInfo;
 	private Menu menu;

@@ -19,6 +19,7 @@ public class TemplateItem extends BaseObject {
 	private static final long serialVersionUID = 2772193021641320781L;
 	
 	private Long id;
+	@SuppressWarnings("unused")
 	private String name;
 	private Template template;
 	private SystemMainTable systemMainTable;
