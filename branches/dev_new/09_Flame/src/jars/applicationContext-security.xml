@@ -27,7 +27,7 @@
         	
             <sec:filter-chain pattern="/" filters="casValidationFilter, wrappingFilter" />
             <sec:filter-chain pattern="/secure/receptor" filters="casValidationFilter" />
-            <sec:filter-chain pattern="/j_spring_security_logout" filters=",etf,fsi" />
+            <sec:filter-chain pattern="/j_spring_security_logout" filters="logoutFilter,etf,fsi" />
             <sec:filter-chain pattern="/**" filters="casAuthenticationFilter, casValidationFilter, wrappingFilter, sif,j2eePreAuthFilter,logoutFilter,etf,fsi"/>
         </sec:filter-chain-map>
     </bean>
