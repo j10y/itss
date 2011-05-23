@@ -1,7 +1,6 @@
 <%@ page language="java" pageEncoding="gbk"%> 
 <html>
 <head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">

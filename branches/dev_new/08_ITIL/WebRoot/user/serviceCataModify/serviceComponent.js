@@ -67,7 +67,7 @@ PageModelComponentPanel = Ext.extend(Ext.Panel, {
 							+ "',applyNum:'-----" 
 							+ "',applyName:'" + Ext.getCmp('ServiceCatalogue$name').getValue()
 							+"',oldDataId:'"+oldModifyDataId+"',applyId : '"+curId+"',applyType: 'cproject',applyTypeName: '服务目录变更审批流程',customer:'',alterFlag:'变更','workflowHistory':'com.zsgj.itil.service.entity.ServiceCatalogueAuditHis'}",						
-						defname : "serviceCataManager1246344634984"
+						defname : "serviceCataManager1305882470217"
 					},
 					success : function(response, options) {
 						var meg = Ext.decode(response.responseText);

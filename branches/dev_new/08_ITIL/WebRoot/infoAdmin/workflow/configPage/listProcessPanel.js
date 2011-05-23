@@ -357,7 +357,7 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 					
 					var oEditor = FCKeditorAPI.GetInstance("content");
 					var content = oEditor.EditorDocument.body.innerHTML;
-					Ext.getCmp('com.digitalchina.writeInfo').getForm().submit({
+					Ext.getCmp('com.zsgj.writeInfo').getForm().submit({
 						url : webContext
 								+ '/workflow/processconfig.do?methodCall=uploadRuleFile&id='
 								+ param + "&department=" + department

@@ -1005,7 +1005,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							params : {
 								dataId : modifyId,
 								bzparam : "{applyId:'"+ modifyId+"',dataId:'"+modifyId+"',applyName:'"+applyName+"',applyNum:'"+applyNum+"',modifyType : '"+type+"',applyType: 'mproject',applyTypeName: '配置项变更处理','workflowHistory':'com.zsgj.itil.config.entity.CIBatchModifyAuditHis'}",						
-								defname : "ConfigItemModify1278482630373"
+								defname : "ConfigItemModify1305861895670"
 							},
 							success : function(response, options) {
 								var meg = response.responseText;

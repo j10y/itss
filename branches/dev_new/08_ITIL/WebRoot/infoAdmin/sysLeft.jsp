@@ -144,7 +144,7 @@ background="${pageContext.request.contextPath}/images/SysLeft_bg_click.gif" bord
     <tr>
     <td width="36" height="22"></td>
     <td class="SystemLeft"><a href="${pageContext.request.contextPath}/infoAdmin/ServiceItemTypeAction.do?methodCall=list&pageNo=1" 
-    	target="mainFrame" onClick='changeAdminFlag("服务项数据模型管理")'>服务项数据模型管理</a></td>
+    	target="mainFrame" onClick='changeAdminFlag("服务项类型管理")'>服务项类型管理</a></td>
   </tr>
   
   <tr>
