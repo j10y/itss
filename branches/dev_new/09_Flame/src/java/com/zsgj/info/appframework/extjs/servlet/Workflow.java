@@ -425,11 +425,11 @@ public class Workflow extends HttpServlet {
 			while (it.hasNext()) {
 				String key = (String) it.next();
 				String value = (String) jo.get(key);
-				try {
-					value = new String(value.getBytes("iso8859-1"), "utf-8");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					value = new String(value.getBytes("iso8859-1"), "utf-8");
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
 				mapBizz.put(key, value);
 			}
 		}
