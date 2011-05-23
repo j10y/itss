@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+			
+		<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+
+		<property name="driverClassName">
+			<value>net.sourceforge.jtds.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:jtds:sqlserver://localhost:1433/itilold</value>
+		</property>
+		<property name="username">
+			<value>sa</value>
+		</property>
+		<property name="password">
+			<value>sa</value>
+		</property>
+		<!-- 
+		
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/itil?useUnicode=true</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>000000</value>
+		</property>
+		 -->
+		<property name="maxActive" value="200"/>
+		<property name="maxIdle" value="30"/>
+		<property name="minIdle" value="10"/>
+		<property name="defaultAutoCommit" value="false"/>
+		<property name="initialSize" value="10"/>
+		<property name="maxWait" value="5000"/>
+		<property name="removeAbandoned" value="true"/>
+		<property name="removeAbandonedTimeout" value="60"/>
+		<property name="logAbandoned" value="true"/>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>com/zsgj/dcit/entity/map/Notice.hbm.xml</value>
+				<value>com/zsgj/dcit/entity/map/UserInfo.hbm.xml</value>
+				<value>com/zsgj/dcit/entity/map/Knowledge.hbm.xml</value>
+				<value>com/zsgj/dcit/entity/map/ServiceItem.hbm.xml</value>
+				<value>com/zsgj/dcit/entity/map/KnowFile.hbm.xml</value>
+				<value>com/zsgj/dcit/entity/map/EventType.hbm.xml</value>
+				<value>com/zsgj/dcit/entity/map/EventTypeServiceItem.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+				org.hibernate.dialect.SQLServerDialect
+					<!--
+					org.hibernate.dialect.MySQLDialect  -->
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+			</props>
+		</property>
+	</bean>
+			
+	<bean name="hibernateTrancationManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="hibernateTrancationManager"/>
+	
+	<bean name="hibernateTransactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="hibernateTrancationManager"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean name="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames" value="*Service"/>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateTransactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="noticeDao" class="com.zsgj.dcit.dao.impl.NoticeDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<bean id="knowledgeDao" class="com.zsgj.dcit.dao.impl.KnowledgeDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<bean id="knowFileDao" class="com.zsgj.dcit.dao.impl.KnowFileDaoImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>		
+	
+	<bean id="noticeService" class="com.zsgj.dcit.service.impl.NoticeServiceImpl">
+		<property name="noticeDao" ref="noticeDao"></property>
+	</bean>
+	<bean id="knowledgeService" class="com.zsgj.dcit.service.impl.KnowledgeServiceImpl">
+		<property name="knowledgeDao" ref="knowledgeDao"></property>
+	</bean>
+		<bean id="knowFileService" class="com.zsgj.dcit.service.impl.KnowFileServiceImpl">
+		<property name="knowFileDao" ref="knowFileDao"></property>
+	</bean>
+	
+	<bean id="noticeAction" class="com.zsgj.dcit.action.NoticeAction" scope="prototype">
+		<property name="noticeService" ref="noticeService"></property>
+	</bean>	
+	<bean id="knowledgeAction" class="com.zsgj.dcit.action.KnowledgeAction" scope="prototype">
+		<property name="knowledgeService" ref="knowledgeService"></property>
+	</bean>	
+		<bean id="knowFileAction" class="com.zsgj.dcit.action.KnowFileAction" scope="prototype">
+		<property name="knowFileService" ref="knowFileService"></property>
+	</bean>	
+
+</beans>

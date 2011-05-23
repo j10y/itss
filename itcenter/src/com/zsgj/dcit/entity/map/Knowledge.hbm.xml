@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.dcit.entity.Knowledge" table="Knowledge" >
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+		<many-to-one name="createUser" class="com.zsgj.dcit.entity.UserInfo" >
+            <column name="createUser" />
+        </many-to-one>
+         <property name="createDate" type="timestamp">
+            <column name="createDate" />
+        </property>
+        <property name="summary" type="string">
+            <column name="summary" />
+        </property>
+        <property name="useTime" type="long">
+            <column name="useTime" default="0"/>
+        </property>
+        <property name="reason" type="string">
+            <column name="reason" />
+        </property>
+        <property name="status" type="integer">
+			<column name="status"></column>
+		</property>
+        <property name="resolvent" type="text">
+            <column name="resolvent" />
+        </property>
+        <many-to-one name="serviceItem" class="com.zsgj.dcit.entity.ServiceItem" >
+            <column name="serviceItem" />
+        </many-to-one>
+        
+         <property name="knowledgeCisn" type="string">
+            <column name="knowledgeCisn" />
+        </property>
+        
+        <property name="readTimes" type="long">
+            <column name="readTimes" />
+        </property>
+
+	</class>
+</hibernate-mapping>
