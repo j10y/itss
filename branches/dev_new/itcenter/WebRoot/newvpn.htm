@@ -1,0 +1,436 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0120)http://dcone.digitalchina.com/wps/wcm/connect/LIB_DCONE/site_dcone/site_area_index/area_index_fwtz/2010-5-7-14-43-32-199 -->
+<HTML xmlns:o = "urn:schemas-microsoft-com:office:office"><HEAD><TITLE>IT公告： 5月7日起，用户新申请远程接入帐号将采用软件令牌</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type>
+<STYLE type=text/css>A:link {
+	COLOR: #000000; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #666666; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #000000; FONT-SIZE: 12px; TEXT-DECORATION: underline
+}
+.bumen {
+	PADDING-LEFT: 5px; COLOR: gray
+}
+SPAN {
+	PADDING-LEFT: 5px; COLOR: gray; FONT-SIZE: 12px
+}
+</STYLE>
+
+<SCRIPT type=text/javascript>
+   /**
+ * 截取发文标题
+ **/
+function subTitle(title,length){
+	var subTitle;
+        var title = title;
+        title = title.replace(/\&ldquo;/g,"\“");
+	   title = title.replace(/\&rdquo;/g,"\”");
+	   title = title.replace(/\&mdash;/g,"—");
+	if( title.length > length)
+	   	subTitle = title.substring(0,(length-1))+"...";
+	else
+	   subTitle = title;
+	return subTitle;
+}
+
+/**
+ * 截取发文概要
+ **/
+function subDesc(desc , length){
+	var subDesc;
+  if(desc.length >length)
+     subDesc = desc.substring(0,(length-1))+"....";
+  else
+     subDesc = desc;
+  return subDesc;
+}
+
+/**
+ * 判断发文时间是否为今天
+ **/
+function isToday(strY,strM,strD){
+  var str='';
+  var d = new Date();
+  if(parseInt(strY) == d.getFullYear()){
+    if(parseFloat(strM) == (d.getMonth()+1)){
+       if(parseFloat(strD) == d.getDate()){
+         str ="今";
+       }
+    }
+  }
+  return str;
+}
+
+/**
+ * 判断发文时间是否为今天
+ **/
+function isToday_2(strY,strM,strD){
+  var temp = false;
+  var d = new Date();
+  if(parseInt(strY) == d.getFullYear()){
+    if(parseFloat(strM) == (d.getMonth()+1)){
+       if(parseFloat(strD) == d.getDate()){
+         temp = true;
+       }
+    }
+  }
+  return temp;
+}
+
+//页面跳转
+function goToUrl(url){
+
+       var addr=top.document.URL;
+       m=addr.lastIndexOf('portal') ;
+
+       addr=addr.substring(0,m+6)+url;
+     
+       window.open(addr);
+       
+}
+
+//  发布人^发布日期^发布部门^内容ID^内容标题^分类名称^分类ID
+function wcmClickContent(pubuser , pubdate , pubdept , contentID , contentTitle , categoryName ,categoryID){
+	    var id;
+         id= pubuser+"^"+pubdate+"^"+pubdept+"^"+contentID+"^"+contentTitle+"^"+categoryName+"^"+categoryID;
+
+		 return id;
+	 }
+    // wcm_内容ID^内容ID^内容标题^分类名称^分类ID
+function wcmClickLink(contentID , contentTitle , categoryName ,categoryID){
+	    var id = "wcm_"+contentID+"^"+contentTitle+"^"+categoryName+"^"+categoryID;
+		return id;
+	  }
+
+
+// portal6.0  URL转换
+    function TransformCgi(url){
+    var strUNC="";
+    for(i=0;i<=url.length-1;i++)
+	 //如果字符串中包含数字，则转换为UNICODE
+	   if (/[^\x00-\xff]/g.test(url.substring(i,i+1))) 
+		  strUNC+=escape(url.substring(i,i+1))
+	   else strUNC+=url.substring(i,i+1)
+           strUNC = strUNC.replace(/\s/g,"\\x20"); 
+           strUNC = strUNC.replace(/\&/g,"");
+		  return strUNC;
+   }
+//portal6.1 URL 转换 portal6.1 自动将特殊字符进行了转义
+ function replaceTag(url){
+   var newUrl ='';
+   newUrl = url.replace(/\s/g,"\\x20");
+   newUrl = newUrl.replace(/\&amp;/g,"");
+   return newUrl;
+}
+//过滤发文标题中的特殊字符（&）
+function filterTitle(title){
+   var newTitle ="";
+   newTitle = title.replace(/\&amp;/g,"");
+   return newTitle;
+}
+//替换半角数字到全角数字
+function convertNum(halfNum){
+		var fullNums = "０１２３４５６７８９";
+		var halfNums = "0123456789";
+		var index;
+			if ((index = halfNums.indexOf(halfNum))>-1){ 
+			return fullNums.charAt(index);
+		}
+ 
+		return halfNum;
+	}
+
+	function checkNum(str){
+	    var halfNums = "0123456789";
+		var result = "";
+		for(var i=0;i<str.length;i++){
+		    if(halfNums.indexOf(str.charAt(i))>-1)
+		    {
+			result +=convertNum(str.charAt(i));
+			}
+			else
+			{
+			result +=str.charAt(i);
+			}
+		}
+		 
+		return result;
+	}
+//替换半角数字到全角数字-结束
+</SCRIPT>
+
+<META name=GENERATOR content="MSHTML 8.00.7600.16588"></HEAD>
+<BODY bottomMargin=0 
+background=IT公告：%205月7日起，用户新申请远程接入帐号将采用软件令牌_files/area_index_fwtz.htm 
+leftMargin=0 rightMargin=0 topMargin=0 bgColor=white text=black>
+<TABLE border=0 cellSpacing=0 cellPadding=0 width="100%" 
+background=IT公告：%205月7日起，用户新申请远程接入帐号将采用软件令牌_files/details_background.gif>
+  <TBODY>
+  <TR>
+    <TD height=2 colSpan=4></TD></TR>
+  <TR>
+    <TD height=25 colSpan=4></TD></TR>
+  <TR vAlign=top>
+    <TD rowSpan=3 width=1><BR></TD>
+    <TD rowSpan=3 width=15><BR></TD>
+    <TD style="MARGIN-LEFT: 20px" class=outline vAlign=top align=middle><BR>
+      <CENTER><FONT class=dd color=#000066 size=5><B>IT公告： 
+      5月7日起，用户新申请远程接入帐号将采用软件令牌</B></FONT> </CENTER><FONT 
+      class=outline>2010-05-07 
+      来自:集团信息化管理部</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN 
+      id=wcmDocumentClicks></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <SCRIPT language=javascript>
+var wcmContentId= '2010-5-7-14-43-32-199';
+var str1 = 'IT公告： 5月7日起，用户新申请远程接入帐号将采用软件令牌';
+var id = "&id="+wcmContentId;
+str1=replaceTag(str1);
+var str2 = 'http://bjas2.digitalchina.com/DconeNewsComment.nsf/memo1?OpenForm&title=';
+var str3 = str2+str1+id;
+var str = (str3);
+//alert(str)
+document.write('<input type=button onclick=window.open("'+str+'") value=参与评论 id=FeedBackButton>');
+//document.write('<input type="button" onclick="window.open(\"'+str+'\")" value="参与评论" id="FeedBackButton">');
+</SCRIPT>
+       
+      <HR align=center SIZE=1 width="100%">
+    </TD>
+    <TD rowSpan=3 width=25></TD></TR>
+  <TR vAlign=top>
+    <TD class=line height=50 vAlign=top width="80%">
+      <P style="MARGIN: 0px">&nbsp;</P>
+      <P 
+      style="TEXT-ALIGN: left; MARGIN: 0cm 0cm 0pt; mso-layout-grid-align: none" 
+      class=MsoNormal align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">公司的远程接入服务采用硬件令牌动态密码进行用户认证，为员工远程接入办公提供了有力的安全保障。<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: 20.25pt; MARGIN: 0cm 0cm 0pt; mso-layout-grid-align: none" 
+      class=MsoNormal align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">为了进一步提高用户远程接入办公效率，在安全保障的基础上改善用户认证的方便性，集团<SPAN 
+      lang=EN-US>IT</SPAN>经需求调研、技术测试，将于</SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: red; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast" 
+      lang=EN-US>5</SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: red; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">月<SPAN 
+      lang=EN-US>7</SPAN>日</SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">起<SPAN 
+      style="COLOR: black">开始提供软件令牌作为远程接入服务的动态密码认证方式，请新申请远程接入帐号的用户仔细阅读<B 
+      style="mso-bidi-font-weight: normal">《软件令牌使用手册》</B>，按照指导进行操作。<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: 20.25pt; MARGIN: 0cm 0cm 0pt; mso-layout-grid-align: none" 
+      class=MsoNormal align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast" 
+      lang=EN-US><o:p style="MARGIN: 0px">&nbsp;</o:p></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: 20.25pt; MARGIN: 0cm 0cm 0pt; mso-layout-grid-align: none" 
+      class=MsoNormal align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">目前已申请到硬件令牌卡的用户可以继续使用，待有效期结束后再重新申请软件令牌。<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: 0cm; MARGIN: 0cm 0cm 0pt 21pt; mso-layout-grid-align: none; mso-char-indent-count: 0" 
+      class=MsoListParagraph align=left><B><SPAN 
+      style="COLOR: blue; FONT-SIZE: 14pt" lang=EN-US><o:p 
+      style="MARGIN: 0px">&nbsp;</o:p></SPAN></B></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 21pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l1 level1 lfo2" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: Wingdings; COLOR: blue; FONT-SIZE: 14pt; mso-bidi-font-family: Wingdings; mso-bidi-font-weight: bold; mso-fareast-font-family: Wingdings" 
+      lang=EN-US><SPAN style="mso-list: Ignore">n<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp; </SPAN></SPAN></SPAN><B><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: blue; FONT-SIZE: 14pt; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">软件令牌优点：</SPAN></B><B><SPAN 
+      style="COLOR: blue; FONT-SIZE: 14pt" lang=EN-US><o:p 
+      style="MARGIN: 0px"></o:p></SPAN></B></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l2 level1 lfo3" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">1.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">无需另外携带，安装在个人电脑上即可。<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l2 level1 lfo3" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">2.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">分发不受地点限制，帐号申请受理后可以立即发到用户手中；<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l2 level1 lfo3" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">3.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">没有使用有效期限制，理论上可以一直使用；<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l2 level1 lfo3" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">4.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">若令牌出现不同步现象，连续输入两次正确的动态密码，自己就可以完成同步；<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l2 level1 lfo3" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">5.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">若软件令牌程序故障或损坏，可以申请重新分发而不需要分摊费用；<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l2 level1 lfo3" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">6.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">用户离职时，其软件令牌也可以重新分配给新的用户使用；<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: 20.25pt; MARGIN: 0cm 0cm 0pt; mso-layout-grid-align: none" 
+      class=MsoNormal align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast" 
+      lang=EN-US><o:p style="MARGIN: 0px">&nbsp;</o:p></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 21pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l1 level1 lfo2" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: Wingdings; COLOR: blue; FONT-SIZE: 14pt; mso-bidi-font-family: Wingdings; mso-bidi-font-weight: bold; mso-fareast-font-family: Wingdings" 
+      lang=EN-US><SPAN style="mso-list: Ignore">n<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp; </SPAN></SPAN></SPAN><B><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: blue; FONT-SIZE: 14pt; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">软件令牌适用的业务情景：</SPAN></B><SPAN 
+      style="COLOR: blue; FONT-SIZE: 14pt; mso-bidi-font-weight: bold" 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l0 level1 lfo4" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">1.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">软件令牌支持目前公司提供的宽带<SPAN 
+      lang=EN-US>VPN</SPAN>和<SPAN lang=EN-US>SSL VPN</SPAN>两种远程接入方式。<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P 
+      style="TEXT-ALIGN: left; TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 41.25pt; mso-layout-grid-align: none; mso-char-indent-count: 0; mso-list: l0 level1 lfo4" 
+      class=MsoListParagraph align=left><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-bidi-theme-font: minor-fareast" 
+      lang=EN-US><SPAN style="mso-list: Ignore">2.<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">因为软件令牌是运行在个人电脑上的一个独立小程序，而且与用户远程接入帐号一一对应，因此要求用户使用固定的个人电脑。如果用户没有固定的个人电脑或有多台个人电脑用于远程接入办公，建议使用硬件令牌卡。<SPAN 
+      lang=EN-US><o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><SPAN lang=EN-US><o:p 
+      style="MARGIN: 0px">&nbsp;</o:p></SPAN></P>
+      <P 
+      style="TEXT-INDENT: -21pt; MARGIN: 0cm 0cm 0pt 21pt; mso-list: l3 level1 lfo1; tab-stops: list 21.0pt" 
+      class=MsoNormal><SPAN 
+      style="FONT-FAMILY: Wingdings; COLOR: blue; FONT-SIZE: 14pt; mso-bidi-font-family: Wingdings; mso-bidi-font-weight: bold; mso-fareast-font-family: Wingdings" 
+      lang=EN-US><SPAN style="mso-list: Ignore">n<SPAN 
+      style="FONT: 7pt 'Times New Roman'">&nbsp; </SPAN></SPAN></SPAN><B><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: blue; FONT-SIZE: 14pt; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">软件令牌使用方法：</SPAN></B><B><SPAN 
+      style="COLOR: blue; FONT-SIZE: 14pt" lang=EN-US><o:p 
+      style="MARGIN: 0px"></o:p></SPAN></B></P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><SPAN 
+      style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'"><STRONG>参见</STRONG></SPAN></P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><SPAN 
+      style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'"></SPAN>&nbsp;</P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><SPAN 
+      style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'"><A 
+      href="http://bjas2/ITHELPME.nsf/947389e8a7dbcb0a48256d5200124f53/0DCDA046232409054825771C00258B1B?OpenDocument"><STRONG>《软件令牌使用手册》</STRONG><FONT 
+      size=2 face="SimSun,song ti,serif">（点击访问）</FONT></A></SPAN></P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><SPAN 
+      style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'"></SPAN>&nbsp;</P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><A 
+      href="http://bjas2/ITHELPME.nsf/33f64d65d8f4361248256d59000ed172/a648ee5832a1953748257474001fbe2f?OpenDocument"><SPAN 
+      style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'"><STRONG>《神州数码令牌卡管理规定》</STRONG><FONT 
+      size=2>（点击访问）</FONT></SPAN><B><SPAN lang=EN-US><o:p 
+      style="MARGIN: 0px">&nbsp;</o:p></SPAN></B></A></P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast" 
+      lang=EN-US><o:p style="MARGIN: 0px">&nbsp;</o:p></SPAN></P>
+      <P style="MARGIN: 0cm 0cm 0pt" class=MsoNormal><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast" 
+      lang=EN-US><o:p style="MARGIN: 0px">&nbsp;</o:p></SPAN></P>
+      <P 
+      style="TEXT-INDENT: 21pt; MARGIN: 0cm 0cm 0pt; mso-char-indent-count: 2.0" 
+      class=MsoNormal><SPAN 
+      style="FONT-FAMILY: 宋体; COLOR: black; mso-bidi-font-size: 10.5pt; mso-font-kerning: 0pt; mso-bidi-font-family: 宋体; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast">如有问题，请咨询集团<SPAN 
+      lang=EN-US>IT</SPAN>服务热线<SPAN lang=EN-US>7888</SPAN>转<SPAN 
+      lang=EN-US>1</SPAN>。<SPAN lang=EN-US><o:p 
+      style="MARGIN: 0px"></o:p></SPAN></SPAN></P>
+      <P style="LINE-HEIGHT: 12.5pt; MARGIN: 0cm 0cm 0pt"><SPAN 
+      style="FONT-SIZE: 10.5pt; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-fareast-font-family: 宋体; mso-ascii-font-family: 宋体; mso-hansi-font-family: 宋体" 
+      lang=EN-US><o:p style="MARGIN: 0px"><FONT 
+      face=宋体>&nbsp;</FONT></o:p></SPAN></P>
+      <P style="TEXT-ALIGN: right; LINE-HEIGHT: 12.5pt; MARGIN: 0cm 0cm 0pt" 
+      align=right><SPAN 
+      style="FONT-SIZE: 10.5pt; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-fareast-font-family: 宋体; mso-ascii-font-family: 宋体; mso-hansi-font-family: 宋体" 
+      lang=EN-US><o:p style="MARGIN: 0px"><FONT 
+      face=宋体>&nbsp;</FONT></o:p></SPAN></P>
+      <P style="TEXT-ALIGN: right; LINE-HEIGHT: 12.5pt; MARGIN: 0cm 0cm 0pt" 
+      align=right><SPAN 
+      style="FONT-SIZE: 10.5pt; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-fareast-font-family: 宋体; mso-ascii-font-family: 宋体; mso-hansi-font-family: 宋体"><FONT 
+      face=宋体>集团信息化管理部<SPAN lang=EN-US><o:p 
+      style="MARGIN: 0px"></o:p></SPAN></FONT></SPAN></P>
+      <P style="TEXT-ALIGN: right; LINE-HEIGHT: 12.5pt; MARGIN: 0cm 0cm 0pt" 
+      align=right><FONT face=宋体><SPAN 
+      style="FONT-SIZE: 10.5pt; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-fareast-font-family: 宋体; mso-ascii-font-family: 宋体; mso-hansi-font-family: 宋体" 
+      lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      (</SPAN><SPAN 
+      style="FONT-SIZE: 10.5pt; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-fareast-font-family: 宋体; mso-ascii-font-family: 宋体; mso-hansi-font-family: 宋体">神州数码<SPAN 
+      lang=EN-US>IT)<o:p style="MARGIN: 0px"></o:p></SPAN></SPAN></FONT></P>
+      <P style="TEXT-ALIGN: right; LINE-HEIGHT: 12.5pt; MARGIN: 0cm 0cm 0pt" 
+      align=right><FONT face=宋体><SPAN 
+      style="FONT-SIZE: 10.5pt; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-fareast-font-family: 宋体; mso-ascii-font-family: 宋体; mso-hansi-font-family: 宋体" 
+      lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      2010</SPAN><SPAN 
+      style="FONT-SIZE: 10.5pt; mso-ascii-theme-font: minor-fareast; mso-fareast-theme-font: minor-fareast; mso-hansi-theme-font: minor-fareast; mso-fareast-font-family: 宋体; mso-ascii-font-family: 宋体; mso-hansi-font-family: 宋体">年<SPAN 
+      lang=EN-US>5</SPAN>月<SPAN lang=EN-US>7</SPAN>日<SPAN lang=EN-US><o:p 
+      style="MARGIN: 0px"></o:p></SPAN></SPAN></FONT></P>
+      <P style="MARGIN: 0px"></P></TD></TR>
+  <TR vAlign=top>
+    <TD class=line height=30 vAlign=top>附件下载：<BR><A 
+      href="IT公告：%205月7日起，用户新申请远程接入帐号将采用软件令牌_files/area_index_fwtz.htm" 
+      target=_blank><FONT color=blue></FONT></A><BR><A 
+      href="IT公告：%205月7日起，用户新申请远程接入帐号将采用软件令牌_files/area_index_fwtz.htm" 
+      target=_blank><FONT color=blue></FONT></A><BR><A 
+      href="IT公告：%205月7日起，用户新申请远程接入帐号将采用软件令牌_files/area_index_fwtz.htm" 
+      target=_blank><FONT color=blue></FONT></A><BR><A 
+      href="IT公告：%205月7日起，用户新申请远程接入帐号将采用软件令牌_files/area_index_fwtz.htm" 
+      target=_blank><FONT color=blue></FONT></A><BR><A 
+      href="IT公告：%205月7日起，用户新申请远程接入帐号将采用软件令牌_files/area_index_fwtz.htm" 
+      target=_blank><FONT color=blue></FONT></A></TD></TR>
+  <TR align=middle>
+    <TD height=100 colSpan=4 align=middle>
+      <SCRIPT type=text/javascript>
+var str1 = 'IT公告： 5月7日起，用户新申请远程接入帐号将采用软件令牌';
+var str2 = 'http://bjas2.digitalchina.com/DconeNewsComment.nsf/memo1?OpenForm&title=';
+var id = "&id="+wcmContentId;
+str1=replaceTag(str1);
+var str3 = str2+str1+id;
+var str = (str3);
+//alert(str)
+document.write('<input type=button onclick=window.open("'+str+'") value=参与评论 id=FeedBackButton>');
+
+</SCRIPT>
+    </TD></TR></TBODY></TABLE>
+<SCRIPT language=JavaScript>
+<!-- 
+document.cookie = "IV_JCT=%2Fwps; path=/";
+//--> 
+</SCRIPT>
+</BODY></HTML>

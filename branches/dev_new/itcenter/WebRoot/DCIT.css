@@ -1,0 +1,236 @@
+@charset "UTF-8";
+.bannertxtbold {
+	color: #666666;
+	font-size: 12px;
+	font-style: normal;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	line-height: 14px;
+	font-weight: bold;
+}
+.bannertxt {
+	color: #666666;
+	font-size: 12px;
+	font-style: normal;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	line-height: 14px;
+	font-weight: normal;
+}
+.Leftlinktxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #868686;
+	text-decoration: none;
+}
+.timetxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #999999;
+	text-decoration: none;
+}
+.bluetxt {
+	font-family: "Times New Roman", Times, serif;
+	font-size: x-small;
+	color: #3399CC;
+	text-decoration: none;
+}
+.greentxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #A7CC2F;
+	text-decoration: none;
+}
+.redtxtbold {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FF0000;
+	text-decoration: none;
+	font-weight: bold;
+}
+.redtxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #de191d;
+	text-decoration: none;
+}
+.whitetxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	text-decoration: none;
+	cursor: text;
+}
+.png_bg {
+	background-image: url(images/index_banner-trans.png);
+}
+.changyongxinxi_bg {
+	background-image: url(images/index_bg2-trans.png);
+
+}
+.water {
+	background-attachment: fixed;
+	background-image: url(images/water_point-trans.png);
+	background-repeat: no-repeat;
+}
+.watertxt {
+	background-image: url(images/water_point_txt-trans.png);
+	background-repeat: no-repeat;
+}
+.textfield {
+	border: 1px solid #CCCCCC;
+}
+.login_bg {
+	background-image: url(images/login_bg-trans.png);
+}
+.ITpassword_bg {
+	background-image: url(images/login_bg03-trans.png);
+}
+.ITpassword_bg .water_red {
+	background-image: url(images/water_point_red-trans.png);
+	background-repeat: no-repeat;
+}
+.rightbar {
+	background-image: url(images/corner_right_bar-trans.png);
+	width: 9px;
+	background-repeat: repeat-y;
+}
+.buttonbar {
+	background-image: url(images/corner_button_bar-trans.png);
+	background-repeat: repeat;
+}
+.topbanner {
+	background-image: url(images/index_banner-trans.png);
+}
+a.nomalLink,a.nomalLink:visited {
+	font-size: 12px;
+	color: #666666;
+	text-decoration: none;
+	font-family: "宋体";
+}
+a.nomalLink:hover,a.nomalLink:active {
+	font-size: 12px;
+	color:#000000;
+	text-decoration: underline;
+	font-family: "宋体";
+}
+a.listLink,a.listLink:visited {
+	font-size: 14px;
+	color: #000000;
+	text-decoration: none;
+	font-family: "宋体";
+}
+a.listLink:hover,a.listLink:active {
+	font-size: 14px;
+	color:#666666;
+	text-decoration: underline;
+	font-family: "宋体";
+}
+.news_menu_over{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+	cursor:pointer
+}
+.news_menu_out{
+	color: #575757;
+	font-size: 12px;
+	font-style: normal;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	line-height: 14px;
+	font-weight: bold;
+	cursor:pointer 
+}
+
+
+#Layer1 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:1;
+	left:50px;
+	top:50px;
+}
+#Layer2 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:1;
+	margin:-5px 0px 0px 25px;
+	
+}
+#Layer3 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:2;
+	margin:-5px 0px 0px 25px;
+}
+#Layer4 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:3;
+	margin:-5px 0px 0px 25px;
+}
+#Layer5 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:4;
+	margin:-5px 0px 0px 25px;
+}
+#Layer6 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:5;
+	margin:-5px 0px 0px 25px;
+}
+#Layer7 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:5;
+	margin:-5px 0px 0px 25px;
+}
+#Layer8 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:5;
+	margin:-5px 0px 0px 25px;
+}
+.beforeClick {
+	font-size: 12px;
+	color: #000000;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	cursor: pointer;
+}
+.afterClick{
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color:#3399CC;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.dcsoutextfiled {
+	font-size: 12px;
+	color: #F2F2F2;
+	background-color: #666666;
+	border: 1px solid #CCCCCC;
+	height: 20px;
+	vertical-align: middle;
+	text-align: left;
+	padding: 0px;
+	line-height: 21px;
+}
+.ipt-t{display:-moz-inline-box;-moz-box-align:center;display:inline-block;+display:inline;zoom:1;vertical-align:middle}
+.ipt-t-dft{background:#fff;border:1px solid;cursor:text}
+.ipt-t-dft input{border:0;height:18px;padding-left:4px;padding-top:1px;_padding-top:2px;line-height:15px;background:transparent}input
+.ipt-t-dft{padding:2px 4px 0;_padding-top:3px;width:160px;height:22px;line-height:15px;overflow:hidden}
+
