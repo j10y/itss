@@ -20,6 +20,9 @@
     			<result name="contentPage">/knowFileContent.jsp</result>
     			<result name="listPage">/knowFileList.jsp</result>
     			<result name="searchPage">/knowFileSearch.jsp</result>
+    		</action>
+    		<action name="userAction_*" class="userAction"  method="{1}">
+    			<result name="userList">/userList.jsp</result>
     		</action>    		
     	</package>	
     

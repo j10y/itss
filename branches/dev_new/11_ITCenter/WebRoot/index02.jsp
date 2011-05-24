@@ -301,7 +301,7 @@ body {
     <td valign="top" background="images/kropli_linia_top.gif" bgcolor="#FFFFFF"><img src="images/1x1_pix.gif" width="1" height="2" /></td>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="5">
         <tr>
-          <td><img src="images/ad.png" alt="" width="417" height="117" /></td>
+          <td><img src="images/ad.jpg" alt="" width="417" height="117" /></td>
         </tr>
 
       </table>

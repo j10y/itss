@@ -9,7 +9,7 @@
 <!--
 @import url("DCIT.css");
 body {
-	background: url(images/bg.png) repeat-x 0px -15px;
+	background: url(${pageContext.request.contextPath}/images/bg.png) repeat-x 0px -15px;
 	margin-left: 0px;
 	margin-top: 0px;
 	margin-right: 0px;

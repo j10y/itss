@@ -130,7 +130,7 @@
 	<bean id="knowledgeService" class="com.zsgj.dcit.service.impl.KnowledgeServiceImpl">
 		<property name="knowledgeDao" ref="knowledgeDao"></property>
 	</bean>
-		<bean id="knowFileService" class="com.zsgj.dcit.service.impl.KnowFileServiceImpl">
+	<bean id="knowFileService" class="com.zsgj.dcit.service.impl.KnowFileServiceImpl">
 		<property name="knowFileDao" ref="knowFileDao"></property>
 	</bean>
 	
@@ -140,8 +140,11 @@
 	<bean id="knowledgeAction" class="com.zsgj.dcit.action.KnowledgeAction" scope="prototype">
 		<property name="knowledgeService" ref="knowledgeService"></property>
 	</bean>	
-		<bean id="knowFileAction" class="com.zsgj.dcit.action.KnowFileAction" scope="prototype">
+	<bean id="knowFileAction" class="com.zsgj.dcit.action.KnowFileAction" scope="prototype">
 		<property name="knowFileService" ref="knowFileService"></property>
 	</bean>	
+		
+	<bean id="userAction" class="com.zsgj.dcit.action.UserAction" scope="prototype">
+	</bean>
 
 </beans>
