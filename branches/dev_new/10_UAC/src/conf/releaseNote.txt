@@ -2,3 +2,14 @@
 修改了net.shopin.ldap.dao.UserDaoImpl.buildDn,增加了判断特殊用户逻辑
 注：特殊用户即类似管理员之类的非真实存在的人员
 shopin.net_20110518.ldif在ou=users下增加了ou=specialuser
+
+---2011-05-24
+关于ApacheDS的数据导出
+通过客户端导出的数据应该是根据数据的创建时间顺序导出的（而非修改时间），这样存在一个问题：
+1,如果某个人员的DN为：uid=xx,ou=employees,ou=users,dc=shopin,dc=net,
+2,后来创建了DN为：ou=suppleers,ou=user,dc=shopin,dc=net
+3,将uid=xx的人员转移到ou=suppleers,ou=user,dc=shopin,dc=net下，导出ldif文件
+那么由于uid=xx的人员的创建时间早于dn为ou=suppleers,ou=user,dc=shopin,dc=net的数据，会首先导出DN为uid=xx,ou=suppleers,ou=user,dc=shopin,dc=net的数据
+然后导出DC为ou=suppleers,ou=user,dc=shopin,dc=net的数据
+4，导入ldif文件，按照ldif文件中数据的过程式顺序依次导入，由于
+数据uid=xx,ou=suppleers,ou=user,dc=shopin,dc=net早于数据ou=suppleers,ou=user,dc=shopin,dc=net导入，也即导入uid=xx的数据的时候，其上层 目录存在会报异常

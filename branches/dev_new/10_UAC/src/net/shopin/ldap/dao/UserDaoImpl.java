@@ -10,6 +10,7 @@ import javax.naming.Name;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
+import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.User;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -181,8 +182,9 @@ public class UserDaoImpl implements UserDao {
 		public Object mapFromContext(Object ctx) {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			DistinguishedName dn = new DistinguishedName(context.getDn());
+			String dnStr = dn.toString();
 			User user = new User();
-			user.setDn(dn.toString());
+			user.setDn(dnStr);
 			user.setUid(context.getStringAttribute("uid"));
 			byte [] bytes = (byte[]) context.getObjectAttribute("userPassword");
 			StringBuffer sb = new StringBuffer();
@@ -198,6 +200,12 @@ public class UserDaoImpl implements UserDao {
 			user.setTelephoneNumber(context.getStringAttribute("telephoneNumber"));
 			user.setMobile(context.getStringAttribute("mobile"));
 			user.setFacsimileTelephoneNumber(context.getStringAttribute("facsimileTelephoneNumber"));
+			
+			
+			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
+			user.setUserType(userType);
+			user.setPhoto((byte[])context.getObjectAttribute("photo"));
+			
 			return user;
 		}
 	}
@@ -255,6 +263,7 @@ public class UserDaoImpl implements UserDao {
 			  		        
 			        String emailCell = null;
 			        String uidCell = null;
+			        String cnCell = null;
 			        String deptCell = null;
 			        String telCell = null;
 			        String mobileCell = null;
@@ -274,6 +283,10 @@ public class UserDaoImpl implements UserDao {
 //			        	continue ;
 //			        }
 			        uidCell = emailCell.substring(0, emailCell.indexOf("@"));
+			        
+			        Object cnObj = getXSSFCellString(row.getCell((short)1));
+			        cnCell = cnObj !=null ? cnObj.toString().trim() : "";
+			        
 			        Object deptObj = getXSSFCellString(row.getCell((short)3));
 			        deptCell = deptObj !=null ? deptObj.toString().trim() : "";
 			        
@@ -318,8 +331,8 @@ public class UserDaoImpl implements UserDao {
 			            User user = new User();
 			            user.setUid(uidCell);
 			            user.setPassword("000000");
-			            user.setCn(uidCell);
-			            user.setSn(uidCell + "_" + uidCell);
+			            user.setCn(cnCell);
+			            user.setSn(uidCell + "_" + cnCell);
 			            user.setMail(emailCell.trim());
 			            user.setDepartmentNumber(deptCell);
 			            user.setTelephoneNumber(telCell);
@@ -458,6 +471,42 @@ public class UserDaoImpl implements UserDao {
 		return result;
 	}
 
+	
+	
+	/* 获取用户的uid或cn模糊匹配uidOrName的用户列表
+	 * @see net.shopin.ldap.dao.UserDao#findUserList(java.lang.String)
+	 */
+	public List<User> findUserList(String uidORName) {
+		String filters = null;
+		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
+		String filter=null;
+		if(uidORName != null && !uidORName.equals("")){
+			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*))";
+		}else{
+			filter="(|(uid=*)(cn=*))";
+		}
+		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
+
+		for(User user : users){
+			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
+				String deptFilter="(ou=" + user.getDepartmentNumber().trim() + ")";
+				List deptNames = ldapTemplate.search("o=orgnizations", deptFilter, new AttributesMapper(){
+					public Object mapFromAttributes(Attributes attributes)
+							throws NamingException {
+						// TODO Auto-generated method stub
+						return attributes.get("description").get();
+					}
+				});
+				if(deptNames.size()>0){
+					user.setDeptName(deptNames.get(0).toString());
+				}
+			}
+		}
+		return users.size()> 20 ? users.subList(0, 21) : users;
+		//return users;
+	
+	}
+
 	public LdapTemplate getLdapTemplate() {
 		return ldapTemplate;
 	}
@@ -465,4 +514,6 @@ public class UserDaoImpl implements UserDao {
 	public void setLdapTemplate(LdapTemplate ldapTemplate) {
 		this.ldapTemplate = ldapTemplate;
 	}
+	
+	
 }

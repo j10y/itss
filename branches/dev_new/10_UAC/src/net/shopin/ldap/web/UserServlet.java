@@ -125,7 +125,7 @@ public class UserServlet extends HttpServlet {
 					uid = user.getDn().substring(user.getDn().indexOf("=")+1, user.getDn().indexOf(","));
 				}
 				if(user.getUserType()==null){
-					userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : "3");
+					userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : (user.getDn().contains("ou=suppliers") ? "3" : (user.getDn().contains("ou=specialuser") ? "4" : "")));
 				}
 				User userDetail = userDao.findByPrimaryKey(uid, userType);
 				json = new StringBuffer("{success:true");
@@ -142,7 +142,7 @@ public class UserServlet extends HttpServlet {
 					.append(",deptName:'" + (userDetail.getDeptName() != null ? userDetail.getDeptName() : "") + "'")
 					.append(",telephoneNumber:'" + (userDetail.getTelephoneNumber() != null ? userDetail.getTelephoneNumber() : "") + "'")
 					.append(",facsimileTelephoneNumber:'" + (userDetail.getFacsimileTelephoneNumber() != null ? userDetail.getFacsimileTelephoneNumber() : "") + "'")
-					.append(",userType:'" + (userDetail.getUserType() != null ? userDetail.getUserType() : user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : "3")) + "'")
+					.append(",userType:'" + (userDetail.getUserType() != null ? userDetail.getUserType() : userDetail.getDn().contains("ou=employees") ? "1" : (userDetail.getDn().contains("ou=customers") ? "2" : (userDetail.getDn().contains("ou=suppliers") ? "3" : (userDetail.getDn().contains("ou=specialuser") ? "4" : "")))) + "'")
 					.append("}");
 			}else if(methodCall.equalsIgnoreCase("getDetailByUid")){
 				String uid = req.getParameter("uid");
@@ -161,48 +161,10 @@ public class UserServlet extends HttpServlet {
 					.append(",deptName:'" + (userDetail.getDeptName() != null ? userDetail.getDeptName() : "") + "'")
 					.append(",telephoneNumber:'" + (userDetail.getTelephoneNumber() != null ? userDetail.getTelephoneNumber() : "") + "'")
 					.append(",facsimileTelephoneNumber:'" + (userDetail.getFacsimileTelephoneNumber() != null ? userDetail.getFacsimileTelephoneNumber() : "") + "'")
-					.append(",userType:'" + (userDetail.getUserType() != null ? userDetail.getUserType() : userDetail.getDn().contains("ou=employees") ? "1" : (userDetail.getDn().contains("ou=customers") ? "2" : "3")) + "'")
+					.append(",userType:'" + (userDetail.getUserType() != null ? userDetail.getUserType() : userDetail.getDn().contains("ou=employees") ? "1" : (userDetail.getDn().contains("ou=customers") ? "2" : (userDetail.getDn().contains("ou=suppliers") ? "3" : (userDetail.getDn().contains("ou=specialuser") ? "4" : "")))) + "'")
 					.append("}");
 			}else if(methodCall.equalsIgnoreCase("import")){
 				String msg = null;
-				//try {					
-					/*DiskFileItemFactory factory = new DiskFileItemFactory();
-					boolean isMutipart = ServletFileUpload.isMultipartContent(req);
-					if(isMutipart){
-						ServletFileUpload upload = new ServletFileUpload(factory);
-						List fileItems = upload.parseRequest(req);
-						Iterator iterator = fileItems.iterator();
-						while(iterator.hasNext()){
-							FileItem fi = (FileItem)iterator.next();
-							if (!fi.isFormField()) {
-								String fileName = fi.getName();
-								String suffix = fileName.substring(fileName.lastIndexOf("."));
-				                //String systemFileName = "upload-" + System.currentTimeMillis() + ".xls";
-				                String systemFileName = "upload-" + System.currentTimeMillis() + suffix;
-				                String filePath = "../../../" + "upload" + "/" + systemFileName;
-				                String realPath = req.getSession().getServletContext().getRealPath("/") + filePath;
-				                File uploadedFile = new File(realPath);
-				                fi.write(uploadedFile);
-				                try {
-									//导入人员信息
-				                	msg = userDao.importUsersFromFile(realPath);
-								} catch (Exception e) {
-									msg = e.getMessage().substring(e.getMessage().lastIndexOf(":")+1);
-							        e.printStackTrace();
-							        json = new StringBuffer("{success:false,msg:'" + msg.trim() + "'}");
-								}
-								json = new StringBuffer("{success:true,msg:'" + msg.trim() + "'}");
-							}
-						}
-					}*/
-				//} catch (FileUploadException e) {
-					// TODO Auto-generated catch block
-				//	e.printStackTrace();
-					//msg = userDao.importUsersFromFile(realPath);
-				//} catch (Exception e) {
-					// TODO Auto-generated catch block
-				//	e.printStackTrace();
-				//} 
 				try {
 					//导入人员信息
                 	msg = userDao.importUsersFromFile(realPath);

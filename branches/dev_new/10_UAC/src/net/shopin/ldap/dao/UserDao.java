@@ -1,5 +1,7 @@
 package net.shopin.ldap.dao;
 
+import java.util.List;
+
 import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.User;
 
@@ -49,5 +51,12 @@ public interface UserDao {
 	 * @return 返回msg信息
 	 */
 	String importUsersFromFile(String filePath);
+	
+	/**
+	 * 通过用户uid或者名称模糊查询用户列表
+	 * @param uidORName
+	 * @return
+	 */
+	public List<User> findUserList(String uidORName);
 	
 }

@@ -3,6 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/applicationContext.xml,
+			/WEB-INF/basic-servlet.xml,
+			/WEB-INF/spring_webservice.xml
+		</param-value>
+	</context-param>
 
 	<display-name>Spring LDAP Basic Example</display-name>
 	<listener>
@@ -80,22 +89,22 @@
 
     <filter-mapping> 
        <filter-name>CAS Authentication Filter</filter-name> 
-        <url-pattern>/*</url-pattern> 
+       <url-pattern>/index.jsp</url-pattern> 
     </filter-mapping> 
    
     <filter-mapping> 
         <filter-name>CAS Validation Filter</filter-name> 
-        <url-pattern>/*</url-pattern> 
+        <url-pattern>/index.jsp</url-pattern> 
     </filter-mapping>   
    
     <filter-mapping> 
         <filter-name>CAS HttpServletRequest WrapperFilter</filter-name> 
-        <url-pattern>/*</url-pattern> 
+        <url-pattern>/index.jsp</url-pattern> 
     </filter-mapping> 
    
     <filter-mapping> 
         <filter-name>CAS Assertion Thread Local Filter</filter-name> 
-        <url-pattern>/*</url-pattern> 
+        <url-pattern>/index.jsp</url-pattern> 
     </filter-mapping>
     
 	<filter>
@@ -110,6 +119,20 @@
             <param-value>false</param-value>
         </init-param>
     </filter>
+    
+    <servlet>
+        <servlet-name>jaxws-servlet</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jaxws-servlet</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>jaxws-servlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
 	
 	<servlet>
 		<servlet-name>basic</servlet-name>
