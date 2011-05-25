@@ -5,6 +5,6 @@
 	<HEAD>
 	</HEAD>
 <body>
-<jsp:forward page="/ReportServer?reportlet=/accountApplyReport.cpt"></jsp:forward>
+<jsp:forward page="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/accountApplyReport.raq"></jsp:forward>
 </body>	
 </HTML>

@@ -20,7 +20,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '域帐号统计',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            /*{
 	            	id : "tree3",
 	                text: 'MSN帐号统计',
 	                iconCls:'search',
@@ -40,17 +41,20 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: 'BI帐号统计',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },*/
+	            {
 	            	id : "tree8",
 	                text: '帐号申请查询',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            /*{
 	            	id : "tree9",
 	                text: '帐号变更查询',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            */{
 	            	id : "tree10",
 	                text: '帐号删除申请查询',
 	                iconCls:'search',
@@ -93,7 +97,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '邮件帐号清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            /*{
 	            	id : "tree15",
 	                text: 'ERP帐号清单',
 	                iconCls:'search',
@@ -143,7 +148,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: 'BI帐号清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },
+	            },*/
 //	            	{
 //	            	id : "tree26",
 //	                text: '手机清单',
@@ -155,8 +160,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '邮件转发',
 	                iconCls:'search',
 	                handler:onItemClick
-	            }
-	            ,{
+	            },
+	            /*{
 	            	id : "tree31",
 	                text: 'www帐号删除清单',
 	                iconCls:'search',
@@ -176,7 +181,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: 'Traveler帐号清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            */{
 	            	id : "tree37",
 	                text: 'Win7帐号清单',
 	                iconCls:'search',
@@ -191,7 +197,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '座机清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },
+	            }
+	        /*,
 	            {
 	            	id : "tree30",
 	                text: '座机额度变更清单',
@@ -209,7 +216,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '手机变更清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            }]
+	            }
+	            */]
             });
             var menu4 = new Ext.menu.Menu({
 	        id: 'mainMenu4',
@@ -254,7 +262,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '域帐号统计',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            /*{
 	            	id : "tree3",
 	                text: 'MSN帐号统计',
 	                iconCls:'search',
@@ -274,17 +283,20 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: 'BI帐号统计',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            */{
 	            	id : "tree8",
 	                text: '帐号申请查询',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            /*{
 	            	id : "tree9",
 	                text: '帐号变更查询',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },*/
+	            {
 	            	id : "tree10",
 	                text: '帐号删除申请查询',
 	                iconCls:'search',
@@ -328,7 +340,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '邮件帐号清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            },
+	            /*{
 	            	id : "tree15",
 	                text: 'ERP帐号清单',
 	                iconCls:'search',
@@ -378,7 +391,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: 'BI帐号清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },
+	            },*/
 //	            	{
 //	            	id : "tree26",
 //	                text: '手机清单',
@@ -391,6 +404,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                iconCls:'search',
 	                handler:onItemClick
 	            },
+	            /*
 	            {
 	            	id : "tree31",
 	                text: 'www帐号删除清单',
@@ -414,7 +428,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: 'Traveler帐号清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },
+	            },*/
 	            {
 	            	id : "tree37",
 	                text: 'Win7帐号清单',
@@ -430,7 +444,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '座机清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },
+	            }
+	        /*,
 	             {
 	            	id : "tree30",
 	                text: '座机额度变更清单',
@@ -447,7 +462,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '手机变更清单',
 	                iconCls:'search',
 	                handler:onItemClick
-	            }]
+	            }*/]
             });
              var menu4 = new Ext.menu.Menu({
 	        id: 'mainMenu4',

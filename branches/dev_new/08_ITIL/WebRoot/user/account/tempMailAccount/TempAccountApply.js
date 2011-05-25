@@ -896,7 +896,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				},
 
 				items : [{
-					html : '<font size=3px><center><font size=2px>邮件账号：</font><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/0e38eaf770fbad8e48256ffe002bd630?OpenDocument" target="_blank"  style="text-decoration:none"><b>NOTES6安装配置方法</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/439e87119e2c1d4a48256d6a00184d39?OpenDocument" target="_blank"  style="text-decoration:none"><b>如何修改Notes口令</b></a></center><br><font size=2px>域帐号：</font><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/79b62bb229f9a89548256e9200291908?OpenDocument" style="text-decoration:none" target="_blank" ><b>如何加入zsgj域（WinXP用户）</b></a>&nbsp&nbsp<a href="http://10.1.120.53/itil/user/domain.exe"><b>自动加入域.exe</b></a></font>',
+					html : '<font size=1px>说明...</font>',
 					cls : 'common-text',
 					style : 'margin:0px 0px 0px 70px'
 

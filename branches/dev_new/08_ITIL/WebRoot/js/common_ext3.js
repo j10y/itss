@@ -607,7 +607,20 @@ DataAction = Ext.extend(Ext.util.Observable, {
 			}
 		});
 	},
-
+	saveDataFromPanel : function(panel, params, successfn) {		
+		Ext.Ajax.request({
+			url:webContext + '/requireAction_savePanelData.action',
+			params:{
+				pagePanel:panel,
+				info:params
+			},
+			method : 'post',
+			success : successfn,
+			failure : function(response, options) {
+				Ext.MessageBox.alert("提示信息：", "保存数据失败");
+			}
+		});
+	},	
 	//form异步保存数据，需要调用unicodeValues函数编码参数
 	getSaveOptions : function(clazz, params) {
 		params = this.unicodeValues(params);

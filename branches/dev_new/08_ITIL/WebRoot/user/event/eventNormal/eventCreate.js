@@ -326,7 +326,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 												+ "',eventCisn:'"
 												+ eventCisn
 												+ "', applyType: 'eproject',applyTypeName: '事件与问题审批',customer:'',workflowHistory:'com.zsgj.itil.event.entity.EventAuditHis'}",
-										defname : 'eventAndProblemProcess1240370895640'
+										defname : 'eventAndProblemProcess1306201650938'
 									},
 									success : function(response, options) {
 										Ext.Msg.alert("提示",

@@ -676,7 +676,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=3px><center><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/30f50f5f5f356be8482575680031af2a?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW配置手册</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/8f51e3c135a215b648256d6a0022f54f?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW帐号密码修改方法</b></a></center></font>',
+				html : '<font size=3px><center></center></font>',
 				cls : 'common-text',
 				style : 'margin:0px 0px 0px 170px'
 				

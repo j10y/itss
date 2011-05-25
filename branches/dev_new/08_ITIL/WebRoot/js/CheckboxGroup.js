@@ -23,7 +23,7 @@ Ext.form.CheckboxGroup=Ext.extend(Ext.form.Field,{
 					hideLabel:true,
 					anchor:"100%"
 				}};
-				if(this.items[0].items){
+				if(this.items[0]!=undefined&&this.items[0].items){
 					Ext.apply(M,{
 						layoutConfig:{
 						columns:this.items.length},

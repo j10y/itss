@@ -145,7 +145,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 																	+ "',applyId : '"
 																	+ dataId
 																	+ "', applyType: 'kproject',applyTypeName: 'ÖªÊ¶ÉóÅú',customer:''}",
-															defname : 'KnowledgeProcess1276415839731'
+															defname : 'KnowledgeProcess1306209462284'
 														},
 														success:function(response,options){
 														},

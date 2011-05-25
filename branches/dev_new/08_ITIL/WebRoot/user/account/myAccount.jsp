@@ -63,6 +63,7 @@
 					}
 	            }	   
 	            ,
+	            /**
 	            {title: '我提出的申请',
 	            autoLoad : {
 					url : webContext + "/tabFrame.jsp?url=" + webContext
@@ -71,7 +72,7 @@
 					method : 'post',
 					scope : this
 					}
-	            },
+	            },*/
 	            {title: '我审批的申请',
 	            autoLoad : {
 					url : webContext + "/tabFrame.jsp?url=" + webContext

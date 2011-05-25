@@ -1165,7 +1165,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 										+ "',eventCisn:'"
 										+ eventCisn
 										+ "', applyType: 'eproject',applyTypeName: '事件与问题审批',customer:'',workflowHistory:'com.zsgj.itil.event.entity.EventAuditHis'}",
-								defname : 'eventAndProblemProcess1240370895640'
+								defname : 'eventAndProblemProcess1306201650938'
 							},
 							success : function(response, options) {
 	
@@ -1276,7 +1276,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 											+ "',applyId : '"
 											+ dataId
 											+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
-									defname : 'KnowledgeProcess1276415839731'
+									defname : 'KnowledgeProcess1306209462284'
 								},
 								success:function(response,options){
 								},
@@ -1301,7 +1301,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	},
 	items : this.items,
 	initComponent : function() {
-		this.CCCallParam="admin*changshuang*admin*3*1591000";
+		this.CCCallParam="admin*admin*admin*3*1591000";
 		var param=this.CCCallParam.split("*");
 		this.loginItCode=param[0];
 		this.submitUserItcode=param[1];

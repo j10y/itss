@@ -35,6 +35,7 @@ function saveExistentTable(serviceItemId){
        params:{
            tableId: tableId,
            serviceItemId: serviceItemId,
+           tableName:tableName,
            sourceServiceItem:sourceServiceItemId
        },
        method:'POST',

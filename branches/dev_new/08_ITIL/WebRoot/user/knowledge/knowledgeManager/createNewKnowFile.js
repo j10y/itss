@@ -146,7 +146,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 											+ "',applyId : '"
 											+ dataId
 											+ "', applyType: 'kproject',applyTypeName: 'ÖªÊ¶ÉóÅú',customer:''}",
-									defname : 'KnowFileProcess1276415884590'
+									defname : 'KnowFileProcess1306213848956'
 								},
 								success : function(response) {
 									var meg = Ext.decode(response.responseText);

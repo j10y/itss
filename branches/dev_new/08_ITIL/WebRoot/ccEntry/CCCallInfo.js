@@ -1164,7 +1164,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 										+ "',eventCisn:'"
 										+ eventCisn
 										+ "', applyType: 'eproject',applyTypeName: '事件与问题审批',customer:'',workflowHistory:'com.zsgj.itil.event.entity.EventAuditHis'}",
-								defname : 'eventAndProblemProcess1240370895640'
+								defname : 'eventAndProblemProcess1306201650938'
 							},
 							success : function(response, options) {},
 							failure : function(response, options) {
@@ -1269,7 +1269,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 											+ "',applyId : '"
 											+ dataId
 											+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
-									defname : 'KnowledgeProcess1276415839731'
+									defname : 'KnowledgeProcess1306209462284'
 								},
 								success:function(response,options){
 								},

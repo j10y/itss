@@ -892,7 +892,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				columns : 2
 			},
 			items:[{
-				html : '<h3><font color=red>PushMail帐号特别说明:</font></h3><br> 1、企业移动终端PushMail服务目前暂时适用于：中国移动的全球通和动感地带用户。<br>2、企业移动终端PushMail服务支持基于Windows Mobile系统的全系列手机和基于Symbian S60以上的商务手机，请您在申请服务时确认您的手机型号是否在支持范围内。具体请查看<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/5f8bbff4e52b51934825756800337d6d?OpenDocument" target="_blank"><b><font color="blue" size=2px style="text-decoration:none">《企业移动终端PushMail服务使用手册》</font></b></a><br>3、PushMail服务费用：用户授权费 + GPRS流量费，其中：用户授权费：80元/用户月，按月分摊至用户所在部门。GPRS流量费：由移动运营商按GPRS流量计费至用户手机账单，具体请查询各地移动运营商资费。 ',
+				html : '<h3><font color=red>PushMail帐号特别说明:</font></h3><br> 1、企业移动终端PushMail服务目前暂时适用于：中国移动的全球通和动感地带用户。<br>2、企业移动终端PushMail服务支持基于Windows Mobile系统的全系列手机和基于Symbian S60以上的商务手机，请您在申请服务时确认您的手机型号是否在支持范围内。<br>3、PushMail服务费用：用户授权费 + GPRS流量费，其中：用户授权费：80元/用户月，按月分摊至用户所在部门。GPRS流量费：由移动运营商按GPRS流量计费至用户手机账单，具体请查询各地移动运营商资费。 ',
 				cls : 'common-text',
 				colspan : 2,
 				rowspan : 0,

@@ -867,10 +867,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=2px> 邮件帐号：<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/0e38eaf770fbad8e48256ffe002bd630?OpenDocument" target="_blank" style="text-decoration:none"><b>NOTES6安装配置方法</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/439e87119e2c1d4a48256d6a00184d39?OpenDocument" target="_blank" style="text-decoration:none"><b>如何修改Notes口令</b></a>' +
-						'<br>域帐号：<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/79b62bb229f9a89548256e9200291908?OpenDocument" target="_blank" style="text-decoration:none"><b>如何加入zsgj域（WinXP用户）</a>自动加入域.exe</b>' +
-						'<br>WWW帐号：<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/30f50f5f5f356be8482575680031af2a?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW配置手册</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/8f51e3c135a215b648256d6a0022f54f?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW帐号密码修改方法</b></a>' +
-						'<br>IT密码（包括：DC域密码、即时消息密码、ESS系统密码、OA协同密码):<br><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/cde85230bfccf2c948256e0b001197ee?OpenDocument" target="_blank" style="text-decoration:none"><b>如何修改Internet口令-统一身份管理系统AM修改ITPASSWPRD</b></a></font>',
+				html : '<font size=2px> 说明</font>',
 				cls : 'common-text',
 				style : ';margin:0px 0px 0px 70px'
 				
@@ -1721,7 +1718,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							style : 'border:1px dotted #b0acac;margin:5px 0px 0px 25px',
 							cls : 'common-text',
 							defaultType : 'textfield',
-				html : ' 1、您的邮箱ID请见附件，初始密码为"password123"。 <br>&nbsp&nbsp&nbsp&nbsp&nbsp重要：请在两个工作日内修改密码，否则帐号将被锁定！<br>2、您更改邮箱密码的方法请见： <br>&nbsp&nbsp&nbsp&nbsp&nbsp重要：按照公司IT管理规定，员工必须用邮件帐号名称来命名自己的办公用机。操作方法请见域帐号说明。<br><br>在您的邮件生效1个工作日内，您的ESS帐号名、密码及相关手册会由ESS帐号管理员直接发到您的邮箱中，请等待接收。</font> '
+				html : ' 1、您的邮箱ID请见附件，初始密码为"password123"。  '
 		  },
 		  {
 							xtype : 'fieldset',
@@ -1732,7 +1729,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							style : 'border:1px dotted #b0acac;margin:5px 0px 0px 25px',
 							cls : 'common-text',
 							defaultType : 'textfield',
-				html : ' 1、您的WWW帐号同域帐号，其初始密码为"123"。<br> &nbsp&nbsp&nbsp&nbsp&nbsp重要：请在两个工作日内修改密码，否则帐号将被锁定！<br>2、更改WWW密码请访问： http://10.1.180.10:18888</font> '
+				html : ' 1、您的WWW帐号同域帐号，其初始密码为"123"。 '
 		  },
 		   {
 							xtype : 'fieldset',
@@ -1743,7 +1740,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							style : 'border:1px dotted #b0acac;margin:5px 0px 0px 25px',
 							cls : 'common-text',
 							defaultType : 'textfield',
-				html : ' 1、普通电话领用话机请在 集团内部主页 http://dcone—业务应用－协同办公平台（2009）－办公用品 中申请。<br>2、IP软电话的安装使用请参照\\bjdc\公用软件\日常办公软件\IP软电话 中的《IP软电话配置与使用手册》。<br>3、IP硬电话领用话机请找相关管理员，话机不使用后归还相关管理员。'
+				html : ' 1、无'
 		  }
 		  ]
 			}],

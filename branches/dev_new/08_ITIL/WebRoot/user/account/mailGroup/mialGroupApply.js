@@ -509,7 +509,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			},
 			items:[
 			{
-				html : '<font color=red> 规范:</font><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/6cdf12b3aea0e0e848256e8f00345ab5?OpenDocument" target="_blank" style="text-decoration:none"><font color="blue">&nbsp群组管理员维护群组的注意事项及方法</font></a>&nbsp&nbsp&nbsp&nbsp&nbsp<font color=red>操作说明:</font><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/6cdf12b3aea0e0e848256e8f00345ab5?OpenDocument" target="_blank" style="text-decoration:none"><font color="blue">&nbsp群组管理员维护群组的注意事项及方法</font></a>',
+				html : '<font color=red> 规范:</font>',
 				cls : 'common-text',
 				colspan : 4,
 				rowspan : 0,

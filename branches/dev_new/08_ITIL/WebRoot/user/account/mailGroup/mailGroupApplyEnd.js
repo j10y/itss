@@ -695,7 +695,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				fieldLabel : '申请原因'
 			}),
 			{
-				html : ' 申请说明:<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/6cdf12b3aea0e0e848256e8f00345ab5?OpenDocument" target="_blank" style="text-decoration:none"><font color="blue">&nbsp群组管理员维护群组的注意事项及方法</font></a>',
+				html : ' 申请说明:',
 				cls : 'common-text',
 				colspan : 4,
 				rowspan : 0,

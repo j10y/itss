@@ -436,7 +436,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						columns : 4
 					},
 					items : [{
-						html : '<center><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/b1e5c359d4f8aab7482575690023cfb6?OpenDocument" target="_blank"><font color=red size="4px" style="text-decoration:none">《重新获取ID文件后如何操作》</font></a></center>',
+						html : '<center></center>',
 						cls : 'common-text',
 						colspan : 4,
 						rowspan : 0,

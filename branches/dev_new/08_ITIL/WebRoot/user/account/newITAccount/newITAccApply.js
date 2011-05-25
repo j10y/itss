@@ -1047,10 +1047,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=2px> 邮件帐号：<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/0e38eaf770fbad8e48256ffe002bd630?OpenDocument" target="_blank" style="text-decoration:none"><b>NOTES6安装配置方法</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/439e87119e2c1d4a48256d6a00184d39?OpenDocument" target="_blank" style="text-decoration:none"><b>如何修改Notes口令</b></a>' +
-						'<br>域帐号：<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/79b62bb229f9a89548256e9200291908?OpenDocument" target="_blank" style="text-decoration:none"><b>如何加入zsgj域（WinXP用户）</a><a href="http://10.1.120.53/itil/user/account/domain.exe">自动加入域.exe</a></b>' +
-						'<br>WWW帐号：<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/30f50f5f5f356be8482575680031af2a?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW配置手册</b></a>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/8f51e3c135a215b648256d6a0022f54f?OpenDocument" target="_blank" style="text-decoration:none"><b>WWW帐号密码修改方法</b></a>' +
-						'<br>IT密码（包括：DC域密码、即时消息密码、ESS系统密码、OA协同密码):<br><a href="http://bjas2/ITHELPME.nsf/00dc6ddbfdcfea6848256d59001efa87/cde85230bfccf2c948256e0b001197ee?OpenDocument" target="_blank" style="text-decoration:none"><b>如何修改Internet口令-统一身份管理系统AM修改ITPASSWPRD</b></a></font>',
+				html : '<font size=2px> 说明</font>',
 				cls : 'common-text',
 				style : ';margin:0px 0px 0px 70px'
 				

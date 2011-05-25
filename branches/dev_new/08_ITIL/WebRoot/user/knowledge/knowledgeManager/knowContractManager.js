@@ -283,7 +283,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 												+ "',applyId : '"
 												+ dataId
 												+ "', applyType: 'kproject',applyTypeName: 'ÖªÊ¶ÉóÅú',customer:''}",
-										defname : 'KnowContractProcess1276415914731'
+										defname : 'KnowContractProcess1306215801136'
 									},
 									success:function(response){
 										var meg = Ext.decode(response.responseText);
