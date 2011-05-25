@@ -880,7 +880,7 @@ public class SCIRelationShipServiceImpl extends BaseDao implements
 			for(SCIRelationShip curShip : childs){
 				ServiceItem curSi = curShip.getServiceItem();
 				ServiceCatalogue curSc = curShip.getServiceCatalogue();
-				curShip.getTypeFlag().equals(SCIRelationShip.SCI_TYPE_CATALOGUE);
+//				curShip.getTypeFlag().equals(SCIRelationShip.SCI_TYPE_CATALOGUE);
 				if(curShip.getTypeFlag().equals(SCIRelationShip.SCI_TYPE_CATALOGUE)){
 					if(!map.containsKey(curSc)){
 						List templist = new ArrayList();
@@ -899,8 +899,8 @@ public class SCIRelationShipServiceImpl extends BaseDao implements
 						map.put(curSi, templist);
 					}else{
 						List templist = map.get(curSi);
-						templist.add(curSi);
-						map.put(curSc, templist);
+						templist.add(curShip);
+						map.put(curSi, templist);
 					}
 				}
 			}

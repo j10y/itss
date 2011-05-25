@@ -39,6 +39,7 @@ import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.util.DateUtil;
 import com.zsgj.info.framework.util.HttpUtil;
+import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
 import com.zsgj.itil.config.entity.CIBatchModify;
 import com.zsgj.itil.config.entity.CIBatchModifyPlan;
@@ -102,7 +103,8 @@ public class ConfigItemAction extends BaseAction {
 						displayServerPassword=true;
 					}else{
 						//拥有配置-服务器管理员角色的用户
-						Role role=(Role) getService().findUnique(Role.class, "keyword", Server.ROLE_SERVERADMINISTRATOR);
+						String rolekey=PropertiesUtil.getProperties("server.role", "serverAdministrator");
+						Role role=(Role) getService().findUnique(Role.class, "keyword", rolekey);
 						if(role!=null){
 							Set<UserInfo> users=role.getUserInfos();
 							for(UserInfo user:users){

@@ -6,7 +6,7 @@
 			<column name="id" />
 			<generator class="native" />
 		</id> 
-		<many-to-one name="serviceItem" class="com.zsgj.itil.service.entity.ServiceItem" unique="true">
+		<many-to-one name="serviceItem" class="com.zsgj.itil.service.entity.ServiceItem" unique="true" not-found="ignore">
 			<column name="serviceItem"></column>
 		</many-to-one>
 		<property name="sidProcessType" type="integer">
@@ -33,8 +33,8 @@
 		<property name="nodeName" type="string">
 			<column name="nodeName" length="20"></column>
 		</property>
-		<many-to-one name="approver" class="com.zsgj.info.framework.security.entity.UserInfo" unique="true">
-			<column name="approver"></column>
+		<many-to-one name="approver" class="com.zsgj.info.framework.security.entity.UserInfo" unique="true" not-found="ignore">
+			<column name="approver" ></column>
 		</many-to-one>
 		<property name="resultFlag" type="string">
 			<column name="resultFlag" length="20"></column>

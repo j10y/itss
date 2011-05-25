@@ -22,30 +22,30 @@
         <property name="telephone" type="string" column="telephone"/>
         <property name="voipPhone" type="string" column="voipPhone"/>
         <property name="departCode" type="long" column="departCode" insert="false" update="false"/>
-        <many-to-one name="department" class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false">
+        <many-to-one name="department" class="com.zsgj.info.framework.security.entity.Department" fetch="join" lazy="false" not-found="ignore">
             <column name="departCode"/>
         </many-to-one>
-        <many-to-one name="platform" class="com.zsgj.info.framework.security.entity.Platform">
+        <many-to-one name="platform" class="com.zsgj.info.framework.security.entity.Platform" not-found="ignore">
             <column name="platform"/>
         </many-to-one>
         
         
         
-        <many-to-one name="workSpace" class="com.zsgj.info.framework.security.entity.WorkSpace" lazy="false">
+        <many-to-one name="workSpace" class="com.zsgj.info.framework.security.entity.WorkSpace" lazy="false" not-found="ignore">
             <column name="workSpace"/>
         </many-to-one>
         
      
         
-        <many-to-one name="userType" class="com.zsgj.info.framework.security.entity.UserType" lazy="false">
+        <many-to-one name="userType" class="com.zsgj.info.framework.security.entity.UserType" lazy="false" not-found="ignore">
             <column name="userType"/>
         </many-to-one>
         
-         <many-to-one name="personnelScope" class="com.zsgj.info.framework.security.entity.PersonnelScope" lazy="false">
+         <many-to-one name="personnelScope" class="com.zsgj.info.framework.security.entity.PersonnelScope" lazy="false" not-found="ignore">
             <column name="personnelScope"/>
         </many-to-one>
         
-          <many-to-one name="sameMailDept" class="com.zsgj.info.framework.security.entity.SameMailDept" >
+          <many-to-one name="sameMailDept" class="com.zsgj.info.framework.security.entity.SameMailDept" not-found="ignore">
                  <column name="sameMailDept"/>
           </many-to-one>
           

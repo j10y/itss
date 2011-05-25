@@ -8291,7 +8291,7 @@ public class AccountAction extends BaseAction {
 				accountMap.put("mail$id", acc.getId());
 				accountMap.put("mail$accountState", acc.getAccountState());
 				accountMap
-						.put("mail$mailValue", acc.getMailValue().getVolume());
+						.put("mail$mailValue", acc.getMailValue()!=null?acc.getMailValue().getVolume():0);
 				accountMap.put("mail$remarkDesc", acc.getRemarkDesc());
 
 			}

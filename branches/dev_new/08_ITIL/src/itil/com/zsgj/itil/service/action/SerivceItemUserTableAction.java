@@ -268,20 +268,28 @@ public class SerivceItemUserTableAction extends BaseDispatchAction{
 		String serviceItemId = request.getParameter("serviceItemId");
 		String sourceServiceItemId=request.getParameter("sourceServiceItem");
         String tableId = request.getParameter("tableId");
-        SystemMainTable smt = (SystemMainTable) service.find(SystemMainTable.class, tableId,true);
+        
+        String tableName=request.getParameter("tableName");
+        SystemMainTable smt=null;
+        if(tableId!=null&&tableId.length()>0){
+        	smt = (SystemMainTable) service.find(SystemMainTable.class, tableId,true);
+        }else if(tableName!=null){
+        	smt = (SystemMainTable) service.findUnique(SystemMainTable.class, "tableName", tableName);
+        }
         ServiceItem serviceItem = serviceItemService.findServiceItemById(serviceItemId);
         ServiceItem sourceServiceItem = serviceItemService.findServiceItemById(sourceServiceItemId);
         ServiceItemUserTable sourceSiut= siuts.findServiceItemUserTableByServiceItem(sourceServiceItem);
 		ServiceItemUserTable siut = siuts.findServiceItemUserTableByServiceItem(serviceItem);
 		if(siut==null){
 			siut = new ServiceItemUserTable();
+		}else{
+			siut.setPagePanel(sourceSiut.getPagePanel());
+			siut.setPageListPanel(sourceSiut.getPageListPanel());
+			siut.setGroupPanel(sourceSiut.getGroupPanel());
 		}
 		siut.setSystemMainTable(smt);
 		siut.setServiceItem(serviceItem);
 		siut.setSystemMainTable(smt);
-		siut.setPagePanel(sourceSiut.getPagePanel());
-		siut.setPageListPanel(sourceSiut.getPageListPanel());
-		siut.setGroupPanel(sourceSiut.getGroupPanel());
 		siut.setServiceItemType(serviceItem.getServiceItemType());
 		siut.setClassName(smt.getClassName());
 		siut.setTableName(smt.getTableName());
@@ -368,11 +376,16 @@ public class SerivceItemUserTableAction extends BaseDispatchAction{
 		String serviceItemId=request.getParameter("serviceItem");
 		ServiceItem serviceItem = serviceItemService.findServiceItemById(serviceItemId);
 		ServiceItemUserTable siut = siuts.findServiceItemUserTableByServiceItem(serviceItem);
-		SystemMainTable smt = siut.getSystemMainTable();
-		Long tableId = smt.getId();
-		String tableName=smt.getTableName();
-		String tableCnName = smt.getTableCnName();
-		String json = "{success:true,tableName:'"+tableName+"',tableCnName:'"+tableCnName+"',tableId:"+tableId+"}";
+		String json ="";
+		if(siut!=null){
+			SystemMainTable smt = siut.getSystemMainTable();
+			Long tableId = smt.getId();
+			String tableName=smt.getTableName();
+			String tableCnName = smt.getTableCnName();
+			json = "{success:true,tableName:'"+tableName+"',tableCnName:'"+tableCnName+"',tableId:"+tableId+"}";
+		}else{
+			json = "{success:true,tableName:'',tableCnName:'',tableId:''}";
+		}
 		response.setCharacterEncoding("gbk");
 		response.getWriter().write(json);
 		return null;

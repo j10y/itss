@@ -113,7 +113,7 @@ public class SRAction extends BaseAction{
 		String principalId = "0";	//服务商负责人Id
 		if(deliveryTeam!=null){
 			deliveryTeam = (DeliveryTeam) service.find(DeliveryTeam.class, deliveryTeam.getId().toString(),true);
-			if(deliveryTeam.getPrincipal()!=null){
+			if(deliveryTeam!=null&&deliveryTeam.getPrincipal()!=null){
 				principalId = deliveryTeam.getPrincipal().getId().toString();
 			}
 		}
@@ -121,7 +121,7 @@ public class SRAction extends BaseAction{
 		String mainEngineerId = "0";
 		if(mainEngineer!=null){
 			mainEngineer = (ServiceEngineer) service.find(ServiceEngineer.class, mainEngineer.getId().toString(),true);
-			if(mainEngineer.getUserInfo()!=null){
+			if(mainEngineer!=null&&mainEngineer.getUserInfo()!=null){
 				mainEngineerId = mainEngineer.getUserInfo().getId().toString();
 			}
 		}

@@ -6,7 +6,7 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.info.framework.security.entity.UserInfo;
 
 public class Server extends BaseObject {
-	public static final String ROLE_SERVERADMINISTRATOR = "serverAdministrator";
+	//public static final String ROLE_SERVERADMINISTRATOR = "serverAdministrator";
 	private java.lang.Long id;
 	private java.lang.String brand;
 	private java.lang.String model;
