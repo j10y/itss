@@ -51,6 +51,7 @@
 	        activeTab: 0,
 	        frame:true,
 	        items:[
+	        /**
 	            {title: '我提出的申请',
 	            viewConfig : {
 					autoFill : true,
@@ -73,7 +74,7 @@
 					method : 'post',
 					scope : this
 					}
-	            },
+	            },*/
 	            {title: '综合查询',
 	            autoLoad : {
 					url : webContext + "/tabFrame.jsp?url=" + webContext

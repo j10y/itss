@@ -53,7 +53,7 @@ PageModelComponentPanel = Ext.extend(Ext.Panel, {
 						+ "',rootText:'" + this.rootText
 						+ "',applyId : '" + this.dataId
 						+ "',applyType: 'cproject',applyTypeName: '服务目录审批',customer:'',alterFlag:'审批','workflowHistory':'com.zsgj.itil.service.entity.ServiceCatalogueAuditHis'}",
-				defname : "serviceCataManager1246270239078"
+				defname : "serviceCataManager1306118352128"
 			},
 			success : function(response, options) {
 				var meg = Ext.decode(response.responseText);

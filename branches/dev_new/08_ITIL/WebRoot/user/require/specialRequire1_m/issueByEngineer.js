@@ -994,7 +994,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 									+ "',newNoticeType : '"
 									+ newNoticeType
 									+ "',applyType: 'nproject',applyTypeName: '¹«¸æÉóÅú',customer:''}",
-							defname : "NoticeManager1249905823812"
+							defname : "NoticeManager1306207296635"
 						},
 						success : function(response, options) {
 							var meg = Ext.decode(response.responseText);

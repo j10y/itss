@@ -153,7 +153,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 	
  getFormpanel_erpSR_enter_input: function() {
  	var pName = this.processName;
- 	
  	  var da = new DataAction();
 		var data = null;
 		// 判断是新增还是修改
@@ -251,7 +250,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 	 * clientvalidation 初始化
 	 */
 	initComponent : function() {
-		
 		var histroyForm = new HistroyForm({
 			reqId : this.dataId,
 			reqClass : "com.zsgj.itil.require.entity.SpecialRequirement"
@@ -290,7 +288,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		   PageTemplates.superclass.initComponent.call(this);
 		   //SBU本部选择是带出相应审批人
 		   	Ext.getCmp('SpecialRequirement$flatCombo').on('select',function(){	
-					var flatId = Ext.getCmp('SpecialRequirement$flatCombo').getValue();				
+					var flatId = Ext.getCmp('SpecialRequirement$flatCombo').getValue();		
 					var curUrl = webContext
 							+ '/requireAction_selectConfirmUserByFlat.action'
 							+ '?flatId=' + flatId;					

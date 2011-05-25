@@ -106,7 +106,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		Ext.getCmp('SpecialRequirement$bigTypeCombo').initComponent();
 		Ext.getCmp('SpecialRequirement$smallTypeCombo').setValue('18');
 		Ext.getCmp('SpecialRequirement$smallTypeCombo').initComponent();
-		Ext.getCmp('SpecialRequirement$deliveryTeamCombo').setValue('3');
+		Ext.getCmp('SpecialRequirement$deliveryTeamCombo').setValue('2');
 		Ext.getCmp('SpecialRequirement$deliveryTeamCombo').initComponent();
 		
 //add by zhangzy for 用户要求显示 需求小类 字段 in 2009 12 4 start		
