@@ -44,7 +44,8 @@ public class UserServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String realPath = null;
 		String filePath = null;
-		byte [] photo = new byte[1024*1024>>>1];//0.5M
+//		byte [] photo = new byte[1024*1024>>>1];//0.5M
+		byte [] photo = null;
 		String methodCall = req.getParameter("methodCall");
 		
 		StringBuffer json = new StringBuffer("{success:true}");
@@ -106,6 +107,7 @@ public class UserServlet extends HttpServlet {
 		//add by awen for add photo to user on 2001-05-16 end
 		if(!methodCall.equalsIgnoreCase("import") && filePath != null && !"".equals(realPath)){
 			FileInputStream fis = new FileInputStream(realPath);
+            photo = new byte[fis.available()];
 			fis.read(photo);
 			fis.close();
 			user.setPhoto(photo);			

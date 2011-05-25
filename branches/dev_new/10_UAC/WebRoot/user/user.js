@@ -190,7 +190,6 @@ var userPanel = new Ext.form.FormPanel({
 			fieldLabel:"请选择肖像",
 			labelStyle:"width:130",
 			maxLength:64,
-			readOnly : true,
 			name:"photo",
 			vtype:'jpegfile',
 			inputType:'file',

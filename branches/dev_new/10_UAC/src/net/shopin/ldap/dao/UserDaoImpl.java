@@ -502,8 +502,7 @@ public class UserDaoImpl implements UserDao {
 				}
 			}
 		}
-		return users.size()> 20 ? users.subList(0, 21) : users;
-		//return users;
+		return users;
 	
 	}
 

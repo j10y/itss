@@ -38,6 +38,7 @@
         }
         .sys-top{
 	    	background-image:url(images/titlelog.png);
+	    	background-color:#ffffff;
 	    	background-repeat:no-repeat;
 	    	height:90px;
 	    }

@@ -3,6 +3,6 @@
 <%
 	System.out.println("退出当前应用");
 	request.getSession().invalidate();
-	System.out.println(request.getUserPrincipal().getName());
+	//System.out.println(request.getUserPrincipal().getName());
 	response.sendRedirect(Constants.CAS_LOGOUT_URL);
 %>
