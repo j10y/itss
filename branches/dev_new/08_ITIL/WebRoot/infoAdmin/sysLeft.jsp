@@ -579,6 +579,24 @@ background="${pageContext.request.contextPath}/images/SysLeft_bg_click.gif" bord
   </tr>
 </table>
 </div> 
+<div id="main32" onclick=expandIt(32)>
+  <table width="167" height="26" border="0" cellpadding="0" cellspacing="0" background="${pageContext.request.contextPath}/images/Admin_left_9.gif">
+    <tr style="cursor: hand;">
+      <td width="26" ></td>
+      <td class="SystemLeft">流程模块设定</td>
+    </tr>
+  </table>
+</div>
+<div id="sub32" style="display:none">
+<table width="160" border="0" cellspacing="0" cellpadding="0" background="${pageContext.request.contextPath}/images/SysLeft_bg_link.gif">
+  <tr>
+    <td width="36" height="22"></td>
+    <td class="SystemLeft"><a href="${pageContext.request.contextPath}/infoAdmin/modleToProcess/modletoprocess.jsp"
+    	target="mainFrame" onClick='changeAdminFlag("流程模块设定")'>流程模块设定</a></td>
+    
+  </tr>
+</table>
+</div> 
 <!-- 
  <div id="main30" onclick=expandIt(30)>
   <table width="167" height="26" border="0" cellpadding="0" cellspacing="0" background="${pageContext.request.contextPath}/images/Admin_left_9.gif">
