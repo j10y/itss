@@ -181,7 +181,19 @@
         <filter-name>struts2</filter-name>
         <url-pattern>*.action</url-pattern>
      </filter-mapping>
-     
+    <!-- monitoring --> 
+     <filter>
+               <filter-name>monitoring</filter-name>
+               <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+       </filter>
+       <filter-mapping>
+               <filter-name>monitoring</filter-name>
+               <url-pattern>/*</url-pattern>
+       </filter-mapping>
+       <listener>
+               <listener-class>net.bull.javamelody.SessionListener</listener-class>
+       </listener>
+       
 	<!-- spring contextLoaderListener -->
     <listener>
 		<listener-class>com.zsgj.info.framework.web.listener.DefaultContextLoaderListener</listener-class>
@@ -560,8 +572,23 @@
      <extension>pdf</extension>
      <mime-type>application/pdf</mime-type>
   </mime-mapping>
+  <!-- runqian by tongjp -->
+  <servlet>
+    <servlet-name>reportServlet</servlet-name>
+    <servlet-class>com.runqian.report4.view.ReportServlet</servlet-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>/WEB-INF/reportConfig.xml</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>reportServlet</servlet-name>
+    <url-pattern>/reportServlet</url-pattern>
+  </servlet-mapping>
+  <!-- runqian by tongjp -->
   
-  <!--finereport begin by tongjp  -->
+  <!--finereport begin by tongjp
   <servlet>
 	    <servlet-name>ReportServer</servlet-name>
 	    <servlet-class>com.fr.web.ReportServlet</servlet-class>
@@ -574,7 +601,7 @@
     <servlet-name>ReportServer</servlet-name>
     <url-pattern>/ReportServer</url-pattern>
   </servlet-mapping>
-
+  -->
   <!--finereport end by tongjp  -->
   
   <!-- session config -->
@@ -607,7 +634,10 @@
          <taglib-uri>/WEB-INF/struts-nested.tld</taglib-uri>
          <taglib-location>/WEB-INF/struts-nested.tld</taglib-location>
       </taglib>
-	      
+	<taglib>
+	   <taglib-uri>/WEB-INF/runqianReport4.tld</taglib-uri>
+	   <taglib-location>/WEB-INF/runqianReport4.tld</taglib-location>
+	</taglib> 
   </jsp-config>
  
 </web-app>
