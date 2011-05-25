@@ -56,7 +56,7 @@
     </bean>
  
     <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
-        <constructor-arg value="/"/>
+        <constructor-arg value="${system.security.cas.loginOutPath}"/>
         <constructor-arg>
             <list>
                 <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
