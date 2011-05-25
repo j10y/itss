@@ -24,7 +24,7 @@ public class SAPExecute {
 	private Service service = (Service) ContextHolder.getBean("baseService");
 	
 	public SAPExecute(){
-		repository = SapOption.GetRepository();
+		//repository = SapOption.GetRepository();
 	}
 	
 	/**
