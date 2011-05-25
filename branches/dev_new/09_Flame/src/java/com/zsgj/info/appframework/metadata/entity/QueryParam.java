@@ -22,7 +22,7 @@ import java.util.List;
  * 
  * Note: A QueryParam can not be nested when his model is BASIC.
  *
- * @author <a href="mailto:scorpio_leon@hotmail.com">Leon Li</a>
+ * @author 
  *
  */
 public final class QueryParam {

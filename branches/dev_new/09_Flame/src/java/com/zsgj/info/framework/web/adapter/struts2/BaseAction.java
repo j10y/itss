@@ -30,7 +30,7 @@ import com.zsgj.info.framework.util.HttpUtil;
  * 来保存数据到Request作用域。<br>
  * 本类需要所有的Action去继承。
  *
- * @author <a href="mailto:fxfeiyi@information.com">peixf</a>
+ * @author 
  */
 public class BaseAction extends ActionSupport implements RequestAware, SessionAware{
     private static final long serialVersionUID = 3525445612504421307L;
