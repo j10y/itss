@@ -1,5 +1,7 @@
 package com.zsgj.dcit.action;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import net.shopin.ldap.ws.client.SystemWSImpl;
 import net.shopin.ldap.ws.client.SystemWSImplService;
+import net.shopin.ldap.ws.client.User;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -33,9 +36,62 @@ public class UserAction extends ActionSupport {
 	public String getUserDetailByUid(){
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();	
-		
+		response.setContentType("text/html;charset=utf-8");
 		String uid = request.getParameter("uid");
-		
+		User user = port.getUserDetailByUid(uid);
+		String fileName = request.getSession().getServletContext().getRealPath("/")+"/images/userphoto/" + uid + ".jpg";
+		FileOutputStream fos = null;
+		try {
+			if(user.getPhoto()!=null){
+				File file = new File(fileName);
+				if(!file.exists()){
+					file.createNewFile();
+				}
+				fos = new FileOutputStream(file);
+				fos.write(user.getPhoto());				
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally{
+			try {
+				if(fos!=null)
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		StringBuffer json = new StringBuffer("{success:true,");
+		json.append("dn:'" + user.getDn() + "',");
+		json.append("uid:'" + user.getUid() + "',");
+		json.append("deptName:'" + (user.getDeptName()!=null ? user.getDeptName() : "") + "',");
+		json.append("password:'" + (user.getPassword()!=null ? user.getPassword() : "") + "',");
+		json.append("cn:'" + user.getCn() + "',");
+		json.append("sn:'" + (user.getSn()!=null ? user.getSn() : "") + "',");
+		json.append("departmentNumber:'" + (user.getDepartmentNumber()!=null ? user.getDeptName() : "") + "',");
+		json.append("title:'" + (user.getTitle()!=null ? user.getTitle() : "") + "',");
+		json.append("mail:'" + (user.getMail()!=null ? user.getMail() : "") + "',");
+		json.append("mobile:'" + (user.getMobile() !=null ? user.getMobile() : "") + "',");
+		json.append("telephoneNumber:'" + (user.getTelephoneNumber() !=null ? user.getTelephoneNumber() : "") + "',");
+		json.append("facsimileTelephoneNumber:'" + (user.getFacsimileTelephoneNumber()!=null ? user.getFacsimileTelephoneNumber() : "") + "',");
+		json.append("userType:'" + (user.getUserType() !=null ? user.getUserType() : "")+ "'}");
+		Writer out = null;
+		try {
+			out = response.getWriter();
+			out.write(json.toString());			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			try {
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 	
@@ -57,13 +113,11 @@ public class UserAction extends ActionSupport {
 		String firstFlag = request.getParameter("firstFlag");//第一次进入1，非为0
 		int currentPage = request.getParameter("currentPage") != null ? new Integer(request.getParameter("currentPage")) : 1;//当前页
 		
-		int start = pageSize*(currentPage-1);//从哪一个条数开始
-
-		
+		int start = pageSize*(currentPage-1);//从哪一个条数开始		
 		
 		HttpSession session = request.getSession();
 				
-		if(session.getAttribute(RESULTKEY)==null){
+		if(firstFlag.equals("1")||session.getAttribute(RESULTKEY)==null){
 			userList = port.findUserListByParam(uidOrName);
 			session.setAttribute(RESULTKEY, userList);
 		}else{

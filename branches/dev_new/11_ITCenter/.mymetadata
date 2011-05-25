@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="DCIT"
+  name="11_ITCenter"
   id="myeclipse.1261555256506"
-  context-root="/ITcenter"
+  context-root="/ITCenter"
   j2ee-spec="5.0"
-  archive="DCIT.war">
+  archive="11_ITCenter.war">
   <attributes>
     <attribute name="webrootdir" value="/WebRoot" />
   </attributes>

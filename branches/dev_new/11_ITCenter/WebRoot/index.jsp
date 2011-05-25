@@ -255,7 +255,7 @@
 														<img src="images/1x1_pix.gif" alt="" width="8" height="15" />
 													</td>
 													<td height="23" class="bannertxt">
-														<a href="" target="_blank" class="nomalLink">协同办公平台</a>
+														<a href="http://localhost:8080/bmrbs/" target="_blank" class="nomalLink">办公室预订</a>
 													</td>
 												</tr>
 												<tr>

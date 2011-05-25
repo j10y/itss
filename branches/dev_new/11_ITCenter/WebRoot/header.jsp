@@ -7,7 +7,7 @@
   <head>   
 <style type="text/css">
 <!--
-@import url("DCIT.css");
+@import url("${pageContext.request.contextPath}/DCIT.css");
 body {
 	background: url(${pageContext.request.contextPath}/images/bg.png) repeat-x 0px -15px;
 	margin-left: 0px;
@@ -30,7 +30,7 @@ body {
   <td height="9" ></td>
   </tr>
   <tr>
-    <td height="105" background="images/banner.jpg"  class="whitetxt" valign="bottom" align="right" >
+    <td height="105" background="${pageContext.request.contextPath}/images/banner.jpg"  class="whitetxt" valign="bottom" align="right" >
       <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:15px;">
 
         <tr>
