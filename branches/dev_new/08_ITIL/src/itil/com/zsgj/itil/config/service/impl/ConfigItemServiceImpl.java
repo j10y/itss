@@ -1201,7 +1201,6 @@ public class ConfigItemServiceImpl extends BaseService implements
 		this.metaDataManager = metaDataManager;
 	}
 
-	@Override
 	public ModleToProcess findProcessByParm(String modleType,
 			String processStatusType) {
 		// TODO Auto-generated method stub
