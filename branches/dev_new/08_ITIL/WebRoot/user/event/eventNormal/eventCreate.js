@@ -306,41 +306,61 @@ PagePanel = Ext.extend(Ext.Panel, {
 							var users = userID;
 							if (users != null && users != '') {// 2010-04-28 modified by huzh for 有工程师存在
 								Ext.Ajax.request({
-									url : webContext
-											+ '/eventWorkflow_apply.action',
+									url : webContext + '/configWorkflow_findProcessByPram.action',
 									params : {
-										dataId : this.dataId,
-										model : this.model,
-										bzparam : "{dataId :'"
-												+ this.dataId
-												+ "',users:'engineerProcess:"
-												+ users
-												+ "',applyId : '"
-												+ this.dataId
-												+ "',eventName : '"
-												+ eventName
-												+ "',eventSubmitUser:'"
-												+ eventSubmitUser
-												+ "',eventSubmitDate:'"
-												+ eventSubmitDate
-												+ "',eventCisn:'"
-												+ eventCisn
-												+ "', applyType: 'eproject',applyTypeName: '事件与问题审批',customer:'',workflowHistory:'com.zsgj.itil.event.entity.EventAuditHis'}",
-										defname : 'eventAndProblemProcess1306201650938'
+										modleType : 'Event',//表示配置项
+										processStatusType : '0'//表示变更
 									},
 									success : function(response, options) {
-										Ext.Msg.alert("提示",
-												"您已成功提交IT问题，我们会在2工时内与您联系并解决！",
-												function() {
-													window.location = webContext
-															+ "/eventAction_toCreatePage.action";
-												});
+										var responseArray = Ext.util.JSON
+												.decode(response.responseText);
+										var vpid = responseArray.vpid;
+										if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+											Ext.Ajax.request({
+												url : webContext
+														+ '/eventWorkflow_apply.action',
+												params : {
+													dataId : this.dataId,
+													model : this.model,
+													bzparam : "{dataId :'"
+															+ this.dataId
+															+ "',users:'engineerProcess:"
+															+ users
+															+ "',applyId : '"
+															+ this.dataId
+															+ "',eventName : '"
+															+ eventName
+															+ "',eventSubmitUser:'"
+															+ eventSubmitUser
+															+ "',eventSubmitDate:'"
+															+ eventSubmitDate
+															+ "',eventCisn:'"
+															+ eventCisn
+															+ "', applyType: 'eproject',applyTypeName: '事件与问题审批',customer:'',workflowHistory:'com.zsgj.itil.event.entity.EventAuditHis'}",
+													defname : vpid
+												},
+												success : function(response, options) {
+													Ext.Msg.alert("提示",
+															"您已成功提交IT问题，我们会在2工时内与您联系并解决！",
+															function() {
+																window.location = webContext
+																		+ "/eventAction_toCreatePage.action";
+															});
+												},
+												failure : function(response, options) {
+													Ext.MessageBox.alert("提示", "问题提交失败！");
+													Ext.getCmp("postButton").enable();
+												}
+											}, this);
+										}else{
+											Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+										}
 									},
 									failure : function(response, options) {
-										Ext.MessageBox.alert("提示", "问题提交失败！");
-										Ext.getCmp("postButton").enable();
+										Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 									}
 								}, this);
+								
 							} else {
 								Ext.MessageBox.alert("提示", "一个支持组工程师也没有！");// 2010-04-28 modified by huzh for 没有工程师
 								Ext.getCmp("postButton").enable();
