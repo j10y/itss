@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	
-	
+		
 	<!-- webAppRootKey -->
 	<context-param>
 	  	<param-name>webAppRootKey</param-name>
@@ -77,14 +76,13 @@
 <taglib-location>/WEB-INF/FCKeditor.tld</taglib-location> 
 </taglib>
 
-
 	<!-- spring contextConfigLocation -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 		    classpath*:applicationContext-personsetting.xml,
 			classpath*:applicationContext-resources.xml,
-			classpath*:applicationContext-security-form.xml,
+			classpath*:applicationContext-security.xml,
 			classpath*:applicationContext-workflow.xml,
 			classpath*:applicationContext-portal.xml,
 			classpath*:applicationContext-metadata.xml,

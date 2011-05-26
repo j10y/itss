@@ -9,9 +9,7 @@
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="0">
 		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/user/sysManage/systemCommon.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/user/sysManage/extendTextArea.js"></script>
+			src="${pageContext.request.contextPath}/js/extendTextArea.js"></script>
 		<script type="text/javascript"
 			src="<c:url value="/js/TabCloseMenu.js"/>"></script>
 		<script type="text/javascript"
@@ -30,6 +28,13 @@
 			src="${pageContext.request.contextPath}/infoAdmin/workflow/configPage/ruleConfigUnit.js"></script>
 		<style type="text/css">
 .x-head {
+
+
+
+
+
+
+
 	background: url(images/titlelog.png) no-repeat left;
 	height: 65px;
 	background-color: 'blank'

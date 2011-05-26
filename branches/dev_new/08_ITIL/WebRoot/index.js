@@ -138,7 +138,7 @@ com.dc.ui.IndexPage = {
 			}),{
 				region : 'west',
 				id : 'west-panel',
-				title : 'IT服务系统',
+				title : 'IT服务支撑系统',
 				cls : "x-btn-text-icon",
 				split : true,
 				iconCls : 'forward',

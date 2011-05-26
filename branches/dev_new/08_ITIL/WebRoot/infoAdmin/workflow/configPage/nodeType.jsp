@@ -7,9 +7,8 @@
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 	<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-	<META HTTP-EQUIV="Expires" CONTENT="0">   
-	<script type="text/javascript" src="${pageContext.request.contextPath}/user/sysManage/systemCommon.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/user/sysManage/extendTextArea.js"></script>
+	<META HTTP-EQUIV="Expires" CONTENT="0">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/extendTextArea.js"></script>
 	<script type="text/javascript" src="<c:url value="/js/TabCloseMenu.js"/>"></script> 
   	<script type="text/javascript" src="${pageContext.request.contextPath}/infoAdmin/workflow/configPage/nodeTypePanel.js"></script>
 	  	<script type="text/javascript" src="${pageContext.request.contextPath}/infoAdmin/workflow/configPage/nodeTypeAndConfigUnitPanel.js"></script>

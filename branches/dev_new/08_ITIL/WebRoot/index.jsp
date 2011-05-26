@@ -16,7 +16,8 @@
             overflow: hidden;
             height: 100%;
         }
-        .empty .x-panel-body {
+        .empty .x-panel-body {     
+        
             padding-top:20px;
             text-align:center;
             font-style:italic;
@@ -24,9 +25,10 @@
             font-size:11px;
         }
         .itil-top{
-	    	background-image:url(images/titlelog.png);
+        	background-image:url(images/titlelog.png);
+        	background-color:#ffffff;
 	    	background-repeat:no-repeat;
-	    	height:90px;
+	    	height:45px;
 	    }
 	    .itil-top-logo{
 	    	position:absolute;
@@ -40,7 +42,7 @@
 	    }
 	    .itil-top-tool{
 	    	position:absolute;
-	    	top:65px;
+	    	top:25px;
 	    	left:0px;
 	    }
 	    .x-toolbar-whDefine{
