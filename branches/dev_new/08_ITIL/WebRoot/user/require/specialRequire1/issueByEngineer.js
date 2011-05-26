@@ -989,39 +989,60 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					var newNoticeName = eval('('+response.responseText+')').newNoticeName
 					var newNoticeType = eval('('+response.responseText+')').newNoticeType
 					Ext.Ajax.request({
-						url : webContext + '/noticeManagerWorkflow_apply.action',
+						url : webContext + '/configWorkflow_findProcessByPram.action',
 						params : {
-							dataId : noticeId,
-							model : this.model,
-							bzparam : "{dataId :'"
-									+ noticeId
-									+ "',applyId : '"
-									+ noticeId
-									+ "',newNoticeName : '"
-									+ newNoticeName
-									+ "',newNoticeType : '"
-									+ newNoticeType
-									+ "',applyType: 'nproject',applyTypeName: '公告审批',customer:''}",
-							defname : "NoticeManager1306207296635"
+							modleType : 'Notice',//
+							processStatusType : '0'//
 						},
 						success : function(response, options) {
-							var meg = Ext.decode(response.responseText);
-							if (meg.id != undefined) {
-								Ext.Msg.alert("提示", "已经成功提交，并发送给审批人", function() {
+							var responseArray = Ext.util.JSON
+									.decode(response.responseText);
+							var vpid = responseArray.vpid;
+							if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+								Ext.Ajax.request({
+									url : webContext + '/noticeManagerWorkflow_apply.action',
+									params : {
+										dataId : noticeId,
+										model : this.model,
+										bzparam : "{dataId :'"
+												+ noticeId
+												+ "',applyId : '"
+												+ noticeId
+												+ "',newNoticeName : '"
+												+ newNoticeName
+												+ "',newNoticeType : '"
+												+ newNoticeType
+												+ "',applyType: 'nproject',applyTypeName: '公告审批',customer:''}",
+										defname : vpid
+									},
+									success : function(response, options) {
+										var meg = Ext.decode(response.responseText);
+										if (meg.id != undefined) {
+											Ext.Msg.alert("提示", "已经成功提交，并发送给审批人", function() {
+													Ext.getCmp('noticeSubmit').enable();//按钮生效
+											});
+										} else {
+											Ext.Msg.alert("提示", "启动工作流失败", function() {
+												Ext.getCmp('noticeSubmit').enable();//按钮生效
+												alert(meg.Exception);
+											});
+										}
+									},
+									failure : function(response, options) {
 										Ext.getCmp('noticeSubmit').enable();//按钮生效
-								});
-							} else {
-								Ext.Msg.alert("提示", "启动工作流失败", function() {
-									Ext.getCmp('noticeSubmit').enable();//按钮生效
-									alert(meg.Exception);
-								});
+										Ext.MessageBox.alert("提示", "启动工作流失败");
+									}
+								}, this);
+							}else{
+								Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 							}
 						},
 						failure : function(response, options) {
-							Ext.getCmp('noticeSubmit').enable();//按钮生效
-							Ext.MessageBox.alert("提示", "启动工作流失败");
+							Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 						}
 					}, this);
+					
+					
 				},
 				failure : function(response, options) {
 					Ext.getCmp('noticeSubmit').enable();//按钮生效

@@ -134,34 +134,52 @@ PagePanel = Ext.extend(Ext.Panel, {
 							var dataId = eval('(' + response.responseText + ')').dataId;
 							var dataType = 7;
 							Ext.Ajax.request({
-								url : webContext
-										+ '/knowledgeWorkflow_apply.action',
+								url : webContext + '/configWorkflow_findProcessByPram.action',
 								params : {
-									dataId : dataId,
-									model : this.model,
-									bzparam : "{dataId :'"
-											+ dataId
-											+ "',dataType : '"
-											+ dataType
-											+ "',applyId : '"
-											+ dataId
-											+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
-									defname : 'KnowFileProcess1306213848956'
+									modleType : 'Kno_File',//
+									processStatusType : '0'//
 								},
-								success : function(response) {
-									var meg = Ext.decode(response.responseText);
-									if (meg.Exception != undefined) {
-										Ext.Msg.alert("提示", meg.Exception);
-									} else {
-										Ext.Msg.alert("提示", "提交成功！",
-												function() {
-															window.location = webContext
-																+ '/user/knowledge/knowledgeManager/knowFileManager.jsp';
-												});
+								success : function(response, options) {
+									var responseArray = Ext.util.JSON
+											.decode(response.responseText);
+									var vpid = responseArray.vpid;
+									if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+										Ext.Ajax.request({
+											url : webContext
+													+ '/knowledgeWorkflow_apply.action',
+											params : {
+												dataId : dataId,
+												model : this.model,
+												bzparam : "{dataId :'"
+														+ dataId
+														+ "',dataType : '"
+														+ dataType
+														+ "',applyId : '"
+														+ dataId
+														+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
+												defname : vpid
+											},
+											success : function(response) {
+												var meg = Ext.decode(response.responseText);
+												if (meg.Exception != undefined) {
+													Ext.Msg.alert("提示", meg.Exception);
+												} else {
+													Ext.Msg.alert("提示", "提交成功！",
+															function() {
+																		window.location = webContext
+																			+ '/user/knowledge/knowledgeManager/knowFileManager.jsp';
+															});
+												}
+											}
+										});
+									}else{
+										Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 									}
+								},
+								failure : function(response, options) {
+									Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 								}
-							});
-
+							}, this);
 						},
 						failure : function(response, options) {
 							Ext.getCmp('savedaraftbutton').enable();

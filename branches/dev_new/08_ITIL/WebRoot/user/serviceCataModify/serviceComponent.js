@@ -59,31 +59,50 @@ PageModelComponentPanel = Ext.extend(Ext.Panel, {
 				var responseArray = Ext.util.JSON.decode(response.responseText);
 				var curId = responseArray.id;//新的服务目录id
 				Ext.Ajax.request({
-					url :webContext+'/extjs/workflow?method=apply',
+					url : webContext + '/configWorkflow_findProcessByPram.action',
 					params : {
-						dataId : curId,
-						model: this.model,
-						bzparam : "{dataId :'"+ curId
-							+ "',applyNum:'-----" 
-							+ "',applyName:'" + Ext.getCmp('ServiceCatalogue$name').getValue()
-							+"',oldDataId:'"+oldModifyDataId+"',applyId : '"+curId+"',applyType: 'cproject',applyTypeName: '服务目录变更审批流程',customer:'',alterFlag:'变更','workflowHistory':'com.zsgj.itil.service.entity.ServiceCatalogueAuditHis'}",						
-						defname : "serviceCataManager1305882470217"
+						modleType : 'SCIC',//表示服务目录
+						processStatusType : '1'//表示变更
 					},
 					success : function(response, options) {
-						var meg = Ext.decode(response.responseText);
-							if (meg.id != undefined) {
-								Ext.Msg.alert("提示", "启动工作流成功", function() {
-									window.location = webContext
-											+'/user/serviceCataModify/serviceCatalogueModifyList.jsp';
-								});
-							} else {
-								Ext.Msg.alert("提示", "启动工作流失败", function() {
-									alert(meg.Exception);
-								});
-							}		
+						var responseArray = Ext.util.JSON
+								.decode(response.responseText);
+						var vpid = responseArray.vpid;
+						if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+							Ext.Ajax.request({
+								url :webContext+'/extjs/workflow?method=apply',
+								params : {
+									dataId : curId,
+									model: this.model,
+									bzparam : "{dataId :'"+ curId
+										+ "',applyNum:'-----" 
+										+ "',applyName:'" + Ext.getCmp('ServiceCatalogue$name').getValue()
+										+"',oldDataId:'"+oldModifyDataId+"',applyId : '"+curId+"',applyType: 'cproject',applyTypeName: '服务目录变更审批流程',customer:'',alterFlag:'变更','workflowHistory':'com.zsgj.itil.service.entity.ServiceCatalogueAuditHis'}",						
+									defname : vpid
+								},
+								success : function(response, options) {
+									var meg = Ext.decode(response.responseText);
+										if (meg.id != undefined) {
+											Ext.Msg.alert("提示", "启动工作流成功", function() {
+												window.location = webContext
+														+'/user/serviceCataModify/serviceCatalogueModifyList.jsp';
+											});
+										} else {
+											Ext.Msg.alert("提示", "启动工作流失败", function() {
+												alert(meg.Exception);
+											});
+										}		
+								},
+								failure : function(response, options) {
+									Ext.MessageBox.alert("提示","启动工作流失败");
+								}
+							}, this);
+						}else{
+							Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+						}
 					},
 					failure : function(response, options) {
-						Ext.MessageBox.alert("提示","启动工作流失败");
+						Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 					}
 				}, this);
 			},
