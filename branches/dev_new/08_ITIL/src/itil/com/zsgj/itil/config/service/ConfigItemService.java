@@ -13,6 +13,7 @@ import com.zsgj.itil.config.entity.CIBatchModifyPlan;
 import com.zsgj.itil.config.entity.CIRelationShip;
 import com.zsgj.itil.config.entity.ConfigItem;
 import com.zsgj.itil.config.entity.ConfigItemNecessaryRel;
+import com.zsgj.itil.config.entity.ModleToProcess;
 
 public interface ConfigItemService {
 	/**
@@ -593,4 +594,11 @@ public interface ConfigItemService {
 	 * @return List<Long> 工程师对应的用户的id
 	 */
 	public List<Long> findServerEngineer(String cisn);
+	/**
+	 * 通过模块类型和流程类型来确定走的流程要用哪个
+	 * @param modleType
+	 * @param processStatusType
+	 * @return
+	 */
+	public ModleToProcess findProcessByParm(String modleType,String processStatusType);
 }

@@ -13,6 +13,7 @@ import com.zsgj.itil.config.entity.CIBatchModify;
 import com.zsgj.itil.config.entity.CIBatchModifyPlan;
 import com.zsgj.itil.config.entity.CIRelationShip;
 import com.zsgj.itil.config.entity.ConfigItem;
+import com.zsgj.itil.config.entity.ModleToProcess;
 
 public interface ConfigItemDao extends Dao{
 	
@@ -483,4 +484,11 @@ public interface ConfigItemDao extends Dao{
 	 * @return List<Long> 工程师对应的用户的id
 	 */
 	public List<Long> selectServerEngineer(String cisn);
+	/**
+	 * 通过模块类型和流程类型来确定走的流程要用哪个
+	 * @param modleType
+	 * @param processStatusType
+	 * @return
+	 */
+	public ModleToProcess findProcessByParm(String modleType,String processStatusType);
 }

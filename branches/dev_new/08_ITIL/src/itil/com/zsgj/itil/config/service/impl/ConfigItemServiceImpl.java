@@ -30,6 +30,7 @@ import com.zsgj.itil.config.entity.ConfigItemFinanceInfo;
 import com.zsgj.itil.config.entity.ConfigItemNecessaryRel;
 import com.zsgj.itil.config.entity.ConfigItemStatus;
 import com.zsgj.itil.config.entity.ConfigItemType;
+import com.zsgj.itil.config.entity.ModleToProcess;
 import com.zsgj.itil.config.service.ConfigItemService;
 import com.zsgj.itil.event.entity.Problem;
 import com.zsgj.itil.require.entity.SpecialRequirement;
@@ -1198,5 +1199,12 @@ public class ConfigItemServiceImpl extends BaseService implements
 
 	public void setMetaDataManager(MetaDataManager metaDataManager) {
 		this.metaDataManager = metaDataManager;
+	}
+
+	@Override
+	public ModleToProcess findProcessByParm(String modleType,
+			String processStatusType) {
+		// TODO Auto-generated method stub
+		return configItemDao.findProcessByParm(modleType, processStatusType);
 	}
 }

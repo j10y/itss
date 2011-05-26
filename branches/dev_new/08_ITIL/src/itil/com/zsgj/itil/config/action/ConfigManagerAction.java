@@ -11,18 +11,27 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sf.json.JSONObject;
 
+import com.zsgj.info.appframework.metadata.MetaDataManager;
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
+import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.service.Service;
+import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
 import com.zsgj.info.framework.workflow.ParameterService;
 import com.zsgj.info.framework.workflow.ProcessService;
 import com.zsgj.info.framework.workflow.TaskService;
+import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
 import com.zsgj.info.framework.workflow.info.HistoryInfo;
 import com.zsgj.info.framework.workflow.info.TaskInfo;
 import com.zsgj.itil.config.entity.ConfigItem;
+import com.zsgj.itil.config.entity.ModleToProcess;
+import com.zsgj.itil.config.service.ConfigItemService;
+import com.zsgj.itil.service.entity.ServiceItemProcess;
 
 @SuppressWarnings("serial")
 public class ConfigManagerAction extends BaseAction{
@@ -32,6 +41,7 @@ public class ConfigManagerAction extends BaseAction{
 //	private ContextService vm = (ContextService)ContextHolder.getBean("contextService");
 //	private TaskService tm = (TaskService)ContextHolder.getBean("taskService");
 	private ProcessService ps = (ProcessService)ContextHolder.getBean("processService");
+	private ConfigItemService configItemService =(ConfigItemService)ContextHolder.getBean("configItemService");
 	
 	/**
 	 * 提出申请（启动工作流）,需要考虑到一个节点有可能指派给多人的情况
@@ -218,5 +228,164 @@ public class ConfigManagerAction extends BaseAction{
 		}
 		return json;
 	}
-
+	public String getModleProcess(){
+		HashMap modleTypeMap=new HashMap();
+		modleTypeMap.put("CI", "配置项");
+		modleTypeMap.put("SCI", "服务项");
+		modleTypeMap.put("SCIC", "服务目录");
+		modleTypeMap.put("Event", "事件");
+		modleTypeMap.put("Notice", "公告");
+		modleTypeMap.put("Kno_Solution", "解决方案");
+		modleTypeMap.put("Kno_Contract", "合同");
+		modleTypeMap.put("Kno_File", "文件");
+		
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String json="";
+		int start = HttpUtil.getInt(request, "start", 0);
+		int pageSize = HttpUtil.getInt(request, "pageSize", 10);
+		int pageNo = start / pageSize + 1;
+		Page page=service.findByPagedQuery(ModleToProcess.class, "id", false, pageNo, pageSize);
+		List<ModleToProcess> list=page.getData();
+		for(ModleToProcess mp:list){
+			String processStatusType1="";
+			if(mp.getProcessStatusType().equals(0)){
+				processStatusType1="申请流程";
+			}else if(mp.getProcessStatusType().equals(1)){
+				processStatusType1="变更流程";
+			}else if(mp.getProcessStatusType().equals(2)){
+				processStatusType1="删除流程";
+			}
+			
+			json+="{id:\""+mp.getId()+"\",modleType:\""+modleTypeMap.get(mp.getModleType())+"\",processStatusType:\""+processStatusType1+"\",definitionName:\""+mp.getProcessInfo().getVirtualDefinitionDesc()+"/"+mp.getProcessInfo().getVirtualDefinitionName()+"\"},";
+		}
+		if (json.endsWith(",")) {
+			json = json.substring(0, json.length() - 1);
+		}
+		json = "{success: true, rowCount:"+page.getTotalCount()+",data:[" + json + "]}";
+		try {
+			HttpServletResponse res = super.getResponse();
+			res.setCharacterEncoding("utf-8");
+			PrintWriter pw = res.getWriter();
+			pw.write(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public String saveModleToProcess(){
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String info = request.getParameter("info");
+//		ServiceItem serviceItem = sis.findServiceItemById(servcieItemId);
+		JSONObject panelJO = JSONObject.fromObject(info);
+		Map<String,Object> dataMap = new HashMap<String,Object>();
+		Iterator columnIter = panelJO.keys();
+		while(columnIter.hasNext()){
+			String columnName = (String) columnIter.next();
+			String columnValue = panelJO.getString(columnName);
+			columnName = StringUtils.substringAfter(columnName, "$");
+			dataMap.put(columnName, columnValue);
+		}
+		ModleToProcess mp=new ModleToProcess();
+		if(dataMap.get("id")!=null&&dataMap.get("id").toString().length()>0){
+			mp.setId(Long.parseLong(dataMap.get("id").toString()));
+		}
+		String processInfoId = (String) dataMap.get("processInfo");
+		//String definname=processInfoId.substring(processInfoId.lastIndexOf("/")+1,processInfoId.length());
+		
+		List list=service.find(VirtualDefinitionInfo.class, "id", Long.parseLong(processInfoId));
+		if(list!=null&&list.size()>0){
+			VirtualDefinitionInfo vd=(VirtualDefinitionInfo) list.get(0);
+			mp.setProcessInfo(vd);
+			mp.setDefinitionName(vd.getVirtualDefinitionName());
+		}
+		mp.setModleType(dataMap.get("modleType").toString());
+		mp.setProcessStatusType(Integer.parseInt(dataMap.get("processStatusType").toString()));
+		service.save(mp);
+		String json= "{success:true}";
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public String removeModleToProcess(){
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String[] dataIds =request.getParameterValues("dataId");
+		String dataId = request.getParameter("dataId");
+		service.remove(ModleToProcess.class, dataId);
+		String json= "{success:true}";
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String findModleToProcess(){
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String dataId = request.getParameter("dataId");
+		ModleToProcess mp=(ModleToProcess) service.find(ModleToProcess.class, dataId);
+		String temp="";
+		temp+="ModleToProcess$id:\""+mp.getId()+"\",ModleToProcess$processInfo:\""+mp.getProcessInfo().getId()
+		+"\",ModleToProcess$processStatusType:\""+mp.getProcessStatusType()+"\",ModleToProcess$modleType:\""+mp.getModleType()+"\"";
+		String json = "{success:" + true + ",form:[{"+ temp + "}]}";
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public String findProcessByPram(){
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String modleType = request.getParameter("modleType");
+		String processStatusType = request.getParameter("processStatusType");
+		ModleToProcess mp=configItemService.findProcessByParm(modleType, processStatusType);
+		String json ="";
+		if(mp!=null){
+			json = "{success:" + true + ",vpid:\""+mp.getDefinitionName()+"\"}";
+		}else{
+			json = "{success:true,Exception:'没有找到相应的流程'}";
+		}
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

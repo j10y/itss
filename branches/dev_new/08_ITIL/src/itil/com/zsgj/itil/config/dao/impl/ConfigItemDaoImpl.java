@@ -36,6 +36,7 @@ import com.zsgj.itil.config.entity.ConfigItem;
 import com.zsgj.itil.config.entity.ConfigItemNecessaryRel;
 import com.zsgj.itil.config.entity.ConfigItemStatus;
 import com.zsgj.itil.config.entity.ConfigItemType;
+import com.zsgj.itil.config.entity.ModleToProcess;
 import com.zsgj.itil.config.extci.entity.DeliveryTeam;
 import com.zsgj.itil.config.extci.entity.ServiceEngineer;
 import com.zsgj.itil.service.entity.ServiceItem;
@@ -1493,5 +1494,17 @@ public class ConfigItemDaoImpl extends BaseDao implements ConfigItemDao {
 		values.add(CIRelationShip.VALID_STATUS);
 		values.add(cisn);
 		return getHibernateTemplate().find(engineerHql.toString(),values.toArray());
+	}
+	
+	public ModleToProcess findProcessByParm(String modleType,String processStatusType){
+		Criteria c=this.createCriteria(ModleToProcess.class);
+		c.add(Restrictions.eq("modleType", modleType));
+		c.add(Restrictions.eq("processStatusType", Integer.parseInt(processStatusType)));
+		List list=c.list();
+		ModleToProcess mp=null;
+		if(list!=null&&list.size()>0){
+			mp=(ModleToProcess) list.get(0);
+		}
+		return mp;
 	}
 }

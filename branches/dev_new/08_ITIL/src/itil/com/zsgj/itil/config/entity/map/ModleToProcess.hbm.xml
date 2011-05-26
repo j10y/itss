@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.zsgj.itil.config.entity.ModleToProcess" table="sys_modleprocess">
+		<id name="id" type="long">
+				<column name="id" />
+				<generator class="native" />
+		</id>
+		<property name="modleType" type="string">
+			<column name="modleType"></column>
+		</property>
+		<property name="processStatusType" type="integer">
+			<column name="processStatusType"></column>
+		</property>
+		<property name="definitionName" type="string">
+			<column name="definitionName"></column>
+		</property>
+		 <many-to-one name="processInfo" class="com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo">
+            <column name="processInfo" />
+        </many-to-one>
+	</class>
+</hibernate-mapping>
