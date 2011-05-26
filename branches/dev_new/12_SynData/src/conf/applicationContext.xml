@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 配置属性文件 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:app.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- applicationContext.xml文件用于公用模块的配置 -->  
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>app</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="filesService" class="cn.shopin.syndata.service.impl.FilesServiceImpl" />
+	<bean id="synDataService" class="cn.shopin.syndata.service.impl.SynDataServiceImpl" />
+	
+	<bean name="synDataJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="cn.shopin.syndata.service.SynDataJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="sds" value-ref="synDataService"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="synDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="synDataJob" />
+        <!-- 每小时执行 
+        <property name="cronExpression" value="59 59 * * * ?" />-->
+        <!-- Test Setting -->
+        <property name="cronExpression" value="0 */30 * * * ?" />
+    </bean>
+    <!-- 启动调度器 -->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+              <ref bean="synDataTrigger" />
+            </list>
+        </property>
+    </bean>
+</beans>

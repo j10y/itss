@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://syndata.shopin.cn" xmlns:tns="http://syndata.shopin.cn" elementFormDefault="qualified">
+
+    <include schemaLocation=""></include>
+    
+	    <complexType name="SynData">
+	    	<sequence>
+	    		<element name="dataBase" type="tns:DataBase"/>
+	    		<element name="tableinfo" type="tns:TableInfo"/>
+	    	</sequence>
+	    </complexType>
+    
+    <complexType name="DataBase">
+    	<sequence>
+    		<element name="driver" type="string"/>
+    		<element name="url" type="string" />
+    		<element name="username" type="string" />
+    		<element name="password" type="string" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="TableInfo">
+    	<sequence>
+    		<element name="dept" type="tns:Dept" />
+    		<element name="user" type="tns:User" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Dept">
+    	<sequence>
+    		<element name="deptcode" type="string" />
+    		<element name="deptname" type="string" />
+    		<element name="parentdept" type="string" />
+    		<element name="startdate" type="string" />
+    		<element name="enddate" type="string" />
+    		<element name="isdelete" type="string" />
+    	</sequence>
+    	<attribute name="isSyn" type="boolean" />
+    	<attribute name="tablename" type="string" />
+    </complexType>
+    
+    <complexType name="User">
+    	<sequence>
+    		<element name="uid" type="string" />
+    		<element name="email" type="string" />
+    		<element name="realname" type="string" />
+    		<element name="belongdept" type="string" />
+    		<element name="belongName" type="string" />
+    		<element name="phone" type="string" />
+    		<element name="mobile" type="string" />
+    		<element name="fax" type="string" />
+    		<element name="position" type="string" />
+    	</sequence>
+    	<attribute name="isSyn" type="boolean" />
+    	<attribute name="tablename" type="string" />
+    </complexType>
+    
+    <simpleType name="Mobile">
+    	<restriction base="integer">
+    		<pattern
+    			value="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)">
+    		</pattern>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="Phone">
+    	<restriction base="integer">
+    		<pattern
+    			value="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)">
+    		</pattern>
+    	</restriction>
+    </simpleType>   
+    
+    
+    <element name="SynData" type="tns:SynData" />
+    <element name="dataBase" type="tns:DataBase" />
+    <element name="tableinfo" type="tns:TableInfo" />
+</schema>
