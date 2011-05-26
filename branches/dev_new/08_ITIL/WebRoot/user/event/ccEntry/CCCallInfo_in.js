@@ -1144,39 +1144,58 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                    if(users!="") { 
 						// ----------------------------
 						Ext.Ajax.request({
-							url : webContext
-									+ '/eventWorkflow_apply.action',
+							url : webContext + '/configWorkflow_findProcessByPram.action',
 							params : {
-								creator : customerItcode,
-								dataId : this.dataId,
-								model : this.model,
-								bzparam : "{dataId :'"
-										+ this.dataId
-										+ "',users:'engineerProcess:"
-										+ userID
-										+ "',applyId : '"
-										+ this.dataId
-										+ "',eventName : '"
-										+ eventName
-										+"',eventSubmitUser:'"
-										+eventSubmitUser
-										+"',eventSubmitDate:'"
-										+eventSubmitDate
-										+ "',eventCisn:'"
-										+ eventCisn
-										+ "', applyType: 'eproject',applyTypeName: '事件与问题审批',customer:'',workflowHistory:'com.zsgj.itil.event.entity.EventAuditHis'}",
-								defname : 'eventAndProblemProcess1306201650938'
+								modleType : 'Event',//
+								processStatusType : '0'//
 							},
 							success : function(response, options) {
-	
-								Ext.Msg.alert("提示", "您已成功提交IT问题，我们会在2工时内与您联系并解决！",
-										function() {
-										});
+								var responseArray = Ext.util.JSON
+										.decode(response.responseText);
+								var vpid = responseArray.vpid;
+								if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+									Ext.Ajax.request({
+										url : webContext
+												+ '/eventWorkflow_apply.action',
+										params : {
+											creator : customerItcode,
+											dataId : this.dataId,
+											model : this.model,
+											bzparam : "{dataId :'"
+													+ this.dataId
+													+ "',users:'engineerProcess:"
+													+ userID
+													+ "',applyId : '"
+													+ this.dataId
+													+ "',eventName : '"
+													+ eventName
+													+"',eventSubmitUser:'"
+													+eventSubmitUser
+													+"',eventSubmitDate:'"
+													+eventSubmitDate
+													+ "',eventCisn:'"
+													+ eventCisn
+													+ "', applyType: 'eproject',applyTypeName: '事件与问题审批',customer:'',workflowHistory:'com.zsgj.itil.event.entity.EventAuditHis'}",
+											defname : vpid
+										},
+										success : function(response, options) {
+				
+											Ext.Msg.alert("提示", "您已成功提交IT问题，我们会在2工时内与您联系并解决！",
+													function() {
+													});
+										},
+										failure : function(response, options) {
+											Ext.MessageBox.alert("提示", "启动工作流失败！");
+											Ext.getCmp("submitButton").enable();
+											Ext.getCmp("dealButton").enable();
+										}
+									}, this);
+								}else{
+									Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+								}
 							},
 							failure : function(response, options) {
-								Ext.MessageBox.alert("提示", "启动工作流失败！");
-								Ext.getCmp("submitButton").enable();
-								Ext.getCmp("dealButton").enable();
+								Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 							}
 						}, this);
 	                    }else{
@@ -1263,26 +1282,46 @@ PagePanel = Ext.extend(Ext.Panel, {
 						var dataType = eval('('+ response.responseText + ')').knowledgeTypeId;
 						var createUser = eval('('+ response.responseText + ')').createUser;
 						Ext.Ajax.request({
-								url : webContext
-										+ '/knowledgeWorkflow_apply.action',
-								params : {
-									createUser :createUser,
-									dataId : dataId,
-									model : this.model,
-									bzparam : "{dataId :'"
-											+ dataId
-											+ "',dataType : '"
-											+ dataType
-											+ "',applyId : '"
-											+ dataId
-											+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
-									defname : 'KnowledgeProcess1306209462284'
-								},
-								success:function(response,options){
-								},
-								failure:function(response,options){
+							url : webContext + '/configWorkflow_findProcessByPram.action',
+							params : {
+								modleType : 'Kno_Solution',//
+								processStatusType : '0'//
+							},
+							success : function(response, options) {
+								var responseArray = Ext.util.JSON
+										.decode(response.responseText);
+								var vpid = responseArray.vpid;
+								if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+									Ext.Ajax.request({
+										url : webContext
+												+ '/knowledgeWorkflow_apply.action',
+										params : {
+											createUser :createUser,
+											dataId : dataId,
+											model : this.model,
+											bzparam : "{dataId :'"
+													+ dataId
+													+ "',dataType : '"
+													+ dataType
+													+ "',applyId : '"
+													+ dataId
+													+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
+											defname : vpid
+										},
+										success:function(response,options){
+										},
+										failure:function(response,options){
+										}
+									}, this);
+								}else{
+									Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 								}
+							},
+							failure : function(response, options) {
+								Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+							}
 						}, this);
+					
 					}
 				},
 				failure : function(response, options) {
