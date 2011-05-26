@@ -305,8 +305,15 @@ public class ConfigManagerAction extends BaseAction{
 		}
 		mp.setModleType(dataMap.get("modleType").toString());
 		mp.setProcessStatusType(Integer.parseInt(dataMap.get("processStatusType").toString()));
-		service.save(mp);
-		String json= "{success:true}";
+		ModleToProcess mp1=configItemService.findProcessByParm(dataMap.get("modleType").toString(), dataMap.get("processStatusType").toString());
+		String mesg="保存成功";
+		if(dataMap.get("id").toString().length()==0&&mp1!=null){
+			mesg="已存在，无需设置";
+		}else{
+			service.save(mp);
+		}
+		//service.save(mp);
+		String json= "{success:true,mesg:\""+mesg+"\"}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
