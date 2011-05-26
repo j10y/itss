@@ -1001,30 +1001,49 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				var applyNum=Ext.getCmp("CIBatchModify$modifyNo").getValue();
 				var submit=function(){
 					Ext.Ajax.request({
-							url :webContext+'/configModifyWorkflow_apply.action',
-							params : {
-								dataId : modifyId,
-								bzparam : "{applyId:'"+ modifyId+"',dataId:'"+modifyId+"',applyName:'"+applyName+"',applyNum:'"+applyNum+"',modifyType : '"+type+"',applyType: 'mproject',applyTypeName: '配置项变更处理','workflowHistory':'com.zsgj.itil.config.entity.CIBatchModifyAuditHis'}",						
-								defname : "ConfigItemModify1305861895670"
-							},
-							success : function(response, options) {
-								var meg = response.responseText;
-								if (meg.trim()=="") {
-									Ext.Msg.alert("提示", "变更提交成功!", function() {
-										window.location = unescape(backUrl);
-									});
-								} else {
-									Ext.Msg.alert("提示", meg, function() {
-										Ext.getCmp("modifySubmit").enable();
-									});
-								}			
-							},
-							failure : function(response, options) {
-								Ext.MessageBox.alert("提示","提交失败!",function(){
-									Ext.getCmp("modifySubmit").enable();
-								});
+						url : webContext + '/configWorkflow_findProcessByPram.action',
+						params : {
+							modleType : 'CI',//表示配置项
+							processStatusType : '1'//表示变更
+						},
+						success : function(response, options) {
+							var responseArray = Ext.util.JSON
+									.decode(response.responseText);
+							var vpid = responseArray.vpid;
+							if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+								Ext.Ajax.request({
+									url :webContext+'/configModifyWorkflow_apply.action',
+									params : {
+										dataId : modifyId,
+										bzparam : "{applyId:'"+ modifyId+"',dataId:'"+modifyId+"',applyName:'"+applyName+"',applyNum:'"+applyNum+"',modifyType : '"+type+"',applyType: 'mproject',applyTypeName: '配置项变更处理','workflowHistory':'com.zsgj.itil.config.entity.CIBatchModifyAuditHis'}",						
+										defname : vpid
+									},
+									success : function(response, options) {
+										var meg = response.responseText;
+										if (meg.trim()=="") {
+											Ext.Msg.alert("提示", "变更提交成功!", function() {
+												window.location = unescape(backUrl);
+											});
+										} else {
+											Ext.Msg.alert("提示", meg, function() {
+												Ext.getCmp("modifySubmit").enable();
+											});
+										}			
+									},
+									failure : function(response, options) {
+										Ext.MessageBox.alert("提示","提交失败!",function(){
+											Ext.getCmp("modifySubmit").enable();
+										});
+									}
+								}, this);
+							}else{
+								Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 							}
-						}, this);
+						},
+						failure : function(response, options) {
+							Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+						}
+					}, this);
 				}
 				var result=response.responseText;
 				if(result.trim()!=""){
