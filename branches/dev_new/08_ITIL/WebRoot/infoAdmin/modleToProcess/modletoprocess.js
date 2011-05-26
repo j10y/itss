@@ -228,7 +228,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 						success : function(response, options) {
 							var responseArray = Ext.util.JSON
 									.decode(response.responseText);
-							var curId = responseArray.id;
+							var mesg = responseArray.mesg;
 							Ext.getCmp('serviceItemProcessPanel').load({
 								url : webContext+ '/configWorkflow_getModleProcess.action',
 								timeout : 30,
@@ -236,8 +236,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 
 								}
 							});
-							
-							Ext.MessageBox.alert("保存成功");
+							Ext.MessageBox.alert(mesg);
 							Ext.getCmp('processgridpanel').getStore().removeAll();
 							Ext.getCmp('processgridpanel').getStore().reload();
 							win1.close();
@@ -286,6 +285,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 						success : function(response, options) {
 							var responseArray = Ext.util.JSON
 									.decode(response.responseText);
+									var mesg = responseArray.mesg;
 							Ext.getCmp('serviceItemProcessPanel').load({
 								url : webContext+ '/configWorkflow_getModleProcess.action',
 								timeout : 30,
@@ -293,7 +293,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 
 								}
 							});
-							Ext.MessageBox.alert("保存成功");
+							Ext.MessageBox.alert(mesg);
 							win1.close();
 							Ext.getCmp('processgridpanel').getStore().removeAll();
 							Ext.getCmp('processgridpanel').getStore().reload();
