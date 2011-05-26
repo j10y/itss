@@ -115,13 +115,24 @@ PageTemplates = Ext.extend(Ext.Panel, {
 	//用户确认--事件详情
  	getFormUserEventMessage_pagepanel: function(eventId,surveyId,taskId) {
             var buttonConfim=new Ext.Button({
-  				id　:'btn_confirm',
+  				id:'btn_confirm',
   				xtype : 'button',
   				text : '确认已解决',
   				iconCls : 'submit',
   				handler : function(){
   					var endEvent=function(){
-						Ext.Ajax.request({
+  						Ext.Ajax.request({
+  							url : webContext + '/configWorkflow_findProcessByPram.action',
+  							params : {
+  								modleType : 'Kno_Solution',//
+  								processStatusType : '0'//
+  							},
+  							success : function(response, options) {
+  								var responseArray = Ext.util.JSON
+  										.decode(response.responseText);
+  								var vpid = responseArray.vpid;
+  								if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+  									Ext.Ajax.request({
 										url : webContext+ '/knowledgeAction_prepareForKnowledgeAuditWorkflow.action',
 										params : {
 											eventId : eventId
@@ -145,7 +156,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 																	+ "',applyId : '"
 																	+ dataId
 																	+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
-															defname : 'KnowledgeProcess1306209462284'
+															defname : vpid
 														},
 														success:function(response,options){
 														},
@@ -155,6 +166,14 @@ PageTemplates = Ext.extend(Ext.Panel, {
 											}
 										}
 								}, this);
+  								}else{
+  									Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+  								}
+  							},
+  							failure : function(response, options) {
+  								Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+  							}
+  						}, this);
 								//
 					                    //--------------------------------------启动工作流----------------------------------------------
 								Ext.Ajax.request({
