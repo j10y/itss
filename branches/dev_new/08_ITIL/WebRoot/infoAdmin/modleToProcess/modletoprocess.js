@@ -13,8 +13,8 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 	getServiceItemProcessPanel : function(tempId) {
 		this.serviceItemProcessPanel = new Ext.form.FormPanel({
 			id : 'serviceItemProcessPanel',
-			height : '400',
-			width : 800,
+			height : '300',
+			width : 700,
 			frame : true,
 			collapsible : true,
 			buttonAlign : 'center',
@@ -28,41 +28,17 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 				root : 'form',
 				successProperty : 'success'
 			}, [{
-				name : 'ServiceItemProcess$id',
-				mapping : 'ServiceItemProcess$id'
+				name : 'ModleToProcess$id',
+				mapping : 'ModleToProcess$id'
 			},{
-				name : 'ServiceItemProcess$processInfo',
-				mapping : 'ServiceItemProcess$processInfo'
+				name : 'ModleToProcess$processInfo',
+				mapping : 'ModleToProcess$processInfo'
 			}, {
-				name : 'ServiceItemProcess$reqTable',
-				mapping : 'ServiceItemProcess$reqTable'
+				name : 'ModleToProcess$processStatusType',
+				mapping : 'ModleToProcess$processStatusType'
 			}, {
-				name : 'ServiceItemProcess$endPageModel',
-				mapping : 'ServiceItemProcess$endPageModel'
-			}, {
-				name : 'ServiceItemProcess$buttonName',
-				mapping : 'ServiceItemProcess$buttonName'
-			}, {
-				name : 'ServiceItemProcess$agreement',
-				mapping : 'ServiceItemProcess$agreement'
-			}, {
-				name : 'ServiceItemProcess$sidProcessType',
-				mapping : 'ServiceItemProcess$sidProcessType'
-			}, {
-				name : 'ServiceItemProcess$definitionName',
-				mapping : 'ServiceItemProcess$definitionName'
-			}, {
-				name : 'ServiceItemProcess$pagePanel',
-				mapping : 'ServiceItemProcess$pagePanel'
-			}, {
-				name : 'ServiceItemProcess$pageModel',
-				mapping : 'ServiceItemProcess$pageModel'
-			}, {
-				name : 'ServiceItemProcess$pageListPanel',
-				mapping : 'ServiceItemProcess$pageListPanel'
-			}, {
-				name : 'ServiceItemProcess$status',
-				mapping : 'ServiceItemProcess$status'
+				name : 'ModleToProcess$modleType',
+				mapping : 'ModleToProcess$modleType'
 			}]),
 			// title : "服务项流程设置",
 			items : [{
@@ -79,8 +55,8 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 							border : false,
 							items : [new Ext.form.ComboBox({
 								xtype : 'combo',
-								hiddenName : 'ServiceItemProcess$processInfo',
-								id : 'ServiceItemProcess$processInfoCombo',
+								hiddenName : 'ModleToProcess$processInfo',
+								id : 'ModleToProcess$processInfoCombo',
 								width : 200,
 								style : '',
 								fieldLabel : '流程',
@@ -92,7 +68,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 								emptyText : '请选择...',
 								allowBlank : true,
 								typeAhead : true,
-								name : 'ServiceItemProcess$processInfo',
+								name : 'ModleToProcess$processInfo',
 								triggerAction : 'all',
 								minChars : 50,
 								queryDelay : 700,
@@ -101,8 +77,8 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 									fields : ['id', 'processName'],
 									listeners : {
 										beforeload : function(store, opt) {
-											if (opt.params['ServiceItemProcess$processInfo'] == undefined) {
-												opt.params['ServiceItemProcess$processInfo'] = Ext.getCmp('ServiceItemProcess$processInfoCombo').defaultParam;
+											if (opt.params['ModleToProcess$processInfo'] == undefined) {
+												opt.params['ModleToProcess$processInfo'] = Ext.getCmp('ModleToProcess$processInfoCombo').defaultParam;
 											}
 										}
 									},
@@ -130,11 +106,11 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 								initComponent : function() {
 									this.store.load({
 										params : {
-											id : Ext.getCmp('ServiceItemProcess$processInfoCombo').getValue(),
+											id : Ext.getCmp('ModleToProcess$processInfoCombo').getValue(),
 											start : 0
 										},
 										callback : function(r, options, success) {
-											Ext.getCmp('ServiceItemProcess$processInfoCombo').setValue(Ext.getCmp('ServiceItemProcess$processInfoCombo').getValue());
+											Ext.getCmp('ModleToProcess$processInfoCombo').setValue(Ext.getCmp('ModleToProcess$processInfoCombo').getValue());
 										}
 									});
 								}
@@ -145,15 +121,15 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 							layout : 'form',
 							border : false,
 							items : [new Ext.form.ComboBox({
-								name : "ServiceItemProcess$sidProcessType",
+								name : "ModleToProcess$processStatusType",
 								allowBlank : false,
 								fieldLabel : "流程类型",
-								id : 'ServiceItemProcess$sidProcessTypeCombo',
+								id : 'ModleToProcess$processStatusTypeCombo',
 								width : 200,
 								mode : 'local',
 								defaultParam : '',
 								allowBlank : false,
-								hiddenName : 'ServiceItemProcess$sidProcessType',
+								hiddenName : 'ModleToProcess$processStatusType',
 								xtype : 'combo',
 								displayField : 'name',
 								valueField : 'id',
@@ -163,7 +139,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 								emptyText : '请选择',
 								store : new Ext.data.SimpleStore({
 									fields : ['id', 'name'],
-									data : [['0', '申请流程'], ['1', '变更流程'],['2', '撤销流程']]
+									data : [['0', '申请流程'], ['1', '变更流程'],['2', '删除流程']]
 								})//,
 							})]
 						},	
@@ -172,255 +148,15 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 							layout : 'form',
 							border : false,
 							items : [new Ext.form.ComboBox({
-								xtype : 'combo',
-								hiddenName : 'ServiceItemProcess$pageModel',
-								id : 'ServiceItemProcess$pageModelCombo',
-								width : 200,
-								style : '',
-								fieldLabel : '入口页面',
-								colspan : 0,
-								rowspan : 0,
-								lazyRender : true,
-								displayField : 'pageName',
-								valueField : 'id',
-								emptyText : '请选择...',
-								allowBlank : true,
-								typeAhead : true,
-								name : 'ServiceItemProcess$pageModel',
-								triggerAction : 'all',
-								minChars : 50,
-								queryDelay : 700,
-								store : new Ext.data.JsonStore({
-									url : webContext
-											+ '/sciProcess_getModelComboData.action',
-									// +
-									// '/pageModel/pageModelManage.do?methodCall=getPageModelComboData',
-									fields : ['id', 'pageName'],
-									listeners : {
-										beforeload : function(store, opt) {
-											if (opt.params['ServiceItemProcess$pageModel'] == undefined) {
-												opt.params['pageName'] = Ext.getCmp('ServiceItemProcess$pageModelCombo').defaultParam;
-											}
-										}
-									},
-									totalProperty : 'rowCount',
-									root : 'data',
-									id : 'id'
-								}),
-								pageSize : 10,
-								listeners : {
-									'beforequery' : function(queryEvent) {
-										var param = queryEvent.combo
-												.getRawValue();
-										this.defaultParam = param;
-										if (queryEvent.query == '') {
-											param = '';
-										}
-										this.store.load({
-											params : {
-												pageName : param,
-												start : 0
-											}
-										});
-										return true;
-									}
-								},
-								initComponent : function() {
-									this.store.load({
-										params : {
-											id : Ext
-													.getCmp('ServiceItemProcess$pageModelCombo')
-													.getValue(),
-											start : 0
-										},
-										callback : function(r, options, success) {
-											Ext.getCmp('ServiceItemProcess$pageModelCombo')
-													.setValue(Ext.getCmp('ServiceItemProcess$pageModelCombo').getValue());
-										}
-									});
-								}
-							})]
-						}, 
-							{
-							columnWidth : .5,
-							layout : 'form',
-							border : false,
-							items : [new Ext.form.ComboBox({
-								xtype : 'combo',
-								hiddenName : 'ServiceItemProcess$endPageModel',
-								id : 'ServiceItemProcess$endPageModelCombo',
-								width : 200,
-								style : '',
-								fieldLabel : '结束页面',
-								colspan : 0,
-								rowspan : 0,
-								lazyRender : true,
-								displayField : 'pageName',
-								valueField : 'id',
-								emptyText : '请选择...',
-								allowBlank : true,
-								typeAhead : true,
-								name : 'ServiceItemProcess$endPageModel',
-								triggerAction : 'all',
-								minChars : 50,
-								queryDelay : 700,
-								store : new Ext.data.JsonStore({
-									url : webContext
-											+ '/sciProcess_getModelComboData.action',
-									// +
-									// '/pageModel/pageModelManage.do?methodCall=getPageModelComboData',
-									fields : ['id', 'pageName'],
-									listeners : {
-										beforeload : function(store, opt) {
-											if (opt.params['ServiceItemProcess$endPageModel'] == undefined) {
-												opt.params['pageName'] = Ext
-														.getCmp('ServiceItemProcess$endPageModelCombo').defaultParam;
-											}
-										}
-									},
-									totalProperty : 'rowCount',
-									root : 'data',
-									id : 'id'
-								}),
-								pageSize : 10,
-								listeners : {
-									'beforequery' : function(queryEvent) {
-										var param = queryEvent.combo
-												.getRawValue();
-										this.defaultParam = param;
-										if (queryEvent.query == '') {
-											param = '';
-										}
-										this.store.load({
-											params : {
-												pageName : param,
-												start : 0
-											}
-										});
-										return true;
-									}
-								},
-								initComponent : function() {
-									this.store.load({
-										params : {
-											id : Ext.getCmp('ServiceItemProcess$endPageModelCombo').getValue(),
-											start : 0
-										},
-										callback : function(r, options, success) {
-											Ext.getCmp('ServiceItemProcess$endPageModelCombo').setValue(Ext.getCmp('ServiceItemProcess$endPageModelCombo').getValue());
-										}
-									});
-								}
-							})]
-						},
-						{
-							columnWidth : .5,
-							layout : 'form',
-							border : false,
-							items : [new Ext.form.ComboBox({
-								xtype : 'combo',
-								hiddenName : 'ServiceItemProcess$pagePanel',
-								id : 'ServiceItemProcess$pagePanelCombo',
-								width : 200,
-								style : '',
-								fieldLabel : '入口面板',
-								colspan : 0,
-								rowspan : 0,
-								lazyRender : true,
-								displayField : 'pageName',
-								valueField : 'id',
-								emptyText : '请选择...',
-								allowBlank : true,
-								typeAhead : true,
-								name : 'ServiceItemProcess$pagePanel',
-								triggerAction : 'all',
-								minChars : 50,
-								queryDelay : 700,
-								store : new Ext.data.JsonStore({
-									url : webContext+ '/sciProcess_getPanelComboData.action',
-									// +
-									// '/pageModel/pagePanelManage.do?methodCall=getPagePanelComboData',
-									fields : ['id', 'pageName'],
-									listeners : {
-										beforeload : function(store, opt) {
-											if (opt.params['ServiceItemProcess$pagePanel'] == undefined) {
-												opt.params['pageName'] = Ext.getCmp('ServiceItemProcess$pagePanelCombo').defaultParam;
-											}
-										}
-									},
-									totalProperty : 'rowCount',
-									root : 'data',
-									id : 'id'
-								}),
-								pageSize : 10,
-								listeners : {
-									'beforequery' : function(queryEvent) {
-										var param = queryEvent.combo
-												.getRawValue();
-										this.defaultParam = param;
-										if (queryEvent.query == '') {
-											param = '';
-										}
-										this.store.load({
-											params : {
-												pageName : param,
-												start : 0
-											}
-										});
-										return true;
-									}
-								},
-								initComponent : function() {
-									this.store.load({
-										params : {
-											id : Ext.getCmp('ServiceItemProcess$pagePanelCombo').getValue(),
-											start : 0
-										},
-										callback : function(r, options, success) {
-											Ext.getCmp('ServiceItemProcess$pagePanelCombo').setValue(Ext.getCmp('ServiceItemProcess$pagePanelCombo').getValue());
-										}
-									});
-								}
-							})]
-						}, 
-						new Ext.form.Hidden({
-							xtype : 'hidden',
-							id : 'ServiceItemProcess$id',
-							colspan : 0,
-							rowspan : 0,
-							name : 'ServiceItemProcess$id',
-							width : 200,
-							style : '',
-							value : '',
-							fieldLabel : '自动编号'
-						}), 
-						{
-							columnWidth : .5,
-							layout : 'form',
-							border : false,
-							items : [new Ext.form.TextField({
-								fieldLabel : '流程启动按钮名',
-								xtype : 'textfield',
-								id : 'ServiceItemProcess$buttonName',
-								name : 'ServiceItemProcess$buttonName',
-								width : 200,
-								allowBlank : true
-							})]
-						}, 
-						{
-							columnWidth : .5,
-							layout : 'form',
-							border : false,
-							items : [new Ext.form.ComboBox({
-								name : "ServiceItemProcess$status",
+								name : "ModleToProcess$modleType",
 								allowBlank : false,
-								fieldLabel : "是否隐藏",
-								id : 'ServiceItemProcess$statusCombo',
+								fieldLabel : "流程隶属模块",
+								id : 'ModleToProcess$modleTypeCombo',
 								width : 200,
 								mode : 'local',
 								defaultParam : '',
 								allowBlank : false,
-								hiddenName : 'ServiceItemProcess$status',
+								hiddenName : 'ModleToProcess$modleType',
 								xtype : 'combo',
 								displayField : 'name',
 								valueField : 'id',
@@ -430,22 +166,32 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 								emptyText : '请选择',
 								store : new Ext.data.SimpleStore({
 									fields : ['id', 'name'],
-									data : [['1', '是'], ['0', '否']]
-								})
+									data : [['CI', '配置项'], ['SCI', '服务项'],['SCIC', '服务目录'],['Event', '事件'],['Notice', '公告'],
+									['Kno_Solution', '解决方案'],['Kno_Contract', '合同'],['Kno_File', '文件']]
+								})//,
 							})]
-						}]
+						},
+						new Ext.form.Hidden({
+							xtype : 'hidden',
+							id : 'ModleToProcess$id',
+							colspan : 0,
+							rowspan : 0,
+							name : 'ModleToProcess$id',
+							width : 200,
+							style : '',
+							value : '',
+							fieldLabel : '自动编号'
+						})]
 			}]
 		});
 		if (tempId != 0) {
 			this.serviceItemProcessPanel.load({
-				url : webContext+ '/sciProcess_getSciProcessInfo.action?sciProcessId='+ tempId,
+				//url : webContext+ '/sciProcess_getSciProcessInfo.action?sciProcessId='+ tempId,
+				url : webContext+ '/configWorkflow_findModleToProcess.action?dataId='+ tempId,
 				timeout : 30,
 				success : function(action, form) {
-					Ext.getCmp('ServiceItemProcess$pagePanelCombo').initComponent();
-					//Ext.getCmp('ServiceItemProcess$pageListPanelCombo').initComponent();
-					Ext.getCmp('ServiceItemProcess$pageModelCombo').initComponent();
-					Ext.getCmp('ServiceItemProcess$endPageModelCombo').initComponent();
-					Ext.getCmp('ServiceItemProcess$processInfoCombo').initComponent();
+					Ext.getCmp('ModleToProcess$processStatusTypeCombo').initComponent();
+					Ext.getCmp('ModleToProcess$processInfoCombo').initComponent();
 				}
 			});
 		}
@@ -454,13 +200,12 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 	showtt : function() {
 		var record = this.processgrid.getSelectionModel().getSelected();
 		var id = record.get("id");
-		var curSciId = this.serviceItemId;
 		this.getServiceItemProcessPanel(id);
 		var win1 = new Ext.Window({
 			title : '服务项流程信息',
 			proxy : '0',
-			height : 500,
-			width : 800,
+			height : 300,
+			width : 700,
 			buttonAlign : 'center',
 			resizable : false,
 			draggable : true,
@@ -475,9 +220,8 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 				handler : function() {
 					var info = Ext.encode(getFormParam('serviceItemProcessPanel'));
 					Ext.Ajax.request({
-						url : webContext + '/sciProcess_saveProcess.action',
+						url : webContext + '/configWorkflow_saveModleToProcess.action',
 						params : {
-							serviceItemId : curSciId,
 							info : info
 						},
 
@@ -486,8 +230,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 									.decode(response.responseText);
 							var curId = responseArray.id;
 							Ext.getCmp('serviceItemProcessPanel').load({
-								//url : webContext+ '/infoAdmin/serviceItemProcessAction.do?methodCall=getSciProcessInfo&sciProcessId='+ curId,
-								url : webContext+ '/sciProcess_getSciProcessInfo.action?sciProcessId='+ curId,
+								url : webContext+ '/configWorkflow_getModleProcess.action',
 								timeout : 30,
 								success : function(action, form) {
 
@@ -524,8 +267,8 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 		var curSciId = this.serviceItemId;
 		var win1 = new Ext.Window({
 			title : '服务项流程信息',
-			height : 500,
-			width : 800,
+			height : 300,
+			width : 700,
 			buttonAlign : 'center',
 			layout : 'fit',
 			items : [this.serviceItemProcessPanel],
@@ -534,7 +277,7 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 				handler : function() {
 					var info = Ext.encode(getFormParam('serviceItemProcessPanel'));
 					Ext.Ajax.request({
-						url : webContext + '/sciProcess_saveProcess.action',
+						url : webContext + '/configWorkflow_saveModleToProcess.action',
 						params : {
 							serviceItemId : curSciId,
 							info : info
@@ -543,10 +286,8 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 						success : function(response, options) {
 							var responseArray = Ext.util.JSON
 									.decode(response.responseText);
-							var curId = responseArray.id;
 							Ext.getCmp('serviceItemProcessPanel').load({
-								//url : webContext+ '/infoAdmin/serviceItemProcessAction.do?methodCall=getSciProcessInfo&sciProcessId='+ curId,
-								url : webContext+ '/sciProcess_getSciProcessInfo.action?sciProcessId='+ curId,
+								url : webContext+ '/configWorkflow_getModleProcess.action',
 								timeout : 30,
 								success : function(action, form) {
 
@@ -581,9 +322,9 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 		var record = this.processgrid.getSelectionModel().getSelected();
 		var id = record.get("id");
 		Ext.Ajax.request({
-			url : webContext + '/sciProcess_removeProcess.action',
+			url : webContext + '/configWorkflow_removeModleToProcess.action',
 			params : {
-				processId : id
+				dataId : id
 			},
 
 			success : function(response, options) {
@@ -598,14 +339,20 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 	initComponent : function() {
 		// 创建表格数据
 		this.store = new Ext.data.JsonStore({
-			url : webContext+ '/sciProcess_listSciProcess.action',
-			fields : ['id', 'processInfo', 'reqTable', 'pageModel',
-					'endPageModel', 'buttonName', 'agreement'],
+			url : webContext+ '/configWorkflow_getModleProcess.action',
+			fields : ['id', 'modleType', 'processStatusType', 'definitionName'],
 			totalProperty : "rowCount",
 			root : "data",
 			id : 'id'
 		});
-
+		this.pageBar = new Ext.PagingToolbar({
+			id : 'pagebar',
+			pageSize : 15,
+			store : this.store,
+			displayInfo : true,
+			displayMsg : '当前显示 {0}-{1}条记录 /共{2}条记录',
+			emptyMsg : "没有符合条件的数据"
+		});
 		var sm = new Ext.grid.CheckboxSelectionModel();
 
 		// 创建Grid表格组件
@@ -616,6 +363,8 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 			id : 'processgridpanel',
 			frame : true,
 			store : this.store,
+			bbar : this.pageBar,
+			autoScroll : true,
 			trackMouseOve : true,
 			tbar : [{
 				pressed : true,
@@ -639,40 +388,27 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 				dataIndex : 'id',
 				hidden : true
 			}, {
-				header : "流程",
+				header : "隶属功能模块",
 				width : 100,
 				sortable : true,
-				dataIndex : 'processInfo'
+				dataIndex : 'modleType'
 			}, {
-				header : "需求主表",
+				header : "流程类型",
 				width : 200,
 				sortable : true,
-				hidden : true,
-				dataIndex : 'reqTable'
+				dataIndex : 'processStatusType'
 			}, {
-				header : "入口页面",
+				header : "对应流程",
 				width : 200,
 				sortable : true,
-				dataIndex : 'pageModel'
-			}, {
-				header : "结束页面",
-				width : 200,
-				sortable : true,
-				hidden : true,
-				dataIndex : 'endPageModel'
-			}, {
-				header : "流程启动按钮名",
-				width : 200,
-				sortable : true,
-				dataIndex : 'buttonName'
-			}, {
-				header : "用户协议",
-				width : 150,
-				sortable : true,
-				hidden : true,
-				dataIndex : 'agreement'
+				dataIndex : 'definitionName'
 			}]
 		})
+		var param = {
+			pageSize : 15,
+			start : 0
+		};
+		this.store.baseParams=param;
 		this.store.removeAll();
 		this.store.load();
 		this.processgrid.on("rowdblclick", this.showtt, this);
