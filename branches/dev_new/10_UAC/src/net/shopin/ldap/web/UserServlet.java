@@ -12,15 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.shopin.Constants;
 import net.shopin.ldap.dao.UserDao;
 import net.shopin.ldap.entity.User;
 import net.shopin.util.SpringContextUtils;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.ldap.NameAlreadyBoundException;
 import org.springframework.ldap.samples.utils.LdapTreeBuilder;
 
@@ -79,12 +80,15 @@ public class UserServlet extends HttpServlet {
 						String suffix = fileName.substring(fileName.lastIndexOf("."));
 			            String systemFileName = "upload-" + System.currentTimeMillis() + suffix;
 			            if(!methodCall.equalsIgnoreCase("import")){
-			            	filePath = "../../../" + "userPhoto" + "/" + systemFileName;
+			            	//filePath = "../../../" + "userPhoto" + "/" + systemFileName;
+			            	filePath = Constants.USER_PHOTO_UPLOADPATH  + systemFileName;
 			            }else{
-			            	filePath = "../../../" + "upload" + "/" + systemFileName;	
+			            	//filePath = "../../../" + "upload" + "/" + systemFileName;	
+			            	filePath = Constants.USER_IMP_UPLOADPATH + systemFileName;	
 			            }
 			            
-			            realPath = req.getSession().getServletContext().getRealPath("/") + filePath;
+			            //realPath = req.getSession().getServletContext().getRealPath("/") + filePath;
+			            realPath = filePath;
 			            File uploadedFile = new File(realPath);
 			            fi.write(uploadedFile);
 			            //FileInputStream fis = new FileInputStream(filePath);

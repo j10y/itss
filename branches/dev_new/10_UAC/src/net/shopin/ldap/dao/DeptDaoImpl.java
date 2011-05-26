@@ -126,13 +126,13 @@ public class DeptDaoImpl implements DeptDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(param != null && !param.equals("")){
-			filter="(|(ou=*" + param + "*)(description=*"+ param + "*))";
+			filter="(&(objectClass=organizationalUnit)|(ou=*" + param + "*)(description=*"+ param + "*))";
 		}else{
-			filter="(|(ou=*)(description=*))";
+			filter="(&(objectClass=organizationalUnit)|(ou=*)(description=*))";
 		}
 		List<Department> depts = ldapTemplate.search("o=orgnizations", filter, getContextMapper());
 
-		return depts.size()> 20 ? depts.subList(0, 21) : depts;
+		return depts;
 	}
 	
 	private ContextMapper getContextMapper() {

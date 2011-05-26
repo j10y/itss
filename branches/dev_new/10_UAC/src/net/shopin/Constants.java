@@ -25,6 +25,10 @@ public class Constants implements ConstantsMBean {
     //public static final DateFormat DATE_ISO8601 = new ISO8601DateFormat();
     public static final String LOGOUT_URL = "/logout.jsp";
     public static final String CAS_LOGOUT_URL = "http://localhost:8080/cas3/logout";
+    
+    public static final String USER_PHOTO_UPLOADPATH = "D:/data/userphoto/";//用户图片上传路径
+    public static final String USER_IMP_UPLOADPATH = "D:/data/upload/";//用户信息导入路径
+    
 
     static {
         //得到平台默认MBean Server
