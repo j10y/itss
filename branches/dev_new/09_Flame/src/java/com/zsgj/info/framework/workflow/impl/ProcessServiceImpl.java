@@ -158,6 +158,9 @@ public class ProcessServiceImpl extends BaseDao  implements ProcessService,Workf
 						if(bizParam.get("users")!=null&&!"".equals(bizParam.get("users"))){//开始节点指派下个节点的人
 							setVariableValue(bizParam,"userList",(String)bizParam.get("users"));
 						}
+						bizParam.put("virtualDefinitionInfoid", virtualDefinitionInfo.getId().toString());
+						bizParam.put("vPrcessDesc",vPrcessDesc);
+						bizParam.put("creator",creator);
 						contextInstance.setVariable(WorkflowConstants.BUSINESS_PARAM_KEY, bizParam);
 					}		
 					try{

@@ -29,6 +29,7 @@ import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.security.entity.UserRole;
 import com.zsgj.info.framework.service.Service;
+import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.workflow.ConfigUnitService;
 import com.zsgj.info.framework.workflow.entity.ConfigUnitMail;
@@ -373,12 +374,13 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String[] strArry = emailTplStr.split(";");
-		String email_real_str ="";
-		for(int i=0;i<strArry.length;i++){
-			String tmp = strArry[i].replace("&#", "");
-			email_real_str += (char)Integer.valueOf(tmp).intValue();
-		}
+		emailTplStr = HttpUtil.ConverUnicode(emailTplStr);
+//		String[] strArry = emailTplStr.split(";");
+//		String email_real_str ="";
+//		for(int i=0;i<strArry.length;i++){
+//			String tmp = strArry[i].replace("&#", "");
+//			email_real_str += (char)Integer.valueOf(tmp).intValue();
+//		}
 		String browseFlag = "";
 		if(browsePerson){//是查看人
 			browseFlag = "1";
@@ -414,7 +416,11 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		m.put("[UserName]", userInfo.getRealName()+"/"+userInfo.getUserName());
 		m.put("[AppUserName]", creatorMeg.getRealName()+"/"+creatorMeg.getUserName());
 		m.put("[AppDesc]", reqFlag+vDesc);
-		m.put("[ApproveAction]", "，<a href=" + PropertiesUtil.getProperties("system.web.url","localhost:8080") + "/infoAdmin/workflow/configPage/auditFromMail.jsp?"+"taskId="+taskId+"&dataId="+dataId+"&goStartState="+goStartState+"&taskName="+"&applyType="+applyType+"&browseFlag="+browseFlag+">"+"请点击链接审批。</a>");
+		if(taskId!=null&&taskId.toString().length()>0){
+			m.put("[ApproveAction]", "，<a href=" + PropertiesUtil.getProperties("system.web.url","localhost:8080") + "/infoAdmin/workflow/configPage/auditFromMail.jsp?"+"taskId="+taskId+"&dataId="+dataId+"&goStartState="+goStartState+"&taskName="+"&applyType="+applyType+"&browseFlag="+browseFlag+">"+"请点击链接审批。</a>");
+		}else{
+			m.put("[ApproveAction]", "");
+		}
 		m.put("[AccessService]", "<a href=" + PropertiesUtil.getProperties("system.web.url","http://10.1.120.53/itil") +">"+"IT服务系统（ITSS）</a>");
 		m.put("[ProcessList]", auditMeg);
 		m.put("[Date]", dateString);
@@ -422,11 +428,11 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		
 		for(Iterator it=m.keySet().iterator();it.hasNext();){
 			String ele = (String)it.next();
-			//email_real_str = email_real_str.replace(ele,(String)m.get(ele));
-			StringUtils.replace(email_real_str, ele, (String)m.get(ele));
+			emailTplStr = emailTplStr.replace(ele,(String)m.get(ele));
+			//StringUtils.replace(emailTplStr, ele, (String)m.get(ele));
 		}
 		
-		return email_real_str.toString();
+		return emailTplStr.toString();
 	}
 	
 	/**
@@ -452,12 +458,13 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String[] strArry = emailTplStr.split(";");
-		String email_real_str ="";
-		for(int i=0;i<strArry.length;i++){
-			String tmp = strArry[i].replace("&#", "");
-			email_real_str += (char)Integer.valueOf(tmp).intValue();
-		}
+		emailTplStr = HttpUtil.ConverUnicode(emailTplStr);
+//		String[] strArry = emailTplStr.split(";");
+//		String email_real_str ="";
+//		for(int i=0;i<strArry.length;i++){
+//			String tmp = strArry[i].replace("&#", "");
+//			email_real_str += (char)Integer.valueOf(tmp).intValue();
+//		}
 		String browseFlag = "";
 		if(browsePerson){//是查看人
 			browseFlag = "1";
@@ -501,11 +508,11 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		
 		for(Iterator it=m.keySet().iterator();it.hasNext();){
 			String ele = (String)it.next();
-			//email_real_str = email_real_str.replace(ele,(String)m.get(ele));
-			StringUtils.replace(email_real_str, ele, (String)m.get(ele));
+			emailTplStr = emailTplStr.replace(ele,(String)m.get(ele));
+			//StringUtils.replace(email_real_str, ele, (String)m.get(ele));
 		}
 		
-		return email_real_str.toString();
+		return emailTplStr.toString();
 	}
 	
 	/**
