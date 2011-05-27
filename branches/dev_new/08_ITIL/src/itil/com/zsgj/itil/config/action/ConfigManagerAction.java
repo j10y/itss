@@ -234,10 +234,14 @@ public class ConfigManagerAction extends BaseAction{
 		modleTypeMap.put("SCI", "服务项");
 		modleTypeMap.put("SCIC", "服务目录");
 		modleTypeMap.put("Event", "事件");
-		modleTypeMap.put("Notice", "公告");
+		modleTypeMap.put("Notice", "公告(需求)");
+		modleTypeMap.put("Notice_Sample", "公告(普通)");
 		modleTypeMap.put("Kno_Solution", "解决方案");
 		modleTypeMap.put("Kno_Contract", "合同");
 		modleTypeMap.put("Kno_File", "文件");
+		modleTypeMap.put("Kno_Knowledge", "知识");
+		modleTypeMap.put("Busi_InFeel", "商务结算收款");
+		modleTypeMap.put("Busi_OutFeel", "商务结算付款");
 		
 		HttpServletRequest request = super.getRequest();
 		HttpServletResponse response = super.getResponse();
