@@ -602,7 +602,7 @@
 										<td id="0" onClick="switchMenu(0,2)" width="105" height="25"
 											class="news_menu_out" align="center"
 											background="images/index2_03.gif">
-											公司公告
+											IT小贴士
 										</td>
 										<td width="4"></td>
 										<td id="1" onClick="switchMenu(1,2)" width="162"
