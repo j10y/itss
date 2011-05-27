@@ -166,6 +166,32 @@ PageTemplates = Ext.extend(Ext.Panel, {
 											}
 										}
 								}, this);
+  									//
+				                    //--------------------------------------启动工作流----------------------------------------------
+  									Ext.Ajax.request({
+											url: webContext + '/extjs/workflow?method=getDataFromPage&taskId=' + taskId + '&next=over',
+											method:'post', 
+											success:function(response,options){
+												var meg = Ext.decode(response.responseText);
+												if (meg.Exception == undefined) {
+													Ext.Msg.alert("提示", "事件结束成功！", function() {
+														window.parent.auditContentWin.close();
+													});
+												} else {
+													Ext.Msg.alert("提示", "工作流审批任务失败，异常信息如下，请您让管理员检查流程！", function() {
+														alert(meg.Exception);
+													});
+												}
+											},
+											failure:function(response,options){
+												Ext.MessageBox.alert('提示','事件结束失败！',function(){
+												
+													Ext.getCmp('btn_confirm').enable();
+  													Ext.getCmp('btn_back').enable();
+												});
+											}
+									});
+  									
   								}else{
   									Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
   								}
@@ -174,32 +200,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
   								Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
   							}
   						}, this);
-								//
-					                    //--------------------------------------启动工作流----------------------------------------------
-								Ext.Ajax.request({
-												url: webContext + '/extjs/workflow?method=getDataFromPage&taskId=' + taskId + '&next=over',
-												method:'post', 
-												success:function(response,options){
-													var meg = Ext.decode(response.responseText);
-													if (meg.Exception == undefined) {
-														Ext.Msg.alert("提示", "事件结束成功！", function() {
-															window.parent.auditContentWin.close();
-														});
-													} else {
-														Ext.Msg.alert("提示", "工作流审批任务失败，异常信息如下，请您让管理员检查流程！", function() {
-															alert(meg.Exception);
-														});
-													}
-												},
-												failure:function(response,options){
-													Ext.MessageBox.alert('提示','事件结束失败！',function(){
-													
-														Ext.getCmp('btn_confirm').enable();
-	  													Ext.getCmp('btn_back').enable();
-													});
-												}
-										});
-								
 							}
   					Ext.getCmp('btn_confirm').disable();
   					Ext.getCmp('btn_back').disable();
