@@ -62,9 +62,9 @@ function void eventStartStatus(Map $map){
 	String nodeId = (String)$map.get("nodeId");	
 	String processId = (String)$map.get("processId");
 	String nodeName = (String)$map.get("nodeName");		
+	Map busmap=$map;
 	EventProcessRuleHelper processRuleHelper=new EventProcessRuleHelper();
-	processRuleHelper.eventStartFlag(dataId,nodeId,nodeName,processId);
-	
+	processRuleHelper.eventStartFlag(dataId,nodeId,nodeName,processId,busmap);
 }
 function String engineerProcessStatus(Map $map){
 
