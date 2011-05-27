@@ -1,10 +1,10 @@
 package com.zsgj.itil.workflow.rules;
 
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
@@ -12,14 +12,12 @@ import com.zsgj.info.framework.dao.BaseObject;
 import com.zsgj.info.framework.message.mail.service.MailSenderService;
 import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.service.Service;
-import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.workflow.ProcessService;
 import com.zsgj.itil.event.entity.Event;
 import com.zsgj.itil.event.entity.EventAuditHis;
 import com.zsgj.itil.event.entity.EventRelation;
 import com.zsgj.itil.event.entity.EventStatus;
 import com.zsgj.itil.event.entity.EventSulotion;
-import com.zsgj.itil.event.service.EventService;
 import com.zsgj.itil.knowledge.entity.KnowContract;
 import com.zsgj.itil.knowledge.entity.KnowContractAuditHis;
 import com.zsgj.itil.knowledge.entity.KnowFile;
@@ -64,7 +62,7 @@ public class ProcessRuleHelper {
 	}
 
 	public void eventStartFlag(String dataId, String nodeId, String nodeName,
-			String processId) throws Exception {
+			String processId,Map busMap) throws Exception {
 		EventStatus dealingStatus = (EventStatus) service.findUnique(
 				EventStatus.class, "keyword", "dealing");
 //		EventStatus reAssignStatus = (EventStatus) service.findUnique(
@@ -607,8 +605,7 @@ public class ProcessRuleHelper {
 		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
 
 		sb
-				.append("感谢您使用集团IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@zsgj.com，"
-						+ "" + "或者拨打IT服务建议及投诉热线7888-0。");
+				.append("感谢您使用集团IT服务");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
@@ -632,92 +629,92 @@ public class ProcessRuleHelper {
 
 	// 邮件格式2
 
-	@SuppressWarnings("unused")
-	private String eventEndHtmlContent(UserInfo creator, String url, Event event) {
-
-		StringBuilder sb = new StringBuilder();
-//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String dateString = dateFormat.format(new Date());
-		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		sb.append("<html>");
-		sb.append("<head>");
-		sb.append("<title> 您已经成功提交一个问题，编号为(" + event.getEventCisn()
-				+ "）”我们会尽快解决并向您反馈。谢谢</title>");
-		sb.append("<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
-		sb.append("<meta http-equiv=\"description\" content=\"this is my page\">");
-		sb.append("<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
-		// sb.append(" <!--<link rel=\"stylesheet\" type=\"text/css\"
-		// href=\"./styles.css\">-->");
-		sb.append(" <!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
-		// sb.append(" <style type=\"text/css\">");
-		sb.append("<style type=\"text/css\">");
-		sb.append("<!--");
-		// sb.append("<!--");
-		sb.append(".STYLE1 {");
-		sb.append("font-size: 24px;");
-		sb.append("font-weight: bold;");
-		sb.append("}");
-		sb.append(".STYLE2 {");
-		sb.append("font-family: '楷体_GB2312'");
-		sb.append("}");
-		sb.append("	-->");
-		sb.append("</style>");
-		sb.append("</head>");
-		sb.append("<body>");
-		sb.append("<div align=\"center\">");
-		sb.append("<table width=\"1000\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
-		sb.append("<tr>");
-		sb.append("<td height=\"29\" colspan=\"3\" nowrap>");
-		sb.append("<div align=\"center\" class=\"STYLE1\">");
-		sb.append("<div align=\"center\">事件确认通知</div>");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td>尊敬的" + creator.getRealName() + "/" + creator.getItcode() + "您好:");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td>");
-		sb.append("&nbsp; &nbsp; &nbsp; &nbsp; ");
-		sb.append("您提出的" + "<font style='font-weight: bold'>" + "" + event.getSummary() + "</font>（事件编号为" + event.getEventCisn()
-				+ "），现在已经处理完毕，请您审核并确认：" + "<a href=" + url + ">" + "审核链接</a>");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td>");
-		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
-		sb.append("我们为您编写了该问题的处理文档，以期对您日后的工作中有所帮助！");
-		sb.append("<br>");
-		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
-		sb.append("为了帮助我们提高IT服务质量，请您在确认后抽出20-30秒的时间对我们的IT服务进行满意度评价，谢谢！");
-		sb.append("感谢您使用集团IT服务，如果您对我们有任何意见和建议可以发送邮件到it-manage@zsgj.com，或者拨打IT服务建议及投诉热线7888-0");
-		sb.append("</td>");
-		sb.append("<tr>");
-		sb.append("<td>");
-		sb.append("</td>");
-		sb.append("<tr>");
-		sb.append("<td>");
-		sb.append("<div align=\"right\">");
-		sb.append("信息系统部");
-		sb.append("</div>");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<br>");
-		sb.append("<tr>");
-		sb.append("<td>");
-		sb.append("<div align=\"right\">");
-		sb.append(dateString);
-		sb.append("</div>");
-		sb.append("</td>");
-		sb.append("<tr>");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("</tr>");
-		sb.append("</table>");
-		sb.append("</div>");
-		sb.append("</body>");
-		sb.append("</html>");
-		return sb.toString();
-	}
+//	@SuppressWarnings("unused")
+//	private String eventEndHtmlContent(UserInfo creator, String url, Event event) {
+//
+//		StringBuilder sb = new StringBuilder();
+////		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		String dateString = dateFormat.format(new Date());
+//		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+//		sb.append("<html>");
+//		sb.append("<head>");
+//		sb.append("<title> 您已经成功提交一个问题，编号为(" + event.getEventCisn()
+//				+ "）”我们会尽快解决并向您反馈。谢谢</title>");
+//		sb.append("<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
+//		sb.append("<meta http-equiv=\"description\" content=\"this is my page\">");
+//		sb.append("<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
+//		// sb.append(" <!--<link rel=\"stylesheet\" type=\"text/css\"
+//		// href=\"./styles.css\">-->");
+//		sb.append(" <!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
+//		// sb.append(" <style type=\"text/css\">");
+//		sb.append("<style type=\"text/css\">");
+//		sb.append("<!--");
+//		// sb.append("<!--");
+//		sb.append(".STYLE1 {");
+//		sb.append("font-size: 24px;");
+//		sb.append("font-weight: bold;");
+//		sb.append("}");
+//		sb.append(".STYLE2 {");
+//		sb.append("font-family: '楷体_GB2312'");
+//		sb.append("}");
+//		sb.append("	-->");
+//		sb.append("</style>");
+//		sb.append("</head>");
+//		sb.append("<body>");
+//		sb.append("<div align=\"center\">");
+//		sb.append("<table width=\"1000\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+//		sb.append("<tr>");
+//		sb.append("<td height=\"29\" colspan=\"3\" nowrap>");
+//		sb.append("<div align=\"center\" class=\"STYLE1\">");
+//		sb.append("<div align=\"center\">事件确认通知</div>");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td>尊敬的" + creator.getRealName() + "/" + creator.getItcode() + "您好:");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td>");
+//		sb.append("&nbsp; &nbsp; &nbsp; &nbsp; ");
+//		sb.append("您提出的" + "<font style='font-weight: bold'>" + "" + event.getSummary() + "</font>（事件编号为" + event.getEventCisn()
+//				+ "），现在已经处理完毕，请您审核并确认：" + "<a href=" + url + ">" + "审核链接</a>");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td>");
+//		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
+//		sb.append("我们为您编写了该问题的处理文档，以期对您日后的工作中有所帮助！");
+//		sb.append("<br>");
+//		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
+//		sb.append("为了帮助我们提高IT服务质量，请您在确认后抽出20-30秒的时间对我们的IT服务进行满意度评价，谢谢！");
+//		sb.append("感谢您使用集团IT服务");
+//		sb.append("</td>");
+//		sb.append("<tr>");
+//		sb.append("<td>");
+//		sb.append("</td>");
+//		sb.append("<tr>");
+//		sb.append("<td>");
+//		sb.append("<div align=\"right\">");
+//		sb.append("信息系统部");
+//		sb.append("</div>");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<br>");
+//		sb.append("<tr>");
+//		sb.append("<td>");
+//		sb.append("<div align=\"right\">");
+//		sb.append(dateString);
+//		sb.append("</div>");
+//		sb.append("</td>");
+//		sb.append("<tr>");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("</tr>");
+//		sb.append("</table>");
+//		sb.append("</div>");
+//		sb.append("</body>");
+//		sb.append("</html>");
+//		return sb.toString();
+//	}
 }
