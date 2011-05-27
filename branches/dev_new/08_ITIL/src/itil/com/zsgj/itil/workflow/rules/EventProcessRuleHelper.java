@@ -1,11 +1,10 @@
 package com.zsgj.itil.workflow.rules;
-
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.Node;
@@ -13,8 +12,6 @@ import org.jbpm.graph.exe.ExecutionContext;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.exe.Token;
 import org.jbpm.taskmgmt.exe.TaskInstance;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 
 import com.zsgj.info.framework.context.ContextHolder;
 import com.zsgj.info.framework.context.UserContext;
@@ -44,7 +41,6 @@ public class EventProcessRuleHelper {
 	private ConfigUnitService cs = (ConfigUnitService) ContextHolder.getBean("configUnitService");
 	private EventService eventService = (EventService) ContextHolder.getBean("EventService");
 	private MailSenderService ms = (MailSenderService) ContextHolder.getBean("mailSenderService");
-
 	/** **********************************************************问题与事件流程*************************************************************** */
 	public void saveEventHis(String nodeId, String nodeName, String processId,
 			String result, String comment, Event event) {
@@ -77,7 +73,7 @@ public class EventProcessRuleHelper {
 	 * @throws Exception void
 	 */
 	public void eventStartFlag(String dataId, String nodeId, String nodeName,
-			String processId) throws Exception {
+			String processId,Map busMap) throws Exception {
 		EventStatus dealingStatus = (EventStatus) service.findUnique(
 				EventStatus.class, "keyword", "dealing");
 		Event event = (Event) service.find(Event.class, dataId, true);
@@ -88,18 +84,38 @@ public class EventProcessRuleHelper {
 		if(event.getSubmitUser()!=null){
 			eah.setApprover(event.getSubmitUser());
 		}
-		eah.setApproverDate(Calendar.getInstance().getTime());
+		eah.setApproverDate(new Date());
 		eah.setEvent(event);
 		eah.setNodeName(nodeName);
 		eah.setNodeId(String.valueOf(nodeId));
 		service.save(eah);
-		
 		service.save(event);
-//		ms.sendSimplyMail(UserContext.getUserInfo().getEmail(), null, null,
-//		"事件提交", "你刚提交了一个事件");eventHtmlContent
+		//start 套用流程定义中的模板
+		String pageUrl = PropertiesUtil.getProperties("system.mail.develop.background.link", "/servlet/getPageModel?taskId=");
+		String reqClass = (String)busMap.get("reqClass");
+		String goStartState = (String)busMap.get("goStartState");
+		String applyType = (String)busMap.get("applyType");
+		String hurryFlag = (String) busMap.get("hurryFlag"); // 这是某些需求中需要的特殊参数
+		String workflowHistory=(String) busMap.get("workflowHistory");
+		String virtualDefinitionInfoid=(String) busMap.get("virtualDefinitionInfoid");
+		String creator=(String) busMap.get("creator");
+		String vPrcessDesc=(String) busMap.get("vPrcessDesc");
+		UserInfo creatorMeg = (UserInfo) service.findUnique(
+				UserInfo.class, "userName", creator);
+		String reqFlag = "";
+		if ("1".equals(hurryFlag)) {
+			reqFlag = "加急";
+		}
+		List auditHis = cs.findAllWorkflowHistoryMessage(workflowHistory,
+				Long.parseLong(processId));// 查找出来的是所有的按流程顺序排列的节点信息
+		String context =cs.htmlContent(Long.parseLong(virtualDefinitionInfoid), nodeName,
+				pageUrl, applyType, dataId, reqClass, goStartState,
+				null, creatorMeg, vPrcessDesc, auditHis, hurryFlag, false,
+				event.getSubmitUser());
+		//end 
 	   //2010-05-05 modified by huzh for 效率优化 begin
 		//ms.sendMimeMail(event.getSubmitUser().getEmail(), null, null, "您已经成功提交一个问题，编号为（"+event.getEventCisn()+"）”我们会尽快解决并向您反馈。谢谢！", this.eventHtmlContent(event.getSubmitUser(), "", event), null);
-		SendMailThred smthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), null, null, "IT温馨提示:"+event.getSubmitUser().getRealName()+"/"+event.getSubmitUser().getUserName()+"成功提交了一个事件（事件编号："+event.getEventCisn()+",事件名称："+event.getSummary()+"），我们会尽快解决并向您反馈。谢谢！", this.eventHtmlContent(event.getSubmitUser(), "", event), null);
+		SendMailThred smthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), null, null, "IT温馨提示:"+event.getSubmitUser().getRealName()+"/"+event.getSubmitUser().getUserName()+"成功提交了一个事件（事件编号："+event.getEventCisn()+",事件名称："+event.getSummary()+"），我们会尽快解决并向您反馈。谢谢！", context, null);
 		 Thread st = new Thread(smthread);
 	          st.start();
 	   //2010-05-05 modified by huzh for 效率优化 end
@@ -152,6 +168,7 @@ public class EventProcessRuleHelper {
 //			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
 			String subject="IT温馨提示:您提交的"+event.getSummary()+"（事件编号为"+event.getEventCisn()+"）已处理完毕,请确认并反馈满意度。谢谢!";
 			String url = PropertiesUtil.getProperties("system.web.url","itss.zsgj.com") + "/user/event/transactionFlow/userconfirm.jsp?dataId="+dataId+"&processId="+processId;
+			
 			SendMailThred mthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), "", null, subject, this.eventNoSatHtmlContent(event.getCreateUser(), url, event,processId), null);
 			Thread std = new Thread(mthread);
 		    std.start();
@@ -362,74 +379,74 @@ public class EventProcessRuleHelper {
 		}
 	}
 
-	private String eventHtmlContent(UserInfo creator, String url,Event event) {
-		StringBuilder sb = new StringBuilder();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date(); 
-		String dateString  = dateFormat.format(date);
-		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		sb.append("<html>");
-		sb.append("	<head>");
-		sb.append("		<title>PO Details</title>");
-        sb.append("		<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
-		sb.append("		<meta http-equiv=\"description\" content=\"this is my page\">");
-		sb.append("		<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
-        sb.append("		<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
-		sb.append("<style type=\"text/css\">");
-        sb.append("<!--");
-		sb.append(".STYLE1 {");
-		sb.append("font-size: 14px;");
-		sb.append("line-height:20px;");
-		sb.append("}");
-		sb.append(".STYLE2 {");
-		sb.append("font-family:'楷体';");
-		sb.append("font-size: 14px;");
-		sb.append("}");
-		sb.append("-->");
-		sb.append("</style>");
-		sb.append("	</head>");
-        sb.append("	<body>");
-		sb.append("		<div align=\"center\">");
-		sb.append("			<table width=\"900\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
-		sb.append("				<tr>");
-		sb.append("					<td height=\"29\" colspan=\"3\" nowrap><div align=\"center\" class=\"STYLE1\"><h3>邮件通知</h3></div></td>");
-		sb.append("				</tr>");
-		sb.append("				<tr>");
-		sb.append("                <td class=\"STYLE1\">尊敬的"
-				+ creator.getRealName() + "/" + creator.getUserName()
-				+ "，您好:</td>");
-		sb.append("				</tr>");
-		sb.append("				 <br>");
-		sb.append("<tr>");
-		sb.append("             <td class=\"STYLE1\" style=\"padding-left:2em\">");
-		sb.append("<div align=\"left\">您成功提交了一个事件（事件编号：<font style='font-weight: bold'>"+event.getEventCisn()+"</font>，事件名称：<font style='font-weight: bold'>"+event.getSummary()+"</font>），我们会安排专人进行受理，在处理后会第一时间向您反馈。谢谢！</div></td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议，可以发送邮件到it-manage@zsgj.com，或者拨打IT服务建议及投诉热线7888-0。"); 
-		sb.append("</td>");	
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append("<br>信息系统部");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append(dateString);
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
-		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("			</table>");
-		sb.append("		</div>");
-		sb.append("	</body>");
-		sb.append("</html>");
-		return sb.toString();
-	}	
+//	private String eventHtmlContent(UserInfo creator, String url,Event event) {
+//		StringBuilder sb = new StringBuilder();
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = new Date(); 
+//		String dateString  = dateFormat.format(date);
+//		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+//		sb.append("<html>");
+//		sb.append("	<head>");
+//		sb.append("		<title>PO Details</title>");
+//        sb.append("		<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
+//		sb.append("		<meta http-equiv=\"description\" content=\"this is my page\">");
+//		sb.append("		<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
+//        sb.append("		<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
+//		sb.append("<style type=\"text/css\">");
+//        sb.append("<!--");
+//		sb.append(".STYLE1 {");
+//		sb.append("font-size: 14px;");
+//		sb.append("line-height:20px;");
+//		sb.append("}");
+//		sb.append(".STYLE2 {");
+//		sb.append("font-family:'楷体';");
+//		sb.append("font-size: 14px;");
+//		sb.append("}");
+//		sb.append("-->");
+//		sb.append("</style>");
+//		sb.append("	</head>");
+//        sb.append("	<body>");
+//		sb.append("		<div align=\"center\">");
+//		sb.append("			<table width=\"900\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+//		sb.append("				<tr>");
+//		sb.append("					<td height=\"29\" colspan=\"3\" nowrap><div align=\"center\" class=\"STYLE1\"><h3>邮件通知</h3></div></td>");
+//		sb.append("				</tr>");
+//		sb.append("				<tr>");
+//		sb.append("                <td class=\"STYLE1\">尊敬的"
+//				+ creator.getRealName() + "/" + creator.getUserName()
+//				+ "，您好:</td>");
+//		sb.append("				</tr>");
+//		sb.append("				 <br>");
+//		sb.append("<tr>");
+//		sb.append("             <td class=\"STYLE1\" style=\"padding-left:2em\">");
+//		sb.append("<div align=\"left\">您成功提交了一个事件（事件编号：<font style='font-weight: bold'>"+event.getEventCisn()+"</font>，事件名称：<font style='font-weight: bold'>"+event.getSummary()+"</font>），我们会安排专人进行受理，在处理后会第一时间向您反馈。谢谢！</div></td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td  style=\"font-family:楷体\">");
+//		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议，可以发送邮件到it-manage@zsgj.com，或者拨打IT服务建议及投诉热线7888-0。"); 
+//		sb.append("</td>");	
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td class=\"STYLE1\" align=\"right\">");
+//		sb.append("<br>信息系统部");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td class=\"STYLE1\" align=\"right\">");
+//		sb.append(dateString);
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
+//		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("			</table>");
+//		sb.append("		</div>");
+//		sb.append("	</body>");
+//		sb.append("</html>");
+//		return sb.toString();
+//	}	
 	
 	private String eventNoSatHtmlContent(UserInfo creator, String url,Event event,String processId) {
 		StringBuilder sb = new StringBuilder();
@@ -509,7 +526,7 @@ public class EventProcessRuleHelper {
 		
 		sb.append("<tr>");
 		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议，可以发送邮件到it-manage@zsgj.com，或者拨打IT服务建议及投诉热线7888-0。"); 
+		sb.append("<br>感谢您使用集团IT服务"); 
 		sb.append("</td>");	
 		sb.append("</tr>");
 		sb.append("<tr>");
