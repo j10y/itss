@@ -2,6 +2,7 @@ package com.zsgj.itil.workflow.rules;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -371,7 +372,7 @@ public class SRProcessRuleHelper{
 		}
 		
 	}
-	public void eventStartFlag(String dataId, String nodeId, String nodeName, String processId)throws Exception{		
+	public void eventStartFlag(String dataId, String nodeId, String nodeName, String processId,Map busMap)throws Exception{		
 		EventStatus dealingStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "dealing");
 //		EventStatus reAssignStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "confirm");
 //		EventStatus endStatus = (EventStatus)service.findUnique(EventStatus.class, "keyword", "finish");
