@@ -34,35 +34,54 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				var newNoticeName = responseArray.newNoticeName;
 				var newNoticeType = responseArray.newNoticeType;
 				Ext.Ajax.request({
-					url : webContext + '/noticeManagerWorkflow_apply.action',
+					url : webContext + '/configWorkflow_findProcessByPram.action',
 					params : {
-						dataId : newNoticeId,
-						model : this.model,
-						bzparam : "{dataId :'" + newNoticeId
-								+ "',applyNum : '-----"
-								+ "',applyName : '" + Ext.getCmp('NewNotice$title').getValue()
-								+ "',oldDataId:'" + oldNoticeId
-								+ "',applyId : '" + newNoticeId
-								+ "',newNoticeName : '" + newNoticeName
-								+ "',newNoticeType : '" + newNoticeType
-								+ "',applyType: 'nproject',applyTypeName: '公告变更审批',customer:'',alterFlag:'变更'}",
-						defname : "NoticeManager1250682324781"
+						modleType : 'Notice_Sample',//
+						processStatusType : '1'//
 					},
 					success : function(response, options) {
-						var meg = Ext.decode(response.responseText);
-						if (meg.id != undefined) {
-							Ext.Msg.alert("提示", "启动工作流成功", function() {
-								window.location = webContext
-										+ '/user/noticeChange/noticeChangeList.jsp';
-							});
-						} else {
-							Ext.Msg.alert("提示", "启动工作流失败", function() {
-								alert(meg.Exception);
-							});
+						var responseArray = Ext.util.JSON
+								.decode(response.responseText);
+						var vpid = responseArray.vpid;
+						if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+							Ext.Ajax.request({
+								url : webContext + '/noticeManagerWorkflow_apply.action',
+								params : {
+									dataId : newNoticeId,
+									model : this.model,
+									bzparam : "{dataId :'" + newNoticeId
+											+ "',applyNum : '-----"
+											+ "',applyName : '" + Ext.getCmp('NewNotice$title').getValue()
+											+ "',oldDataId:'" + oldNoticeId
+											+ "',applyId : '" + newNoticeId
+											+ "',newNoticeName : '" + newNoticeName
+											+ "',newNoticeType : '" + newNoticeType
+											+ "',applyType: 'nproject',applyTypeName: '公告变更审批',customer:'',alterFlag:'变更'}",
+									defname : vpid
+								},
+								success : function(response, options) {
+									var meg = Ext.decode(response.responseText);
+									if (meg.id != undefined) {
+										Ext.Msg.alert("提示", "启动工作流成功", function() {
+											window.location = webContext
+													+ '/user/noticeChange/noticeChangeList.jsp';
+										});
+									} else {
+										Ext.Msg.alert("提示", "启动工作流失败", function() {
+											alert(meg.Exception);
+										});
+									}
+								},
+								failure : function(response, options) {
+									Ext.MessageBox.alert("提示", "启动工作流失败");
+								}
+							}, this);
+						}else{
+							Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 						}
 					},
 					failure : function(response, options) {
-						Ext.MessageBox.alert("提示", "启动工作流失败");
+						Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 					}
 				}, this);
 			},

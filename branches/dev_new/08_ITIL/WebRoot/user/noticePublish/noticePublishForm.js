@@ -20,25 +20,44 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			return;
 		}
 		Ext.Ajax.request({
-			url : webContext + '/noticeManagerWorkflow_apply.action',
+			url : webContext + '/configWorkflow_findProcessByPram.action',
 			params : {
-				dataId : this.dataId,
-				model : this.model,
-				bzparam : "{dataId :'" + this.dataId
-						+ "',applyId : '" + this.dataId
-						+ "',applyNum : '-----"
-						+ "',applyName : '" + Ext.getCmp('NewNotice$title').getValue()
-						+ "',applyType: 'nproject',applyTypeName: '公告审批',customer:'',alterFlag:'审批','workflowHistory':'com.zsgj.itil.notice.entity.NoticeAuditHis'}",
-				defname : "noticeManager1237967838187"
+				modleType : 'Notice_Sample',//
+				processStatusType : '0'//
 			},
 			success : function(response, options) {
-				Ext.Msg.alert("提示", "启动工作流成功", function() {
-					window.location = webContext
-							+ '/user/noticePublish/noticePublishList.jsp';
-				});
+				var responseArray = Ext.util.JSON
+						.decode(response.responseText);
+				var vpid = responseArray.vpid;
+				if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+					Ext.Ajax.request({
+						url : webContext + '/noticeManagerWorkflow_apply.action',
+						params : {
+							dataId : this.dataId,
+							model : this.model,
+							bzparam : "{dataId :'" + this.dataId
+									+ "',applyId : '" + this.dataId
+									+ "',applyNum : '-----"
+									+ "',applyName : '" + Ext.getCmp('NewNotice$title').getValue()
+									+ "',applyType: 'nproject',applyTypeName: '公告审批',customer:'',alterFlag:'审批','workflowHistory':'com.zsgj.itil.notice.entity.NoticeAuditHis'}",
+							defname : vpid
+						},
+						success : function(response, options) {
+							Ext.Msg.alert("提示", "启动工作流成功", function() {
+								window.location = webContext
+										+ '/user/noticePublish/noticePublishList.jsp';
+							});
+						},
+						failure : function(response, options) {
+							Ext.MessageBox.alert("提示", "启动工作流失败");
+						}
+					}, this);
+				}else{
+					Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+				}
 			},
 			failure : function(response, options) {
-				Ext.MessageBox.alert("提示", "启动工作流失败");
+				Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 			}
 		}, this);
 	},

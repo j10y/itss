@@ -19,27 +19,46 @@ PageModelComponentPanel = Ext.extend(Ext.Panel, {
 //		alert("=="+this.modifyDataId+"==22");
 //		alert("=="+this.rootId+"==");
 //		alert("=="+this.rootText+"==");
-
 		Ext.Ajax.request({
-			url :webContext+'/configWorkflow_apply.action',
+			url : webContext + '/configWorkflow_findProcessByPram.action',
 			params : {
-				dataId : this.dataId,
-				model: this.model,
-				bzparam : "{dataId :'"+ this.dataId+"',applyId : '"+this.dataId+"',applyType: 'cproject',applyTypeName: '服务目录审批',customer:''}",						
-				defname : "serviceCatalogueManager"
+				modleType : 'SCIC',//
+				processStatusType : '0'//
 			},
 			success : function(response, options) {
-				
-					
-				Ext.Msg.alert("提示","启动工作流成功",function(){
-					
-					window.location = webContext+'/user/service/serviceCatalogueList.jsp';
-				});				
+				var responseArray = Ext.util.JSON
+						.decode(response.responseText);
+				var vpid = responseArray.vpid;
+				if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+					Ext.Ajax.request({
+						url :webContext+'/configWorkflow_apply.action',
+						params : {
+							dataId : this.dataId,
+							model: this.model,
+							bzparam : "{dataId :'"+ this.dataId+"',applyId : '"+this.dataId+"',applyType: 'cproject',applyTypeName: '服务目录审批',customer:''}",						
+							defname : vpid
+						},
+						success : function(response, options) {
+							
+								
+							Ext.Msg.alert("提示","启动工作流成功",function(){
+								
+								window.location = webContext+'/user/service/serviceCatalogueList.jsp';
+							});				
+						},
+						failure : function(response, options) {
+							Ext.MessageBox.alert("提示","启动工作流失败");
+						}
+					}, this);
+				}else{
+					Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+				}
 			},
 			failure : function(response, options) {
-				Ext.MessageBox.alert("提示","启动工作流失败");
+				Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 			}
 		}, this);
+		
 		},
 	getButtons : function() {
 		return [{

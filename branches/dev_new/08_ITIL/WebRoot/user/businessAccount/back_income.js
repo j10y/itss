@@ -26,34 +26,53 @@ function submit() {
 		success : function(response) {
 			var curRequireId = this.requireId;
 			Ext.Ajax.request({
-				url : webContext + '/businessAccountWorkflow_apply.action',
+				url : webContext + '/configWorkflow_findProcessByPram.action',
 				params : {
-					dataId : curbaId,
-					bzparam : "{dataId :'" + curbaId + "',applyId : '"+ curbaId + "',requireId : '" + curRequireId 
-							+ "',applyType: 'baproject',applyTypeName: '商务结算收款申请',workflowHistory:'com.zsgj.itil.require.entity.BusinessAccountApplyHis'}",
-					defname : 'businessAccount11251188913109'
+					modleType : 'Busi_InFeel',//
+					processStatusType : '0'//
 				},
 				success : function(response, options) {
-					var meg = Ext.decode(response.responseText);
-					if (meg.id != undefined) {
-						//Ext.Msg.alert("提示", "启动工作流成功",function(){//remove by lee for 用户要求去掉提示
-							window.location = webContext+'/user/businessAccount/searchBusinessAccount.jsp';
-						//});
-						
-					} else {
-						Ext.Msg.alert("提示", "启动工作流失败", function() {
-							Ext.getCmp('saveButton').enable();
-							Ext.getCmp('submitButton').enable();
-							Ext.getCmp('backButton').enable();
-							alert(meg.Exception);
-						});
+					var responseArray = Ext.util.JSON
+							.decode(response.responseText);
+					var vpid = responseArray.vpid;
+					if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+						Ext.Ajax.request({
+							url : webContext + '/businessAccountWorkflow_apply.action',
+							params : {
+								dataId : curbaId,
+								bzparam : "{dataId :'" + curbaId + "',applyId : '"+ curbaId + "',requireId : '" + curRequireId 
+										+ "',applyType: 'baproject',applyTypeName: '商务结算收款申请',workflowHistory:'com.zsgj.itil.require.entity.BusinessAccountApplyHis'}",
+								defname : vpid
+							},
+							success : function(response, options) {
+								var meg = Ext.decode(response.responseText);
+								if (meg.id != undefined) {
+									//Ext.Msg.alert("提示", "启动工作流成功",function(){//remove by lee for 用户要求去掉提示
+										window.location = webContext+'/user/businessAccount/searchBusinessAccount.jsp';
+									//});
+									
+								} else {
+									Ext.Msg.alert("提示", "启动工作流失败", function() {
+										Ext.getCmp('saveButton').enable();
+										Ext.getCmp('submitButton').enable();
+										Ext.getCmp('backButton').enable();
+										alert(meg.Exception);
+									});
+								}
+							},
+							failure : function(response, options) {
+								Ext.getCmp('backButton').enable();
+								Ext.getCmp('saveButton').enable();
+								Ext.getCmp('submitButton').enable();
+								Ext.MessageBox.alert("提示", "启动工作流失败");
+							}
+						}, this);
+					}else{
+						Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 					}
 				},
 				failure : function(response, options) {
-					Ext.getCmp('backButton').enable();
-					Ext.getCmp('saveButton').enable();
-					Ext.getCmp('submitButton').enable();
-					Ext.MessageBox.alert("提示", "启动工作流失败");
+					Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 				}
 			}, this);
 		},

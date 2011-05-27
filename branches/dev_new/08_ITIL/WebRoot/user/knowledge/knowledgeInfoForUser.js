@@ -386,31 +386,51 @@ PagePanel = Ext.extend(Ext.Panel, {
 										var dataId = SkipKnowId;//数据Id
 										var dataType = KnowledgeTypeID;//数据类型Id
 										Ext.Ajax.request({
-													url : webContext
-															+ '/knowledgeWorkflow_apply.action',
-													params : {
-														dataId : dataId,
-														model : this.model,
-														bzparam : "{dataId :'"
-																+ dataId
-																+ "',dataType : '"
-																+ dataType
-																+ "',applyId : '"
-																+ dataId
-																+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
-														defname : 'knowledgeProcess1240978267609'
-													},
-													success:function(response){
-														var meg = Ext.decode(response.responseText);
-														if (meg.Exception != undefined) {
-															Ext.Msg.alert("提示",meg.Exception);
-														}else{
-															Ext.Msg.alert("提示","提交成功！",function(){
-																windowSkip.close();
-															});
+											url : webContext + '/configWorkflow_findProcessByPram.action',
+											params : {
+												modleType : 'Kno_Knowledge',//
+												processStatusType : '0'//
+											},
+											success : function(response, options) {
+												var responseArray = Ext.util.JSON
+														.decode(response.responseText);
+												var vpid = responseArray.vpid;
+												if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+													Ext.Ajax.request({
+														url : webContext
+																+ '/knowledgeWorkflow_apply.action',
+														params : {
+															dataId : dataId,
+															model : this.model,
+															bzparam : "{dataId :'"
+																	+ dataId
+																	+ "',dataType : '"
+																	+ dataType
+																	+ "',applyId : '"
+																	+ dataId
+																	+ "', applyType: 'kproject',applyTypeName: '知识审批',customer:''}",
+															defname : vpid
+														},
+														success:function(response){
+															var meg = Ext.decode(response.responseText);
+															if (meg.Exception != undefined) {
+																Ext.Msg.alert("提示",meg.Exception);
+															}else{
+																Ext.Msg.alert("提示","提交成功！",function(){
+																	windowSkip.close();
+																});
+															}
 														}
-													}
-											});
+													});
+												}else{
+													Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+												}
+											},
+											failure : function(response, options) {
+												Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+											}
+										}, this);
+										
 									},
 									failure : function(response, options) {
 										Ext.MessageBox

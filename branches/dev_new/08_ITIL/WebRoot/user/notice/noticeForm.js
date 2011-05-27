@@ -40,7 +40,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				Ext.Ajax.request({
 					url : webContext + '/configWorkflow_findProcessByPram.action',
 					params : {
-						modleType : 'Notice',//表示公告
+						modleType : 'Notice_Sample',//表示公告
 						processStatusType : '0'//表示审批
 					},
 					success : function(response, options) {

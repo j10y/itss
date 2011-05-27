@@ -279,39 +279,58 @@ PagePanel = Ext.extend(Ext.Panel, {
 								//提交流程（合同、解决方案、文件）
 								var dataType = 7;//数据类型Id
 								Ext.Ajax.request({
-										url : webContext
-												+ '/knowledgeWorkflow_apply.action',
-										params : {
-											dataId : dataId,
-											model : this.model,
-											bzparam : "{dataId :'"
-													+ dataId
-													+ "',dataType : '"
-													+ dataType
-													+ "',applyId : '"
-													+ dataId
-													+ "', applyType: 'kproject',applyTypeName: '知识审批审批',customer:''}",
-											defname : 'KnowFileChangeProcess1276415998668'
-										},
-										success:function(response){
-											var meg = Ext.decode(response.responseText);
-											if (meg.Exception != undefined) {
-												Ext.Msg.alert("提示",meg.Exception);
-											}else{
-												Ext.Msg.alert("提示","提交变更申请成功！",function(){
-													windowSkip.close();
-												});
-												var param = Ext.getCmp("searchForm").getForm().getValues(false);
-												var store = Ext.getCmp("KnowFileListGrid").getStore();
-												param.start = 1;
-												param.status = 1;
-												Ext.getCmp("pagetoolbar").formValue = param;
-												store.load({
-													params : param
-												});
-											}
+									url : webContext + '/configWorkflow_findProcessByPram.action',
+									params : {
+										modleType : 'Kno_File',//
+										processStatusType : '1'//
+									},
+									success : function(response, options) {
+										var responseArray = Ext.util.JSON
+												.decode(response.responseText);
+										var vpid = responseArray.vpid;
+										if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+											Ext.Ajax.request({
+												url : webContext
+														+ '/knowledgeWorkflow_apply.action',
+												params : {
+													dataId : dataId,
+													model : this.model,
+													bzparam : "{dataId :'"
+															+ dataId
+															+ "',dataType : '"
+															+ dataType
+															+ "',applyId : '"
+															+ dataId
+															+ "', applyType: 'kproject',applyTypeName: '知识审批审批',customer:''}",
+													defname : vpid
+												},
+												success:function(response){
+													var meg = Ext.decode(response.responseText);
+													if (meg.Exception != undefined) {
+														Ext.Msg.alert("提示",meg.Exception);
+													}else{
+														Ext.Msg.alert("提示","提交变更申请成功！",function(){
+															windowSkip.close();
+														});
+														var param = Ext.getCmp("searchForm").getForm().getValues(false);
+														var store = Ext.getCmp("KnowFileListGrid").getStore();
+														param.start = 1;
+														param.status = 1;
+														Ext.getCmp("pagetoolbar").formValue = param;
+														store.load({
+															params : param
+														});
+													}
+												}
+										});
+										}else{
+											Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 										}
-								});
+									},
+									failure : function(response, options) {
+										Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+									}
+								}, this);
                                }
 							},
 							failure : function(response, options) {
