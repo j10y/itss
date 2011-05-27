@@ -166,8 +166,9 @@ ModelProcessPanel = Ext.extend(Ext.Panel, {
 								emptyText : '请选择',
 								store : new Ext.data.SimpleStore({
 									fields : ['id', 'name'],
-									data : [['CI', '配置项'], ['SCI', '服务项'],['SCIC', '服务目录'],['Event', '事件'],['Notice', '公告'],
-									['Kno_Solution', '解决方案'],['Kno_Contract', '合同'],['Kno_File', '文件']]
+									data : [['CI', '配置项'], ['SCI', '服务项'],['SCIC', '服务目录'],['Event', '事件'],['Notice', '公告(需求)'],['Notice_Sample', '公告(普通)'],
+									['Kno_Solution', '解决方案'],['Kno_Contract', '合同'],['Kno_File', '文件'],['Kno_Knowledge', '知识'],
+									['Busi_InFeel', '商务结算收款'],['Busi_OutFeel', '商务结算付款']]
 								})//,
 							})]
 						},
