@@ -164,15 +164,15 @@ public class EventProcessRuleHelper {
 		service.save(event);
 		
 		//2010-08-11 add by huzh for 添加2个工作日后用户未确认事件自动解决的规则后，用户确认邮件格式修改后再此处发送 begin
-		if(result.equals("touserconfirm")){//审批历史保存后再发送邮件
-//			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
-			String subject="IT温馨提示:您提交的"+event.getSummary()+"（事件编号为"+event.getEventCisn()+"）已处理完毕,请确认并反馈满意度。谢谢!";
-			String url = PropertiesUtil.getProperties("system.web.url","itss.zsgj.com") + "/user/event/transactionFlow/userconfirm.jsp?dataId="+dataId+"&processId="+processId;
-			
-			SendMailThred mthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), "", null, subject, this.eventNoSatHtmlContent(event.getCreateUser(), url, event,processId), null);
-			Thread std = new Thread(mthread);
-		    std.start();
-		}
+//		if(result.equals("touserconfirm")){//审批历史保存后再发送邮件
+////			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
+//			String subject="IT温馨提示:您提交的"+event.getSummary()+"（事件编号为"+event.getEventCisn()+"）已处理完毕,请确认并反馈满意度。谢谢!";
+//			String url = PropertiesUtil.getProperties("system.web.url","itss.zsgj.com") + "/user/event/transactionFlow/userconfirm.jsp?dataId="+dataId+"&processId="+processId;
+//			
+//			SendMailThred mthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), "", null, subject, this.eventNoSatHtmlContent(event.getCreateUser(), url, event,processId), null);
+//			Thread std = new Thread(mthread);
+//		    std.start();
+//		}
 		//2010-08-11 add by huzh for 添加2个工作日后用户未确认事件自动解决的规则后，用户确认邮件格式修改后再此处发送 begin
 		// result替换next
 		return result;
@@ -247,14 +247,14 @@ public class EventProcessRuleHelper {
 		service.save(event);
 		
 		//2010-08-11 add by huzh for 添加2个工作日后用户未确认事件自动解决的规则后，用户确认邮件格式修改后再此处发送 begin
-		if(result.equals("touserconfirm")){//审批历史保存后在发送邮件
-//			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
-			String subject="IT温馨提示:您提交的"+event.getSummary()+"（事件编号为"+event.getEventCisn()+"）已处理完毕，请确认并反馈满意度。谢谢！";
-			String url = PropertiesUtil.getProperties("system.web.url","itss.zsgj.com") + "/user/event/transactionFlow/userconfirm.jsp?dataId="+dataId+"&processId="+processId;
-			SendMailThred mthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), "", null, subject, this.eventNoSatHtmlContent(event.getCreateUser(), url, event,processId), null);
-			Thread std = new Thread(mthread);
-		    std.start();
-		}
+//		if(result.equals("touserconfirm")){//审批历史保存后在发送邮件
+////			Long taskId=eventService.findTaskId(dataId,nodeId,processId);
+//			String subject="IT温馨提示:您提交的"+event.getSummary()+"（事件编号为"+event.getEventCisn()+"）已处理完毕，请确认并反馈满意度。谢谢！";
+//			String url = PropertiesUtil.getProperties("system.web.url","itss.zsgj.com") + "/user/event/transactionFlow/userconfirm.jsp?dataId="+dataId+"&processId="+processId;
+//			SendMailThred mthread =new SendMailThred(ms,event.getSubmitUser().getEmail(), "", null, subject, this.eventNoSatHtmlContent(event.getCreateUser(), url, event,processId), null);
+//			Thread std = new Thread(mthread);
+//		    std.start();
+//		}
 		//2010-08-11 add by huzh for 添加2个工作日后用户未确认事件自动解决的规则后，用户确认邮件格式修改后再此处发送 begin
 		// result替换next
 		return result;
@@ -448,108 +448,108 @@ public class EventProcessRuleHelper {
 //		return sb.toString();
 //	}	
 	
-	private String eventNoSatHtmlContent(UserInfo creator, String url,Event event,String processId) {
-		StringBuilder sb = new StringBuilder();
-//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date(); 
-		String dateString  = dateFormat.format(date);
-		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		sb.append("<html>");
-		sb.append("	<head>");
-		sb.append("		<title>PO Details</title>");
-        sb.append("		<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
-		sb.append("		<meta http-equiv=\"description\" content=\"this is my page\">");
-		sb.append("		<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
-        sb.append("		<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
-		sb.append("<style type=\"text/css\">");
-        sb.append("<!--");
-		sb.append(".STYLE1 {");
-		sb.append("font-size: 14px;");
-		sb.append("line-height:20px;");
-		sb.append("}");
-		sb.append(".STYLE2 {");
-		sb.append("font-family:'楷体';");
-		sb.append("font-size: 14px;");
-		sb.append("}");
-		sb.append("-->");
-		sb.append("</style>");
-		sb.append("	</head>");
-        sb.append("	<body>");
-		sb.append("		<div align=\"center\">");
-		sb.append("			<table width=\"900\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
-		sb.append("				<tr>");
-		sb.append("					<td height=\"29\" colspan=\"3\" nowrap><div align=\"center\" class=\"STYLE1\"><h3>邮件通知</h3></div></td>");
-		sb.append("				</tr>");
-		sb.append("				<tr>");
-		sb.append("                <td class=\"STYLE1\">尊敬的"
-				+ creator.getRealName() + "/" + creator.getUserName()
-				+ "，您好：</td>");
-		sb.append("				</tr>");
-		sb.append("				 <br>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE1\" style=\"padding-left:2em\">");
-		sb.append("您提交的事件（"+"事件名称：<font style='font-weight: bold'>"+event.getSummary()+"</font>"+"，事件编号：<font style='font-weight: bold'>"+event.getEventCisn()+"</font>），现在已经处理完毕，请您在2个工作日内确认处理结果，超过2个工作日后系统会自动默认解决并关闭。");
-		sb.append("<br>同时我们为您编写了该问题的处理文档，以期对您日后的工作中有所帮助！您可以" + "<a href=" + url + ">"
-				+ "点击此链接</a>" + "访问。");
-		sb.append("<br>为了帮助我们提高IT服务质量，请您在确认后抽出20-30秒的时间对我们的IT服务进行满意度评价，谢谢！");
-		sb.append("</td>");
-		sb.append("</tr>");
-		
-		sb.append("				 <tr>");
-    	sb.append("					<td><div class=\"STYLE1\" align=\"left\"><br>过程：</div></td>");
-    	sb.append("				 </tr>");
-    	List<EventAuditHis> historyList=eventService.findAllEventHistory(event,processId);
-		if(historyList!=null&&!"".equals(historyList)){
-			for (int i=0;i<historyList.size();i++) {
-				EventAuditHis his=historyList.get(i);
-				String nodeMeg = his.getNodeName();
-				UserInfo approver = his.getApprover();
-				Date approverDate = his.getApproverDate();
-				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-				String timeString  = dateFormats.format(approverDate);
-				String auditMeg="";
-				if(approver!=null){
-					String userName = approver.getRealName();
-					String resultFlag = his.getResultFlag();
-					if(resultFlag!=null&&"unconfirm".equals(resultFlag)==true){
-						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"打回；";
-					}else{
-						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；";
-					}
-			        sb.append("				 <tr>");
-		        	sb.append("					<td><div class=\"STYLE1\" align=\"left\">" + auditMeg + "</div></td>");
-		        	sb.append("				 </tr>");
-				}
-	        }
-		}
-		
-		sb.append("<tr>");
-		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务"); 
-		sb.append("</td>");	
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append("<br>信息系统部");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE1\" align=\"right\">");
-		sb.append(dateString);
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
-		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("			</table>");
-		sb.append("		</div>");
-		sb.append("	</body>");
-		sb.append("</html>");
-		return sb.toString();
-	}
+//	private String eventNoSatHtmlContent(UserInfo creator, String url,Event event,String processId) {
+//		StringBuilder sb = new StringBuilder();
+////		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = new Date(); 
+//		String dateString  = dateFormat.format(date);
+//		sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+//		sb.append("<html>");
+//		sb.append("	<head>");
+//		sb.append("		<title>PO Details</title>");
+//        sb.append("		<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
+//		sb.append("		<meta http-equiv=\"description\" content=\"this is my page\">");
+//		sb.append("		<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
+//        sb.append("		<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
+//		sb.append("<style type=\"text/css\">");
+//        sb.append("<!--");
+//		sb.append(".STYLE1 {");
+//		sb.append("font-size: 14px;");
+//		sb.append("line-height:20px;");
+//		sb.append("}");
+//		sb.append(".STYLE2 {");
+//		sb.append("font-family:'楷体';");
+//		sb.append("font-size: 14px;");
+//		sb.append("}");
+//		sb.append("-->");
+//		sb.append("</style>");
+//		sb.append("	</head>");
+//        sb.append("	<body>");
+//		sb.append("		<div align=\"center\">");
+//		sb.append("			<table width=\"900\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+//		sb.append("				<tr>");
+//		sb.append("					<td height=\"29\" colspan=\"3\" nowrap><div align=\"center\" class=\"STYLE1\"><h3>邮件通知</h3></div></td>");
+//		sb.append("				</tr>");
+//		sb.append("				<tr>");
+//		sb.append("                <td class=\"STYLE1\">尊敬的"
+//				+ creator.getRealName() + "/" + creator.getUserName()
+//				+ "，您好：</td>");
+//		sb.append("				</tr>");
+//		sb.append("				 <br>");
+//		sb.append("<tr>");
+//		sb.append("<td class=\"STYLE1\" style=\"padding-left:2em\">");
+//		sb.append("您提交的事件（"+"事件名称：<font style='font-weight: bold'>"+event.getSummary()+"</font>"+"，事件编号：<font style='font-weight: bold'>"+event.getEventCisn()+"</font>），现在已经处理完毕，请您在2个工作日内确认处理结果，超过2个工作日后系统会自动默认解决并关闭。");
+//		sb.append("<br>同时我们为您编写了该问题的处理文档，以期对您日后的工作中有所帮助！您可以" + "<a href=" + url + ">"
+//				+ "点击此链接</a>" + "访问。");
+//		sb.append("<br>为了帮助我们提高IT服务质量，请您在确认后抽出20-30秒的时间对我们的IT服务进行满意度评价，谢谢！");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		
+//		sb.append("				 <tr>");
+//    	sb.append("					<td><div class=\"STYLE1\" align=\"left\"><br>过程：</div></td>");
+//    	sb.append("				 </tr>");
+//    	List<EventAuditHis> historyList=eventService.findAllEventHistory(event,processId);
+//		if(historyList!=null&&!"".equals(historyList)){
+//			for (int i=0;i<historyList.size();i++) {
+//				EventAuditHis his=historyList.get(i);
+//				String nodeMeg = his.getNodeName();
+//				UserInfo approver = his.getApprover();
+//				Date approverDate = his.getApproverDate();
+//				SimpleDateFormat dateFormats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+//				String timeString  = dateFormats.format(approverDate);
+//				String auditMeg="";
+//				if(approver!=null){
+//					String userName = approver.getRealName();
+//					String resultFlag = his.getResultFlag();
+//					if(resultFlag!=null&&"unconfirm".equals(resultFlag)==true){
+//						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"打回；";
+//					}else{
+//						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；";
+//					}
+//			        sb.append("				 <tr>");
+//		        	sb.append("					<td><div class=\"STYLE1\" align=\"left\">" + auditMeg + "</div></td>");
+//		        	sb.append("				 </tr>");
+//				}
+//	        }
+//		}
+//		
+//		sb.append("<tr>");
+//		sb.append("<td  style=\"font-family:楷体\">");
+//		sb.append("<br>感谢您使用集团IT服务"); 
+//		sb.append("</td>");	
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td class=\"STYLE1\" align=\"right\">");
+//		sb.append("<br>信息系统部");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td class=\"STYLE1\" align=\"right\">");
+//		sb.append(dateString);
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
+//		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("			</table>");
+//		sb.append("		</div>");
+//		sb.append("	</body>");
+//		sb.append("</html>");
+//		return sb.toString();
+//	}
 //	
 //	//邮件格式2
 //	private String eventEndHtmlContent(UserInfo creator, String url,Event event) {

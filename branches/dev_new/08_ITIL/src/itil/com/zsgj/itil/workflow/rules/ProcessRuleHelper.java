@@ -77,10 +77,10 @@ public class ProcessRuleHelper {
 		service.save(event);
 		// ms.sendSimplyMail(UserContext.getUserInfo().getEmail(), null, null,
 		// "事件提交", "你刚提交了一个事件");eventHtmlContent
-		ms.sendMimeMail(UserContext.getUserInfo().getEmail(), null, null,
-				"您已经成功提交一个问题，编号为（" + event.getEventCisn()
-						+ "）”我们会尽快解决并向您反馈。谢谢！", this.eventHtmlContent(
-						UserContext.getUserInfo(), "", event), null);
+//		ms.sendMimeMail(UserContext.getUserInfo().getEmail(), null, null,
+//				"您已经成功提交一个问题，编号为（" + event.getEventCisn()
+//						+ "）”我们会尽快解决并向您反馈。谢谢！", this.eventHtmlContent(
+//						UserContext.getUserInfo(), "", event), null);
 	}
 
 	public String engineerProcessFlag(String dataId, String nodeId,
@@ -541,91 +541,91 @@ public class ProcessRuleHelper {
 	}
 
 	// 邮件格式1EventHtmlContent()；
-	private String eventHtmlContent(UserInfo creator, String url, Event event) {
-
-		StringBuilder sb = new StringBuilder();
-//		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String dateString = dateFormat.format(date);
-
-		sb
-				.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		sb.append("<html>");
-		sb.append("<head>");
-		sb.append("<title> 您已经成功提交一个问题，编号为(" + event.getEventCisn()
-				+ "）”我们会尽快解决并向您反馈。谢谢</title>");
-		sb
-				.append("<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
-		sb
-				.append("<meta http-equiv=\"description\" content=\"this is my page\">");
-		sb
-				.append("<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
-
-		sb
-				.append("<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
-		sb.append("<style type=\"text/css\">");
-		sb.append("<!--");
-		sb.append(".STYLE1 {");
-		sb.append("font-size: 24px;");
-		sb.append("font-weight: bold;");
-		sb.append("}");
-		sb.append(".STYLE2 {");
-		sb.append("font-family: '楷体_GB2312'");
-		sb.append("}");
-		sb.append("-->");
-		sb.append("</style>");
-		sb.append("</head>");
-		sb.append("<body>");
-		sb.append("<div align=\"center\">");
-		sb
-				.append("<table width=\"1000\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
-		sb.append("<tr>");
-		sb.append("<td height=\"10\" colspan=\"3\" nowrap>");
-		sb.append("<div align=\"center\" >");
-		sb.append("<div align=\"center\">事件确认通知</div>");
-		sb.append("</div>");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td>尊敬的" + creator.getRealName() + "/" + creator.getItcode()
-				+ "您好:");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td>");
-		sb.append("&nbsp; &nbsp; &nbsp; &nbsp; 您已经成功提交"
-				+ "<font style='font-weight: bold'>" + event.getSummary()
-				+ "</font>（事件编号为" + event.getEventCisn()
-				+ "），我们会安排专人进行受理，在处理后会第一时间向您反馈。");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td class=\"STYLE2\">");
-		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
-
-		sb
-				.append("感谢您使用集团IT服务");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td>");
-		sb.append("<div align=\"right\">");
-		sb.append("信息系统部");
-		sb.append("</div>");
-		sb.append("<br");
-		sb.append("<div align=\"right\">");
-		sb.append(dateString);
-
-		sb.append("</div>");
-		sb.append("</td>");
-		sb.append("</tr>");
-		sb.append("</table>");
-		sb.append("</div>");
-		sb.append("</body>");
-		sb.append("</html>");
-		return sb.toString();
-	}
+//	private String eventHtmlContent(UserInfo creator, String url, Event event) {
+//
+//		StringBuilder sb = new StringBuilder();
+////		NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = new Date();
+//		String dateString = dateFormat.format(date);
+//
+//		sb
+//				.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
+//		sb.append("<html>");
+//		sb.append("<head>");
+//		sb.append("<title> 您已经成功提交一个问题，编号为(" + event.getEventCisn()
+//				+ "）”我们会尽快解决并向您反馈。谢谢</title>");
+//		sb
+//				.append("<meta http-equiv=\"keywords\" content=\"keyword1,keyword2,keyword3\">");
+//		sb
+//				.append("<meta http-equiv=\"description\" content=\"this is my page\">");
+//		sb
+//				.append("<meta http-equiv=\"content-type\" content=\"text/html; charset=GBK\">");
+//
+//		sb
+//				.append("<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\">-->");
+//		sb.append("<style type=\"text/css\">");
+//		sb.append("<!--");
+//		sb.append(".STYLE1 {");
+//		sb.append("font-size: 24px;");
+//		sb.append("font-weight: bold;");
+//		sb.append("}");
+//		sb.append(".STYLE2 {");
+//		sb.append("font-family: '楷体_GB2312'");
+//		sb.append("}");
+//		sb.append("-->");
+//		sb.append("</style>");
+//		sb.append("</head>");
+//		sb.append("<body>");
+//		sb.append("<div align=\"center\">");
+//		sb
+//				.append("<table width=\"1000\" height=\"200\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+//		sb.append("<tr>");
+//		sb.append("<td height=\"10\" colspan=\"3\" nowrap>");
+//		sb.append("<div align=\"center\" >");
+//		sb.append("<div align=\"center\">事件确认通知</div>");
+//		sb.append("</div>");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td>尊敬的" + creator.getRealName() + "/" + creator.getItcode()
+//				+ "您好:");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td>");
+//		sb.append("&nbsp; &nbsp; &nbsp; &nbsp; 您已经成功提交"
+//				+ "<font style='font-weight: bold'>" + event.getSummary()
+//				+ "</font>（事件编号为" + event.getEventCisn()
+//				+ "），我们会安排专人进行受理，在处理后会第一时间向您反馈。");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td class=\"STYLE2\">");
+//		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
+//
+//		sb
+//				.append("感谢您使用集团IT服务");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("<tr>");
+//		sb.append("<td>");
+//		sb.append("<div align=\"right\">");
+//		sb.append("信息系统部");
+//		sb.append("</div>");
+//		sb.append("<br");
+//		sb.append("<div align=\"right\">");
+//		sb.append(dateString);
+//
+//		sb.append("</div>");
+//		sb.append("</td>");
+//		sb.append("</tr>");
+//		sb.append("</table>");
+//		sb.append("</div>");
+//		sb.append("</body>");
+//		sb.append("</html>");
+//		return sb.toString();
+//	}
 
 	// 邮件格式2
 
