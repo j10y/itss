@@ -255,7 +255,26 @@
 														<img src="images/1x1_pix.gif" alt="" width="8" height="15" />
 													</td>
 													<td height="23" class="bannertxt">
-														<a href="http://localhost:8080/bmrbs/" target="_blank" class="nomalLink">办公室预订</a>
+														<a href="http://localhost:8080/bmrbs/" target="_blank" class="nomalLink">会议室预订</a>
+													</td>
+												</tr>
+												<tr>
+													<td height="1" colspan="2"
+														background="images/dotted_grey.gif">
+														<img src="images/1x1_pix.gif" width="1" height="1" />
+													</td>
+												</tr>
+											</table>
+											<table width="165" border="0" cellspacing="1" cellpadding="0">
+												<tr>
+													<td width="8" rowspan="2">
+														<img src="images/1x1_pix.gif" width="8" height="15" />
+													</td>
+													<td width="7">
+														<img src="images/1x1_pix.gif" alt="" width="8" height="15" />
+													</td>
+													<td height="23" class="bannertxt">
+														<a href="http://mail.shopin.cn/" target="_blank" class="nomalLink">企业邮箱</a>
 													</td>
 												</tr>
 												<tr>
