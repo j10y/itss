@@ -93,5 +93,8 @@
 		<property name="modifyDate" type="timestamp">
 		  <column name="modifyDate"></column>
 		</property>
+		<property name="ciAddress" type="string">
+			<column name="ciAddress"></column>
+		</property>
 	</class>
 </hibernate-mapping>
