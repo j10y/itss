@@ -866,7 +866,7 @@ public class ProcessConfigAction extends BaseDispatchAction {
 			for (PageModel model : pageModel) {
 
 //				String dataStr = "";
-				json += "{id:" + model.getId() + ",name:'" + model.getName()
+				json += "{id:" + model.getId() + ",name:'" + model.getTitle() + "/" + model.getName()
 						+ "'}";
 				json += ",";
 			}
