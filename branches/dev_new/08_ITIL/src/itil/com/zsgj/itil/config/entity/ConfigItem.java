@@ -85,6 +85,16 @@ public class ConfigItem extends CIBaseData{
     private UserInfo modifyUser;
     private Date modifyDate;
     
+    private String ciAddress;
+    
+	public String getCiAddress() {
+		return ciAddress;
+	}
+
+	public void setCiAddress(String ciAddress) {
+		this.ciAddress = ciAddress;
+	}
+
 	public UserInfo getCreateUser() {
 		return createUser;
 	}
