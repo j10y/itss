@@ -13,7 +13,7 @@
 			<column name="name"></column>
 		</property>
 		
-		<many-to-one name="parentConfigItemType" class="com.zsgj.itil.config.entity.ConfigItemType">
+		<many-to-one name="parentConfigItemType" class="com.zsgj.itil.config.entity.ConfigItemType" not-found="ignore">
 			<column name="parentConfigItemType"></column>
 		</many-to-one>
 		
@@ -25,15 +25,15 @@
 			<column name="tableName"></column>
 		</property>
 				
-		<many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable">
+		<many-to-one name="systemMainTable" class="com.zsgj.info.appframework.metadata.entity.SystemMainTable" not-found="ignore">
 			<column name="systemMainTable"></column>
 		</many-to-one>
 		
 		<many-to-one name="pagePanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" 
-        			column="pagePanel" />
+        			column="pagePanel" not-found="ignore"/>
         
         <many-to-one name="groupPanel" class="com.zsgj.info.appframework.pagemodel.entity.PagePanel" 
-        			column="groupPanel" />
+        			column="groupPanel" not-found="ignore"/>
        
         <property name="deployFlag" type="integer">
 			<column name="deployFlag"></column>
