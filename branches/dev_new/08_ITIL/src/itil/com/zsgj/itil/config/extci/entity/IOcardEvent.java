@@ -15,7 +15,21 @@ public class IOcardEvent extends BaseObject {
    private java.util.Date createDate;
    private com.zsgj.info.framework.security.entity.UserInfo modifyUser;
    private java.util.Date modifyDate;
-
+   private java.lang.String brand;
+   private java.lang.String model;
+   
+   public java.lang.String getBrand() {
+		return brand;
+	}
+	public void setBrand(java.lang.String brand) {
+		this.brand = brand;
+	}
+	public java.lang.String getModel() {
+		return model;
+	}
+	public void setModel(java.lang.String model) {
+		this.model = model;
+	}
    public void setId(java.lang.Long id){
 	     this.id=id;
    }
