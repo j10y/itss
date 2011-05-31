@@ -30,6 +30,11 @@
 			<property name="modifyDate" type="date">
 			  <column name="MODIFYDATE"></column>
 			</property>
-	
+			<property name="model" type="java.lang.String">
+			  <column name="MODEL" ></column>
+			</property>
+			<property name="brand" type="java.lang.String">
+			  <column name="BRAND" ></column>
+			</property>
   </class>
 </hibernate-mapping>
