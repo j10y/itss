@@ -39,23 +39,42 @@ PageModelComponentPanel = Ext.extend(Ext.Panel, {
 	worksubmit : function(){
 		alert("================"+"启动工作流"+"======================");
 		Ext.Ajax.request({
-			url :webContext+'/extjs/workflow?method=apply',
+			url : webContext + '/configWorkflow_findProcessByPram.action',
 			params : {
-				dataId : this.dataId,
-				model: this.model,
-				bzparam : "{dataId :'"+ this.dataId+"',modifyDataId:'"+this.dataId+"',rootId:'"+this.rootId+"',rootText:'"+this.rootText+"',applyId : '"+this.dataId+"',applyType: 'cproject',applyTypeName: '服务目录审批',customer:''}",						
-				defname : "serviceCatalogueManager50000075"
+				modleType : 'SCIC',//
+				processStatusType : '0'//
 			},
 			success : function(response, options) {
-				
-					
-				Ext.Msg.alert("提示","启动工作流成功",function(){
-					
-					window.location = webContext+'/user/serviceIssue/serviceCatalogueIssueList.jsp';
-				});				
+				var responseArray = Ext.util.JSON
+						.decode(response.responseText);
+				var vpid = responseArray.vpid;
+				if(vpid!=""&&vpid!=undefined&&vpid.length>0){
+					Ext.Ajax.request({
+						url :webContext+'/extjs/workflow?method=apply',
+						params : {
+							dataId : this.dataId,
+							model: this.model,
+							bzparam : "{dataId :'"+ this.dataId+"',modifyDataId:'"+this.dataId+"',rootId:'"+this.rootId+"',rootText:'"+this.rootText+"',applyId : '"+this.dataId+"',applyType: 'cproject',applyTypeName: '服务目录审批',customer:''}",						
+							defname : vpid
+						},
+						success : function(response, options) {
+							
+								
+							Ext.Msg.alert("提示","启动工作流成功",function(){
+								
+								window.location = webContext+'/user/serviceIssue/serviceCatalogueIssueList.jsp';
+							});				
+						},
+						failure : function(response, options) {
+							Ext.MessageBox.alert("提示","启动工作流失败");
+						}
+					}, this);
+				}else{
+					Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
+				}
 			},
 			failure : function(response, options) {
-				Ext.MessageBox.alert("提示","启动工作流失败");
+				Ext.MessageBox.alert("未找到对应的流程，请查看是否配置!");
 			}
 		}, this);
 		},

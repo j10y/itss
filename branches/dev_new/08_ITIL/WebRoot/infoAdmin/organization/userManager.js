@@ -200,7 +200,7 @@ UserManagePanel = Ext.extend(Ext.Panel, {
 			root : 'roles',
             url: webContext+ '/sysManage/userMangeAction.do?methodCall=findRoleByDept',
             baseParams: {
-                  deptCode:'50000075'
+                  deptCode:'1101'
              },    
 			fields : ['name', 'department', 'descn', 'id'],
 			autoLoad : true

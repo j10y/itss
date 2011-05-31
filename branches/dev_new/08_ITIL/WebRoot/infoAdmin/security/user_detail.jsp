@@ -96,7 +96,7 @@
     <td  align="center" bgcolor="#EFF3FF">隶属部门</td>
     <td  bgcolor="#EFF3FF" colspan="4">
      <select name="department" id="department" class="textfield" onchange="findRoleByDept2();">
-       <option value="50000075">上品折扣</option>
+       <option value="1101">上品折扣</option>
       <c:forEach var="item" items="${requestScope.depts}" varStatus="status">
       <option value="${item.departCode}" 
   ${user.department.departCode eq item.departCode or requestScope.dept.departCode eq item.departCode?' selected':''}>${item.fullDepartName}</option>

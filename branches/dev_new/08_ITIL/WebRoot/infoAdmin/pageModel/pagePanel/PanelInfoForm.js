@@ -14,7 +14,7 @@ function PanelInfoForm(){
 //	 conn.send(null);
 //	 alert(conn.responseText);
 	 
-	 var data = [["50000075","上品折扣"]];
+	 var data = [["1101","上品公司"]];
 	 var store = new Ext.data.SimpleStore({
 //	 	        url: webContext+'/servlet/findAllDept',
 	 			data: data,
