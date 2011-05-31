@@ -282,7 +282,7 @@ public class SecurityManageDaoImpl extends BaseDao implements SecurityManageDao 
 		Department dept = userInfo.getDepartment();
 		if(dept==null){
 			DetachedCriteria ddc = DetachedCriteria.forClass(Department.class);
-			String rootDeptCode = PropertiesUtil.getProperties("system.dept.rootdeptcode", "50000075");
+			String rootDeptCode = PropertiesUtil.getProperties("system.dept.rootdeptcode", "1101");
 			ddc.add(Restrictions.eq("departCode", Long.valueOf(rootDeptCode)));
 			Department result = (Department) getDaoSupport().uniqueResult(ddc);
 			dept = result;

@@ -65,16 +65,16 @@ public class RoleAction extends BaseDispatchAction{
 //		Department dept = role.getDepartment();
 		/*if(dept!=null){
 			deptTmps = dtms.findDeptMenuTemplate(dept);
-			Department deptDc = ds.findDepartmentById(Long.valueOf(50000075L));
+			Department deptDc = ds.findDepartmentById(Long.valueOf(1101L));
 			List listDc = dtms.findDeptMenuTemplate(deptDc);
 			deptTmps.addAll(listDc);
 			
 		}else{
-			Department deptDc = ds.findDepartmentById(Long.valueOf(50000075L));
+			Department deptDc = ds.findDepartmentById(Long.valueOf(1101));
 			deptTmps = dtms.findDeptMenuTemplate(deptDc);
 		}
 		if(deptTmps.isEmpty()){
-			Department deptDc = ds.findDepartmentById(Long.valueOf(50000075L));
+			Department deptDc = ds.findDepartmentById(Long.valueOf(1101));
 			deptTmps = dtms.findDeptMenuTemplate(deptDc);
 		}*/
 		

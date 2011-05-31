@@ -34,7 +34,7 @@ public class DepartmentAction extends BaseDispatchAction{
 		String departmentCode = request.getParameter("id");
 		List<Department> storeDepartment = new ArrayList<Department>();
 		if (departmentCode.equals("-1")) {
-			List<Department> childDepartmentList = departmentService.findRootDepartments("50000075");
+			List<Department> childDepartmentList = departmentService.findRootDepartments("1101");
 			for (Department department : childDepartmentList) {
 				department.setDepartName(department.getDepartName()+"£¨<font color=blue >"+department.getId()+"</font>£©");
 				storeDepartment.add(department);

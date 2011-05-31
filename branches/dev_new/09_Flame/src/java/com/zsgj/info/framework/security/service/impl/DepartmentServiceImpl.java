@@ -395,11 +395,11 @@ public class DepartmentServiceImpl extends BaseDao implements DepartmentService 
 			criteria.add(Expression.like("departName", "%"+depName+"%"));
 		}
 		Criteria c1 = super.getCriteria(Department.class);
-		String rootCode =PropertiesUtil.getProperties("system.dept.rootdeptcode", "50008953");
+		String rootCode =PropertiesUtil.getProperties("system.dept.rootdeptcode", "1101");
 		c1.add(Restrictions.eq("departCode", Long.valueOf(rootCode)));//总裁办公室
 		Department deptRoot = (Department) c1.uniqueResult(); //当前根部门
 		//modify by tongjp 当部门号为下面几个号的时候，则不执行下面的查询，影响效率
-		if(!rootCode.equals("50008953")&&!rootCode.equals("50008952")&&!rootCode.equals("50000075")){
+		if(!rootCode.equals("1101")&&!rootCode.equals("1101")&&!rootCode.equals("1101")){
 			this.initChilden(deptRoot, list);
 			for(Department dep:list){
 				depList.add(dep.getDepartCode());
