@@ -50,7 +50,7 @@ public class DeptMenuTemplateAction extends BaseDispatchAction{
 			HttpServletResponse response) throws Exception {
 	//通过根找其部门及下面的子部门.
 		List depts = ds.findDeptAll();
-		//String rootDeptCode = PropertiesUtil.getProperties("system.dept.rootdeptcode", "50000075");
+		//String rootDeptCode = PropertiesUtil.getProperties("system.dept.rootdeptcode", "1101");
 		//List dept = ds.findRootDept(rootDeptCode);
 		request.setAttribute("depts", depts);
 		
