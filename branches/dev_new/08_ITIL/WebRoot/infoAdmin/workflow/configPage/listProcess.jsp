@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="gbk"%>
-<%@ include file="/includefiles.jsp"%>
 <html>
 	<head>
 		<title>欢迎使用IT服务系统</title>
@@ -48,7 +47,6 @@ p {
 }
 </style>
 		<script type="text/javascript">
-	
 	function changeSkin(value){
 	   		 Ext.util.CSS.swapStyleSheet('window', webContext+'/extEngine/resources/css/' + value + '.css');
 	}
@@ -62,9 +60,10 @@ p {
     }
 	
 	Ext.BLANK_IMAGE_URL = webContext+'/extEngine/resources/images/default/s.gif';
-	Ext.onReady(function(){	
-	   Ext.QuickTips.init();
 
+	Ext.onReady(function(){
+		alert(221);
+	   Ext.QuickTips.init();
 	   Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
 	   var listProcessPanel = new ListProcessPanel();
 	   
