@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="itDevSearchRequireProcess" width="1027" height="572">
+  <node name="提出申请" x="163" y="73" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="DBA审批处理" x="145" y="213" width="166" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-9" y="9"/>
+    </edge>
+  </node>
+  <node name="打回" x="398" y="213" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-1" h1="-72" w2="234" h2="-1"/>
+    </edge>
+  </node>
+  <node name="部门总监审批" x="163" y="142" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="161" y="312" width="132" height="36"/>
+  <node name="放弃" x="397" y="285" width="132" height="36"/>
+</root-container>
