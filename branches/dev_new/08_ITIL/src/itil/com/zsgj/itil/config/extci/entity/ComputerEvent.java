@@ -9,7 +9,22 @@ public class ComputerEvent extends BaseObject {
    private java.lang.String model;
    private java.lang.String remark;
    private ComputerType type;
-
+   private String cisn;
+   private String assetsNum;
+   
+   
+   public String getCisn() {
+	return cisn;
+	}
+	public void setCisn(String cisn) {
+		this.cisn = cisn;
+	}
+	public String getAssetsNum() {
+		return assetsNum;
+	}
+	public void setAssetsNum(String assetsNum) {
+		this.assetsNum = assetsNum;
+	}
    public void setId(java.lang.Long id){
 	     this.id=id;
    }

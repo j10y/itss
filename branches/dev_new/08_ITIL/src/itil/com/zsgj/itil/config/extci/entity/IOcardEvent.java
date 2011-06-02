@@ -17,7 +17,13 @@ public class IOcardEvent extends BaseObject {
    private java.util.Date modifyDate;
    private java.lang.String brand;
    private java.lang.String model;
-   
+   private String assetsNum;
+   public String getAssetsNum() {
+	return assetsNum;
+	}
+	public void setAssetsNum(String assetsNum) {
+		this.assetsNum = assetsNum;
+	}
    public java.lang.String getBrand() {
 		return brand;
 	}

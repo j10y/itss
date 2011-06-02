@@ -52,6 +52,15 @@ public class Server extends BaseObject {
 	private Integer cpuCores;//CPU核数
 	private Double diskSize;//内置硬盘大小
 	private Integer diskNumber;//内置硬盘个数
+	private String assetsNum;
+	   
+    public String getAssetsNum() {
+		return assetsNum;
+	}
+	public void setAssetsNum(String assetsNum) {
+		this.assetsNum = assetsNum;
+	}
+		
 	public Double getDiskSize() {
 		return diskSize;
 	}

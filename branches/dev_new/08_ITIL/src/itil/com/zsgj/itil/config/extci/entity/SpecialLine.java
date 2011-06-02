@@ -22,7 +22,14 @@ public class SpecialLine extends BaseObject {
 	private java.lang.String costCenterNum; // 分摊成本中心
 	private String aclientContacts; // A端联系人
 	private String bclientContacts; // B端联系人
-	
+	private String assetsNum;
+	   
+    public String getAssetsNum() {
+		return assetsNum;
+	}
+	public void setAssetsNum(String assetsNum) {
+		this.assetsNum = assetsNum;
+	}
 	public Operators getOperators() {
 		return operators;
 	}
