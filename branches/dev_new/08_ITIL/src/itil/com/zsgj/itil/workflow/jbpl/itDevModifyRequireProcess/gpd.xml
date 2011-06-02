@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="itDevModifyRequireProcess" width="1027" height="572">
+  <node name="提出申请" x="166" y="40" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="架构师审批处理" x="148" y="180" width="166" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-10" y="-1"/>
+    </edge>
+  </node>
+  <node name="打回" x="401" y="180" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-1" h1="-72" w2="234" h2="-1"/>
+    </edge>
+  </node>
+  <node name="部门总监审批" x="166" y="109" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-1" y="-8"/>
+    </edge>
+  </node>
+  <node name="结束" x="162" y="524" width="132" height="36"/>
+  <node name="放弃" x="400" y="252" width="132" height="36"/>
+  <node name="信息系统部总监" x="164" y="251" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-1" y="0"/>
+    </edge>
+  </node>
+  <node name="提交解决方案" x="164" y="317" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-115" h1="32" w2="-114" h2="-39"/>
+    </edge>
+  </node>
+  <node name="用户确认" x="163" y="388" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="114" h1="-36" w2="113" h2="35"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="实施并交付" x="162" y="458" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+</root-container>
