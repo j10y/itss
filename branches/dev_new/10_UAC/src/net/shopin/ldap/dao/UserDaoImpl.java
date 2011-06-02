@@ -481,9 +481,9 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
-			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*))";
+			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*))";
 		}else{
-			filter="(|(uid=*)(cn=*))";
+			filter="(|(uid=*)(cn=*)(title=*))";
 		}
 		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
 

@@ -41,6 +41,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
 		 --> 
   		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Ext.form.FCKeditor.js"></script>
+  		<script type="text/javascript" src="${pageContext.request.contextPath}/js/vtype-mine.js"></script>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/xtheme-gray.css" />	
 	</head>
 	<body> 

@@ -4,6 +4,7 @@
 <%
 	AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal(); 
 	String username = principal.getName(); 
+	request.setAttribute("SERVLETPATH", request.getServletPath());
 	
 	if(username==null || username.equals("")) response.sendRedirect(request.getContextPath()+ "/index.jsp");
 %>
@@ -14,6 +15,7 @@
 	<%@include file="/includefiles.jsp"%>
 	<script type="text/javascript">
 		var panels = [];
+		var servletPath = "${SERVLETPATH}"; 
 	</script>
 	<script type="text/javascript" src="<c:url value="/dept/dept.js"/>" ></script>
 	<script type="text/javascript" src="<c:url value="/user/user.js"/>" ></script>

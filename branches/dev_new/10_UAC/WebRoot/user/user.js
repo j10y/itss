@@ -205,6 +205,7 @@ var userPanel = new Ext.form.FormPanel({
 			xtype:"textfield",
 			hidden:true
 		},{
+			id:"help",
 			html:"<br><font color='red'>注意："
 				+"<br>1,添加新用户操作，填写完毕用户信息（账号必须修改），点击【添加新用户】即可"
 				+"<br>2,修改用户操作，请首先选择要修改的用户（账号不可以修改，即使修改系统会自动重置），点击【修改】即可"
@@ -315,7 +316,17 @@ var userPanel = new Ext.form.FormPanel({
 						        	userType : formValues.userType
 						        },*/
 				                success: function(form, action) {
-									Ext.Msg.alert("提示", "修改成功！");
+									//Ext.Msg.alert("提示", "修改成功！");
+					        		if(servletPath==="/user/userModify.jsp"){
+					        			Ext.Msg.confirm("确认", "修改成功,是否关闭？", function(btn, text){
+					        				if(btn=="yes"){
+					        					window.close();
+					        					self.close();
+					        				}
+					        			});
+					        		}else{
+										Ext.Msg.alert("提示", "修改成功！");
+					        		}
 				                },
 				                failure : function(form, action) {
 									Ext.Msg.alert("提示", "修改失败！");
@@ -346,7 +357,7 @@ var userPanel = new Ext.form.FormPanel({
 						        async: false,  
 						        success: function(response, opts) {	
 						        	obj = Ext.util.JSON.decode(response.responseText);
-						        	if(obj.success){				         
+						        	if(obj.success){
 										Ext.Msg.alert("提示", "修改成功！");
 									}			         	
 						        },
