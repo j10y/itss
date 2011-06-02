@@ -173,6 +173,9 @@
 								姓名
 							</th>
 							<th>
+								所在部门
+							</th>
+							<th>
 								职位
 							</th>
 							<th>
@@ -195,6 +198,9 @@
 									</td>
 									<td>
 										${user.cn }&nbsp;
+									</td>
+									<td>
+										${user.deptName }&nbsp;
 									</td>
 									<td>
 										${user.title }&nbsp;

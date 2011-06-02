@@ -109,7 +109,13 @@ public class UserAction extends ActionSupport {
 		response.setContentType("text/html;charset=utf-8");
 		
 		String uidOrName = request.getParameter("username");
-		
+		try {
+			//get请求 TOMCAT 默认ISO-8859-1
+			uidOrName = new String(uidOrName.getBytes("ISO-8859-1"), "utf-8");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		String firstFlag = request.getParameter("firstFlag");//第一次进入1，非为0
 		int currentPage = request.getParameter("currentPage") != null ? new Integer(request.getParameter("currentPage")) : 1;//当前页
 		
