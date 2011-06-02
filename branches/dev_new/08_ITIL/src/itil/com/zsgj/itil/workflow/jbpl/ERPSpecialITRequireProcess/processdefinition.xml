@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="ERPSpecialITRequireProcess">
+
+
+	<description>
+		ERP非常规需求流程
+	</description>
+
+
+	<start-state name="提交申请">
+		<description>
+			start
+		</description>
+		<transition to="工程师"></transition>
+	</start-state>
+
+
+	<task-node name="工程师">
+		<description>
+			engineerAudit
+		</description>
+		<transition to="打回" name="N"></transition>
+		<transition to="主管" name="Y"></transition>
+	</task-node>
+
+	<task-node name="主管">
+		<description>
+			headAudit
+		</description>
+		<transition to="打回" name="N"></transition>
+		<transition to="经理" name="Y"></transition>
+	</task-node>
+
+	<task-node name="经理">
+		<description>
+			managerAudit
+		</description>
+		<transition to="打回" name="N"></transition>
+		<transition to="结束" name="Y"></transition>
+	</task-node>
+
+	<task-node name="打回">
+		<description>
+			back
+		</description>
+		<transition to="工程师" name="Y"></transition>
+		<transition to="放弃" name="N"></transition>
+	</task-node>
+
+
+	<end-state name="结束">
+		<description>
+			end
+		</description>
+	</end-state>
+
+	<end-state name="放弃">
+		<description>
+			giveUp
+		</description>
+	</end-state>
+
+
+</process-definition>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="APPDevSpecialITRequireProcess">
+
+
+	<description>
+		应用开发类IT需求流程
+	</description>
+
+
+	<start-state name="提交申请">
+		<description>
+			start
+		</description>
+		<transition to="部门经理审批"></transition>
+	</start-state>
+
+
+	<task-node name="部门经理审批">
+		<description>
+			deptManagerAudit
+		</description>
+		<transition to="DBA、架构师等审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="DBA、架构师等审批">
+		<description>
+			someAudit
+		</description>
+		<transition to="信息系统部总监审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="信息系统部总监审批">
+		<description>
+			directorAudit
+		</description>
+		<transition to="处理" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="打回">
+		<description>
+			back
+		</description>
+		<transition to="放弃" name="N"></transition>
+		<transition to="部门经理审批" name="Y"></transition>
+	</task-node>
+
+	<task-node name="处理">
+		<description>
+			process
+		</description>
+		<transition to="结束"></transition>
+	</task-node>
+
+
+	<end-state name="结束">
+		<description>
+			end
+		</description>
+	</end-state>
+
+	<end-state name="放弃">
+		<description>
+			giveUp
+		</description>
+	</end-state>
+
+
+</process-definition>
