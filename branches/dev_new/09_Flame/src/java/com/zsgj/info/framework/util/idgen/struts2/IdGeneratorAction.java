@@ -252,7 +252,7 @@ public class IdGeneratorAction extends  BaseAction {
 				if (i != 0)
 					json.append(",");
 				json.append("{");
-				json.append("departCode:'" + listData.get(i).get("departCode") + "',");
+				json.append("departCode:'" + listData.get(i).get("id") + "',");
 				json.append("departName:'" + listData.get(i).get("departName") + "'");
 				json.append("}");
 			}

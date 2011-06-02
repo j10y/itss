@@ -453,7 +453,6 @@ public class PagePanelServiceImpl extends BaseDao implements PagePanelService {
 		list = super.find(hql, panel);
 		return list;
 	}
-
 	public void savePanelColumnsFormSysMainTable(String ppId, String smtId) {
 		//System.out.println(ppId+smtId);
 		PagePanel pp=findPagePanelById(ppId);
