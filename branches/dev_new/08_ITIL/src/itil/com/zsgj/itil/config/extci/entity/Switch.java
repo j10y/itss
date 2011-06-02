@@ -17,7 +17,14 @@ public class Switch extends BaseObject {
 	private java.util.Date createDate;
 	private com.zsgj.info.framework.security.entity.UserInfo modifyUser;
 	private java.util.Date modifyDate;
-
+	private String assetsNum;
+	   
+    public String getAssetsNum() {
+		return assetsNum;
+	}
+	public void setAssetsNum(String assetsNum) {
+		this.assetsNum = assetsNum;
+	}
 	public Integer getStandardHigh() {
 		return standardHigh;
 	}

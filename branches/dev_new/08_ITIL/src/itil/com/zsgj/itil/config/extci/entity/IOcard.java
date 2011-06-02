@@ -17,7 +17,14 @@ public class IOcard extends BaseObject {
    private java.util.Date modifyDate;
    private java.lang.String brand;
    private java.lang.String model;
-   public java.lang.String getBrand() {
+   private String assetsNum;
+   public String getAssetsNum() {
+	return assetsNum;
+	}
+	public void setAssetsNum(String assetsNum) {
+		this.assetsNum = assetsNum;
+	}
+	public java.lang.String getBrand() {
 		return brand;
 	}
 	public void setBrand(java.lang.String brand) {
