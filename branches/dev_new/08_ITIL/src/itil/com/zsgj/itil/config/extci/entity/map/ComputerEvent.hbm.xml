@@ -21,6 +21,12 @@
 			<many-to-one name="type" class="com.zsgj.itil.config.extlist.entity.ComputerType">
 		      <column name="TYPE" />
 		    </many-to-one>
-	
+		    
+			<property name="cisn" type="java.lang.String">
+			  <column name="cisn" ></column>
+			</property>
+			<property name="assetsNum" type="java.lang.String">
+			  <column name="assetsNum" ></column>
+			</property>
   </class>
 </hibernate-mapping>

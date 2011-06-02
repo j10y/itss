@@ -60,6 +60,9 @@
 			<property name="modifyDate" type="date">
 			  <column name="MODIFYDATE"></column>
 			</property>
+			<property name="assetsNum" type="java.lang.String">
+			  <column name="assetsNum" ></column>
+			</property>
 	
   </class>
 </hibernate-mapping>

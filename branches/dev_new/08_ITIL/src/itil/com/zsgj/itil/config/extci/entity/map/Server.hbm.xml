@@ -125,6 +125,9 @@
 			<property name="diskNumber" type="integer">
 				<column name="diskNumber"></column>
 			</property>
+			<property name="assetsNum" type="java.lang.String">
+			  <column name="assetsNum" ></column>
+			</property>
 	
   </class>
 </hibernate-mapping>

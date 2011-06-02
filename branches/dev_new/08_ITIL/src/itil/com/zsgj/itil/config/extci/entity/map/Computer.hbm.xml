@@ -22,5 +22,11 @@
 		      <column name="TYPE" />
 		    </many-to-one>
 	
+			<property name="cisn" type="java.lang.String">
+			  <column name="cisn" ></column>
+			</property>
+			<property name="assetsNum" type="java.lang.String">
+			  <column name="assetsNum" ></column>
+			</property>
   </class>
 </hibernate-mapping>

@@ -53,6 +53,9 @@
 			<property name="bclientContacts" type="string">
 		      <column name="bclientContacts" />
 		    </property>
+			<property name="assetsNum" type="java.lang.String">
+			  <column name="assetsNum" ></column>
+			</property>
 	
   </class>
 </hibernate-mapping>
