@@ -101,15 +101,15 @@ function void requireEndFlag(Map $map){
 	String nodeName = (String)$map.get("nodeName");	
 	String reqClass = (String)$map.get("reqClass");	
 	List sbus = new ArrayList();#触发邮件的SBU
-	sbus.add("31");#供应链SBU
-	sbus.add("32");#商用SBU
-	sbus.add("33");#消费SBU
-	String sbuMailRoleId = "11";#接收邮件的角色EB工程师
-
+	#sbus.add("31");#供应链SBU
+	#sbus.add("32");#商用SBU
+	#sbus.add("33");#消费SBU
+	#String sbuMailRoleId = "11";#接收邮件的角色EB工程师
+	String sbuMailRoleId ="";
 	String storeMailRoleId = "";#物流核算经理角色
-	if(serviceItemId=="167"){ #库存地服务项
-		storeMailRoleId = ""; 
-	}
+	#if(serviceItemId=="167"){ #库存地服务项
+	#	storeMailRoleId = ""; 
+	#}
 	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
 	processRuleHelper.requireErpEndFlag(dataId,serviceItemId ,nodeId,nodeName,processId,reqClass,sbus,sbuMailRoleId,storeMailRoleId);
 	
@@ -146,7 +146,8 @@ function String isNewFactory(Map $map){
 	String reqClass = (String)$map.get("reqClass");	
 	String result = (String)$map.get("result");
 	String comment = (String)$map.get("comment");	
-	String sbuMailRoleId = "83";#接收邮件的角色新建工厂加签人审批 
+	String sbuMailRoleId = "";
+	#String sbuMailRoleId = "83";#接收邮件的角色新建工厂加签人审批 
 	Map typeMailMap = new HashMap();
 	RequireProcessRuleHelper processRuleHelper=new RequireProcessRuleHelper();
 	return processRuleHelper.isNewFactory(dataId,serviceItemId ,nodeId,nodeName,processId,reqClass,result,comment,sbuMailRoleId);
@@ -194,22 +195,23 @@ function void toRealTestEndDate(Map $map){
 	String comment = (String)$map.get("comment");
 	
 	List sbus = new ArrayList();#触发邮件的SBU
-	sbus.add("31");#供应链SBU
-	sbus.add("32");#商用SBU
-	sbus.add("33");#消费SBU
-	String sbuMailRoleId = "11";#接收邮件的角色EB工程师
+	#sbus.add("31");#供应链SBU
+	#sbus.add("32");#商用SBU
+	#sbus.add("33");#消费SBU
+	String sbuMailRoleId = "";
+	#String sbuMailRoleId = "11";#接收邮件的角色EB工程师
 	
 	List types1 = new ArrayList();#触发邮件的需求小类
-	types1.add("19");#公司代码
-	types1.add("21");#利润中心
-	types1.add("26");#业务范围
-	types1.add("27");#组织结构
-	String typeMailRoleId1 = "47";#接收邮件的角色ERP帐号管理员
-	
+	#types1.add("19");#公司代码
+	#types1.add("21");#利润中心
+	#types1.add("26");#业务范围
+	#types1.add("27");#组织结构
+	#String typeMailRoleId1 = "47";#接收邮件的角色ERP帐号管理员
+	String typeMailRoleId1 ="";
 	List types2 = new ArrayList();#触发邮件的需求小类
-	types2.add("82");#新增非零件工厂
-	String typeMailRoleId2 = "83";#接收邮件的角色物流核算经理
-	
+	#types2.add("82");#新增非零件工厂
+	#String typeMailRoleId2 = "83";#接收邮件的角色物流核算经理
+	String typeMailRoleId2 ="";
 	Map typeMailMap = new HashMap();
 	typeMailMap.put(types1,typeMailRoleId1);
 	typeMailMap.put(types2,typeMailRoleId2);
