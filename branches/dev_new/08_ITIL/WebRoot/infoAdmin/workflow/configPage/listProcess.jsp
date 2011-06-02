@@ -62,7 +62,6 @@ p {
 	Ext.BLANK_IMAGE_URL = webContext+'/extEngine/resources/images/default/s.gif';
 
 	Ext.onReady(function(){
-		alert(221);
 	   Ext.QuickTips.init();
 	   Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
 	   var listProcessPanel = new ListProcessPanel();
