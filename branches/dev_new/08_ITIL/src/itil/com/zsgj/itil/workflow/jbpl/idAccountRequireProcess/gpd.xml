@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="idAccountRequireProcess" width="1027" height="572">
+  <node name="提出申请" x="163" y="73" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="运维工程师审批处理" x="145" y="172" width="166" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-9" y="-3"/>
+      <bendpoint w1="113" h1="42" w2="-125" h2="66"/>
+    </edge>
+  </node>
+  <node name="打回" x="400" y="148" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-4" y="-10"/>
+      <bendpoint w1="-112" h1="-43" w2="126" h2="-67"/>
+    </edge>
+  </node>
+  <node name="结束" x="161" y="271" width="132" height="36"/>
+  <node name="放弃" x="399" y="220" width="132" height="36"/>
+</root-container>
