@@ -707,7 +707,7 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 			allowBlank : false,
 			name : "description",
 			pageSize : 10,
-			selectOnFocus : true,
+			//selectOnFocus : true,
 			listWidth : 200,
 			maxHeight : 240,
 			listeners : {
