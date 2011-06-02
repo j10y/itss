@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<br><br>
     	<br><br>
     	<br>
-    <h3 align='center'>上品折扣特殊帐号用户确认</h3>
+    <h3 align='center'>上品公司特殊帐号用户确认</h3>
     <br>
     	<br>
     	<br>

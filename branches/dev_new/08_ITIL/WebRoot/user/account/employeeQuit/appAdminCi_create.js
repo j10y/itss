@@ -51,13 +51,13 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					params : {
 						clazz : 'com.zsgj.itil.actor.entity.CustomerIn',
 						propertyName : 'customerName',
-						propertyValue : unicode('上品折扣')
+						propertyValue : unicode('上品公司')
 					},
 					success : function(response, options) {
 						var responseText = response.responseText;
 						data = Ext.decode(responseText);
 						Ext.getCmp("ConfigItem$customerCombo").setValue(data.id);
-						Ext.getCmp("ConfigItem$customerCombo").setRawValue('上品折扣');
+						Ext.getCmp("ConfigItem$customerCombo").setRawValue('上品公司');
 					}
 				})
 			}
@@ -69,13 +69,13 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					params : {
 						clazz : 'com.zsgj.itil.actor.entity.CustomerIn',
 						propertyName : 'customerName',
-						propertyValue : unicode('上品折扣')
+						propertyValue : unicode('上品公司')
 					},
 					success : function(response, options) {
 						var responseText = response.responseText;
 						data = Ext.decode(responseText);
 						Ext.getCmp("ConfigItem$ownerCombo").setValue(data.id);
-						Ext.getCmp("ConfigItem$ownerCombo").setRawValue('上品折扣');
+						Ext.getCmp("ConfigItem$ownerCombo").setRawValue('上品公司');
 					}
 				})
 			}

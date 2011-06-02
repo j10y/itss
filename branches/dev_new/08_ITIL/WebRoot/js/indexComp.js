@@ -12,7 +12,7 @@ com.dc.ui.IndexPage = {
 				border : false,
 				iconCls : 'nav',
 				autoScroll : true,
-				html:'IT需求管理员：刘辉(liuhuip/6106-5388)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;樊恒发(fanhf/6106-5280)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文楠(wennan/6106-7604)<br> 手机类帐号：马然（maran/6106-5093）<br>座机类帐号：刘庆忠（liuqz/6106-7966）<br>BI类帐号：7888-4  <br> EL/EB类账号：7888-5<br>HRS类账号：李东娅（lidy/6106-7931）<br> SCM类账号：曹卫锋（caowf/6100-3385）<br> 其他账号类问题：7888-1'
+				html:''
 			});
 		menu.push(helpInfo);
 			

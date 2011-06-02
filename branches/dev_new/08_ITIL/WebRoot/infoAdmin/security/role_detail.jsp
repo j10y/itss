@@ -98,9 +98,9 @@ function initSelect(cobj, fselect){
    <tr>
     <td  align="center" bgcolor="#EFF3FF">隶属部门</td>
     <td  bgcolor="#EFF3FF" colspan="3">
-    <font color="red">对于公用角色请选择上品折扣，将自动带出上品折扣下的所有菜单模板</font><br>
+    <font color="red">对于公用角色请选择上品公司，将自动带出上品公司下的所有菜单模板</font><br>
      <select name="department" id="department" class="textfield" onchange="findDeptTemplateByDept();">
-      <option value="1101">上品折扣</option>
+      <option value="1101">上品公司</option>
       <c:forEach var="item" items="${requestScope.depts}" varStatus="status">
       <option value="${item.departCode}" ${role.department.departCode eq item.departCode?' selected':''}>${item.fullDepartName}</option>
      </c:forEach>

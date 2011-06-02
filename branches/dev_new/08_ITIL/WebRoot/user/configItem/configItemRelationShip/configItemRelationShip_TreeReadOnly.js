@@ -169,7 +169,7 @@ PagteModelTreePanel = Ext.extend(Ext.tree.TreePanel, {
 		}, this);
 		
 		this.root = new Ext.tree.AsyncTreeNode({
-			text: '上品折扣',
+			text: '上品公司',
 			draggable: false,
 			itemCode: '0',
 			itemType:'',
