@@ -159,7 +159,7 @@
 	</table>
 </div>
 <div style="position:absolute;  left: 25%; top: 420px; width:902px; height:20px;font-family: 宋体;font-size: 12px;" >
-上品折扣版权所有 Copyright 2000-2009 All Right Reserved.
+上品公司版权所有 Copyright 2000-2009 All Right Reserved.
 信息系统部（DCIT） 提供支持平台
 </div>
 	 
