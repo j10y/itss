@@ -6,9 +6,9 @@
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="0">  
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/ext-all.css" />
-		<!-- 
+		 
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/tabs.css" />
-		 -->
+		
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/editable-column-tree.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Ext.ux.UploadDialog.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common.css"/>
