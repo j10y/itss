@@ -19,14 +19,14 @@
 		<description>
 			engineerProcess
 		</description>
-		<transition to="服务组长处理" name="overtime"></transition>
-		<transition to="服务组长处理" name="cannotresolve"></transition>
+		<transition to="支持组长处理" name="overtime"></transition>
+		<transition to="支持组长处理" name="cannotresolve"></transition>
 		<transition to="其他处理组处理" name="otherOrgProcess"></transition>
 		<transition to="用户确认" name="touserconfirm"></transition>
 		<transition to="结束" name="resolveByuserself"></transition>
 	</task-node>
 
-	<task-node name="服务组长处理">
+	<task-node name="支持组长处理">
 		<description>
 			headerProcess
 		</description>
@@ -39,7 +39,7 @@
 			otherOrgProcess
 		</description>
 		<transition to="工程师处理" name="return"></transition>
-		<transition to="服务组长处理" name="cannotresolve"></transition>
+		<transition to="支持组长处理" name="cannotresolve"></transition>
 		<transition to="用户确认" name="touserconfirm"></transition>
 		<transition to="结束" name="resolveByuserself"></transition>
 	</task-node>

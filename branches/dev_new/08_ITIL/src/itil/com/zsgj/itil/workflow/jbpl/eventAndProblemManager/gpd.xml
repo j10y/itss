@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="eventAndProblemProcess" width="797" height="493">
+<root-container name="eventAndProblemProcess" width="764" height="462">
   <node name="填写事件清单" x="342" y="57" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -28,7 +28,7 @@
       <bendpoint w1="-118" h1="172" w2="-118" h2="-88"/>
     </edge>
   </node>
-  <node name="服务组长处理" x="82" y="164" width="132" height="36">
+  <node name="支持组长处理" x="82" y="164" width="132" height="36">
     <edge>
       <label x="-33" y="-13"/>
       <bendpoint w1="143" h1="-47" w2="-116" h2="-48"/>
@@ -57,7 +57,6 @@
       <bendpoint w1="0" h1="259" w2="224" h2="-1"/>
     </edge>
   </node>
-  <node name="结束" x="341" y="425" width="132" height="36"/>
   <node name="用户确认" x="341" y="298" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -67,4 +66,5 @@
       <bendpoint w1="-46" h1="-60" w2="-46" h2="73"/>
     </edge>
   </node>
+  <node name="结束" x="341" y="425" width="132" height="36"/>
 </root-container>
