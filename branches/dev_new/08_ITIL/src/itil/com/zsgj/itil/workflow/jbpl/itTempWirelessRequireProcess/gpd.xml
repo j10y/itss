@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="itTempHardwareRequireProcess" width="1027" height="572">
+<root-container name="itTempWirelessRequireProcess" width="1063" height="554">
   <node name="提出申请" x="157" y="73" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -24,8 +24,6 @@
       <bendpoint w1="-118" h1="-44" w2="125" h2="-42"/>
     </edge>
   </node>
-  <node name="结束" x="156" y="336" width="132" height="36"/>
-  <node name="放弃" x="399" y="220" width="132" height="36"/>
   <node name="运维主管审批" x="157" y="146" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -35,4 +33,6 @@
       <bendpoint w1="127" h1="31" w2="-116" h2="29"/>
     </edge>
   </node>
+  <node name="结束" x="156" y="336" width="132" height="36"/>
+  <node name="放弃" x="399" y="220" width="132" height="36"/>
 </root-container>
