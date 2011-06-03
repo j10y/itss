@@ -457,7 +457,7 @@ public class ServiceItemAction  extends BaseAction{
 		String sciStatus = request.getParameter("sciStatus");
 		String sciName = request.getParameter("sciName");
 		int start = HttpUtil.getInt(request, "start",0);
-		int pageSize = HttpUtil.getInt(request, "pageSize",20);
+		int pageSize = HttpUtil.getInt(request, "pageSize",15);
 		int pageNo=start/pageSize+1;
 		ServiceItemType serviceItemType = null;
 		ServiceStatus serviceStatus = null;
