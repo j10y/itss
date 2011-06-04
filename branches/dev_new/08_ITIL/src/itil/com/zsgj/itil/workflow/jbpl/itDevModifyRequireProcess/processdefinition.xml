@@ -16,11 +16,11 @@
 	</start-state>
 
 
-	<task-node name="架构师审批处理">
+	<task-node name="架构师审批">
 		<description>
 			architectAudit
 		</description>
-		<transition to="信息系统部总监" name="Y"></transition>
+		<transition to="信息系统部总监审批" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
@@ -36,21 +36,21 @@
 		<description>
 			deptDirectorAudit
 		</description>
-		<transition to="架构师审批处理" name="Y"></transition>
+		<transition to="架构师审批" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
-	<task-node name="信息系统部总监">
+	<task-node name="信息系统部总监审批">
 		<description>
 			infoDirector
 		</description>
-		<transition to="提交解决方案" name="Y"></transition>
+		<transition to="提交实施方案" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
-	<task-node name="提交解决方案">
+	<task-node name="提交实施方案">
 		<description>
-			submitSolution
+			submitImplementation
 		</description>
 		<transition to="用户确认" name="Y"></transition>
 	</task-node>
@@ -59,7 +59,7 @@
 		<description>
 			confirm
 		</description>
-		<transition to="提交解决方案" name="N"></transition>
+		<transition to="提交实施方案" name="N"></transition>
 		<transition to="实施并交付" name="Y"></transition>
 	</task-node>
 
