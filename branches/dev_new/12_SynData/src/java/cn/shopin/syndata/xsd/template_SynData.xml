@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	本文件是一个模板文件，使用时请将文件名命名成如下格式：系统名_SynData.xml。
+	并在部署本工程时修改配置文件中的检查目录：system.file.basepath为自己的路径。
+	并将配置好的  系统名_SynData.xml 文件放置到system.file.basepath制定的路径下。
+-->
 <SynData xmlns="http://syndata.shopin.cn"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://syndata.shopin.cn Syndata.xsd">
-
+	<!-- 此部分为待同步的目的数据库的链接配置 -->
 	<dataBase>
 		<driver></driver>
 		<url></url>
@@ -11,6 +17,18 @@ xsi:schemaLocation="http://syndata.shopin.cn Syndata.xsd">
 	</dataBase>
 	
 	<tableinfo>
+		<!-- 
+			此部分为部门信息同步，其中内容需要根据实际情况配置，例如： <deptcode>departCode</deptcode>
+			其中的“departCode”字段表示数据库中真是的department表的对应字段。如果没有对应字段则不填写任何值
+			部门有效时间标记可以使用startDate+endDate或者是IsDelete两个标记中的其中一个。不能两个同时使用
+			IsDelete字段请使用int型，1表示删除，0表示为删除。如需更新部门表，请首先将数据库中目前的部门信息设置为
+			失效状态，即：endDate=当天 或者 isDelete标记为1。部门信息同步仅只会执行一次，当一次执行完毕后将会修改
+			本文件<dept>节中的“isSyn”属性为false。"<customizeSQL>"节可以提供自定义SQL执行的支持，如需定义请参照
+			如下格式,value可以是多个：
+			<customizeSQL>
+				<value>select * from xxxx</value>
+			</customizeSQL>
+		-->
 		<dept isSyn="true" tablename="">
 			<deptcode></deptcode>
 			<deptname></deptname>
@@ -19,6 +37,16 @@ xsi:schemaLocation="http://syndata.shopin.cn Syndata.xsd">
 			<enddate></enddate>
 			<isdelete></isdelete>
 		</dept>
+		
+		<!--
+			此部分用户信息同步， 同上请根据实际表对应字段填写。如需将用户信息对应密码更新为预设值时，请将
+			<passWord>节“isSyn”属性设置为true并填写“defaultValue”值。否则会请将“isSyn”设定为false，以防止
+			误操作。"<customizeSQL>"节可以提供自定义SQL执行的支持，如需定义请参照
+			如下格式,value可以是多个：
+			<customizeSQL>
+				<value>select * from xxxx</value>
+			</customizeSQL>
+		-->
 		<user isSyn="true" tablename="">
 			<uid>username</uid>
 			<email>email</email>
@@ -29,6 +57,7 @@ xsi:schemaLocation="http://syndata.shopin.cn Syndata.xsd">
 			<mobile></mobile>
 			<fax></fax>
 			<position></position>
+			<passWord isSyn="false" columnName="" defaultValue="" />
 		</user>
 	</tableinfo>
 </SynData>

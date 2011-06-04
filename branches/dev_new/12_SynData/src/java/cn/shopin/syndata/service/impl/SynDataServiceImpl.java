@@ -34,6 +34,7 @@ public class SynDataServiceImpl implements SynDataService{
 		logger.info("Start SynData........");
 		try {
 			for(String item : fl){
+				logger.info("Create Thread for " + item);
 				SynDataRunnable sdr = new SynDataRunnable(item);
 				Thread td = new Thread(sdr);
 				td.start();

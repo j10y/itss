@@ -31,6 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import cn.shopin.syndata.entity.CustomizeSQL;
 import cn.shopin.syndata.entity.ObjectFactory;
 import cn.shopin.syndata.entity.SynData;
 import cn.shopin.syndata.utils.PropertiesUtil;
@@ -82,6 +83,7 @@ public class SynDataRunnable implements Runnable {
 
 			DataSource ds = BasicDataSourceFactory.createDataSource(p);
 			JdbcTemplate jt = new JdbcTemplate(ds);
+			fis.close();
 
 			if (sd.getTableinfo().getDept().isIsSyn()) {
 				synDepartment(sd, jt);
@@ -90,14 +92,63 @@ public class SynDataRunnable implements Runnable {
 			if (sd.getTableinfo().getUser().isIsSyn()) {
 				synUser(sd, jt);
 			}
-			fis.close();
+			
+			setFlag(sd);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.error("SynData Runnable Thread Error: " + e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * 设定同步结束标记
+	 * @Methods Name setFlag
+	 * @Create In 2011-6-4 By Jack
+	 * @param sd void
+	 */
+	private void setFlag(final SynData sd){
+		logger.info("Start Change Department Syn Flag To False--------");
+		FileOutputStream fos = null;
+		try {
+			JAXBContext jc = JAXBContext.newInstance("cn.shopin.syndata.entity");
+			Marshaller marshaller = jc.createMarshaller();
+			
+			sd.getTableinfo().getDept().setIsSyn(false);
+			sd.getTableinfo().getUser().getPassWord().setIsSyn(false);
+			
+			ObjectFactory factory = new ObjectFactory();
+			SynData sdw = factory.createSynData();
+			sdw = sd;
+			fos = new FileOutputStream(this.filePath);
+			marshaller.marshal(sdw, fos);
+			fos.flush();
+			fos.close();
+			
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("Start Change Department Syn Flag To False Error:" + e.getMessage());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("Start Change Department Syn Flag To False Error:" + e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("Start Change Department Syn Flag To False Error:" + e.getMessage());
+		}
+		logger.info("End Change Department Syn Flag To False--------");
+	}
+	
+	/**
+	 * 同步部门信息
+	 * @Methods Name synDepartment
+	 * @Create In 2011-6-4 By Jack
+	 * @param sd
+	 * @param jt void
+	 */
 	@SuppressWarnings("deprecation")
 	private void synDepartment(final SynData sd, JdbcTemplate jt) {
 		List<net.shopin.ldap.ws.client.Department> ldapDept = new ArrayList<net.shopin.ldap.ws.client.Department>();
@@ -208,38 +259,19 @@ public class SynDataRunnable implements Runnable {
 					jt.update(insert, arg);
 				}
 			}
+			doCustomizeSQL(sd.getTableinfo().getDept().getCustomizeSQL(), jt);
 		}
-		logger.info("Start Change Department Syn Flag To False--------");
-		FileOutputStream fos = null;
-		try {
-			JAXBContext jc = JAXBContext.newInstance("cn.shopin.syndata.entity");
-			Marshaller marshaller = jc.createMarshaller();
-			sd.getTableinfo().getDept().setIsSyn(false);
-			ObjectFactory factory = new ObjectFactory();
-			SynData sdw = factory.createSynData();
-			sdw = sd;
-			fos = new FileOutputStream(this.filePath);
-			marshaller.marshal(sdw, fos);
-			fos.flush();
-			fos.close();
-			
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error("Start Change Department Syn Flag To False Error:" + e.getMessage());
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error("Start Change Department Syn Flag To False Error:" + e.getMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error("Start Change Department Syn Flag To False Error:" + e.getMessage());
-		}
-		logger.info("End Change Department Syn Flag To False--------");
+		
 		logger.info("End Department SynData..............");
 	}
-
+	
+	/**
+	 * 同步人员信息
+	 * @Methods Name synUser
+	 * @Create In 2011-6-4 By Jack
+	 * @param sd
+	 * @param jt void
+	 */
 	private void synUser(SynData sd, JdbcTemplate jt) {
 		List<net.shopin.ldap.ws.client.User> ldapUser = new ArrayList<net.shopin.ldap.ws.client.User>();
 		logger.info("Start User SynData..............");
@@ -313,6 +345,12 @@ public class SynDataRunnable implements Runnable {
 				values += " , ?";
 				paraNum +=1;
 			}
+			if(sd.getTableinfo().getUser().getPassWord().isIsSyn()){
+				update += (sd.getTableinfo().getUser().getPassWord().getColumnName() + " = ?, ");
+				insert += (sd.getTableinfo().getUser().getPassWord().getColumnName() + " , ");
+				values += " , ?";
+				paraNum +=1;
+			}
 
 			update = update.trim();
 			update = update.substring(0, update.length() - 1);
@@ -365,6 +403,9 @@ public class SynDataRunnable implements Runnable {
 							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
 									.getBelongName())) {
 						arg[itemn++] = item.getDeptName();
+					}
+					if(sd.getTableinfo().getUser().getPassWord().isIsSyn()){
+						arg[itemn++] = sd.getTableinfo().getUser().getPassWord().getDefaultValue();
 					}
 					
 					logger.info("Update User:" + item.getCn() + "/" + uid);
@@ -420,13 +461,38 @@ public class SynDataRunnable implements Runnable {
 									.getBelongName())) {
 						arg[itemn++] = item.getDeptName();
 					}
+					if(sd.getTableinfo().getUser().getPassWord().isIsSyn()){
+						arg[itemn++] = sd.getTableinfo().getUser().getPassWord().getDefaultValue();
+					}
+					
 					logger.info("Insert User:" + item.getCn() + "/" + uid);
 					jt.update(insert, arg);
 				}
 			}
+			
+			doCustomizeSQL(sd.getTableinfo().getUser().getCustomizeSQL(), jt);
 		}
 
 		logger.info("End User SynData..............");
+	}
+	
+	/**
+	 * 执行自定义SQL
+	 * @Methods Name doCustomizeSQL
+	 * @Create In 2011-6-4 By Jack
+	 * @param csql
+	 * @param jt void
+	 */
+	private void doCustomizeSQL(CustomizeSQL csql, JdbcTemplate jt){
+		if(csql !=  null){
+			logger.info("Start deal Customize SQL...................");
+			long no = 1;
+			for(String item : csql.getValue()){
+				logger.info("No." + no++ + ": " + item);
+				jt.update(item);
+			}
+			logger.info("End deal Customize SQL...................");
+		}
 	}
 	
 	/**
