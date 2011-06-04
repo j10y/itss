@@ -149,6 +149,8 @@
     <bean id="casAuthenticationFilter" class="org.jasig.cas.client.authentication.AuthenticationFilter">
         <property name="casServerLoginUrl" value="${system.security.cas.loginPath}" />
         <property name="serverName" value="${system.security.cas.clientPath}" />
+        <property name="renew" value="false" />
+        
     </bean>
  
     <bean id="casValidationFilter" class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter">
