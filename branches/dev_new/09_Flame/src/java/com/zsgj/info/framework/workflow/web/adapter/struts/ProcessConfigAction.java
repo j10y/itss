@@ -694,7 +694,8 @@ public class ProcessConfigAction extends BaseDispatchAction {
 						Iterator it = list.iterator();
 						while (it.hasNext()) {
 							PageModel r = (PageModel) it.next();
-							if (value.equals(r.getName())) {
+							String value1=value.substring(value.indexOf("/")+1, value.length());
+							if (value1.equals(r.getName())) {
 								infoMap.put("pageModelId", r.getId());
 							}
 						}
