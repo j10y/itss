@@ -20,7 +20,7 @@
 		<description>
 			operationHeadAudit
 		</description>
-		<transition to="处理" name="Y"></transition>
+		<transition to="运维经理审批" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
@@ -52,7 +52,15 @@
 			deptManagerAudit
 		</description>
 		<transition to="运维工程师审批" name="Y"></transition>
-		<transition to="打回" name="to 打回"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="运维经理审批">
+		<description>
+			operationManagerAudit
+		</description>
+		<transition to="处理" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
 	</task-node>
 
 

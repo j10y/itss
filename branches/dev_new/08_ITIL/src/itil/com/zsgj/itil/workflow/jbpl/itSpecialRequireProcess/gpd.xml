@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="itSpecialRequireProcess" width="1027" height="572">
-  <node name="提出申请" x="157" y="73" width="132" height="36">
+<root-container name="itSpecialRequireProcess" width="1045" height="535">
+  <node name="提出申请" x="153" y="44" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="运维主管审批" x="140" y="307" width="166" height="36">
+  <node name="运维主管审批" x="136" y="258" width="166" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -14,7 +14,7 @@
       <label x="-9" y="-3"/>
     </edge>
   </node>
-  <node name="打回" x="400" y="218" width="132" height="36">
+  <node name="打回" x="396" y="189" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -23,27 +23,35 @@
       <bendpoint w1="-1" h1="-73" w2="243" h2="0"/>
     </edge>
   </node>
-  <node name="运维工程师审批" x="157" y="216" width="132" height="36">
+  <node name="运维工程师审批" x="153" y="187" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
-      <label x="-5" y="-6"/>
-    </edge>
-  </node>
-  <node name="处理" x="158" y="377" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
+      <label x="-10" y="-7"/>
     </edge>
   </node>
-  <node name="结束" x="158" y="434" width="132" height="36"/>
-  <node name="放弃" x="399" y="290" width="132" height="36"/>
-  <node name="部门经理审批" x="156" y="145" width="132" height="36">
+  <node name="处理" x="153" y="402" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审批" x="152" y="116" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
+      <label x="-8" y="-14"/>
+    </edge>
+  </node>
+  <node name="结束" x="152" y="464" width="132" height="36"/>
+  <node name="放弃" x="395" y="261" width="132" height="36"/>
+  <node name="运维经理审批" x="153" y="330" width="132" height="36">
+    <edge>
       <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-7" y="3"/>
     </edge>
   </node>
 </root-container>
