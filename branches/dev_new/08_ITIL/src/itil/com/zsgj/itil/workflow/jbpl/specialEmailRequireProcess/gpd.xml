@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="specialEmailRequireProcess" width="1027" height="572">
+<root-container name="specialEmailRequireProcess" width="1045" height="500">
   <node name="提出申请" x="163" y="73" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -12,20 +12,15 @@
     </edge>
     <edge>
       <label x="-9" y="-3"/>
-      <bendpoint w1="117" h1="27" w2="-121" h2="51"/>
     </edge>
   </node>
-  <node name="打回" x="398" y="210" width="132" height="36">
+  <node name="打回" x="405" y="176" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
-      <label x="-10" y="-15"/>
-      <bendpoint w1="-118" h1="-27" w2="118" h2="-30"/>
-    </edge>
-    <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="-1" h1="-69" w2="234" h2="-1"/>
+      <bendpoint w1="0" h1="-34" w2="242" h2="0"/>
     </edge>
   </node>
   <node name="人力资源审批" x="163" y="142" width="132" height="36">
@@ -34,9 +29,8 @@
     </edge>
     <edge>
       <label x="5" y="-10"/>
-      <bendpoint w1="141" h1="13" w2="-94" h2="-55"/>
     </edge>
   </node>
   <node name="结束" x="161" y="312" width="132" height="36"/>
-  <node name="放弃" x="397" y="282" width="132" height="36"/>
+  <node name="放弃" x="404" y="248" width="132" height="36"/>
 </root-container>
