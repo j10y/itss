@@ -19,14 +19,15 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			Ext.MessageBox.alert("提示", "页面中带红色波浪线的为必填项,请填写完整。谢谢您合作！");
 			return false;
 		}
-		var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();	
+//		var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();	
 		var ItName=Ext.getCmp('SpecialRequirement$confirmUserCombo').getRawValue();			
-		if(deptName=="无"){
-			Ext.MessageBox.alert("提示","请选择所属SBU/本部！");
-			return;
-		}
+//		if(deptName=="无"){
+//			Ext.MessageBox.alert("提示","请选择所属SBU/本部！");
+//			return;
+//		}
 		if(ItName=="无"){
-			Ext.MessageBox.alert("提示","请选择IT审批人！");
+//			Ext.MessageBox.alert("提示","请选择IT审批人！");
+			Ext.MessageBox.alert("提示","请选择部门审批人！");
 			return;
 		}		
 		Ext.getCmp('saveButton').disable();
@@ -39,12 +40,12 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			Ext.getCmp('workFlowButton').enable();
 			return;
 		}
-		if (dept == "" || dept == null) {
-			Ext.MessageBox.alert("提示", "请选择部门审批人！");
-			Ext.getCmp('saveButton').enable();
-			Ext.getCmp('workFlowButton').enable();
-			return;
-		}
+//		if (dept == "" || dept == null) {
+//			Ext.MessageBox.alert("提示", "请选择部门审批人！");
+//			Ext.getCmp('saveButton').enable();
+//			Ext.getCmp('workFlowButton').enable();
+//			return;
+//		}
 		var curscid = this.serviceItemId;
 		var formParam = Ext.encode(getFormParam('panel_SpecialRequireDev_m_Input',false));		
 
@@ -75,14 +76,15 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			Ext.MessageBox.alert("提示", "页面中带红色波浪线的为必填项,请填写完整。谢谢您合作！");
 			return false;
 		}
-		var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();	
+//		var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();	
 		var ItName=Ext.getCmp('SpecialRequirement$confirmUserCombo').getRawValue();			
-		if(deptName=="无"){
-			Ext.MessageBox.alert("提示","请选择所属SBU/本部！");
-			return;
-		}
+//		if(deptName=="无"){
+//			Ext.MessageBox.alert("提示","请选择所属SBU/本部！");
+//			return;
+//		}
 		if(ItName=="无"){
-			Ext.MessageBox.alert("提示","请选择IT审批人！");
+			//Ext.MessageBox.alert("提示","请选择IT审批人！");
+			Ext.MessageBox.alert("提示","请选择部门审批人！");
 			return;
 		}					
 		Ext.getCmp('saveButton').disable();
@@ -95,12 +97,12 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			Ext.getCmp('workFlowButton').enable();
 			return;
 		}
-		if (dept == "" || dept == null) {
-			Ext.MessageBox.alert("提示", "请选择部门审批人！");
-			Ext.getCmp('saveButton').enable();
-			Ext.getCmp('workFlowButton').enable();
-			return;
-		}
+//		if (dept == "" || dept == null) {
+//			Ext.MessageBox.alert("提示", "请选择部门审批人！");
+//			Ext.getCmp('saveButton').enable();
+//			Ext.getCmp('workFlowButton').enable();
+//			return;
+//		}
 		var curscid = this.serviceItemId;
 		var curModel = this.model;
 		var curProcessName = this.processName;
@@ -208,7 +210,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				data[i].initComponent();
 			}			
 			if (idStr=='SpecialRequirement$confirmUserCombo') {
-					data[i].fieldLabel = 'IT审批人';
+//					data[i].fieldLabel = 'IT审批人';
+					data[i].fieldLabel = '部门审批人';
 					data[i].readOnly = true;				// add by zhangzy for 字段设为只读 in 2009 12 09
 					data[i].hideTrigger = true;					
 			}
@@ -296,26 +299,27 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		this.items = [this.formpanel_SpecialRequireDev_m_Input];
 		PageTemplates.superclass.initComponent.call(this);
 //所属SBU/本部 选择后 连带选择“IT审批人” start		
-		Ext.getCmp('SpecialRequirement$flatCombo').on('select',function(){	
-					var flatId = Ext.getCmp('SpecialRequirement$flatCombo').getValue();				
-					var curUrl = webContext
-							+ '/requireAction_selectConfirmUserByFlat.action'
-							+ '?flatId=' + flatId;					
-					Ext.Ajax.request({
-						url : curUrl,			
-						success : function(response, options) {
-							var responseArray = Ext.util.JSON.decode(response.responseText);
-							var clientItManagerId = responseArray.clientItManagerId;
-							if(clientItManagerId!='0'){
-								Ext.getCmp('SpecialRequirement$confirmUserCombo').setValue(clientItManagerId);
-								Ext.getCmp('SpecialRequirement$confirmUserCombo').initComponent();
-							}
-						},
-						failure : function(response, options) {
-							Ext.MessageBox.alert("获取IT审批人失败");
-						}
-					}, this);					
-				});		
+//		Ext.getCmp('SpecialRequirement$flatCombo').on('select',function(){	
+//					var flatId = Ext.getCmp('SpecialRequirement$flatCombo').getValue();				
+//					var curUrl = webContext
+//							+ '/requireAction_selectConfirmUserByFlat.action'
+//							+ '?flatId=' + flatId;					
+//					Ext.Ajax.request({
+//						url : curUrl,			
+//						success : function(response, options) {
+//							var responseArray = Ext.util.JSON.decode(response.responseText);
+//							var clientItManagerId = responseArray.clientItManagerId;
+//							if(clientItManagerId!='0'){
+//								Ext.getCmp('SpecialRequirement$confirmUserCombo').setValue(clientItManagerId);
+//								Ext.getCmp('SpecialRequirement$confirmUserCombo').initComponent();
+//							}
+//						},
+//						failure : function(response, options) {
+//							//Ext.MessageBox.alert("获取IT审批人失败");
+//							Ext.MessageBox.alert("获取部门审批人失败");
+//						}
+//					}, this);					
+//				});		
 //所属SBU/本部 选择后 连带选择“IT审批人” end	
 //应用系统 选择后 连带选择“应用管理员” start		
 		Ext.getCmp('SpecialRequirement$appConfigItemCombo').on('select',function(){	

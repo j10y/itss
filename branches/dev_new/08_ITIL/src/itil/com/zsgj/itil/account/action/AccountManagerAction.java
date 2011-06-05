@@ -101,7 +101,8 @@ public class AccountManagerAction extends BaseAction{
 		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
 		
 		
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		String userListStr = "deptDirectorAudit:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
 		
 		mapBizz.put("userList", userListStr);//放入流程参数中
 		String name = (String) bWrapper.getPropertyValue("name");

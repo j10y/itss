@@ -21,10 +21,12 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			Ext.MessageBox.alert("提示","页面中带红色波浪线的为必填项,请填写完整。谢谢您合作！");	
 			return false;
 		}
-		if(Ext.getCmp('SpecialRequirement$deliveryTeamCombo').getValue()==""){
-			Ext.MessageBox.alert("提示","您必须选择交付团队！");	
-			return false;
-		}
+		//remove  by awen  on 2011-06-05 begin
+//		if(Ext.getCmp('SpecialRequirement$deliveryTeamCombo').getValue()==""){
+//			Ext.MessageBox.alert("提示","您必须选择交付团队！");	
+//			return false;
+//		}
+		//remove  by awen  on 2011-06-05 end
 		var formParam = Ext.encode(getFormParam('panel_SpecialRequireDevConfirm_Input'));
 		var taskId = this.taskId;
 		Ext.Ajax.request({
@@ -53,6 +55,10 @@ PageTemplates = Ext.extend(Ext.Panel, {
 								tempUrl += '$confirmByServiceManager:' + tempServiceManageId;
 							}		
 				}
+				//add by awen for remove dynamic assign auditPerson on 2011-06-05 begin
+				tempUrl = webContext
+				+ '/extjs/workflow?method=getData&taskId=' + taskId;
+				//add by awen for remove dynamic assign auditPerson on 2011-06-05 end
 				Ext.Ajax.request({
 					url : tempUrl,
 					method : 'post',

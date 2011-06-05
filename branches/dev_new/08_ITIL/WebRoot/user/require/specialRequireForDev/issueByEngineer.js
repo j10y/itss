@@ -45,6 +45,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 //					}
 //				})
 //remove by zhangzy for‘用户要求去掉动态指派传输工程师操作，改为后台预指派（也就是在后台工作流配置角色） end
+
 				window.parent.auditContentWin.specialAudit();	
 			},
 			failure : function(response, options) {

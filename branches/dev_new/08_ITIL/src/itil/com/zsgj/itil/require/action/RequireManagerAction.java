@@ -320,6 +320,9 @@ public class RequireManagerAction extends BaseAction{
 			userListStr += "$confirmByDivision:" + confirmUser.getUserName()+
 							"$confirmByClientManager:" + confirmUser.getUserName();//add by lee for 解决方案用户经理审批阶段要申请时的部门审批人来处理 in 20091104
 		}
+		if(confirmUser!=null){
+			userListStr += "$deptManagerAudit:" + confirmUser.getUserName()+"$deptDirectorAudit:" + confirmUser.getUserName();
+		}
 		if(userListStr.startsWith("$")){
 			userListStr = userListStr.substring(1);
 		}

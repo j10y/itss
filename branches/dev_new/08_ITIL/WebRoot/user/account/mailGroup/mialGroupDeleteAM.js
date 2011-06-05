@@ -30,7 +30,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				bodyStyle : 'padding:2px'
 			},
 			items : tab,
-			tbar : [new Ext.Toolbar.TextItem('<font color=red>提示：</font><font color=blue><font color=red>审批时要严格授权</font>，如果单据审核不通过，请点击页面下方的<font color=red>“驳回”</font>按钮</font>')]
+//			tbar : [new Ext.Toolbar.TextItem('<font color=red>提示：</font><font color=blue><font color=red>审批时要严格授权</font>，如果单据审核不通过，请点击页面下方的<font color=red>“驳回”</font>按钮</font>')]
+			tbar : [new Ext.Toolbar.TextItem('<font color=red>提示：</font><font color=blue>如果放弃邮件群组删除申请，请点击页面下方的<font color=red>“放弃”</font>按钮</font>')]
 
 		});
 		return this.tabPanel;
@@ -661,7 +662,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				width : 200,
 				style : '',
 				value : '',
-				fieldLabel : '变更钱申请'
+				fieldLabel : '变更前申请'
 			}), new Ext.form.Hidden({
 				xtype : 'hidden',
 				id : 'MailGroup$id',
@@ -674,7 +675,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				fieldLabel : '自动编号'
 			})]}],
 	       buttons : [{
-				text : '保存并提交',
+				text : '重新提交',
 				iconCls : 'submit',
 				handler : function() {
 //					var dataId=Ext.getCmp('AccountApplyMainTable$id').getValue();
@@ -693,7 +694,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				}
 			},
 			{
-				text : '驳回',
+				text : '放弃',
 				iconCls : 'back',
 				handler : function() {
 					window.parent.auditContentWin.specialNoAudit();
