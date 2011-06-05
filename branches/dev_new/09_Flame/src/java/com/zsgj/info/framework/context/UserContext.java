@@ -11,11 +11,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.cas.authentication.CasAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,11 +52,11 @@ public class UserContext
 		}
 		
 		//匿名登录，可能为第一次登录
-		if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken){
+		else if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken){
 			return null;
 		}
 		//add by awen for chang acegi to security3 end
-		if(SecurityContextHolder.getContext() instanceof UsernamePasswordAuthenticationToken){
+		else if(SecurityContextHolder.getContext().getAuthentication() instanceof UsernamePasswordAuthenticationToken){
 			AuthenticationCust authen = (AuthenticationCust)SecurityContextHolder.getContext()
 					.getAuthentication();
 			if(authen != null){
@@ -67,11 +64,14 @@ public class UserContext
 			}else{
 				return null;
 			}
-		}
-		Authentication cas = (Authentication)SecurityContextHolder.getContext().getAuthentication();
-		UserInfo user = ((User)cas.getPrincipal()).getCurrentUserInfo();
+		}else if(SecurityContextHolder.getContext().getAuthentication() != null){
+			Authentication cas = (Authentication)SecurityContextHolder.getContext().getAuthentication();
+			UserInfo user = ((User)cas.getPrincipal()).getCurrentUserInfo();
 			
 			return user;
+		}
+		
+		return null;
     	
     }
     
