@@ -1,6 +1,5 @@
 package com.zsgj.itil.knowledge.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -14,19 +13,14 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
-import com.fr.report.script.function.AND;
 import com.zsgj.info.framework.dao.BaseDao;
 import com.zsgj.info.framework.dao.support.Page;
 import com.zsgj.info.framework.exception.DaoException;
-import com.zsgj.info.framework.security.entity.Department;
-import com.zsgj.info.framework.security.entity.Role;
 import com.zsgj.info.framework.security.entity.UserInfo;
-import com.zsgj.info.framework.security.entity.UserRole;
 import com.zsgj.itil.actor.entity.SupportGroup;
 import com.zsgj.itil.actor.entity.SupportGroupEngineer;
 import com.zsgj.itil.actor.entity.SupportGroupServiceItem;
 import com.zsgj.itil.event.entity.EventSulotion;
-import com.zsgj.itil.event.entity.EventType;
 import com.zsgj.itil.event.entity.EventTypeServiceItem;
 import com.zsgj.itil.knowledge.dao.KnowledgeDao;
 import com.zsgj.itil.knowledge.entity.KnowContractAuditHis;
