@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security
+           				http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+
+	<bean id="contextSource"
+		class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+		<constructor-arg value="ldap://172.16.100.173:10389/" />
+		<property name="userDn" value="uid=admin,ou=system" />
+		<property name="password" value="secret" />
+	</bean>
+	<bean id="ldapAuthProvider"
+		class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+		<constructor-arg>
+			<bean
+				class="org.springframework.security.ldap.authentication.BindAuthenticator">
+				<constructor-arg ref="contextSource" />
+
+				<property name="userSearch">
+					<bean
+						class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"
+						id="userSearch">
+						<constructor-arg value="ou=employees,ou=users,dc=shopin,dc=net"
+							index="0" />
+						<constructor-arg value="(&amp;(uid={0})(objectclass=person))"
+							index="1" />
+						<constructor-arg ref="contextSource" index="2" />
+					</bean>
+				</property>
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+		 <!--  
+			<bean
+				class="org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator">
+				<constructor-arg ref="contextSource" />
+				<constructor-arg value="ou=groups" />
+				<property name="groupRoleAttribute" value="ou" />
+			</bean>
+		-->
+		<bean class="com.jeecms.common.security.CompanyAuthoritiesPopulator" >
+			<property name="cmsUserMng" ref="cmsUserMng"/>
+		</bean>
+		</constructor-arg>
+	</bean>
+
+	<!--  
+	<sec:authentication-manager>
+		<sec:authentication-provider ref="ldapAuthProvider" />
+	</sec:authentication-manager>
+	<sec:http>
+		<sec:intercept-url access="1" pattern="/**" />
+		<sec:form-login always-use-default-target="true"
+			default-target-url="/index.jsp" />
+		<sec:logout />
+	</sec:http>
+	-->
+</beans>
