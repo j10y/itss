@@ -62,6 +62,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 	},
 
 	getFormpanel_swrequire_input : function() {
+
 		var da = new DataAction();
 		var data = null;
 		// 判断是新增还是修改
@@ -72,6 +73,15 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				"panel_swrequire_input", this);
 		if (this.dataId != '0') {
 			data = da.getPanelElementsForEdit("sw_confirmByHome","panel_swrequire_input", this.dataId);// 这是要随时变得
+			for (i = 0; i < data.length; i++) {
+				var idStr = data[i].id + "";
+				
+				if (idStr.indexOf('$confirmUserCombo') > 0) {
+					delete data[i].fieldLabel;
+					data[i].fieldLabel = '部门审批人';
+					
+				}
+			}
 			biddata = da.splitForReadOnly(data);
 		} else {
 			data = da.getPanelElementsForAdd("panel_swrequire_input");
@@ -113,6 +123,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				items : biddata
 			});
 		}
+
+		
 		return this.formpanel_swrequire_input;
 	},
 	items : this.items,
@@ -147,7 +159,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		this.pa.push(this.formpanel_swrequire_input);
 		this.formname.push("panel_swrequire_input");
 		temp.push(this.formpanel_swrequire_input);
-
 		temp.push(histroyForm);
 
 		items.push(this.getTabpanel(temp));
