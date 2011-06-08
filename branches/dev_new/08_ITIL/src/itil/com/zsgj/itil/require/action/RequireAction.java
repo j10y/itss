@@ -1347,6 +1347,7 @@ public class RequireAction extends BaseAction {
 			request.setAttribute("description", vdescription);
 			request.setAttribute("status", status);
 			request.setAttribute("dataId", id);
+			request.setAttribute("serviceItemName", serviceItem.getName());
 			//add by lee for modifyPage in 20090804 begin
 			if(StringUtils.isNotBlank(oldId)){
 				request.setAttribute("oldId", oldId);
