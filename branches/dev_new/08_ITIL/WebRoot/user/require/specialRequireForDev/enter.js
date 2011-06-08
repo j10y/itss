@@ -26,7 +26,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();	
 		var ItName=Ext.getCmp('SpecialRequirement$confirmUserCombo').getRawValue();			
 		if(deptName=="无"){
-			Ext.MessageBox.alert("提示","请选择所属SBU/本部！");
+//			Ext.MessageBox.alert("提示","请选择所属部门！");
+			Ext.MessageBox.alert("提示","请选择所属部门！");
 			return;
 		}
 		if(ItName=="无"){
@@ -83,7 +84,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();	
 		var ItName=Ext.getCmp('SpecialRequirement$confirmUserCombo').getRawValue();			
 		if(deptName=="无"){
-			Ext.MessageBox.alert("提示","请选择所属SBU/本部！");
+			Ext.MessageBox.alert("提示","请选择所属部门！");
 			return;
 		}
 		if(ItName=="无"){
@@ -210,8 +211,11 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				});
 				data[i].initComponent();
 			}
+			if (idStr=='SpecialRequirement$flatCombo') {
+				data[i].fieldLabel = '所属部门';			
+			}
 			if (idStr=='SpecialRequirement$confirmUserCombo') {
-					data[i].fieldLabel = 'IT审批人';
+					data[i].fieldLabel = '部门审批人';
 					data[i].readOnly = true;				// add by zhangzy for 字段设为只读 in 2009 12 09
 					data[i].hideTrigger = true;					
 			}
@@ -309,7 +313,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			this.items = [this.formpanel_SpecialRequireDev_Input];
 		}
 		PageTemplates.superclass.initComponent.call(this);
-//所属SBU/本部 选择后 连带选择“IT审批人” start		
+//所属部门 选择后 连带选择“IT审批人” start		
 		Ext.getCmp('SpecialRequirement$flatCombo').on('select',function(){	
 					var flatId = Ext.getCmp('SpecialRequirement$flatCombo').getValue();				
 					var curUrl = webContext
@@ -330,7 +334,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					}, this);					
 				});		
-//所属SBU/本部 选择后 连带选择“IT审批人” end
+//所属部门 选择后 连带选择“IT审批人” end
 //应用系统 选择后 连带选择“应用管理员” start		
 		Ext.getCmp('SpecialRequirement$appConfigItemCombo').on('select',function(){	
 					var appConfigItemId = Ext.getCmp('SpecialRequirement$appConfigItemCombo').getValue();				

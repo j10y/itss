@@ -27,6 +27,69 @@ PagePanel = Ext.extend(Ext.Panel, {
 		var panel = 'requireApplyDefaultAuditPanel';
 		var da = new DataAction();
 		var data = da.getPanelElementsForAdd(panel);
+		//add by awen for change dept textfield to combo on 2011-06-08 begin
+		data[1] = new Ext.form.ComboBox(
+				{
+					hiddenName : "itil_RequireApplyDefaultAudit$departmentName",
+					id : "itil_RequireApplyDefaultAudit$departmentNameCombo",
+					width : "null",
+					fieldLabel : "部门",
+					lazyRender : true,
+					displayField : "departName",
+					valueField : "id",
+					forceSelection : true,
+					emptyText : "请选择...",
+					allowBlank : true,
+					name : "itil_RequireApplyDefaultAudit$departmentName",
+					triggerAction : "all",
+					queryDelay : 700,
+					store : new Ext.data.JsonStore(
+							{
+								url : webContext
+										+ "/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.Department",
+								fields : [ "id", "departName" ],
+								totalProperty : "rowCount",
+								root : "data"
+							}),
+					pageSize : 10,
+					listeners : {
+						"beforequery" : function(queryEvent) {
+							var store = queryEvent.combo.store;
+							store.baseParams.departName = queryEvent.combo
+									.getRawValue();
+							store.baseParams.start = 0;
+							store.load();
+							return false;
+						},
+						"select" : function(combo, record, index) {
+							Ext.getCmp("itil_RequireApplyDefaultAudit$departmentNameCombo").setValue(record.data['departName'] + "/" + record.data['id']);
+						}
+					},
+					initComponent : function() {
+						if (this.getValue() != '') {
+							var combo = this;
+							this.store
+									.load({
+										params : {
+											id : combo
+													.getValue(),
+											start : 0
+										},
+										callback : function(r,
+												options,
+												success) {
+											if (r.length > 0) {
+												combo
+														.setRawValue(r[0]
+																.get(combo.displayField));
+											}
+										}
+									});
+						}
+					}
+				});
+		//add by awen for change dept textfield to combo on 2011-06-08 end
+		
 		var custdata = da.split(data);
 		var envForm = new Ext.form.FormPanel({
 			id : 'envFormPanelForAdd',
@@ -43,6 +106,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 			items : custdata
 
 		});
+		
 		var store = this.store;
 	     var win = new Ext.Window({
 				title : 'ERP审批人',
@@ -160,6 +224,72 @@ PagePanel = Ext.extend(Ext.Panel, {
 		var panel = 'requireApplyDefaultAuditPanel';
 		var da = new DataAction();
 		var data = da.getSingleFormPanelElementsForEdit(panel,id);
+		
+		var tempValue = data[1].value;
+		//add by awen for change dept textfield to combo on 2011-06-08 begin
+		data[1] = new Ext.form.ComboBox(
+				{
+					hiddenName : "itil_RequireApplyDefaultAudit$departmentName",
+					id : "itil_RequireApplyDefaultAudit$departmentNameCombo",
+					width : "null",
+					fieldLabel : "部门",
+					lazyRender : true,
+					displayField : "departName",
+					valueField : "id",
+					forceSelection : true,
+					emptyText : "请选择...",
+					allowBlank : true,
+					name : "itil_RequireApplyDefaultAudit$departmentName",
+					triggerAction : "all",
+					queryDelay : 700,
+					store : new Ext.data.JsonStore(
+							{
+								url : webContext
+										+ "/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.Department",
+								fields : [ "id", "departName" ],
+								totalProperty : "rowCount",
+								root : "data"
+							}),
+					pageSize : 10,
+					listeners : {
+						"beforequery" : function(queryEvent) {
+							var store = queryEvent.combo.store;
+							store.baseParams.departName = queryEvent.combo
+									.getRawValue();
+							store.baseParams.start = 0;
+							store.load();
+							return false;
+						},
+						"select" : function(combo, record, index) {
+							Ext.getCmp("itil_RequireApplyDefaultAudit$departmentNameCombo").setValue(record.data['departName'] + "/" + record.data['id']);
+						}
+					},
+					initComponent : function() {
+						if (this.getValue() != '') {
+							var combo = this;
+							this.store
+									.load({
+										params : {
+											id : combo
+													.getValue(),
+											start : 0
+										},
+										callback : function(r,
+												options,
+												success) {
+											if (r.length > 0) {
+												combo
+														.setRawValue(r[0]
+																.get(combo.displayField));
+											}
+										}
+									});
+						}
+					}
+				});		
+		
+		data[1].value = tempValue;
+		//add by awen for change dept textfield to combo on 2011-06-08 end
 		var custdata = da.split(data);
 		
 		var envForm = new Ext.form.FormPanel({

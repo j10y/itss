@@ -148,6 +148,13 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				data[i].readOnly = true;
 				data[i].hideTrigger = true;
 			}
+			//add by awen for changge fieldLable on 2011-06-08 begin
+			if (data[i].id=='SpecialRequirement$confirmUserCombo') {
+				data[i].fieldLabel = '部门审批人';
+				data[i].readOnly = true;				
+				data[i].hideTrigger = true;					
+			}
+			//add by awen for changge fieldLable on 2011-06-08 end
 		}	
 		biddata = da.split(data);
 		if (this.getFormButtons.length != 0) {

@@ -359,6 +359,187 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				name : 'account$comment',
 				mapping : 'account$comment'
 			}
+			//add by awen for add new accountTypes on 2011-05-08 begin
+			, 
+			{
+				name : 'Win7$id',
+				mapping : 'Win7$id'
+			},
+			{
+				name : 'Win7$accountState',
+				mapping : 'Win7$accountState'
+			},
+				{
+				name : 'Win7$rightsDesc',
+				mapping : 'Win7$rightsDesc'
+			},
+				{
+				name : 'Win7$remarkDesc',
+				mapping : 'Win7$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'wirlessAccount$id',
+				mapping : 'wirlessAccount$id'
+			},
+			{
+				name : 'wirlessAccount$accountState',
+				mapping : 'wirlessAccount$accountState'
+			},
+				{
+				name : 'wirlessAccount$rightsDesc',
+				mapping : 'wirlessAccount$rightsDesc'
+			},
+				{
+				name : 'wirlessAccount$remarkDesc',
+				mapping : 'wirlessAccount$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'WWWContent$id',
+				mapping : 'WWWContent$id'
+			},
+			{
+				name : 'WWWContent$accountState',
+				mapping : 'WWWContent$accountState'
+			},
+				{
+				name : 'WWWContent$rightsDesc',
+				mapping : 'WWWContent$rightsDesc'
+			},
+				{
+				name : 'WWWContent$remarkDesc',
+				mapping : 'WWWContent$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'QQAccount$id',
+				mapping : 'QQAccount$id'
+			},
+			{
+				name : 'QQAccount$accountState',
+				mapping : 'QQAccount$accountState'
+			},
+				{
+				name : 'QQAccount$rightsDesc',
+				mapping : 'QQAccount$rightsDesc'
+			},
+				{
+				name : 'QQAccount$remarkDesc',
+				mapping : 'QQAccount$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'PDAAccount$id',
+				mapping : 'PDAAccount$id'
+			},
+			{
+				name : 'PDAAccount$accountState',
+				mapping : 'PDAAccount$accountState'
+			},
+				{
+				name : 'PDAAccount$rightsDesc',
+				mapping : 'PDAAccount$rightsDesc'
+			},
+				{
+				name : 'PDAAccount$remarkDesc',
+				mapping : 'PDAAccount$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'CallCenter$id',
+				mapping : 'CallCenter$id'
+			},
+			{
+				name : 'CallCenter$accountState',
+				mapping : 'CallCenter$accountState'
+			},
+				{
+				name : 'CallCenter$rightsDesc',
+				mapping : 'CallCenter$rightsDesc'
+			},
+				{
+				name : 'CallCenter$remarkDesc',
+				mapping : 'CallCenter$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'eFutureAcount$id',
+				mapping : 'eFutureAcount$id'
+			},
+			{
+				name : 'eFutureAcount$accountState',
+				mapping : 'eFutureAcount$accountState'
+			},
+				{
+				name : 'eFutureAcount$rightsDesc',
+				mapping : 'eFutureAcount$rightsDesc'
+			},
+				{
+				name : 'eFutureAcount$remarkDesc',
+				mapping : 'eFutureAcount$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'posManageAcount$id',
+				mapping : 'posManageAcount$id'
+			},
+			{
+				name : 'posManageAcount$accountState',
+				mapping : 'posManageAcount$accountState'
+			},
+				{
+				name : 'posManageAcount$rightsDesc',
+				mapping : 'posManageAcount$rightsDesc'
+			},
+				{
+				name : 'posManageAcount$remarkDesc',
+				mapping : 'posManageAcount$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'productForProvider$id',
+				mapping : 'productForProvider$id'
+			},
+			{
+				name : 'productForProvider$accountState',
+				mapping : 'productForProvider$accountState'
+			},
+				{
+				name : 'productForProvider$rightsDesc',
+				mapping : 'productForProvider$rightsDesc'
+			},
+				{
+				name : 'productForProvider$remarkDesc',
+				mapping : 'productForProvider$remarkDesc'
+			}
+			
+			, 
+			{
+				name : 'productForShopin$id',
+				mapping : 'productForShopin$id'
+			},
+			{
+				name : 'productForShopin$accountState',
+				mapping : 'productForShopin$accountState'
+			},
+				{
+				name : 'productForShopin$rightsDesc',
+				mapping : 'productForShopin$rightsDesc'
+			},
+				{
+				name : 'productForShopin$remarkDesc',
+				mapping : 'productForShopin$remarkDesc'
+			}
+			//add by awen for add new accountTypes on 2011-05-08 end
 			
 			
 			]),
@@ -2153,6 +2334,847 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			})
 			]
 			}
+			//add by awen for add new accountTypes on 2011-05-08 begin
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : 'Win7',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'Win7$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'Win7$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'Win7$accountState',
+				name : 'Win7$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'Win7$rightsDesc',
+				name : 'Win7$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'Win7$remarkDesc',
+				name : 'Win7$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : '无线网络帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'wirlessAccount$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'wirlessAccount$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'wirlessAccount$accountState',
+				name : 'wirlessAccount$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'wirlessAccount$rightsDesc',
+				name : 'wirlessAccount$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'wirlessAccount$remarkDesc',
+				name : 'wirlessAccount$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : 'WWW浏览内容',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'WWWContent$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'WWWContent$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'WWWContent$accountState',
+				name : 'WWWContent$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'WWWContent$rightsDesc',
+				name : 'WWWContent$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'WWWContent$remarkDesc',
+				name : 'WWWContent$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : 'QQ帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'QQAccount$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'QQAccount$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'QQAccount$accountState',
+				name : 'QQAccount$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'QQAccount$rightsDesc',
+				name : 'QQAccount$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'QQAccount$remarkDesc',
+				name : 'QQAccount$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : 'PDA帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'PDAAccount$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'PDAAccount$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'PDAAccount$accountState',
+				name : 'PDAAccount$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'PDAAccount$rightsDesc',
+				name : 'PDAAccount$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'PDAAccount$remarkDesc',
+				name : 'PDAAccount$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : 'CallCenter帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'CallCenter$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'CallCenter$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'CallCenter$accountState',
+				name : 'CallCenter$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'CallCenter$rightsDesc',
+				name : 'CallCenter$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'CallCenter$remarkDesc',
+				name : 'CallCenter$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : 'eFuture收银帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'eFutureAcount$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'eFutureAcount$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'eFutureAcount$accountState',
+				name : 'eFutureAcount$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'eFutureAcount$rightsDesc',
+				name : 'eFutureAcount$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'eFutureAcount$remarkDesc',
+				name : 'eFutureAcount$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : 'POS管理维护系统帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'posManageAcount$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'posManageAcount$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'posManageAcount$accountState',
+				name : 'posManageAcount$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'posManageAcount$rightsDesc',
+				name : 'posManageAcount$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'posManageAcount$remarkDesc',
+				name : 'posManageAcount$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : '单品管理供应商版帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'productForProvider$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'productForProvider$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'productForProvider$accountState',
+				name : 'productForProvider$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'productForProvider$rightsDesc',
+				name : 'productForProvider$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'productForProvider$remarkDesc',
+				name : 'productForProvider$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			
+			,
+			{
+				columnWidth : 0.25,
+				border : true,
+				html : '单品管理上品版帐号',
+				cls : 'common-text',
+				height:30,
+				style : 'width:150;text-align:center;border:1px dotted #b0acac;margin:0px 0px 0px 30px'
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.Hidden({
+				xtype : 'hidden',
+				id : 'productForShopin$id',
+				colspan : 0,
+				rowspan : 0,
+				name : 'productForShopin$id',
+				width : 200,
+				style : '',
+				value : '',
+				fieldLabel : '自动编号'
+			}),
+			new Ext.form.TextField({
+				fieldLabel : '状态',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				emptyText : '0',
+				id : 'productForShopin$accountState',
+				name : 'productForShopin$accountState',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			
+		{
+			columnWidth : 0.25,
+				height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+			
+				rowspan : 0,
+				id : 'productForShopin$rightsDesc',
+				name : 'productForShopin$rightsDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			},
+			{
+			columnWidth : 0.25,
+			height:30,
+			items:[
+			new Ext.form.TextField({
+				fieldLabel : '姓名',
+				xtype : 'textfield',
+				colspan : 0,
+				rowspan : 0,
+				id : 'productForShopin$remarkDesc',
+				name : 'productForShopin$remarkDesc',
+				style : '',
+				width : 200,
+				value : '',
+				allowBlank : true,
+				validator : '',
+				vtype : ''
+			}) 
+			]
+			}
+			//add by awen for add new accountTypes on 2011-05-08 end
 			
 	]	
 			},

@@ -111,6 +111,13 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		}
 		for (i = 0; i < data.length; i++) {
 			var idStr = data[i].id;
+			//add by awen for changge fieldLable on 2011-06-08 begin
+			if (idStr=='SpecialRequirement$confirmUserCombo') {
+				data[i].fieldLabel = '部门审批人';
+				data[i].readOnly = true;				
+				data[i].hideTrigger = true;					
+			}
+			//add by awen for changge fieldLable on 2011-06-08 end
 			if(idStr=='SpecialRequirement$applyNum'|| idStr=='SpecialRequirement$applyUserCombo'
 				||idStr=='SpecialRequirement$applyDate'|| idStr=='SpecialRequirement$tel'
 				||idStr=='SpecialRequirement$mobilePhone'|| idStr=='SpecialRequirement$finishDate'

@@ -213,6 +213,13 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}});
 					}})
 				}
+			//add by awen for changge fieldLable on 2011-06-08 begin
+			if (idStr=='SpecialRequirement$confirmUserCombo') {
+				data[i].fieldLabel = '部门审批人';
+				data[i].readOnly = true;				
+				data[i].hideTrigger = true;					
+			}
+			//add by awen for changge fieldLable on 2011-06-08 end
 			if (data[i].id == 'SpecialRequirement$deliveryTeamCombo') {
 						data[i] = new Ext.form.ComboBox({
 							xtype:"combo",

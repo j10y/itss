@@ -77,6 +77,16 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			data = da.getPanelElementsForAdd("panel_SpecialRequireDevConfirm_m_Input");
 			
 		}
+		for (i = 0; i < data.length; i++) {
+
+			//add by awen for changge fieldLable on 2011-06-08 begin
+			if (data[i].id=='SpecialRequirement$confirmUserCombo') {
+				data[i].fieldLabel = '部门审批人';
+				data[i].readOnly = true;				
+				data[i].hideTrigger = true;					
+			}
+			//add by awen for changge fieldLable on 2011-06-08 end
+		}
 		biddata = da.splitForReadOnly(data);
 		if (this.getFormButtons.length != 0) {
 			this.formpanel_SpecialRequireDevConfirm_m_Input = new Ext.form.FormPanel({

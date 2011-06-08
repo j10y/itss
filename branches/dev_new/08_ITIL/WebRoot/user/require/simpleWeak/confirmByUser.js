@@ -74,6 +74,15 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				"panel_swrequire_input", this);
 		if (this.dataId != '0') {
 			data = da.getPanelElementsForEdit("sw_confirmByUser","panel_swrequire_input", this.dataId);// 这是要随时变得
+			for (i = 0; i < data.length; i++) {
+				var idStr = data[i].id + "";
+				
+				if (idStr.indexOf('$confirmUserCombo') > 0) {
+					delete data[i].fieldLabel;
+					data[i].fieldLabel = '部门审批人';
+					
+				}
+			}
 			biddata = da.splitForReadOnly(data);
 		} else {
 			data = da.getPanelElementsForAdd("panel_swrequire_input");
