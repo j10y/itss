@@ -17,7 +17,7 @@ function showAuditWindow(taskId,taskName,applyType,applyId,pageUrl,reqClass,goSt
 		modal : true,
 		height : 500,
 		layout:'fit',
-		width : 800,
+		width : 850,
 		resizable : true,
 		maximizable : true,
 		//增加本节点的加签人
