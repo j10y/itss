@@ -33,7 +33,6 @@ import com.zsgj.itil.account.entity.AccountSBUOfficer;
 import com.zsgj.itil.account.entity.AccountType;
 import com.zsgj.itil.account.entity.PersonFormalAccount;
 import com.zsgj.itil.account.entity.SpecialAccount;
-import com.zsgj.itil.account.entity.Win7PlatForm;
 import com.zsgj.itil.account.service.AccountService;
 import com.zsgj.itil.config.extlist.entity.AR_DrawSpace;
 import com.zsgj.itil.config.extlist.entity.HRSAccountManger;
@@ -100,11 +99,11 @@ public class AccountManagerAction extends BaseAction{
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
 		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
 		
+		if(cofirmUser!=null){
+			String userListStr = "deptDirectorAudit:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+			mapBizz.put("userList", userListStr);//放入流程参数中
+		}
 		
-		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
-		String userListStr = "deptDirectorAudit:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
-		
-		mapBizz.put("userList", userListStr);//放入流程参数中
 		String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
@@ -242,25 +241,26 @@ public class AccountManagerAction extends BaseAction{
         String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		//modify by tongjp 去掉指点审批人节点 改为由角色获取
+		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
 		/************根据人事子范围初始化SBU节点审批人************************/
-		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
-		PersonnelScope personnelScope=applyUser.getPersonnelScope();
-		if(personnelScope!=null){
-		String personScope=personnelScope.getPersonnelScopeCode();
-		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
-		for(AccountSBUOfficer officer:confirmUsers){
-			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
-		}
-		}
-		
-		
-		
-		/************根据领卡地点选择帐号管理员节点审批人************************/
-		AR_DrawSpace space=(AR_DrawSpace) service.find(AR_DrawSpace.class, drawSpace);
-		String confirmUser=space.getConfirmUser();
-		userListStr+="$confirmByAM:"+confirmUser;
-		mapBizz.put("userList", userListStr);//放入流程参数中
+//		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
+//		PersonnelScope personnelScope=applyUser.getPersonnelScope();
+//		if(personnelScope!=null){
+//		String personScope=personnelScope.getPersonnelScopeCode();
+//		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
+//		for(AccountSBUOfficer officer:confirmUsers){
+//			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
+//		}
+//		}
+//		
+//		
+//		
+//		/************根据领卡地点选择帐号管理员节点审批人************************/
+//		AR_DrawSpace space=(AR_DrawSpace) service.find(AR_DrawSpace.class, drawSpace);
+//		String confirmUser=space.getConfirmUser();
+//		userListStr+="$confirmByAM:"+confirmUser;
+//		mapBizz.put("userList", userListStr);//放入流程参数中
 		String creator = UserContext.getUserInfo().getUserName();
 		Long instanceId = null;
 		String meg = "";
@@ -543,14 +543,14 @@ public class AccountManagerAction extends BaseAction{
 		String className = siut.getClassName();
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-        UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");//原部门经理审批
-        UserInfo signAuditUser=(UserInfo) bWrapper.getPropertyValue("signAuditUser");//新部门经理审批
-		String userListStr = "confirmByDMold:"+cofirmUser.getUserName()+"$confirmByDMnew:"+signAuditUser.getUserName();//指定部门经理审批人节点审批人
+//        UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");//原部门经理审批
+//        UserInfo signAuditUser=(UserInfo) bWrapper.getPropertyValue("signAuditUser");//新部门经理审批
+		//String userListStr = "confirmByDMold:"+cofirmUser.getUserName()+"$confirmByDMnew:"+signAuditUser.getUserName();//指定部门经理审批人节点审批人
 		String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-		mapBizz.put("userList", userListStr);//放入流程参数中
-		String dynCounterSignStr="confirmByAM:";
+		//mapBizz.put("userList", userListStr);//放入流程参数中
+		String dynCounterSignStr="operationEngineerAudit:";
 		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
 		List<PersonFormalAccount> accounts=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
 		List<PersonFormalAccount> account=new ArrayList<PersonFormalAccount>();
@@ -570,8 +570,10 @@ public class AccountManagerAction extends BaseAction{
 			AccountType at=acc.getAccountType();
 			if(at.getAccountType().equals("Telephone")){
 				TelephoneAudit telephoneAudit=(TelephoneAudit) getService().find(TelephoneAudit.class, "workSpace", acc.getWorkSpace().getName()).get(0);
-				dynCounterSignStr+="1"+"+"+telephoneAudit.getAuditManger();
-				dynCounterSignStr+=";";
+				if(telephoneAudit!=null){
+					dynCounterSignStr+="1"+"+"+telephoneAudit.getAuditManger();
+					dynCounterSignStr+=";";
+				}
 			}else{
 			//add by liuying at 20100903 for 修改部门变更申请座机号码不保留时 根据工作地点选择座机管理员 end
 				Role role = at.getRole();
@@ -658,19 +660,19 @@ public class AccountManagerAction extends BaseAction{
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
 		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
 		/************根据人事子范围初始化SBU节点审批人************************/
 		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
 		PersonnelScope personnelScope=applyUser.getPersonnelScope();
-		if(personnelScope!=null){
-		String personScope=personnelScope.getPersonnelScopeCode();
-		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
-		for(AccountSBUOfficer officer:confirmUsers){
-			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
-		}
-		}
-		
-		mapBizz.put("userList", userListStr);//放入流程参数中
+//		if(personnelScope!=null){
+//		String personScope=personnelScope.getPersonnelScopeCode();
+//		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
+//		for(AccountSBUOfficer officer:confirmUsers){
+//			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
+//		}
+//		}
+//		
+//		mapBizz.put("userList", userListStr);//放入流程参数中
 		String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
@@ -868,51 +870,51 @@ public class AccountManagerAction extends BaseAction{
 		String className = siut.getClassName();
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
+		//UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
 		
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
-		mapBizz.put("userList", userListStr);//放入流程参数中
+		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		//mapBizz.put("userList", userListStr);//放入流程参数中
 		String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-		String dynCounterSignStr="confirmByAM:";
-		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
-		List<PersonFormalAccount> account=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
-		//Set user2=new HashSet();
-		for (PersonFormalAccount acc : account) {
-		if(acc.getAccountType().getAccountType().equals("Telephone")){
-			dynCounterSignStr+="1"+"+";
-			dynCounterSignStr+=accountManger;
-			String type="&"+acc.getAccountType().getName()+"管理员处理";
-			dynCounterSignStr+=type;
-			dynCounterSignStr+=";";
-		}else{
-		Role role = acc.getAccountType().getRole();
-		Set<UserInfo> userinfos=role.getUserInfos();
-		if(userinfos.size()>1){
-		dynCounterSignStr+="1"+"+";
-		for(UserInfo userinfo:userinfos){
-			dynCounterSignStr+=userinfo.getUserName()+",";
-		}
-		dynCounterSignStr=dynCounterSignStr.substring(0, dynCounterSignStr.length()-1);
-		String type="&"+acc.getAccountType().getName()+"管理员处理";
-		dynCounterSignStr+=type;
-		dynCounterSignStr+=";";
-		}else{
-			for(UserInfo userinfo:userinfos){
-				dynCounterSignStr+="1"+"+"+userinfo.getUserName();
-			}
-			String type="&"+acc.getAccountType().getName()+"管理员处理";
-			dynCounterSignStr+=type;
-			dynCounterSignStr+=";";
-			
-		}
-		}
-		}
-		if(dynCounterSignStr.endsWith(";")) {
-			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
-		}
-		mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
+//		String dynCounterSignStr="confirmByAM:";
+//		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
+//		List<PersonFormalAccount> account=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
+//		//Set user2=new HashSet();
+//		for (PersonFormalAccount acc : account) {
+//		if(acc.getAccountType().getAccountType().equals("Telephone")){
+//			dynCounterSignStr+="1"+"+";
+//			dynCounterSignStr+=accountManger;
+//			String type="&"+acc.getAccountType().getName()+"管理员处理";
+//			dynCounterSignStr+=type;
+//			dynCounterSignStr+=";";
+//		}else{
+//		Role role = acc.getAccountType().getRole();
+//		Set<UserInfo> userinfos=role.getUserInfos();
+//		if(userinfos.size()>1){
+//		dynCounterSignStr+="1"+"+";
+//		for(UserInfo userinfo:userinfos){
+//			dynCounterSignStr+=userinfo.getUserName()+",";
+//		}
+//		dynCounterSignStr=dynCounterSignStr.substring(0, dynCounterSignStr.length()-1);
+//		String type="&"+acc.getAccountType().getName()+"管理员处理";
+//		dynCounterSignStr+=type;
+//		dynCounterSignStr+=";";
+//		}else{
+//			for(UserInfo userinfo:userinfos){
+//				dynCounterSignStr+="1"+"+"+userinfo.getUserName();
+//			}
+//			String type="&"+acc.getAccountType().getName()+"管理员处理";
+//			dynCounterSignStr+=type;
+//			dynCounterSignStr+=";";
+//			
+//		}
+//		}
+//		}
+//		if(dynCounterSignStr.endsWith(";")) {
+//			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
+//		}
+		//mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
 		String creator = UserContext.getUserInfo().getUserName();
 		Long instanceId = null;
 		String meg = "";
@@ -1307,41 +1309,31 @@ public class AccountManagerAction extends BaseAction{
 		String className = siut.getClassName();
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
+		//UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
 		String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
-		mapBizz.put("userList", userListStr);//放入流程参数中
-		
-//		MobileTelephoneApply mobile=(MobileTelephoneApply) getService().findUnique(
-//				MobileTelephoneApply.class, "applyId", obj);
-		
-		String dynCounterSignStr="confirmByAM:";
-//		if(mobile!=null){
-//			dynCounterSignStr+="0"+"+"+"maran;";
-//		}
+		//modify tongjp 20110608 由于没有部门审批人这一个节点，去掉部门审批人动态获取 ，改为有角色获取
+		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		//mapBizz.put("userList", userListStr);//放入流程参数中
+		//modify tongjp 20110608 end
+		String dynCounterSignStr="operationEngineerAudit:";
 		List<PersonFormalAccount> account= as.findAllPersonAccount(applyUser);
 		for (PersonFormalAccount acc : account) {
-//		if(acc.getAccountType().getAccountType().equals("VPNAccount")){
-//		AR_DrawSpace workSpace=acc.getDrawSpace();
-//		String confirmUsers=workSpace.getConfirmUser();	
-//		dynCounterSignStr+="1"+"+"+confirmUsers;
-//		}else{
 		String accountType=acc.getAccountType().getAccountType();
 		String vpnType=acc.getVpnType();
-		if(accountType.equals("VPNAccount")&&vpnType.equals("0")){
+		if(accountType.equals("VPNAccount")&&vpnType.equals("0")&&space!=null){
 			dynCounterSignStr+="1"+"+"+space.getConfirmUser();
 			String type="&"+acc.getAccountType().getName()+"管理员处理";
 			dynCounterSignStr+=type;
-			dynCounterSignStr+=";";
-			
-		}else if(accountType.equals("Telephone")){
+			dynCounterSignStr+=";";			
+		}else if(accountType.equals("Telephone")&&space!=null){
 			dynCounterSignStr+="1"+"+"+space.getTelephoneConfirmUser();
 			String type="&"+acc.getAccountType().getName()+"管理员处理";
 			dynCounterSignStr+=type;
 			dynCounterSignStr+=";";
 		}else{
+//modify 20110608 tongjp 添加动态会签人的时候需要根据不同的账号类型找到不同的角色，然后机加入会签列表中
 		Role role = acc.getAccountType().getRole();
 		Set<UserInfo> userinfos=role.getUserInfos();
 		if(userinfos.size()>1){
@@ -1361,15 +1353,13 @@ public class AccountManagerAction extends BaseAction{
 			dynCounterSignStr+=type;
 			dynCounterSignStr+=";";	
 		  }
-		 }
+//modify 20110608 tongjp 	 end	
+		}
 		}
 		
 		if(dynCounterSignStr.endsWith(";")) {
 			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
 		}
-		
-		
-		
 		mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
 		String creator = UserContext.getUserInfo().getUserName();
 		Long instanceId = null;
@@ -1625,7 +1615,7 @@ public class AccountManagerAction extends BaseAction{
 		String dataId = super.getRequest().getParameter("dataId");//主数据id
 		//String departmentCode = super.getRequest().getParameter("deptcode");
 		//String userAssign = super.getRequest().getParameter("userAssign");
-		String platForm=super.getRequest().getParameter("platForm");
+		//String platForm=super.getRequest().getParameter("platForm");
 		//需要进入上下文的业务参数
 		Map<String,String> mapBizz = new HashMap<String,String>();
 		if(buzzParameters!=null&&!buzzParameters.equals("")) {
@@ -1646,29 +1636,30 @@ public class AccountManagerAction extends BaseAction{
 		String className = siut.getClassName();
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-        UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");//原部门经理审批
+        //UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");//原部门经理审批
         String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		//modify by tongjp 根据角色找对应的审批人
+		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
 		/************根据人事子范围初始化SBU节点审批人************************/
-		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
-		PersonnelScope personnelScope=applyUser.getPersonnelScope();
-		if(personnelScope!=null){
-		String personScope=personnelScope.getPersonnelScopeCode();
-		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
-		for(AccountSBUOfficer officer:confirmUsers){
-			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
-		}
-		}
-		
-		
-		
-		/************根据领卡地点选择帐号管理员节点审批人************************/
-		Win7PlatForm space=(Win7PlatForm) service.find(Win7PlatForm.class, platForm);
-		String confirmUser=space.getManager();
-		userListStr+="$confirmByAM:"+confirmUser;
-		mapBizz.put("userList", userListStr);//放入流程参数中
+//		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
+//		PersonnelScope personnelScope=applyUser.getPersonnelScope();
+//		if(personnelScope!=null){
+//		String personScope=personnelScope.getPersonnelScopeCode();
+//		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
+//		for(AccountSBUOfficer officer:confirmUsers){
+//			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
+//		}
+//		}
+//		
+//		
+//		
+//		/************根据领卡地点选择帐号管理员节点审批人************************/
+//		Win7PlatForm space=(Win7PlatForm) service.find(Win7PlatForm.class, platForm);
+//		String confirmUser=space.getManager();
+//		userListStr+="$confirmByAM:"+confirmUser;
+//		mapBizz.put("userList", userListStr);//放入流程参数中
 		String creator = UserContext.getUserInfo().getUserName();
 		Long instanceId = null;
 		String meg = "";
@@ -1688,6 +1679,64 @@ public class AccountManagerAction extends BaseAction{
 		}
 		return null;	
 	}
-	
+	public String commonapply() throws Exception{
+		String json = ""; 
+		//需要的参数
+		String definitionName = super.getRequest().getParameter("defname");
+		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
+		String dataId = super.getRequest().getParameter("dataId");//主数据id
+		//String userInfo = super.getRequest().getParameter("userInfo");//申请人
+		//String departmentCode = super.getRequest().getParameter("deptcode");
+		//String userAssign = super.getRequest().getParameter("userAssign");
+		//需要进入上下文的业务参数
+		Map<String,String> mapBizz = new HashMap<String,String>();
+		if(buzzParameters!=null&&!buzzParameters.equals("")) {
+			JSONObject jo = JSONObject.fromObject(buzzParameters);
+			Iterator it = jo.keys();
+			while(it.hasNext()) {
+				String key = (String)it.next();
+				String value = (String)jo.get(key);					
+				mapBizz.put(key, value);
+			}
+		}
+		mapBizz.put("processName", definitionName);
+		mapBizz.put("workflowHistory", "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis");
+		/*************************根据serviceItem和dataId获取申请主实体*****************/
+		String serviceItemId = mapBizz.get("serviceItemId");
+		ServiceItem servcieItem = (ServiceItem) service.find(ServiceItem.class, serviceItemId);
+		ServiceItemUserTable siut = (ServiceItemUserTable) service.findUnique(ServiceItemUserTable.class, "serviceItem", servcieItem);
+		String className = siut.getClassName();
+		Object obj = service.find(this.toClass(className), dataId);
+		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
+		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
+		String userListStr = "deptManagerAudit:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		/************根据人事子范围初始化SBU节点审批人************************/
+		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
+		PersonnelScope personnelScope=applyUser.getPersonnelScope();
+
+		mapBizz.put("userList", userListStr);//放入流程参数中
+		String name = (String) bWrapper.getPropertyValue("name");
+		mapBizz.put("applyNum",name);
+		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
+		
+		String creator = UserContext.getUserInfo().getUserName();
+		Long instanceId = null;
+		String meg = "";
+		try{
+			instanceId = ps.createProcess(definitionName,creator,mapBizz);
+			json = "{success:true,id:'"+instanceId+"'}";	
+		}catch(Exception e){
+			meg = e.getMessage();
+			json = "{success:true,Exception:'"+meg+"'}";
+		}			
+		try {			
+			super.getResponse().setCharacterEncoding("utf-8");
+			PrintWriter pw = super.getResponse().getWriter();	
+			pw.write(json);		
+			} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;				
+	}	
 	
 }

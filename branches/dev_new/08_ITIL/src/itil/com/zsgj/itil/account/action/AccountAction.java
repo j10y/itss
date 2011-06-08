@@ -1047,6 +1047,7 @@ public class AccountAction extends BaseAction {
 		String dataId = request.getParameter("dataId");
 		String rightDesc = request.getParameter("rightDesc");
 		String pw = request.getParameter("password");
+		String accountname=request.getParameter("accountname");
 		Date currentDate = DateUtil.getCurrentDate();
 		UserInfo user = (UserInfo) getService().find(UserInfo.class, userInfo);
 		AccountApplyMainTable aam = (AccountApplyMainTable) getService().find(
@@ -1054,7 +1055,12 @@ public class AccountAction extends BaseAction {
 		List<PersonFormalAccount> account = getService().find(
 				PersonFormalAccount.class, "applyId", aam);
 		for (PersonFormalAccount personAccount : account) {
-			personAccount.setAccountName(user.getItcode().toLowerCase());
+			if(accountname!=null&&accountname.length()>0){
+				personAccount.setAccountName(accountname);
+			}else{
+				personAccount.setAccountName(user.getItcode().toLowerCase());
+			}
+			
 			if (pw != null && !"".equals(pw)) {
 				personAccount.setPassword(pw);
 			} else {
@@ -6047,9 +6053,7 @@ public class AccountAction extends BaseAction {
 
 					getService().save(acc);
 				}
-				if ((accountType.equals("MailAccount"))
-						&& (!attachment.equals(""))) {
-
+				if (accountType.equals("MailAccount")) {
 					acc.setRightsDesc(mailRightsDesc);
 					acc.setAccountName(applyUser.getItcode().toLowerCase());
 					acc.setAttachment(attachment);
@@ -10647,7 +10651,7 @@ public class AccountAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		String owner = request.getParameter("owner");
 		String confirmUser = request.getParameter("confirmUser");
-		String Win7pf = request.getParameter("platform");
+		//String Win7pf = request.getParameter("platform");
 		String deviceId = request.getParameter("deviceId");
 		String rightsDesc = request.getParameter("rightsDesc");
 		String accountid = request.getParameter("accountid");
@@ -10670,11 +10674,11 @@ public class AccountAction extends BaseAction {
 			if (accountConfirmUser != null) {
 				sa.setConfirmUser(accountConfirmUser);
 			}
-			Win7PlatForm pf = (Win7PlatForm) getService().find(
-					Win7PlatForm.class, Win7pf);
-			if (pf != null) {
-				sa.setWin7PaltForm(pf);
-			}
+//			Win7PlatForm pf = (Win7PlatForm) getService().find(
+//					Win7PlatForm.class, Win7pf);
+//			if (pf != null) {
+//				sa.setWin7PaltForm(pf);
+//			}
 			sa.setRemarkDesc(rightsDesc);
 			DeviceType deviceType = (DeviceType) getService().find(
 					DeviceType.class, deviceId);
@@ -10717,7 +10721,7 @@ public class AccountAction extends BaseAction {
 		HttpServletResponse response = super.getResponse();
 		String owner = request.getParameter("owner");
 		String confirmUser = request.getParameter("confirmUser");
-		String win7pf = request.getParameter("platform");
+		//String win7pf = request.getParameter("platform");
 		String deviceId = request.getParameter("deviceId");
 		String rightsDesc = request.getParameter("rightsDesc");
 		String hardWareId = request.getParameter("hardwareId");
@@ -10737,11 +10741,11 @@ public class AccountAction extends BaseAction {
 		if (accountConfirmUser != null) {
 			sa.setConfirmUser(accountConfirmUser);
 		}
-		Win7PlatForm pf = (Win7PlatForm) getService().find(Win7PlatForm.class,
-				win7pf);
-		if (pf != null) {
-			sa.setWin7PaltForm(pf);
-		}
+//		Win7PlatForm pf = (Win7PlatForm) getService().find(Win7PlatForm.class,
+//				win7pf);
+//		if (pf != null) {
+//			sa.setWin7PaltForm(pf);
+//		}
 		sa.setRemarkDesc(rightsDesc);
 		DeviceType deviceType = (DeviceType) getService().find(
 				DeviceType.class, deviceId);
@@ -11327,6 +11331,27 @@ public class AccountAction extends BaseAction {
 		} else {
 			json = "{success:false}";
 		}
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String findServiceItemNameByID(){
+		HttpServletRequest request = super.getRequest();
+		HttpServletResponse response = super.getResponse();
+		String dataId = request.getParameter("dataId");
+		AccountApplyMainTable aam=(AccountApplyMainTable) baseBervice.findUnique(AccountApplyMainTable.class,"id", Long.parseLong(dataId));
+		ServiceItem si=(ServiceItem)baseBervice.findUnique(ServiceItem.class,"id",aam.getServiceItem());
+		String json = "{success:true,serviceName:'" + si.getName() + "'}";
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out;
