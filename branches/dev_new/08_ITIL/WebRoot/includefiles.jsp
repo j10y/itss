@@ -4,11 +4,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-		<META HTTP-EQUIV="Expires" CONTENT="0">  
+		<META HTTP-EQUIV="Expires" CONTENT="0"> 
+		 
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/ext-all.css" />
 		 
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/tabs.css" />
-		
+		<script type="text/javascript"> 
+			var webContext="${pageContext.request.contextPath}";
+			var sys_pageSize = 10;
+		</script>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/editable-column-tree.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Ext.ux.UploadDialog.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common.css"/>
@@ -29,9 +33,6 @@
   		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Ext.ux.UploadDialog.js"></script>
   		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Ext.su.UpDownLoadFile.js"></script>
 		<link rel='stylesheet' type='text/css'  href='${pageContext.request.contextPath}/js/multisel/Multiselect.css'> 
-		<script type="text/javascript"> var webContext="${pageContext.request.contextPath}";
-			var sys_pageSize = 10;
-		</script>
 		<script type="text/javascript" src="<c:url value="/js/util/UtilE.js"/>"></script>     
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/common_ext3.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script> 
