@@ -961,18 +961,16 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 		
 		if (bw.isReadableProperty("flat")) {
 			flat = (RequireApplyDefaultAudit) bw.getPropertyValue("flat"); //得到SBU范围
-			if(flat != null){
-				String flatId = flat.getId().toString();
-				if(sbus.contains(flatId)&&StringUtils.isNotBlank(sbuMailRoleId)){//如果满足触发要求
-					Role role = (Role) service.find(Role.class, sbuMailRoleId);
-					if(role!=null){
-						Set<UserInfo> mailUsers = role.getUserInfos();
-						String sendMailTatle = "IT温馨提示："+applyUser.getUserName()+"/"+applyUser.getRealName()+"提交的需求(需求号："+reqCode+"，需求名称："+reqName+")已完成";
-						for(UserInfo user : mailUsers){
-							String sendMail = user.getEmail();
-							ms.sendMimeMail(sendMail, null, null, sendMailTatle, this.erpReqMsHtmlContent(
-									applyUser, user, curUrl, reqName,reqCode,auditHis,definitionName), null);
-						}
+			String flatId = flat.getId().toString();
+			if(sbus.contains(flatId)&&StringUtils.isNotBlank(sbuMailRoleId)){//如果满足触发要求
+				Role role = (Role) service.find(Role.class, sbuMailRoleId);
+				if(role!=null){
+					Set<UserInfo> mailUsers = role.getUserInfos();
+					String sendMailTatle = "IT温馨提示："+applyUser.getUserName()+"/"+applyUser.getRealName()+"提交的需求(需求号："+reqCode+"，需求名称："+reqName+")已完成";
+					for(UserInfo user : mailUsers){
+						String sendMail = user.getEmail();
+						ms.sendMimeMail(sendMail, null, null, sendMailTatle, this.erpReqMsHtmlContent(
+								applyUser, user, curUrl, reqName,reqCode,auditHis,definitionName), null);
 					}
 				}
 			}
@@ -2733,7 +2731,9 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 								.getProperties("system.attachment.filePath")
 								+ systemFileName.getSystemFileName() + ';';
 					}
-					filePath = filePath.substring(0, filePath.length() - 1);
+					if(filePath!=null&&filePath.length()>0){
+						filePath = filePath.substring(0, filePath.length() - 1);
+					}
 				}
 			}
 			if (acc.getAccountType().getAccountType().equals("Telephone")) {
@@ -3828,11 +3828,13 @@ public void transmitByEngineer(String dataId, String serviceItemId,
 	 * @param voipPhone void
 	 */
 	private void updateDCContacts(String employeeCode,String telephone,String mobilePhone,String voipPhone,boolean isDelete){
-		UserInfo user=(UserInfo) service.findUnique(UserInfo.class, "employeeCode",employeeCode);
-		if(user!=null){
-			user.setTelephone(telephone);
-			user.setMobilePhone(mobilePhone);
-			service.save(user);
+		if(employeeCode!=null&&employeeCode.length()>0){
+			UserInfo user=(UserInfo) service.findUnique(UserInfo.class, "employeeCode",employeeCode);
+			if(user!=null){
+				user.setTelephone(telephone);
+				user.setMobilePhone(mobilePhone);
+				service.save(user);
+			}
 		}
 //		HrInfoService hs = new HrInfoServiceLocator();
 //		try {
