@@ -1,5 +1,4 @@
 package com.zsgj.itil.account.action;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -3684,7 +3683,7 @@ public class AccountAction extends BaseAction {
 			json += "{\"id\":\"" + id + "\",\"accountName\":\"" + accountName
 					+ "\",\"accountType\":\"" + accountType
 					+ "\",\"vpnType\":\"" + vpnType + "\",\"ifHold\":\""
-					+ ifHold + "\",\"remarkDesc\":\"" + remarkDesc
+					+ ifHold + "\",\"remarkDesc\":\"" + (remarkDesc!=null?remarkDesc.replace("\"", "\\\"").replace("[", "\\[").replace("]", "\\]"):remarkDesc)
 					+ "\",\"userRight\":\"" + "" + "\",\"rightsDesc\":\""
 					+ rightsDesc + "\"},";
 		}
