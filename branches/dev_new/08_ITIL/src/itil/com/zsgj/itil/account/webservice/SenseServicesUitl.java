@@ -199,6 +199,7 @@ public class SenseServicesUitl {
 //			e1.printStackTrace();
 //		}
 //		return null;
+		System.out.println("SenseServicesUitl-addWWWAccount 新增WWW帐号----------此方法可同步到其他库，但是目前没使用");
 		return "success";
 	}
 	/**
@@ -235,6 +236,7 @@ public class SenseServicesUitl {
 //			e1.printStackTrace();
 //		}
 //		return null;
+		System.out.println("SenseServicesUitl-addWWWAccount 删除WWW帐号----------此方法可同步到其他库，但是目前没使用");
 		return "success";
 	}
 	/**
