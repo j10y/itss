@@ -941,76 +941,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					allowBlank : true,
 					validator : '',
 					vtype : ''
-					
-//				xtype : 'combo',
-//				hiddenName : 'itil_ac_DCContacts$mailServer',
-//				id : 'itil_ac_DCContacts$mailServerCombo',
-//				width : 200,
-//				style : '',
-//				fieldLabel : '邮件服务器',
-//				colspan : 0,
-//				rowspan : 0,
-//				lazyRender : true,
-//				displayField : 'name',
-//				valueField : 'id',
-//				emptyText : '请选择...',
-//				allowBlank : true,
-//				typeAhead : true,
-//				name : 'itil_ac_DCContacts$mailServer',
-//				triggerAction : 'all',
-//				minChars : 50,
-//				hideTrigger:true,
-//				readOnly : true,
-//				queryDelay : 700,
-//				store : new Ext.data.JsonStore({
-//					url : webContext
-//							+ '/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.MailServer',
-//					fields : ['id', 'name'],
-//					listeners : {
-//						beforeload : function(store, opt) {
-//							if (opt.params['itil_ac_DCContacts$mailServer'] == undefined) {
-//								opt.params['name'] = Ext
-//										.getCmp('itil_ac_DCContacts$mailServerCombo').defaultParam;
-//							}
-//						}
-//					},
-//					totalProperty : 'rowCount',
-//					root : 'data',
-//					id : 'id'
-//				}),
-//				pageSize : 10,
-//				listeners : {
-//					'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-//						var param = queryEvent.combo.getRawValue();
-//						this.defaultParam = param;
-//						if (queryEvent.query == '') {
-//							param = '';
-//						}
-//						this.store.load({
-//							params : {
-//								name : param,
-//								start : 0
-//							}
-//						});
-//						return true;
-//					}
-//				},
-//				initComponent : function() {
-//					this.store.load({
-//						params : {
-//							id : Ext.getCmp('itil_ac_DCContacts$mailServerCombo')
-//									.getValue(),
-//							start : 0
-//						},
-//						callback : function(r, options, success) {
-//							Ext
-//									.getCmp('itil_ac_DCContacts$mailServerCombo')
-//									.setValue(Ext
-//											.getCmp('itil_ac_DCContacts$mailServerCombo')
-//											.getValue());
-//						}
-//					});
-//				}
+
 //modify by liuying for 修改原邮件服务器为文本框 at 20100514 end				
 			}), {
 						html : '新邮件服务器:',
@@ -1088,7 +1019,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					}
 					})]
 				},
-
+				/*
 				{
 					html : '<font color=red>*</font>原部门审批人:',
 					cls : 'common-text',
@@ -1233,7 +1164,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				}), new Ext.form.Hidden({
+				}),*/
+				new Ext.form.Hidden({
 					xtype : 'hidden',
 					id : 'sUserInfos$id',
 					colspan : 0,
@@ -1576,10 +1508,10 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							time = time + 1;
 						}
 					}
-					if (time > 1) {
-						Ext.MessageBox.alert("温馨提示","帐号管理员一次只能处理一种帐号类型,谢谢您的合作!");
-						return false;
-					}
+//					if (time > 1) {
+//						Ext.MessageBox.alert("温馨提示","帐号管理员一次只能处理一种帐号类型,谢谢您的合作!");
+//						return false;
+//					}
 					if (rights == '' || rights == null) {
 						Ext.MessageBox.alert("温馨提示",
 								"权限说明处不能为空,请在相应的帐号权限说明处双击填写,谢谢您的合作!");
@@ -1625,10 +1557,10 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				success : function(action, form) {
 					Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							.initComponent();
-					Ext.getCmp("AccountApplyMainTable$signAuditUserCombo")
-							.initComponent();
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$signAuditUserCombo")
+//							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 					Ext.getCmp("itil_ac_DCContacts$workSpaceCombo")
 							.initComponent();
 					Ext.getCmp("sUserInfos$workSpaceCombo").initComponent();

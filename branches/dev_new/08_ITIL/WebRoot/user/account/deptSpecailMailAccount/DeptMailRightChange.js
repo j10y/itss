@@ -504,248 +504,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					});
 				}
 			}), 
-//				{
-//				html : '成本中心号:',
-//				cls : 'common-text',
-//				style : 'width:135;text-align:right'
-//			}, new Ext.form.TextField({
-//				fieldLabel : '成本中心号',
-//				xtype : 'textfield',
-//				colspan : 0,
-//				rowspan : 0,
-//				id : 'sUserInfos$costCenterCode',
-//				name : 'sUserInfos$costCenterCode',
-//				style : '',
-//				width : 200,
-//				readOnly : true,
-//				value : '',
-//				allowBlank : true,
-//				validator : '',
-//				vtype : ''
-//			}), {
-//				html : '邮件等价名部门:',
-//				cls : 'common-text',
-//				style : 'width:135;text-align:right'
-//			}, new Ext.form.ComboBox({forceSelection:true,
-//				xtype : 'combo',
-//				hiddenName : 'sUserInfos$sameMailDept',
-//				id : 'sUserInfos$sameMailDeptCombo',
-//				width : 200,
-//				style : '',
-//				fieldLabel : '邮件等价各部门',
-//				colspan : 0,
-//				rowspan : 0,
-//				lazyRender : true,
-//				readOnly : true,
-//				hideTrigger:true,
-//				displayField : 'name',
-//				valueField : 'id',
-//				emptyText : '',
-//				allowBlank : true,
-//				
-//				name : 'sUserInfos$sameMailDept',
-//				triggerAction : 'all',
-//				minChars : 50,
-//				queryDelay : 700,
-//				store : new Ext.data.JsonStore({
-//					url : webContext
-//							+ '/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.SameMailDept',
-//					fields : ['id', 'name'],
-//					listeners : {
-//						beforeload : function(store, opt) {
-//							if (opt.params['sUserInfos$sameMailDept'] == undefined) {
-//								opt.params['name'] = Ext
-//										.getCmp('sUserInfos$sameMailDeptCombo').defaultParam;
-//							}
-//						}
-//					},
-//					totalProperty : 'rowCount',
-//					root : 'data',
-//					id : 'id'
-//				}),
-//				pageSize : 10,
-//				listeners : {
-//					'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-//						var param = queryEvent.combo.getRawValue();
-//						this.defaultParam = param;
-//						if (queryEvent.query == '') {
-//							param = '';
-//						}
-//						this.store.load({
-//							params : {
-//								name : param,
-//								start : 0
-//							}
-//						});
-//						return true;
-//					}
-//				},
-//				initComponent : function() {
-//					this.store.load({
-//						params : {
-//							id : Ext.getCmp('sUserInfos$sameMailDeptCombo')
-//									.getValue(),
-//							start : 0
-//						},
-//						callback : function(r, options, success) {
-//							Ext
-//									.getCmp('sUserInfos$sameMailDeptCombo')
-//									.setValue(Ext
-//											.getCmp('sUserInfos$sameMailDeptCombo')
-//											.getValue());
-//						}
-//					});
-//				}
-//			}), {
-//				html : '邮件服务器:',
-//				cls : 'common-text',
-//				style : 'width:135;text-align:right'
-//			}, new Ext.form.ComboBox({forceSelection:true,
-//				xtype : 'combo',
-//				hiddenName : 'sUserInfos$mailServer',
-//				id : 'sUserInfos$mailServerCombo',
-//				width : 200,
-//				style : '',
-//				fieldLabel : '邮件服务器',
-//				colspan : 0,
-//				rowspan : 0,
-//				lazyRender : true,
-//				readOnly : true,
-//				hideTrigger:true,
-//				displayField : 'name',
-//				valueField : 'id',
-//				emptyText : '',
-//				allowBlank : true,
-//				
-//				name : 'sUserInfos$mailServer',
-//				triggerAction : 'all',
-//				minChars : 50,
-//				queryDelay : 700,
-//				store : new Ext.data.JsonStore({
-//					url : webContext
-//							+ '/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.MailServer',
-//					fields : ['id', 'name'],
-//					listeners : {
-//						beforeload : function(store, opt) {
-//							if (opt.params['sUserInfos$mailServer'] == undefined) {
-//								opt.params['name'] = Ext
-//										.getCmp('sUserInfos$mailServerCombo').defaultParam;
-//							}
-//						}
-//					},
-//					totalProperty : 'rowCount',
-//					root : 'data',
-//					id : 'id'
-//				}),
-//				pageSize : 10,
-//				listeners : {
-//					'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-//						var param = queryEvent.combo.getRawValue();
-//						this.defaultParam = param;
-//						if (queryEvent.query == '') {
-//							param = '';
-//						}
-//						this.store.load({
-//							params : {
-//								name : param,
-//								start : 0
-//							}
-//						});
-//						return true;
-//					}
-//				},
-//				initComponent : function() {
-//					this.store.load({
-//						params : {
-//							id : Ext.getCmp('sUserInfos$mailServerCombo')
-//									.getValue(),
-//							start : 0
-//						},
-//						callback : function(r, options, success) {
-//							Ext
-//									.getCmp('sUserInfos$mailServerCombo')
-//									.setValue(Ext
-//											.getCmp('sUserInfos$mailServerCombo')
-//											.getValue());
-//						}
-//					});
-//				}
-//			}), 
-//			{
-//				html : '用户类别/员工组:',
-//				cls : 'common-text',
-//				style : 'width:135;text-align:right'
-//			},new Ext.form.ComboBox({forceSelection:true,
-//				xtype : 'combo',
-//				hiddenName : 'sUserInfos$userType',
-//				id : 'sUserInfos$userTypeCombo',
-//				width : 200,
-//				style : '',
-//				fieldLabel : '用户类型',
-//				colspan : 0,
-//				rowspan : 0,
-//				lazyRender : true,
-//				readOnly : true,
-//				hideTrigger:true,
-//				displayField : 'name',
-//				valueField : 'id',
-//				emptyText : '请选择...',
-//				allowBlank : true,
-//				
-//				name : 'sUserInfos$userType',
-//				triggerAction : 'all',
-//				minChars : 50,
-//				queryDelay : 700,
-//				store : new Ext.data.JsonStore({
-//					url : webContext
-//							+ '/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.UserType',
-//					fields : ['id', 'name'],
-//					listeners : {
-//						beforeload : function(store, opt) {
-//							if (opt.params['sUserInfos$userType'] == undefined) {
-//								opt.params['name'] = Ext
-//										.getCmp('sUserInfos$userTypeCombo').defaultParam;
-//							}
-//						}
-//					},
-//					totalProperty : 'rowCount',
-//					root : 'data',
-//					id : 'id'
-//				}),
-//				pageSize : 10,
-//				listeners : {
-//					'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-//						var param = queryEvent.combo.getRawValue();
-//						this.defaultParam = param;
-//						if (queryEvent.query == '') {
-//							param = '';
-//						}
-//						this.store.load({
-//							params : {
-//								name : param,
-//								start : 0
-//							}
-//						});
-//						return true;
-//					}
-//				},
-//				initComponent : function() {
-//					this.store.load({
-//						params : {
-//							id : Ext.getCmp('sUserInfos$userTypeCombo')
-//									.getValue(),
-//							start : 0
-//						},
-//						callback : function(r, options, success) {
-//							Ext.getCmp('sUserInfos$userTypeCombo').setValue(Ext
-//									.getCmp('sUserInfos$userTypeCombo')
-//									.getValue());
-//						}
-//					});
-//				}
-//			}),
-			
-						{
+			{
 				html : '所属平台:',
 				cls : 'common-text',
 				style : 'width:135;text-align:right'
@@ -831,7 +590,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -905,7 +665,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			{
 			xtype : 'fieldset',
 		    title : '申请帐号信息',
@@ -1310,11 +1071,11 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					return false;
 					}
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 				  Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
 					Ext.getCmp("back").disable();
@@ -1335,17 +1096,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						},
 
 						success : function(response, options) {
-//							var responseArray = Ext.util.JSON
-//									.decode(response.responseText);
-//							var curId = responseArray.id;
-//							Ext.getCmp('panel_SpecailAccountApply_Input').load({
-//								url : webContext
-//										+ '/accountAction_getApplyDraftData.action?panelName=panel_SpecailAccountApply_Input&dataId='
-//										+ curId,
-//								timeout : 30,
-//								success : function(action, form) {
-//								}
-//							});
 							Ext.MessageBox.alert("提示", "保存成功", function() {
 										window.location = webContext
 												+ "/requireSIAction_toRequireInfoByServiceItemId2.action?id="
@@ -1373,15 +1123,15 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					return false;
 					}
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					if(confirmUser==''||confirmUser==null){
-						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+//					if(confirmUser==''||confirmUser==null){
+//						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					
 					var accountName=Ext.getCmp('itil_ac_SpecialAccount$accountNameCombo').getValue();
 					if(accountName==''||accountName==null){
@@ -1490,9 +1240,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				                  Ext.getCmp("itil_ac_SpecialAccount$mailValueCombo").setValue("");
                                   Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							           .initComponent();
-					
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 				              },
 				             failure : function(response, options) {
 							
@@ -1528,9 +1278,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				success : function(action, form) {
 					 Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							           .initComponent();
-					
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 					             Ext.getCmp("AccountApplyMainTable$platFormHRCountSignCombo")
 							.initComponent();
 				}

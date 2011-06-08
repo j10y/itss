@@ -808,7 +808,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			}),
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -884,7 +885,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			})]}, 
+			})*/
+			]}, 
 			{
 			xtype : 'fieldset',
             title : '申请帐号信息',
@@ -1213,8 +1215,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							.initComponent();
 							  Ext.getCmp("itil_ac_SpecialAccount$accountOldUserCombo")
 							.initComponent();
-						 Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//						 Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 							Ext.getCmp('itil_ac_SpecialAccount$rightsDesc').setValue("");
 				}
 			});

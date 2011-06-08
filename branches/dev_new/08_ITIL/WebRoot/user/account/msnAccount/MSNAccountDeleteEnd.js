@@ -667,7 +667,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			}),  
+			})
+			/*,  
 			{
 				html : '<font color=red>*</font>…Û≈˙»À:',
 				cls : 'common-text',
@@ -740,7 +741,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			 
 			 {
 			xtype : 'fieldset',
@@ -1011,8 +1013,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
 					
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 					      	
 					 
 				}

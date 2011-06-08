@@ -604,27 +604,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			}),  
-//				{
-//				html : '人事子范围:',
-//				cls : 'common-text',
-//				style : 'width:135;text-align:right'
-//			}, new Ext.form.TextField({
-//				fieldLabel : '员工编号',
-//				xtype : 'textfield',
-//				colspan : 0,
-//				rowspan : 0,
-//				readOnly : true,
-//				id : 'sUserInfos$personnelScope',
-//				name : 'sUserInfos$personnelScope',
-//				style : '',
-//				width : 200,
-//				value : '',
-//				allowBlank : true,
-//				validator : '',
-//				vtype : ''
-//			}), 
-			
+			})
+			/*,  
 			
 			{
 				html : '<font color=red>*</font>审批人:',
@@ -698,7 +679,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			{
 			xtype : 'fieldset',
 		    title : '申请帐号信息',
@@ -968,8 +950,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           .initComponent();
 							    
 					
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 				}
 			});
 		}

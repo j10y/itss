@@ -911,7 +911,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			})
+			/*,
 
 					 {
 							html : '<font color=red>*</font>审批人:',
@@ -986,7 +987,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-						})]
+						})*/
+			]
 			}, {
 				xtype : 'fieldset',
 				title : '座机信息',
@@ -1289,19 +1291,19 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					if(confirmUser==''||confirmUser==null){
-						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+//					if(confirmUser==''||confirmUser==null){
+//						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 				    var telephoneNumber=Ext.getCmp("itil_ac_PersonFormalAccount$telephoneNumber").getValue();
 				    if(telephoneNumber==null||telephoneNumber.trim().length<7){
 				    	Ext.MessageBox.alert("提示","请填写完整的要变更的电话号码,谢谢您的合作!");
@@ -1409,20 +1411,20 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					    var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
 						var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-						var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					
-						if(confirmUser==''||confirmUser==null){
-						      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-						      return false;
-					     }
-						if(applyUser==confirmUser){
-						 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-			                return false;
-						}
-						if(delegateApplyUser==confirmUser){
-						 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-			                return false;
-						}
+//						var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+//					
+//						if(confirmUser==''||confirmUser==null){
+//						      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//						      return false;
+//					     }
+//						if(applyUser==confirmUser){
+//						 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//			                return false;
+//						}
+//						if(delegateApplyUser==confirmUser){
+//						 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//			                return false;
+//						}
 						Ext.getCmp("save").disable();
 						Ext.getCmp("submit").disable();
 						Ext.getCmp("back").disable();
@@ -1547,8 +1549,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							.initComponent();
 					Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							.initComponent();
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 					Ext.getCmp("itil_ac_PersonFormalAccount$workSpaceCombo")
 							.initComponent();
 		  var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();

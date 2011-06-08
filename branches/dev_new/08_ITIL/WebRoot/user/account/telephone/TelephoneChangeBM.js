@@ -624,7 +624,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}), 
+			})
+			/*, 
 
 				{
 					html : '<font color=red>*</font>…Û≈˙»À:',
@@ -698,7 +699,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				})]
+				})*/
+			]
 			},
 
 			{
@@ -1079,8 +1081,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							.initComponent();
 
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 					Ext.getCmp("AccountApplyMainTable$telephoneSignUserCombo")
 							.initComponent();	
 							if( Ext.getCmp("itil_ac_PersonFormalAccount$userRight").getValue()!=''){

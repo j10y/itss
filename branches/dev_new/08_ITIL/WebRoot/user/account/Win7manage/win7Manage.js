@@ -354,7 +354,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 						});
 					}
 				
-			}),{
+			}),
+			/*{
 				html : "隶属平台:",
 				cls : 'common-text',
 				width : 100,
@@ -427,7 +428,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 							}
 						});
 					}
-				}),{
+				}),
+				*/{
 					html : "硬件序列号:",
 					cls : 'common-text',
 					width : 100,
@@ -438,7 +440,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 					id : "ahardwareId",
 					allowBlank : true,
 					width : 200
-				}),{},{},{
+				}),{
 					html : "备注说明:",
 					cls : 'common-text',
 					width : 100,
@@ -465,7 +467,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 					return false;
 					}
 					var mowner=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var mplatform=Ext.getCmp('itil_ac_MobileTelephoneApply$platFormCombo').getValue();
+					//var mplatform=Ext.getCmp('itil_ac_MobileTelephoneApply$platFormCombo').getValue();
 					var mdeviceid=Ext.getCmp('mDeviceId').getValue().trim();
 					var mrightsDesc=getEncodeValue('itil_ac_MobileTelephoneApply$rightsDesc');
 					var mcfuid=Ext.getCmp('AccountApplyMainTable$managerNameCombo').getValue();
@@ -475,10 +477,10 @@ PagePanel = Ext.extend(Ext.Panel, {
 						Ext.MessageBox.alert("提示","管理员必须从下拉列表中选择,谢谢您的合作!");
 						return false;
 					}
-					if(mplatform==''||mplatform==null){
-						Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
+//					if(mplatform==''||mplatform==null){
+//						Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
 					if(mdeviceid==''||mdeviceid==null){
 						Ext.MessageBox.alert("提示","设备型号不能为空,谢谢您的合作!");
 						return false;
@@ -490,7 +492,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 								+ '/accountAction_addWin7Account.action',
 						params : {
 							owner : mowner,
-							platform : mplatform,
+							//platform : mplatform,
 							deviceId : mdeviceid,
 							rightsDesc : mrightsDesc,
 							confirmUser : mcfuid,
@@ -868,7 +870,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 					}
 				
 			
-			}),{
+			}),
+			/*{
 				html : "隶属平台:",
 				cls : 'common-text',
 				width : 100,
@@ -942,7 +945,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 							}
 						});
 					}
-				}),{
+				}),
+				*/{
 					html : "硬件序列号:",
 					cls : 'common-text',
 					width : 100,
@@ -954,7 +958,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 					allowBlank : true,
 					value : mhardwareId,
 					width : 200
-				}),{},{},{
+				}),{
 					html : "备注说明:",
 					cls : 'common-text',
 					width : 100,
@@ -1010,7 +1014,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 																return false;
 																}
 																var mowner=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-																var mplatform=Ext.getCmp('itil_ac_MobileTelephoneApply$platFormCombo').getValue();
+																//var mplatform=Ext.getCmp('itil_ac_MobileTelephoneApply$platFormCombo').getValue();
 																var mdeviceid=Ext.getCmp('mDeviceId').getValue();
 																var mrightsDesc=getEncodeValue('itil_ac_MobileTelephoneApply$rightsDesc');
 																var mcfuid=Ext.getCmp('mAccountApplyMainTable$managerNameCombo').getValue();
@@ -1024,10 +1028,10 @@ PagePanel = Ext.extend(Ext.Panel, {
 																	Ext.MessageBox.alert("提示","管理员必须从下拉列表中选择,谢谢您的合作!");
 																	return false;
 																}
-																if(mplatform==''||mplatform==null){
-																	Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
-																	return false;
-																}
+//																if(mplatform==''||mplatform==null){
+//																	Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
+//																	return false;
+//																}
 																if(mdeviceid==''||mdeviceid==null){
 																	Ext.MessageBox.alert("提示","设备型号不能为空,谢谢您的合作!");
 																	return false;
@@ -1039,7 +1043,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 																			+ '/accountAction_modifyWin7Account.action',
 																	params : {
 																		owner : mowner,
-																		platform : mplatform,
+																		//platform : mplatform,
 																		deviceId : mdeviceid,
 																		rightsDesc : mrightsDesc,
 																		confirmUser : mcfuid,

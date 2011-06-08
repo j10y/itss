@@ -553,6 +553,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				validator : '',
 				vtype : ''
 			}), 
+			/*去掉隶属平台，所有win7申请都由维护工程师来审批
 		   {
 				html : "<font color=red>*</font>隶属平台:",
 				cls : 'common-text',
@@ -624,7 +625,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				}),
+				}),*/
 			{
 				html : "<font color=red>*</font>设备型号:",
 				cls : 'common-text',
@@ -698,7 +699,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					}
 				
-			}),
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -773,7 +775,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]}, 
+			})*/
+			]}, 
 			{
 			xtype : 'fieldset',
             title : '申请帐号信息',
@@ -1040,33 +1043,33 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					}
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					var win7pf=Ext.getCmp('itil_ac_SpecialAccount$win7PaltFormCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var win7pf=Ext.getCmp('itil_ac_SpecialAccount$win7PaltFormCombo').getValue();
 					var devicetype=Ext.getCmp('itil_ac_SpecialAccount$deviceTypeCombo').getValue();
 					if(applyUser==''||applyUser==null){
 					      Ext.MessageBox.alert("提示","申请人必须从下拉列表中选择,谢谢您的合作!");
 					      return false;
     				 }
-					if(win7pf==''||win7pf==null){
-					      Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
-					      return false;
-    				 }
+//					if(win7pf==''||win7pf==null){
+//					      Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
+//					      return false;
+//    				 }
 					if(devicetype==''||devicetype==null){
 					      Ext.MessageBox.alert("提示","设备型号必须从下拉列表中选择,谢谢您的合作!");
 					      return false;
     				 }
-					if(confirmUser==''||confirmUser==null){
-					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-					      return false;
-				     }
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(confirmUser==''||confirmUser==null){
+//					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//					      return false;
+//				     }
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					  
 		            Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
@@ -1121,8 +1124,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					}
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					var win7pf=Ext.getCmp('itil_ac_SpecialAccount$win7PaltFormCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var win7pf=Ext.getCmp('itil_ac_SpecialAccount$win7PaltFormCombo').getValue();
 					var devicetype=Ext.getCmp('itil_ac_SpecialAccount$deviceTypeCombo').getValue();
 					
 					if(devicetype==''||devicetype==null){
@@ -1133,22 +1136,22 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					      Ext.MessageBox.alert("提示","申请人必须从下拉列表中选择,谢谢您的合作!");
 					      return false;
     				 }
-					if(win7pf==''||win7pf==null){
-					      Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
-					      return false;
-    				 }
-					if(confirmUser==''||confirmUser==null){
-					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-					      return false;
-				     }
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(win7pf==''||win7pf==null){
+//					      Ext.MessageBox.alert("提示","隶属平台必须从下拉列表中选择,谢谢您的合作!");
+//					      return false;
+//    				 }
+//					if(confirmUser==''||confirmUser==null){
+//					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//					      return false;
+//				     }
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					  
 		            Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
@@ -1174,19 +1177,19 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							var curId = responseArray.id;
 							var curName = responseArray.applyId;
 						    var userInfo=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-						    var win7pf=Ext.getCmp('itil_ac_SpecialAccount$win7PaltFormCombo').getValue();
+						    //var win7pf=Ext.getCmp('itil_ac_SpecialAccount$win7PaltFormCombo').getValue();
 							Ext.Ajax.request({
 								url : webContext
 										+ '/accountWorkflow_applyWin7AccessAccount.action',
 								params : {
 									dataId : curId,
 									userInfo : userInfo,
-									platForm : win7pf,
+									//platForm : win7pf,
 									bzparam : "{dataId :'"+ curId
 											+ "',applyId : '"+ curId
 											+ "',accountName:'"+ curName
 											+ "',applyType: 'acproject',"
-											+ "applyTypeName: '临时人员远程接入帐号删除申请',"
+											+ "applyTypeName: 'xp改win7帐号申请',"
 											+ "customer:'',serviceItemId:'"
 											+ curscid + "'}",
 									defname : pName
@@ -1241,7 +1244,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				             
 				                 Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
                                  Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+					            // Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 				              },
 				             failure : function(response, options) {
 							
@@ -1258,9 +1261,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				success : function(action, form) {
 								 Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 					     		 Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
-								 Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+								// Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 								 Ext.getCmp("itil_ac_SpecialAccount$deviceTypeCombo").initComponent();
-								 Ext.getCmp("itil_ac_SpecialAccount$win7PaltFormCombo").initComponent();
+								// Ext.getCmp("itil_ac_SpecialAccount$win7PaltFormCombo").initComponent();
 				}
 			});
 				

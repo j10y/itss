@@ -888,7 +888,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				allowBlank : false,
 				validator : '',
 				vtype : 'email'
-			}),
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>…Û≈˙»À:',
 				cls : 'common-text',
@@ -961,7 +962,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 	
 			 
 			 {
@@ -1234,8 +1236,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				success : function(action, form) {
 				  			Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 					        Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
-					        Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
-//							Ext.getCmp("itil_ac_PersonFormalAccount$drawSpaceCombo").initComponent();
+					       // Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 							Ext.getCmp("sUserInfos$personnelScopeCombo").initComponent();
 				}
 			});

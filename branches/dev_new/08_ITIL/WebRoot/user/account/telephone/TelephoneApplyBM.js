@@ -941,7 +941,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}), 
+			})
+			/*, 
 						
 			
 					 {
@@ -1016,7 +1017,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-						})]
+						})*/
+			]
 			}, {
 				xtype : 'fieldset',
 				title : '…Í«Î’ ∫≈–≈œ¢',
@@ -1431,8 +1433,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							.initComponent();
 					Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							.initComponent();
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 							
 					Ext.getCmp("AccountApplyMainTable$telephoneSignUserCombo")
 							.initComponent();

@@ -900,83 +900,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
-//				{
-//				html : '人事子范围:',
-//				cls : 'common-text',
-//				style : 'width:135;text-align:right'
-//			}, new Ext.form.ComboBox({
-//				xtype : 'combo',
-//				hiddenName : 'sUserInfos$personnelScope',
-//				id : 'sUserInfos$personnelScopeCombo',
-//				width : 200,
-//				style : '',
-//				fieldLabel : '人事子范围',
-//				colspan : 0,
-//				rowspan : 0,
-//				readOnly : true,
-//				hideTrigger:true,
-//				lazyRender : true,
-//				displayField : 'personnelScopeCode',
-//				valueField : 'id',
-//				emptyText : '请选择...',
-//				allowBlank : true,
-//				typeAhead : true,
-//				name : 'sUserInfos$personnelScope',
-//				triggerAction : 'all',
-//				minChars : 50,
-//				queryDelay : 700,
-//				store : new Ext.data.JsonStore({
-//					url : webContext
-//							+ '/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.PersonnelScope',
-//					fields : ['id', 'personnelScopeCode'],
-//					listeners : {
-//						beforeload : function(store, opt) {
-//							if (opt.params['sUserInfos$personnelScope'] == undefined) {
-//								opt.params['personnelScopeCode'] = Ext
-//										.getCmp('sUserInfos$personnelScopeCombo').defaultParam;
-//							}
-//						}
-//					},
-//					totalProperty : 'rowCount',
-//					root : 'data',
-//					id : 'id'
-//				}),
-//				pageSize : 10,
-//				listeners : {
-//					'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-//						var param = queryEvent.combo.getRawValue();
-//						this.defaultParam = param;
-//						if (queryEvent.query == '') {
-//							param = '';
-//						}
-//						this.store.load({
-//							params : {
-//								personnelScopeCode : param,
-//								start : 0
-//							}
-//						});
-//						return true;
-//					}
-//				},
-//				initComponent : function() {
-//					this.store.load({
-//						params : {
-//							id : Ext.getCmp('sUserInfos$personnelScopeCombo')
-//									.getValue(),
-//							start : 0
-//						},
-//						callback : function(r, options, success) {
-//							Ext
-//									.getCmp('sUserInfos$personnelScopeCombo')
-//									.setValue(Ext
-//											.getCmp('sUserInfos$personnelScopeCombo')
-//											.getValue());
-//						}
-//					});
-//				}
-//			}),
-			
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -1049,7 +974,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			 
 			 {
 			xtype : 'fieldset',
@@ -1381,8 +1307,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           .initComponent();
 					             Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 							 Ext.getCmp("sUserInfos$personnelScopeCombo")
 							.initComponent();
 				}

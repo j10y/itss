@@ -486,7 +486,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					allowBlank : false,
 					validator : '',
 					vtype : ''
-				}),
+				})
+				,
 				{
 				html : '…Í«Î»À:',
 				cls : 'common-text',
@@ -786,7 +787,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				allowBlank : true,
 				validator : '',
 				vtype : ''
-			}),
+			})
+			/*,
 			
 				{
 				html : '…Û≈˙»À:',
@@ -870,7 +872,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})
+			*/
+			]},
 			
 			{
 			xtype : 'fieldset',
@@ -1742,8 +1746,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							    Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
 					
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							     .initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							     .initComponent();
 				               },
 				             failure : function(response, options) {
 							   
@@ -1778,8 +1782,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			    Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
 					
-			     Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							     .initComponent();
+//			     Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							     .initComponent();
 							     
 							     Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							           .initComponent();

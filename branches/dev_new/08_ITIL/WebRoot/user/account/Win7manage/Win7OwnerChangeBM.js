@@ -775,7 +775,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			}),
+			})
+			/*,
 
 		   
 			{
@@ -851,7 +852,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]}, 
+			})*/
+			]}, 
 			{
 			xtype : 'fieldset',
             title : '…Í«Î’ ∫≈–≈œ¢',
@@ -1177,7 +1179,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							  Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
 					          Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 							  Ext.getCmp("itil_ac_SpecialAccount$accountOldUserCombo").initComponent();
-							  Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+							 // Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 							  Ext.getCmp("itil_ac_SpecialAccount$accountNameCombo").initComponent();
 				}
 			});

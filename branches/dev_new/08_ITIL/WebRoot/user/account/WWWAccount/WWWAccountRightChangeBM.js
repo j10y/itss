@@ -539,7 +539,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			}),  
+			})
+			/*,  
 			
 			{
 				html : '<font color=red>*</font>审批人:',
@@ -613,7 +614,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			 {
 			xtype : 'fieldset',
 		    title : '帐号变更信息(加注<font color=red>*</font>为必填项)',
@@ -941,8 +943,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							           .initComponent();
 					            
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 				}
 			});
 		}

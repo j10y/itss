@@ -774,7 +774,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			}),
+			})
+			/*,
 
 		   
 			{
@@ -850,7 +851,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]}, 
+			})*/
+			]}, 
 			{
 			xtype : 'fieldset',
             title : '申请帐号信息',
@@ -1165,7 +1167,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					return false;
 					}
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
 					var OldUser=Ext.getCmp('itil_ac_SpecialAccount$accountOldUserCombo').getValue();
 					if(applyUser==''||applyUser==null){
@@ -1176,18 +1178,18 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					 Ext.MessageBox.alert("提示","帐号原所有者选择错误,请重新选择！");
 		                return false;
 					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请的人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","帐号新所有者不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(OldUser==confirmUser){
-					 Ext.MessageBox.alert("提示","帐号原所有者不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请的人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","帐号新所有者不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(OldUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","帐号原所有者不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					
 				  
 		           Ext.getCmp("save").disable();
@@ -1262,34 +1264,34 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					return false;
 					}
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
 					var OldUser=Ext.getCmp('itil_ac_SpecialAccount$accountOldUserCombo').getValue();
 					if(applyUser==''||applyUser==null){
 					      Ext.MessageBox.alert("提示","帐号新所有者必须从下拉列表中选择,谢谢您的合作!");
 					      return false;
     				 }
-					if(confirmUser==''||confirmUser==null){
-					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-					      return false;
-				     }
+//					if(confirmUser==''||confirmUser==null){
+//					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//					      return false;
+//				     }
 					if(OldUser==''||OldUser==null){
 					 Ext.MessageBox.alert("提示","帐号原所有者必须从下拉列表中选择,谢谢您的合作！");
 		                return false;
 					}
 					
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请的人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","帐号新所有者不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(OldUser==confirmUser){
-					 Ext.MessageBox.alert("提示","帐号原所有者不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请的人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","帐号新所有者不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(OldUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","帐号原所有者不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					
 		           Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
@@ -1435,7 +1437,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				                	
 			                	 Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
                                  Ext.getCmp("AccountApplyMainTable$applyUserCombo").setValue("");
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+					            // Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 				              },
 				             failure : function(response, options) {
 							
@@ -1454,7 +1456,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							  Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
 					          Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 							  Ext.getCmp("itil_ac_SpecialAccount$accountOldUserCombo").initComponent();
-							  Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+							//  Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 							  Ext.getCmp("itil_ac_SpecialAccount$accountNameCombo").initComponent();
 				}
 			});

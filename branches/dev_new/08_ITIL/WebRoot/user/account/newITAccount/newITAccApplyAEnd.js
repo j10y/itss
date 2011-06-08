@@ -774,7 +774,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				allowBlank : true,
 				validator : '',
 				vtype : ''
-			}),
+			})
+			/*,
 			
 				{
 				html : '审批人:',
@@ -848,7 +849,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})
+			*/
+			]},
 			{
 			xtype : 'fieldset',
 		    title : '<font color=red>帐号使用说明</font>',
@@ -1771,8 +1774,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							    Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
 					
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							     .initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							     .initComponent();
 				               },
 				             failure : function(response, options) {
 							   
@@ -1807,8 +1810,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
 					
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							    .initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							    .initComponent();
 							     Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							    .initComponent();
 							    Ext.getCmp('mailServer').setValue(Ext.getCmp('itil_ac_PersonFormalAccount$mailServer').getValue());

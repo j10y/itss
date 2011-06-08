@@ -609,7 +609,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					allowBlank : true,
 					validator : '',
 					vtype : ''
-				}),
+				})
+				/*,
 
 				{
 					html : '<font color=red>*</font>…Û≈˙»À:',
@@ -697,7 +698,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				})]
+				})*/
+				]
 			},
 
 			{

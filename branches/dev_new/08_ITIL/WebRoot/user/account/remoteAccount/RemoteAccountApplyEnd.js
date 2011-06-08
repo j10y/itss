@@ -802,81 +802,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					}
 			}),
-
-			/**{
-				html : '<font color=red>*</font>领卡地点:',
-				cls : 'common-text',
-				style : 'width:135;text-align:right'
-			}, new Ext.form.ComboBox({
-				xtype : 'combo',
-				hiddenName : 'itil_ac_PersonFormalAccount$drawSpace',
-				id : 'itil_ac_PersonFormalAccount$drawSpaceCombo',
-				width : 200,
-				style : '',
-				fieldLabel : '领卡地点',
-				colspan : 0,
-				rowspan : 0,
-				lazyRender : true,
-				displayField : 'name',
-				valueField : 'id',
-				emptyText : '请选择...',
-				allowBlank : false,
-				typeAhead : true,
-				name : 'itil_ac_PersonFormalAccount$drawSpace',
-				triggerAction : 'all',
-				minChars : 50,
-				queryDelay : 700,
-				store : new Ext.data.JsonStore({
-					url : webContext
-							+ '/extjs/comboDataAction?clazz=com.zsgj.itil.config.extlist.entity.AR_DrawSpace',
-					fields : ['id', 'name'],
-					listeners : {
-						beforeload : function(store, opt) {
-							if (opt.params['itil_ac_PersonFormalAccount$drawSpace'] == undefined) {
-								opt.params['name'] = Ext
-										.getCmp('itil_ac_PersonFormalAccount$drawSpaceCombo').defaultParam;
-							}
-						}
-					},
-					totalProperty : 'rowCount',
-					root : 'data',
-					id : 'id'
-				}),
-				pageSize : 10,
-				listeners : {
-					'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-						var param = queryEvent.combo.getRawValue();
-						this.defaultParam = param;
-						if (queryEvent.query == '') {
-							param = '';
-						}
-						this.store.load({
-							params : {
-								name : param,
-								start : 0
-							}
-						});
-						return true;
-					}
-				},
-				initComponent : function() {
-					this.store.load({
-						params : {
-							id : Ext
-									.getCmp('itil_ac_PersonFormalAccount$drawSpaceCombo')
-									.getValue(),
-							start : 0
-						},
-						callback : function(r, options, success) {
-							Ext
-									.getCmp('itil_ac_PersonFormalAccount$drawSpaceCombo')
-									.setValue(Ext
-											.getCmp('itil_ac_PersonFormalAccount$drawSpaceCombo')
-											.getValue());
-						}
-					});
-				}
-			}),*/
 			{
 				html : '通知邮箱:',
 				cls : 'common-text',
@@ -894,7 +819,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				allowBlank : true,
 				validator : '',
 				vtype : 'email'
-			}),
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -967,7 +893,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 		
 			 
 			 {
@@ -1485,7 +1412,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				success : function(action, form) {
 					  Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 					  Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
-					  Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+					 // Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 					  Ext.getCmp("itil_ac_PersonFormalAccount$drawSpaceCombo").initComponent();
 					  Ext.getCmp("sUserInfos$personnelScopeCombo").initComponent();
 					  var da=new DataAction();

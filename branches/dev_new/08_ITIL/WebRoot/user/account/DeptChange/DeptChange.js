@@ -541,44 +541,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							}
 						});
 					}
-				}), /*{
-					html : '原成本中心号:',
-					cls : 'common-text',
-					style : 'width:135;text-align:right'
-				}, new Ext.form.TextField({
-					fieldLabel : '成本中心号',
-					xtype : 'textfield',
-					colspan : 0,
-					rowspan : 0,
-					id : 'itil_ac_DCContacts$costCenterCode',
-					name : 'itil_ac_DCContacts$costCenterCode',
-					style : '',
-					width : 200,
-					hideTrigger : true,
-					readOnly : true,
-					value : '',
-					allowBlank : true,
-					validator : '',
-					vtype : ''
-				}), {
-					html : '新成本中心号:',
-					cls : 'common-text',
-					style : 'width:135;text-align:right'
-				}, new Ext.form.TextField({
-					fieldLabel : '新成本中心号',
-					xtype : 'textfield',
-					colspan : 0,
-					rowspan : 0,
-					id : 'sUserInfos$costCenterCode',
-					name : 'sUserInfos$costCenterCode',
-					style : '',
-					width : 200,
-                    readOnly : true,
-					value : '',
-					allowBlank : true,
-					validator : '',
-					vtype : ''
-				}), */{
+				}),{
 					html : '原邮件等价名部门:',
 					cls : 'common-text',
 					style : 'width:135;text-align:right'
@@ -939,76 +902,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					allowBlank : true,
 					validator : '',
 					vtype : ''
-			
-//				xtype : 'combo',
-//				hiddenName : 'itil_ac_DCContacts$mailServer',
-//				id : 'itil_ac_DCContacts$mailServerCombo',
-//				width : 200,
-//				style : '',
-//				fieldLabel : '邮件服务器',
-//				colspan : 0,
-//				rowspan : 0,
-//				lazyRender : true,
-//				displayField : 'name',
-//				valueField : 'id',
-//				emptyText : '请选择...',
-//				allowBlank : true,
-//				typeAhead : true,
-//				name : 'itil_ac_DCContacts$mailServer',
-//				triggerAction : 'all',
-//				minChars : 50,
-//				hideTrigger:true,
-//				readOnly : true,
-//				queryDelay : 700,
-//				store : new Ext.data.JsonStore({
-//					url : webContext
-//							+ '/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.MailServer',
-//					fields : ['id', 'name'],
-//					listeners : {
-//						beforeload : function(store, opt) {
-//							if (opt.params['itil_ac_DCContacts$mailServer'] == undefined) {
-//								opt.params['name'] = Ext
-//										.getCmp('itil_ac_DCContacts$mailServerCombo').defaultParam;
-//							}
-//						}
-//					},
-//					totalProperty : 'rowCount',
-//					root : 'data',
-//					id : 'id'
-//				}),
-//				pageSize : 10,
-//				listeners : {
-//					'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-//						var param = queryEvent.combo.getRawValue();
-//						this.defaultParam = param;
-//						if (queryEvent.query == '') {
-//							param = '';
-//						}
-//						this.store.load({
-//							params : {
-//								name : param,
-//								start : 0
-//							}
-//						});
-//						return true;
-//					}
-//				},
-//				initComponent : function() {
-//					this.store.load({
-//						params : {
-//							id : Ext.getCmp('itil_ac_DCContacts$mailServerCombo')
-//									.getValue(),
-//							start : 0
-//						},
-//						callback : function(r, options, success) {
-//							Ext
-//									.getCmp('itil_ac_DCContacts$mailServerCombo')
-//									.setValue(Ext
-//											.getCmp('itil_ac_DCContacts$mailServerCombo')
-//											.getValue());
-//						}
-//					});
-//				}
 //modify by liuying for 修改原邮件服务器为文本框 at 20100514 end
 			}), {
 						html : '新邮件服务器:',
@@ -1087,7 +980,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					})]
 				},
 
-				{
+				/*{
 					html : '<font color=red>*</font>原部门审批人:',
 					cls : 'common-text',
 					style : 'width:135;text-align:right'
@@ -1243,7 +1136,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				}), new Ext.form.Hidden({
+				}),*/ 
+				new Ext.form.Hidden({
 					xtype : 'hidden',
 					id : 'sUserInfos$id',
 					colspan : 0,
@@ -1751,29 +1645,29 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					}
 					
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					var signAuditUser=Ext.getCmp('AccountApplyMainTable$signAuditUserCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var signAuditUser=Ext.getCmp('AccountApplyMainTable$signAuditUserCombo').getValue();
 					var sameMailDept = Ext.getCmp('sUserInfos$sameMailDeptCombo').getValue();
-					if(confirmUser==''||confirmUser==null){
-						Ext.MessageBox.alert("提示","原部门审批人必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
+//					if(confirmUser==''||confirmUser==null){
+//						Ext.MessageBox.alert("提示","原部门审批人必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
 					if(sameMailDept==''||sameMailDept==null){
 						Ext.MessageBox.alert("提示","新邮件等价部门必须从下拉列表中选择,谢谢您的合作!");
 						return false;
 					}
-					if(signAuditUser==''||signAuditUser==null){
-						Ext.MessageBox.alert("提示","新部门审批人必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和原部门审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(signAuditUser==applyUser){
-					 Ext.MessageBox.alert("提示","申请人不能和新部门审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(signAuditUser==''||signAuditUser==null){
+//						Ext.MessageBox.alert("提示","新部门审批人必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和原部门审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(signAuditUser==applyUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和新部门审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					
 					Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
@@ -1953,10 +1847,10 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							Ext.getCmp("itil_ac_DCContacts$workSpaceCombo")
 							.initComponent();
 										
-								Ext
-										.getCmp("AccountApplyMainTable$confirmUserCombo")
-										.initComponent();
-										Ext.getCmp("AccountApplyMainTable$signAuditUserCombo").initComponent();
+//								Ext
+//										.getCmp("AccountApplyMainTable$confirmUserCombo")
+//										.initComponent();
+//										Ext.getCmp("AccountApplyMainTable$signAuditUserCombo").initComponent();
 								Ext
 										.getCmp('itil_ac_PersonFormalAccount$wwwAccountValueCombo')
 										.setValue("");
@@ -2021,10 +1915,10 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					Ext.getCmp("AccountApplyMainTable$applyUserCombo")
 							.initComponent();
 					
-					Ext.getCmp("AccountApplyMainTable$signAuditUserCombo")
-							.initComponent();
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$signAuditUserCombo")
+//							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 					Ext.getCmp("itil_ac_DCContacts$workSpaceCombo")
 							.initComponent();
 				    Ext.getCmp("sUserInfos$sameMailDeptCombo")

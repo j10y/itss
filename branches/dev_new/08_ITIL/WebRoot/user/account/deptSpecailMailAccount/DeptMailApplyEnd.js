@@ -666,7 +666,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>…Û≈˙»À:',
 				cls : 'common-text',
@@ -739,7 +740,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})
+			*/
+			]},
 			{
 			xtype : 'fieldset',
 		   layout : 'table',
@@ -1314,8 +1317,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           .initComponent();
 						 Ext.getCmp("AccountApplyMainTable$platFormHRCountSignCombo")
 							           .initComponent();
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 							var da=new DataAction();
 					         var url=webContext
 						+ '/accountAction_getFileList.action?clazzName=com.zsgj.itil.account.entity.SpecialAccount&dataId='

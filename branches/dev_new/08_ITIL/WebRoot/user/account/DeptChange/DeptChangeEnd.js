@@ -1100,7 +1100,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			})
 			]},
 			
-			
+			/*
 			{
 				html : '<font color=red>*</font>原部门审批人:',
 				cls : 'common-text',
@@ -1247,7 +1247,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}), 
+			}), */
 			 new Ext.form.Hidden({
 				xtype : 'hidden',
 				id : 'sUserInfos$id',
@@ -1602,8 +1602,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 										.initComponent();
 			   Ext.getCmp("itil_ac_DCContacts$sameMailDeptCombo")
 										.initComponent();
-			    Ext.getCmp("AccountApplyMainTable$signAuditUserCombo").initComponent();
-			    Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+//			    Ext.getCmp("AccountApplyMainTable$signAuditUserCombo").initComponent();
+//			    Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 			    Ext.getCmp("itil_ac_DCContacts$workSpaceCombo").initComponent();
 			    Ext.getCmp("sUserInfos$workSpaceCombo").initComponent();
 			    var newWorkSpace=Ext.getCmp('itil_ac_DCContacts$workSpaceCombo').getValue();

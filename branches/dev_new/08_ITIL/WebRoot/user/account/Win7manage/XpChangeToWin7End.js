@@ -556,6 +556,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				validator : '',
 				vtype : ''
 			}), 
+			/*
 		   {
 				html : "<font color=red>*</font>隶属平台:",
 				cls : 'common-text',
@@ -628,7 +629,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				}),
+				}),*/
 			{
 				html : "<font color=red>*</font>设备型号:",
 				cls : 'common-text',
@@ -703,7 +704,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					}
 				
-			}),
+			})
+			/*,
 			{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -778,7 +780,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]}, 
+			})*/
+			]}, 
 			{
 			xtype : 'fieldset',
             title : '申请帐号信息',
@@ -1091,9 +1094,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				success : function(action, form) {
 								 Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 					     		 Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
-								 Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+								 //Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 								 Ext.getCmp("itil_ac_SpecialAccount$deviceTypeCombo").initComponent();
-								 Ext.getCmp("itil_ac_SpecialAccount$win7PaltFormCombo").initComponent();
+								// Ext.getCmp("itil_ac_SpecialAccount$win7PaltFormCombo").initComponent();
 				}
 			});
 				

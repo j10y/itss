@@ -714,7 +714,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				}
 			}), 
 			
-			
+
+			/*
 			{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -788,7 +789,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			}),*/
 			{
 				html : '<font color=red>*</font>还卡地点:',
 				cls : 'common-text',
@@ -1137,16 +1138,16 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					return false;
 					}
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
 					Ext.getCmp("back").disable();
@@ -1278,24 +1279,24 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					         return false;
 					}
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
 					if(applyUser==''||applyUser==null){
 				      Ext.MessageBox.alert("提示","申请人必须从下拉列表中选择,谢谢您的合作!");
 				      return false;
     				 }
-					if(confirmUser==''||confirmUser==null){
-					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-					      return false;
-				     }
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					 }
+//					if(confirmUser==''||confirmUser==null){
+//					      Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//					      return false;
+//				     }
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					 }
 					
 				   var vpnType=Ext.getCmp('itil_ac_PersonFormalAccount$vpnType').getValue();
 				   
@@ -1528,8 +1529,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           .initComponent();
 							        Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
-					                Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-									   .initComponent();
+//					                Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//									   .initComponent();
 									Ext.getCmp("itil_ac_PersonFormalAccount$drawSpaceCombo")
 									   .initComponent();
                                  
@@ -1560,7 +1561,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				success : function(action, form) {
 					Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 					Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+					//Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 					Ext.getCmp("itil_ac_PersonFormalAccount$drawSpaceCombo").initComponent();
 					var userInfo=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
 			      	Ext.Ajax.request({

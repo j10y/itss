@@ -666,7 +666,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			})
+			/*,
 
 		
 			{
@@ -741,7 +742,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			{
 			xtype : 'fieldset',
 		    title : '…Í«Î’ ∫≈–≈œ¢',
@@ -1367,8 +1369,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           .initComponent();
 					  Ext.getCmp("AccountApplyMainTable$platFormHRCountSignCombo")
 							.initComponent();
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 							 Ext.getCmp("mailServerCombo")
 							.initComponent();
 							 Ext.getCmp("itil_ac_SpecialAccount$accountName").setValue( Ext.getCmp("itil_ac_SpecialAccount$erpUserName").getValue());

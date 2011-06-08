@@ -667,7 +667,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}
 					});
 				}
-			}), 
+			})
+			/*, 
 						{
 				html : '<font color=red>*</font>审批人:',
 				cls : 'common-text',
@@ -740,7 +741,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			}),*/
 			{
 				html : '<font color=red>*</font>还卡地点:',
 				cls : 'common-text',

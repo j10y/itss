@@ -936,7 +936,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				allowBlank : true,
 				validator : '',
 				vtype : ''
-			}),
+			})
+			/*,
 			
 				{
 				html : '<font color=red>*</font>审批人:',
@@ -1027,7 +1028,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			
 			{
 			xtype : 'fieldset',
@@ -1047,7 +1049,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=2px> 说明</font>',
+				html : '<font size=2px> 暂无说明</font>',
 				cls : 'common-text',
 				style : ';margin:0px 0px 0px 70px'
 				
@@ -1080,7 +1082,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							style : 'border:1px dotted #b0acac;margin:5px 0px 0px 15px',
 							cls : 'common-text',
 							defaultType : 'textfield',
-				html : ' 新财年公司规定对邮件帐号的邮箱容量只有三种规格（包括所有帐号类型，即个人正式帐号、部门特殊邮件帐号和临时邮件帐号），并按照邮箱容量的大小进行收费。所以帐号确认时请选择相应的邮箱容量。<font color=blue>容量一经确定，在本财年将不能变更</font>。详细信息如下： <font align=center><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp50M邮箱（个人正式帐号邮箱的默认大小）8元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp100M邮箱 16元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp150M邮箱 32元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp200M邮箱 64元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp此规定的解释权在信息化管理部。</font> '
+				html : ' 暂无说明'//新财年公司规定对邮件帐号的邮箱容量只有三种规格（包括所有帐号类型，即个人正式帐号、部门特殊邮件帐号和临时邮件帐号），并按照邮箱容量的大小进行收费。所以帐号确认时请选择相应的邮箱容量。<font color=blue>容量一经确定，在本财年将不能变更</font>。详细信息如下： <font align=center><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp50M邮箱（个人正式帐号邮箱的默认大小）8元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp100M邮箱 16元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp150M邮箱 32元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp200M邮箱 64元/月<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp此规定的解释权在信息化管理部。</font> '
 		  },
 			
 			{
@@ -1634,11 +1636,11 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					return false;
 					}
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请的人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请的人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
 					Ext.getCmp("back").disable();
@@ -1764,24 +1766,24 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						Ext.MessageBox.alert("提示","工作地点必须从下拉列表中选择,谢谢您的合作!");
 						return false;
 					}
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
 					if(applyUser==''||applyUser==null){
 						Ext.MessageBox.alert("提示","申请人必须从下拉列表中选择,谢谢您的合作!");
 						return false;
 					}
-					if(confirmUser==''||confirmUser==null){
-						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请的人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请的人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(confirmUser==''||confirmUser==null){
+//						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请的人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请的人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
 					Ext.getCmp("back").disable();
@@ -1906,7 +1908,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							 if(responseArray.success){	
 		                         Ext.getCmp("AccountApplyMainTable$applyUserCombo").setValue("");
 							     Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+					             //Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 							 }
 		              },
 		             failure : function(response, options) {
@@ -1928,7 +1930,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo").initComponent();
 			            Ext.getCmp("itil_ac_PersonFormalAccount$sameMailDeptCombo").initComponent();
 			            Ext.getCmp("itil_ac_PersonFormalAccount$workSpaceCombo").initComponent();
-			            Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
+			            //Ext.getCmp("AccountApplyMainTable$confirmUserCombo").initComponent();
 				        Ext.getCmp("AccountApplyMainTable$applyUserCombo").initComponent();
 			            Ext.getCmp("itil_ac_PersonFormalAccount$telephoneTypeCombo").initComponent();
 			            Ext.getCmp("itil_ac_PersonFormalAccount$sameMailDeptCombo").initComponent();

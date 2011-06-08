@@ -908,7 +908,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			})
+			/*,
 
 					 {
 							html : '<font color=red>*</font>审批人:',
@@ -982,7 +983,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-						})]
+						})*/
+			]
 			}, {
 				xtype : 'fieldset',
 				title : '座机信息',
@@ -1332,8 +1334,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							.initComponent();
 					Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							.initComponent();
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 					Ext.getCmp("itil_ac_PersonFormalAccount$workSpaceCombo")
 							.initComponent();
 		  var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();

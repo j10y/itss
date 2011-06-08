@@ -731,7 +731,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							}
 						});
 					}
-				}),
+				})
+				/*,
 				
 				
 				{
@@ -816,7 +817,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				})]
+				}
+				)*/
+				]
 			},
 
 			{
@@ -835,7 +838,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					columns : 2
 				},
 				items : [{
-					html : ' 1、请离职人员在主页→"人力资源管理流程"→提交"调离"申请后,再进行IT帐号注销申请。<br>2、员工离职帐号注销申请"审批后2小时内所有IT帐号（包括EB、ERP、ESS、MSN、WWW、邮箱、域、<br>&nbsp&nbsp&nbsp&nbsp&nbsp远程接入帐号等）将删除或禁用。<br>3、离职人员的"员工离职帐号注销申请"未提交或审批未通过,IT不予签署纸质离职转单。<br>4、离职人员如有远程接入帐号,请携带令牌卡到IT部门进行注销. ',
+					html : ' 1、员工离职帐号注销申请"审批后2小时内所有IT帐号（包括ERP、MSN、WWW、邮箱、域、<br>&nbsp&nbsp&nbsp&nbsp&nbsp远程接入帐号等）将删除或禁用。<br>2、离职人员的"员工离职帐号注销申请"未提交或审批未通过,IT不予签署纸质离职转单。<br>3、离职人员如有远程接入帐号,请携带令牌卡到IT部门进行注销. ',
 					cls : 'common-text',
 				    style : 'margin:0px 0px 0px 55px;line-height:18px'
 				}]
@@ -863,167 +866,6 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							items : [{
 								items : [this.grid2]
 							}
-//							, {
-//								layout : 'table',
-//								style : 'margin:10px 0px 0px 25px',
-//								anchor : '100%',
-//								defaults : {
-//									bodyStyle : 'padding:4px'
-//								},
-//								id : 'ifHoldErp',
-//								layoutConfig : {
-//									columns : 2
-//								},
-//
-//								items : [{
-//									html : '该ERP帐号是否保留:',
-//									cls : 'common-text',
-//									id : '',
-//									style : 'width:135;text-align:right'
-//								}, new Ext.form.ComboBox({forceSelection:true,
-//									xtype : 'combo',
-//									id : 'itil_ac_PersonFormalAccount$ifHoldCombo',
-//									style : '',
-//									mode : 'local',
-//									hiddenName : 'itil_ac_PersonFormalAccount$ifHold',
-//									colspan : 0,
-//									rowspan : 0,
-//									triggerAction : 'all',
-//									
-//									forceSelection : true,
-//									allowBlank : true,
-//									store : new Ext.data.SimpleStore({
-//										fields : ['id', 'name'],
-//										data : [['1', '是'], ['0', '否']]
-//									}),
-//									emptyText : '请选择...',
-//									valueField : 'id',
-//									value : '',
-//									displayField : 'name',
-//									name : 'itil_ac_PersonFormalAccount$ifHold',
-//									width : 100,
-//									fieldLabel : '是否涉及薪酬',
-//									listeners : {
-//										'expand' : function(combo) {
-//											combo.reset();
-//										},
-//										'select' : function(combo) {
-//											var result = Ext
-//													.getCmp('itil_ac_PersonFormalAccount$ifHoldCombo')
-//													.getValue();
-//
-//											if (result == 1) {
-//												Ext.getCmp('newRight')
-//														.expand(true);
-//												Ext
-//														.getCmp('itil_ac_PersonFormalAccount$accountownerCombo').allowBlank = false;
-//											} else {
-//												Ext.getCmp('newRight')
-//														.collapse(true);
-//											}
-//
-//										}
-//									}
-//								})]
-//
-//							}
-//							, {
-//								xtype : 'fieldset',
-//								id : 'newRight',
-//								layout : 'table',
-//								anchor : '100%',
-//								colspan : 4,
-//								rowspan : 0,
-//								collapsed : true,
-//								animCollapse : false,
-//								collapsible : false,
-//								autoHeight : true,
-//								style : 'border:1px dotted #b0acac;margin:0px 0px 0px 0px',
-//								autoHeight : true,
-//								defaults : {
-//									bodyStyle : 'padding:4px'
-//								},
-//								layoutConfig : {
-//									columns : 4
-//								},
-//								items : [{
-//									html : '帐号新所有者:',
-//									cls : 'common-text',
-//									style : 'width:135;text-align:right'
-//								}, new Ext.form.ComboBox({forceSelection:true,
-//									xtype : 'combo',
-//									hiddenName : 'itil_ac_PersonFormalAccount$accountowner',
-//									id : 'itil_ac_PersonFormalAccount$accountownerCombo',
-//									width : 200,
-//									style : '',
-//									fieldLabel : '帐号新所有者',
-//									colspan : 0,
-//									rowspan : 0,
-//									lazyRender : true,
-//									displayField : 'userName',
-//									valueField : 'id',
-//									emptyText : '请选择...',
-//									allowBlank : true,
-//									
-//									name : 'itil_ac_PersonFormalAccount$accountowner',
-//									triggerAction : 'all',
-//									minChars : 50,
-//									queryDelay : 700,
-//									store : new Ext.data.JsonStore({
-//										url : webContext
-//												+ '/extjs/comboDataAction?clazz=com.zsgj.info.framework.security.entity.UserInfo',
-//										fields : ['id', 'userName'],
-//										listeners : {
-//											beforeload : function(store, opt) {
-//												if (opt.params['itil_ac_PersonFormalAccount$accountowner'] == undefined) {
-//													opt.params['userName'] = Ext
-//															.getCmp('itil_ac_PersonFormalAccount$accountownerCombo').defaultParam;
-//												}
-//											}
-//										},
-//										totalProperty : 'rowCount',
-//										root : 'data',
-//										id : 'id'
-//									}),
-//									pageSize : 10,
-//									listeners : {
-//										'beforequery' : function(queryEvent) {if(this.readOnly==true){return false}
-//											var param = queryEvent.combo
-//													.getRawValue();
-//											this.defaultParam = param;
-//											if (queryEvent.query == '') {
-//												param = '';
-//											}
-//											this.store.load({
-//												params : {
-//													userName : param,
-//													start : 0
-//												}
-//											});
-//											return true;
-//										}
-//									},
-//									initComponent : function() {
-//										this.store.load({
-//											params : {
-//												id : Ext
-//														.getCmp('itil_ac_PersonFormalAccount$accountownerCombo')
-//														.getValue(),
-//												start : 0
-//											},
-//											callback : function(r, options,
-//													success) {
-//												Ext
-//														.getCmp('itil_ac_PersonFormalAccount$accountownerCombo')
-//														.setValue(Ext
-//																.getCmp('itil_ac_PersonFormalAccount$accountownerCombo')
-//																.getValue());
-//											}
-//										});
-//									}
-//								})]
-//
-//							}
 							]
 						}]
 					})]
@@ -1251,17 +1093,17 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					var applyUser = Ext
 							.getCmp('AccountApplyMainTable$applyUserCombo')
 							.getValue();
-					var confirmUser = Ext
-							.getCmp('AccountApplyMainTable$confirmUserCombo')
-							.getValue();
-					if (applyUser == confirmUser) {
-						Ext.MessageBox.alert("提示", "申请人不能和审批人相同,请确认后再保存！");
-						return false;
-					}
-					if (delegateApplyUser == confirmUser) {
-						Ext.MessageBox.alert("提示", "代申请人不能和审批人相同,请确认后再保存！");
-						return false;
-					}
+//					var confirmUser = Ext
+//							.getCmp('AccountApplyMainTable$confirmUserCombo')
+//							.getValue();
+//					if (applyUser == confirmUser) {
+//						Ext.MessageBox.alert("提示", "申请人不能和审批人相同,请确认后再保存！");
+//						return false;
+//					}
+//					if (delegateApplyUser == confirmUser) {
+//						Ext.MessageBox.alert("提示", "代申请人不能和审批人相同,请确认后再保存！");
+//						return false;
+//					}
 					var records = Ext.getCmp('account').getStore().getRange(0,
 							Ext.getCmp('account').getStore().getCount());
 					if (records.length < 1) {
@@ -1370,25 +1212,25 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					var applyUser = Ext
 							.getCmp('AccountApplyMainTable$applyUserCombo')
 							.getValue();
-					var confirmUser = Ext
-							.getCmp('AccountApplyMainTable$confirmUserCombo')
-							.getValue();
+//					var confirmUser = Ext
+//							.getCmp('AccountApplyMainTable$confirmUserCombo')
+//							.getValue();
 				  	if(applyUser==''||applyUser==null){
 						Ext.MessageBox.alert("提示","申请人必须从下拉列表中选择,谢谢您的合作!");
 						return false;
 					}
-					if(confirmUser==''||confirmUser==null){
-						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
-					if (applyUser == confirmUser) {
-						Ext.MessageBox.alert("提示", "申请人不能和审批人相同,请确认后再保存！");
-						return false;
-					}
-					if (delegateApplyUser == confirmUser) {
-						Ext.MessageBox.alert("提示", "代申请人不能和审批人相同,请确认后再保存！");
-						return false;
-					}
+//					if(confirmUser==''||confirmUser==null){
+//						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
+//					if (applyUser == confirmUser) {
+//						Ext.MessageBox.alert("提示", "申请人不能和审批人相同,请确认后再保存！");
+//						return false;
+//					}
+//					if (delegateApplyUser == confirmUser) {
+//						Ext.MessageBox.alert("提示", "代申请人不能和审批人相同,请确认后再保存！");
+//						return false;
+//					}
 					var records = Ext.getCmp('account').getStore().getRange(0,
 							Ext.getCmp('account').getStore().getCount());
 					if (records.length < 1) {
@@ -1783,8 +1625,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							.initComponent();
 
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 //					Ext.getCmp('ifHoldErp').hide();
 
 				},
@@ -1806,8 +1648,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							.initComponent();
 					
 
-					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 //					Ext.getCmp("itil_ac_PersonFormalAccount$accountownerCombo")
 //							.initComponent();
 //					var ifHold = Ext

@@ -481,8 +481,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 									function(button, text) {
 										if (button == 'yes') {
 											window.location = webContext
-													+ "/requireAction_toProcessEnterPage.action?serviceItemProcessId=195";
-										} else {
+													+ "/requireAction_toProcessEnterPage.action?serviceItemProcessId=3";
+										} else { 
 											var userInfo = Ext.getCmp('AccountApplyMainTable$applyUserCombo').setValue("");
 										}
 
@@ -764,7 +764,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			}),
+			})
+			/*,
 			
 			{
 				html : '<font color=red>*</font>审批人:',
@@ -847,7 +848,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-			})]},
+			})*/
+			]},
 			{
 			xtype : 'fieldset',
 		    layout : 'table',
@@ -865,7 +867,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			
 			items:[ 
 			{
-				html : '<font size=3px><center>无</center></font>',
+				html : '<font size=3px>暂时无说明</font>',
 				cls : 'common-text',
 				style : 'margin:0px 0px 0px 170px'
 				
@@ -1205,15 +1207,15 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					}
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					 Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
 					Ext.getCmp("back").disable();
@@ -1289,23 +1291,23 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							 }else{
 					var delegateApplyUser=Ext.getCmp('AccountApplyMainTable$delegateApplyUserCombo').getValue();
 					var applyUser=Ext.getCmp('AccountApplyMainTable$applyUserCombo').getValue();
-					var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
+					//var confirmUser=Ext.getCmp('AccountApplyMainTable$confirmUserCombo').getValue();
 					if(applyUser==''||applyUser==null){
 						Ext.MessageBox.alert("提示","申请人必须从下拉列表中选择,谢谢您的合作!");
 						return false;
 					}
-					if(confirmUser==''||confirmUser==null){
-						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
-						return false;
-					}
-					if(applyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
-					if(delegateApplyUser==confirmUser){
-					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
-		                return false;
-					}
+//					if(confirmUser==''||confirmUser==null){
+//						Ext.MessageBox.alert("提示","审批人必须从下拉列表中选择,谢谢您的合作!");
+//						return false;
+//					}
+//					if(applyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
+//					if(delegateApplyUser==confirmUser){
+//					 Ext.MessageBox.alert("提示","代申请人不能和审批人相同,请确认后再保存！");
+//		                return false;
+//					}
 					Ext.getCmp("save").disable();
 					Ext.getCmp("submit").disable();
 					Ext.getCmp("back").disable();
@@ -1459,8 +1461,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           .initComponent();
 					             Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 							 Ext.getCmp("sUserInfos$personnelScopeCombo")
 							.initComponent();
 							  
@@ -1485,7 +1487,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 														function(button, text) {
 															if (button == 'yes') {
 																window.location = webContext
-																		+ "/requireAction_toProcessEnterPage.action?serviceItemProcessId=195";
+																		+ "/requireAction_toProcessEnterPage.action?serviceItemProcessId=3";
 															} else {
 																window.history
 																		.back(-1);
@@ -1514,8 +1516,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							           .initComponent();
 					             Ext.getCmp("AccountApplyMainTable$delegateApplyUserCombo")
 							           .initComponent();
-					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
-							.initComponent();
+//					             Ext.getCmp("AccountApplyMainTable$confirmUserCombo")
+//							.initComponent();
 							 Ext.getCmp("sUserInfos$personnelScopeCombo")
 							.initComponent();
 				}
