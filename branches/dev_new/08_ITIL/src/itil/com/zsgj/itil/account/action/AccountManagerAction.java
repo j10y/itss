@@ -322,26 +322,27 @@ public class AccountManagerAction extends BaseAction{
 		String className = siut.getClassName();
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-        UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");//原部门经理审批
+//        UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");//原部门经理审批
         String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
-		/************根据工作地点选择帐号管理员节点审批人************************/
-		
-		//modify by liuying at 20100329 for 修改座机申请工作地点对应审批人的错误 start
-		//AR_DrawSpace space=(AR_DrawSpace) service.find(AR_DrawSpace.class, workSpace);
-		//String confirmUsers=space.getTelephoneConfirmUser();
-		//userListStr+="$confirmByAM:"+confirmUsers;
-			TelephoneAudit ta=(TelephoneAudit)service.find(TelephoneAudit.class, workSpace);
-			String confirmUsers=ta.getAuditManger();
-			userListStr+="$confirmByAM:"+confirmUsers;
-		
-		//modify by liuying at 20100329 for 修改座机申请工作地点对应审批人的错误 end
+//		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+//		/************根据工作地点选择帐号管理员节点审批人************************/
+//		
+//		//modify by liuying at 20100329 for 修改座机申请工作地点对应审批人的错误 start
+//		//AR_DrawSpace space=(AR_DrawSpace) service.find(AR_DrawSpace.class, workSpace);
+//		//String confirmUsers=space.getTelephoneConfirmUser();
+//		//userListStr+="$confirmByAM:"+confirmUsers;
+//			TelephoneAudit ta=(TelephoneAudit)service.find(TelephoneAudit.class, workSpace);
+//			String confirmUsers=ta.getAuditManger();
+//			userListStr+="$confirmByAM:"+confirmUsers;
+//		
+//		//modify by liuying at 20100329 for 修改座机申请工作地点对应审批人的错误 end
+		String userListStr ="";
 		if(department!=null&&!department.equals("")){
 		TelephoneCountSign addSign=(TelephoneCountSign) service.find(TelephoneCountSign.class, department);
 		String addSignUser=addSign.getCountSignItcode();
-		userListStr+="$confirmMore:"+addSignUser;
+		userListStr+="deptManagerAudit:"+addSignUser;
 		}
 		mapBizz.put("userList", userListStr);//放入流程参数中
 		String creator = UserContext.getUserInfo().getUserName();
@@ -1067,17 +1068,17 @@ public class AccountManagerAction extends BaseAction{
 		String className = siut.getClassName();
 		Object obj = service.find(this.toClass(className), dataId);
 		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
+		//UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");hrAudit 
 		PlatFormHRCountSign hrCountSign=(PlatFormHRCountSign) bWrapper.getPropertyValue("platFormHRCountSign");
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName()+"$confirmMore:"+hrCountSign.getItcode();//指定部门经理审批人节点审批人
-		PersonnelScope personnelScope=applyUser.getPersonnelScope();
-		if(personnelScope!=null){
-		String personScope=personnelScope.getPersonnelScopeCode();
-		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
-		for(AccountSBUOfficer officer:confirmUsers){
-			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
-		}
-		}
+		String userListStr = "hrAudit:"+hrCountSign.getItcode();//指定部门经理审批人节点审批人
+//		PersonnelScope personnelScope=applyUser.getPersonnelScope();
+//		if(personnelScope!=null){
+//		String personScope=personnelScope.getPersonnelScopeCode();
+//		List<AccountSBUOfficer> confirmUsers = as.findOfficer(processNameDescription, personScope);
+//		for(AccountSBUOfficer officer:confirmUsers){
+//			userListStr+="$"+officer.getNodeName()+":"+officer.getConfirmUser();
+//		}
+//		}
 		mapBizz.put("userList", userListStr);//放入流程参数中
 		String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
