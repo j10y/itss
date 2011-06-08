@@ -8408,6 +8408,79 @@ public class AccountAction extends BaseAction {
 				}
 				// modify by liuying for 增加号码为空时的验证 at 20100504 end
 			}
+			
+			//add by awen for add new accountType on 2011-05-08 begin
+			if (acc.getAccountType().getAccountType().equals("Win7")) {
+				accountMap.put("Win7$id", acc.getId());
+				accountMap.put("Win7$accountState", acc.getAccountState());
+				accountMap.put("Win7$rightsDesc", acc.getRightsDesc());
+				accountMap.put("Win7$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("wirlessAccount")) {
+				accountMap.put("wirlessAccount$id", acc.getId());
+				accountMap.put("wirlessAccount$accountState", acc.getAccountState());
+				accountMap.put("wirlessAccount$rightsDesc", acc.getRightsDesc());
+				accountMap.put("wirlessAccount$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("WWWContent")) {
+				accountMap.put("WWWContent$id", acc.getId());
+				accountMap.put("WWWContent$accountState", acc.getAccountState());
+				accountMap.put("WWWContent$rightsDesc", acc.getRightsDesc());
+				accountMap.put("WWWContent$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("QQAccount")) {
+				accountMap.put("QQAccount$id", acc.getId());
+				accountMap.put("QQAccount$accountState", acc.getAccountState());
+				accountMap.put("QQAccount$rightsDesc", acc.getRightsDesc());
+				accountMap.put("QQAccount$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("PDAAccount")) {
+				accountMap.put("PDAAccount$id", acc.getId());
+				accountMap.put("PDAAccount$accountState", acc.getAccountState());
+				accountMap.put("PDAAccount$rightsDesc", acc.getRightsDesc());
+				accountMap.put("PDAAccount$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("CallCenter")) {
+				accountMap.put("CallCenter$id", acc.getId());
+				accountMap.put("CallCenter$accountState", acc.getAccountState());
+				accountMap.put("CallCenter$rightsDesc", acc.getRightsDesc());
+				accountMap.put("CallCenter$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("eFutureAcount")) {
+				accountMap.put("eFutureAcount$id", acc.getId());
+				accountMap.put("eFutureAcount$accountState", acc.getAccountState());
+				accountMap.put("eFutureAcount$rightsDesc", acc.getRightsDesc());
+				accountMap.put("eFutureAcount$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("posManageAcount")) {
+				accountMap.put("posManageAcount$id", acc.getId());
+				accountMap.put("posManageAcount$accountState", acc.getAccountState());
+				accountMap.put("posManageAcount$rightsDesc", acc.getRightsDesc());
+				accountMap.put("posManageAcount$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("productForProvider")) {
+				accountMap.put("productForProvider$id", acc.getId());
+				accountMap.put("productForProvider$accountState", acc.getAccountState());
+				accountMap.put("productForProvider$rightsDesc", acc.getRightsDesc());
+				accountMap.put("productForProvider$remarkDesc", acc.getRemarkDesc());
+
+			}
+			if (acc.getAccountType().getAccountType().equals("productForShopin")) {
+				accountMap.put("productForShopin$id", acc.getId());
+				accountMap.put("productForShopin$accountState", acc.getAccountState());
+				accountMap.put("productForShopin$rightsDesc", acc.getRightsDesc());
+				accountMap.put("productForShopin$remarkDesc", acc.getRemarkDesc());
+
+			}
+			//add by awen for add new accountType on 2011-05-08 end
 		}
 		// add by liuying at 20100312 for 简要表显示手机信息 start
 		MobileTelephoneApply mobileTelephone = accountService
@@ -8494,6 +8567,18 @@ public class AccountAction extends BaseAction {
 		Map<String, Object> vpnMap = new HashMap<String, Object>();
 		Map<String, Object> telephoneMap = new HashMap<String, Object>();
 		Map<String, Object> mobileTelephoneMap = new HashMap<String, Object>();
+		//add by awen for add new account Type on 2011-05-08 begin
+		Map<String, Object> win7Map = new HashMap<String, Object>();
+		Map<String, Object> wirlessAccountMap = new HashMap<String, Object>();
+		Map<String, Object> wwwContentMap = new HashMap<String, Object>();
+		Map<String, Object> qqAccountMap = new HashMap<String, Object>();
+		Map<String, Object> pdaAccountMap = new HashMap<String, Object>();
+		Map<String, Object> callcenterMap = new HashMap<String, Object>();
+		Map<String, Object> eFutureAcountMap = new HashMap<String, Object>();
+		Map<String, Object> posManageAcountMap = new HashMap<String, Object>();
+		Map<String, Object> productForProviderMap = new HashMap<String, Object>();
+		Map<String, Object> productForShopinMap = new HashMap<String, Object>();
+		//add by awen for add new account Type on 2011-05-08 end
 		Iterator columnIter = panelJO.keys();
 		while (columnIter.hasNext()) {
 			String columnName = (String) columnIter.next();
@@ -8591,6 +8676,78 @@ public class AccountAction extends BaseAction {
 				mobileTelephoneMap.put("createDate", currentDate);
 
 			}
+			//add by awen for add new accounttypes on 2011-05-08 begin
+			if (accountType.equals("Win7")) {
+				String columnValue = panelJO.getString(columnName);
+				win7Map.put(property, columnValue);
+				win7Map.put("accountType", "24");
+				win7Map.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("wirlessAccount")) {
+				String columnValue = panelJO.getString(columnName);
+				wirlessAccountMap.put(property, columnValue);
+				wirlessAccountMap.put("accountType", "25");
+				wirlessAccountMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("WWWContent")) {
+				String columnValue = panelJO.getString(columnName);
+				wwwContentMap.put(property, columnValue);
+				wwwContentMap.put("accountType", "26");
+				wwwContentMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("QQAccount")) {
+				String columnValue = panelJO.getString(columnName);
+				qqAccountMap.put(property, columnValue);
+				qqAccountMap.put("accountType", "27");
+				qqAccountMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("PDAAccount")) {
+				String columnValue = panelJO.getString(columnName);
+				pdaAccountMap.put(property, columnValue);
+				pdaAccountMap.put("accountType", "28");
+				pdaAccountMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("CallCenter")) {
+				String columnValue = panelJO.getString(columnName);
+				callcenterMap.put(property, columnValue);
+				callcenterMap.put("accountType", "29");
+				callcenterMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("eFutureAcount")) {
+				String columnValue = panelJO.getString(columnName);
+				eFutureAcountMap.put(property, columnValue);
+				eFutureAcountMap.put("accountType", "30");
+				eFutureAcountMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("posManageAcount")) {
+				String columnValue = panelJO.getString(columnName);
+				posManageAcountMap.put(property, columnValue);
+				posManageAcountMap.put("accountType", "31");
+				posManageAcountMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("productForProvider")) {
+				String columnValue = panelJO.getString(columnName);
+				productForProviderMap.put(property, columnValue);
+				productForProviderMap.put("accountType", "32");
+				productForProviderMap.put("createDate", currentDate);
+
+			}
+			if (accountType.equals("productForShopin")) {
+				String columnValue = panelJO.getString(columnName);
+				productForShopinMap.put(property, columnValue);
+				productForShopinMap.put("accountType", "30");
+				productForShopinMap.put("createDate", currentDate);
+
+			}
+			//add by awen for add new accounttypes on 2011-05-08 end
 		}
 		// 保存域账号信息
 		String domainId = (String) domainMap.get("id");
@@ -8836,6 +8993,42 @@ public class AccountAction extends BaseAction {
 			ac.setAccountState(mailstate);
 			getService().save(ac);
 		}
+		
+		//add by awen for add new accountTypes on 2011-05-08 begin			
+		List<Map> list = new ArrayList();
+		list.add(win7Map);
+		list.add(wirlessAccountMap);
+		list.add(wwwContentMap);
+		list.add(qqAccountMap);
+		list.add(pdaAccountMap);
+		list.add(callcenterMap);
+		list.add(eFutureAcountMap);
+		list.add(posManageAcountMap);
+		list.add(productForProviderMap);
+		list.add(productForShopinMap);
+		
+		for(Map tempMap : list){			
+			String tmpId = (String) tempMap.get("id");
+			String tmpstate = (String) tempMap.get("accountState");
+			if (tmpId.equals("") && tmpstate.equals("1")) {
+				tempMap.put("accountowner", userid);
+				tempMap.put("accountName", accountName);
+
+				metaDataManager
+						.saveEntityData(PersonFormalAccount.class, tempMap);// 保存关联实体
+
+			} else if (!tmpId.equals("")) {
+				PersonFormalAccount ac = (PersonFormalAccount) getService().find(
+						PersonFormalAccount.class, tmpId);
+				ac.setAccountState(tmpstate);
+				ac.setRemarkDesc((String)tempMap.get("remarkDesc"));
+				ac.setRightsDesc((String)tempMap.get("rightsDesc"));
+				getService().save(ac);
+			}
+		}
+				
+		//add by awen for add new accountTypes on 2011-05-08 end
+		
 
 		String json = "{success:true}";
 		response.setContentType("text/plain");
