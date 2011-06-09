@@ -216,7 +216,17 @@ public class UserDaoImpl implements UserDao {
 	 *
 	 */
 	public void update(User user) {
-		// TODO Auto-generated method stub
+		// TODO 如果修改用户的用户类型，需要unbind老数据，新bind新数据，图片信息需要保存
+		//首先判断userType是否修改
+		User old = this.findByPrimaryKey(user.getUid());
+		if(old.getUserType()==null || !old.getUserType().equals(user.getUserType())){//用户类型改变
+			this.delete(old);
+			if(user.getPhoto()==null||user.getPhoto().length == 0){
+				user.setPhoto(old.getPhoto());//图片
+			}
+			this.create(user);
+			return;
+		}		
 		Name dn = buildDn(user);
 		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(dn);
 		mapToContext(user, context);

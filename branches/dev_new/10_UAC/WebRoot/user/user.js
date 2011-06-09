@@ -326,6 +326,30 @@ var userPanel = new Ext.form.FormPanel({
 					        			});
 					        		}else{
 										Ext.Msg.alert("提示", "修改成功！");
+										//修改成功后，用户类型可能改变，那么uid也改变了，需要重新load
+										//初始化数据
+									    Ext.Ajax.request({  
+									        url: webContext + '/user?methodCall=getDetailByUid', 
+									        params : {
+									        	uid : formValues.uid
+									        },
+									        async: false,
+									        method: 'POST',
+									        success: function(response, opts) {	
+									        	obj = Ext.util.JSON.decode(response.responseText);
+									        	if(obj.success){
+									        		Ext.getCmp("userPanel").form.setValues(obj);
+									        		Ext.getCmp("uidCopy").setValue(obj.uid);
+									        		
+									        		Ext.getCmp("departmentNumber1").setValue(obj.deptNo);
+									        		Ext.getCmp("departmentNumber1").setRawValue(obj.deptName);
+												}			         	
+									        },
+									        failure: function(response, opts) {
+									         	Ext.Msg.alert("提示", "DN为：" + dn + "的用户信息获取失败！");
+									        }   
+									    });
+										
 					        		}
 				                },
 				                failure : function(form, action) {
