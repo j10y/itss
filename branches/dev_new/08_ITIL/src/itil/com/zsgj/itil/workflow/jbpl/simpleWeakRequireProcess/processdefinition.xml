@@ -44,7 +44,7 @@
 		<description>
 			process
 		</description>
-		<transition to="结束" name="Y"></transition>
+		<transition to="用户确认" name="Y"></transition>
 	</task-node>
 
 	<task-node name="部门经理审批">
@@ -61,6 +61,14 @@
 		</description>
 		<transition to="处理" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="用户确认">
+		<description>
+			confirmByUser
+		</description>
+		<transition to="处理" name="N"></transition>
+		<transition to="结束" name="Y"></transition>
 	</task-node>
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="simpleWeakRequireProcess" width="1114" height="554">
+<root-container name="simpleWeakRequireProcess" width="1132" height="543">
   <node name="提出申请" x="157" y="73" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -34,6 +34,7 @@
   <node name="处理" x="158" y="418" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
+      <bendpoint w1="114" h1="-46" w2="-125" h2="-46"/>
     </edge>
   </node>
   <node name="部门经理审批" x="156" y="145" width="132" height="36">
@@ -44,14 +45,24 @@
       <label x="-4" y="-12"/>
     </edge>
   </node>
-  <node name="结束" x="158" y="475" width="132" height="36"/>
-  <node name="放弃" x="399" y="290" width="132" height="36"/>
   <node name="行政部审批" x="158" y="350" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
       <label x="-2" y="-5"/>
+    </edge>
+  </node>
+  <node name="结束" x="157" y="488" width="132" height="36"/>
+  <node name="放弃" x="399" y="290" width="132" height="36"/>
+  <node name="用户确认" x="397" y="418" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-123" h1="42" w2="116" h2="42"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-1" h1="69" w2="239" h2="-1"/>
     </edge>
   </node>
 </root-container>

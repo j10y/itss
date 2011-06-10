@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<process-definition  xmlns=""  name="itDevSearchRequireProcess">
+<process-definition  xmlns=""  name="itTempWirelessReqProcess">
 
 
 	<description>
-		IT开发类查询显示申请流程
+		无线网络申请流程-临时人员
 	</description>
 
 
@@ -12,15 +12,15 @@
 		<description>
 			start
 		</description>
-		<transition to="部门总监审批"></transition>
+		<transition to="运维主管审批"></transition>
 	</start-state>
 
 
-	<task-node name="DBA审批处理">
+	<task-node name="网络工程师审批处理">
 		<description>
-			auditProcess
+			netEngineerAudit
 		</description>
-		<transition to="用户确认并评估" name="Y"></transition>
+		<transition to="用户确认" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
@@ -29,23 +29,23 @@
 			back
 		</description>
 		<transition to="放弃" name="N"></transition>
-		<transition to="部门总监审批" name="Y"></transition>
+		<transition to="运维主管审批" name="Y"></transition>
 	</task-node>
 
-	<task-node name="部门总监审批">
+	<task-node name="运维主管审批">
 		<description>
-			deptDirectorAudit
+			operationHeadAudit
 		</description>
-		<transition to="DBA审批处理" name="Y"></transition>
+		<transition to="网络工程师审批处理" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
-	<task-node name="用户确认并评估">
+	<task-node name="用户确认">
 		<description>
 			confirmByUser
 		</description>
-		<transition to="DBA审批处理" name="N"></transition>
 		<transition to="结束" name="Y"></transition>
+		<transition to="网络工程师审批处理" name="N"></transition>
 	</task-node>
 
 

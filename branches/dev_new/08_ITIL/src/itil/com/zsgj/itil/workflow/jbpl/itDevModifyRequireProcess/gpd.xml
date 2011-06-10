@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="itDevModifyRequireProcess" width="577" height="561">
+<root-container name="itDevModifyRequireProcess" width="1084" height="592">
   <node name="提出申请" x="166" y="40" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -57,8 +57,19 @@
   <node name="实施并交付" x="162" y="458" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
+      <bendpoint w1="125" h1="-38" w2="-119" h2="-36"/>
     </edge>
   </node>
   <node name="结束" x="162" y="524" width="132" height="36"/>
   <node name="放弃" x="400" y="252" width="132" height="36"/>
+  <node name="用户确认并评估" x="415" y="460" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="0" h1="64" w2="253" h2="0"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-125" h1="39" w2="128" h2="41"/>
+    </edge>
+  </node>
 </root-container>

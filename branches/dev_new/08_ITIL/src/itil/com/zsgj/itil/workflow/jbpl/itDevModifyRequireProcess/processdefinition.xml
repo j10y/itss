@@ -67,7 +67,15 @@
 		<description>
 			implementation
 		</description>
-		<transition to="结束"></transition>
+		<transition to="用户确认并评估" name="Y"></transition>
+	</task-node>
+
+	<task-node name="用户确认并评估">
+		<description>
+			confirmByUser
+		</description>
+		<transition to="结束" name="Y"></transition>
+		<transition to="实施并交付" name="N"></transition>
 	</task-node>
 
 
