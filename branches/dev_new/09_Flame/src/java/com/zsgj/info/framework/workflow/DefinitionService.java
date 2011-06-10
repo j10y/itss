@@ -154,4 +154,11 @@ public interface DefinitionService {
 	 * @return Page
 	 */
 	Page getProcessDefinition(String processName, int pageNo, int pageSize);
+	
+	/**
+	 * 通过真实流程名称获取最新的流程定义
+	 * @param processDefinitionName
+	 * @return
+	 */
+	ProcessDefinition getLatestProcessDefinitionByName(String processDefinitionName);
 }

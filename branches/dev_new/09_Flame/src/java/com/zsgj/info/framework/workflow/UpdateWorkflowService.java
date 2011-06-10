@@ -1,8 +1,11 @@
 package com.zsgj.info.framework.workflow;
 
+import java.util.List;
 import java.util.Map;
 
 import com.zsgj.info.framework.dao.support.Page;
+import com.zsgj.info.framework.workflow.entity.VirtualDefinitionInfo;
+import com.zsgj.info.framework.workflow.entity.VirtualNodeInfo;
 
 /** 
  * @author 杨涛 E-mail: yangtao@info.com
@@ -50,5 +53,12 @@ public interface UpdateWorkflowService {
 	 * @return Page
 	 */
 	public Page getPageModelConfigUnit(Map requestParams, int pageNo, int pageSize, String orderBy, boolean isAsc);
+	
+	/**
+	 * 得到某个虚拟流程的所有虚拟节点信息
+	 * @param vd
+	 * @return
+	 */
+	List<VirtualNodeInfo> getVirtualNodeInfo(VirtualDefinitionInfo vd);
 
 }

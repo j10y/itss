@@ -384,5 +384,11 @@ public class DefinitionServiceImpl extends BaseDao implements DefinitionService,
 		return page;
 	}
 	
+	public ProcessDefinition getLatestProcessDefinitionByName(String processDefinitionName){
+		JbpmContext jbpmContext = JbpmContextFactory.getJbpmContext();
+		ProcessDefinition pd = jbpmContext.getGraphSession().findLatestProcessDefinition(processDefinitionName);
+		return pd;
+	}
+	
 
 }

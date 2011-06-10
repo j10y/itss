@@ -1,5 +1,6 @@
 package com.zsgj.info.framework.workflow.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
@@ -92,6 +93,18 @@ public class UpdateWorkflowServiceImpl extends BaseDao implements UpdateWorkflow
 		c.add(Restrictions.eq("nodeId", Long.valueOf(nodeId)));
 		Page page = this.pagedQuery(c, pageNo, pageSize);
 		return page;
+	}
+	
+	/**
+	 * 得到某个虚拟流程的所有虚拟节点信息
+	 * @param vd
+	 * @return
+	 */
+	public List<VirtualNodeInfo> getVirtualNodeInfo(VirtualDefinitionInfo vd) {
+		// TODO Auto-generated method stub
+		Criteria c = this.createCriteria(VirtualNodeInfo.class);
+		c.add(Restrictions.eq("virtualDefinitionInfo", vd));
+		return c.list();
 	}
 
 }
