@@ -52,13 +52,23 @@ public class AuthenticationMngImpl implements AuthenticationMng {
 			SessionProvider session) throws UsernameNotFoundException,
 			BadCredentialsException {
 		Authentication auth = null;
+		UnifiedUser user = null;
+		String loginType = request.getAttribute("loginType") != null ? String.valueOf(request.getAttribute("loginType")) 
+						: (request.getParameter("loginType") != null ? request.getParameter("loginType") : null);
 		try{
 			//兼容Ldap
-//			UnifiedUser user = unifiedUserMng.login(username, password, ip);
-			UsernamePasswordAuthenticationToken authLdap = new UsernamePasswordAuthenticationToken(username, password);
-			org.springframework.security.core.Authentication result = ldap.authenticate(authLdap);
-			UnifiedUser user = unifiedUserMng.getByUsername(result.getName().toString());
-			unifiedUserMng.updateLoginInfo(user.getId(),ip);
+			if(loginType != null && !"".equalsIgnoreCase(loginType)){
+				
+				user = unifiedUserMng.getByUsername(username);
+				unifiedUserMng.updateLoginInfo(user.getId(),ip);
+			}else{
+				//原本的数据库登录
+//				UnifiedUser user = unifiedUserMng.login(username, password, ip);
+				UsernamePasswordAuthenticationToken authLdap = new UsernamePasswordAuthenticationToken(username, password);
+				org.springframework.security.core.Authentication result = ldap.authenticate(authLdap);
+				user = unifiedUserMng.getByUsername(result.getName().toString());
+				unifiedUserMng.updateLoginInfo(user.getId(),ip);
+			}
 			
 			auth = new Authentication();
 			auth.setUid(user.getId());

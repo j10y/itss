@@ -235,6 +235,37 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		query.setCacheable(cacheable).setMaxResults(1);
 		return (Content) query.uniqueResult();
 	}
+	
+	public Content getSide(Integer id, Integer siteId, Integer channelId,
+			boolean next, String jounalNum, String forum, boolean cacheable){
+		Finder f = Finder.create("from Content bean where 1=1");
+		if (channelId != null) {
+			f.append(" and bean.channel.id=:channelId");
+			f.setParam("channelId", channelId);
+		} else if (siteId != null) {
+			f.append(" and bean.site.id=:siteId");
+			f.setParam("siteId", siteId);
+		}
+		if(jounalNum != null){
+			f.append(" and bean.attr['jounalNum']=:jounalNumId and bean.attr['forum']=:forumId");
+			f.setParam("jounalNumId", jounalNum);
+			f.setParam("forumId", forum);
+		}
+		if (next) {
+			f.append(" and bean.id>:id");
+			f.setParam("id", id);
+			f.append(" and bean.status=" + ContentCheck.CHECKED);
+			f.append(" order by bean.id asc");
+		} else {
+			f.append(" and bean.id<:id");
+			f.setParam("id", id);
+			f.append(" and bean.status=" + ContentCheck.CHECKED);
+			f.append(" order by bean.id desc");
+		}
+		Query query = f.createQuery(getSession());
+		query.setCacheable(cacheable).setMaxResults(1);
+		return (Content) query.uniqueResult();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Content> getListByIdsForTag(Integer[] ids, int orderBy) {
@@ -278,6 +309,16 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Pagination getPageByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, int pageNo, int pageSize, String customizes) {
+		Finder f = byChannelIds(channelIds, typeIds, titleImg, recommend,
+				title, orderBy, option, customizes);
+		f.setCacheable(true);
+		return find(f, pageNo, pageSize);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
@@ -285,6 +326,22 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			String title, int orderBy, int option, Integer first, Integer count) {
 		Finder f = byChannelIds(channelIds, typeIds, titleImg, recommend,
 				title, orderBy, option);
+		if (first != null) {
+			f.setFirstResult(first);
+		}
+		if (count != null) {
+			f.setMaxResults(count);
+		}
+		f.setCacheable(true);
+		return find(f);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, Integer first, Integer count, String customizes) {
+		Finder f = byChannelIds(channelIds, typeIds, titleImg, recommend,
+				title, orderBy, option, customizes);
 		if (first != null) {
 			f.setFirstResult(first);
 		}
@@ -444,6 +501,65 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.contentExt.title like :title");
 			f.setParam("title", "%" + title + "%");
 		}
+		appendOrder(f, orderBy);
+		return f;
+	}
+	
+	private Finder byChannelIds(Integer[] channelIds, Integer[] typeIds,
+			Boolean titleImg, Boolean recommend, String title, int orderBy,
+			int option, String customizes) {
+		Finder f = Finder.create();
+		int len = channelIds.length;
+		// 如果多个栏目
+		if (option == 0 || len > 1) {
+			f.append("select bean from Content bean");
+			if (len == 1) {
+				f.append(" where bean.channel.id=:channelId");
+				f.setParam("channelId", channelIds[0]);
+			} else {
+				f.append(" where bean.channel.id in (:channelIds)");
+				f.setParamList("channelIds", channelIds);
+			}
+		} else if (option == 1) {
+			// 包含子栏目
+			f.append("select bean from Content bean");
+			f.append(" join bean.channel node,Channel parent");
+			f.append(" where node.lft between parent.lft and parent.rgt");
+			f.append(" and bean.site.id=parent.site.id");
+			f.append(" and parent.id=:channelId");
+			f.setParam("channelId", channelIds[0]);
+		} else if (option == 2) {
+			// 包含副栏目
+			f.append("select bean from Content bean");
+			f.append(" join bean.channels as channel");
+			f.append(" where channel.id=:channelId");
+			f.setParam("channelId", channelIds[0]);
+		} else {
+			throw new RuntimeException("option value must be 0 or 1 or 2.");
+		}
+		if (titleImg != null) {
+			f.append(" and bean.hasTitleImg=:titleImg");
+			f.setParam("titleImg", titleImg);
+		}
+		if (recommend != null) {
+			f.append(" and bean.recommend=:recommend");
+			f.setParam("recommend", recommend);
+		}
+		
+		appendTypeIds(f, typeIds);
+		f.append(" and bean.status=" + ContentCheck.CHECKED);
+		if (!StringUtils.isBlank(title)) {
+			f.append(" and bean.contentExt.title like :title");
+			f.setParam("title", "%" + title + "%");
+		}
+		
+		if(customizes != null && !"".equalsIgnoreCase(customizes)){
+			String[] condition = customizes.split("@@");
+			f.append(" and bean.attr[:key]=:value");
+			f.setParam("key", condition[0]);
+			f.setParam("value", condition[1]);
+		}
+		
 		appendOrder(f, orderBy);
 		return f;
 	}

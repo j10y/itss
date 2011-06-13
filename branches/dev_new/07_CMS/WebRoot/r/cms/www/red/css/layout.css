@@ -20,8 +20,25 @@ Copyright: JEECMS
 #header{width:100%;	margin: 0 auto 5px;margin-bottom:0; }
 
 #logo{height:105px;}
-#logo div.logo{width:292px; height:70px; cursor:pointer;background:transparent url(../img/logo.gif) no-repeat scroll 0 0 ;}
+#logo div.logo{width:292px; height:70px; cursor:pointer;background:transparent url(../img/logo.png) no-repeat scroll 0 0 ;}
 #logo div.banner{text-align:center;}
+
+
+.navjo{background:url(../img/otherJounal.jpg) no-repeat scroll 0 0 ; width:100%; height:46px;}
+.navjoforum{font-weight:bolder; font-size:15px; width:90px; margin-left:2px; margin-top:5px}
+.navjotitle{font-weight:bolder;  font-size:20px; background-color:white; text-align:center;  width:100%;  margin-top:5px}
+
+.navj{background:url(../img/jounalbanner.png) no-repeat scroll 0 0 ; width:100%; height:209px; font-weight:bolder;}
+.navjdate{font-weight:bolder; font-size:9px; width:120px; margin-left:50px; margin-top:119px}
+.navjtext{font-weight:bolder; width:80px; margin-left:20px; margin-top:119px}
+
+.buttom{width:960px; height:27px; background:url(../img/buttom.jpg) no-repeat scroll 0 0 ;}
+.bottomtest{font-weight:bolder;color:White; width:140px; margin-left:5px; margin-top:6px}
+
+.buttomd23{width:960px; height:38px; background:url(../img/buttomd23.jpg) no-repeat scroll 0 0 ;}
+.bottomd23text{font-weight:bolder; color:White; width:235px; margin-left:5px; margin-top:11px}
+
+.buttomd4{width:960px; height:34px; background:url(../img/buttomd4.jpg) no-repeat scroll 0 0 ;}
 
 /* nav
 ----------------------------------------*/
@@ -29,12 +46,12 @@ Copyright: JEECMS
 #topmenu{display:inline; margin:7px 0 0; width:960px; height: 65px; float:left; position:relative;}
 #topmenu dt{text-align:center;padding:0 10px; display:inline;float:left; margin:0px 0px 0px -2px; line-height:25px; font-weight:bold;}
 #topmenu dt .menu_first{padding-left:15px;}
-#topmenu dt a{display:block;float:left;width:70px;color:#fff;height:32px;}
-#topmenu dt a.selected{font-weight: bold; background: url(../img/menu_bg.gif) no-repeat 0px -73px; color:#225099; line-height: 35px;}
+#topmenu dt a{display:block;float:left;width:90px;color:#fff;height:32px;}
+#topmenu dt a.selected{font-weight: bold; background: #EFF0E8; color:#384649; }
 #topmenu dt a:hover {text-decoration:none;}
 #topmenu dd {left:5px; position: absolute; top:40px;}
 #topmenu ul {overflow:hidden;}
-#topmenu li {display:inline; padding:0 10px 0 12px;background: url(../img/bar_headermenu.gif) no-repeat 0px 1px; float: left; margin: 0px 2px 0px -2px;}
+#topmenu li {display:inline; padding:0 20px 0 22px;background: url(../img/bar_headermenu.gif) no-repeat 0px 1px; float: left; margin: 0px 2px 0px -2px;}
 #sub1 li.notice{display:inline;width:800px;float:left; text-align:left;}
 
 /* search
@@ -52,6 +69,7 @@ Copyright: JEECMS
 /* main
 ----------------------------------------*/
 #main{margin-top:5px; overflow:hidden;}
+.w950{width:960px;}
 .w700{width:700px;}
 .w300{width:300px;}
 .w340{width:330px;}
@@ -73,9 +91,15 @@ Copyright: JEECMS
 .rb_mid .shrd{margin:5px auto;}
 .shrd h2,.left_div h2{height:30px; line-height:30px; padding-left:15px; font-size:14px; background:url(../img/jee.gif) 300px 0; border-top:solid 1px #e5e5e5; border-bottom:solid 1px #e5e5e5;}
 .shrd h2 a,.shrd h2 a:visited{background:url(../img/jee.gif) 0 -100px; color:#990000; padding-left:15px;}
-.shrd1 h2,.left_div h2{height:30px; line-height:30px; padding-left:15px; font-size:14px; background:transparent url(../img/jee.gif) 0 -35px ; border-top:solid 1px #e5e5e5; border-bottom:solid 1px #e5e5e5;}
-.shrd1 h2 a,.shrd1 h2 a:visited{background:url(../img/jee.gif) 0 -100px; color:#993300;padding-left:15px;}
 
+.shrd1 {margin:5px auto; background:transparent url(../img/jee.gif) 0 -139px ; border-bottom:solid 1px #e5e5e5;}
+.shrd1box {height:100%; border-left:solid 1px #e5e5e5; border-bottom:solid 1px #e5e5e5; width:100%; background-color:white; border-left:solid 1px #e5e5e5; border-top:solid 1px #e5e5e5;}
+.shrd1 h2,.left_div h2{height:30px; width:485px; line-height:30px; padding-left:15px; font-size:14px; }
+.shrd1 h2 a,.shrd1 h2 a:visited{background:url(../img/jee.gif) 0 -100px; color:#993300;padding-left:15px; padding-right:5px; }
+
+.rb_right_line{border-right:solid 1px #e5e5e5;}
+.rb_lb_line{border-left:solid 1px #e5e5e5; border-bottom:solid 1px #e5e5e5;}
+	
 ul.list{margin:5px;}
 ul.list li{height:24px; line-height:24px; overflow:hidden; position:relative;}
 ul.list li.toptext{height:90px;line-height:1.7em; border-bottom:dashed 1px #e5e5e5; padding-bottom:10px; margin-bottom:5px;}
@@ -116,11 +140,11 @@ ul.topnews li.toptext a{display:block; height:30px; line-height:30px; overflow:h
 ul.topnews li.toptext a h3{text-align:center; font-weight:bold; font-size:16px; color:#f54100;}
 
 ul.topnews1{line-height:1.6em; margin:5px;}
-ul.topnews1 li.toptext1{height:140px; overflow:hidden; padding-bottom:6px;margin-bottom:5px;}
+ul.topnews1 li.toptext1{border-left:solid 1px #e5e5e5; border-right:solid 1px #e5e5e5; height:140px; overflow:hidden; padding-bottom:6px;margin-bottom:5px;}
 ul.topnews1 li.toptext1 a{display:block; height:30px; line-height:30px; overflow:hidden;}
 ul.topnews1 li.toptext1 a h3{text-align:center; font-weight:bold; font-size:16px; color:#f54100;}
 
-ul.topnews li{height:24px; line-height:24px; overflow:hidden; position:relative;}
+ul.topnews li{height:24px; width:485x;  line-height:24px; overflow:hidden; position:relative;}
 ul.topnews li span a,ul.topnews li span a:visited{color:#f54100;}
 ul.topnews li em{position:absolute; right:0; top:0; padding-left:6px;color:#999999; font-size:11px;}
 .line{border-bottom:dotted 1px #d7d7d7; padding-bottom:6px;}
@@ -152,7 +176,7 @@ ul.jctw{border:solid 1px #e5e5e5;height:100%; overflow:hidden;}
 ul.jctw h2{height:33px; line-height:33px; padding-left:15px; font-size:14px; background:url(../img/bg1.jpg) repeat-x;}
 ul.jctw h2 a,ul.jctw h2 a:visited{background:url(../img/jee.gif) 0 -100px; color:#990000; padding-left:15px;}
 ul.jctw li{float:left; margin:5px;text-align:center;}
-ul.jctw li img{display:block; width:143px !important; width:142px; height:98px; border:1px solid #ccc; padding:2px;}
+ul.jctw li img{display:block; width:224px !important; width:224px; height:293px; border:1px solid #ccc; padding:2px;}
 ul.jctw li span{height:25px; line-height:25px;}
 
 /*首页热门评论样式*/

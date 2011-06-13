@@ -6,11 +6,36 @@ import static com.jeecms.core.action.front.LoginAct.PROCESS_URL;
 import static com.jeecms.core.action.front.LoginAct.RETURN_URL;
 import static com.jeecms.core.manager.AuthenticationMng.AUTH_KEY;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.htmlparser.Node;
+import org.htmlparser.Parser;
+import org.htmlparser.tags.FormTag;
+import org.htmlparser.tags.InputTag;
+import org.htmlparser.tags.TitleTag;
+import org.htmlparser.visitors.ObjectFindingVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.cas.authentication.CasAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +61,9 @@ public class CasLoginAct {
 	public static final String LOGIN_INPUT = "tpl.loginInput";
 	public static final String LOGIN_STATUS = "tpl.loginStatus";
 
+	
 	@RequestMapping(value = "/login.jspx", method = RequestMethod.GET)
-	public String input(HttpServletRequest request, ModelMap model) {
+	public String input(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		String sol = site.getSolutionPath();
 		String processUrl = RequestUtils.getQueryParam(request, PROCESS_URL);
@@ -59,6 +85,42 @@ public class CasLoginAct {
 							LOGIN_STATUS);
 				}
 			}
+		}else {
+			CasAuthenticationToken principal = (CasAuthenticationToken)request.getUserPrincipal();
+			if(principal != null) {
+				WebErrors errors = new WebErrors();
+				try {
+					String ip = RequestUtils.getIpAddr(request);
+					request.setAttribute("loginType", "font");
+					Authentication auth = authMng.login(principal.getUserDetails().getUsername(), principal.getUserDetails().getPassword(), ip,
+							request, response, session);
+					// 是否需要在这里加上登录次数的更新？按正常的方式，应该在process里面处理的，不过这里处理也没大问题。
+					cmsUserMng.updateLoginInfo(auth.getUid(), ip);
+					CmsUser user = cmsUserMng.findById(auth.getUid());
+					if (user.getDisabled()) {
+						//如果已经禁用，则推出登录。
+						authMng.deleteById(auth.getId());
+						session.logout(request, response);
+						throw new DisabledException("user disabled");
+					}
+					String view = getView(processUrl, returnUrl, auth.getId());
+					if (view != null) {
+						return view;
+					} else {
+						FrontUtils.frontData(request, model, site);
+						return "redirect:login.jspx";
+					}
+				} catch (UsernameNotFoundException e) {
+					errors.addErrorString(e.getMessage());
+				} catch (BadCredentialsException e) {
+					errors.addErrorString(e.getMessage());
+				} catch (DisabledException e) {
+					errors.addErrorString(e.getMessage());
+				}
+			}else{
+				FrontUtils.frontData(request, model, site);
+				return "redirect:login.jspx";
+			}
 		}
 		FrontUtils.frontData(request, model, site);
 		if (!StringUtils.isBlank(processUrl)) {
@@ -72,7 +134,7 @@ public class CasLoginAct {
 		}
 		return FrontUtils.getTplPath(request, sol, TPLDIR_MEMBER, LOGIN_INPUT);
 	}
-
+	
 	@RequestMapping(value = "/login.jspx", method = RequestMethod.POST)
 	public String submit(String username, String password, String processUrl,
 			String returnUrl, String message, HttpServletRequest request,

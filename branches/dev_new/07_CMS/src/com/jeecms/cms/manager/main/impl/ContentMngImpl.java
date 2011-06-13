@@ -90,6 +90,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			boolean next) {
 		return dao.getSide(id, siteId, channelId, next, true);
 	}
+	
+	public Content getSide(Integer id, Integer siteId, Integer channelId,
+			boolean next, String jounalNum, String forum){
+		return dao.getSide(id, siteId, channelId, next, jounalNum, forum, true);
+	}
+			
 
 	@Transactional(readOnly = true)
 	public List<Content> getListByIdsForTag(Integer[] ids, int orderBy) {
@@ -131,6 +137,14 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPageByChannelIdsForTag(channelIds, typeIds, titleImg,
 				recommend, title, orderBy, option, pageNo, pageSize);
 	}
+	
+	@Transactional(readOnly = true)
+	public Pagination getPageByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, int pageNo, int pageSize, String customiz) {
+		return dao.getPageByChannelIdsForTag(channelIds, typeIds, titleImg,
+				recommend, title, orderBy, option, pageNo, pageSize, customiz);
+	}
 
 	@Transactional(readOnly = true)
 	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
@@ -138,6 +152,14 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String title, int orderBy, int option, Integer first, Integer count) {
 		return dao.getListByChannelIdsForTag(channelIds, typeIds, titleImg,
 				recommend, title, orderBy, option, first, count);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, Integer first, Integer count, String customizs) {
+		return dao.getListByChannelIdsForTag(channelIds, typeIds, titleImg,
+				recommend, title, orderBy, option, first, count, customizs);
 	}
 
 	@Transactional(readOnly = true)

@@ -48,6 +48,9 @@ public interface ContentMng {
 
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
 			boolean next);
+	
+	public Content getSide(Integer id, Integer siteId, Integer channelId,
+			boolean next, String jounalNum, String forum);
 
 	public Pagination getPageBySiteIdsForTag(Integer[] siteIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
@@ -60,11 +63,19 @@ public interface ContentMng {
 	public Pagination getPageByChannelIdsForTag(Integer[] channelIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
 			String title, int orderBy, int option, int pageNo, int pageSize);
-
+	
+	public Pagination getPageByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, int pageNo, int pageSize, String customizes);
+	
 	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
 			String title, int orderBy, int option, Integer first, Integer count);
-
+	
+	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, Integer first, Integer count, String customizes);
+	
 	public Pagination getPageByChannelPathsForTag(String[] paths,
 			Integer[] siteIds, Integer[] typeIds, Boolean titleImg,
 			Boolean recommend, String title, int orderBy, int pageNo,

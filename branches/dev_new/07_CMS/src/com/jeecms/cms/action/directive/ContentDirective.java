@@ -30,7 +30,7 @@ import freemarker.template.TemplateModel;
  */
 public class ContentDirective implements TemplateDirectiveModel {
 	/**
-	 * 输入参数，栏目ID。
+	 * 输入参数，内容ID。
 	 */
 	public static final String PARAM_ID = "id";
 	/**
@@ -41,7 +41,17 @@ public class ContentDirective implements TemplateDirectiveModel {
 	 * 输入参数，栏目ID。
 	 */
 	public static final String PARAM_CHANNEL_ID = "channelId";
-
+	
+	/**
+	 * 输入参数，如果是期刊的话，需要同期的下一个版面值：D1---D4。可后台配置数值
+	 */
+	public static final String PARAM_JOUNAL_PAGE_NUM = "forum";
+	
+	/**
+	 * 输入参数，如果是期刊，则需要提供相同期数下的上下页，故此需要提供期数。
+	 */
+	public static final String PARAM_JOUNAL_NUM	= "jounalNum";
+	
 	@SuppressWarnings("unchecked")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
@@ -53,7 +63,14 @@ public class ContentDirective implements TemplateDirectiveModel {
 		} else {
 			CmsSite site = FrontUtils.getSite(env);
 			Integer channelId = DirectiveUtils.getInt(PARAM_CHANNEL_ID, params);
-			content = contentMng.getSide(id, site.getId(), channelId, next);
+			
+			String jounalNum = DirectiveUtils.getString(PARAM_JOUNAL_NUM, params);
+			if(jounalNum != null){
+				String forum = DirectiveUtils.getString(PARAM_JOUNAL_PAGE_NUM, params);
+				content = contentMng.getSide(id, site.getId(), channelId, next, jounalNum, forum);
+			}else{
+				content = contentMng.getSide(id, site.getId(), channelId, next);
+			}
 		}
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(

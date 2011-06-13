@@ -164,6 +164,22 @@ public interface ContentDao {
 			boolean next, boolean cacheable);
 
 	/**
+	 * 获得一篇内容的上一篇或下一篇内容,期刊的情况
+	 * @Methods Name getSide
+	 * @Create In 2011-6-7 By Jack
+	 * @param id 文章ID。
+	 * @param siteId 站点ID。可以为null。
+	 * @param channelId 栏目ID。可以为null。
+	 * @param next 根据文章ID，大者为下一篇，小者为上一篇。true：下一篇；fasle：上一篇。
+	 * @param forum 期刊版面数
+	 * @param JounalNum 期刊数
+	 * @param cacheable 是否使用缓存。
+	 * @return Content
+	 */
+	public Content getSide(Integer id, Integer siteId, Integer channelId,
+			boolean next, String jounalNumId, String forum, boolean cacheable);
+	
+	/**
 	 * 根据内容ID数组获取内容列表
 	 * 
 	 * @param ids
@@ -184,9 +200,17 @@ public interface ContentDao {
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
 			String title, int orderBy, int option, int pageNo, int pageSize);
 
+	public Pagination getPageByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, int pageNo, int pageSize, String customizes);
+	
 	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
 			String title, int orderBy, int option, Integer first, Integer count);
+	
+	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
+			Integer[] typeIds, Boolean titleImg, Boolean recommend,
+			String title, int orderBy, int option, Integer first, Integer count, String customizes);
 
 	public Pagination getPageByChannelPathsForTag(String[] paths,
 			Integer[] siteIds, Integer[] typeIds, Boolean titleImg,

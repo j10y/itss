@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -16,7 +15,7 @@ import com.jeecms.cms.entity.main.CmsUser;
 import com.jeecms.cms.manager.main.CmsUserMng;
 
 public class CompanyAuthoritiesPopulator implements LdapAuthoritiesPopulator {
-	@Autowired
+	
 	private CmsUserMng cmsUserMng;
 	
 	/**

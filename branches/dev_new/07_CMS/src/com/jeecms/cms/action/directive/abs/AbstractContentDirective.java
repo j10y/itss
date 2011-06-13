@@ -107,6 +107,14 @@ public abstract class AbstractContentDirective implements
 	 * </ul>
 	 */
 	public static final String PARAM_ORDER_BY = "orderBy";
+	
+	/**
+	 * 输入参数，
+	 * 自定义字段作为查询条件进行查询
+	 * 请使用如：(aaa=1&&bbb=2) 这样的格式，其中&&表示And, ||表示or
+	 */
+	public static final String CUSTOMIZE_CONDITION = "customizes";
+	
 	/**
 	 * 输入参数，不包含的文章ID。用于按tag查询相关文章。
 	 */
@@ -285,6 +293,16 @@ public abstract class AbstractContentDirective implements
 		}
 	}
 
+	protected String getCustomize(Map<String, TemplateModel> params)
+			throws TemplateException {
+		String customizes = DirectiveUtils.getString(CUSTOMIZE_CONDITION, params);
+		if(customizes != null){
+			customizes = customizes.replace("&&", " and ");
+			customizes = customizes.replace("||", " or ");
+		}
+		return customizes;
+	}
+
 	protected Object getData(Map<String, TemplateModel> params, Environment env)
 			throws TemplateException {
 		int orderBy = getOrderBy(params);
@@ -294,7 +312,10 @@ public abstract class AbstractContentDirective implements
 		Integer[] siteIds = getSiteIds(params);
 		String title = getTitle(params);
 		int count = FrontUtils.getCount(params);
-
+		
+		//自定义字段作为查询条件
+		String customizes = getCustomize(params);
+		
 		Integer[] tagIds = getTagIds(params);
 		if (tagIds != null) {
 			Integer[] channelIds = getChannelIdsOrPaths(params, siteIds);
@@ -331,14 +352,27 @@ public abstract class AbstractContentDirective implements
 			int option = getChannelOption(params);
 			if (isPage()) {
 				int pageNo = FrontUtils.getPageNo(env);
-				return contentMng.getPageByChannelIdsForTag(channelIds,
-						typeIds, titleImg, recommend, title, orderBy, option,
-						pageNo, count);
+				if(customizes != null){
+					return contentMng.getPageByChannelIdsForTag(channelIds,
+							typeIds, titleImg, recommend, title, orderBy, option,
+							pageNo, count, customizes);
+				}else{
+					return contentMng.getPageByChannelIdsForTag(channelIds,
+							typeIds, titleImg, recommend, title, orderBy, option,
+							pageNo, count);
+				}
+				
 			} else {
 				int first = FrontUtils.getFirst(params);
-				return contentMng.getListByChannelIdsForTag(channelIds,
-						typeIds, titleImg, recommend, title, orderBy, option,
-						first, count);
+				if(customizes != null){
+					return contentMng.getListByChannelIdsForTag(channelIds,
+							typeIds, titleImg, recommend, title, orderBy, option,
+							first, count, customizes);
+				}else{
+					return contentMng.getListByChannelIdsForTag(channelIds,
+							typeIds, titleImg, recommend, title, orderBy, option,
+							first, count);
+				}
 			}
 		}
 		String[] channelPaths = getChannelPaths(params);
