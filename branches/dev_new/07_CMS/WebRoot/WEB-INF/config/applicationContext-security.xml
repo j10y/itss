@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security
+           				http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+ 
+	
+	<!-- 在此定义URL与授权的关系. 而用户、角色、授权及三者的关系保存在数据库中. -->
+	<sec:http  access-decision-manager-ref="accessDecisionManager" entry-point-ref="casProcessingFilterEntryPoint">
+       <!--不会对swf做出限制，允许随意引用，但是如果想预定时候，则需要登陆-->
+	
+		<sec:intercept-url pattern="/login.jspx**" access="AUTH_LOGIN" />
+		<sec:logout/>
+		<sec:anonymous granted-authority="AUTH_ANONYMOUS" />
+		
+		<sec:custom-filter after="CAS_FILTER" ref="casProcessingFilter"/>
+		
+		<sec:custom-filter before="LOGOUT_FILTER" ref="logoutFilter"/>
+		<sec:custom-filter before="CAS_FILTER" ref="casSingleSignOutFilter"/>
+	</sec:http>
+	
+	<bean id="casSingleSignOutFilter" class="com.jeecms.core.manager.impl.SingleSignOutFilter" />
+	<bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg value="${sso_cas.logout.url}"/>
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+    </bean>
+		
+	<bean id="casProcessingFilter" class="org.springframework.security.cas.web.CasAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+	<bean id="casProcessingFilterEntryPoint"
+		class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+		<property name="loginUrl" value="${sso_cas.loginUrl}" />
+		<property name="serviceProperties" ref="serviceProperties" />
+	</bean>
+	
+	<bean id="userDetailServiceImpl"
+		class="com.jeecms.common.security.UserDetailServiceImpl" >
+		<property name="unifiedUserMng" ref="unifiedUserMng"/>
+		<property name="dao" ref="authenticationDao"/>	
+	</bean>
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider ref="casAuthenticationProvider" />
+	</sec:authentication-manager>
+	
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions" value="false"></property>
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.access.vote.RoleVoter">
+					<property name="rolePrefix" value="AUTH_" />
+				</bean>
+			</list>
+		</property>
+		<!-- 所有的vote都弃权的时候，那么就拒绝 -->
+	</bean>
+	<!-- cas provider setting -->
+	<bean id="casAuthenticationProvider"
+		class="org.springframework.security.cas.authentication.CasAuthenticationProvider">
+		
+		<property name="userDetailsService" ref="userDetailServiceImpl" />
+		<property name="serviceProperties" ref="serviceProperties" />
+		<property name="ticketValidator">
+			<bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+				<constructor-arg index="0" value="${sso_cas.casserver}" />
+			</bean>
+		</property>
+		<property name="key" value="bmrbs_casAuthenticationProvider" />
+	</bean>
+	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
+		<property name="service" value="${sso_cas.service}" />
+		<property name="sendRenew" value="false" />
+	</bean>
+	
+	<!-- end cas provider setting -->
+	<sec:global-method-security
+		secured-annotations="enabled" jsr250-annotations="enabled"
+		access-decision-manager-ref="accessDecisionManager" />
+
+</beans>

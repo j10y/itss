@@ -19,8 +19,8 @@ $(function() {
 <div class="toolbar box">
    <div class="toolbar-inner">
     <div class="fl " id="logincontent">
-	[#if user??]欢迎您: ${user.username} &nbsp; ${user.group.name} &nbsp; <a href="logout.jspx?returnUrl=/">退出登录</a>[#else]
-	游客您好，您还没有登录哦！ <a href="${base}/register.jspx">免费注册</a>|<a href="${base}/login.jspx?returnUrl=${location}">登录</a>[/#if]
+	[#if user??]欢迎您: ${user.username} &nbsp; ${user.group.name} &nbsp; <a href="${base}/j_spring_security_logout">退出登录</a>[#else]
+	游客您好，您还没有登录哦！ <!--a href="${base}/register.jspx">免费注册<|/a--><a href="${base}/login.jspx?returnUrl=${location}">登录</a>[/#if]
 	</div>
     <div class="fr">
 	<a href="${base}/tag.jspx" target="_blank">Tags</a>|<a href="${base}/search.jspx" target="_blank">高级搜索</a>|<a href="${base}/rss.jspx" target="_blank">RSS订阅</a>|<a href="#" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.jeecms.com');">设为主页</a>|
@@ -60,7 +60,7 @@ $(function() {
 		
 		<table width="800" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="430" height="350" align="center"><img src="/${res}/img/member/llogo.jpg"/></td>
+            <td width="430" height="350" align="center"><img src="/${res}/img/member/llogo.png"/></td>
             <td>
 			
 				<table width="96%" border="0" align="center" cellpadding="0" cellspacing="5">	
@@ -87,27 +87,9 @@ $(function() {
 </form>	
 </div>
 
-<div class="footer">
-    <div class="clearfix footer-inner">
-        <p class="extralink">
-            <a target="_blank" href="http://www.jeecms.com/news/743.htm">关于我们</a> - 
-			<a target="_blank" href="http://www.jeecms.com/yjdt/826.htm">联系我们</a> - 
-			<a target="_blank" href="http://www.jeecms.com">诚聘英才</a> -
-			<a target="_blank" href="http://www.jeecms.com">友情链接</a> - 
-			<a target="_blank" href="http://www.jeecms.com/download/index.htm">程序下载</a> - 
-			<a target="_blank" href="http://www.jeecms.com">合作服务</a> - 
-			<a target="_blank" href="http://www.jeecms.com/yjdt/825.htm">许可协议</a> - 
-			<a onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(location.href)" href="javascript:void(0);">设为首页</a> - 
-			<a onClick="window.external.addFavorite('http://www.jeecms.com','jeecms-国内专业、开源、免费的JAVA (JSP)版网站管理系统')" href="javascript:void(0);">加入收藏</a> - 
-			<a target="_blank" href="${base}/jeeadmin/jeecms/index.do">管理登录</a>
-        </p>
-        <p class="copyright">
-Powered by <a target="_blank" href="http://www.jeecms.com">JEECMS</a> Copyright &copy; 2007-2010 www.jeecms.com, All Rights Reserved 
-        </p>
-        <p class="extrainfo">
-          电话：0791-6538070、13576281815　传真：0791-6538070  [@process_time/]<br />
-        </p>
-    </div>
+<!--footer_begin-->
+			[#include "../include/页脚信息栏.html"/]
+<!--footer_end-->
 </div>
 </div>
 </body>

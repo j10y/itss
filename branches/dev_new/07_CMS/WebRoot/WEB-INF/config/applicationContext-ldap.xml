@@ -9,9 +9,9 @@
 
 	<bean id="contextSource"
 		class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
-		<constructor-arg value="ldap://172.16.100.173:10389/" />
-		<property name="userDn" value="uid=admin,ou=system" />
-		<property name="password" value="secret" />
+		<constructor-arg value="${jeecms.security.ldap.address}" />
+		<property name="userDn" value="${jeecms.security.ldap.admin.username}" />
+		<property name="password" value="${jeecms.security.ldap.admin.password}" />
 	</bean>
 	<bean id="ldapAuthProvider"
 		class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
@@ -24,9 +24,9 @@
 					<bean
 						class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"
 						id="userSearch">
-						<constructor-arg value="ou=employees,ou=users,dc=shopin,dc=net"
+						<constructor-arg value="${jeecms.security.ldap.search.base}"
 							index="0" />
-						<constructor-arg value="(&amp;(uid={0})(objectclass=person))"
+						<constructor-arg value="${jeecms.security.ldap.search.userDN}"
 							index="1" />
 						<constructor-arg ref="contextSource" index="2" />
 					</bean>
