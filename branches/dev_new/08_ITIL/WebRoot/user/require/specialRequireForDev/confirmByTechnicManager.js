@@ -40,10 +40,12 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				if (tempEngineerId != "0") {
 					tempUrl = webContext
 							+ '/extjs/workflow?method=getData&taskId=' + taskId
-							+ '&users=makeInfoByEngineer:' + tempEngineerId
-							+ '$executeByEngineer:' + tempEngineerId
-							+ '$issueByEngineer:' + tempEngineerId
-							+ '$selectEngineer:' + tempOfficerId;
+//							+ '&users=makeInfoByEngineer:' + tempEngineerId
+//							+ '$executeByEngineer:' + tempEngineerId
+//							+ '$issueByEngineer:' + tempEngineerId
+//							+ '$selectEngineer:' + tempOfficerId;
+							+ '&users=submitImplementation:' + tempEngineerId
+							+ '$implementation:' + tempEngineerId;
 							if(tempServiceManageId != ""){
 								tempUrl += '$confirmByServiceManager:' + tempServiceManageId;
 							}		

@@ -25,8 +25,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		Ext.getCmp('saveButton').disable();
 		Ext.getCmp('workFlowButton').disable();
 		var name = Ext.getCmp('SpecialRequirement$name').getValue();
-		var dept=Ext.getCmp('SpecialRequirement$flatCombo').getValue();
-		var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();//add by zhangzy for 申请本部选择“无”时bug
+		//var dept=Ext.getCmp('SpecialRequirement$flatCombo').getValue();
+		//var deptName=Ext.getCmp('SpecialRequirement$flatCombo').getRawValue();//add by zhangzy for 申请本部选择“无”时bug
 		var comfirmUserName=Ext.getCmp('SpecialRequirement$confirmUserCombo').getRawValue();		
 		if(name==""||name==null){
 			Ext.MessageBox.alert("提示","请填写需求名称！");
@@ -34,12 +34,12 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			Ext.getCmp('workFlowButton').enable();
 			return;
 		}
-		if(dept==""||dept==null){
-			Ext.MessageBox.alert("提示","请选择申请本部！");
-			Ext.getCmp('saveButton').enable();
-			Ext.getCmp('workFlowButton').enable();
-			return;
-		}
+		//if(dept==""||dept==null){
+		//	Ext.MessageBox.alert("提示","请选择申请本部！");
+		//	Ext.getCmp('saveButton').enable();
+		//	Ext.getCmp('workFlowButton').enable();
+		//	return;
+		//}
 
 		if(comfirmUserName=="无"){
 			Ext.MessageBox.alert("提示","请选择部门审批人！");

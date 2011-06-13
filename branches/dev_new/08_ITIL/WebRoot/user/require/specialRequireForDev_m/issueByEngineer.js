@@ -153,10 +153,10 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				data[i].readOnly = true;
 				data[i].hideTrigger = true;
 				if (data[i].xtype == "panel") {
-					var dd = Ext.encode(data[i]).replace(/display:/g,
+				/*	var dd = Ext.encode(data[i]).replace(/display:/g,
 							"display:none").replace("\"disabled\":false",
 							"\"disabled\":true");
-					data[i] = Ext.decode(dd);
+					data[i] = Ext.decode(dd);*/
 				}
 			}
 			if(data[i].id=="itil_req_SpecialRequirementInfo$transContent"){
@@ -312,14 +312,16 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		this.on("saveAndSubmit", this.saveAndSubmit, this);
 		PageTemplates.superclass.initComponent.call(this);
 	//是否传输选择“否”时，改变传输工程师只读属性			
-		Ext.getCmp('SpecialRequirement$flatCombo').on('select',function(){	
-			var isTrans = Ext.getCmp('itil_req_SpecialRequirementInfo$isTransmisCombo').getValue();
-			var transmis = Ext.getCmp('itil_req_SpecialRequirementInfo$transmisEngineerCombo');	
-				if(isTrans == 0){
-					transmis.readOnly = true;
-					transmis.hideTrigger = true;
-				}
-		});	
+//		Ext.getCmp('SpecialRequirement$flatCombo').on('select',function(){	
+//			var isTrans = Ext.getCmp('itil_req_SpecialRequirementInfo$isTransmisCombo').getValue();
+//			var transmis = Ext.getCmp('itil_req_SpecialRequirementInfo$transmisEngineerCombo');	
+//				if(isTrans == 0){
+//
+//
+//					transmis.readOnly = true;
+//					transmis.hideTrigger = true;
+//				}
+//		});	
 	//是否传输选择“否”时，改变传输工程师只读属性			
 	}
 })
