@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>会员登录 - ${site.name} - Powered by JEECMS</title>
+<title>会员登录 - ${site.name}</title>
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -80,10 +80,13 @@ $(function() {
          <td height="25" align="right" bgcolor="#FAF9FE">自我介绍：</td>
          <td bgcolor="#FFFFFF"><input type="text" name="intro" value="${user.intro!?html}" maxlength="255"/></td>
        </tr>  
+       <!-- 暂时去掉，本部分默认为部门 
        <tr>
          <td height="25" align="right" bgcolor="#FAF9FE">来自：</td>
          <td bgcolor="#FFFFFF"><input type="text" name="comefrom" value="${user.comefrom!?html}" maxlength="150"/></td>
        </tr>
+       -->
+       <input type="hidden" name="comefrom" value="${user.comefrom!?html}" />
        <tr>
          <td height="25" align="right" bgcolor="#FAF9FE">QQ：</td>
          <td bgcolor="#FFFFFF"><input type="text" name="qq" value="${user.qq!?html}" maxlength="100"/></td>
