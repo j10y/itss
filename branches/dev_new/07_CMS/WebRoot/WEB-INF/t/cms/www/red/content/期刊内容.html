@@ -104,15 +104,14 @@ $(function() {
               		[@cms_content id=content.id next='1' jounalNum=content.attr.jounalNum forum='D5' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D5]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
               	[/#if]
               </span>
-            
           </div>
         </div>
 		<!--网友评论_Begin-->
-		<!--  
+		 
         [#if channel.commentControl!=2]
 		  [#include "inc_comment_input.html"/]
 		[/#if]
-		-->
+		
 		<!--网友评论_End-->
 
   </div>

@@ -82,8 +82,16 @@ $(function() {
         <!--相关资讯_End-->
 		
         <!--最新图文_Begin-->
-        <h2><span>最新图文</span></h2>
-        <div class="w98"> 斯蒂芬 </div>
+        <h2><span>上品在线 SHOPIN ONLINE</span></h2>
+        <div class="w98"> 
+			[@cms_content_list count='4' titLen='10' typeId='2' channelOption='1']
+	        <ul class="list right_pic">
+	          [#list tag_list as d]
+	          <li><a href="${d.url}" target="_blank"><img src="${d.typeImg!site.defImg}" alt="${d.title}" /></a><a href="${d.url}" title="${d.title}" target="_blank">[@text_cut s=d.stit len=titLen append=append/]</a></li>
+	          [/#list]
+	        </ul>
+	        [/@cms_content_list]
+	 	</div>
         <!--最新图文_End-->
 		
         <!--本周热门资讯排行_Begin-->
