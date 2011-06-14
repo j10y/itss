@@ -1,3 +1,5 @@
+
+
 PageTemplates = Ext.extend(Ext.Panel, {
 	id : "PageTemplates",
 	layout : 'table',
@@ -61,7 +63,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 
 	},
 
-	getFormpanel_typicalRequire_Input : function() {
+	getFormpanel_swrequire_input : function() {
 		var da = new DataAction();
 		var data = null;
 		// 判断是新增还是修改
@@ -69,9 +71,9 @@ PageTemplates = Ext.extend(Ext.Panel, {
 
 		var buttonUtil = new ButtonUtil();
 		this.getFormButtons = buttonUtil.getButtonForPanel(
-				"panel_typicalRequire_Input", this);
+				"panel_swrequire_input", this);
 		if (this.dataId != '0') {
-			data = da.getPanelElementsForEdit("tr_confirmByHome","panel_typicalRequire_Input", this.dataId);// 这是要随时变得
+			data = da.getPanelElementsForEdit("sw_confirmByUser","panel_swrequire_input", this.dataId);// 这是要随时变得
 			for (i = 0; i < data.length; i++) {
 				var idStr = data[i].id + "";
 				
@@ -83,12 +85,12 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			}
 			biddata = da.splitForReadOnly(data);
 		} else {
-			data = da.getPanelElementsForAdd("panel_typicalRequire_Input");
+			data = da.getPanelElementsForAdd("panel_swrequire_input");
 			biddata = da.split(data);
 		}
 		if (this.getFormButtons.length != 0) {
-			this.formpanel_typicalRequire_Input = new Ext.form.FormPanel({
-				id : 'panel_typicalRequire_Input',
+			this.formpanel_swrequire_input = new Ext.form.FormPanel({
+				id : 'panel_swrequire_input',
 				layout : 'table',
 				height : 'auto',
 				width : 800,
@@ -105,8 +107,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				buttons : this.getFormButtons
 			});
 		} else {
-			this.formpanel_typicalRequire_Input = new Ext.form.FormPanel({
-				id : 'panel_typicalRequire_Input',
+			this.formpanel_swrequire_input = new Ext.form.FormPanel({
+				id : 'panel_swrequire_input',
 				layout : 'table',
 				height : 'auto',
 				width : 800,
@@ -119,10 +121,25 @@ PageTemplates = Ext.extend(Ext.Panel, {
 					columns : 4
 				},
 				title : "需求申请",
-				items : biddata
+				items : biddata,
+				buttonAlign:'center',
+				buttons : [{
+					text : '重新提交',
+					iconCls : 'submit',
+					handler : function() {
+				               window.parent.auditContentWin.specialAudit();
+							}
+				} ,
+				{
+					text : '放弃',
+					iconCls : 'back',
+					handler : function() {
+						window.parent.auditContentWin.specialNoAudit();
+				  }
+				}]
 			});
 		}
-		return this.formpanel_typicalRequire_Input;
+		return this.formpanel_swrequire_input;
 	},
 	items : this.items,
 	buttons : this.buttons,
@@ -147,15 +164,15 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		this.formname = formname;
 		var gridname = new Array();
 		this.gridname = gridname;
-		this.model = "tr_confirmByHome";
+		this.model = "sw_confirmByUser";
 		var buttonUtil = new ButtonUtil();
-		this.mybuttons = buttonUtil.getButtonForModel("tr_confirmByHome", this);
+		this.mybuttons = buttonUtil.getButtonForModel("sw_confirmByUser", this);
 		this.buttons = this.mybuttons;
 	
-		this.getFormpanel_typicalRequire_Input();
-		this.pa.push(this.formpanel_typicalRequire_Input);
-		this.formname.push("panel_typicalRequire_Input");
-		temp.push(this.formpanel_typicalRequire_Input);
+		this.getFormpanel_swrequire_input();
+		this.pa.push(this.formpanel_swrequire_input);
+		this.formname.push("panel_swrequire_input");
+		temp.push(this.formpanel_swrequire_input);
 
 		temp.push(histroyForm);
 

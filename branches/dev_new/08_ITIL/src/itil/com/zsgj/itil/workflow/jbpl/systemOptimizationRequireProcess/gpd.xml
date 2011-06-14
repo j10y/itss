@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="systemOptimizationRequireProcess" width="1051" height="611">
+<root-container name="systemOptimizationRequireProcess" width="1117" height="615">
   <node name="提出申请" x="157" y="73" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -9,6 +9,7 @@
   <node name="运维工程师审批处理" x="139" y="154" width="166" height="36">
     <edge>
       <label x="5" y="-10"/>
+      <bendpoint w1="-73" h1="42" w2="-74" h2="-44"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
@@ -24,6 +25,15 @@
       <bendpoint w1="-103" h1="-43" w2="113" h2="-40"/>
     </edge>
   </node>
-  <node name="结束" x="155" y="253" width="132" height="36"/>
+  <node name="结束" x="157" y="327" width="132" height="36"/>
   <node name="放弃" x="371" y="229" width="132" height="36"/>
+  <node name="用户确认" x="157" y="240" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="75" h1="-42" w2="76" h2="44"/>
+    </edge>
+  </node>
 </root-container>

@@ -20,7 +20,7 @@
 		<description>
 			operationEngineerAudit
 		</description>
-		<transition to="结束" name="Y"></transition>
+		<transition to="用户确认" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
@@ -30,6 +30,14 @@
 		</description>
 		<transition to="放弃" name="N"></transition>
 		<transition to="运维工程师审批处理" name="Y"></transition>
+	</task-node>
+
+	<task-node name="用户确认">
+		<description>
+			confirmByUser
+		</description>
+		<transition to="结束" name="Y"></transition>
+		<transition to="运维工程师审批处理" name="N"></transition>
 	</task-node>
 
 

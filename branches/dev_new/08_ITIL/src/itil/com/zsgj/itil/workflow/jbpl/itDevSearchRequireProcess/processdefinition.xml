@@ -20,7 +20,7 @@
 		<description>
 			auditProcess
 		</description>
-		<transition to="用户确认并评估" name="Y"></transition>
+		<transition to="用户确认" name="Y"></transition>
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
@@ -40,7 +40,7 @@
 		<transition to="打回" name="N"></transition>
 	</task-node>
 
-	<task-node name="用户确认并评估">
+	<task-node name="用户确认">
 		<description>
 			confirmByUser
 		</description>

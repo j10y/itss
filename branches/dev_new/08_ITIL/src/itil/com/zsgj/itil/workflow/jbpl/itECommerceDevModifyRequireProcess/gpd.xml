@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="itECommerceDevModifyRequireProcess" width="824" height="702">
+  <node name="提出申请" x="191" y="37" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="架构师审批" x="175" y="237" width="166" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-10" y="-1"/>
+    </edge>
+  </node>
+  <node name="打回" x="428" y="237" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-1" h1="-131" w2="236" h2="0"/>
+    </edge>
+  </node>
+  <node name="部门总监审批" x="191" y="106" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-7" y="-8"/>
+      <bendpoint w1="121" h1="15" w2="-116" h2="-116"/>
+    </edge>
+  </node>
+  <node name="信息系统部总监审批" x="183" y="308" width="148" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-1" y="0"/>
+    </edge>
+  </node>
+  <node name="提交实施方案" x="191" y="374" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-115" h1="32" w2="-114" h2="-39"/>
+    </edge>
+  </node>
+  <node name="用户确认" x="190" y="445" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="114" h1="-36" w2="113" h2="35"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="实施并交付" x="189" y="515" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="125" h1="-38" w2="-119" h2="-36"/>
+    </edge>
+  </node>
+  <node name="用户确认并评估" x="442" y="517" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="0" h1="64" w2="253" h2="0"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-125" h1="39" w2="128" h2="41"/>
+    </edge>
+  </node>
+  <node name="结束" x="189" y="581" width="132" height="36"/>
+  <node name="放弃" x="427" y="309" width="132" height="36"/>
+  <node name="产品经理审批" x="192" y="171" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-2" y="-11"/>
+    </edge>
+  </node>
+</root-container>

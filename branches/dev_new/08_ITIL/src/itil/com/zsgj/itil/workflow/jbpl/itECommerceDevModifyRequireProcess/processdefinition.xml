@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="itECommerceDevModifyRequireProcess">
+
+
+	<description>
+		IT（电子商务）开发类服务或变更申请流程
+	</description>
+
+
+	<start-state name="提出申请">
+		<description>
+			start
+		</description>
+		<transition to="部门总监审批"></transition>
+	</start-state>
+
+
+	<task-node name="架构师审批">
+		<description>
+			architectAudit
+		</description>
+		<transition to="信息系统部总监审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="打回">
+		<description>
+			back
+		</description>
+		<transition to="放弃" name="N"></transition>
+		<transition to="部门总监审批" name="Y"></transition>
+	</task-node>
+
+	<task-node name="部门总监审批">
+		<description>
+			deptDirectorAudit
+		</description>
+		<transition to="产品经理审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="信息系统部总监审批">
+		<description>
+			infoDirector
+		</description>
+		<transition to="提交实施方案" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+	<task-node name="提交实施方案">
+		<description>
+			submitImplementation
+		</description>
+		<transition to="用户确认" name="Y"></transition>
+	</task-node>
+
+	<task-node name="用户确认">
+		<description>
+			confirm
+		</description>
+		<transition to="提交实施方案" name="N"></transition>
+		<transition to="实施并交付" name="Y"></transition>
+	</task-node>
+
+	<task-node name="实施并交付">
+		<description>
+			implementation
+		</description>
+		<transition to="用户确认并评估" name="Y"></transition>
+	</task-node>
+
+	<task-node name="用户确认并评估">
+		<description>
+			confirmByUser
+		</description>
+		<transition to="结束" name="Y"></transition>
+		<transition to="实施并交付" name="N"></transition>
+	</task-node>
+
+	<task-node name="产品经理审批">
+		<description>
+			pmAudit
+		</description>
+		<transition to="架构师审批" name="Y"></transition>
+		<transition to="打回" name="N"></transition>
+	</task-node>
+
+
+	<end-state name="结束">
+		<description>
+			end
+		</description>
+	</end-state>
+
+	<end-state name="放弃">
+		<description>
+			giveUp
+		</description>
+	</end-state>
+
+
+</process-definition>
