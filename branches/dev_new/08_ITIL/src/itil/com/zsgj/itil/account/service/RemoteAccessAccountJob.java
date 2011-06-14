@@ -125,12 +125,12 @@ public class RemoteAccessAccountJob extends QuartzJobBean{
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td class=\"STYLE1\" style=\"padding-left:2em\">");
-		sb.append("<br>您的令牌卡即将到期<u><i>(可以在您的令牌卡背面查看具体到期日期：MM/DD/YY)</i></u>，请在两周内联系平台/办公区IT现场工程师进行更换,或拨打集团IT服务热线7888-1指导您进行更换，以免影响您使用VPN服务。");
+		sb.append("<br>您的令牌卡即将到期<u><i>(可以在您的令牌卡背面查看具体到期日期：MM/DD/YY)</i></u>，请在两周内联系平台/办公区IT现场工程师进行更换,或拨打公司IT服务热线7888-1指导您进行更换，以免影响您使用VPN服务。");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td class=\"STYLE2\">");
-		sb.append("<br>感谢您使用集团IT服务"); 
+		sb.append("<br>感谢您使用公司IT服务"); 
 		sb.append("</td>");	
 		sb.append("</tr>");
 		sb.append("<tr>");

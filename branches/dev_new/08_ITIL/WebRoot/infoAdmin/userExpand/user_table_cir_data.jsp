@@ -46,6 +46,14 @@
     <input name="fromFile" type="file"  id="fromFile" size="41">
     <input class=button type="button" onclick="importFile();" value="上传EXCEL数据">
 </FORM>
+<!-- 
+<br>
+<h1><font color="red">&nbsp;使用说明：</font></h1>
+<ul>
+<li>&nbsp;&nbsp;Coffee</li>
+<li>&nbsp;&nbsp;Milk</li>
+</ul>
+ -->
 <!--
 <br>
 

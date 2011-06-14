@@ -605,7 +605,7 @@ public class ProcessRuleHelper {
 //		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
 //
 //		sb
-//				.append("感谢您使用集团IT服务");
+//				.append("感谢您使用公司IT服务");
 //		sb.append("</td>");
 //		sb.append("</tr>");
 //		sb.append("<tr>");
@@ -688,7 +688,7 @@ public class ProcessRuleHelper {
 //		sb.append("<br>");
 //		sb.append(" &nbsp; &nbsp; &nbsp; &nbsp; ");
 //		sb.append("为了帮助我们提高IT服务质量，请您在确认后抽出20-30秒的时间对我们的IT服务进行满意度评价，谢谢！");
-//		sb.append("感谢您使用集团IT服务");
+//		sb.append("感谢您使用公司IT服务");
 //		sb.append("</td>");
 //		sb.append("<tr>");
 //		sb.append("<td>");

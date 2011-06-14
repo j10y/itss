@@ -185,7 +185,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 //		sb.append("</tr>");
 //		sb.append("<tr>");
 //		sb.append("<td class=\"STYLE2\">");
-//		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@zsgj.com,或者拨打IT服务建议及投诉热线7888-0。"); 
+//		sb.append("<br>感谢您使用公司IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@zsgj.com,或者拨打IT服务建议及投诉热线7888-0。"); 
 //		sb.append("</td>");	
 //		sb.append("</tr>");
 //		sb.append("<tr>");
@@ -252,7 +252,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务"); 
+		sb.append("<br>感谢您使用公司IT服务"); 
 		sb.append("</td>");	
 		sb.append("</tr>");
 		sb.append("<tr>");
@@ -267,7 +267,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
-		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
+		sb.append("<br>本邮件由公司IT服务系统（ITSS）自动发送，请勿直接回复。");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("			</table>");
@@ -334,7 +334,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 //		sb.append("</tr>");
 //		sb.append("<tr>");
 //		sb.append("<td class=\"STYLE2\">");
-//		sb.append("<br>感谢您使用集团IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@zsgj.com,或者拨打IT服务建议及投诉热线7888-0。"); 
+//		sb.append("<br>感谢您使用公司IT服务，如果您对我们有任何意见和建议,可以发送邮件到it-manage@zsgj.com,或者拨打IT服务建议及投诉热线7888-0。"); 
 //		sb.append("</td>");	
 //		sb.append("</tr>");
 //		sb.append("<tr>");
@@ -403,7 +403,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td  style=\"font-family:楷体\">");
-		sb.append("<br>感谢您使用集团IT服务"); 
+		sb.append("<br>感谢您使用公司IT服务"); 
 		sb.append("</td>");	
 		sb.append("</tr>");
 		sb.append("<tr>");
@@ -418,7 +418,7 @@ public class CCTelInfoSynJob extends QuartzJobBean {
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td  style=\"FILTER:alpha(opacity=30);font-size:10px\" align=\"left\">");
-		sb.append("<br>本邮件由集团IT服务系统（ITSS）自动发送，请勿直接回复。");
+		sb.append("<br>本邮件由公司IT服务系统（ITSS）自动发送，请勿直接回复。");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("			</table>");

@@ -100,7 +100,7 @@ public class DeptAccountJob extends QuartzJobBean{
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td class=\"STYLE2\">");
-		sb.append("<br>感谢您使用集团IT服务"); 
+		sb.append("<br>感谢您使用公司IT服务"); 
 		sb.append("</td>");	
 		sb.append("</tr>");
 		sb.append("<tr>");

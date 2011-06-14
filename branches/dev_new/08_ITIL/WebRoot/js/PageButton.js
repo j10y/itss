@@ -168,6 +168,8 @@ ButtonUtil = Ext.extend(Ext.util.Observable, {
 				barbuttons[i] = this.createGoBack(btnName, link, imageUrl,
 						scope);
 			} else if (method == "workflow") {// 激活工作流向下运行
+				alert(link);
+				return;
 				barbuttons[i] = this.createWorkFlow(btnName, link, imageUrl,
 						scope);
 			} else if (method == "yesSubmit") {// 激活工作流向下运行只能同意
