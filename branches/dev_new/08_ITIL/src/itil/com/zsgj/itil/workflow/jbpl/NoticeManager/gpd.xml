@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="NoticeManager" width="692" height="489">
+<root-container name="NoticeManager" width="903" height="475">
   <node name="提交公告申请" x="324" y="4" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -22,14 +22,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="部门终审" x="334" y="326" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
   <node name="是否为A、B、C类公告" x="304" y="62" width="163" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -38,15 +30,6 @@
       <label x="5" y="-10"/>
       <bendpoint w1="203" h1="-2" w2="202" h2="-137"/>
       <bendpoint w1="204" h1="134" w2="203" h2="-1"/>
-    </edge>
-  </node>
-  <node name="是否为B、C类公告" x="330" y="262" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-      <bendpoint w1="187" h1="-1" w2="-1" h2="-68"/>
     </edge>
   </node>
   <node name="拒绝并推回到提交人" x="55" y="220" width="154" height="36">
@@ -59,10 +42,10 @@
       <bendpoint w1="-1" h1="229" w2="-268" h2="1"/>
     </edge>
   </node>
-  <node name="发布" x="517" y="329" width="132" height="36">
+  <node name="发布" x="333" y="305" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="结束" x="517" y="446" width="132" height="36"/>
+  <node name="结束" x="334" y="438" width="132" height="36"/>
 </root-container>
