@@ -1,8 +1,8 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="GBK"%>
 
 <html>
 	<head>
-		<title>娆㈣繋浣跨敤IT鏈嶅姟绯荤粺</title>
+		<title>欢迎使用IT服务系统</title>
 		<%@ include file="/includefiles.jsp"%>
 		<script type="text/javascript"
 			src="${pageContext.request.contextPath}/infoAdmin/organization/roleManager.js"></script>

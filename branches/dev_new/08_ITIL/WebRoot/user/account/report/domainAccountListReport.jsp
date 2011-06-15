@@ -5,6 +5,6 @@
 	<HEAD>
 	</HEAD>
 <body>
-<jsp:forward page="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/domaonAccountListReport.raq"></jsp:forward>
+<jsp:forward page="/reportJsp/showReport.jsp?raq=/domaonAccountListReport.raq"></jsp:forward>
 </body>	
 </HTML>
