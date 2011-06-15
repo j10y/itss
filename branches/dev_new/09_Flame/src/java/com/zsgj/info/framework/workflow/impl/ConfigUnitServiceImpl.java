@@ -405,9 +405,9 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 				if(user!=null){
 				String userName = user.getRealName();
 				if(nodeMeg.contains("提交")){
-					auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；";
+					auditMeg+= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；</br>";
 				}else{
-					auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；";
+					auditMeg+= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；</br>";
 				}
 				}
 	        }
@@ -489,9 +489,9 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 				if(user!=null){
 					String userName = user.getRealName();
 					if(nodeMeg.contains("提交")){
-						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；</br>";
+						auditMeg+= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；</br>";
 					}else{
-						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；</br>";
+						auditMeg+= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；</br>";
 					}
 				}
 	        }
