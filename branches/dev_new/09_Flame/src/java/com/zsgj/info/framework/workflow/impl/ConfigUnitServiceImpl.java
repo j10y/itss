@@ -424,7 +424,7 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 		m.put("[AccessService]", "<a href=" + PropertiesUtil.getProperties("system.web.url","http://10.1.120.53/itil") +">"+"IT服务系统（ITSS）</a>");
 		m.put("[ProcessList]", auditMeg);
 		m.put("[Date]", dateString);
-		m.put("[Department]", PropertiesUtil.getProperties("system.dept.rootdepttext","上品公司") + "IT");
+		m.put("[Department]", PropertiesUtil.getProperties("system.dept.rootdepttext","上品公司"));
 		
 		for(Iterator it=m.keySet().iterator();it.hasNext();){
 			String ele = (String)it.next();
@@ -489,9 +489,9 @@ public class ConfigUnitServiceImpl extends BaseDao implements ConfigUnitService{
 				if(user!=null){
 					String userName = user.getRealName();
 					if(nodeMeg.contains("提交")){
-						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；";
+						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"提交；</br>";
 					}else{
-						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；";
+						auditMeg= nodeMeg+"环节"+" "+userName+" "+timeString+" "+"审批通过；</br>";
 					}
 				}
 	        }
