@@ -311,7 +311,7 @@ public class PageModelAction extends BaseDispatchAction{
 		List modules = getService().findAll(Module.class);
 		request.setAttribute("modules", modules);
 		
-		List pagePanels = getService().findAll(PagePanel.class);
+		List pagePanels = getService().findAllBy(PagePanel.class,"name",true);
 		request.setAttribute("pagePanels", pagePanels);
 		
 		List<PagePanelType> panelTypes = pps.findAllGroupPanelTypes();
