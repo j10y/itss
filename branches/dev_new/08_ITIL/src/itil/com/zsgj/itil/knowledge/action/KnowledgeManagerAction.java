@@ -149,7 +149,7 @@ public class KnowledgeManagerAction extends BaseAction {
 					if (supportGroup != null) {
 						UserInfo Contracter = supportGroup.getGroupContractOrFileer();// 获取合同/文件审批人
 						if (Contracter != null) {
-							String userListStr = "fileApproval:" + Contracter.getUserName();
+							String userListStr = "fileApproval:" + Contracter.getUserName()+"$serviceDeptServiceStationApproval:"+Contracter.getUserName();
 							mapBizz.put("userList", userListStr);// 指定支持组审批人节点审批用户
 						} else {
 							error = "未找到指定文件审批人！";
@@ -172,7 +172,7 @@ public class KnowledgeManagerAction extends BaseAction {
 					if (supportGroup != null) {
 						UserInfo filer = supportGroup.getGroupContractOrFileer();// 获取合同/文件审批人
 						if (filer != null) {
-							String userListStr = "contractApproval:" + filer.getUserName();
+							String userListStr = "contractApproval:" + filer.getUserName()+"$serviceDeptThreeStationApproval:"+filer.getUserName();
 							mapBizz.put("userList", userListStr);// 指定支持组审批人节点审批用户
 						} else {
 							error = "未找到指定合同审批人！";
