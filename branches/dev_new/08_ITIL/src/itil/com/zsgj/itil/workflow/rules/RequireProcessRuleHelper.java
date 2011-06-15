@@ -1,7 +1,5 @@
 package com.zsgj.itil.workflow.rules;
 
-import java.rmi.RemoteException;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.xml.rpc.ServiceException;
 
 import org.apache.commons.lang.StringUtils;
 import org.jbpm.JbpmContext;
@@ -45,9 +41,6 @@ import com.zsgj.itil.account.entity.MobileTelephoneApply;
 import com.zsgj.itil.account.entity.PersonFormalAccount;
 import com.zsgj.itil.account.entity.SpecialAccount;
 import com.zsgj.itil.account.service.AccountService;
-import com.zsgj.itil.account.webservice.HrInfoService;
-import com.zsgj.itil.account.webservice.HrInfoServiceLocator;
-import com.zsgj.itil.account.webservice.HrInfoServiceSoap_PortType;
 import com.zsgj.itil.account.webservice.SenseServicesUitl;
 import com.zsgj.itil.config.extci.entity.DeliveryTeam;
 import com.zsgj.itil.config.extci.entity.ServiceEngineer;
