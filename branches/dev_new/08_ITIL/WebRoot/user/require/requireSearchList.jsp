@@ -101,7 +101,8 @@
 					method : 'post',
 					scope : this
 					}
-	            },
+	            }
+	            /*,
 	            {title: '付款条款报表',
 	            autoScroll:true,
 	            autoLoad : {
@@ -111,7 +112,7 @@
 					method : 'post',
 					scope : this
 					}
-	            }		            		            	            
+	            }	*/	            		            	            
 	        ]
     	});
 	 new Ext.Viewport({

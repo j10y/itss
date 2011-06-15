@@ -37,10 +37,10 @@ PagePanel = Ext.extend(Ext.Panel, {
         if(eventPonderance == '') {
             eventPonderance = ponderanceId;
         }
-        var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
-        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
-        	Ext.getCmp("Event$problemSortCombo").clearValue();
-        }
+//        var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
+//        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
+//        	Ext.getCmp("Event$problemSortCombo").clearValue();
+//        }
         var desc=Ext.encode(Ext.getCmp("Event$description8").getValue());//事件描述
          Ext.Ajax.request({
                   url :webContext + '/eventAction_modifyEvent.action',
@@ -49,8 +49,9 @@ PagePanel = Ext.extend(Ext.Panel, {
                              serviceItemId : serviceItemId,
                              eventFrequency : eventFrequency,
                              eventPonderance : eventPonderance,
-                             desc : desc.substring(1,desc.length-1),//保存事件描述
-                             problemSortId : pSort
+                             desc : desc.substring(1,desc.length-1)//保存事件描述
+//                             ,
+//                             problemSortId : pSort
                            },
                   method : 'post', 
                   success : function(){
@@ -131,10 +132,10 @@ PagePanel = Ext.extend(Ext.Panel, {
 				   		Ext.MessageBox.alert("提示","事件描述不能为空！");
 				   		return;
 				   	}
-				   	var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
-			        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
-			        	Ext.getCmp("Event$problemSortCombo").clearValue();
-			        }
+//				   	var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
+//			        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
+//			        	Ext.getCmp("Event$problemSortCombo").clearValue();
+//			        }
 			        Ext.getCmp("useKnowButton").disable();
 			        Ext.getCmp("closeButton").disable();
                     var eventId = this.dataId;
@@ -147,8 +148,9 @@ PagePanel = Ext.extend(Ext.Panel, {
                               eventId : this.dataId,
                               knowledgeId : knowledgeId,
                               serviceItemId : siId,
-                              desc : desc.substring(1,desc.length-1),//保存事件描述
-                              problemSortId : pSort
+                              desc : desc.substring(1,desc.length-1)//保存事件描述
+//                              ,
+//                              problemSortId : pSort
                             },
                           method:'post', 
                           success:function(){
@@ -394,10 +396,10 @@ PagePanel = Ext.extend(Ext.Panel, {
 						   		Ext.MessageBox.alert("提示","事件描述不能为空！");
 						   		return;
 						   	}
-						   	var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
-					        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
-					        	Ext.getCmp("Event$problemSortCombo").clearValue();
-					        }
+//						   	var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
+//					        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
+//					        	Ext.getCmp("Event$problemSortCombo").clearValue();
+//					        }
 						   	var desc=Ext.encode(description);
 						   	Ext.Ajax.request({
 								url : webContext+ '/eventAction_saveEventDescInDealing.action',
@@ -406,8 +408,9 @@ PagePanel = Ext.extend(Ext.Panel, {
 										serviceItemId : si.getValue(),
 										frequency : eventFrequency,
 										ponderance : eventPonderance,
-										desc : desc.substring(1,desc.length-1),
-										problemSortId : pSort
+										desc : desc.substring(1,desc.length-1)
+//										,
+//										problemSortId : pSort
 								},
 								success : function(response, options) {},
 								failure : function(response, options) {}
@@ -582,10 +585,10 @@ PagePanel = Ext.extend(Ext.Panel, {
 						Ext.getCmp("otherGroup").disable();
 						Ext.getCmp("operateSelf").disable();
 						var desc=Ext.encode(Ext.getCmp("Event$description8").getValue());//事件描述
-						var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
-				        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
-				        	Ext.getCmp("Event$problemSortCombo").clearValue();
-				        }
+//						var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
+//				        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
+//				        	Ext.getCmp("Event$problemSortCombo").clearValue();
+//				        }
                            var eventassignparam = Ext.encode(getFormParam('eventassign'));
                            var siId=si.getValue();
                         	Ext.Ajax.request({
@@ -594,8 +597,9 @@ PagePanel = Ext.extend(Ext.Panel, {
                                         eid : this.dataId,
                                         serviceItem : siId,
                                         eventassignparam : eventassignparam,
-                                      	 desc : desc.substring(1,desc.length-1),//保存事件描述
-                                      	 problemSortId : pSort
+                                      	 desc : desc.substring(1,desc.length-1)//保存事件描述
+//                                      	 ,
+//                                      	 problemSortId : pSort
                                         },
                                 method:'post',  
                                 success:function(){
@@ -875,7 +879,9 @@ PagePanel = Ext.extend(Ext.Panel, {
 				fieldLabel:"事件描述"
 			});
 		 //2010-06-23 add by huzh for 添加事件提交人电话 end	
-		var problemSort=new Ext.form.ComboBox({
+		/*
+		var problemSort=new Ext.form.ComboBox(
+				{
 				name : "Event$problemSort",
 				id : 'Event$problemSortCombo',
 				fieldLabel : "类型",
@@ -919,7 +925,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 						}
 					});
              }
-		});
+		});*/
         var da = new DataAction();
         var data=da.getPanelElementsForEdit("page_event_suppGroupEngineer","panel_event_suppGroupEngineer",this.dataId);
         var newdata=new Array();
@@ -951,7 +957,7 @@ PagePanel = Ext.extend(Ext.Panel, {
                 Ext.getCmp('Event$ponderanceCombo').setValue(ponderanceName);
                 data[i].on('select',function(combo,record,index){ponderance=combo.value});
             }else if(data[i].name=="Event$description"){
-            	newdata.push(Ext.getCmp("Event$problemSortCombo"));
+            	//newdata.push(Ext.getCmp("Event$problemSortCombo"));
             }else{
                 data[i].readOnly=true;
                 data[i].hideTrigger=true;
@@ -972,8 +978,8 @@ PagePanel = Ext.extend(Ext.Panel, {
         Ext.getCmp('Event$submitUserCombo').setValue(submitUser);
         Ext.getCmp('Event$createUserCombo').setValue(createUser);
         Ext.getCmp('Event$dealuserCombo').setValue(dealuser);
- 		Ext.getCmp('Event$problemSortCombo').setValue(problemSortId); 
- 		Ext.getCmp('Event$problemSortCombo').initComponent();
+ 		//Ext.getCmp('Event$problemSortCombo').setValue(problemSortId); 
+ 		//Ext.getCmp('Event$problemSortCombo').initComponent();
         var biddata = this.split(newdata);
         this.panel = new Ext.form.FormPanel({  
             id : 'eventDetails',
@@ -1243,10 +1249,10 @@ PagePanel = Ext.extend(Ext.Panel, {
 					     if(type.getRawValue().trim()==""){
 								type.setValue("");
 							}
-						var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
-				        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
-				        	Ext.getCmp("Event$problemSortCombo").clearValue();
-				        }
+//						var pSort=Ext.getCmp("Event$problemSortCombo").getValue();
+//				        if(Ext.getCmp("Event$problemSortCombo").getRawValue()==""){
+//				        	Ext.getCmp("Event$problemSortCombo").clearValue();
+//				        }
 						Ext.getCmp("saveServiceType").disable();
 						Ext.getCmp("backHead").disable();
 						Ext.getCmp("otherGroup").disable();
@@ -1279,8 +1285,9 @@ PagePanel = Ext.extend(Ext.Panel, {
 									serviceItemId:si.getValue(),
 									frequency:eventFrequency,
 									ponderance:eventPonderance,
-									desc : desc.substring(1,desc.length-1),
-									problemSortId : pSort
+									desc : desc.substring(1,desc.length-1)
+//									,
+//									problemSortId : pSort
 								},
 								success : function(response, options) {
 									Ext.MessageBox.alert("提示", "保存成功！",function(){
@@ -1314,8 +1321,9 @@ PagePanel = Ext.extend(Ext.Panel, {
 								serviceItemId:si.getValue(),
 								frequency:eventFrequency,
 								ponderance:eventPonderance,
-								desc : desc.substring(1,desc.length-1),
-								problemSortId : pSort
+								desc : desc.substring(1,desc.length-1)
+//								,
+//								problemSortId : pSort
 							},
 							success : function(response, options) {
 								var result=Ext.decode(response.responseText);

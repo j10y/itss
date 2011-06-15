@@ -587,12 +587,14 @@ PagePanel = Ext.extend(Ext.Panel, {
 						allowBlank:false,
 						fieldLabel : "事件描述",
 						emptyText :'描述性文字请限制在4000字以内'
-				}),new Ext.Panel({
+				}),new Ext.Panel(
+						{
 						height : 23,
 						layout : 'table',
 						width :557,
 						colspan : 4,
-						items:[{
+						items:[
+						       /*{
 									html : '类型:',
 									cls : 'common-text',
 									style : 'width:70;text-align:right'
@@ -630,7 +632,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 											return false;
 										}
 									}
-								}),{
+								}),*/
+						       {
 									html : '附件:',
 									cls : 'common-text',
 									style : 'width:55;text-align:right'

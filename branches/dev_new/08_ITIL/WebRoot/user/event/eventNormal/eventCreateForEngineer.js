@@ -367,7 +367,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 						layout : 'table',
 						width :557,
 						colspan : 4,
-						items:[{
+						items:[
+						      /* {
 								html : 'ÀàÐÍ:',
 								cls : 'common-text',
 								style : 'width:70;text-align:right'
@@ -405,7 +406,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 										return false;
 									}
 								}
-							}),{
+							}),*/
+							{
 								html : '¸½¼þ:',
 								cls : 'common-text',
 								style : 'width:55;text-align:right'
