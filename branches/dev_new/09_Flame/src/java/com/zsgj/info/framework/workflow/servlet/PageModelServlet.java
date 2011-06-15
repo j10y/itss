@@ -38,7 +38,6 @@ public class PageModelServlet extends HttpServlet {
 	private TaskPageModelService pageModelService = (TaskPageModelService) ContextHolder.getBean("taskPageModelService");
 	private ContextService vm = (ContextService) ContextHolder.getBean("contextService");
 	private ConfigUnitService cs = (ConfigUnitService) ContextHolder.getBean("configUnitService");
-
 	/**
 	 * Constructor of the object.
 	 */
