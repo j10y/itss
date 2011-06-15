@@ -37,6 +37,7 @@ import com.zsgj.info.framework.security.entity.UserInfo;
 import com.zsgj.info.framework.security.entity.UserRole;
 import com.zsgj.info.framework.security.service.UserInfoService;
 import com.zsgj.info.framework.service.Service;
+import com.zsgj.info.framework.util.DateUtil;
 import com.zsgj.info.framework.util.HttpUtil;
 import com.zsgj.info.framework.util.PropertiesUtil;
 import com.zsgj.info.framework.web.adapter.struts2.BaseAction;
@@ -2088,6 +2089,12 @@ public class EventAction extends BaseAction {
 			//2010-07-20 add by huzh for 根据事件类型找支持组，并保存第一个 end
 			engineers = supportGroupService.findSupportGroupEngineersByEventType(eventtypeId);
 		}
+		if(infoMap.get("submitUser")==null||infoMap.get("submitUser").toString().length()==0){
+			infoMap.put("submitUser", UserContext.getUserInfo().getId());
+		}
+		if(infoMap.get("submitDate")==null||infoMap.get("submitDate").toString().length()==0){
+			infoMap.put("submitDate", DateUtil.convertDateToString(new Date()));
+		}
 			Event event = (Event) metaDataManager.saveEntityData(Event.class, infoMap);
 			String userId = "";
 			if (engineers.size() == 0) {
@@ -2101,8 +2108,12 @@ public class EventAction extends BaseAction {
 			json.append("{success:true,eventId:'" + event.getId());
 			json.append("',userID:'" + userId + "',eventName:'" + event.getSummary());
 			json.append("',eventCisn:'" + event.getEventCisn());
-			json.append("',eventSubmitUser:'" + event.getSubmitUser().getUserName());
-			json.append("',eventSubmitDate:'" + simpleDateFormat.format(event.getSubmitDate()) + "'}");
+			if(event.getSubmitUser()!=null){
+				json.append("',eventSubmitUser:'" + event.getSubmitUser().getUserName());
+			}else{
+				json.append("',eventSubmitUser:'" + UserContext.getUserInfo().getUserName());
+			}
+			json.append("',eventSubmitDate:'" + simpleDateFormat.format((event.getSubmitDate()!=null?event.getSubmitDate():new Date())) + "'}");
 			HttpServletResponse response = getResponse();
 			response.setContentType("text/plain;charset=gbk");
 			PrintWriter out = response.getWriter();

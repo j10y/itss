@@ -551,6 +551,9 @@ public class AccountManagerAction extends BaseAction{
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
 		//mapBizz.put("userList", userListStr);//放入流程参数中
+		/*
+		 * 部门变更由于是运维工程师处理审批信息，所以取消所有帐号管理员的审批
+		 *
 		String dynCounterSignStr="operationEngineerAudit:";
 		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
 		List<PersonFormalAccount> accounts=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
@@ -603,6 +606,7 @@ public class AccountManagerAction extends BaseAction{
 		
 		
 		mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
+		 */
 		String creator = UserContext.getUserInfo().getUserName();
 		Long instanceId = null;
 		String meg = "";
@@ -697,136 +701,6 @@ public class AccountManagerAction extends BaseAction{
 		}
 		return null;				
 	}	
-	
-	/**
-	 * 新员工IT帐号申请（启动工作流）
-	 * @Methods Name newITAccountApply
-	 * @Create In Aug 8, 2009 By CEO awen
-	 * @return String
-	 * @throws 
-	 */
-	
-//	public String newITAccountApply() throws Exception{
-//		String json = ""; 
-//		//需要的参数
-//		String definitionName = super.getRequest().getParameter("defname");
-//		String buzzParameters = super.getRequest().getParameter("bzparam");//在ajax当中已经把js对象变成了json字符串
-//		String dataId=super.getRequest().getParameter("dataId");//主数据id
-//		String userInfo =super.getRequest().getParameter("userInfo");//申请人
-//		String workSpace=super.getRequest().getParameter("workSpace");//申请人
-//		UserInfo applyUser=(UserInfo) getService().find(UserInfo.class, userInfo);
-//        List<TelephoneAudit> audit= getService().find(TelephoneAudit.class, "workSpace", workSpace);
-//        String accountManger="";
-//        if(audit!=null){
-//        for(TelephoneAudit te:audit){
-//		 accountManger=te.getAuditManger();
-//         }
-//        }
-//	    
-//		//需要进入上下文的业务参数
-//		Map<String,String> mapBizz = new HashMap<String,String>();
-//		if(buzzParameters!=null&&!buzzParameters.equals("")) {
-//			JSONObject jo = JSONObject.fromObject(buzzParameters);
-//			Iterator it = jo.keys();
-//			while(it.hasNext()) {
-//				String key = (String)it.next();
-//				String value = (String)jo.get(key);					
-//				mapBizz.put(key, value);
-//			}
-//		}
-//		mapBizz.put("workflowHistory", "com.zsgj.itil.service.entity.ServiceItemApplyAuditHis");
-//		/*************************根据serviceItem和dataId获取申请主实体*****************/
-//		String serviceItemId = mapBizz.get("serviceItemId");
-//		ServiceItem servcieItem = (ServiceItem) service.find(ServiceItem.class, serviceItemId);
-//		ServiceItemUserTable siut = (ServiceItemUserTable) service.findUnique(ServiceItemUserTable.class, "serviceItem", servcieItem);
-//		String className = siut.getClassName();
-//		Object obj = service.find(this.toClass(className), dataId);
-//		BeanWrapper bWrapper = new BeanWrapperImpl(obj);
-//		UserInfo cofirmUser = (UserInfo) bWrapper.getPropertyValue("confirmUser");
-//		
-//		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
-//		mapBizz.put("userList", userListStr);//放入流程参数中
-//		String name = (String) bWrapper.getPropertyValue("name");
-//		mapBizz.put("applyNum",name);
-//		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-//		String dynCounterSignStr="confirmByAM:";
-//		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
-//		List<PersonFormalAccount> account=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
-//		Set user1= new HashSet();
-//		Set user2=new HashSet();
-//		for (PersonFormalAccount acc : account) {
-//		if(acc.getAccountType().getAccountType().equals("Telephone")){
-//			dynCounterSignStr+="0"+"+";
-//			dynCounterSignStr+=accountManger+",";
-//		}else{
-//		Role role = acc.getAccountType().getRole();
-//		Set<UserInfo> userinfos=role.getUserInfos();
-//		if(userinfos.size()>1){
-//		for(UserInfo userinfo:userinfos){
-//			user1.add(userinfo.getUserName());
-//		}
-//		
-//		}else{
-//			for(UserInfo userinfo:userinfos){
-//				user2.add(userinfo.getUserName());
-//			}	
-//			
-//		}
-//		}
-//		}
-//		
-//		if(user2.size()>0){
-//		Iterator ite2 = user2.iterator();
-//		if(dynCounterSignStr.indexOf("0")==-1){
-//			dynCounterSignStr+="0"+"+";
-//		}
-//		while(ite2.hasNext()){
-//			dynCounterSignStr+=ite2.next()+",";
-//		}
-//		
-//		}
-//		if(dynCounterSignStr.endsWith(",")) {
-//			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
-//		}
-//		dynCounterSignStr+=";";
-//		
-//		if(user1.size()>0){
-//		dynCounterSignStr+="1"+"+";
-//		Iterator ite1 = user1.iterator();
-//		while(ite1.hasNext()){
-//			dynCounterSignStr+=ite1.next()+",";
-//		}
-//		}
-//		if(dynCounterSignStr.endsWith(",")) {
-//			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
-//		}
-//		if(dynCounterSignStr.endsWith(";")) {
-//			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
-//		}
-//		
-//		
-//		mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
-//		String creator = UserContext.getUserInfo().getUserName();
-//		Long instanceId = null;
-//		String meg = "";
-//		try{
-//			instanceId = ps.createProcess(definitionName,creator,mapBizz);
-//			json = "{success:true,id:'"+instanceId+"'}";	
-//		}catch(Exception e){
-//			meg = e.getMessage();
-//			json = "{success:true,Exception:'"+meg+"'}";
-//		}			
-//		try {			
-//			super.getResponse().setCharacterEncoding("utf-8");
-//			PrintWriter pw = super.getResponse().getWriter();	
-//			pw.write(json);		
-//			} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;				
-//	}	
-	
-	
 	/**
 	 * 新员工IT帐号申请（启动工作流）
 	 * @Methods Name newITAccountApply
@@ -878,44 +752,48 @@ public class AccountManagerAction extends BaseAction{
 		String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-//		String dynCounterSignStr="confirmByAM:";
-//		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
-//		List<PersonFormalAccount> account=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
-//		//Set user2=new HashSet();
-//		for (PersonFormalAccount acc : account) {
-//		if(acc.getAccountType().getAccountType().equals("Telephone")){
-//			dynCounterSignStr+="1"+"+";
-//			dynCounterSignStr+=accountManger;
-//			String type="&"+acc.getAccountType().getName()+"管理员处理";
-//			dynCounterSignStr+=type;
-//			dynCounterSignStr+=";";
-//		}else{
-//		Role role = acc.getAccountType().getRole();
-//		Set<UserInfo> userinfos=role.getUserInfos();
-//		if(userinfos.size()>1){
-//		dynCounterSignStr+="1"+"+";
-//		for(UserInfo userinfo:userinfos){
-//			dynCounterSignStr+=userinfo.getUserName()+",";
-//		}
-//		dynCounterSignStr=dynCounterSignStr.substring(0, dynCounterSignStr.length()-1);
-//		String type="&"+acc.getAccountType().getName()+"管理员处理";
-//		dynCounterSignStr+=type;
-//		dynCounterSignStr+=";";
-//		}else{
-//			for(UserInfo userinfo:userinfos){
-//				dynCounterSignStr+="1"+"+"+userinfo.getUserName();
-//			}
-//			String type="&"+acc.getAccountType().getName()+"管理员处理";
-//			dynCounterSignStr+=type;
-//			dynCounterSignStr+=";";
-//			
-//		}
-//		}
-//		}
-//		if(dynCounterSignStr.endsWith(";")) {
-//			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
-//		}
-		//mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
+/**
+ * 新员工IT帐号申请中的帐号都有运维人员审批，所以取消动态加签的人信息
+
+		String dynCounterSignStr="confirmByAM:";
+		AccountApplyMainTable mainObj = (AccountApplyMainTable) getService().find(AccountApplyMainTable.class, dataId, true);			//得到面板主实体
+		List<PersonFormalAccount> account=  getService().find(PersonFormalAccount.class, "applyId", mainObj);
+		//Set user2=new HashSet();
+		for (PersonFormalAccount acc : account) {
+		if(acc.getAccountType().getAccountType().equals("Telephone")){
+			dynCounterSignStr+="1"+"+";
+			dynCounterSignStr+=accountManger;
+			String type="&"+acc.getAccountType().getName()+"管理员处理";
+			dynCounterSignStr+=type;
+			dynCounterSignStr+=";";
+		}else{
+		Role role = acc.getAccountType().getRole();
+		Set<UserInfo> userinfos=role.getUserInfos();
+		if(userinfos.size()>1){
+		dynCounterSignStr+="1"+"+";
+		for(UserInfo userinfo:userinfos){
+			dynCounterSignStr+=userinfo.getUserName()+",";
+		}
+		dynCounterSignStr=dynCounterSignStr.substring(0, dynCounterSignStr.length()-1);
+		String type="&"+acc.getAccountType().getName()+"管理员处理";
+		dynCounterSignStr+=type;
+		dynCounterSignStr+=";";
+		}else{
+			for(UserInfo userinfo:userinfos){
+				dynCounterSignStr+="1"+"+"+userinfo.getUserName();
+			}
+			String type="&"+acc.getAccountType().getName()+"管理员处理";
+			dynCounterSignStr+=type;
+			dynCounterSignStr+=";";
+			
+		}
+		}
+		}
+		if(dynCounterSignStr.endsWith(";")) {
+			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
+		}
+		mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
+		 */
 		String creator = UserContext.getUserInfo().getUserName();
 		Long instanceId = null;
 		String meg = "";
@@ -1318,6 +1196,8 @@ public class AccountManagerAction extends BaseAction{
 		//String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
 		//mapBizz.put("userList", userListStr);//放入流程参数中
 		//modify tongjp 20110608 end
+/**	由于所有帐号都是由运维工程师审批的，所以不需要加那些价签人了，只给配运维工程师的角色
+ 
 		String dynCounterSignStr="operationEngineerAudit:";
 		List<PersonFormalAccount> account= as.findAllPersonAccount(applyUser);
 		for (PersonFormalAccount acc : account) {
@@ -1356,12 +1236,12 @@ public class AccountManagerAction extends BaseAction{
 		  }
 //modify 20110608 tongjp 	 end	
 		}
-		}
-		
+		}		
 		if(dynCounterSignStr.endsWith(";")) {
 			dynCounterSignStr = dynCounterSignStr.substring(0,dynCounterSignStr.length()-1);
 		}
 		mapBizz.put("dynCounterSign", dynCounterSignStr);//放入流程参数中
+		*/
 		String creator = UserContext.getUserInfo().getUserName();
 		Long instanceId = null;
 		String meg = "";
@@ -1543,8 +1423,13 @@ public class AccountManagerAction extends BaseAction{
         String name = (String) bWrapper.getPropertyValue("name");
 		mapBizz.put("applyNum",name);
 		mapBizz.put("applyName",servcieItem.getName());//modify by lee for 按用户要求修改为帐号（服务项）名称 in 20091210
-		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		
 		/************根据人事子范围初始化SBU节点审批人************************/
+		/**
+		 * 由于远程帐号由运维经理和网络工程师管理，因此取消动态价签的人员信息
+		
+		String userListStr = "confirmByDM:"+cofirmUser.getUserName();//指定部门经理审批人节点审批人
+		
 		UserInfo applyUser = (UserInfo) bWrapper.getPropertyValue("applyUser");
 		PersonnelScope personnelScope=applyUser.getPersonnelScope();
 		if(personnelScope!=null){
@@ -1558,7 +1443,7 @@ public class AccountManagerAction extends BaseAction{
 		
 		
 		
-		/************根据领卡地点选择帐号管理员节点审批人************************/
+		//根据领卡地点选择帐号管理员节点审批人
 		AR_DrawSpace space=(AR_DrawSpace) service.find(AR_DrawSpace.class, drawSpace);
 		String confirmUser=space.getConfirmUser();
 		AR_DrawSpace spaceBeijing=(AR_DrawSpace) service.find(AR_DrawSpace.class, "1");
@@ -1575,9 +1460,8 @@ public class AccountManagerAction extends BaseAction{
 			dynCounterSignUser+="0"+"+"+confirmUserBeijing;
 		}
 		
-		
 		mapBizz.put("dynCounterSign", dynCounterSignUser);//放入流程参数中
-		
+		*/
 		
 		
 		
