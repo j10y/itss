@@ -1,4 +1,4 @@
-// 所有流程列表
+// 所有流程列表   
 ListProcessPanel = Ext.extend(Ext.Panel, {
 	id : "ListProcessPanel",
 	closable : true,
@@ -13,6 +13,7 @@ ListProcessPanel = Ext.extend(Ext.Panel, {
 	reset : function() {
 		this.fp.form.reset();
 	},
+	
 	// 搜索
 	search : function() {
 		var id = Ext.getCmp("processSearch").getValue();//this.processSearch.getValue();

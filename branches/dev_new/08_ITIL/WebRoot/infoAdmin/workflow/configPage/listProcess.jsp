@@ -1,16 +1,16 @@
 <%@ page language="java" pageEncoding="gbk"%>
 <html>
 	<head>
-		<title>欢迎使用IT服务系统</title>
+		<title>欢迎使用IT服务系统</title>		 
 		<%@include file="/includefiles.jsp"%>
 		<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=gbk">
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="0">
 		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/infoAdmin/workflow/configPage/applySearchForm.js"></script>
-		<script type="text/javascript"
 			src="${pageContext.request.contextPath}/infoAdmin/workflow/configPage/listProcessPanel.js"></script>
+		<script type="text/javascript"
+			src="${pageContext.request.contextPath}/infoAdmin/workflow/configPage/applySearchForm.js"></script>
 		<script type="text/javascript"
 			src="${pageContext.request.contextPath}/infoAdmin/workflow/configPage/processAction.js"></script>
 
