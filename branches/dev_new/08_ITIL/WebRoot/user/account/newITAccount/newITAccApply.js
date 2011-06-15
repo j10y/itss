@@ -504,12 +504,13 @@ PageTemplates = Ext.extend(Ext.Panel, {
 //											   .getCmp('AccountApplyMainTable$applyUserCombo').setValue("");
 //												return false;
 //											}
+											/*zanshiqudiaocipanduan
 											if(r.employeeCode=="null"||r.employeeCode==null||r.employeeCode=="00000000"){
 												Ext.MessageBox.alert("提示","如果申请人员工编号没正常带出，请不要提交申请！有问题联系管理员处理。");
 												 Ext
 											     .getCmp('AccountApplyMainTable$applyUserCombo').setValue("");
 												return false;
-											}
+											}*/
 											Ext.getCmp('itil_ac_PersonFormalAccount$costCenterCode').setValue(r.costCenter);
 											Ext.getCmp('sUserInfos$employeeCode').setValue(r.employeeCode);
 											Ext.getCmp('AccountApplyMainTable$applyUserTel').setValue(r.telephone);	
