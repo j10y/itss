@@ -36,6 +36,14 @@ $(function() {
         <div class="w96">
           <h1>${content.title}</h1>
           <div class="msgbar">发布时间： ${content.releaseDate} &nbsp; 作者：${content.author!'本站编辑'} &nbsp; 来源： <a href="${content.originUrl!}" target="_blank">${content.origin!'本站原创'}</a> &nbsp;  浏览次数：<span id="views"></span> &nbsp; 我要评论(<span id="comments"></span>) </div>
+		  [#if content.attachments?size gt 0]
+          	<ui class="box">
+                               附件：
+		   	[#list content.attachments as attach]
+		       <li><a id="attach${attach_index}">${attach.filename}</a></li>
+            [/#list]
+            </ui>
+	      [/#if]
 		  [#if pagination.firstPage]
           <div class="summary">
 		  	<strong>摘要：</strong> [@text_cut s=content.description len='50' append='...'/]
