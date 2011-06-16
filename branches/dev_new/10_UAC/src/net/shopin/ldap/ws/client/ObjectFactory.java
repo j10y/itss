@@ -26,9 +26,11 @@ public class ObjectFactory {
 
     private final static QName _GetDeptListResponse_QNAME = new QName("http://service.ws.ldap.shopin.net/", "getDeptListResponse");
     private final static QName _GetUserDetailByUid_QNAME = new QName("http://service.ws.ldap.shopin.net/", "getUserDetailByUid");
+    private final static QName _UpdateUser_QNAME = new QName("http://service.ws.ldap.shopin.net/", "updateUser");
     private final static QName _GetUserDetailByUidResponse_QNAME = new QName("http://service.ws.ldap.shopin.net/", "getUserDetailByUidResponse");
     private final static QName _GetDeptList_QNAME = new QName("http://service.ws.ldap.shopin.net/", "getDeptList");
     private final static QName _FindUserListByParam_QNAME = new QName("http://service.ws.ldap.shopin.net/", "findUserListByParam");
+    private final static QName _UpdateUserResponse_QNAME = new QName("http://service.ws.ldap.shopin.net/", "updateUserResponse");
     private final static QName _FindUserListResponse_QNAME = new QName("http://service.ws.ldap.shopin.net/", "findUserListResponse");
     private final static QName _FindUserList_QNAME = new QName("http://service.ws.ldap.shopin.net/", "findUserList");
     private final static QName _FindUserListByParamResponse_QNAME = new QName("http://service.ws.ldap.shopin.net/", "findUserListByParamResponse");
@@ -41,51 +43,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link User }
-     * 
-     */
-    public User createUser() {
-        return new User();
-    }
-
-    /**
-     * Create an instance of {@link GetUserDetailByUid }
-     * 
-     */
-    public GetUserDetailByUid createGetUserDetailByUid() {
-        return new GetUserDetailByUid();
-    }
-
-    /**
      * Create an instance of {@link Department }
      * 
      */
     public Department createDepartment() {
         return new Department();
-    }
-
-    /**
-     * Create an instance of {@link GetDeptList }
-     * 
-     */
-    public GetDeptList createGetDeptList() {
-        return new GetDeptList();
-    }
-
-    /**
-     * Create an instance of {@link GetDeptListResponse }
-     * 
-     */
-    public GetDeptListResponse createGetDeptListResponse() {
-        return new GetDeptListResponse();
-    }
-
-    /**
-     * Create an instance of {@link FindUserListByParam }
-     * 
-     */
-    public FindUserListByParam createFindUserListByParam() {
-        return new FindUserListByParam();
     }
 
     /**
@@ -97,11 +59,59 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetDeptList }
+     * 
+     */
+    public GetDeptList createGetDeptList() {
+        return new GetDeptList();
+    }
+
+    /**
+     * Create an instance of {@link User }
+     * 
+     */
+    public User createUser() {
+        return new User();
+    }
+
+    /**
+     * Create an instance of {@link UpdateUser }
+     * 
+     */
+    public UpdateUser createUpdateUser() {
+        return new UpdateUser();
+    }
+
+    /**
+     * Create an instance of {@link GetUserDetailByUidResponse }
+     * 
+     */
+    public GetUserDetailByUidResponse createGetUserDetailByUidResponse() {
+        return new GetUserDetailByUidResponse();
+    }
+
+    /**
      * Create an instance of {@link FindUserListByParamResponse }
      * 
      */
     public FindUserListByParamResponse createFindUserListByParamResponse() {
         return new FindUserListByParamResponse();
+    }
+
+    /**
+     * Create an instance of {@link UpdateUserResponse }
+     * 
+     */
+    public UpdateUserResponse createUpdateUserResponse() {
+        return new UpdateUserResponse();
+    }
+
+    /**
+     * Create an instance of {@link FindUserListByParam }
+     * 
+     */
+    public FindUserListByParam createFindUserListByParam() {
+        return new FindUserListByParam();
     }
 
     /**
@@ -113,11 +123,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetUserDetailByUidResponse }
+     * Create an instance of {@link GetUserDetailByUid }
      * 
      */
-    public GetUserDetailByUidResponse createGetUserDetailByUidResponse() {
-        return new GetUserDetailByUidResponse();
+    public GetUserDetailByUid createGetUserDetailByUid() {
+        return new GetUserDetailByUid();
+    }
+
+    /**
+     * Create an instance of {@link GetDeptListResponse }
+     * 
+     */
+    public GetDeptListResponse createGetDeptListResponse() {
+        return new GetDeptListResponse();
     }
 
     /**
@@ -136,6 +154,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "getUserDetailByUid")
     public JAXBElement<GetUserDetailByUid> createGetUserDetailByUid(GetUserDetailByUid value) {
         return new JAXBElement<GetUserDetailByUid>(_GetUserDetailByUid_QNAME, GetUserDetailByUid.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateUser }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "updateUser")
+    public JAXBElement<UpdateUser> createUpdateUser(UpdateUser value) {
+        return new JAXBElement<UpdateUser>(_UpdateUser_QNAME, UpdateUser.class, null, value);
     }
 
     /**
@@ -163,6 +190,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findUserListByParam")
     public JAXBElement<FindUserListByParam> createFindUserListByParam(FindUserListByParam value) {
         return new JAXBElement<FindUserListByParam>(_FindUserListByParam_QNAME, FindUserListByParam.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateUserResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "updateUserResponse")
+    public JAXBElement<UpdateUserResponse> createUpdateUserResponse(UpdateUserResponse value) {
+        return new JAXBElement<UpdateUserResponse>(_UpdateUserResponse_QNAME, UpdateUserResponse.class, null, value);
     }
 
     /**

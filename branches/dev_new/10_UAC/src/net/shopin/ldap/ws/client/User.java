@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="cn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="departmentNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deptName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="displayName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="dn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="facsimileTelephoneNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="mail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlType;
     "cn",
     "departmentNumber",
     "deptName",
+    "displayName",
     "dn",
     "facsimileTelephoneNumber",
     "mail",
@@ -60,6 +62,7 @@ public class User {
     protected String cn;
     protected String departmentNumber;
     protected String deptName;
+    protected String displayName;
     protected String dn;
     protected String facsimileTelephoneNumber;
     protected String mail;
@@ -142,6 +145,30 @@ public class User {
      */
     public void setDeptName(String value) {
         this.deptName = value;
+    }
+
+    /**
+     * Gets the value of the displayName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    /**
+     * Sets the value of the displayName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDisplayName(String value) {
+        this.displayName = value;
     }
 
     /**

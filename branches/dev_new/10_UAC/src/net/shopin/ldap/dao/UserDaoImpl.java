@@ -58,23 +58,19 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		context.setAttributeValues("objectclass", new String[] { "top", "person","inetOrgPerson","organizationalPerson"});
 		context.setAttributeValue("uid", user.getUid());
-		//if(user.getPassword()!=null || !"".equals(user.getPassword()))context.setAttributeValue("userPassword", user.getPassword());
 		context.setAttributeValue("userPassword", user.getPassword()!=null && !"".equals(user.getPassword()) ? user.getPassword() : null);
-		//if(user.getCn()!=null || !"".equals(user.getCn()))context.setAttributeValue("cn", user.getCn());
-		context.setAttributeValue("cn", user.getCn()!=null && !"".equals(user.getCn()) ? user.getCn() : null);
-		//if(user.getSn()!=null || !"".equals(user.getSn()))context.setAttributeValue("sn", user.getSn());
-		context.setAttributeValue("sn", user.getSn()!=null && !"".equals(user.getSn()) ? user.getSn() : user.getCn());
-		//if(user.getDepartmentNumber()!=null || !"".equals(user.getDepartmentNumber()))context.setAttributeValue("departmentNumber", user.getDepartmentNumber());
+		context.setAttributeValue("cn", user.getCn());
+		context.setAttributeValue("sn", user.getSn());
+
+		context.setAttributeValue("displayName", user.getDisplayName());
+		context.setAttributeValue("givenName", user.getGivenName());
+		context.setAttributeValue("description", user.getDescription());
+		
 		context.setAttributeValue("departmentNumber", user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber()) ? user.getDepartmentNumber() : null);
-		//if(user.getTitle()!=null || !"".equals(user.getTitle()))context.setAttributeValue("title", user.getTitle());
 		context.setAttributeValue("title", user.getTitle()!=null && !"".equals(user.getTitle()) ? user.getTitle() : null);
-		//if(user.getTelephoneNumber()!=null || !"".equals(user.getTelephoneNumber()))context.setAttributeValue("telephoneNumber", user.getTelephoneNumber());
 		context.setAttributeValue("telephoneNumber", user.getTelephoneNumber()!=null && !"".equals(user.getTelephoneNumber()) ? user.getTelephoneNumber() : null);
-		//if(user.getMobile()!=null || !"".equals(user.getMobile()))context.setAttributeValue("mobile", user.getMobile());
 		context.setAttributeValue("mobile", user.getMobile()!=null && !"".equals(user.getMobile()) ? user.getMobile() : null);
-		//if(user.getMail()!=null || !"".equals(user.getMail()))context.setAttributeValue("mail", user.getMail());
 		context.setAttributeValue("mail", user.getMail()!=null && !"".equals(user.getMail()) ? user.getMail() : null);
-		//if(user.getFacsimileTelephoneNumber()!=null && !"".equals(user.getFacsimileTelephoneNumber()))context.setAttributeValue("facsimileTelephoneNumber", user.getFacsimileTelephoneNumber());
 		context.setAttributeValue("facsimileTelephoneNumber", user.getFacsimileTelephoneNumber()!=null && !"".equals(user.getFacsimileTelephoneNumber()) ? user.getFacsimileTelephoneNumber() : null);
 		context.setAttributeValue("photo", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
 	}
@@ -100,10 +96,6 @@ public class UserDaoImpl implements UserDao {
 				case 4 : userType="specialuser"; break;
 			}
 		}else{
-			//delete by awen for add userType specialuser on 2011-05-18 begin
-			//userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : "3");
-			//delete by awen for add userType specialuser on 2011-05-18 end
-			
 			//add by awen for add userType specialuser on 2011-05-18 begin
 			userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : (user.getDn().contains("ou=suppliers") ? "3" : "4"));
 			//add by awen for add userType specialuser on 2011-05-18 end
@@ -200,7 +192,9 @@ public class UserDaoImpl implements UserDao {
 			user.setTelephoneNumber(context.getStringAttribute("telephoneNumber"));
 			user.setMobile(context.getStringAttribute("mobile"));
 			user.setFacsimileTelephoneNumber(context.getStringAttribute("facsimileTelephoneNumber"));
-			
+			user.setDisplayName(context.getStringAttribute("displayName"));
+			user.setGivenName(context.getStringAttribute("givenName"));
+			user.setDescription(context.getStringAttribute("description"));
 			
 			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
 			user.setUserType(userType);
@@ -273,7 +267,9 @@ public class UserDaoImpl implements UserDao {
 			  		        
 			        String emailCell = null;
 			        String uidCell = null;
-			        String cnCell = null;
+			        String gnCell = null;
+			        String snCell = null;
+			        String displayNameCell = null;
 			        String deptCell = null;
 			        String telCell = null;
 			        String mobileCell = null;
@@ -284,20 +280,18 @@ public class UserDaoImpl implements UserDao {
 			        Object emailObj = getXSSFCellString(row.getCell((short)0));
 			        emailCell = emailObj !=null ? emailObj.toString().trim() : "";
 			        
-//			        Object uidObj = getXSSFCellString(row.getCell((short)1));
-//			        uidCell = uidObj !=null ? uidObj.toString().trim() : "";
-//			        //uid为空则不录入
-//			        if(uidCell==null||"".equals(uidCell)){
-//			        	rowMs += "Line: "+(rowIndex+1)+", uid IS EMPTY";
-//			        	msg += rowMs+"<br>";
-//			        	continue ;
-//			        }
 			        uidCell = emailCell.substring(0, emailCell.indexOf("@"));
 			        
-			        Object cnObj = getXSSFCellString(row.getCell((short)1));
-			        cnCell = cnObj !=null ? cnObj.toString().trim() : "";
+			        Object snObj = getXSSFCellString(row.getCell((short)1));
+			        snCell = snObj !=null ? snObj.toString().trim() : "";
 			        
-			        Object deptObj = getXSSFCellString(row.getCell((short)3));
+			        Object gnObj = getXSSFCellString(row.getCell((short)2));
+			        gnCell = gnObj !=null ? gnObj.toString().trim() : "";
+			        
+			        Object displayNameObj = getXSSFCellString(row.getCell((short)3));
+			        displayNameCell = displayNameObj !=null ? displayNameObj.toString().trim() : "";
+			        
+			        Object deptObj = getXSSFCellString(row.getCell((short)5));
 			        deptCell = deptObj !=null ? deptObj.toString().trim() : "";
 			        
 			        if(emailCell.length()>0 && !emailPattern.matcher(emailCell).matches()){
@@ -306,7 +300,7 @@ public class UserDaoImpl implements UserDao {
 			        	continue ;
 			        }
 			        
-			        Object telObj = getXSSFCellString(row.getCell((short)4));
+			        Object telObj = getXSSFCellString(row.getCell((short)6));
 			        telCell = telObj !=null ? telObj.toString().trim() : "";
 			        if(telCell.length()>0 && !simplePattern.matcher(telCell).matches()){
 			        	rowMs += "Line: "+(rowIndex+1)+", telephone is incorrect";
@@ -314,7 +308,7 @@ public class UserDaoImpl implements UserDao {
 			        	continue ;
 			        }
 			        
-			        Object mobileObj = getXSSFCellString(row.getCell((short)5));
+			        Object mobileObj = getXSSFCellString(row.getCell((short)7));
 			        mobileCell = mobileObj !=null ? mobileObj.toString().trim() : "";
 		        	if(mobileCell.length()>0 && !simplePattern.matcher(mobileCell).matches()){
 		        		rowMs += "Line: "+(rowIndex+1)+", mobile is incorrect";
@@ -322,7 +316,7 @@ public class UserDaoImpl implements UserDao {
 			        	continue ;
 			        }
 			        
-			        Object faxObj = getXSSFCellString(row.getCell((short)6));
+			        Object faxObj = getXSSFCellString(row.getCell((short)8));
 			        faxCell = faxObj !=null ? faxObj.toString().trim() : "";
 			        if(faxCell.length()>0 && !simplePattern.matcher(faxCell).matches()){
 			        	rowMs += "Line: "+(rowIndex+1)+", fax is incorrect";
@@ -330,10 +324,10 @@ public class UserDaoImpl implements UserDao {
 			        	continue ;
 			        }
 			        
-			        Object titleObj = getXSSFCellString(row.getCell((short)7));
+			        Object titleObj = getXSSFCellString(row.getCell((short)9));
 			        titleCell = titleObj !=null ? titleObj.toString().trim() : "";
 			        
-			        Object userTypeObj = getXSSFCellString(row.getCell((short)8));
+			        Object userTypeObj = getXSSFCellString(row.getCell((short)10));
 			        userTypeCell = userTypeObj !=null ? userTypeObj.toString() : "";
 			        userTypeCell = this.userTypeTrans(userTypeCell).trim();
 			        
@@ -341,8 +335,10 @@ public class UserDaoImpl implements UserDao {
 			            User user = new User();
 			            user.setUid(uidCell);
 			            user.setPassword("000000");
-			            user.setCn(cnCell);
-			            user.setSn(uidCell + "_" + cnCell);
+			            user.setCn(uidCell);
+			            user.setSn(snCell);
+			            user.setGivenName(gnCell);
+			            user.setDisplayName(displayNameCell);
 			            user.setMail(emailCell.trim());
 			            user.setDepartmentNumber(deptCell);
 			            user.setTelephoneNumber(telCell);

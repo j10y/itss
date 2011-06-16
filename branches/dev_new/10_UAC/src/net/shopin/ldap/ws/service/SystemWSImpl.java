@@ -75,4 +75,15 @@ public class SystemWSImpl implements SystemWS{
 		return depts;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.shopin.ldap.ws.service.SystemWS#updateUser(net.shopin.ldap.entity.User)
+	 */
+	@Override
+	public void updateUser(User user) {
+		// TODO Auto-generated method stub
+		 userDao.update(user);
+	}
+	
+	
+
 }

@@ -10,8 +10,11 @@ public class User  implements Serializable {
 	private String dn;//专有名称
 	private String uid;//uid
 	private String password;//
-	private String cn;//姓名
+	private String cn;//描述名
+	private String givenName;//名字
 	private String sn;//姓
+	private String displayName; //显示名称
+	private String description; //描述信息
 	private String departmentNumber;//部门编号
 	private String title;//职务
 	private String mail;//email
@@ -23,6 +26,13 @@ public class User  implements Serializable {
 	
 	private String deptName;//部门名称，为了展示方便
 	
+	public String getGivenName() {
+		return givenName;
+	}
+	
+	public void setGivenName(String givenName) {
+		this.givenName = givenName;
+	}
 	public String getDn() {
 		return dn;
 	}
@@ -52,6 +62,14 @@ public class User  implements Serializable {
 	}
 	public void setSn(String sn) {
 		this.sn = sn;
+	}
+		
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 	public String getDepartmentNumber() {
 		return departmentNumber;
@@ -108,7 +126,22 @@ public class User  implements Serializable {
 	}
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
+	}	
+	
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
 	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */

@@ -26,14 +26,17 @@ public interface SystemWSImpl {
 
     /**
      * 
+     * @param arg0
      * @return
-     *     returns java.util.List<net.shopin.ldap.ws.client.User>
+     *     returns net.shopin.ldap.ws.client.User
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "findUserList", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindUserList")
-    @ResponseWrapper(localName = "findUserListResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindUserListResponse")
-    public List<User> findUserList();
+    @RequestWrapper(localName = "getUserDetailByUid", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.GetUserDetailByUid")
+    @ResponseWrapper(localName = "getUserDetailByUidResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.GetUserDetailByUidResponse")
+    public User getUserDetailByUid(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
 
     /**
      * 
@@ -51,17 +54,14 @@ public interface SystemWSImpl {
 
     /**
      * 
-     * @param arg0
      * @return
-     *     returns net.shopin.ldap.ws.client.User
+     *     returns java.util.List<net.shopin.ldap.ws.client.User>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getUserDetailByUid", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.GetUserDetailByUid")
-    @ResponseWrapper(localName = "getUserDetailByUidResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.GetUserDetailByUidResponse")
-    public User getUserDetailByUid(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+    @RequestWrapper(localName = "findUserList", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindUserList")
+    @ResponseWrapper(localName = "findUserListResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindUserListResponse")
+    public List<User> findUserList();
 
     /**
      * 
@@ -73,5 +73,16 @@ public interface SystemWSImpl {
     @RequestWrapper(localName = "getDeptList", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.GetDeptList")
     @ResponseWrapper(localName = "getDeptListResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.GetDeptListResponse")
     public List<Department> getDeptList();
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "updateUser", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.UpdateUser")
+    @ResponseWrapper(localName = "updateUserResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.UpdateUserResponse")
+    public void updateUser(
+        @WebParam(name = "arg0", targetNamespace = "")
+        User arg0);
 
 }

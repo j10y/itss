@@ -121,7 +121,8 @@ public class LdapTreeServlet extends HttpServlet {
 					if(dnStr.indexOf("ou=")==0 || dnStr.indexOf("o=")==0){//orgnizationUnit or orgnization
 						desc = attributes.get("description") != null ? attributes.get("description").get(0).toString() : dnStr + " description 为空";
 					}else if(dnStr.indexOf("uid=")==0){//person
-						desc = attributes.get("cn") != null ? attributes.get("cn").get(0).toString() : dnStr + " common name 为空";
+//						desc = attributes.get("cn") != null ? attributes.get("cn").get(0).toString() : dnStr + " common name 为空";
+						desc = attributes.get("displayName") != null ? attributes.get("displayName").get(0).toString() : dnStr + " displayName 为空";
 					}
 					json.append("{");
 					json.append("id:'" + dnStr + "," + parentDN + "',");

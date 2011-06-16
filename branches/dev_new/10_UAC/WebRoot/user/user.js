@@ -44,12 +44,56 @@ var userPanel = new Ext.form.FormPanel({
 			xtype:"textfield"
 		},
 		{
-			allowBlank:false,
+			//allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"姓名",
+			fieldLabel:"姓",
 			labelStyle:"width:130",
 			maxLength:255,
-			name:"cn",
+			id:"sn",
+			name:"sn",
+			xtype:"textfield",
+			listeners : {
+				'keyup':function(field, event){
+					Ext.getCmp("displayName").setValue(Ext.getCmp("sn").getValue() + Ext.getCmp("givenName").getValue());
+				},
+				'change':function(field, event){
+					Ext.getCmp("displayName").setValue(Ext.getCmp("sn").getValue() + Ext.getCmp("givenName").getValue());
+				},
+				'blur':function(field, event){
+					Ext.getCmp("displayName").setValue(Ext.getCmp("sn").getValue() + Ext.getCmp("givenName").getValue());
+				}
+			}
+		},
+		{
+			allowBlank:false,
+			anchor:"50%",
+			fieldLabel:"名",
+			labelStyle:"width:130",
+			maxLength:255,
+			name:"givenName",
+			id:"givenName",
+			xtype:"textfield",
+			listeners : {
+				'keyup':function(field, event){
+					Ext.getCmp("displayName").setValue(Ext.getCmp("sn").getValue() + Ext.getCmp("givenName").getValue());
+				},
+				'change':function(field, event){
+					Ext.getCmp("displayName").setValue(Ext.getCmp("sn").getValue() + Ext.getCmp("givenName").getValue());
+				},
+				'blur':function(field, event){
+					Ext.getCmp("displayName").setValue(Ext.getCmp("sn").getValue() + Ext.getCmp("givenName").getValue());
+				}
+			}
+		},
+		{
+			readOnly:true,
+			anchor:"50%",
+			fieldLabel:"显示名称",
+			labelStyle:"width:130",
+			//emptyText : '显示名称默认由姓+名组成，可以修改',
+			maxLength:255,
+			name:"displayName",
+			id:"displayName",
 			xtype:"textfield"
 		},{
 			allowBlank:false,
@@ -120,15 +164,6 @@ var userPanel = new Ext.form.FormPanel({
 				}
 			}
 		},
-		/*{
-			//allowBlank:false,
-			anchor:"50%",
-			fieldLabel:"部门编号",
-			labelStyle:"width:130",
-			maxLength:255,
-			name:"departmentNumber",
-			xtype:"textfield"
-		},*/
 		{
 			//allowBlank:false,
 			anchor:"50%",
@@ -177,13 +212,11 @@ var userPanel = new Ext.form.FormPanel({
 		{
 			//allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"姓",
+			fieldLabel:"描述信息",
 			labelStyle:"width:130",
 			maxLength:255,
-			name:"sn",
-			xtype:"textfield",
-			hidden:true,
-			hideLabel:true
+			name:"description",
+			xtype:"textfield"
 		},
 		{
 			anchor:"50%",
@@ -193,8 +226,42 @@ var userPanel = new Ext.form.FormPanel({
 			name:"photo",
 			vtype:'jpegfile',
 			inputType:'file',
+			id:'photo',
 			xtype:"textfield"
-		},
+		},{
+			anchor:"50%",
+			text : '点击预览',
+			fieldLabel:"图片预览",
+			handler:function(){
+				var img = Ext.getCmp("photo").getValue();
+				var uid = Ext.getCmp("userPanel").form.getValues().uid;
+				var fex = img.substr(img.lastIndexOf("."));
+				if(img==""){
+					Ext.Msg.alert("提示", "请选择要上传的图片!");
+				}else{
+					//临时上传图片
+					document.getElementById("imgTarget").innerHTML="";
+					userPanel.form.submit({
+		                method: 'POST',
+		                url: webContext + '/user?methodCall=tempUpload',
+		                success: function(form, action) {
+			        		if(servletPath==="/user/userModify.jsp"){
+			        		}else{
+			        			document.getElementById("imgTarget").innerHTML="<IMG onerror='this.src=\""+ webContext +"/images/default.jpg\"' src='"+ webContext +"/images/userphoto/" + action.result.filePath +"'></IMG>";
+			        		}
+		                },
+		                failure : function(form, action) {
+							Ext.Msg.alert("提示", "修改失败！原因：\n" + action.result.msg);
+		                }
+		            });					
+				}
+			},
+			xtype:"button"
+		},{
+            id : 'browseImage',
+            fieldLabel : "预览图片",
+            html:'<div id="imgTarget"></div>'
+        },	
 		{
 			anchor:"50%",
 			//fieldLabel:"账号备份",
@@ -243,44 +310,13 @@ var userPanel = new Ext.form.FormPanel({
 									Ext.Msg.alert("提示", "添加失败！原因:\n" + action.result.msg);
 				                }
 				            });
-				            
-							/*Ext.Ajax.request({  
-						        url: webContext + '/user?methodCall=add', 
-						        params : {
-						        	dn : formValues.dn,
-						        	uid : formValues.uid,
-						        	password : formValues.password,
-						        	cn : formValues.cn,
-						        	sn : formValues.uid + '_' + formValues.cn,
-						        	departmentNumber : formValues.departmentNumber,
-						        	title : formValues.title,
-						        	mail : formValues.mail,
-						        	telephoneNumber : formValues.telephoneNumber,
-						        	mobile : formValues.mobile,
-						        	facsimileTelephoneNumber : formValues.facsimileTelephoneNumber,
-						        	userType : formValues.userType
-						        },
-						        async: false,
-						        method: 'POST',
-						        success: function(response, opts) {	
-						        	obj = Ext.util.JSON.decode(response.responseText);
-						        	if(obj.success){				         
-										Ext.Msg.alert("提示", "添加成功！");
-									}else{
-										Ext.Msg.alert("提示", "添加失败！原因:\n" + obj.msg);
-									}			         	
-						        },
-						        failure: function(response, opts) {
-						         	Ext.Msg.alert("提示", "添加失败！");
-						        }   
-						    });*/
 						}else{
 							Ext.Msg.alert("提示", "请检查您的输入！");
 						}
 					}
 				},
 				{
-					text:"修改",
+					text:"保存",
 					xtype:"button",
 					id:'btnUserModify',
 					handler : function(){
@@ -288,35 +324,8 @@ var userPanel = new Ext.form.FormPanel({
 							var formValues = Ext.getCmp("userPanel").form.getValues();
 							userPanel.form.submit({
 				                method: 'POST',
-				                url: webContext + '/user?methodCall=modify'
-				                	/*+ '&dn=' + formValues.dn
-				                	+ '&uid=' + formValues.uid
-				                	+ '&password=' + formValues.password
-				                	+ '&cn=' + formValues.cn
-				                	+ '&sn=' + formValues.uid + '_' + formValues.cn
-				                	+ '&departmentNumber=' + formValues.departmentNumber
-				                	+ '&title=' + formValues.title
-				                	+ '&mail=' + formValues.mail
-				                	+ '&telephoneNumber=' + formValues.telephoneNumber
-				                	+ '&mobile=' + formValues.mobile
-				                	+ '&facsimileTelephoneNumber=' + formValues.facsimileTelephoneNumber
-				                	+ '&userType=' + formValues.userType*/,
-				                /*params : {
-						        	dn : formValues.dn,
-						        	uid : formValues.uidCopy,
-						        	password : formValues.password,
-						        	cn : formValues.cn,
-						        	sn : formValues.uid + '_' + formValues.cn,
-						        	departmentNumber : formValues.departmentNumber,
-						        	title : formValues.title,
-						        	mail : formValues.mail,
-						        	telephoneNumber : formValues.telephoneNumber,
-						        	mobile : formValues.mobile,
-						        	facsimileTelephoneNumber : formValues.facsimileTelephoneNumber,
-						        	userType : formValues.userType
-						        },*/
+				                url: webContext + '/user?methodCall=modify',
 				                success: function(form, action) {
-									//Ext.Msg.alert("提示", "修改成功！");
 					        		if(servletPath==="/user/userModify.jsp"){
 					        			Ext.Msg.confirm("确认", "修改成功,是否关闭？", function(btn, text){
 					        				if(btn=="yes"){
@@ -353,42 +362,9 @@ var userPanel = new Ext.form.FormPanel({
 					        		}
 				                },
 				                failure : function(form, action) {
-									Ext.Msg.alert("提示", "修改失败！");
+									Ext.Msg.alert("提示", "修改失败！原因：\n" + action.result.msg);
 				                }
 				            });
-							
-							return ;
-							
-							Ext.Ajax.request({  
-						        url: webContext + '/user?methodCall=modify', 
-						        method: 'POST', 
-						        isUpload:true,
-						        params : {
-						        	dn : formValues.dn,
-						        	uid : formValues.uidCopy,
-						        	password : formValues.password,
-						        	cn : formValues.cn,
-						        	sn : formValues.uid + '_' + formValues.cn,
-						        	departmentNumber : formValues.departmentNumber,
-						        	title : formValues.title,
-						        	mail : formValues.mail,
-						        	telephoneNumber : formValues.telephoneNumber,
-						        	mobile : formValues.mobile,
-						        	facsimileTelephoneNumber : formValues.facsimileTelephoneNumber,
-						        	userType : formValues.userType,
-						        	photo: formValues.photo
-						        }, 
-						        async: false,  
-						        success: function(response, opts) {	
-						        	obj = Ext.util.JSON.decode(response.responseText);
-						        	if(obj.success){
-										Ext.Msg.alert("提示", "修改成功！");
-									}			         	
-						        },
-						        failure: function(response, opts) {
-						         	Ext.Msg.alert("提示", "修改失败！");
-						        }   
-						    });
 						}else{
 							Ext.Msg.alert("提示", "请检查您的输入！");
 						}

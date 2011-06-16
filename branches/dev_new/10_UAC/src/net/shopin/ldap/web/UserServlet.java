@@ -1,20 +1,23 @@
 package net.shopin.ldap.web;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.shopin.Constants;
 import net.shopin.ldap.dao.UserDao;
 import net.shopin.ldap.entity.User;
+import net.shopin.util.PropertiesUtil;
 import net.shopin.util.SpringContextUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -30,6 +33,9 @@ public class UserServlet extends HttpServlet {
 	
 	LdapTreeBuilder ldapTreeBuilder = (LdapTreeBuilder) SpringContextUtils.getBean("ldapTreeBuilder");
 	UserDao userDao = (UserDao) SpringContextUtils.getBean("userDao");
+	int imgWidth = new Integer(PropertiesUtil.getProperties("imgWidth", "128")).intValue();
+	int imgHeight = new Integer(PropertiesUtil.getProperties("imgHeight", "128")).intValue();
+	int imgSize = new Integer(PropertiesUtil.getProperties("imgHeight", "1024")).intValue();//1024kb
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -54,8 +60,11 @@ public class UserServlet extends HttpServlet {
 		user.setDn(req.getParameter("dn"));
 		user.setUid(req.getParameter("uid"));
 		user.setPassword(req.getParameter("password"));
-		user.setCn(req.getParameter("cn"));
+		user.setCn(req.getParameter("uid"));
 		user.setSn(req.getParameter("sn"));
+		user.setGivenName(req.getParameter("givenName"));
+		user.setDisplayName(req.getParameter("displayName"));
+		user.setDescription(req.getParameter("description"));
 		user.setDepartmentNumber(req.getParameter("departmentNumber"));
 		user.setTitle(req.getParameter("title"));
 		user.setMail(req.getParameter("mail"));
@@ -78,20 +87,94 @@ public class UserServlet extends HttpServlet {
 						String fileName = fi.getName();
 						if(fileName==null || "".equals(fileName)) break;
 						String suffix = fileName.substring(fileName.lastIndexOf("."));
-			            String systemFileName = "upload-" + System.currentTimeMillis() + suffix;
+			            String systemFileName = "upload-" + System.currentTimeMillis() + suffix;			            
+			            
 			            if(!methodCall.equalsIgnoreCase("import")){
 			            	//filePath = "../../../" + "userPhoto" + "/" + systemFileName;
-			            	filePath = Constants.USER_PHOTO_UPLOADPATH  + systemFileName;
+//			            	filePath = Constants.USER_PHOTO_UPLOADPATH  + systemFileName;
+			            	filePath = PropertiesUtil.getProperties("userPhotoUploadpath", "D:/data/userphoto/")  + systemFileName;
 			            }else{
 			            	//filePath = "../../../" + "upload" + "/" + systemFileName;	
-			            	filePath = Constants.USER_IMP_UPLOADPATH + systemFileName;	
+//			            	filePath = Constants.USER_IMP_UPLOADPATH + systemFileName;	
+			            	filePath = PropertiesUtil.getProperties("userImpUploadpath", "D:/data/upload/")  + systemFileName;	
 			            }
 			            
 			            //realPath = req.getSession().getServletContext().getRealPath("/") + filePath;
 			            realPath = filePath;
 			            File uploadedFile = new File(realPath);
-			            fi.write(uploadedFile);
-			            //FileInputStream fis = new FileInputStream(filePath);
+			            if(!methodCall.equalsIgnoreCase("import")){//上传肖像
+			            	BufferedImage img = ImageIO.read(fi.getInputStream());
+			            	int width = img.getWidth();
+				            int heigth = img.getHeight();
+				            if(width > imgWidth || heigth > imgHeight){
+				            	json = new StringBuffer("{success:false,msg:'请检查上传图片的分辨率是否为" + imgWidth + "*" + imgHeight + "!'}");
+				            	try {
+				        			resp.setContentType("text/html;charset=utf-8");
+				        			resp.setCharacterEncoding("utf-8");
+				        			PrintWriter pw = resp.getWriter();
+				        			pw.write(json.toString());
+				        		} catch (IOException e) {
+				        			e.printStackTrace();
+				        		}
+				        		return;
+				            }
+				            int size = fi.getInputStream().available();
+				            double kb = size/1024;
+				            if(kb > imgSize){
+				            	json = new StringBuffer("{success:false,msg:'请检查上传图片的大小，最大不能超过" + imgSize + "KB!'}");
+				            	try {
+				        			resp.setContentType("text/html;charset=utf-8");
+				        			resp.setCharacterEncoding("utf-8");
+				        			PrintWriter pw = resp.getWriter();
+				        			pw.write(json.toString());
+				        		} catch (IOException e) {
+				        			e.printStackTrace();
+				        		}
+				        		return;
+				            }
+				            
+				            if(methodCall.equalsIgnoreCase("tempUpload")){//临时上传
+				            	filePath = user.getUid() + "-" + System.currentTimeMillis() + suffix;
+				            	realPath = req.getSession().getServletContext().getRealPath("/") + "./images/userphoto/" + filePath;
+				            	File uf = new File(realPath);
+				            	final String fileNameFix = user.getUid() + "-";
+				            	
+				            	File dir = new File(req.getSession().getServletContext().getRealPath("/") + "./images/userphoto/");
+				            	String [] fileNames = dir.list(new FilenameFilter(){
+
+									/* (non-Javadoc)
+									 * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
+									 */
+									@Override
+									public boolean accept(File dir, String name) {
+										// TODO Auto-generated method stub
+										if(name.indexOf(fileNameFix)!=-1){
+											return true;
+										}
+										return false;
+									}});
+				            	
+				            	for(String name : fileNames){
+				            		File file = new File(req.getSession().getServletContext().getRealPath("/") + "./images/userphoto/" + name);
+				            		file.delete();
+				            	}
+				            	
+				            	fi.write(uf);
+				            	json = new StringBuffer().append("{success:true,filePath:'"+filePath+"'}");
+				            	try {
+				        			resp.setContentType("text/html;charset=utf-8");
+				        			resp.setCharacterEncoding("utf-8");
+				        			PrintWriter pw = resp.getWriter();
+				        			pw.write(json.toString());
+				        		} catch (IOException e) {
+				        			e.printStackTrace();
+				        		}
+				        		return;
+				            }
+				            
+			            }
+			            fi.write(uploadedFile);			            
+			            FileInputStream fis = new FileInputStream(filePath);
 					}else{
 						String name = fi.getFieldName();
 						String value = fi.getString();
@@ -101,6 +184,8 @@ public class UserServlet extends HttpServlet {
 					}
 				}
 			}
+			//修改cn为uid
+			user.setCn(user.getUid());
 		} catch (FileUploadException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -140,6 +225,9 @@ public class UserServlet extends HttpServlet {
 					.append(",password:'" + (userDetail.getPassword() != null ? userDetail.getPassword() : "") + "'")
 					.append(",cn:'" + (userDetail.getCn() != null ? userDetail.getCn() : "") + "'")
 					.append(",sn:'" + (userDetail.getSn() != null ? userDetail.getSn() : "") + "'")
+					.append(",givenName:'" + (userDetail.getGivenName() != null ? userDetail.getGivenName() : "") + "'")
+					.append(",displayName:'" + (userDetail.getDisplayName() != null ? userDetail.getDisplayName() : "") + "'")
+					.append(",description:'" + (userDetail.getDescription() != null ? userDetail.getDescription() : "") + "'")
 					.append(",departmentNumber:'" + (userDetail.getDepartmentNumber() != null ? userDetail.getDepartmentNumber() : "") + "'")
 					.append(",title:'" + (userDetail.getTitle() != null ? userDetail.getTitle() : "") + "'")
 					.append(",mail:'" + (userDetail.getMail() != null ? userDetail.getMail() : "") + "'")
@@ -159,6 +247,9 @@ public class UserServlet extends HttpServlet {
 					.append(",password:'" + (userDetail.getPassword() != null ? userDetail.getPassword() : "") + "'")
 					.append(",cn:'" + (userDetail.getCn() != null ? userDetail.getCn() : "") + "'")
 					.append(",sn:'" + (userDetail.getSn() != null ? userDetail.getSn() : "") + "'")
+					.append(",givenName:'" + (userDetail.getGivenName() != null ? userDetail.getGivenName() : "") + "'")
+					.append(",displayName:'" + (userDetail.getDisplayName() != null ? userDetail.getDisplayName() : "") + "'")
+					.append(",description:'" + (userDetail.getDescription() != null ? userDetail.getDescription() : "") + "'")
 					.append(",departmentNumber:'" + (userDetail.getDepartmentNumber() != null ? userDetail.getDepartmentNumber() : "") + "'")
 					.append(",title:'" + (userDetail.getTitle() != null ? userDetail.getTitle() : "") + "'")
 					.append(",mail:'" + (userDetail.getMail() != null ? userDetail.getMail() : "") + "'")

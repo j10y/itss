@@ -104,7 +104,7 @@ com.dc.ui.IndexPage = {
 	        },
 	        async: false,
 	        method: 'POST',
-	        success: function(response, opts) {	
+	        success: function(response, opts) {
 	        	obj = Ext.util.JSON.decode(response.responseText);
 	        	if(obj.success){
 	        		Ext.getCmp("userPanel").form.setValues(obj);
@@ -247,7 +247,7 @@ com.dc.ui.IndexPage = {
 							        	if(obj.success){
 							        		Ext.getCmp("userPanel").form.setValues(obj);
 							        		Ext.getCmp("uidCopy").setValue(obj.uid);
-							        									        		
+							        		alert(response.responseText);					        		
 							        		Ext.getCmp("departmentNumber1").setValue(obj.deptNo);
 							        		Ext.getCmp("departmentNumber1").setRawValue(obj.deptName);
 							        									        		

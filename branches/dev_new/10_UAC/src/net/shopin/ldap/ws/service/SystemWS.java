@@ -40,5 +40,12 @@ public interface SystemWS {
 	 * @return
 	 */
 	List<Department> getDeptList();
+	
+	/**
+	 * 修改用户信息
+	 * @param user
+	 * @return
+	 */
+	void updateUser(User user);
 
 }
