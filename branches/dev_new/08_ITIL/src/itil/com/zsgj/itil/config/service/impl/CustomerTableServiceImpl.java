@@ -386,7 +386,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 				String otherInfo=getCellStringValue(row.getCell(num++));//其他信息
 				if(childType.length()==0||childCode.length()==0||
 				   parentType.length()==0||parentCode.length()==0){
-					System.out.println("=================导入到第 " + i+ " 行=================失败================缺少必要数据");
+					System.out.println("=================导入到第 " + i+ " 行"+parentType+","+parentCode+","+childType+","+childCode+","+relationShipType+","+relationShipGrade+"=================失败================缺少必要数据");
 					continue;
 				}
 				CIRelationShip cir=new CIRelationShip();
@@ -397,7 +397,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 										.add(Restrictions.eq("deleteFlag", ServiceItem.DELETE_FALSE))
 										.uniqueResult();
 						if(si==null){
-							System.out.println("=================导入到第 " + i+ " 行=================失败================父服务项不存在");
+							System.out.println("=================导入到第 " + i+ " 行"+parentType+","+parentCode+","+childType+","+childCode+","+relationShipType+","+relationShipGrade+"=================失败================父服务项不存在");
 							continue;
 						}
 						cir.setParentServiceItemCode(si.getServiceItemCode());
@@ -408,7 +408,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 						               .add(Restrictions.eq("status", ConfigItem.VALID_STATUS))
 						               .uniqueResult();
 						if(ci==null){
-							System.out.println("=================导入到第 " + i+ " 行=================失败================父配置项不存在");
+							System.out.println("=================导入到第 " + i+ " 行"+parentType+","+parentCode+","+childType+","+childCode+","+relationShipType+","+relationShipGrade+"=================失败================父配置项不存在");
 							continue;
 						}
 						cir.setParentConfigItemCode(ci.getCisn());
@@ -422,7 +422,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 									.add(Restrictions.eq("deleteFlag", ServiceItem.DELETE_FALSE))
 									.uniqueResult();
 					if(si==null){
-						System.out.println("=================导入到第 " + i+ " 行=================失败================子服务项不存在");
+						System.out.println("=================导入到第 " + i+ " 行"+parentType+","+parentCode+","+childType+","+childCode+","+relationShipType+","+relationShipGrade+"=================失败================子服务项不存在");
 						continue;
 					}
 					cir.setChildServiceItemCode(si.getServiceItemCode());
@@ -433,7 +433,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 					               .add(Restrictions.eq("status", ConfigItem.VALID_STATUS))
 					               .uniqueResult();
 					if(ci==null){
-						System.out.println("=================导入到第 " + i+ " 行=================失败================子配置项不存在");
+						System.out.println("=================导入到第 " + i+ " 行"+parentType+","+parentCode+","+childType+","+childCode+","+relationShipType+","+relationShipGrade+"=================失败================子配置项不存在");
 						continue;
 					}
 					cir.setChildConfigItemCode(ci.getCisn());
@@ -490,7 +490,7 @@ public class CustomerTableServiceImpl extends BaseDao implements CustomerTableSe
 					flush();
 					clear();
 				}
-				System.out.println("=================导入到第 " + i+ " 行=================成功================"+update);
+				System.out.println("=================导入到第 " + i+ " 行"+parentType+","+parentCode+","+childType+","+childCode+","+relationShipType+","+relationShipGrade+"=================成功================"+update);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				System.out.println("=================导入到第 " + i+ " 行=================失败================异常"+ex.getMessage());
