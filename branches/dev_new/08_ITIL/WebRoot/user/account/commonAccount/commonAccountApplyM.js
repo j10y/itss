@@ -929,7 +929,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 				name : 'itil_ac_PersonFormalAccount$accountName',
 				style : 'color:red',
 				width : 200,
-				emptyText:'帐号名',
+				emptyText:'默认为用户名',
 				value : '',
 				allowBlank : false,
 				validator : '',
