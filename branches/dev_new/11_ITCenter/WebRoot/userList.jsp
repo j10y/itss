@@ -68,6 +68,7 @@
 	     				+ "<TR><TD align='right' style='font-family: 宋体; font-size: 14px; color: black;'>电子邮箱：</TD><TD colspan='3' style='font-family: 宋体; font-size: 13px; color: #666666;'>" + dataObj.mail + "</TD></TR>"
 	     				+ "<TR><TD align='right' style='font-family: 宋体; font-size: 14px; color: black;'>座机：</TD><TD colspan='3' style='font-family: 宋体; font-size: 13px; color: #666666;'>" + dataObj.mobile + "</TD></TR>"
 	     				+ "<TR><TD align='right' style='font-family: 宋体; font-size: 14px; color: black;'>手机：</TD><TD colspan='3' style='font-family: 宋体; font-size: 13px; color: #666666;'>" + dataObj.telephoneNumber + "</TD></TR>"
+	     				+ "<TR><TD align='right' style='font-family: 宋体; font-size: 14px; color: black;height:30px;''>描述：</TD><TD colspan='3' style='font-family: 宋体; font-size: 13px; color: #666666;'>" + dataObj.description + "</TD></TR>"
 	     				+ "</TABLE>";
 	     			//document.getElementById("pop-div-content").innerHTML = htmlContent;
 					$("#pop-div-title").html("<font color=\"white\">" + dataObj.cn + "的基本信息"+"</font>");
@@ -103,7 +104,7 @@
 		<table width="940" align="center" cellpadding="0" cellspacing="0"
 			border="0">
 			<tr>
-				<div id='pop-div' style="width: 400px; height: 270px"
+				<div id='pop-div' style="width: 400px; height: 320px"
 					class="pop-box">
 					<div id="pop-div-title" class=".pop-box">
 						标题位置
@@ -197,7 +198,7 @@
 											}</a>
 									</td>
 									<td>
-										${user.cn }&nbsp;
+										${user.displayName }&nbsp;
 									</td>
 									<td>
 										${user.deptName }&nbsp;

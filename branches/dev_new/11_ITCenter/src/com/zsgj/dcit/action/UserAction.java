@@ -30,6 +30,8 @@ public class UserAction extends ActionSupport {
 
 	public static final String RESULTKEY = "RESULT_KEY";
 	
+	public static final String lineSeparator = System.getProperty("line.separator");
+	
 	/**
 	 * 通过用户uid查询用户详细信息
 	 */
@@ -66,6 +68,8 @@ public class UserAction extends ActionSupport {
 		StringBuffer json = new StringBuffer("{success:true,");
 		json.append("dn:'" + user.getDn() + "',");
 		json.append("uid:'" + user.getUid() + "',");
+		json.append("displayName:'" + user.getDisplayName() + "',");
+		json.append("description:'" + user.getDescription() + "',");
 		json.append("deptName:'" + (user.getDeptName()!=null ? user.getDeptName() : "") + "',");
 		json.append("password:'" + (user.getPassword()!=null ? user.getPassword() : "") + "',");
 		json.append("cn:'" + user.getCn() + "',");
@@ -80,6 +84,7 @@ public class UserAction extends ActionSupport {
 		Writer out = null;
 		try {
 			out = response.getWriter();
+//			out.write(json.toString().replaceAll(lineSeparator, "<br/>"));			
 			out.write(json.toString());			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
