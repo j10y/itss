@@ -76,10 +76,7 @@ $(function() {
          <td height="25" align="right" bgcolor="#FAF9FE">出生日期：</td>
          <td bgcolor="#FFFFFF"><input type="text" name="birthday" value="${(user.birthday?string('yyyy-MM-dd'))!}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/></td>
        </tr>
-       <tr>
-         <td height="25" align="right" bgcolor="#FAF9FE">自我介绍：</td>
-         <td bgcolor="#FFFFFF"><input type="text" name="intro" value="${user.intro!?html}" maxlength="255"/></td>
-       </tr>  
+         
        <!-- 暂时去掉，本部分默认为部门 
        <tr>
          <td height="25" align="right" bgcolor="#FAF9FE">来自：</td>
@@ -102,7 +99,11 @@ $(function() {
        <tr>
          <td height="25" align="right" bgcolor="#FAF9FE">手机：</td>
          <td bgcolor="#FFFFFF"><input type="text" name="moble" value="${user.moble!?html}" maxlength="50"/></td>
-       </tr>   
+       </tr>  
+       <tr>
+         <td height="25" align="right" bgcolor="#FAF9FE">自我介绍：</td>
+         <td bgcolor="#FFFFFF"><input type="text" name="intro" value="${user.intro!?html}" maxlength="255"/></td>
+       </tr> 
        <tr>
          <td height="25" colspan="2" align="center" bgcolor="#FAF9FE">
 		    <input type="hidden" name="nextUrl" value="profile.jspx"/>

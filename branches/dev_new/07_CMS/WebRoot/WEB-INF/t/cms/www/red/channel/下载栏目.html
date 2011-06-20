@@ -57,7 +57,7 @@
     </div>
     <div class="rb_right_div">
       <!--最新下载_Begin-->
-      <div class="w98"> [@cms_content_list channelId='38' count='4' titLen='10' channelOption='1']
+      <div class="w98"> [@cms_content_list channelId='9' count='4' titLen='10' channelOption='1']
         <ul class="list right_pic">
           [#list tag_list as d]
           <li><a href="${d.url}" target="_blank"><img src="${d.contentImg!site.defImg}" alt="${d.title}" /></a><a href="${d.url}" title="${d.title}" target="_blank">[@text_cut s=d.stit len=titLen append=append/]</a></li>
@@ -69,7 +69,7 @@
       <h2><span>本周热门下载排行</span></h2>
       <div class="w98">
         <ul class="order">
-          [@cms_content_list channelId='38' count='10' titLen='15' orderBy='7' channelOption='1']
+          [@cms_content_list channelId='9' count='10' titLen='15' orderBy='7' channelOption='1']
           [#list tag_list as a]
           <li><a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen append=append/]</a></li>
           [/#list]
