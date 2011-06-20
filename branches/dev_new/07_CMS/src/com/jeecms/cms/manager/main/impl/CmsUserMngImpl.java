@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import net.shopin.ldap.ws.client.SystemWSImpl;
+import net.shopin.ldap.ws.client.SystemWSImplService;
+import net.shopin.ldap.ws.client.User;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,7 +119,15 @@ public class CmsUserMngImpl implements CmsUserMng {
 		} else {
 			user.setEmail(null);
 		}
+		//同步更新Ldap用户信息		
+		SystemWSImpl port = SystemWSImplService.getPort("http://172.16.100.173:8081/uac/services/sysService?wsdl");
+		User ldapUser = port.getUserDetailByUid(user.getUsername());
+		ldapUser.setPassword(password);
+		ldapUser.setMail(user.getEmail());
+		port.updateUser(ldapUser);
+		
 		unifiedUserMng.update(id, password, email);
+		
 	}
 
 	public CmsUser saveAdmin(String username, String email, String password,

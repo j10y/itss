@@ -1,5 +1,9 @@
 package com.jeecms.cms.manager.main.impl;
 
+import net.shopin.ldap.ws.client.SystemWSImpl;
+import net.shopin.ldap.ws.client.SystemWSImplService;
+import net.shopin.ldap.ws.client.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +29,7 @@ public class CmsUserExtMngImpl implements CmsUserExtMng {
 		if (entity == null) {
 			entity = save(ext, user);
 			user.getUserExtSet().add(entity);
+			updateLdap(user);
 			return entity;
 		} else {
 			Updater<CmsUserExt> updater = new Updater<CmsUserExt>(ext);
@@ -32,7 +37,23 @@ public class CmsUserExtMngImpl implements CmsUserExtMng {
 			updater.include("birthday");
 			ext = dao.updateByUpdater(updater);
 			ext.blankToNull();
+			updateLdap(user);
 			return ext;
+		}
+	}
+	
+	private void updateLdap(CmsUser user){
+		try{
+			SystemWSImpl port = SystemWSImplService.getPort("http://172.16.100.173:8081/uac/services/sysService?wsdl");
+			User ldapUser = port.getUserDetailByUid(user.getUsername());
+			ldapUser.setDisplayName(user.getRealname());
+			ldapUser.setTelephoneNumber(user.getPhone());
+			ldapUser.setMobile(user.getMoble());
+			ldapUser.setDescription(user.getIntro());
+			
+			port.updateUser(ldapUser);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
