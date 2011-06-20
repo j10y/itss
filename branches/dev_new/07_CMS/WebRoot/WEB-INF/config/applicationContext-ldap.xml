@@ -9,7 +9,7 @@
 
 	<bean id="contextSource"
 		class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
-		<constructor-arg value="ldap://172.16.100.173:10389/" />
+		<constructor-arg value="ldap://172.16.103.165:10389/" />
 		<property name="userDn" value="uid=admin,ou=system" />
 		<property name="password" value="secret" />
 	</bean>

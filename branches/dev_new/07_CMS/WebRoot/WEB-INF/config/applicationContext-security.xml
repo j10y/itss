@@ -13,7 +13,6 @@
        <!--不会对swf做出限制，允许随意引用，但是如果想预定时候，则需要登陆-->
 	
 		<sec:intercept-url pattern="/login.jspx**" access="AUTH_LOGIN" />
-		<sec:logout/>
 		<sec:anonymous granted-authority="AUTH_ANONYMOUS" />
 		
 		<sec:custom-filter after="CAS_FILTER" ref="casProcessingFilter"/>
