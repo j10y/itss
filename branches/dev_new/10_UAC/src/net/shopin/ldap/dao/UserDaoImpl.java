@@ -64,7 +64,7 @@ public class UserDaoImpl implements UserDao {
 
 		context.setAttributeValue("displayName", user.getDisplayName());
 		context.setAttributeValue("givenName", user.getGivenName());
-		context.setAttributeValue("description", user.getDescription());
+		context.setAttributeValue("description", user.getDescription()!=null && !"".equals(user.getDescription())? user.getDescription():null);
 		
 		context.setAttributeValue("departmentNumber", user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber()) ? user.getDepartmentNumber() : null);
 		context.setAttributeValue("title", user.getTitle()!=null && !"".equals(user.getTitle()) ? user.getTitle() : null);
@@ -487,9 +487,9 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
-			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*))";
+			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 		}else{
-			filter="(|(uid=*)(cn=*)(title=*))";
+			filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
 		}
 		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
 

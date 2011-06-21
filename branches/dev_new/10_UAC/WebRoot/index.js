@@ -109,9 +109,11 @@ com.dc.ui.IndexPage = {
 	        	if(obj.success){
 	        		Ext.getCmp("userPanel").form.setValues(obj);
 	        		Ext.getCmp("uidCopy").setValue(obj.uid);
-	        		
 	        		Ext.getCmp("departmentNumber1").setValue(obj.deptNo);
 	        		Ext.getCmp("departmentNumber1").setRawValue(obj.deptName);
+	        		if(currentUser!='admin'){
+	        			Ext.getCmp("userTypeCombo").setReadOnly(true);
+	        		}
 				}			         	
 	        },
 	        failure: function(response, opts) {
@@ -246,16 +248,17 @@ com.dc.ui.IndexPage = {
 							        	obj = Ext.util.JSON.decode(response.responseText);
 							        	if(obj.success){
 							        		Ext.getCmp("userPanel").form.setValues(obj);
-							        		Ext.getCmp("uidCopy").setValue(obj.uid);
-							        		alert(response.responseText);					        		
+							        		Ext.getCmp("uidCopy").setValue(obj.uid);				        		
 							        		Ext.getCmp("departmentNumber1").setValue(obj.deptNo);
 							        		Ext.getCmp("departmentNumber1").setRawValue(obj.deptName);
 							        									        		
 							        		//如果非管理员查看非本人信息的话，隐藏修改按钮
 							        		if(currentUser!='admin'){
+							        			Ext.getCmp("userTypeCombo").setReadOnly(true);
 							        			if(obj.uid != currentUser){
 							        				Ext.getCmp("btnUserModify").setVisible(false);
 							        				Ext.getCmp("userPanel").setTitle(obj.uid + "基本信息");
+							        				Ext.getCmp("userTypeCombo").setReadOnly(true);
 							        			}else{							        				
 								        			Ext.getCmp("userPanel").setTitle("个人基本信息");
 								        			Ext.getCmp("btnUserModify").setVisible(true);

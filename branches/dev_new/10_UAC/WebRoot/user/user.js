@@ -96,6 +96,7 @@ var userPanel = new Ext.form.FormPanel({
 			id:"displayName",
 			xtype:"textfield"
 		},{
+			//readOnly:true,
 			allowBlank:false,
 			anchor:"50%",
 			fieldLabel:"人员类型",
@@ -105,6 +106,7 @@ var userPanel = new Ext.form.FormPanel({
 			displayField:'value',
 			hiddenName:'userType',
 			valueField:'id',
+			id : 'userTypeCombo',
 			store : new Ext.data.SimpleStore({
 				fields:['id','value'],
 				data:[[1, '员工'],[2, '客户'],[3, '供应商'],[4,'特殊用户']]
@@ -245,10 +247,11 @@ var userPanel = new Ext.form.FormPanel({
 		                method: 'POST',
 		                url: webContext + '/user?methodCall=tempUpload',
 		                success: function(form, action) {
-			        		if(servletPath==="/user/userModify.jsp"){
-			        		}else{
+			        		//if(servletPath==="/user/userModify.jsp"){
+			        			
+			        		//}else{
 			        			document.getElementById("imgTarget").innerHTML="<IMG onerror='this.src=\""+ webContext +"/images/default.jpg\"' src='"+ webContext +"/images/userphoto/" + action.result.filePath +"'></IMG>";
-			        		}
+			        		//}
 		                },
 		                failure : function(form, action) {
 							Ext.Msg.alert("提示", "修改失败！原因：\n" + action.result.msg);
@@ -322,10 +325,12 @@ var userPanel = new Ext.form.FormPanel({
 					handler : function(){
 						if(Ext.getCmp("userPanel").form.isValid()){
 							var formValues = Ext.getCmp("userPanel").form.getValues();
+							Ext.getCmp("btnUserModify").disable();
 							userPanel.form.submit({
 				                method: 'POST',
 				                url: webContext + '/user?methodCall=modify',
 				                success: function(form, action) {
+				                	Ext.getCmp("btnUserModify").enable();
 					        		if(servletPath==="/user/userModify.jsp"){
 					        			Ext.Msg.confirm("确认", "修改成功,是否关闭？", function(btn, text){
 					        				if(btn=="yes"){
@@ -362,6 +367,7 @@ var userPanel = new Ext.form.FormPanel({
 					        		}
 				                },
 				                failure : function(form, action) {
+				                	Ext.getCmp("btnUserModify").enable();
 									Ext.Msg.alert("提示", "修改失败！原因：\n" + action.result.msg);
 				                }
 				            });

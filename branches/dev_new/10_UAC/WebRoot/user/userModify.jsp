@@ -15,6 +15,7 @@
 	<script type="text/javascript">
 		var panels = [];
 		var servletPath = "${SERVLETPATH}"; 
+		var currentUser = '${currentUser }';
 	</script>
 	<script type="text/javascript" src="<c:url value="/user/user.js"/>" ></script>
     <SCRIPT SRC="<c:url value="/js/stcookie.js"/>" language="JavaScript1.1"></SCRIPT>
@@ -53,13 +54,13 @@
 				layout : 'fit',
 				items : [Ext.getCmp("userPanel")]
 			});
-		viewport.doLayout();					        		
+		viewport.doLayout();					     
    		Ext.getCmp("departmentNumber1").setValue(obj.deptNo);
    		Ext.getCmp("departmentNumber1").setRawValue(obj.deptName);
+   		Ext.getCmp("userTypeCombo").setReadOnly(true);
     });
 	</script>
 </head>
 <body>
-
 </body>
 </html>
