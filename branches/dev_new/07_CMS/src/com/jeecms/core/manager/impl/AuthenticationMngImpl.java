@@ -25,6 +25,7 @@ import com.jeecms.core.entity.Authentication;
 import com.jeecms.core.entity.UnifiedUser;
 import com.jeecms.core.manager.AuthenticationMng;
 import com.jeecms.core.manager.UnifiedUserMng;
+import com.jeecms.core.web.PropertiesUtil;
 
 @Service
 @Transactional
@@ -56,18 +57,22 @@ public class AuthenticationMngImpl implements AuthenticationMng {
 		String loginType = request.getAttribute("loginType") != null ? String.valueOf(request.getAttribute("loginType")) 
 						: (request.getParameter("loginType") != null ? request.getParameter("loginType") : null);
 		try{
-			//兼容Ldap
+			//如果是前台Cas登录则直接登录，因为已经由拦截器完成鉴权
 			if(loginType != null && !"".equalsIgnoreCase(loginType)){
-				
 				user = unifiedUserMng.getByUsername(username);
 				unifiedUserMng.updateLoginInfo(user.getId(),ip);
 			}else{
-				//原本的数据库登录
-//				UnifiedUser user = unifiedUserMng.login(username, password, ip);
-				UsernamePasswordAuthenticationToken authLdap = new UsernamePasswordAuthenticationToken(username, password);
-				org.springframework.security.core.Authentication result = ldap.authenticate(authLdap);
-				user = unifiedUserMng.getByUsername(result.getName().toString());
-				unifiedUserMng.updateLoginInfo(user.getId(),ip);
+				//被注释掉的原本的数据库登录
+				boolean isLdap = new Boolean(PropertiesUtil.getProperties("system.security.auth.isldap","false")).booleanValue();
+				if(isLdap){
+					UsernamePasswordAuthenticationToken authLdap = new UsernamePasswordAuthenticationToken(username, password);
+					org.springframework.security.core.Authentication result = ldap.authenticate(authLdap);
+					user = unifiedUserMng.getByUsername(result.getName().toString());
+					unifiedUserMng.updateLoginInfo(user.getId(),ip);
+				}else{
+					user = unifiedUserMng.login(username, password, ip);
+				}				
+				
 			}
 			
 			auth = new Authentication();

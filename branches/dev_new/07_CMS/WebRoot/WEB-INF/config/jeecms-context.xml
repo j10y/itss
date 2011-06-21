@@ -11,6 +11,13 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>appset</value>
+			</list>
+		</property>
+	</bean>
 	<!--标签-->
 	<bean id="cms_pagination" class="com.jeecms.cms.action.directive.PaginationDirective"/>
 	<bean id="cms_channel_list" class="com.jeecms.cms.action.directive.ChannelListDirective"/>
