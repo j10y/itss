@@ -11,6 +11,14 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
   <title>欢迎使用统一用户管理系统</title>
+  	<style type="text/css">
+  		.uac-top{
+        	background-image:url(${pageContext.request.contextPath}/images/banner.jpg);
+        	background-color:#eff0e8;
+	    	background-repeat:no-repeat;
+	    	height:105px;
+	    }
+  	</style>
 	<%@include file="/includefiles.jsp"%>
 	<script type="text/javascript">
 		var panels = [];
@@ -49,12 +57,13 @@
 	         	Ext.Msg.alert("提示", "DN为：" + dn + "的用户信息获取失败！");
 	        }   
 	    });	
-	    var viewport = new Ext.Viewport({
+	    Ext.getCmp("userPanel").render("content");
+	    /*var viewport = new Ext.Viewport({
 				id:'mainViewport',
 				layout : 'fit',
 				items : [Ext.getCmp("userPanel")]
 			});
-		viewport.doLayout();					     
+		viewport.doLayout();*/					     
    		Ext.getCmp("departmentNumber1").setValue(obj.deptNo);
    		Ext.getCmp("departmentNumber1").setRawValue(obj.deptName);
    		Ext.getCmp("userTypeCombo").setReadOnly(true);
@@ -62,5 +71,7 @@
 	</script>
 </head>
 <body>
+<div id="banner" class="uac-top"></div>
+<div id="content"></div>
 </body>
 </html>

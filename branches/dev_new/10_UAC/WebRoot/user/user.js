@@ -26,7 +26,7 @@ var userPanel = new Ext.form.FormPanel({
 			id:'userUid',
 			allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"账号",
+			fieldLabel:"账号<font color='red'>*</font>",
 			labelStyle:"width:130",
 			maxLength:64,
 			name:"uid",
@@ -35,7 +35,7 @@ var userPanel = new Ext.form.FormPanel({
 		{
 			allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"密码",
+			fieldLabel:"密码<font color='red'>*</font>",
 			labelStyle:"width:130",
 			maxLength:64,
 			name:"password",
@@ -46,7 +46,7 @@ var userPanel = new Ext.form.FormPanel({
 		{
 			//allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"姓",
+			fieldLabel:"姓<font color='red'>*</font>",
 			labelStyle:"width:130",
 			maxLength:255,
 			id:"sn",
@@ -67,7 +67,7 @@ var userPanel = new Ext.form.FormPanel({
 		{
 			allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"名",
+			fieldLabel:"名<font color='red'>*</font>",
 			labelStyle:"width:130",
 			maxLength:255,
 			name:"givenName",
@@ -99,7 +99,7 @@ var userPanel = new Ext.form.FormPanel({
 			//readOnly:true,
 			allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"人员类型",
+			fieldLabel:"人员类型<font color='red'>*</font>",
 			labelStyle:"width:130",
 			maxLength:255,
 			name:"userType",
@@ -178,7 +178,7 @@ var userPanel = new Ext.form.FormPanel({
 		{
 			allowBlank:false,
 			anchor:"50%",
-			fieldLabel:"邮箱",
+			fieldLabel:"邮箱<font color='red'>*</font>",
 			labelStyle:"width:130",
 			maxLength:255,
 			name:"mail",
