@@ -22,7 +22,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends ActionSupport {
 	
-	public static final String urlStr = "http://localhost:8081/uac/services/sysService?wsdl";
+	public static final String urlStr = "http://172.16.103.165/uac/services/sysService?wsdl";
 	
 	public static final SystemWSImpl port = SystemWSImplService.getPort(urlStr);
 	
