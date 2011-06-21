@@ -19,12 +19,13 @@ import net.shopin.ldap.ws.client.User;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.zsgj.dcit.util.PropertiesUtil;
 
 public class UserAction extends ActionSupport {
 	
 	public static final String urlStr = "http://172.16.103.165/uac/services/sysService?wsdl";
 	
-	public static final SystemWSImpl port = SystemWSImplService.getPort(urlStr);
+	public static final SystemWSImpl port = SystemWSImplService.getPort(PropertiesUtil.getProperties("uac.wsdl", urlStr));
 	
 	public static final int pageSize = 20;
 
