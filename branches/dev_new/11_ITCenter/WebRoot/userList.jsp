@@ -236,12 +236,12 @@
 
 					<c:if test="${currentPage!=1}">
 						<c:url var="first"
-							value="${pageContext.request.contextPath}/userAction_getUserListByParam.action?firstFlag=0">
+							value="/userAction_getUserListByParam.action?firstFlag=0">
 							<c:param name="currentPage" value="1" />
 							<c:param name="firstFlag" value="0" />
 						</c:url>
 						<c:url var="previous"
-							value="${pageContext.request.contextPath}/userAction_getUserListByParam.action?firstFlag=0">
+							value="/userAction_getUserListByParam.action?firstFlag=0">
 							<c:param name="currentPage" value="${currentPage-1}" />
 							<c:param name="firstFlag" value="0" />
 						</c:url>
@@ -251,12 +251,12 @@
 
 					<c:if test="${currentPage<totalPage}">
 						<c:url var="next"
-							value="${pageContext.request.contextPath}/userAction_getUserListByParam.action?firstFlag=0">
+							value="/userAction_getUserListByParam.action?firstFlag=0">
 							<c:param name="currentPage" value="${currentPage+1}" />
 							<c:param name="firstFlag" value="0" />
 						</c:url>
 						<c:url var="last"
-							value="${pageContext.request.contextPath}/userAction_getUserListByParam.action?firstFlag=0">
+							value="/userAction_getUserListByParam.action?firstFlag=0">
 							<c:param name="currentPage" value="${totalPage}" />
 							<c:param name="firstFlag" value="0" />
 						</c:url>

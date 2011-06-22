@@ -70,7 +70,7 @@ public class UserAction extends ActionSupport {
 		json.append("dn:'" + user.getDn() + "',");
 		json.append("uid:'" + user.getUid() + "',");
 		json.append("displayName:'" + user.getDisplayName() + "',");
-		json.append("description:'" + user.getDescription() + "',");
+		json.append("description:'" + (user.getDescription() != null ? user.getDescription() : "" ) + "',");
 		json.append("deptName:'" + (user.getDeptName()!=null ? user.getDeptName() : "") + "',");
 		json.append("password:'" + (user.getPassword()!=null ? user.getPassword() : "") + "',");
 		json.append("cn:'" + user.getCn() + "',");
