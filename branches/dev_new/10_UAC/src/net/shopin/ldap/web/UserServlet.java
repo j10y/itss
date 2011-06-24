@@ -1,5 +1,7 @@
 package net.shopin.ldap.web;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -90,23 +92,21 @@ public class UserServlet extends HttpServlet {
 			            String systemFileName = "upload-" + System.currentTimeMillis() + suffix;			            
 			            
 			            if(!methodCall.equalsIgnoreCase("import")){
-			            	//filePath = "../../../" + "userPhoto" + "/" + systemFileName;
-//			            	filePath = Constants.USER_PHOTO_UPLOADPATH  + systemFileName;
 			            	filePath = PropertiesUtil.getProperties("userPhotoUploadpath", "D:/data/userphoto/")  + systemFileName;
-			            }else{
-			            	//filePath = "../../../" + "upload" + "/" + systemFileName;	
-//			            	filePath = Constants.USER_IMP_UPLOADPATH + systemFileName;	
+			            }else{//用户信息导入
 			            	filePath = PropertiesUtil.getProperties("userImpUploadpath", "D:/data/upload/")  + systemFileName;	
 			            }
 			            
 			            //realPath = req.getSession().getServletContext().getRealPath("/") + filePath;
 			            realPath = filePath;
 			            File uploadedFile = new File(realPath);
+			            
+			            
 			            if(!methodCall.equalsIgnoreCase("import")){//上传肖像
 			            	BufferedImage img = ImageIO.read(fi.getInputStream());
 			            	int width = img.getWidth();
 				            int heigth = img.getHeight();
-				            if(width > imgWidth || heigth > imgHeight){
+				            /*if(width > imgWidth || heigth > imgHeight){
 				            	json = new StringBuffer("{success:false,msg:'请检查上传图片的分辨率是否为" + imgWidth + "*" + imgHeight + "!'}");
 				            	try {
 				        			resp.setContentType("text/html;charset=utf-8");
@@ -117,7 +117,7 @@ public class UserServlet extends HttpServlet {
 				        			e.printStackTrace();
 				        		}
 				        		return;
-				            }
+				            }*/
 				            int size = fi.getInputStream().available();
 				            double kb = size/1024;
 				            if(kb > imgSize){
@@ -133,7 +133,15 @@ public class UserServlet extends HttpServlet {
 				        		return;
 				            }
 				            
-				            if(methodCall.equalsIgnoreCase("tempUpload")){//临时上传
+				            Image image = img.getScaledInstance(imgWidth, imgHeight, Image.SCALE_DEFAULT);
+				            
+				            BufferedImage tag = new BufferedImage(imgWidth, imgHeight,
+				            	     BufferedImage.TYPE_INT_RGB);
+				            	   Graphics g = tag.getGraphics();
+				            	   g.drawImage(image, 0, 0, null); // 绘制缩小后的图
+				            	   g.dispose();
+				            
+				            if(methodCall.equalsIgnoreCase("tempUpload")){//临时上传,预览
 				            	filePath = user.getUid() + "-" + System.currentTimeMillis() + suffix;
 				            	realPath = req.getSession().getServletContext().getRealPath("/") + "./images/userphoto/" + filePath;
 				            	File uf = new File(realPath);
@@ -159,7 +167,9 @@ public class UserServlet extends HttpServlet {
 				            		file.delete();
 				            	}
 				            	
-				            	fi.write(uf);
+				            	//fi.write(uf);
+				            	//............................
+				            	ImageIO.write(tag, "JPEG", uf);// 输出到文件流
 				            	json = new StringBuffer().append("{success:true,filePath:'"+filePath+"'}");
 				            	try {
 				        			resp.setContentType("text/html;charset=utf-8");
@@ -171,10 +181,12 @@ public class UserServlet extends HttpServlet {
 				        		}
 				        		return;
 				            }
-				            
-			            }
-			            fi.write(uploadedFile);			            
-			            FileInputStream fis = new FileInputStream(filePath);
+				            //放大或者缩小的照片
+				            //....................
+				            ImageIO.write(tag, "JPEG", uploadedFile);// 输出到文件流
+			            }else{
+			            	fi.write(uploadedFile);
+			            }			            
 					}else{
 						String name = fi.getFieldName();
 						String value = fi.getString();
@@ -262,14 +274,14 @@ public class UserServlet extends HttpServlet {
 					.append("}");
 			}else if(methodCall.equalsIgnoreCase("import")){
 				String msg = null;
-				try {
+//				try {
 					//导入人员信息
                 	msg = userDao.importUsersFromFile(realPath);
-				} catch (Exception e) {
-					msg = e.getMessage().substring(e.getMessage().lastIndexOf(":")+1);
-			        e.printStackTrace();
-				}
-		        json = new StringBuffer("{success:false,msg:'" + msg.trim() + "'}");
+//				} catch (Exception e) {
+//					msg = e.getMessage().substring(e.getMessage().lastIndexOf(":")+1);
+//			        e.printStackTrace();
+//				}
+		        json = new StringBuffer("{success:true,msg:'" + msg.trim() + "'}");
 			}
 		}catch(NameAlreadyBoundException e){
 			e.printStackTrace();

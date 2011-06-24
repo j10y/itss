@@ -25,6 +25,13 @@ public interface UserDao {
 	void update(User user);
 	
 	/**
+	 * 修改用户但是不修改PWD
+	 * @param user
+	 * @param modPwd
+	 */
+	void updateUserButPwd(User user, boolean modPwd);
+	
+	/**
 	 * 删除用户
 	 * @param department
 	 */

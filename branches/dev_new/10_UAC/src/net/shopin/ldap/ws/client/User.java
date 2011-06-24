@@ -19,9 +19,11 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="cn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="departmentNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deptName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="displayName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="dn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="facsimileTelephoneNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="givenName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="mail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="mobile" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -44,9 +46,11 @@ import javax.xml.bind.annotation.XmlType;
     "cn",
     "departmentNumber",
     "deptName",
+    "description",
     "displayName",
     "dn",
     "facsimileTelephoneNumber",
+    "givenName",
     "mail",
     "mobile",
     "password",
@@ -62,9 +66,11 @@ public class User {
     protected String cn;
     protected String departmentNumber;
     protected String deptName;
+    protected String description;
     protected String displayName;
     protected String dn;
     protected String facsimileTelephoneNumber;
+    protected String givenName;
     protected String mail;
     protected String mobile;
     protected String password;
@@ -148,6 +154,30 @@ public class User {
     }
 
     /**
+     * Gets the value of the description property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the value of the description property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDescription(String value) {
+        this.description = value;
+    }
+
+    /**
      * Gets the value of the displayName property.
      * 
      * @return
@@ -217,6 +247,30 @@ public class User {
      */
     public void setFacsimileTelephoneNumber(String value) {
         this.facsimileTelephoneNumber = value;
+    }
+
+    /**
+     * Gets the value of the givenName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGivenName() {
+        return givenName;
+    }
+
+    /**
+     * Sets the value of the givenName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGivenName(String value) {
+        this.givenName = value;
     }
 
     /**

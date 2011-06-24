@@ -35,6 +35,7 @@ var userImpPanel = new Ext.form.FormPanel({
 			userImpPanel.getForm().submit({						
 				url:webContext + '/user?methodCall=import',						
 				method:'POST',
+				timeout:120,
 				waitTitle : '请稍候',
 				waitMsg :'正在提交表单数据，请稍候……',
 				success : function(form, action){

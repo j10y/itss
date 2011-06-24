@@ -221,6 +221,9 @@ com.dc.ui.IndexPage = {
 							var dn = node.id;
 							//判断是部门还是人员
 							if(dn.indexOf('o=orgnizations')!=-1){
+								if(currentUser!='admin'){
+									return;
+								}
 								if(mainPanel.getActiveTab().id!='deptPanel'){
 									//mainPanel.setActiveTab('deptPanel');
 									mainPanel.setActiveTab(Ext.getCmp("deptPanel"));
@@ -255,10 +258,10 @@ com.dc.ui.IndexPage = {
 							        		//如果非管理员查看非本人信息的话，隐藏修改按钮
 							        		if(currentUser!='admin'){
 							        			Ext.getCmp("userTypeCombo").setReadOnly(true);
+							        			Ext.getCmp("departmentNumber1").setReadOnly(true);
 							        			if(obj.uid != currentUser){
 							        				Ext.getCmp("btnUserModify").setVisible(false);
 							        				Ext.getCmp("userPanel").setTitle(obj.uid + "基本信息");
-							        				Ext.getCmp("userTypeCombo").setReadOnly(true);
 							        			}else{							        				
 								        			Ext.getCmp("userPanel").setTitle("个人基本信息");
 								        			Ext.getCmp("btnUserModify").setVisible(true);

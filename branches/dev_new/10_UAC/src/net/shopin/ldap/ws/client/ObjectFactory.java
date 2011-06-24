@@ -43,11 +43,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Department }
+     * Create an instance of {@link User }
      * 
      */
-    public Department createDepartment() {
-        return new Department();
+    public User createUser() {
+        return new User();
+    }
+
+    /**
+     * Create an instance of {@link FindUserListByParamResponse }
+     * 
+     */
+    public FindUserListByParamResponse createFindUserListByParamResponse() {
+        return new FindUserListByParamResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetDeptListResponse }
+     * 
+     */
+    public GetDeptListResponse createGetDeptListResponse() {
+        return new GetDeptListResponse();
     }
 
     /**
@@ -56,22 +72,6 @@ public class ObjectFactory {
      */
     public FindUserListResponse createFindUserListResponse() {
         return new FindUserListResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetDeptList }
-     * 
-     */
-    public GetDeptList createGetDeptList() {
-        return new GetDeptList();
-    }
-
-    /**
-     * Create an instance of {@link User }
-     * 
-     */
-    public User createUser() {
-        return new User();
     }
 
     /**
@@ -91,19 +91,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FindUserListByParamResponse }
+     * Create an instance of {@link GetUserDetailByUid }
      * 
      */
-    public FindUserListByParamResponse createFindUserListByParamResponse() {
-        return new FindUserListByParamResponse();
+    public GetUserDetailByUid createGetUserDetailByUid() {
+        return new GetUserDetailByUid();
     }
 
     /**
-     * Create an instance of {@link UpdateUserResponse }
+     * Create an instance of {@link GetDeptList }
      * 
      */
-    public UpdateUserResponse createUpdateUserResponse() {
-        return new UpdateUserResponse();
+    public GetDeptList createGetDeptList() {
+        return new GetDeptList();
     }
 
     /**
@@ -115,6 +115,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Department }
+     * 
+     */
+    public Department createDepartment() {
+        return new Department();
+    }
+
+    /**
      * Create an instance of {@link FindUserList }
      * 
      */
@@ -123,19 +131,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetUserDetailByUid }
+     * Create an instance of {@link UpdateUserResponse }
      * 
      */
-    public GetUserDetailByUid createGetUserDetailByUid() {
-        return new GetUserDetailByUid();
-    }
-
-    /**
-     * Create an instance of {@link GetDeptListResponse }
-     * 
-     */
-    public GetDeptListResponse createGetDeptListResponse() {
-        return new GetDeptListResponse();
+    public UpdateUserResponse createUpdateUserResponse() {
+        return new UpdateUserResponse();
     }
 
     /**

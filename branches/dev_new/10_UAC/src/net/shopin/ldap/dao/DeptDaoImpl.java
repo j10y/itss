@@ -88,7 +88,8 @@ public class DeptDaoImpl implements DeptDao {
 					}					
 				});
 				String sameLevelLastDn = children.get(0);
-				dn = new DistinguishedName(sameLevelLastDn.substring(0, sameLevelLastDn.length()-2)+ (new Integer(sameLevelLastDn.substring(sameLevelLastDn.length()-2)).intValue()+1));
+				dn = new DistinguishedName(sameLevelLastDn.substring(0, sameLevelLastDn.length()-2) + 
+						((new Integer(sameLevelLastDn.substring(sameLevelLastDn.length()-2)).intValue()+1) < 10 ? "0" + (new Integer(sameLevelLastDn.substring(sameLevelLastDn.length()-2)).intValue()+1) : (new Integer(sameLevelLastDn.substring(sameLevelLastDn.length()-2)).intValue()+1)));
 				dn.prepend(new DistinguishedName(parentDN));
 			}
 		}
@@ -135,7 +136,7 @@ public class DeptDaoImpl implements DeptDao {
 		return depts;
 	}
 	
-	private ContextMapper getContextMapper() {
+	public ContextMapper getContextMapper() {
 		// TODO Auto-generated method stub
 		return new DeptContextMapper();
 	}

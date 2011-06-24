@@ -33,6 +33,8 @@ import org.springframework.ldap.core.LdapTemplate;
 public class UserDaoImpl implements UserDao {
 
 	private LdapTemplate ldapTemplate;	
+	
+	private DeptDao deptDao;
 
 	/**
 	 * @see net.shopin.ldap.dao.UserDao#create(User)
@@ -72,7 +74,9 @@ public class UserDaoImpl implements UserDao {
 		context.setAttributeValue("mobile", user.getMobile()!=null && !"".equals(user.getMobile()) ? user.getMobile() : null);
 		context.setAttributeValue("mail", user.getMail()!=null && !"".equals(user.getMail()) ? user.getMail() : null);
 		context.setAttributeValue("facsimileTelephoneNumber", user.getFacsimileTelephoneNumber()!=null && !"".equals(user.getFacsimileTelephoneNumber()) ? user.getFacsimileTelephoneNumber() : null);
-		context.setAttributeValue("photo", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
+		//context.setAttributeValue("photo", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
+		//只有photo非空的时候才覆盖
+		if(user.getPhoto()!=null && user.getPhoto().length>0) context.setAttributeValue("photo", user.getPhoto());
 	}
 		
 	/**
@@ -226,6 +230,32 @@ public class UserDaoImpl implements UserDao {
 		mapToContext(user, context);
 		ldapTemplate.modifyAttributes(dn, context.getModificationItems());
 	}
+	
+	/**
+	 * @see net.shopin.ldap.dao.UserDao#updateUserButPwd(User, boolean)
+	 * @author wchao
+	 *
+	 */
+	public void updateUserButPwd(User user, boolean modPwd) {
+		// TODO 如果修改用户的用户类型，需要unbind老数据，新bind新数据，图片信息需要保存
+		//首先判断userType是否修改
+		User old = this.findByPrimaryKey(user.getUid());
+		if(!modPwd){
+			user.setPassword(old.getPassword());
+		}
+		if(old.getUserType()==null || !old.getUserType().equals(user.getUserType())){//用户类型改变
+			this.delete(old);
+			if(user.getPhoto()==null||user.getPhoto().length == 0){
+				user.setPhoto(old.getPhoto());//图片
+			}
+			this.create(user);
+			return;
+		}		
+		Name dn = buildDn(user);
+		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(dn);
+		mapToContext(user, context);
+		ldapTemplate.modifyAttributes(dn, context.getModificationItems());
+	}
 
 	public String importUsersFromFile(String filePath) {
 		// TODO Auto-generated method stub
@@ -259,6 +289,9 @@ public class UserDaoImpl implements UserDao {
 			java.util.regex.Pattern simplePattern = java.util.regex.Pattern.compile("\\d*[-]*\\d*[-]*\\d*");
 			
 			java.util.regex.Pattern emailPattern = java.util.regex.Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
+			
+			//部门正则表达式
+			java.util.regex.Pattern deptPattern = java.util.regex.Pattern.compile("\\d{4,}?");
 			for (int rowIndex = 1; rowIndex <= rowCount; rowIndex++) {
 			    String rowMs = "";
 				//HSSFRow row = sheet.getRow(rowIndex);
@@ -293,6 +326,24 @@ public class UserDaoImpl implements UserDao {
 			        
 			        Object deptObj = getXSSFCellString(row.getCell((short)5));
 			        deptCell = deptObj !=null ? deptObj.toString().trim() : "";
+			        
+		            //add by awen for add a switch deptCell not a NUM as deptName to select form LDAP on 2011-06-23 begin
+		            
+		            if(!deptPattern.matcher(deptCell).matches()){
+		            	DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
+		        		String filter=null;
+		        		filter="(&(objectClass=organizationalUnit)(description=" + deptCell +"))";
+		        		List<Department> depts = ldapTemplate.search("o=orgnizations", filter, deptDao.getContextMapper());
+		        		if(depts.size() != 1){//如果指定名称的部门不惟一，那么不倒入数据库，记录日志，手动添加
+		        			rowMs += "Line: "+(rowIndex+1)+", deptName not found or more than one";
+				        	msg += rowMs+"<br>";
+				        	continue ;
+		        		}else{
+			        		deptCell = depts.get(0).getDeptNo();
+		        		}
+		            }
+		            
+		            //add by awen for add a switch deptCell not a NUM as deptName to select form LDAP on 2011-06-23 end
 			        
 			        if(emailCell.length()>0 && !emailPattern.matcher(emailCell).matches()){
 			        	rowMs += "Line: "+(rowIndex+1)+", email is incorrect";
@@ -339,7 +390,7 @@ public class UserDaoImpl implements UserDao {
 			            user.setSn(snCell);
 			            user.setGivenName(gnCell);
 			            user.setDisplayName(displayNameCell);
-			            user.setMail(emailCell.trim());
+			            user.setMail(emailCell.trim());			            
 			            user.setDepartmentNumber(deptCell);
 			            user.setTelephoneNumber(telCell);
 			            user.setMobile(mobileCell);
@@ -373,7 +424,8 @@ public class UserDaoImpl implements UserDao {
 				ldapTemplate.bind(dn, context, null);
 			}else{
 				//update
-				update(user);
+				//update(user);
+				updateUserButPwd(user,false);
 			}
 		}
 		
@@ -519,6 +571,19 @@ public class UserDaoImpl implements UserDao {
 	public void setLdapTemplate(LdapTemplate ldapTemplate) {
 		this.ldapTemplate = ldapTemplate;
 	}
-	
+
+	/**
+	 * @return the deptDao
+	 */
+	public DeptDao getDeptDao() {
+		return deptDao;
+	}
+
+	/**
+	 * @param deptDao the deptDao to set
+	 */
+	public void setDeptDao(DeptDao deptDao) {
+		this.deptDao = deptDao;
+	}
 	
 }

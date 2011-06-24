@@ -2,6 +2,8 @@ package net.shopin.ldap.dao;
 
 import java.util.List;
 
+import org.springframework.ldap.core.ContextMapper;
+
 import net.shopin.ldap.entity.Department;
 
 /**
@@ -51,4 +53,10 @@ public interface DeptDao {
 	 * @return
 	 */
 	List<Department> findDeptsByParam(String param);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	ContextMapper getContextMapper();
 }
