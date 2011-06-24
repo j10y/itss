@@ -31,6 +31,7 @@ import com.jeecms.common.hibernate3.Updater;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.core.entity.UnifiedUser;
 import com.jeecms.core.manager.UnifiedUserMng;
+import com.jeecms.core.web.PropertiesUtil;
 
 @Service
 @Transactional
@@ -120,7 +121,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 			user.setEmail(null);
 		}
 		//同步更新Ldap用户信息		
-		SystemWSImpl port = SystemWSImplService.getPort("http://172.16.100.173:8081/uac/services/sysService?wsdl");
+		SystemWSImpl port = SystemWSImplService.getPort(PropertiesUtil.getProperties("system.security.auth.wsdlpath","http://172.16.103.165/uac/services/sysService?wsdl"));
 		User ldapUser = port.getUserDetailByUid(user.getUsername());
 		ldapUser.setPassword(password);
 		ldapUser.setMail(user.getEmail());

@@ -13,6 +13,7 @@ import com.jeecms.cms.entity.main.CmsUser;
 import com.jeecms.cms.entity.main.CmsUserExt;
 import com.jeecms.cms.manager.main.CmsUserExtMng;
 import com.jeecms.common.hibernate3.Updater;
+import com.jeecms.core.web.PropertiesUtil;
 
 @Service
 @Transactional
@@ -44,7 +45,7 @@ public class CmsUserExtMngImpl implements CmsUserExtMng {
 	
 	private void updateLdap(CmsUser user){
 		try{
-			SystemWSImpl port = SystemWSImplService.getPort("http://172.16.100.173:8081/uac/services/sysService?wsdl");
+			SystemWSImpl port = SystemWSImplService.getPort(PropertiesUtil.getProperties("system.security.auth.wsdlpath","http://172.16.103.165/services/sysService?wsdl"));
 			User ldapUser = port.getUserDetailByUid(user.getUsername());
 			ldapUser.setDisplayName(user.getRealname());
 			ldapUser.setTelephoneNumber(user.getPhone());
