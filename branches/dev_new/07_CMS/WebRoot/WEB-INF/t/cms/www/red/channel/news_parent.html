@@ -14,38 +14,43 @@
 
 <body>
 
-<!--header_begin-->
-[#include "../include/页头顶栏.html"/]
-<!--header_end-->
-<!--header_begin-->
-[#include "../include/页头导航栏.html"/]
-<!--header_end-->
+		<!--header_begin-->
+		[#include "../include/head_head.html"/]
+		<!--header_end-->
+		<!--header_begin-->
+		[#include "../include/head_nav.html"/]
+		<!--header_end-->
 
-<!--search_begin-->
-[#include "../include/页头搜索栏.html"/]
-<!--search_end-->
+		<!--search_begin-->
+		[#include "../include/head_search.html"/]
+		<!--search_end-->
 
 <!--body_begin-->
 <div id="main">
+
 
 <div class="page2 position"> 您现在正在浏览： <a href="${base}/">首页</a> &raquo; [#list channel.nodeList as n]<a href="${n.url}" target="_blank">${n.name}</a>[#if n_has_next] &raquo; [/#if][/#list]</div>
 
 <!--cjbd_begin-->
 <div class="page2 box">
   <div class="w700 fl">
-  
-    <div class="left_top box">
-      <h2 class="w340 fl"><a href="#" target="_blank">${channel.name!}</a></h2>
+    [@cms_channel_list parentId=channel.id]
+    [#list tag_list as c]
+    <div class="left_top box[#if c_index!=0] mt5[/#if]">
+      <h2 class="w340 fl"><a href="${c.url}" target="_blank">${c.name!}</a></h2>
     </div>
     <div class="box"></div>
     <div class="left_div box">
-		<div class="w96" style="min-height:800px;">
-		[@cms_content_page channelId=channel.id count='25' sysPage='1' pageClass='pagination' styleList='1-1' ctgForm='1' ctgClass='red' lineHeight='10' bottomLine='1' headMark='4' dateFormat='yyyy-MM-dd' datePosition='2' dateClass='gray' channelOption='2' tpl='2'/]
+		<div class="w96" style="min-height:150px;">
+		[@cms_content_page channelId=c.id count='5' styleList='1-1' ctgForm='1' ctgClass='red' lineHeight='10' bottomLine='1' headMark='4' dateFormat='yyyy-MM-dd' datePosition='2' dateClass='gray' channelOption='2' tpl='2'/]
 		</div>
-    </div>
-    <div class="left_low"></div>	
+    </div>	 
+    <div class="left_low"></div>
+	[/#list]
+    [/@cms_channel_list]
   </div>  
-  
+ 
+   
   <div class="w250 fr">
     <div class="rb_right_top">
       <h2>上品在线 SHOPIN ONLINE</h2>
@@ -92,8 +97,9 @@
 <!--body_end-->
 
 
+
 <!--footer_begin-->
-[#include "../include/页脚信息栏.html"/]
-<!--footer_end-->
+			[#include "../include/foot_info.html"/]
+			<!--footer_end-->
 </body>
 </html>

@@ -11,9 +11,11 @@
 
 [#if tag_list?size gt 0 || !emptyMsg??]
 <div class="${cssClass!'c2-body'}"[#if cssStyle??] style="${cssStyle}"[/#if]>
-[#list tag_list as ctt]
-[#include "style_1-2_core.html"/]
-[/#list]
+	<ul class="list_pic_01" id="mag_sort_cover"> 
+		[#list tag_list as ctt]
+			[#include "style_1-2_core.html" /]
+		[/#list]
+	</ul>
 <div class="clear"></div>
 </div>
 [#else]

@@ -21,15 +21,18 @@ dl.gb dd.relpy{margin-top:10px;color:#006600;}
 </head>
 
 <body>
-<!--header_begin-->
-		[#include "../include/页头顶栏.html"/]
-<!--header_end-->
-<!--header_begin-->
-[#include "../include/页头导航栏.html"/]
-<!--header_end-->
-<!--search_begin-->
-[#include "../include/页头搜索栏.html"/]
-<!--search_end-->
+
+		<!--header_begin-->
+		[#include "../include/head_head.html"/]
+		<!--header_end-->
+		<!--header_begin-->
+		[#include "../include/head_nav.html"/]
+		<!--header_end-->
+
+		<!--search_begin-->
+		[#include "../include/head_search.html"/]
+		<!--search_end-->
+		
 <!--body_begin-->
 <div id="main">
 
@@ -187,7 +190,7 @@ dl.gb dd.relpy{margin-top:10px;color:#006600;}
 
 
 <!--footer_begin-->
-[#include "../include/页脚信息栏.html"/]
-<!--footer_end-->
+			[#include "../include/foot_info.html"/]
+			<!--footer_end-->
 </body>
 </html>

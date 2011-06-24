@@ -24,22 +24,20 @@ target: 是否新窗口打开；【0：原窗口；1：新窗口】不能为空
 		[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
 	[/#if]
 [/#if]
-<dl style="margin:0;padding:0;[#if picWidth!='']width:${picWidth}%;[/#if][#if picHeight!='']height:${picHeight}px;[/#if][#if picFloat=='1']float:left;[/#if]padding-right:${rightPadding}px;text-align:center;">
-	<dd style="margin-left:0;">[#rt/]
-		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>[#t/]
-			<img src="${imgUrl}" alt="${ctt.tit?html}" border="0"/>[#t/]
-		</a>[#t/]
-	</dd>[#lt/]
+<li>
+		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>
+			<img src="${imgUrl}" alt="${ctt.tit?html}" border="0"/>
+		</a>
 	[#if !noTitle?? || noTitle!="1"]
-	<dt style="padding:0 3px;">[#rt/]
+
 		[#if useShortTitle=='1'][#assign tit=ctt.stit/][#else][#assign tit=ctt.tit/][/#if]
-		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>[#t/]
+		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>
 		[#if showTitleStyle=='1']
-		<span style="[#if ctt.titCol?has_content]color:${ctt.titCol};[/#if][#if ctt.titBold]font-weight:bold;[/#if]">[#if ctt.attr.jounalNum??][总第${ctt.attr.jounalNum}期][/#if][@text_cut s=tit len=titLen append=append/]</span>[#rt/]
+			[#if ctt.attr.jounalNum??][总第${ctt.attr.jounalNum}期][/#if][@text_cut s=tit len=titLen append=append/]
 		[#else]
-		[#if ctt.attr.jounalNum??][总第${ctt.attr.jounalNum}期][/#if][@text_cut s=tit len=titLen append=append/][#rt/]
+			[#if ctt.attr.jounalNum??][总第${ctt.attr.jounalNum}期][/#if][@text_cut s=tit len=titLen append=append/]
 		[/#if]
-		</a>[#t/]
-	</dt>[#lt/]
+		</a>
 	[/#if]
-</dl>
+
+</li>

@@ -17,14 +17,14 @@
 
 	<body>
 		<!--header_begin-->
-		[#include "../include/页头顶栏.html"/]
+		[#include "../include/head_head.html"/]
 		<!--header_end-->
 		<!--header_begin-->
-		[#include "../include/页头导航栏.html"/]
+		[#include "../include/head_nav.html"/]
 		<!--header_end-->
 
 		<!--search_begin-->
-		[#include "../include/页头搜索栏.html"/]
+		[#include "../include/head_search.html"/]
 		<!--search_end-->
 
 		<!--body_begin--> 
@@ -40,12 +40,12 @@
 								</h2>
 								<ul class="ul1list">
 									<li>
-										<a href="http://172.16.100.173:8081/uac/user/userModify.jsp"
+										<a href="http://172.16.103.165/uac/user/userModify.jsp"
 											target="_blank">个人信息修改</a>
 									</li>
 
 									<li class="ul1list_li">
-										<a href="http://172.16.100.26/bmrbs/index.html" target="_blank">会议室预定</a>
+										<a href="http://172.16.100.26/bmrbs/" target="_blank">会议室预定</a>
 									</li>
 									<li class="ul1list_li">
 										<a href="http://mail.shopin.cn/" target="_blank">企业邮箱</a>
@@ -60,7 +60,7 @@
 								</h2>
 								<ul class="ul1list">
 									<li>
-										<a href="http://172.16.100.139:8080" target="_blank">提交IT服务申请(ITSS)</a>
+										<a href="#" target="_blank">提交IT服务申请(ITSS)-即将提供</a>
 									</li>
 
 									<li class="ul1list_li"></li>
@@ -72,18 +72,15 @@
 								</h2>
 								<ul class="ul1list">
 									<li>
-										<a href="#" target="_blank">远程接入软令牌</a>
+										<a href="http://www.shopin.cn:81/login/Jeecms.do" target="_blank">官网后台</a>
 									</li>
 									<li class="ul1list_li">
-										<a href="#" target="_blank">Notes客户端升级</a>
+										<a href="http://supplier.shopin.cn/crmManage/login.jsp" target="_blank">供应商信息系统 后台</a>
 									</li>
 									<li class="ul1list_li">
-										<a href="#" target="_blank">企业移动终端（试用）</a>
+										<a href="http://www.shopin.net/backWeb/index.htm" target="_blank">折扣网后台</a>
 									</li>
-									<li class="ul1list_li">
-										<a href="#" target="_blank">团队协作空间（试用）</a>
-									</li>
-
+									
 									<li class="ul1list_li"></li>
 								</ul>
 							</div>
@@ -148,11 +145,12 @@
 										[/#list] 
 										[/@cms_content_list]
 										
-										[@cms_channel id='11']
-										<li class="fr" ><a style="none" href="${tag_bean.url}" target="_blank">更多...</a></li>
-										[/@cms_channel]
 									</ul>
 								</div>
+                                                              [@cms_channel id='11']
+										<span class="fr" ><a style="none" href="${tag_bean.url}" target="_blank">更多...</a></span>
+										[/@cms_channel]
+
 							</div>
 							
 							<div class="shrd1">
@@ -370,7 +368,7 @@
  	<div class="pink_right_top"><h2><a href="#">网友投票</a></h2></div>
 	<div class="pink_right_div" style="min-height:240px;">
 	    <div class="w98">
-	        [#include "../include/投票栏.html"/]
+	        [#include "../include/vote.html"/]
 	    </div>
 	</div>
 	<div class="pink_right_low"></div>
@@ -445,7 +443,7 @@
 								}, this);
 			</script>
 			<!--footer_begin-->
-			[#include "../include/页脚信息栏.html"/]
+			[#include "../include/foot_info.html"/]
 			<!--footer_end-->
 	</body>
 </html>

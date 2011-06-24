@@ -14,16 +14,16 @@
 
 <body>
 
-<!--header_begin-->
-[#include "../include/页头顶栏.html"/]
-<!--header_end-->
-<!--header_begin-->
-[#include "../include/页头导航栏.html"/]
-<!--header_end-->
+		<!--header_begin-->
+		[#include "../include/head_head.html"/]
+		<!--header_end-->
+		<!--header_begin-->
+		[#include "../include/head_nav.html"/]
+		<!--header_end-->
 
-<!--search_begin-->
-[#include "../include/页头搜索栏.html"/]
-<!--search_end-->
+		<!--search_begin-->
+		[#include "../include/head_search.html"/]
+		<!--search_end-->
 
 <!--body_begin-->
 <div id="main">
@@ -34,38 +34,62 @@
 <!--cjbd_begin-->
 <div class="page2 box">
   <div class="w700 fl">
-  
     <div class="left_top box">
-      <h2 class="w340 fl"><a href="#" target="_blank">${channel.name!}</a></h2>
+      <h2 class="w340 fl">${channel.name!}</h2>
     </div>
     <div class="box"></div>
     <div class="left_div box">
-		<div class="w96" style="min-height:800px;">
-		[@cms_content_page channelId=channel.id count='25' sysPage='1' pageClass='pagination' styleList='1-1' ctgForm='1' ctgClass='red' lineHeight='10' bottomLine='1' headMark='4' dateFormat='yyyy-MM-dd' datePosition='2' dateClass='gray' channelOption='2' tpl='2'/]
+      <div class="w96" style="min-height:500px;"> 
+	    <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#cccccc" class="mt5">
+            <tr>
+              <td width="55%" height="25" align="center" bgcolor="#F9F9F9"><strong>软件名称</strong></td>
+              <td width="15%" align="center" bgcolor="#F9F9F9"><strong>发布日期</strong></td>
+              <td width="15%" align="center" bgcolor="#F9F9F9"><strong>软件大小</strong></td>
+              <td width="15%" align="center" bgcolor="#F9F9F9"><strong>浏览次数</strong></td>
+            </tr>
+        </table>
+	    [@cms_content_page channelId=channel.id count='10' dateFormat='yyyy-MM-dd' descLen='100' append='...']         
+        [#list tag_pagination.list as d]
+        <dl class="list3">
+          <dt>
+			<ul class="down_top box">			
+				<li class="name"><a href="${d.url}" title="${d.title}" target="_blank">${d.title}</a></li>
+				<li>${d.date?string(dateFormat)}</li>
+				<li>11460 KB</li>
+				<li>${d.views} 次</li>
+			</ul>
+		  </dt>
+		  <div class="box"></div>
+          <dd class="zy">[@text_cut s=d.description len=descLen append=append/]</dd>
+		  <dd>软件类型： ${d.attr.softType!'国产软件'} &nbsp;&nbsp; 授权方式： ${d.attr.warrant!'共享版'} &nbsp;&nbsp; 发布人： ${d.author!'本站编辑员'} </dd>
+        </dl>
+        [/#list]
+		<div class="pagebar">[@cms_pagination sysPage='1'/]</div>
+        [/@cms_content_page] 
 		</div>
     </div>
-    <div class="left_low"></div>	
+    <div class="left_low"></div>
   </div>  
   
   <div class="w250 fr">
     <div class="rb_right_top">
-      <h2>上品在线 SHOPIN ONLINE</h2>
+      <h2>最新下载</h2>
     </div>
     <div class="rb_right_div">
-      <!--最新图文资讯_Begin-->
-      <div class="w98"> [@cms_content_list count='4' titLen='10' typeId='2' channelOption='1']
+      <!--最新下载_Begin-->
+      <div class="w98"> [@cms_content_list channelId='9' count='4' titLen='10' channelOption='1']
         <ul class="list right_pic">
           [#list tag_list as d]
-          <li><a href="${d.url}" target="_blank"><img src="${d.typeImg!site.defImg}" alt="${d.title}" /></a><a href="${d.url}" title="${d.title}" target="_blank">[@text_cut s=d.stit len=titLen append=append/]</a></li>
+          <li><a href="${d.url}" target="_blank"><img src="${d.contentImg!site.defImg}" alt="${d.title}" /></a><a href="${d.url}" title="${d.title}" target="_blank">[@text_cut s=d.stit len=titLen append=append/]</a></li>
           [/#list]
         </ul>
         [/@cms_content_list] </div>
-      <!--最新图文资讯_End-->
+      <!--最新下载_End-->
       <!--本周热门资讯排行_Begin-->
-      <h2><span>本周热门资讯排行</span></h2>
+      <h2><span>本周热门下载排行</span></h2>
       <div class="w98">
         <ul class="order">
-          [@cms_content_list count='10' titLen='15' orderBy='7' channelOption='1']
+          [@cms_content_list channelId='9' count='10' titLen='15' orderBy='7' channelOption='1']
           [#list tag_list as a]
           <li><a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen append=append/]</a></li>
           [/#list]
@@ -93,8 +117,9 @@
 <!--body_end-->
 
 
+
 <!--footer_begin-->
-[#include "../include/页脚信息栏.html"/]
-<!--footer_end-->
+			[#include "../include/foot_info.html"/]
+			<!--footer_end-->
 </body>
 </html>
