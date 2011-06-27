@@ -363,11 +363,10 @@ public class SynDataRunnable implements Runnable {
 			List<net.shopin.ldap.ws.client.User> notIn = new ArrayList<net.shopin.ldap.ws.client.User>();
 			for (net.shopin.ldap.ws.client.User item : ldapUser) {
 				try {
-					String uid = item.getMail().substring(0,
-							item.getMail().indexOf("@"));
+					String uid = item.getUid();
 					Object[] arg = new Object[paraNum];
 					int itemn = 2;
-					arg[0] = item.getCn();
+					arg[0] = item.getDisplayName();
 					arg[1] = item.getMail();
 					arg[arg.length-1] = uid;
 					
@@ -420,12 +419,11 @@ public class SynDataRunnable implements Runnable {
 			}
 			if (notIn.size() != 0) {
 				for (net.shopin.ldap.ws.client.User item : notIn) {
-					String uid = item.getMail().substring(0,
-							item.getMail().indexOf("@"));
+					String uid = item.getUid();
 					Object[] arg = new Object[paraNum];
 					int itemn = 3;
 					arg[0] = uid;
-					arg[1] = item.getCn();
+					arg[1] = item.getDisplayName();
 					arg[2] = item.getMail();
 					
 					if (sd.getTableinfo().getUser().getMobile() != null
