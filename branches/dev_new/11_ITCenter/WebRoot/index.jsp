@@ -254,7 +254,7 @@
 														<img src="images/1x1_pix.gif" alt="" width="8" height="15" />
 													</td>
 													<td height="23" class="bannertxt">
-														<a href="http://172.16.100.173:8080/bmrbs/" target="_blank" class="nomalLink">会议室预订</a>
+														<a href="http://172.16.100.26/bmrbs/" target="_blank" class="nomalLink">会议室预订</a>
 													</td>
 												</tr>
 												<tr>
