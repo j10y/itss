@@ -22,7 +22,7 @@
 		<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-
+<!-- 
 		<property name="driverClassName">
 			<value>net.sourceforge.jtds.jdbc.Driver</value>
 		</property>
@@ -35,21 +35,21 @@
 		<property name="password">
 			<value>sa</value>
 		</property>
-		<!-- 
+		-->
 		
 		<property name="driverClassName">
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://localhost:3306/itil?useUnicode=true</value>
+			<value>jdbc:mysql://172.16.100.27:3306/itil?useUnicode=true</value>
 		</property>
 		<property name="username">
-			<value>root</value>
+			<value>itil</value>
 		</property>
 		<property name="password">
-			<value>000000</value>
+			<value>itil</value>
 		</property>
-		 -->
+		 
 		<property name="maxActive" value="200"/>
 		<property name="maxIdle" value="30"/>
 		<property name="minIdle" value="10"/>
@@ -82,9 +82,9 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">
-				org.hibernate.dialect.SQLServerDialect
-					<!--
-					org.hibernate.dialect.MySQLDialect  -->
+				<!--org.hibernate.dialect.SQLServerDialect -->
+					
+					org.hibernate.dialect.MySQLDialect 
 				</prop>
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">false</prop>
