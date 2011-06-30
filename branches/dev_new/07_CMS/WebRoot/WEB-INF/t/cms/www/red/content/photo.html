@@ -19,11 +19,7 @@ $(function() {
 <body>
 
 <!--header_begin-->
-[#if content.attr.forum == 'D1']
-	[#include "../include/jounal_nav.html"/]
-[#else]
-	[#include "../include/jounal_othernav.html"/]
-[/#if]
+
 <!--header_end-->
 
 <!--body_begin-->
@@ -33,79 +29,22 @@ $(function() {
   <div class="page2 box">
   	
         <div class="w950">
-        <div class="page2 position"> 您现在正在浏览： <a href="${base}/">首页</a> &raquo; [#list channel.nodeList as n]<a href="${n.url}" target="_blank">${n.name}</a>[#if n_has_next] &raquo; [/#if][/#list] &raquo; [总第${content.attr.jounalNum}期]${content.title}</div>
-          <!--  
-          <h1>${content.title}</h1>
-          <div class="msgbar">发布时间： ${content.releaseDate} &nbsp; 作者：${content.author!'本站编辑'} &nbsp; 来源： <a href="${content.originUrl!}" target="_blank">${content.origin!'本站原创'}</a> &nbsp;  浏览次数：<span id="views"></span> &nbsp; 我要评论(<span id="comments"></span>) </div>
-		  -->
-		  
-		  [#if content.mediaPath?? && content.mediaType??]
-		  <p style="text-align:center; margin:5px auto">
-		   [#if  content.mediaType=='FLV']
-			<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="400" height="300">
-				<param name="movie" value="/${res}/img/flvplayer.swf" />
-				<param name="quality" value="high" />
-				<param name="allowFullScreen" value="true" />
-				<param name="FlashVars" value="vcastr_file=${content.mediaPath!}&BufferTime=3" />
-				<embed src="/${res}/img/flvplayer.swf" allowfullscreen="true" flashvars="vcastr_file=${content.mediaPath!}" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="400" height="300"></embed>
-			</object>			
-			
-			[#elseif content.mediaType=='FLASH']			
-			<embed width="400" height="300" align="center" src="${content.mediaPath}" type="application/x-shockwave-flash" wmode="transparent" quality="high"></embed>		
-			
-			[#else]			
-			<embed autostart="true" src="${content.mediaPath}" type="video/x-ms-wmv" width="400" height="300" controls="ImageWindow" console="cons">
-			</embed>			
-			[/#if]
-		  </p>			
-		  [/#if]
-		  
-          <div class="content" stype="margin-left:5px;margin-right:5px;">		 		  
-            ${txt!}
-          </div>
-          <!--  
-          <div class="pagebar">[#include "../style_page/content.html"/]</div>
-		  -->
-		  <div class="box"></div>
-		  [#if content.attr.forum == 'D1']
-		  <div id="buttom" class="buttom">
-		  	<span class="bottomtest fr">${content.author!'本站编辑'}</span>
-		  </div>
-		  [#elseif content.attr.forum == 'D4']
-		  <div id="buttom" class="buttomd4">
-		  	&nbsp;
-		  </div>
-		  [#else]
-		  <div id="buttom" class="buttomd23">
-		  	<span class="bottomd23text fr">${content.author!'本站编辑'}</span>
-		  </div>
-		  [/#if]
-		  
-          <div class="other box">
-              <span class="fl"><strong>上一篇：</strong>
-              	[#if content.attr.forum == 'D1']
-              		[@cms_content id=content.id next='0' jounalNum=content.attr.jounalNum forum='D0' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D0]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[#elseif content.attr.forum == 'D2']
-              		[@cms_content id=content.id next='0' jounalNum=content.attr.jounalNum forum='D1' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D1]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[#elseif content.attr.forum == 'D3']
-              		[@cms_content id=content.id next='0' jounalNum=content.attr.jounalNum forum='D2' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D2]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[#elseif content.attr.forum == 'D4']
-              		[@cms_content id=content.id next='0' jounalNum=content.attr.jounalNum forum='D3' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D3]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[/#if]
-              </span>
-              <span class="fr"><strong>下一篇：</strong>
-              	[#if content.attr.forum == 'D1']
-              		[@cms_content id=content.id next='1' jounalNum=content.attr.jounalNum forum='D2' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D2]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[#elseif content.attr.forum == 'D2']
-              		[@cms_content id=content.id next='1' jounalNum=content.attr.jounalNum forum='D3' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D3]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[#elseif content.attr.forum == 'D3']
-              		[@cms_content id=content.id next='1' jounalNum=content.attr.jounalNum forum='D4' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D4]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[#elseif content.attr.forum == 'D4']
-              		[@cms_content id=content.id next='1' jounalNum=content.attr.jounalNum forum='D5' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[D5]${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]
-              	[/#if]
-              </span>
-          </div>
+        <div class="page2 position"> 您现在正在浏览： <a href="${base}/">首页</a> &raquo; [#list channel.nodeList as n]<a href="${n.url}" target="_blank">${n.name}</a>[#if n_has_next] &raquo; [/#if][/#list] &raquo; ${content.title}</div>
+       
+        <div>
+        	<ul>
+        	[#list content.pictures as p] 
+			<li value="${p_index+1}"> 
+			<img src="${p.imgPath}"/> 
+			</li> 
+			<script type="text/javascript">  
+			imgsrc[${p_index+1}]="${p.imgPath}"; 
+			pictitle[${p_index+1}]="${p.description?trim?replace('\r\n','')}"; 
+			</script> 
+			[/#list]
+			</ul>
         </div>
+        
 		<!--网友评论_Begin-->
 		 
         [#if channel.commentControl!=2]
@@ -120,7 +59,7 @@ $(function() {
 
 
 <!--footer_begin-->
-[#include "inc_comment_input.html"/]
+
 <!--footer_end-->
 </body>
 </html>
