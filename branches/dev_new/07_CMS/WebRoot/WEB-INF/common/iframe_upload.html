@@ -14,7 +14,10 @@ if(!$(imgSrc).attr("noResize")) {
 	$(imgSrc).css("width","auto");
 	$(imgSrc).css("height","auto");
 }
-if("${uploadPath}".indexOf("?")==-1) {
+
+if("${uploadPath}".indexOf("ftp")!=-1){
+	$(imgSrc).attr("src","${uploadPath}");
+}else if("${uploadPath}".indexOf("?")==-1) {
 	$(imgSrc).attr("src","${uploadPath}?d="+new Date()*1);
 } else {
 	$(imgSrc).attr("src","${uploadPath}&d="+new Date()*1);
