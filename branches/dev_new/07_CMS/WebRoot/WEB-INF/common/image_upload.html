@@ -39,7 +39,10 @@ function imgCut(n) {
 function previewImg(n) {
 	var img = $("#uploadImgPath"+n).val();
 	if(img!="") {
-		if(img.indexOf("?")==-1) {
+		//alert(img);
+		if(img.indexOf("ftp")!=-1){
+			$("#preImg"+n).attr("src",img);
+		}else if(img.indexOf("?")==-1) {
 			$("#preImg"+n).attr("src",img+"?d="+new Date()*1);
 		} else {
 			$("#preImg"+n).attr("src",img+"&d="+new Date()*1);
