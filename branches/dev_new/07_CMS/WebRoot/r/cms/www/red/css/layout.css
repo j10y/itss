@@ -321,3 +321,11 @@ dl.gb dd.relpy{margin-top:10px;color:#006600;}
 #mag_sort_cover{}
 #mag_sort_cover li{width:222px; text-align:center; padding-bottom:20px;}
 #mag_sort_cover li p{width:150px; font-size:14px; height:36px; line-height:18px;}
+
+/*相册*/
+ul.photo{border:solid 1px #e5e5e5;height:100%; overflow:hidden;}
+ul.photo h2{height:33px; line-height:33px; padding-left:15px; font-size:14px; background:url(../img/bg1.jpg) repeat-x;}
+ul.photo h2 a,ul.photo h2 a:visited{background:url(../img/jee.gif) 0 -100px; color:#990000; padding-left:15px;}
+ul.photo li{float:left; margin:5px;text-align:center;}
+ul.photo li img{display:block; width:240px !important; width:24opx; height:160px; border:1px solid #ccc; padding:2px;}
+ul.photo li span{height:25px; line-height:25px;}
