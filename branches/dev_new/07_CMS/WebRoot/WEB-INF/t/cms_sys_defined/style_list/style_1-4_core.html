@@ -1,0 +1,34 @@
+[#--
+照片列表
+
+--]
+[#if imgType?? && (imgType?string=="1"||imgType?string=="2"||imgType?string=="8")]
+	[#if imgType?string=="2"||imgType?string=="8"]
+		[#if ctt.imgUrl2??][#assign imgUrl=ctt.imgUrl2/][#else][#assign imgUrl=site.defImg/][/#if]
+	[#else]
+		[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
+	[/#if]
+[#else]
+	[#if typeId?? && typeId?string!=""]
+		[#if ctt.imgUrl2??][#assign imgUrl=ctt.imgUrl2/][#else][#assign imgUrl=site.defImg/][/#if]
+	[#else]
+		[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
+	[/#if]
+[/#if]
+<li>
+		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>
+			<img src="${imgUrl}" alt="${ctt.tit?html}" border="0"/>
+		</a>
+	[#if !noTitle?? || noTitle!="1"]
+
+		[#if useShortTitle=='1'][#assign tit=ctt.stit/][#else][#assign tit=ctt.tit/][/#if]
+		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>
+		[#if showTitleStyle=='1']
+			[@text_cut s=tit len=titLen append=append/]
+		[#else]
+			[@text_cut s=tit len=titLen append=append/]
+		[/#if]
+		</a>
+	[/#if]
+
+</li>

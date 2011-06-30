@@ -1,5 +1,5 @@
 [#--
-图文列表
+照片
 --]
 [#if !picWidth?? || picWidth==''][#assign picWidth='24.9'/][/#if]
 [#if !picHeight?? || picHeight==''][#assign picHeight=''/][/#if]
@@ -10,12 +10,12 @@
 [#if !useShortTitle?? || useShortTitle==''][#assign useShortTitle='1'/][/#if]
 
 [#if tag_list?size gt 0 || !emptyMsg??]
-<div class="${cssClass!'c2-body'}"[#if cssStyle??] style="${cssStyle}"[/#if]>
-[#list tag_list as ctt]
-[#include "style_1-2_core.html"/]
-[/#list]
+<span >
+		[#list tag_list as ctt]
+			[#include "style_1-2_core.html" /]
+		[/#list]
 <div class="clear"></div>
-</div>
+</span>
 [#else]
 <div class="${emptyClass!'empty-body'}"[#if emptyStyle??] style="${emptyStyle}"[/#if]>${emptyMsg!}</div>
 [/#if]
