@@ -41,13 +41,13 @@ $(function() {
 	var tr = $('#tr-typeImg');
 	tr.toggle(${content.type.hasImage?string("true","false")});
 	<#if content.typeImg??>
-	$("#preImg0").css("width","auto").css("height","auto").attr("src","${content.typeImg}?d="+new Date()*1);
+	$("#preImg0").css("width","auto").css("height","auto").attr("src","${content.typeImg}");//?d="+new Date()*1
 	</#if>
 	<#if content.titleImg??>
-	$("#preImg1").css("width","auto").css("height","auto").attr("src","${content.titleImg}?d="+new Date()*1);
+	$("#preImg1").css("width","auto").css("height","auto").attr("src","${content.titleImg}");
 	</#if>
 	<#if content.contentImg??>
-	$("#preImg2").css("width","auto").css("height","auto").attr("src","${content.contentImg}?d="+new Date()*1);
+	$("#preImg2").css("width","auto").css("height","auto").attr("src","${content.contentImg}");
 	</#if>
 	
 	$("#channelsDialog").dialog({
