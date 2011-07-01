@@ -163,31 +163,27 @@ code {
 	  height: 390px;
   }
   */
+  a:link, a:visited {
+    color: white;
+    text-decoration: none;
+}
+a:hover, a:active {
+    color: #FF3300;
+    text-decoration: underline;
+}
+
 </style>
 
 </head>
 <body onload="start();">
 
-<!--header_begin-->
-
-<!--header_end-->
-
 <!--body_begin-->
-<div id="main" >
+
   
   <!--cjbd_begin-->
 
-        <div class="nav fc4 sicn "> 您现在正在浏览： <a href="${base}/">首页</a> &raquo; [#list channel.nodeList as n]<a href="${n.url}" target="_blank">${n.name}</a>[#if n_has_next] &raquo; [/#if][/#list] &raquo; ${content.title}</div>
+        <div class="nav fc4 sicn "> 您现在正在浏览： <a href="${base}/" >首页</a> &raquo; [#list channel.nodeList as n]<a href="${n.url}" target="_blank">${n.name}</a><a href="#" >[#if n_has_next] &raquo; [/#if][/#list] &raquo; ${content.title}</a></div>
        
-        <div style="display: none;">
-        	<ul>
-        	[#list content.pictures as p] 
-			<li value="${p_index+1}"> 
-			<img src="${p.imgPath}"/> 
-			</li>
-			[/#list]
-			</ul>
-        </div>
         
         <div id="container" >
 			<center>
@@ -215,17 +211,17 @@ code {
 		<br>
 		<br>
 		
-		<div class="info sicn">
-			<div class="rd sicn"></div>
-			<h1 title="${content.title}">${content.title}</h1>
+		<div class="info sicn" >
+			<div class="rd sicn "></div>
+			<h1 title="${content.title}" class="w-title fc4">${content.title}</h1>
 			<div class="avt">
 				 <img src="${content.typeImg}" alt="${content.title}" height="60" width="60"/>
 			</div>
 			<div class="dtl">
-				<span class="fc2">作者：</span>${content.author!'本站编辑'}
+				<span class="fc2 fc4">作者：</span><font class="fc4">${content.author!'本站编辑'}</font>
 			</div>
 			<div class="act">
-				<span class="fc2">摘要：</span>${content.description!''}
+				<span class="fc2 fc4">摘要：</span><font class="fc4">${content.description!''}</font>
 			</div>
 	    </div>
 
