@@ -200,8 +200,8 @@ a:hover, a:active {
 						<ul class="ad-thumb-list">
 						[#list content.pictures as p] 
 						<li value="${p_index+1}">
-						<a href="${p.imgPath}"><img title='A title for this' longdesc="${p.description?trim?replace('\r\n','')}" src="${p.imgPath}" class='image'/></a>
-						<img src="${p.imgPath}"/> 
+						<a href="${p.imgPath}"><img title='描述信息：' longdesc="${p.description?trim?replace('\r\n','')}" src="${p.imgPath}" class='image'/></a>
+
 						</li> 
 						[/#list]
 						</ul>

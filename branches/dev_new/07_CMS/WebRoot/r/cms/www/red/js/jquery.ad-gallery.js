@@ -534,11 +534,11 @@
         this._centerImage(img_container, size.width, size.height);
         var desc = this._getDescription(image, img_container);
         if(desc) {
-          //img_container.append(desc);
+          img_container.append(desc);
           var width = size.width - parseInt(desc.css('padding-left'), 10) - parseInt(desc.css('padding-right'), 10);
           desc.css('width', width +'px');
         };
-        //this.highLightThumb(this.nav.find('.ad-thumb'+ index));
+        this.highLightThumb(this.nav.find('.ad-thumb'+ index));
 
         var direction = 'right';
         if(this.current_index < index) {
