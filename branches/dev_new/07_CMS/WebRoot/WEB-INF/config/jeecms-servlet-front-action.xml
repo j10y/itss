@@ -25,5 +25,6 @@
 	<bean id="contributeAct" class="com.jeecms.cms.action.member.ContributeAct"/>
 	<bean id="fckAct" class="com.jeecms.cms.action.member.FckAct"/>
 	<bean id="registerAct" class="com.jeecms.cms.action.member.RegisterAct"/>
+	<bean id="albumAct" class="com.jeecms.cms.action.member.AlbumAct"/>
 
 </beans>
