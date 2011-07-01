@@ -1,0 +1,660 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上传相册 - ${site.name}</title>
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/fckeditor/fckeditor.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/${res}/css/member.css" />
+
+<link href="/res/jeecms/css/admin.css" rel="stylesheet" type="text/css"/>
+<link href="/res/common/css/theme.css" rel="stylesheet" type="text/css"/>
+<!--
+<link href="/res/common/css/jquery.validate.css" rel="stylesheet" type="text/css"/>
+-->
+<link href="/res/common/css/jquery.treeview.css" rel="stylesheet" type="text/css"/>
+<link href="/res/common/css/jquery.ui.css" rel="stylesheet" type="text/css"/>
+ 
+<script src="/thirdparty/fckeditor/fckeditor.js" type="text/javascript"></script>
+<script src="/thirdparty/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<script src="/res/common/js/jquery.js" type="text/javascript"></script>
+<script src="/res/common/js/jquery.ext.js" type="text/javascript"></script>
+<script src="/res/common/js/pony.js" type="text/javascript"></script>
+<script src="/res/jeecms/js/admin.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$.validator.methods.leafChannel = function(value, element, param) {
+	var i = element.selectedIndex;
+	return $(element.options[i]).attr("class")!="sel-disabled";
+}
+$(function() {
+	$("#jvForm").validate({
+		rules: {
+			channelId: {
+				required: true,
+				leafChannel: true
+			}
+		},
+		messages:{
+			channelId: {
+				leafChannel: "请选择末级栏目"
+			}
+		}
+	});
+});
+</script>
+
+<script type="text/javascript">
+
+var types = [];
+	types[0] = {hasImage:false,imgWidth:100,imgHeight:100};
+	types[1] = {hasImage:true,imgWidth:224,imgHeight:293};
+	types[2] = {hasImage:true,imgWidth:280,imgHeight:200};
+	types[3] = {hasImage:false,imgWidth:0,imgHeight:0};
+var channels = [];
+	channels[0] = {
+		id:71,
+		hasTitleImg:false,
+		titleImgWidth:139,
+		titleImgHeight:139,
+		hasContentImg:false,
+		contentImgWidth:310,
+		contentImgHeight:310
+	};
+function typeChange(n) {
+	var tr = $('#tr-typeImg');
+	tr.toggle(types[n].hasImage);
+	$('#zoomWidth0').val(types[n].imgWidth);
+	$('#zoomHeight0').val(types[n].imgHeight);
+}
+function channelChange(n) {
+	if(n==0) {
+		return;
+	}
+	//0为请选择，所以必须减一。
+	n--;
+	var trt = $('#tr-titleImg');
+	var trc = $('#tr-contentImg');
+	trt.toggle(channels[n].hasContentImg);
+	$('#zoomWidth1').val(channels[n].titleImgWidth);
+	$('#zoomHeight1').val(channels[n].titleImgHeight);
+	trc.toggle(channels[n].hasTitleImg);
+	$('#zoomWidth2').val(channels[n].contentImgWidth);
+	$('#zoomHeight2').val(channels[n].contentImgHeight);
+	fetchTopics(channels[n].id);
+}
+function fetchTopics(channelId) {
+	$.getJSON("../topic/by_channel.do",{channelId:channelId},function(topics) {
+		var ts = $("#topics");
+		ts.empty();
+		var len = topics.length;
+		for(var i=0;i<len;i++) {
+			ts.append("<label><input type='checkbox' name='topicIds' value='"+topics[i].id+"'/>"+topics[i].name+"</label> ");
+		}
+		ts.parent().toggle(len>0);
+	});
+}
+$.validator.methods.leafChannel = function(value, element, param) {
+	var i = element.selectedIndex;
+	return $(element.options[i]).attr("class")!="sel-disabled";
+}
+$(function() {
+	$("#titleColor").colorPicker();
+	$("#jvForm").validate({
+		rules: {
+			channelId: {
+				required: true,
+				leafChannel: true
+			},
+			mediaType: {
+				required: function() {return $("#mediaPath").val()!=""}
+			}
+		},
+		messages:{
+			channelId: {
+				leafChannel: "请选择末级栏目"
+			},
+			mediaType:$.validator.messages.required
+		}
+	});
+	//副栏目对话框
+	$("#channelsDialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 280,
+		height: 400,
+		position: ["center",20],
+		buttons: {
+			"OK": function() {
+				$("#channelsSelector input[name='channels']:checked").each(function(){
+					appendChannels(this);
+					$(this).removeAttr("checked");
+				});
+				$(this).dialog("close");
+			}
+		}
+	});
+	$('#channelsLink').click(function(){
+		$('#channelsDialog').dialog('open');
+		return false;
+	});	
+	$("#channelsSelector").treeview({
+		url: "v_tree_channels.do"
+	});
+});
+function appendChannels(channel) {
+	var hasContain = false;
+	$("input[name=channelIds]").each(function() {
+		if($(this).val()==$(channel).val()) {
+			hasContain = true;
+		}
+	});
+	if(hasContain) {
+		return;
+	}
+	var nodeList = eval($(channel).attr("nodeList"));
+	var s = "<div style='padding-top:3px'>";
+	for(var i=0,len=nodeList.length;i<len;i++) {
+		s += nodeList[i];
+		if(i<len-1) {
+			s += " > ";
+		}
+	}
+	s += " <a href='javascript:void(0);' onclick='$(this).parent().remove();' class='pn-opt'>删除</a>";
+	s += "<input type='hidden' name='channelIds' value='"+$(channel).val()+"'/>";
+	s += "</div>";
+	$("#channelsContainer").append(s);
+}
+
+
+</script>
+
+<style type="text/css">
+.sel-disabled{background-color:#ccc}
+.STYLE1 {color: #FF0000}
+</style>
+</head>
+
+<body>
+<div class="container">
+<!--mc_header-->
+[#include "member_head.html"/]
+<!--mc_header_end-->
+
+<div class="main">
+<!--top-->
+<div class="my_local">
+<div class="location_cs">
+您现在的位置：&nbsp;<a class='LinkPath' href='#'>网站首页</a>&nbsp;&raquo;&nbsp;<a class='LinkPath' href='${base}/member/index.jspx'>员工中心</a>&nbsp;&raquo;&nbsp;上传相册
+</div>
+</div>
+<!--top_end-->
+
+<div class="mrow box">
+
+<!--mc_left-->
+[#include "member_nav.html"/]
+<!--mc_left_end-->
+
+<!--mc_center-->
+<div class="mc_center">
+  <div><img src="/${res}/img/member/web_center_top.jpg" /></div>
+  <div class="mc_center_bj"></div>
+  <div><img src="/${res}/img/member/web_center_bottom.jpg" /></div>
+</div>
+<!--mc_center_end-->
+
+<!--mc_right-->
+<div class="mc_right">
+   <div class="mc_top_bj box">
+      <div class="page_tit">上传相册</div>
+	  <!--
+	  <div class="user_info_cs">
+	  <a href="${base}/member/index.jspx">员工中心首页</a> | <a href="#">退出</a>
+	  </div>
+	  -->
+   </div>
+   <div class="mc_content">  
+  [#if channelList?size gt 0]
+  
+<!--
+<form id="jvForm" action="contribute_save.jspx" method="post"> 
+-->
+
+
+<script type="text/javascript"> 
+var types = [];
+	types[0] = {hasImage:false,imgWidth:100,imgHeight:100};
+	types[1] = {hasImage:true,imgWidth:224,imgHeight:293};
+	types[2] = {hasImage:true,imgWidth:280,imgHeight:200};
+	types[3] = {hasImage:false,imgWidth:0,imgHeight:0};
+var channels = [];
+	channels[0] = {
+		id:71,
+		hasTitleImg:false,
+		titleImgWidth:139,
+		titleImgHeight:139,
+		hasContentImg:false,
+		contentImgWidth:310,
+		contentImgHeight:310
+	};
+function typeChange(n) {
+	var tr = $('#tr-typeImg');
+	tr.toggle(types[n].hasImage);
+	$('#zoomWidth0').val(types[n].imgWidth);
+	$('#zoomHeight0').val(types[n].imgHeight);
+}
+function channelChange(n) {
+	if(n==0) {
+		return;
+	}
+	//0为请选择，所以必须减一。
+	n--;
+	var trt = $('#tr-titleImg');
+	var trc = $('#tr-contentImg');
+	trt.toggle(channels[n].hasContentImg);
+	$('#zoomWidth1').val(channels[n].titleImgWidth);
+	$('#zoomHeight1').val(channels[n].titleImgHeight);
+	trc.toggle(channels[n].hasTitleImg);
+	$('#zoomWidth2').val(channels[n].contentImgWidth);
+	$('#zoomHeight2').val(channels[n].contentImgHeight);
+	fetchTopics(channels[n].id);
+}
+function fetchTopics(channelId) {
+	$.getJSON("../topic/by_channel.do",{channelId:channelId},function(topics) {
+		var ts = $("#topics");
+		ts.empty();
+		var len = topics.length;
+		for(var i=0;i<len;i++) {
+			ts.append("<label><input type='checkbox' name='topicIds' value='"+topics[i].id+"'/>"+topics[i].name+"</label> ");
+		}
+		ts.parent().toggle(len>0);
+	});
+}
+$.validator.methods.leafChannel = function(value, element, param) {
+	var i = element.selectedIndex;
+	return $(element.options[i]).attr("class")!="sel-disabled";
+}
+$(function() {
+	$("#titleColor").colorPicker();
+	$("#jvForm").validate({
+		rules: {
+			channelId: {
+				required: true,
+				leafChannel: true
+			},
+			mediaType: {
+				required: function() {return $("#mediaPath").val()!=""}
+			}
+		},
+		messages:{
+			channelId: {
+				leafChannel: "请选择末级栏目"
+			},
+			mediaType:$.validator.messages.required
+		}
+	});
+	//副栏目对话框
+	$("#channelsDialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 280,
+		height: 400,
+		position: ["center",20],
+		buttons: {
+			"OK": function() {
+				$("#channelsSelector input[name='channels']:checked").each(function(){
+					appendChannels(this);
+					$(this).removeAttr("checked");
+				});
+				$(this).dialog("close");
+			}
+		}
+	});
+	$('#channelsLink').click(function(){
+		$('#channelsDialog').dialog('open');
+		return false;
+	});	
+	$("#channelsSelector").treeview({
+		url: "v_tree_channels.do"
+	});
+});
+function appendChannels(channel) {
+	var hasContain = false;
+	$("input[name=channelIds]").each(function() {
+		if($(this).val()==$(channel).val()) {
+			hasContain = true;
+		}
+	});
+	if(hasContain) {
+		return;
+	}
+	var nodeList = eval($(channel).attr("nodeList"));
+	var s = "<div style='padding-top:3px'>";
+	for(var i=0,len=nodeList.length;i<len;i++) {
+		s += nodeList[i];
+		if(i<len-1) {
+			s += " > ";
+		}
+	}
+	s += " <a href='javascript:void(0);' onclick='$(this).parent().remove();' class='pn-opt'>删除</a>";
+	s += "<input type='hidden' name='channelIds' value='"+$(channel).val()+"'/>";
+	s += "</div>";
+	$("#channelsContainer").append(s);
+}
+</script>
+<style type="text/css"> 
+.sel-disabled{background-color:#ccc}
+</style>
+</head>
+<body>
+<div class="body-box">
+<div class="rhead">
+	<!--
+	<div class="rpos">当前位置: 内容管理 - 添加</div>
+	-->
+	<!--
+	<form class="ropt">
+		<input type="submit" value="返回列表" onclick="this.form.action='v_list.do';"/>
+		<input type="hidden" name="cid" value="71"/>
+	</form>
+	-->
+	<div class="clear"></div>
+</div>
+<script type="text/javascript"> 
+//上传图片
+function upload(n) {
+	var of = $("#uploadFile"+n);
+	//检查是否选择了图片
+	if(of.val()=="") {
+		alert("请先选择图片");
+		return;
+	}
+	//将file移动至上传表单
+	$("#fileContent").empty();
+	$("#fileContent").append(of);
+	//复制一个file放至原处
+	$("#ufc"+n).append(of.clone().attr("value",""));
+	//修改属性
+	of.attr("id","");
+	of.attr("name","uploadFile");
+	//其他表单
+	$("#ufFileName").val($("#fileName"+n).val());
+	$("#ufWidth").val($("#zoomWidth"+n).val());
+	$("#ufHeight").val($("#zoomHeight"+n).val());
+	//先清除
+	$("#ufMark").val("");
+	$("#ufMark").val($("#mark"+n).val());
+	$("#uploadNum").val(n);
+	$("#uploadForm").submit();
+}
+//剪裁图片
+function imgCut(n) {
+	if($("#uploadImgPath"+n).val()=="") {
+		alert("请先上传图片");
+		return;
+	}
+	var url = "/jeeadmin/jeecms/common/v_image_area_select.do?uploadNum="+n+"&imgSrcPath="
+		+$("#uploadImgPath"+n).val()+"&zoomWidth="+$("#zoomWidth"+n).val()+"&zoomHeight="+$("#zoomHeight"+n).val();
+	window.open(url,"imgcut","height=550, width=1000, top=0, left=0, toolbar=no, menubar=no, scrollbars=auto, resizable=yes,location=no, status=no");
+}
+//预览图片
+function previewImg(n) {
+	var img = $("#uploadImgPath"+n).val();
+	if(img!="") {
+		if(img.indexOf("?")==-1) {
+			$("#preImg"+n).attr("src",img+"?d="+new Date()*1);
+		} else {
+			$("#preImg"+n).attr("src",img+"&d="+new Date()*1);
+		}
+		if(!$("#preImg"+n).attr("noResize")) {
+			$("#preImg"+n).css("width","auto");
+			$("#preImg"+n).css("height","auto");
+		}
+	} else {
+		$("#preImg"+n).removeAttr("src");		
+	}
+}
+</script>
+<form id="uploadForm" action="/jeeadmin/jeecms/common/o_upload_image.do" method="post" enctype="multipart/form-data" target="hiddenIframe" style="display:none;width:0px;height:0px;">
+<span id="fileContent"></span>
+<input id="ufWidth" type="hidden" name="zoomWidth"/>
+<input id="ufHeight" type="hidden" name="zoomHeight"/>
+<input id="ufFileName" type="hidden" name="fileName"/>
+<input id="ufMark" type="hidden" name="mark"/>
+<input id="uploadNum" type="hidden" name="uploadNum"/>
+</form>
+<iframe name="hiddenIframe" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe><script type="text/javascript"> 
+//上传附件
+function uploadAttachment(n) {
+	var af = $('#attachmentFile'+n);
+	//检查是否选择了文件
+	if(af.val()=='') {
+		alert('请选择要上传的文件');
+		return;
+	}
+	//将file移动至上传表单
+	$('#attachmentContent').empty();
+	$('#attachmentContent').append(af);
+	//复制一个file放至原处
+	$('#afc'+n).append(af.clone().attr('value',''));
+	//修改属性
+	af.attr('id','');
+	//其他表单
+	$('#attachmentNum').val(n);
+	$('#attachmentForm').submit();
+}
+</script>
+<form id="attachmentForm" action="/jeeadmin/jeecms/o_upload_attachment.do" method="post" enctype="multipart/form-data" target="attachment_iframe" style="display:none;width:0px;height:0px;">
+<span id="attachmentContent"></span>
+<input type="hidden" id="attachmentNum" name="attachmentNum"/>
+</form>
+<iframe name="attachment_iframe" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe><script type="text/javascript"> 
+//传附件
+function uploadMedia() {
+	var mf = $("#mediaFile");
+	//检查是否选择了文件
+	if(mf.val()=="") {
+		alert("请选择要上传的文件");
+		return;
+	}
+	//将file移动至上传表单
+	$("#mediaContent").empty();
+	$("#mediaContent").append(mf);
+	//复制一个file放至原处
+	$("#mfc").append(mf.clone().attr('value',''));
+	//修改属性
+	mf.attr("id","");
+	//其他表单
+	$("#mediaFilename").val($("#origFilename").val());
+	$("#mediaForm").submit();
+}
+</script>
+<form id="mediaForm" action="/jeeadmin/jeecms/o_upload_media.do" method="post" enctype="multipart/form-data" target="media_iframe" style="display:none;width:0px;height:0px;">
+<span id="mediaContent"></span>
+<input type="hidden" id="mediaFilename" name="filename"/>
+</form>
+<iframe name="media_iframe" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe>
+
+<form method="post" action="/member/o_save.jspx" id="jvForm">
+
+<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
+
+<tr>
+ 
+ 
+ 
+<td width="15%" class="pn-flabel pn-flabel-h"><span class="pn-frequired">*</span>栏目:</td><td colspan="3" width="90%" class="pn-fcontent">
+<div style="float:left">
+<div>
+<select id="channelId" name="channelId" >
+	<option value="71" onchange="selected" >相册</option>
+</select> 
+<!--
+<input id="channelsLink" type="button" value="副栏目"/>
+<span class="pn-fhelp">只能选择末级栏目</span>
+-->
+</div>
+ 
+<div style="float:left;padding-left:7px;display:none">
+&nbsp;专题: <span id="topics"></span>
+</div>
+<div style="clear:both"></div>
+</td>
+ 
+</tr>
+<tr id="tr-title"> 
+<td width="86" class="pn-flabel pn-flabel-h"><span class="pn-frequired">*</span>标题:</td><td colspan="3" width="90%" class="pn-fcontent">
+<input type="text" maxlength="150" name="title" class="required" size="70" maxlength="150"/><label>
+
+<!--
+<input type="checkbox" onclick="$('#linkDiv').toggle(this.checked);if(!this.checked){$('#link').val('');}"/>外部链接</label>
+<div id="linkDiv" style="display:none">url: <input type="text" id="link" name="link" size="35" maxlength="255"/></div>
+-->
+</td>
+ 
+</tr><tr id="tr-description">
+ 
+ 
+<td width="10%" class="pn-flabel pn-flabel-h">摘要:</td><td colspan="3" width="90%" class="pn-fcontent"><textarea cols="70" rows="3" name="description" maxlength="255"></textarea>
+</td>
+ 
+</tr>
+
+<tr id="tr-author">
+ 
+ 
+<td width="10%" class="pn-flabel pn-flabel-h">上传人:</td><td colspan="3" width="90%" class="pn-fcontent">
+<input type="text" maxlength="100" name="author" maxlength="100" value="${user.realname}"/></td>
+ 
+</tr>
+
+
+<tr id="tr-typeId">
+<td width="10%" class="pn-flabel pn-flabel-h">内容类型:</td><td colspan="3" width="90%" class="pn-fcontent">
+<select name="typeId" onchange="typeChange(this.selectedIndex)" ><option value="1">普通</option><option value="2" selected="selected">图文</option><option value="3">焦点</option><option value="4">头条</option></select>
+<!-- 
+&nbsp; <label><input type="checkbox" onclick="$('#recommend').val(this.checked)"/>推荐<input type="hidden" id="recommend" name="recommend" value="false"/></label>
+&nbsp; <label><input type="checkbox" onclick="$('#draft').val(this.checked)"/>草稿<input type="hidden" id="draft" name="draft" value="false"/></label>
+ -->
+</td>
+ 
+</tr><tr id="tr-typeImg" >
+ 
+ 
+<td id="typeImg" width="10%" class="pn-flabel">类型图:</td><td colspan="1" width="40%" class="pn-fcontent">
+<input type="text" id="uploadImgPath0" name="typeImg" style="width:220px"/> <input type="button" value="预览" onclick="previewImg(0);"/><br/>
+<span id="ufc0"><input type="file" id="uploadFile0" size="14" style="width:180px"/></span><label><input type="checkbox" onclick="$('#mark0').val(this.checked);"/>水印</label><input type="hidden" id="mark0" value="false"/> <input type="button" value="上传" onclick="upload(0);"/><br/>
+宽: <input type="text" id="zoomWidth0" value="100" size="5"/> 高: <input type="text" id="zoomHeight0" value="100" size="5"/> <input type="button" value="裁剪" onclick="imgCut(0);"/> 
+</td><td colspan="2" class="pn-fbutton">
+<img id="preImg0" alt="预览" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333"/>
+</td>
+ 
+</tr><tr id="tr-titleImg" style="display:none">
+ 
+ 
+<td id="titleImg" width="10%" class="pn-flabel">标题图:</td><td colspan="1" width="40%" class="pn-fcontent">
+<input type="text" id="uploadImgPath1" name="titleImg" style="width:220px"/> <input type="button" value="预览" onclick="previewImg(1);"/><br/>
+<span id="ufc1"><input type="file" id="uploadFile1" size="14" style="width:180px"/></span><label><input type="checkbox" onclick="$('#mark1').val(this.checked);"/>水印</label><input type="hidden" id="mark1" value="false"/> <input type="button" value="上传" onclick="upload(1);"/><br/>
+宽: <input type="text" id="zoomWidth1" value="139" size="5"/> 高: <input type="text" id="zoomHeight1" value="139" size="5"/> <input type="button" value="裁剪" onclick="imgCut(1);"/> 
+</td><td colspan="2" class="pn-fbutton">
+<img id="preImg1" alt="预览" style="width:100px;height:70px;background-color:#ccc;border:1px solid #333"/>
+</td>
+ 
+</tr><tr id="tr-pictures">
+ 
+ 
+<td width="10%" class="pn-flabel">图片集:</td><td colspan="3" width="90%" class="pn-fcontent">
+<div><input type="button" onclick="addPicLine();" value="增加一张图片"/></div>
+<table id="picTable3" border="0" style="float:left;">
+<tr>
+	<td>
+		<div><input type="text" id="uploadImgPath3" name="picPaths" style="width:170px"/> <a href="javascript:void(0);" onclick="$('#picTable3').remove();" class="pn-opt">删除</a></div>
+		<div><span id="ufc3"><input type="file" id="uploadFile3" size="10" style="width:150px"/></span> <input type="button" value="上传" onclick="upload(3);"/></div>
+		<div><textarea style="width:200px;height:60px;" name="picDescs" maxlength="255"></textarea></div>
+	</td>
+	<td><img id="preImg3" alt="预览" noResize="true" style="width:110px;height:110px;background-color:#ccc;border:1px solid #333"/></td>
+</tr>
+</table>
+<table id="picTable4" border="0" style="float:left;">
+<tr>
+	<td>
+		<div><input type="text" id="uploadImgPath4" name="picPaths" style="width:170px"/> <a href="javascript:void(0);" onclick="$('#picTable4').remove();" class="pn-opt">删除</a></div>
+		<div><span id="ufc4"><input type="file" id="uploadFile4" size="10" style="width:150px"/></span> <input type="button" value="上传" onclick="upload(4);"/></div>
+		<div><textarea style="width:200px;height:60px;" name="picDescs" maxlength="255"></textarea></div>
+	</td>
+	<td><img id="preImg4" alt="预览" noResize="true" style="width:110px;height:110px;background-color:#ccc;border:1px solid #333"/></td>
+</tr>
+</table>
+<table id="picTable5" border="0" style="float:left;">
+<tr>
+	<td>
+		<div><input type="text" id="uploadImgPath5" name="picPaths" style="width:170px"/> <a href="javascript:void(0);" onclick="$('#picTable5').remove();" class="pn-opt">删除</a></div>
+		<div><span id="ufc5"><input type="file" id="uploadFile5" size="10" style="width:150px"/></span> <input type="button" value="上传" onclick="upload(5);"/></div>
+		<div><textarea style="width:200px;height:60px;" name="picDescs" maxlength="255"></textarea></div>
+	</td>
+	<td><img id="preImg5" alt="预览" noResize="true" style="width:110px;height:110px;background-color:#ccc;border:1px solid #333"/></td>
+</tr>
+</table>
+<table id="picTable6" border="0" style="float:left;">
+<tr>
+	<td>
+		<div><input type="text" id="uploadImgPath6" name="picPaths" style="width:170px"/> <a href="javascript:void(0);" onclick="$('#picTable6').remove();" class="pn-opt">删除</a></div>
+		<div><span id="ufc6"><input type="file" id="uploadFile6" size="10" style="width:150px"/></span> <input type="button" value="上传" onclick="upload(6);"/></div>
+		<div><textarea style="width:200px;height:60px;" name="picDescs" maxlength="255"></textarea></div>
+	</td>
+	<td><img id="preImg6" alt="预览" noResize="true" style="width:110px;height:110px;background-color:#ccc;border:1px solid #333"/></td>
+</tr>
+</table>
+<div id="picBefore" style="clear:both"></div>
+<textarea id="picTable" style="display:none;">
+<table id="picTable{0}" border="0" style="float:left;">
+<tr>
+	<td>
+		<div><input type="text" id="uploadImgPath{0}" name="picPaths" style="width:160px"/> <a href="javascript:void(0);" onclick="$('#picTable{0}').remove();" class="pn-opt">删除</a></div>
+		<div><span id="ufc{0}"><input type="file" id="uploadFile{0}" size="10" style="width:150px"/></span> <input type="button" value="上传" onclick="upload({0});"/></div>
+		<div>&lt;textarea style="width:200px;height:60px;" name="picDescs" maxlength="255"&gt;&lt;/textarea&gt;</div>
+	</td>
+	<td><img id="preImg{0}" alt="预览" noResize="true" style="width:110px;height:110px;background-color:#ccc;border:1px solid #333"/></td>
+</tr>
+</table>
+</textarea>
+<script type="text/javascript"> 
+var picIndex = 7;
+var picTpl = $.format($("#picTable").val());
+function addPicLine() {
+	$('#picBefore').before(picTpl(picIndex++));
+}
+</script>
+</td>
+</tr>
+<tr align="center">
+<td colspan="4" class="pn-fbutton">
+	<input type="hidden" name="cid" value="71"/>
+	<input type="submit" value="提交"/> &nbsp; <input type="reset" value="重置"/>
+</td>
+</tr>
+</table>
+	 </form>
+	[#else]
+	<div>系统不允许投稿，请联系管理员！</div>
+	[/#if]
+   </div>
+
+</div>
+<!--mc_right_end-->
+
+</div>
+</div>
+<div id="channelsDialog" title="请选择副栏目" style="display:none;">
+<ul id="channelsSelector" class="filetree"></ul>
+</div>
+<!--footer-->
+[#include "member_foot.html"/]
+<!--footer_end-->
+
+</div>
+</body>
+</html>
