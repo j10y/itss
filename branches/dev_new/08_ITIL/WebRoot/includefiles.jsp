@@ -8,7 +8,6 @@
 		 
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/ext-all.css" />
 		 
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/tabs.css" />
 		<script type="text/javascript"> 
 			var webContext="${pageContext.request.contextPath}";
 			var sys_pageSize = 10;
