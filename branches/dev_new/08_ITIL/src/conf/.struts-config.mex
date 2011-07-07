@@ -125,6 +125,7 @@
   <StrutsActivity path="/infoAdmin/workflow/processConfig.jsp" location="4250,3750" dimension="262,48" />
   <StrutsActivity path="/infoAdmin/workflow/deploy.jsp" location="50,4150" dimension="219,53" />
   <StrutsActivity path="/infoAdmin/workflow/alldefination.jsp" location="350,4150" dimension="250,53" />
+  <StrutsActivity path="/infoAdmin/workflow/allprocessPanel.jsp" location="1550,1850" dimension="269,53" />
   <StrutsActivity path="/infoAdmin/workflow/allprocess.jsp" location="650,4150" dimension="238,53" />
   <StrutsActivity path="/infoAdmin/workflow/preassign.jsp" location="950,4150" dimension="236,53" />
   <StrutsActivity path="/infoAdmin/workflow/assignTaskDetail.jsp" location="1250,3250" dimension="276,53" />
@@ -263,6 +264,7 @@
   <StrutsActivity path="/infoAdmin/pageModel/pagePanelEditForm.jsp" location="3050,2050" dimension="292,48" />
   <StrutsActivity path="/infoAdmin/workflow/configunit.jsp" location="3050,1750" dimension="244,48" />
   <StrutsActivity path="/infoAdmin/workflow/configmodel.jsp" location="1250,1950" dimension="250,48" />
+  <StrutsActivity path="/system/utilAction.do" location="3950,2650" dimension="248,104" />
   <StrutsTransition id="failure;6,null,/WEB-INF/jsp/struts/Error.jsp,1" routingType="0">
     <AutomaticBendpoints>
       <AbsolutePoint location="229,397" />
@@ -836,15 +838,6 @@
       <AbsolutePoint location="3505,2998" />
     </AutomaticBendpoints>
   </StrutsTransition>
-  <StrutsTransition id="/infoAdmin/sysMainTable.do,tjForm,/infoAdmin/system/sys_table_column_tjList.jsp,1" routingType="0">
-    <AutomaticBendpoints>
-      <AbsolutePoint location="3301,50" />
-      <AbsolutePoint location="3301,-55" />
-      <AbsolutePoint location="5217,-55" />
-      <AbsolutePoint location="5217,2174" />
-      <AbsolutePoint location="3960,2174" />
-    </AutomaticBendpoints>
-  </StrutsTransition>
   <StrutsTransition id="/infoAdmin/SCIColumnAction.do,add,/infoAdmin/system/sys_table_column_scitdetail.jsp,1" routingType="0">
     <AutomaticBendpoints>
       <AbsolutePoint location="4608,2517" />
@@ -852,6 +845,15 @@
       <AbsolutePoint location="5223,4133" />
       <AbsolutePoint location="1717,4133" />
       <AbsolutePoint location="1717,4098" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/infoAdmin/sysMainTable.do,tjForm,/infoAdmin/system/sys_table_column_tjList.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3301,50" />
+      <AbsolutePoint location="3301,-55" />
+      <AbsolutePoint location="5217,-55" />
+      <AbsolutePoint location="5217,2174" />
+      <AbsolutePoint location="3960,2174" />
     </AutomaticBendpoints>
   </StrutsTransition>
   <StrutsTransition id="/admin/resourceManage.do,listRes,/infoAdmin/security/resources_list.jsp,1" routingType="0">
@@ -1101,6 +1103,12 @@
       <AbsolutePoint location="2961,2846" />
       <AbsolutePoint location="754,2846" />
       <AbsolutePoint location="754,2798" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/workflow/listprocess.do,allprocessPanel,/infoAdmin/workflow/allprocessPanel.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2680,992" />
+      <AbsolutePoint location="0,0" />
     </AutomaticBendpoints>
   </StrutsTransition>
   <StrutsTransition id="unknown-error;6,null,/WEB-INF/jsp/struts/Error.jsp,1" routingType="0">
