@@ -144,9 +144,9 @@ PagePanel = Ext.extend(Ext.Panel, {
 	       	var tempJsp =webContext+ "/reportJsp/showReport.jsp?raq=/configItem.raq";
 	       	//var menu=this.menu;
 			if (node.id == "tree01") {
-				tempJsp =webContext+"/reportJsp/showReport.jsp?raq=/configItem.raq";
+				tempJsp ="/reportJsp/showReport.jsp?raq=/configItem.raq";
 			} else if (node.id == "tree02") {
-				tempJsp = webContext+"/reportJsp/showReport.jsp?raq=/relationTypeInfoReport.raq";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/relationTypeInfoReport.raq";
 			} else if (node.id == "tree03") {
 				tempJsp = "/reportJsp/showReport.jsp?raq=/noRelationTypeConfigItemReport.raq";
 			} else if (node.id == "tree11") {

@@ -156,7 +156,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '服务项满意度（月表）',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            }
+	            /*,{
 	            	id : "tree18",
 	                text: '热线满意度（日表）',
 	                iconCls:'search',
@@ -166,7 +167,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '热线满意度（月表）',
 	                iconCls:'search',
 	                handler:onItemClick
-	            }]
+	            }*/
+	            ]
             }); 
             var menu6 = new Ext.menu.Menu({
 	        id: 'mainMenu6',
@@ -353,7 +355,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '服务项满意度（月表）',
 	                iconCls:'search',
 	                handler:onItemClick
-	            },{
+	            }
+	           /* ,{
 	            	id : "tree18",
 	                text: '热线满意度（日表）',
 	                iconCls:'search',
@@ -363,7 +366,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '热线满意度（月表）',
 	                iconCls:'search',
 	                handler:onItemClick
-	            }]
+	            }*/
+	            ]
             }); 
             var menu6 = new Ext.menu.Menu({
 	        id: 'mainMenu6',
@@ -410,25 +414,25 @@ PagePanel = Ext.extend(Ext.Panel, {
 		            }]
             }); 
         	//--------
-	       	var tempJsp = "/user/event/eventReport/eventWholeAnalysisForDay.jsp";
+	       	var tempJsp = "/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForDay.raq";
 	       	//var menu=this.menu;
 			if (node.id == "tree0") {
-				tempJsp ="/user/event/eventReport/eventWholeAnalysisForDay.jsp";
+				tempJsp ="/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForDay.raq";
 			} else if (node.id == "tree1") {
-				tempJsp ="/user/event/eventReport/eventWholeAnalysisForMonth.jsp";
+				tempJsp ="/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForMonth.raq";
 			} else if (node.id == "tree2") {
-				tempJsp = "/user/event/eventReport/eventWholeAnalysisForYear.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForYear.raq";
 			}  
 			
 			else if (node.id == "tree3") {
-				tempJsp = "/user/event/eventReport/eventsSlovedList.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventsSlovedList.raq";
 			}  else if (node.id == "tree4") {
-				tempJsp = "/user/event/eventReport/dealingEventsList.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/dealingEventsList.raq";
 			} else if (node.id == "tree28") {
-				tempJsp = "/user/event/eventReport/AllEventDetail.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/AllEventDetail.raq";
 			}  
 			
-			else if (node.id == "tree5") {
+			/*else if (node.id == "tree5") {
 				tempJsp = "/user/event/eventReport/supportGroupSatisfyCompare.jsp";
 			} else if (node.id == "tree6") {
 				tempJsp = "/user/event/eventReport/supportGroupDealtimeCompare.jsp";
@@ -436,9 +440,9 @@ PagePanel = Ext.extend(Ext.Panel, {
 				tempJsp = "/user/event/eventReport/supportGroupOnetimeSloveCompare.jsp";
 			} 
 			
-			/*else if (node.id == "tree8") {
+			else if (node.id == "tree8") {
 				tempJsp = "#";
-			} */else if (node.id == "tree9") {
+			} else if (node.id == "tree9") {
 				tempJsp = "/user/event/eventReport/userCallTop10.jsp";
 			} else if (node.id == "tree10") {
 				tempJsp = "/user/event/eventReport/CCAmountServiceAnalysis.jsp";
@@ -446,26 +450,26 @@ PagePanel = Ext.extend(Ext.Panel, {
 				tempJsp = "/user/event/eventReport/problemTypeCallTop10.jsp";
 			} else if (node.id == "tree27") {
 				tempJsp = "/user/event/eventReport/CCForMonth.jsp";
-			} 
+			} */
 			
 			
 			else if (node.id == "tree12") {
-				tempJsp = "/user/event/eventReport/problemAnalysis.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/problemAnalysis.raq";
 			} else if (node.id == "tree13") {
-				tempJsp = "/user/event/eventReport/serviceItemProblmeAnalysis.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/serviceItemProblmeAnalysis.raq";
 			}else if (node.id == "tree14") {
-				tempJsp = "/user/event/eventReport/CIProblmeAmountAnalysis.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/ciProblmeAnalysis.raq";
 			} else if (node.id == "tree15") {
-				tempJsp = "/user/event/eventReport/problmeCauseCIBatchModifyAnalysis.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/problmeCauseCIBatchModifyAnalysis.raq";
 			}
 			else if (node.id == "tree16") {
-				tempJsp = "/user/event/eventReport/engineerAbilitySatisfyForDay.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/engineerAbilitySatisfyForDay.raq";
 			}else if(node.id == "tree29"){
-				tempJsp = "/user/event/eventReport/engineerAbilitySatisfyForMonth.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/engineerAbilitySatisfyForMonth.raq";
 			} else if (node.id == "tree17") {
-				tempJsp = "/user/event/eventReport/serviceItemSatisfyForDay.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/serviceItemSatisfyForDay.raq";
 			} else if (node.id == "tree30") {
-				tempJsp = "/user/event/eventReport/serviceItemSatisfyForMonth.jsp";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/serviceItemSatisfyForMonth.raq";
 			} else if (node.id == "tree18") {
 				tempJsp = "/user/event/eventReport/CCSatisfyForDay.jsp";
 			} else if (node.id == "tree26") {
@@ -501,14 +505,16 @@ PagePanel = Ext.extend(Ext.Panel, {
 		            },{                   // <-- Add the action directly to a toolbar
 		                text: '事件清单',
 		                menu: menu1         // <-- Add the action directly to a menu
-		            },{                   // <-- Add the action directly to a toolbar
+		            }
+		            /* ,{                   // <-- Add the action directly to a toolbar
 		                text: '技能组对比分析',
 		                menu: menu2         // <-- Add the action directly to a menu
 		            }
+		            
 		            ,{                   // <-- Add the action directly to a toolbar
 		                text: '热线相关分析',
 		                menu: menu3         // <-- Add the action directly to a menu
-		            }
+		            }*/
 		            ,{                   // <-- Add the action directly to a toolbar
 		                text: '问题相关分析',
 		                menu: menu4         // <-- Add the action directly to a menu
@@ -552,14 +558,16 @@ PagePanel = Ext.extend(Ext.Panel, {
 		            },{                   // <-- Add the action directly to a toolbar
 		                text: '事件清单',
 		                menu: menu1         // <-- Add the action directly to a menu
-		            },{                   // <-- Add the action directly to a toolbar
+		            }
+		            /*,{                   // <-- Add the action directly to a toolbar
 		                text: '技能组对比分析',
 		                menu: menu2         // <-- Add the action directly to a menu
 		            }
+		           
 		            ,{                   // <-- Add the action directly to a toolbar
 		                text: '热线相关分析',
 		                menu: menu3         // <-- Add the action directly to a menu
-		            }
+		            }*/
 		            ,{                   // <-- Add the action directly to a toolbar
 		                text: '问题相关分析',
 		                menu: menu4         // <-- Add the action directly to a menu
@@ -579,7 +587,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	        ],
 			autoLoad : {
 				url : webContext + "/tabFrame.jsp?url=" + webContext
-						+ "/user/event/eventReport/eventWholeAnalysisForDay.jsp",
+						+ "/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForDay.raq",
 				text : "页面正在加载中......",
 				method : 'post',
 				scope : this
