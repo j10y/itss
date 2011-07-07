@@ -18,6 +18,9 @@
 
 	<action-mappings>
 		
+		<action path="/system/utilAction" type="com.zsgj.itil.system.action.UtilAction"
+				parameter="methodCall" scope="request" >	
+		</action>
 	
 		<!-- 后台管理 -->
 		<action path="/infoAdmin/userMainTable" type="com.zsgj.itil.config.action.UserMainTableAction"
@@ -219,6 +222,8 @@
 			parameter="methodCall" scope="request">
 			<forward name="success"
 				path="/infoAdmin/workflow/allprocess.jsp" />
+			<forward name="allprocessPanel"
+				path="/infoAdmin/workflow/allprocessPanel.jsp" />
 		</action>
 
 		<action path="/workflow/endprocess"

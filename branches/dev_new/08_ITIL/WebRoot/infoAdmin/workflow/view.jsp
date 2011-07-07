@@ -14,10 +14,22 @@
 	<body class="BODY">	
 		<br><br>	
 		<table width="300" align="center"><tr><td align="center">
-		流程执行示意图<br><br>
+		流程执行示意图
+		<br>		
+		<br>
 		<jbpm:processimage task="${id}"/> 
 		<a href="${pageContext.request.contextPath}/test/jbpm/index.jsp"></a> 
-		</td></tr></table>
+		</td></tr>
+		</table>
+		<br>
+		<table width="300" align="center">
+		<tr>
+			<td align="center">			
+		<a href="javascript:history.go(-1)">点击返回</a>
+			</td>
+		</tr>
+		</table>
+		
 
 	</body>
 </html>

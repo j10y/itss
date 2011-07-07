@@ -489,11 +489,11 @@ PagePanel = Ext.extend(Ext.Panel, {
 			columns : [sm, {header : '自动编号',dataIndex : 'id',align : 'left',sortable : true,hidden : true}, 
 						{header : '排序值',dataIndex : 'sortNum',align : 'left',sortable : true,hidden : true}, 
 						{header : '部门名称',dataIndex : 'departmentName',align : 'left',sortable : true,hidden : false}, 
-						{header : '本部审批人',dataIndex : 'cadreBizAudit',align : 'left',sortable : true,hidden : false},
-						{header : '本部财务审批人',dataIndex : 'cadreFinanceAudit',align : 'left',sortable : true,hidden : false}, 
-						{header : '集团财务审批人',dataIndex : 'groupFinanceAudit',align : 'left',sortable : true,hidden : false},
-						{header : '本部商务审批人',dataIndex : 'cadreBusinessAudit',align : 'left',sortable : true,hidden : false},
-						{header : '客户IT经理',dataIndex : 'clientItManager',align : 'left',sortable : true,hidden : false},
+						{header : '部门审批人',dataIndex : 'cadreBizAudit',align : 'left',sortable : true,hidden : false},
+						{header : '部门财务审批人',dataIndex : 'cadreFinanceAudit',align : 'left',sortable : true,hidden : false}, 
+						{header : '公司财务审批人',dataIndex : 'groupFinanceAudit',align : 'left',sortable : true,hidden : false},
+						{header : '公司商务审批人',dataIndex : 'cadreBusinessAudit',align : 'left',sortable : true,hidden : false},
+						{header : '产品经理',dataIndex : 'clientItManager',align : 'left',sortable : true,hidden : false},
 						{header : '可用',dataIndex : 'enable',align : 'left',sortable : true,renderer:function(value){
 							if(value=='1'){
 								return '是';

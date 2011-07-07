@@ -323,11 +323,16 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						url : curUrl,			
 						success : function(response, options) {
 							var responseArray = Ext.util.JSON.decode(response.responseText);
-							var clientItManagerId = responseArray.clientItManagerId;
-							if(clientItManagerId!='0'){
-								Ext.getCmp('SpecialRequirement$confirmUserCombo').setValue(clientItManagerId);
+							//modify by awen for change dept auditer on 2011-07-6 begin
+//							var clientItManagerId = responseArray.clientItManagerId;
+							var auditUserId = responseArray.auditUserId;
+//							if(clientItManagerId!='0'){
+							if(auditUserId!='0'){
+//								Ext.getCmp('SpecialRequirement$confirmUserCombo').setValue(clientItManagerId);
+								Ext.getCmp('SpecialRequirement$confirmUserCombo').setValue(auditUserId);
 								Ext.getCmp('SpecialRequirement$confirmUserCombo').initComponent();
 							}
+							//modify by awen for change dept auditer on 2011-07-6 end
 						},
 						failure : function(response, options) {
 							Ext.MessageBox.alert("获取IT审批人失败");

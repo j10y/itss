@@ -205,7 +205,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			}
 			if (idStr.indexOf('$confirmUserCombo') > 0) {
 					data[i].emptyText = '请输入ITCODE进行查询';
-					data[i].fieldLabel = '事业部审批人';//add by lee for 按用户要求修改名称 in 20091113 
+					data[i].fieldLabel = '部门审批人';//add by lee for 按用户要求修改名称 in 20091113 
 			}
 			if (idStr.indexOf('$flatCombo') > 0) {
 					data[i].fieldLabel = '申请本部';//add by lee for 按用户要求修改名称 in 20091113 

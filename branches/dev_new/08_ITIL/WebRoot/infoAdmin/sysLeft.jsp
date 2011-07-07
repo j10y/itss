@@ -335,21 +335,32 @@ background="${pageContext.request.contextPath}/images/SysLeft_bg_click.gif" bord
  -->
    <tr>
     <td width="36" height="22"></td>
-    <td class="SystemLeft"><a href="${pageContext.request.contextPath}/workflow/listprocess.do?methodCall=list" 
+  	<!-- 
+  	<td class="SystemLeft"><a href="${pageContext.request.contextPath}/workflow/listprocess.do?methodCall=list" 
+    	target="mainFrame" onClick='changeAdminFlag("流程监控")'>工作流程监控</a></td>
+  	 -->
+    <td class="SystemLeft"><a href="${pageContext.request.contextPath}/infoAdmin/workflow/allprocessPanel.jsp" 
     	target="mainFrame" onClick='changeAdminFlag("流程监控")'>工作流程监控</a></td>
   </tr>
-  
+  <!-- 
    <tr>
     <td width="36" height="22"></td>
     <td class="SystemLeft"><a href="${pageContext.request.contextPath}/workflow/listTask.do?methodCall=listAll" 
     	target="mainFrame" onClick='changeAdminFlag("所有任务监控")'>所有任务监控</a></td>
   </tr>
+   -->
+   <!--
    <tr>
     <td width="36" height="22"></td>
     <td class="SystemLeft"><a href="${pageContext.request.contextPath}/workflow/listTask.do?methodCall=logon" 
     	target="mainFrame" onClick='changeAdminFlag("用户任务")'>用户任务委派</a></td>
-  </tr>
-  
+   </tr>
+  -->
+  <tr>
+    <td width="36" height="22"></td>
+    <td class="SystemLeft"><a href="${pageContext.request.contextPath}/infoAdmin/workflow/allTaskPanel.jsp" 
+    	target="mainFrame" onClick='changeAdminFlag("用户任务")'>用户任务委派</a></td>
+   </tr>
   <!--
   <tr>
     <td width="36" height="22"></td>

@@ -21,10 +21,10 @@
     <br/>
     <c:if test="${not empty taskId}">
         Task Id：${taskId}
-        <a href="${pageContext.request.contextPath}/workflow/history.do?id=${taskId }&methodCall=view"> view the diagram</a>
+        <a href="${pageContext.request.contextPath}/workflow/history.do?id=${taskId }&methodCall=view">查看流程图</a>
     </c:if>
     <br> <br>
-    <a href="${pageContext.request.contextPath}/test/jbpm/index.jsp">back</a>
+    <a href="javascript:history.go(-1)">点击返回</a>
     </td></tr></table>
   </body>
 </html>

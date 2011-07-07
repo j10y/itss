@@ -47,5 +47,21 @@
 		<property name="departmentService" ref="deptService"></property>
 	</bean>
 	
+	<!-- add by awen 新增工具类 开始-->
+	
+	<bean id="utilDao" class="com.zsgj.itil.system.dao.impl.UtilDaoImpl">
+		<property name="sessionFactory" ref="pmcSessionFactory"/>
+	</bean>
+	
+	<bean id="utilService" class="com.zsgj.itil.system.service.impl.UtilServiceImpl">
+		<property name="utilDao" ref="utilDao" />
+	</bean>
+	
+	<bean name="/system/utilAction" class="com.zsgj.itil.system.action.UtilAction" scope="prototype">
+		<property name="utilService" ref="utilService"></property>
+	</bean>
+	
+	<!-- add by awen 新增工具类 结束-->
+	
 </beans>
 
