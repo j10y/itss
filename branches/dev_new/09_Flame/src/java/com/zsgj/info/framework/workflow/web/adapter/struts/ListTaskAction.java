@@ -80,6 +80,42 @@ public class ListTaskAction extends BaseDispatchAction {
 			e.printStackTrace();
 			}
 		return null;
+	}	
+	
+	/**
+	 * Add By awen 2011-07-05 获取前台页面任务列表数据<br>
+	 * listTaskDetailByActor中TaskDetail表示包含了ProcessInfo的信息
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param httpServletResponse
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward listTaskDetailByActor(ActionMapping mapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String actor = request.getParameter("actor");
+		String json = "";
+		List<TaskInfo> task = ts.listTasks(actor);
+		for(TaskInfo ta : task){
+			Map BizParams=ta.getBizParams();
+		   String vName = (String)BizParams.get("vProcessDesc");
+			json += "{'id':"+ta.getId()+",'taskIdANDprocessId':'"+ta.getId() + "|"+ta.getProcessId()+"','processId':'"+ta.getProcessId()+"','processName':'"+vName+"','taskName':'"+ta.getNodeName()+"','auditPerson':'"+ta.getActorId()+"'},";
+		}
+		if(json.endsWith(",")){
+			json = "{data:[" + json.substring(0, json.length()-1) + "]}";
+		}else{
+			json = "{data:[" + json + "]}";
+		}
+		try {			
+			response.setCharacterEncoding("utf-8");
+			PrintWriter pw = response.getWriter();	
+			pw.write(json);		
+			} catch (IOException e) {
+			e.printStackTrace();
+			}
+		return null;
 	}
 	
 //	public ActionForward cancel(ActionMapping mapping,

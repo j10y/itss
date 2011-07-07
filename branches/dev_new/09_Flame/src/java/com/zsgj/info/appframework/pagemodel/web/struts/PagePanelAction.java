@@ -283,7 +283,7 @@ public class PagePanelAction extends BaseDispatchAction{
 	public ActionForward save(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-	
+		String name = request.getParameter("name");
 		PagePanel pagePanel = (PagePanel) BeanUtil.getObject(request, PagePanel.class);
 		String panelSystemMainTableId = request.getParameter("panelSystemMainTable");
 		SystemMainTable smt = null;
