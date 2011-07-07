@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-		
+	
+	<distributable /> 
 	<!-- webAppRootKey -->
 	<context-param>
 	  	<param-name>webAppRootKey</param-name>
 	  	<param-value>itil.root</param-value>
-	</context-param>
+	</context-param> 
 	 <servlet>
 		<servlet-name>Connector</servlet-name>
 		<servlet-class>com.fredck.FCKeditor.connector.ConnectorServlet</servlet-class>
@@ -76,13 +77,14 @@
 <taglib-location>/WEB-INF/FCKeditor.tld</taglib-location> 
 </taglib>
 
+
 	<!-- spring contextConfigLocation -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 		    classpath*:applicationContext-personsetting.xml,
 			classpath*:applicationContext-resources.xml,
-			classpath*:applicationContext-security.xml,
+			classpath*:applicationContext-security-form.xml,
 			classpath*:applicationContext-workflow.xml,
 			classpath*:applicationContext-portal.xml,
 			classpath*:applicationContext-metadata.xml,
@@ -110,6 +112,18 @@
         <param-name>log4jRefreshInterval</param-name>
         <param-value>60000</param-value>
     </context-param>
+     <filter>
+		  <filter-name>SetCharacterEncodingFilter</filter-name> 
+		  <filter-class>com.zsgj.itil.util.SetCharacterEncodingFilter</filter-class> 
+		  <init-param>
+			  <param-name>encoding</param-name> 
+			  <param-value>GBK</param-value> 
+		  </init-param>
+	 </filter>
+	 <filter-mapping>
+		  <filter-name>SetCharacterEncodingFilter</filter-name> 
+		  <url-pattern>*.do</url-pattern> 
+	</filter-mapping>
     
 	 <!-- spring security delegatingFilterProxy -->
 	 <filter>
