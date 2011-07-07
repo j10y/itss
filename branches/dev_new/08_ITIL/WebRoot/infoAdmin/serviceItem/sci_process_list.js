@@ -203,7 +203,7 @@ ProcessPanel = Ext.extend(Ext.Panel, {
 								emptyText : '请选择',
 								store : new Ext.data.SimpleStore({
 									fields : ['id', 'name'],
-									data : [['0', '申请流程'], ['1', '变更流程'],['2', '撤销流程']]
+									data : [['0', '申请流程'], ['1', '变更流程'],['2', '撤销流程'],['3', '重置流程'],['4', '查询流程']]
 								})//,
 //								listeners : {
 //									'expand' : function(combo) {
