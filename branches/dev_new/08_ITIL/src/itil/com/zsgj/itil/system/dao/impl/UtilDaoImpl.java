@@ -11,7 +11,7 @@ import com.zsgj.itil.system.dao.UtilDao;
 
 public class UtilDaoImpl extends BaseDao implements UtilDao{
 
-	@Override
+	
 	public Page searchComboMessage(Class clazz, String propertyName, Object value, boolean isLike, String orderBy, boolean isAsc,
 			int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
