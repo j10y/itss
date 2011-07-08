@@ -2,6 +2,6 @@
 
 <jbpm-configuration>
   <transaction-context>
-     <object class="com.htsoft.core.jbpm.UserSession"/>
+     <object class="com.xpsoft.core.jbpm.UserSession"/>
   </transaction-context>
 </jbpm-configuration>
