@@ -15,12 +15,12 @@
 	
 	<servlet>
         <servlet-name>SimpleCaptcha</servlet-name>
-        <servlet-class>com.htsoft.core.web.servlet.SimpleCaptchaServlet</servlet-class>
+        <servlet-class>com.xpsoft.core.web.servlet.SimpleCaptchaServlet</servlet-class>
     </servlet>
 
   <servlet>
   	<servlet-name>fileUpload</servlet-name>
-  	<servlet-class>com.htsoft.core.web.servlet.FileUploadServlet</servlet-class>
+  	<servlet-class>com.xpsoft.core.web.servlet.FileUploadServlet</servlet-class>
   </servlet>
   <servlet>
   	<description>
@@ -28,17 +28,17 @@
   	<display-name>ReportServlet</display-name>
   	<servlet-name>ReportServlet</servlet-name>
   	<servlet-class>
-  	com.htsoft.core.web.servlet.ReportServlet</servlet-class>
+  	com.xpsoft.core.web.servlet.ReportServlet</servlet-class>
   </servlet>
   <!-- 工作流图形显示 -->
   <servlet>
       <servlet-name>JpdlImageServlet</servlet-name>
-      <servlet-class>com.htsoft.core.jbpm.servlet.JpdlImageServlet</servlet-class>
+      <servlet-class>com.xpsoft.core.jbpm.servlet.JpdlImageServlet</servlet-class>
   </servlet>
   	<!-- 不进行缓存 -->
    <filter>  
        <filter-name>NoCache</filter-name>  
-       <filter-class>com.htsoft.core.web.filter.ResponseHeaderFilter</filter-class>  
+       <filter-class>com.xpsoft.core.web.filter.ResponseHeaderFilter</filter-class>  
        <init-param>  
            <param-name>Cache-Control</param-name>  
            <param-value>no-cache, must-revalidate</param-value>  
@@ -51,7 +51,7 @@
    <!-- 进行缓存 ，开发时可去掉该缓存配置--> 
    <filter>  
        <filter-name>CacheForWeek</filter-name>  
-       <filter-class>com.htsoft.core.web.filter.ResponseHeaderFilter</filter-class>  
+       <filter-class>com.xpsoft.core.web.filter.ResponseHeaderFilter</filter-class>  
        <init-param>  
            <param-name>Cache-Control</param-name>  
            <param-value>max-age=604800, public</param-value>  
@@ -76,7 +76,7 @@
    
    <filter>  
 	     <filter-name>GzipJsFilter</filter-name>  
-	     <filter-class>com.htsoft.core.web.filter.GzipJsFilter</filter-class>  
+	     <filter-class>com.xpsoft.core.web.filter.GzipJsFilter</filter-class>  
 	     <init-param>  
 	         <param-name>headers</param-name>  
 	         <param-value>Content-Encoding=gzip</param-value>  
@@ -184,14 +184,14 @@
 	</servlet-mapping>
 
 	<listener>
-    	<listener-class>com.htsoft.core.web.listener.StartupListener</listener-class>
+    	<listener-class>com.xpsoft.core.web.listener.StartupListener</listener-class>
     </listener>
    <!-- Spring 刷新Introspector防止内存泄露 -->
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>com.htsoft.core.web.listener.UserSessionListener</listener-class>
+		<listener-class>com.xpsoft.core.web.listener.UserSessionListener</listener-class>
 	</listener>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
