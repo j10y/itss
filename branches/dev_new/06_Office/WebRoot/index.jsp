@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.core.util.ContextUtil"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.core.util.ContextUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String basePath=request.getContextPath();

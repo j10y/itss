@@ -1,5 +1,5 @@
 <%@page pageEncoding="UTF-8"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
 
 <%@page import="org.apache.commons.lang.StringUtils"%><html>
 	<head>
