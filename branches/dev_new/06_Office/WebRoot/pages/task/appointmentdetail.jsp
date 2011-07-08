@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="java.util.*"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.service.task.AppointmentService"%>
-<%@page import="com.htsoft.oa.service.task.impl.AppointmentServiceImpl"%>
-<%@page import="com.htsoft.core.web.paging.PagingBean"%>
-<%@page import="com.htsoft.oa.model.task.Appointment"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.service.task.AppointmentService"%>
+<%@page import="com.xpsoft.oa.service.task.impl.AppointmentServiceImpl"%>
+<%@page import="com.xpsoft.core.web.paging.PagingBean"%>
+<%@page import="com.xpsoft.oa.model.task.Appointment"%>
 <%
 	Long appointId = null;
 	String strId = request.getParameter("appointId");
@@ -55,8 +55,8 @@
 	request.setAttribute("appointment",appointment);
 %>
 
-<%@page import="com.htsoft.core.util.ContextUtil"%>
-<%@page import="com.htsoft.core.command.QueryFilter"%><table class="table-info" width="98%" cellpadding="0" cellspacing="1">
+<%@page import="com.xpsoft.core.util.ContextUtil"%>
+<%@page import="com.xpsoft.core.command.QueryFilter"%><table class="table-info" width="98%" cellpadding="0" cellspacing="1">
 	<tr>
 		<td width="20%">主题：</td>
 		<td width="80%">

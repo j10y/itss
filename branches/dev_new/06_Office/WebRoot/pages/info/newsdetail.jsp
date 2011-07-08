@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.service.info.NewsService"%>
-<%@page import="com.htsoft.oa.service.info.impl.NewsServiceImpl"%>
-<%@page import="com.htsoft.core.web.paging.PagingBean"%>
-<%@page import="com.htsoft.oa.model.info.News"%>
-<%@page import="com.htsoft.oa.model.info.NewsType"%>
-<%@page import="com.htsoft.oa.service.info.NewsTypeService"%>
-<%@page import="com.htsoft.core.command.QueryFilter"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.service.info.NewsService"%>
+<%@page import="com.xpsoft.oa.service.info.impl.NewsServiceImpl"%>
+<%@page import="com.xpsoft.core.web.paging.PagingBean"%>
+<%@page import="com.xpsoft.oa.model.info.News"%>
+<%@page import="com.xpsoft.oa.model.info.NewsType"%>
+<%@page import="com.xpsoft.oa.service.info.NewsTypeService"%>
+<%@page import="com.xpsoft.core.command.QueryFilter"%>
 <%@page import="java.util.List"%>
 <%
 	Long newsId = null;

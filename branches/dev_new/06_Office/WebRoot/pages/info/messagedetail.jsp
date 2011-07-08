@@ -2,12 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.service.info.InMessageService"%>
-<%@page import="com.htsoft.oa.model.info.InMessage"%>
-<%@page import="com.htsoft.core.command.QueryFilter"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.service.info.InMessageService"%>
+<%@page import="com.xpsoft.oa.model.info.InMessage"%>
+<%@page import="com.xpsoft.core.command.QueryFilter"%>
 <%@page import="java.util.List"%>
-<%@page import="com.htsoft.core.util.ContextUtil"%>
+<%@page import="com.xpsoft.core.util.ContextUtil"%>
 <%
 		Long receiveId = null;
 		String strId = request.getParameter("receiveId");

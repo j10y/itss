@@ -4,9 +4,9 @@
 %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.service.archive.ArchivesHandleService"%>
-<%@page import="com.htsoft.oa.model.archive.ArchivesHandle"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.service.archive.ArchivesHandleService"%>
+<%@page import="com.xpsoft.oa.model.archive.ArchivesHandle"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%
 	String handleId = request.getParameter("handleId");

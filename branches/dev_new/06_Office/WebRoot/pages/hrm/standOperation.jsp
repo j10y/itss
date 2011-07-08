@@ -4,9 +4,9 @@
 %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.service.hrm.StandSalaryService"%>
-<%@page import="com.htsoft.oa.model.hrm.StandSalary"%><table class="table-info" cellpadding="0" cellspacing="1" width="98%" align="center">
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.service.hrm.StandSalaryService"%>
+<%@page import="com.xpsoft.oa.model.hrm.StandSalary"%><table class="table-info" cellpadding="0" cellspacing="1" width="98%" align="center">
 	
 <%
 	String standardId = request.getParameter("standardId");

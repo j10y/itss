@@ -5,9 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.service.archive.ArchivesService"%>
-<%@page import="com.htsoft.oa.model.archive.Archives"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.service.archive.ArchivesService"%>
+<%@page import="com.xpsoft.oa.model.archive.Archives"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%
 	String archivesId = request.getParameter("archivesId");

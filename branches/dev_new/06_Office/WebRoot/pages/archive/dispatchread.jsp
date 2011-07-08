@@ -4,10 +4,10 @@
 %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
-<%@page import="com.htsoft.oa.service.archive.ArchDispatchService"%>
-<%@page import="com.htsoft.oa.model.archive.ArchDispatch"%>
+<%@page import="com.xpsoft.oa.service.archive.ArchDispatchService"%>
+<%@page import="com.xpsoft.oa.model.archive.ArchDispatch"%>
 <%
 	String dispatchId = request.getParameter("dispatchId");
 	ArchDispatchService adService = (ArchDispatchService) AppUtil

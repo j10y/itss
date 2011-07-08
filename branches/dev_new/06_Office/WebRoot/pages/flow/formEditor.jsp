@@ -1,8 +1,8 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@page import="org.apache.commons.lang.StringUtils"%>
-<%@page import="com.htsoft.oa.service.flow.FormDefService"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.model.flow.FormDef"%><html>
+<%@page import="com.xpsoft.oa.service.flow.FormDefService"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.model.flow.FormDef"%><html>
 	<head>
 		<title>在线流程表单设计器</title>
 		<%

@@ -247,7 +247,7 @@ var IndexPage = Ext
 														animate : true,
 														border : false,
 														autoScroll : true,
-														loader : new htsoft.ux.TreeXmlLoader(
+														loader : new xpsoft.ux.TreeXmlLoader(
 																{
 																	preloadChildren : true
 																}),

@@ -4,9 +4,9 @@
 %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.htsoft.core.util.AppUtil"%>
-<%@page import="com.htsoft.oa.service.hrm.JobChangeService"%>
-<%@page import="com.htsoft.oa.model.hrm.JobChange"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.service.hrm.JobChangeService"%>
+<%@page import="com.xpsoft.oa.model.hrm.JobChange"%>
 <%
 	String changeId = request.getParameter("changeId");
 	JobChangeService jobChangeService = (JobChangeService)AppUtil.getBean("jobChangeService");

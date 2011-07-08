@@ -1,9 +1,9 @@
 
 <%@page import="java.net.URLDecoder"%>
-<%@page import="com.htsoft.oa.model.system.ReportParam"%>
-<%@page import="com.htsoft.oa.service.system.ReportParamService"%>
+<%@page import="com.xpsoft.oa.model.system.ReportParam"%>
+<%@page import="com.xpsoft.oa.service.system.ReportParamService"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
-<%@page import="com.htsoft.core.command.ReportFilter"%><%@page language="java" contentType="text/html;charset=utf-8" pageEncoding="UTF-8"%>
+<%@page import="com.xpsoft.core.command.ReportFilter"%><%@page language="java" contentType="text/html;charset=utf-8" pageEncoding="UTF-8"%>
 <%@page import="net.sf.jasperreports.engine.JRRuntimeException"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.io.File"%>
@@ -20,10 +20,10 @@
 <%@page import="net.sf.jasperreports.engine.export.JRHtmlExporter"%>
 <%@page import="net.sf.jasperreports.j2ee.servlets.*" %>
 <%@page import="org.apache.lucene.store.jdbc.support.JdbcTemplate"%>
-<%@page import="com.htsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
 <%@page import="javax.sql.DataSource"%>
-<%@page import="com.htsoft.oa.model.system.ReportTemplate" %>
-<%@page import="com.htsoft.oa.service.system.ReportTemplateService" %>
+<%@page import="com.xpsoft.oa.model.system.ReportTemplate" %>
+<%@page import="com.xpsoft.oa.service.system.ReportTemplateService" %>
 <%
 request.setCharacterEncoding("utf-8");
 response.setContentType("text/html;charset=utf-8");
