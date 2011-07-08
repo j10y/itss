@@ -168,10 +168,10 @@
 /* 168 */     double c = 4.0D * siny; double d = 4.0D * cosy;
 /* 169 */     xPoints[0] = (int)Math.round(x2 - (b + c));
 /* 170 */     yPoints[0] = (int)Math.round(y2 - (a - d));
-/* 171 */     xPoints[2] = (int)Math.round(x2 - (b - c));
-/* 172 */     yPoints[2] = (int)Math.round(y2 - (d + a));
+/* 171 */     xPoints[1] = (int)Math.round(x2 - (b - c));
+/* 172 */     yPoints[1] = (int)Math.round(y2 - (d + a));
  
-/* 174 */     g2.fillPolygon(xPoints, yPoints, 3);
+/* 174 */     g2.fillPolygon(xPoints, yPoints, 2);
    }
  
    private void drawNode(Map<String, Node> nodes, Set activityNames, Graphics2D g2, Font font)
