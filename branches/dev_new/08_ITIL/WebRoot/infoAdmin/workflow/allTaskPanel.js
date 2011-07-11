@@ -148,11 +148,11 @@ ListProcessPanel = Ext.extend(Ext.Panel,{
 							typeAhead : true,
 							defaultParam : "",
 							triggerAction : "all",
-							displayField : 'realName',
-							valueField : "userName",
+							displayField : 'dataName',
+							valueField : "dataValue",
 							store : new Ext.data.JsonStore({
-								url : webContext + '/system/utilAction.do?methodCall=searchComboMessage&className=com.zsgj.info.framework.security.entity.UserInfo&propertyName=userName&nameField=realName&valueField=userName',
-								fields : ['userName', 'realName'],
+								url : webContext + '/system/utilAction.do?methodCall=searchComboMessage&className=com.zsgj.info.framework.security.entity.UserInfo&propertyName=userName&nameField=userName|realName&valueField=userName',
+								fields : ['dataName', 'dataValue'],
 								totalProperty : 'rowCount',
 								root : 'data',
 								listeners : {

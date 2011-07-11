@@ -36,7 +36,7 @@ public class UtilAction extends BaseDispatchAction {
 	 * 6,isAsc 默认升序<br>
 	 * 7,start<br>
 	 * 8,pageSize 默认为10<br>
-	 * 9,nameField 非空<br>
+	 * 9,nameField 非空,包含|的话表示多个字段分割，如username|realname<br>
 	 * 10,valueField 非空<br>
 	 * @param mapping
 	 * @param actionForm
@@ -88,11 +88,25 @@ public class UtilAction extends BaseDispatchAction {
 			List list = page.list();
 			StringBuffer sb = new StringBuffer();
 			for(int i=0; i<list.size(); i++){
-				String name = EntityBeanUtils.forceGetProperty(list.get(i), nameField).toString();
+				StringBuffer name = new StringBuffer();
+				if(!nameField.contains("|")){
+					name.append(EntityBeanUtils.forceGetProperty(list.get(i), nameField).toString());
+				}else{
+					String [] nameFields = nameField.split("\\|");
+					for(int j=0; j<nameFields.length; j++){
+						name.append(EntityBeanUtils.forceGetProperty(list.get(i), nameFields[j]).toString());
+						if(j<nameFields.length-1){
+							name.append("/");
+						}
+					}
+				}
+				
 				String value = EntityBeanUtils.forceGetProperty(list.get(i), valueField).toString();
 				sb.append("{");
-				sb.append(nameField + ":'" + name + "',");
-				sb.append(valueField + ":'" + value + "'");
+//				sb.append(nameField + ":'" + name.toString() + "',");
+//				sb.append(valueField + ":'" + value + "'");
+				sb.append("dataName:'" + name.toString() + "',");
+				sb.append("dataValue:'" + value + "'");
 				if(i<list.size()-1){
 					sb.append("},");
 				}else{

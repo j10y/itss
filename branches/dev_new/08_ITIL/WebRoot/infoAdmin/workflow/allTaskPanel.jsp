@@ -95,16 +95,16 @@ p {
 						defaultParam : "",
 						allowBlank:false,
 						triggerAction : "all",
-						displayField : 'realName',
-						valueField : "userName",
-						store : new Ext.data.JsonStore({
-							url : webContext + '/system/utilAction.do?methodCall=searchComboMessage&className=com.zsgj.info.framework.security.entity.UserInfo&propertyName=userName&nameField=realName&valueField=userName',
-							fields : ['userName', 'realName'],
+						displayField : 'dataName',
+							valueField : "dataValue",
+							store : new Ext.data.JsonStore({
+							url : webContext + '/system/utilAction.do?methodCall=searchComboMessage&className=com.zsgj.info.framework.security.entity.UserInfo&propertyName=userName&nameField=userName|realName&valueField=userName',
+							fields : ['dataName', 'dataValue'],
 							totalProperty : 'rowCount',
 							root : 'data',
 							listeners : {
 								beforeload : function(store, opt) {
-									var param = Ext.getCmp('userCombo').defaultParam;
+									var param = Ext.getCmp("userCombo1").defaultParam;
 									if (opt.params['propertyValue'] == undefined) {
 										opt.params['propertyValue'] = param;
 									}
