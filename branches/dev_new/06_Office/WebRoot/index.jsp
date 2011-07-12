@@ -52,6 +52,7 @@
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/Toast.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/Ext.ux.grid.RowActions.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/DateTimeField.js"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/TabCloseMenu.js"></script>
 	
 		<script type="text/javascript" src="<%=basePath%>/js/core/SystemCalendar.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/core/TreeSelector.js"></script>
@@ -100,7 +101,7 @@
 	    <script type="text/javascript" src="<%=basePath%>/js/App.home.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/App.js"></script>	
 	</head>
-	<body oncontextmenu="return false">
+	<body >
 		<div id="loading">
              <div class="loading-indicator">
                   <img src="<%=basePath%>/images/loading.gif" alt="" width="153" height="16" style="margin-right:8px;" align="absmiddle"/>

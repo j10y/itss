@@ -165,7 +165,8 @@ var IndexPage = Ext
 								autoScroll : true,
 								closable : true
 							},
-							items : []
+							items : [],
+							plugins: new Ext.ux.TabCloseMenu()
 						});
 						IndexPage.superclass.constructor.call(this, {
 							layout : "border",
