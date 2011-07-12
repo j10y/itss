@@ -178,6 +178,7 @@ function appendChannels(channel) {
 </head>
 
 <body>
+
 <div class="container">
 <!--mc_header-->
 [#include "member_head.html"/]
@@ -544,8 +545,8 @@ function uploadMedia() {
 </tr><tr id="tr-typeImg" >
  
  
-<td id="typeImg" width="10%" class="pn-flabel">类型图:</td><td colspan="1" width="40%" class="pn-fcontent">
-<input type="text" id="uploadImgPath0" name="typeImg" style="width:220px"/> <input type="button" value="预览" onclick="previewImg(0);"/><br/>
+<td id="typeImg" width="10%" class="pn-flabel"><span class="pn-frequired">*</span>类型图:</td><td colspan="1" width="40%" class="pn-fcontent">
+<input type="text" id="uploadImgPath0" name="typeImg" style="width:220px"/> <input type="button" class="required" value="预览" onclick="previewImg(0);"/><label></label><br/>
 <span id="ufc0"><input type="file" id="uploadFile0" size="14" style="width:180px"/></span><label><input type="checkbox" onclick="$('#mark0').val(this.checked);"/>水印</label><input type="hidden" id="mark0" value="false"/> <input type="button" value="上传" onclick="upload(0);"/><br/>
 宽: <input type="text" id="zoomWidth0" value="100" size="5"/> 高: <input type="text" id="zoomHeight0" value="100" size="5"/> <input type="button" value="裁剪" onclick="imgCut(0);"/> 
 </td><td colspan="2" class="pn-fbutton">

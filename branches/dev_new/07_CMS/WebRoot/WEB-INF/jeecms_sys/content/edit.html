@@ -9,6 +9,7 @@ var types = [];
 <#list typeList as t>
 	types[${t_index}] = {hasImage:${t.hasImage?string('true','false')},imgWidth:${t.imgWidth},imgHeight:${t.imgHeight}};
 </#list>
+
 function typeChange(n) {
 	var tr = $('#tr-typeImg');
 	tr.toggle(types[n].hasImage);
@@ -20,6 +21,23 @@ $.validator.methods.leafChannel = function(value, element, param) {
 	return $(element.options[i]).attr("class")!="sel-disabled";
 }
 $(function() {
+
+	$("#roptSubmit").click(function(){
+		var cid = "${cid!}";
+		if(cid=="71"){
+			document.getElementById("roptForm").action="/member/album_list.jspx?queryChannelId=71";
+		}else{
+			document.getElementById("roptForm").action="v_list.do";
+		} 
+	});
+	$("#jvFormSubmit").click(function(){
+		var cid = "${cid!}";
+		if(cid=="71"){
+			document.getElementById("jvForm").action="/member/o_update.jspx";
+		}else{
+			document.getElementById("jvForm").action="o_update.do";
+		} 
+	});
 	$("#titleColor").colorPicker();
 	$("#jvForm").validate({
 		rules: {
@@ -107,8 +125,8 @@ function appendChannels(channel) {
 <div class="body-box">
 <div class="rhead">
 	<div class="rpos"><@s.m "global.position"/>:  <@s.m "content.function"/> - <@s.m "global.edit"/></div>
-	<form class="ropt">
-		<input type="submit" value="<@s.m "global.backToList"/>" onclick="this.form.action='v_list.do';"/>
+	<form id="roptForm" class="ropt" >
+		<input id="roptSubmit" type="submit" value="<@s.m "global.backToList"/>" />
 		<input type="hidden" name="pageNo" value="${pageNo!}"/>
 		<input type="hidden" name="cid" value="${cid!}"/>
 		<#list .data_model?keys as pkey>
@@ -120,7 +138,9 @@ function appendChannels(channel) {
 <#include "/common/image_upload.html"/>
 <#include "attachment_upload.html"/>
 <#include "media_upload.html"/>
+
 <@p.form id="jvForm" action="o_update.do" labelWidth="10">
+ 
 <#assign count=0/>
 <#list itemList as item>
 <#if !item.single><#assign count=count+1/></#if>
@@ -361,7 +381,7 @@ function addPicLine() {
 </#list>
 <@p.td colspan="2">
 	<@p.hidden name="id" value=content.id/>
-	<@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/>
+	<@p.submit id="jvFormSubmit" code="global.submit"/> &nbsp; <@p.reset code="global.reset"/>
 		<input type="hidden" name="pageNo" value="${pageNo!}"/>
 		<input type="hidden" name="cid" value="${cid!}"/>
 		<#list .data_model?keys as pkey>

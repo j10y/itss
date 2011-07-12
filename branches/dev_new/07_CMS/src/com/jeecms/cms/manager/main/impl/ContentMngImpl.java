@@ -54,6 +54,13 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			ContentStatus status, Byte checkStep, Integer siteId,
 			Integer channelId, Integer userId, int orderBy, int pageNo,
 			int pageSize) {
+		//add by awen for strong cod for add channel 71 logic on 2011-07-12 begin		
+		if(channelId.equals(new Integer("71"))){
+			return dao.getPageBySelf(title, typeId, inputUserId, topLevel,
+					recommend, status, checkStep, siteId, channelId, userId,
+					orderBy, pageNo, pageSize);
+		}
+		//add by awen for strong cod for add channel 71 logic on 2011-07-12 end
 		CmsUser user = cmsUserMng.findById(userId);
 		CmsUserSite us = user.getUserSite(siteId);
 		Pagination p;
@@ -243,10 +250,14 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (draft != null && draft) {
 			bean.setStatus(ContentCheck.DRAFT);
 		} else {
-			if (userStep >= bean.getChannel().getFinalStepExtends()) {
+			if(bean.getChannel().getId().equals(new Integer("71"))){
 				bean.setStatus(ContentCheck.CHECKED);
-			} else {
-				bean.setStatus(ContentCheck.CHECKING);
+			}else{
+				if (userStep >= bean.getChannel().getFinalStepExtends()) {
+					bean.setStatus(ContentCheck.CHECKED);
+				} else {
+					bean.setStatus(ContentCheck.CHECKING);
+				}
 			}
 		}
 		// 是否有标题图
@@ -329,30 +340,53 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			userStep = user.getCheckStep(site.getId());
 		}
 		AfterCheckEnum after = bean.getChannel().getAfterCheckEnum();
-		if (after == AfterCheckEnum.BACK_UPDATE
-				&& bean.getCheckStep() > userStep) {
-			bean.getContentCheck().setCheckStep(userStep);
-			if (bean.getCheckStep() >= bean.getChannel().getFinalStepExtends()) {
-				bean.setStatus(ContentCheck.CHECKED);
-			} else {
-				bean.setStatus(ContentCheck.CHECKING);
+		if(channelId.equals(new Integer("71"))){
+			bean.setStatus(ContentCheck.CHECKED);
+		}else{			
+			if (after == AfterCheckEnum.BACK_UPDATE
+					&& bean.getCheckStep() > userStep) {
+				bean.getContentCheck().setCheckStep(userStep);
+				if (bean.getCheckStep() >= bean.getChannel().getFinalStepExtends()) {
+					bean.setStatus(ContentCheck.CHECKED);
+				} else {
+					bean.setStatus(ContentCheck.CHECKING);
+				}
 			}
-		}
-		// 草稿
-		if (draft != null) {
-			if (draft) {
-				bean.setStatus(DRAFT);
-			} else {
-				if (bean.getStatus() == DRAFT) {
-					if (bean.getCheckStep() >= bean.getChannel()
-							.getFinalStepExtends()) {
-						bean.setStatus(ContentCheck.CHECKED);
-					} else {
-						bean.setStatus(ContentCheck.CHECKING);
+			if (after == AfterCheckEnum.BACK_UPDATE
+					&& bean.getCheckStep() > userStep) {
+				bean.getContentCheck().setCheckStep(userStep);
+				if (bean.getCheckStep() >= bean.getChannel().getFinalStepExtends()) {
+					bean.setStatus(ContentCheck.CHECKED);
+				} else {
+					bean.setStatus(ContentCheck.CHECKING);
+				}
+			}
+			if (after == AfterCheckEnum.BACK_UPDATE
+					&& bean.getCheckStep() > userStep) {
+				bean.getContentCheck().setCheckStep(userStep);
+				if (bean.getCheckStep() >= bean.getChannel().getFinalStepExtends()) {
+					bean.setStatus(ContentCheck.CHECKED);
+				} else {
+					bean.setStatus(ContentCheck.CHECKING);
+				}
+			}
+			// 草稿
+			if (draft != null) {
+				if (draft) {
+					bean.setStatus(DRAFT);
+				} else {
+					if (bean.getStatus() == DRAFT) {
+						if (bean.getCheckStep() >= bean.getChannel()
+								.getFinalStepExtends()) {
+							bean.setStatus(ContentCheck.CHECKED);
+						} else {
+							bean.setStatus(ContentCheck.CHECKING);
+						}
 					}
 				}
 			}
 		}
+		
 		// 是否有标题图
 		bean.setHasTitleImg(!StringUtils.isBlank(ext.getTitleImg()));
 		// 更新栏目

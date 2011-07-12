@@ -296,19 +296,21 @@ public class AlbumAct {
 		// 栏目列表
 		List<Channel> channelList;
 		Set<Channel> rights;
-		if (user.getUserSite(siteId).getAllChannel()) {
-			// 拥有所有栏目权限
-			rights = null;
-		} else {
-			rights = user.getChannels(siteId);
-		}
-		if (c != null) {
-			channelList = c.getListForSelect(rights, true);
-		} else {
-			List<Channel> topList = channelMng.getTopListByRigth(userId,
-					siteId, true);
-			channelList = Channel.getListForSelect(topList, rights, true);
-		}
+//		if (user.getUserSite(siteId).getAllChannel()) {
+//			// 拥有所有栏目权限
+//			rights = null;
+//		} else {
+//			rights = user.getChannels(siteId);
+//		}
+		rights = null;
+		channelList = c.getListForSelect(rights, true);
+//		if (c != null) {
+//			channelList = c.getListForSelect(rights, true);
+//		} else {
+//			List<Channel> topList = channelMng.getTopListByRigth(userId,
+//					siteId, true);
+//			channelList = Channel.getListForSelect(topList, rights, true);
+//		}
 
 		// 专题列表
 		List<CmsTopic> topicList;
@@ -415,7 +417,8 @@ public class AlbumAct {
 		Integer siteId = site.getId();
 		CmsUser user = CmsUtils.getUser(request);
 		Integer userId = user.getId();
-		byte currStep = user.getCheckStep(siteId);
+		//byte currStep = user.getCheckStep(siteId);
+		Byte currStep = user.getCheckStep(siteId);
 		Pagination p = manager.getPageByRight(queryTitle, queryTypeId,
 				queryInputUserId, queryTopLevel, queryRecommend, status, user
 						.getCheckStep(siteId), siteId, cid, userId,

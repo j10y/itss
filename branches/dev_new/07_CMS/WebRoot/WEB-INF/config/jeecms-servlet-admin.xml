@@ -45,6 +45,14 @@
 			<list>
 				<value>/login.do</value>
 				<value>/logout.do</value>
+				<value>/common/v_image_area_select.do</value>
+				<value>/common/o_image_cut.do</value>
+				<value>/common/o_upload_image.do</value>
+				<value>/content/v_edit.do</value>
+				<value>/content/o_update.do</value>
+				<!-- 
+				/common/v_image_area_select.do,/common/o_image_cut.do,/common/o_upload_image.do
+				 -->
 			</list>
 		</property>
 	</bean>

@@ -86,7 +86,7 @@ $(function() {
 	<!--
 	<td bgcolor="#FFFFFF">[#if c.checkStep==0]<a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="contribute_delete.jspx?ids=${c.id}&nextUrl=contribute_list.jspx">删除<a>[#else]修改 | 删除[/#if]</td>
 	-->
-	<td bgcolor="#FFFFFF"><a href="album_edit.jspx?id=${c.id}&nextUrl=/member/album_list.jspx">修改<a> | <a href="album_delete.jspx?ids=${c.id}&nextUrl=/member/album_list.jspx?queryChannelId=71">删除<a></td>
+	<td bgcolor="#FFFFFF"><a href="/jeeadmin/jeecms/content/v_edit.do?id=${c.id}&cid=71&pageNo=&queryTitle=&queryInputUsername=&queryTopLevel=false&queryRecommend=false&queryTypeId=&queryStatus=&queryOrderBy=0&nextUrl=/member/album_list.jspx">修改<a> | <a href="album_delete.jspx?ids=${c.id}&nextUrl=/member/album_list.jspx?queryChannelId=71">删除<a></td>
 </tr>
 [/#list]
 </table>

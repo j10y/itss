@@ -163,7 +163,8 @@ public class ContentAct {
 		Integer siteId = site.getId();
 		CmsUser user = CmsUtils.getUser(request);
 		Integer userId = user.getId();
-		byte currStep = user.getCheckStep(siteId);
+		//byte currStep = user.getCheckStep(siteId);
+		Byte currStep = user.getCheckStep(siteId);
 		Pagination p = manager.getPageByRight(queryTitle, queryTypeId,
 				queryInputUserId, queryTopLevel, queryRecommend, status, user
 						.getCheckStep(siteId), siteId, cid, userId,
@@ -177,7 +178,7 @@ public class ContentAct {
 		addAttibuteForQuery(model, queryTitle, queryInputUsername, queryStatus,
 				queryTypeId, queryTopLevel, queryRecommend, queryOrderBy,
 				pageNo);
-
+		
 		return "content/list";
 	}
 
@@ -311,12 +312,17 @@ public class ContentAct {
 				false);
 		// 栏目列表
 		Set<Channel> rights;
-		if (user.getUserSite(siteId).getAllChannel()) {
-			// 拥有所有栏目权限
+		if(cid.equals(new Integer(71))){
 			rights = null;
-		} else {
-			rights = user.getChannels(siteId);
+		}else{
+			if (user.getUserSite(siteId).getAllChannel()) {
+				// 拥有所有栏目权限
+				rights = null;
+			} else {
+				rights = user.getChannels(siteId);
+			}
 		}
+		
 
 		List<Channel> topList = channelMng.getTopList(site.getId(), true);
 		List<Channel> channelList = Channel.getListForSelect(topList, rights,
