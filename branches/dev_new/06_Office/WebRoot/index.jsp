@@ -105,7 +105,7 @@
 	<body >
 		<div id="loading">
              <div class="loading-indicator">
-                  <img src="<%=basePath%>/images/loading.gif" alt="" width="153" height="16" style="margin-right:8px;" align="absmiddle"/>
+                  <img src="<%=basePath%>/images/loading.gif" alt="" width="85" height="81" style="margin-left:10px;" align="absmiddle"/>
                   <div class="clear"></div>
          		    正在加载，请稍候......
              </div>
