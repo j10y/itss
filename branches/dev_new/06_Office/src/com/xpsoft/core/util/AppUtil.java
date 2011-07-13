@@ -129,26 +129,24 @@ public class AppUtil implements ApplicationContextAware {
 	}
 
 	public static void init(ServletContext in_servletContext) {
-		/* 189 */servletContext = in_servletContext;
+		servletContext = in_servletContext;
 
-		/* 192 */String filePath = servletContext
-				.getRealPath("/WEB-INF/classes/conf/");
+		String filePath = servletContext.getRealPath("/WEB-INF/classes/conf/");
 
 		//add by awen for change the config info to type of 'first load database info then load config file infos to override' on 2011-07-08 begin
 		reloadSysConfig();
 		//add by awen for change the config info to type of 'first load database info then load config file infos to override' on 2011-07-08 end
-		/* 194 */Properties props = new Properties();
+		Properties props = new Properties();
 		try {
-			/* 196 */InputStream is = new BufferedInputStream(
-					new FileInputStream(filePath + "/config.properties"));
-			/* 197 */props.load(is);
-			/* 198 */Iterator it = props.keySet().iterator();
-			/* 199 */while (it.hasNext()) {
-				/* 200 */String key = (String) it.next();
-				/* 201 */configMap.put(key, props.get(key));
+			InputStream is = new BufferedInputStream(new FileInputStream(filePath + "/config.properties"));
+			props.load(is);
+			Iterator it = props.keySet().iterator();
+			while (it.hasNext()) {
+				String key = (String) it.next();
+				configMap.put(key, props.get(key));
 			}
 		} catch (Exception ex) {
-			/* 204 */logger.error(ex.getMessage());
+			logger.error(ex.getMessage());
 		}
 
 		//delete by awen on 2011-07-08 begin
@@ -158,153 +156,143 @@ public class AppUtil implements ApplicationContextAware {
 		//reloadSysConfig();
 		//delete by awen on 2011-07-08 end
 		
-		/* 211 */CompanyService companyService = (CompanyService) getBean("companyService");
-		/* 212 */List cList = companyService.findCompany();
-		/* 213 */if (cList.size() > 0) {
-			/* 214 */Company company = (Company) cList.get(0);
-			/* 215 */configMap.put("app.logoPath", company.getLogo());
-			/* 216 */configMap.put("app.companyName", company.getCompanyName());
+		CompanyService companyService = (CompanyService) getBean("companyService");
+		List cList = companyService.findCompany();
+		if (cList.size() > 0) {
+			Company company = (Company) cList.get(0);
+			configMap.put("app.logoPath", company.getLogo());
+			configMap.put("app.companyName", company.getCompanyName());
 		}
 
-		/* 219 */String xslStyle = servletContext.getRealPath("/js/menu")
-				+ "/menu-left.xsl";
-		/* 220 */Document doc = getOrignalMenuDocument();
+		String xslStyle = servletContext.getRealPath("/js/menu") + "/menu-left.xsl";
+		Document doc = getOrignalMenuDocument();
 		try {
-			/* 223 */Document finalDoc = XmlUtil.styleDocument(doc, xslStyle);
-			/* 224 */setLeftMenuDocument(finalDoc);
+			Document finalDoc = XmlUtil.styleDocument(doc, xslStyle);
+			setLeftMenuDocument(finalDoc);
 		} catch (Exception ex) {
-			/* 226 */logger.error("menux.xml trasform has error:"
-					+ ex.getMessage());
+			logger.error("menux.xml trasform has error:" + ex.getMessage());
 		}
 
-		/* 230 */String publicStyle = servletContext.getRealPath("/js/menu")
-				+ "/menu-public.xsl";
+			String publicStyle = servletContext.getRealPath("/js/menu") + "/menu-public.xsl";
 		try {
-			/* 232 */Document publicDoc = XmlUtil.styleDocument(doc,
-					publicStyle);
-			/* 233 */HashSet pubIds = new HashSet();
-			/* 234 */Element rootEl = publicDoc.getRootElement();
-			/* 235 */List idNodes = rootEl.selectNodes("/Menus//*");
-			/* 236 */for (int i = 0; i < idNodes.size(); i++) {
-				/* 237 */Element el = (Element) idNodes.get(i);
-				/* 238 */Attribute attr = el.attribute("id");
-				/* 239 */if (attr != null) {
-					/* 240 */pubIds.add(attr.getValue());
+			Document publicDoc = XmlUtil.styleDocument(doc,	publicStyle);
+			HashSet pubIds = new HashSet();
+			Element rootEl = publicDoc.getRootElement();
+			List idNodes = rootEl.selectNodes("/Menus//*");
+			for (int i = 0; i < idNodes.size(); i++) {
+				Element el = (Element) idNodes.get(i);
+				Attribute attr = el.attribute("id");
+				if (attr != null) {
+					pubIds.add(attr.getValue());
 				}
 			}
 
-			/* 244 */setPublicMenuIds(pubIds);
-			/* 245 */setPublicDocument(publicDoc);
+			setPublicMenuIds(pubIds);
+			setPublicDocument(publicDoc);
 		} catch (Exception ex) {
-			/* 248 */logger
-					.error("menu.xml + menu-public.xsl transform has error:"
+			logger.error("menu.xml + menu-public.xsl transform has error:"
 							+ ex.getMessage());
 		}
 	}
 
 	public static Document getOrignalMenuDocument() {
-		/* 257 */String menuFilePath = servletContext.getRealPath("/js/menu")
+		String menuFilePath = servletContext.getRealPath("/js/menu")
 				+ "/menu.xml";
-		/* 258 */Document doc = XmlUtil.load(menuFilePath);
-		/* 259 */return doc;
+		Document doc = XmlUtil.load(menuFilePath);
+		return doc;
 	}
 
 	public static Document getGrantMenuDocument() {
-		/* 267 */String xslStyle = servletContext.getRealPath("/js/menu")
-				+ "/menu-grant.xsl";
-		/* 268 */Document finalDoc = null;
+		String xslStyle = servletContext.getRealPath("/js/menu") + "/menu-grant.xsl";
+		Document finalDoc = null;
 		try {
-			/* 270 */finalDoc = XmlUtil.styleDocument(getOrignalMenuDocument(),
-					xslStyle);
+			finalDoc = XmlUtil.styleDocument(getOrignalMenuDocument(), xslStyle);
 		} catch (Exception ex) {
-			/* 272 */logger
-					.error("menu.xml + menu-grant.xsl transform has error:"
+			logger.error("menu.xml + menu-grant.xsl transform has error:"
 							+ ex.getMessage());
 		}
-		/* 274 */return finalDoc;
+		return finalDoc;
 	}
 
 	public static Document getPublicMenuDocument() {
-		/* 282 */return publicDocument;
+		return publicDocument;
 	}
 
 	public static Set<String> getPublicMenuIds() {
-		/* 290 */return publicMenuIds;
+		return publicMenuIds;
 	}
 
 	public static void synMenu() {
-		/* 294 */AppFunctionService appFunctionService = (AppFunctionService) getBean("appFunctionService");
-		/* 295 */FunUrlService funUrlService = (FunUrlService) getBean("funUrlService");
+		AppFunctionService appFunctionService = (AppFunctionService) getBean("appFunctionService");
+		FunUrlService funUrlService = (FunUrlService) getBean("funUrlService");
 
-		/* 299 */List funNodeList = getOrignalMenuDocument().getRootElement()
-				.selectNodes("/Menus/Items//Item/Function");
+		List funNodeList = getOrignalMenuDocument().getRootElement().selectNodes("/Menus/Items//Item/Function");
 
-		/* 301 */for (int i = 0; i < funNodeList.size(); i++) {
-			/* 302 */Element funNode = (Element) funNodeList.get(i);
+		for (int i = 0; i < funNodeList.size(); i++) {
+			Element funNode = (Element) funNodeList.get(i);
 
-			/* 304 */String key = funNode.attributeValue("id");
-			/* 305 */String name = funNode.attributeValue("text");
+			String key = funNode.attributeValue("id");
+			String name = funNode.attributeValue("text");
 
-			/* 307 */AppFunction appFunction = appFunctionService.getByKey(key);
+			AppFunction appFunction = appFunctionService.getByKey(key);
 
-			/* 309 */if (appFunction == null)
-				/* 310 */appFunction = new AppFunction(key, name);
+			if (appFunction == null)
+				appFunction = new AppFunction(key, name);
 			else {
-				/* 312 */appFunction.setFunName(name);
+				appFunction.setFunName(name);
 			}
 
-			/* 315 */List urlNodes = funNode.selectNodes("./url");
+			List urlNodes = funNode.selectNodes("./url");
 
-			/* 317 */appFunctionService.save(appFunction);
+			appFunctionService.save(appFunction);
 
-			/* 319 */for (int k = 0; k < urlNodes.size(); k++) {
-				/* 320 */Node urlNode = (Node) urlNodes.get(k);
-				/* 321 */String path = urlNode.getText();
-				/* 322 */FunUrl fu = funUrlService.getByPathFunId(path,
-						appFunction.getFunctionId());
-				/* 323 */if (fu == null) {
-					/* 324 */fu = new FunUrl();
-					/* 325 */fu.setUrlPath(path);
-					/* 326 */fu.setAppFunction(appFunction);
-					/* 327 */funUrlService.save(fu);
+			for (int k = 0; k < urlNodes.size(); k++) {
+				Node urlNode = (Node) urlNodes.get(k);
+				String path = urlNode.getText();
+				FunUrl fu = funUrlService.getByPathFunId(path, appFunction.getFunctionId());
+				if (fu == null) {
+					fu = new FunUrl();
+					fu.setUrlPath(path);
+					fu.setAppFunction(appFunction);
+					funUrlService.save(fu);
 				}
 			}
 		}
 	}
 
 	public static boolean getIsSynMenu() {
-		/* 338 */String synMenu = (String) configMap.get("isSynMenu");
+		String synMenu = (String) configMap.get("isSynMenu");
 
-		/* 340 */return "true".equals(synMenu);
+		return "true".equals(synMenu);
 	}
 
 	public static Map getSysConfig() {
-		/* 349 */return configMap;
+		return configMap;
 	}
 
 	public static void reloadSysConfig() {
-		/* 353 */configMap.clear();
-		/* 354 */SysConfigService sysConfigService = (SysConfigService) getBean("sysConfigService");
-		/* 355 */List<SysConfig> list = sysConfigService.getAll();
-		/* 356 */for (SysConfig conf : list)
-			/* 357 */configMap.put(conf.getConfigKey(), conf.getDataValue());
+		configMap.clear();
+		SysConfigService sysConfigService = (SysConfigService) getBean("sysConfigService");
+		List<SysConfig> list = sysConfigService.getAll();
+		for (SysConfig conf : list)
+			configMap.put(conf.getConfigKey(), conf.getDataValue());
 	}
 
 	public static String getCompanyLogo() {
-		/* 362 */String defaultLogoPath = "/images/ht-logo.png";
-		/* 363 */String path = (String) configMap.get("app.logoPath");
-		/* 364 */if (StringUtils.isNotEmpty(path)) {
-			/* 365 */defaultLogoPath = "/attachFiles/" + path;
+		String defaultLogoPath = "/images/ht-logo.png";
+		String path = (String) configMap.get("app.logoPath");
+		if (StringUtils.isNotEmpty(path)) {
+			defaultLogoPath = "/attachFiles/" + path;
 		}
-		/* 367 */return defaultLogoPath;
+		return defaultLogoPath;
 	}
 
 	public static String getCompanyName() {
-		/* 371 */String defaultName = "北京极限软件有限公司";
-		/* 372 */String companyName = (String) configMap.get("app.companyName");
-		/* 373 */if (StringUtils.isNotEmpty(companyName)) {
-			/* 374 */defaultName = companyName;
+		String defaultName = "北京极限软件有限公司";
+		String companyName = (String) configMap.get("app.companyName");
+		if (StringUtils.isNotEmpty(companyName)) {
+			defaultName = companyName;
 		}
-		/* 376 */return defaultName;
+		return defaultName;
 	}
 }

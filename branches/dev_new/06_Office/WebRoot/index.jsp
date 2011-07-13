@@ -84,6 +84,7 @@
 		<script type="text/javascript" src="<%=basePath%>/js/personal/DutyForm.js"></script>
         <script type="text/javascript" src="<%=basePath%>/js/sound/soundmanager2.js"></script>
         <script type="text/javascript" src="<%=basePath%>/js/search/SearchForm.js"></script>
+        <script type="text/javascript" src="<%=basePath%>/js/changeTheme/changeTheme.js"></script>
     	<link href="<%=basePath%>/css/desktop.css" rel="stylesheet" type="text/css" />	
     	<script type="text/javascript" src="<%=basePath%>/js/ScrollText.js"></script>
     	<script type="text/javascript" src="<%=basePath%>/ext3/ext-basex.js"></script>
@@ -112,31 +113,47 @@
         <div id="loading-mask"></div>
 		
 		<div id="app-header">
-			<div id="header-left">
-				<img id ="CompanyLogo" src="<%=basePath+AppUtil.getCompanyLogo()%>" height="50" style="max-width:230px;"/>
-			</div>
-			<div id="header-main">
-				<div id="topInfoPanel" style="float:left;padding-bottom: 4px">
-					<div id="welcomeMsg">欢迎您，<security:authentication property="principal.fullname"/>，[<a href="<%=basePath%>/j_logout.do">注销</a>]</div>
-					<div id="currentTime"><span id="nowTime"></span><span id="nowTime2"></span></div>
+			<div id="up">
+				<div id="header-left">
+					<img id ="CompanyLogo" src="<%=basePath+AppUtil.getCompanyLogo()%>" height="50" style="max-width:230px;"/>
 				</div>
-				<div class="clear"></div>
-				<ul id="header-topnav">
-					<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu-desktop">桌面</a></li>
-					<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu-mail_box">邮件</a></li>
-					<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu-task">任务</a></li>
-					<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu-workPlan">计划</a></li>
-					<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu-document">文档</a></li>
-				</ul>
-			</div>
-			<div id="header-right">
-				<div id="setting">
-					<a href="<%=basePath%>/help/manual.zip" target="blank">帮助</a>
-					<c:if test="${IS_MANAGER ==true}">
-						|&nbsp;<a href="#" onclick="App.clickTopTab('SysConfigView')">设置</a>
-					</c:if>
+				<div id="header-main">
+					<div id="topInfoPanel" style="float:left;padding-bottom: 4px">
+						<div id="welcomeMsg">欢迎您，<security:authentication property="principal.fullname"/>，[<a href="<%=basePath%>/j_logout.do">注销</a>]</div>
+						<div id="currentTime"><span id="nowTime"></span><span id="nowTime2"></span></div>
+					</div>
+					<div class="clear"></div>
+					<!--
+					<ul id="header-topnav">
+						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu-desktop">桌面</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu-mail_box">邮件</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu-task">任务</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu-workPlan">计划</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu-document">文档</a></li>
+					</ul>
+					-->
 				</div>
-				<div id="searchFormDisplay" style="width:260px;float:right;padding-top:8px;">&nbsp;</div>
+				<div>
+					<ul id="header-topnav">
+						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu-desktop">桌面</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu-mail_box">邮件</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu-task">任务</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu-workPlan">计划</a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu-document">文档</a></li>
+					</ul>
+				</div>
+				<div id="header-right">
+					<div id="setting">
+						<div style="position:absolute;top:10px;padding-left:105px;z-index:99;">
+							<a href="<%=basePath%>/help/manual.zip" target="blank">帮助</a>
+							<c:if test="${IS_MANAGER ==true}">
+								|&nbsp;<a href="#" onclick="App.clickTopTab('SysConfigView')">设置</a>
+							</c:if>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="down" class="down-tool">
 			</div>
 		</div>
 		

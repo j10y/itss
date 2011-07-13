@@ -28,23 +28,6 @@ var IndexPage = Ext
 								border : false,
 								bbar : [
 										{
-											text : "退出系统",
-											iconCls : "btn-logout",
-											handler : function() {
-												App.Logout();
-											}
-										},
-										"-",
-										{
-											text : "在线用户",
-											iconCls : "btn-onlineUser",
-											handler : function() {
-												OnlineUserSelector.getView()
-														.show();
-											}
-										},
-										"-",
-										{
 											id : "messageTip",
 											xtype : "button",
 											hidden : true,
@@ -90,16 +73,6 @@ var IndexPage = Ext
 											xtype : "tbseparator"
 										},
 										{
-											pressed : false,
-											text : "与我们联系",
-											handler : function() {
-												Ext.ux.Toast
-														.msg("联系我们",
-																"网址：http://172.16.100.26/ITC");
-											}
-										},
-										"-",
-										{
 											text : "收展",
 											iconCls : "btn-expand",
 											handler : function() {
@@ -111,48 +84,7 @@ var IndexPage = Ext
 													a.collapse(true);
 												}
 											}
-										},
-										"-",
-										{
-											xtype : "combo",
-											mode : "local",
-											editable : false,
-											value : "切换皮肤",
-											width : 100,
-											triggerAction : "all",
-											store : [
-													[ "ext-all", "缺省浅蓝" ],
-													[ "ext-all-css04", "灰白主题" ],
-													[ "ext-all-css05", "绿色主题" ],
-													[ "ext-all-css03", "粉红主题" ],
-													[ "xtheme-tp", "灰色主题" ],
-													[ "xtheme-default2", "灰蓝主题" ],
-													[ "xtheme-default16",
-															"绿色主题" ],
-													[ "xtheme-access",
-															"Access风格" ] ],
-											listeners : {
-												scope : this,
-												"select" : function(d, b, c) {
-													if (d.value != "") {
-														var a = new Date();
-														a
-																.setDate(a
-																		.getDate() + 300);
-														setCookie("theme",
-																d.value, a,
-																__ctxPath);
-														Ext.util.CSS
-																.swapStyleSheet(
-																		"theme",
-																		__ctxPath
-																				+ "/ext3/resources/css/"
-																				+ d.value
-																				+ ".css");
-													}
-												}
-											}
-										} ]
+										}]
 							}),
 					constructor : function() {
 						this.center = new Ext.TabPanel({
@@ -175,7 +107,82 @@ var IndexPage = Ext
 						});
 						this.afterPropertySet();
 						this.loadWestMenu();
+						this.buildToolBar();
 					},
+					buildToolBar : function(){
+						
+						var toolbar = new Ext.Toolbar({
+							id : 'down-tool',
+							renderTo : 'down',
+							cls:'x-toolbar-banner',
+							items : [
+										{
+											id : "searchContent",
+											xtype : "textfield",
+											width : 100
+										},
+										{
+											id : "searchType",
+											width : 60,
+											xtype : "combo",
+											mode : "local",
+											editable : false,
+											triggerAction : "all",
+											store : [ [ "news", "新闻" ], [ "mail", "邮件" ],
+													[ "notice", "公告" ], [ "document", "文档" ] ],
+											value : "news"
+										},
+										{
+											xtype : "button",
+											text : "搜索",
+											iconCls : "search",
+											handler : function() {
+												var b = Ext.getCmp("searchContent").getValue();
+												var a = Ext.getCmp("searchType").value;
+												if (a == "news") {
+													App.clickTopTab("SearchNews", b, function() {
+														AppUtil.removeTab("SearchNews");
+													});
+												} else {
+													if (a == "mail") {
+														App
+																.clickTopTab(
+																		"SearchMail",
+																		b,
+																		function() {
+																			AppUtil
+																					.removeTab("SearchMail");
+																		});
+													} else {
+														if (a == "notice") {
+															App
+																	.clickTopTab(
+																			"SearchNotice",
+																			b,
+																			function() {
+																				AppUtil
+																						.removeTab("SearchNotice");
+																			});
+														} else {
+															if (a == "document") {
+																App
+																		.clickTopTab(
+																				"SearchDocument",
+																				b,
+																				function() {
+																					AppUtil
+																							.removeTab("SearchDocument");
+																				});
+															}
+														}
+													}
+												}
+											}
+										} , "-", Ext.getCmp("ChangeTheme")]
+						});
+						return toolbar;
+					},
+					
 					afterPropertySet : function() {
 						var a = this.center;
 						var c = function(f) {
@@ -225,7 +232,6 @@ var IndexPage = Ext
 								b();
 							};
 						}, 100);
-						Ext.getCmp("SearchForm").render("searchFormDisplay");
 					},
 					loadWestMenu : function() {
 						var westPanel = Ext.getCmp("west-panel");
