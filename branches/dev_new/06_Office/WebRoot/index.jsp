@@ -123,23 +123,15 @@
 						<div id="currentTime"><span id="nowTime"></span><span id="nowTime2"></span></div>
 					</div>
 					<div class="clear"></div>
-					<!--
-					<ul id="header-topnav">
-						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu-desktop">桌面</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu-mail_box">邮件</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu-task">任务</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu-workPlan">计划</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu-document">文档</a></li>
-					</ul>
-					-->
+					
 				</div>
 				<div style="padding-right:350px;position: relative;float:right;width:250px;">
 					<ul id="header-topnav">
-						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu_desktop" ><!-- 桌面 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu_email"><!-- 邮件 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu_assign"><!-- 任务 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu_plan"><!-- 计划 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu_doc"><!-- 文档 --></a></li>
+						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu_desktop" title="桌面"><!-- 桌面 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu_email" title="邮件"><!-- 邮件 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu_assign" title="任务"><!-- 任务 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu_plan" title="计划"><!-- 计划 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu_doc" title="文档"><!-- 文档 --></a></li>
 					</ul>
 				</div>
 				
