@@ -133,18 +133,22 @@
 					</ul>
 					-->
 				</div>
-				<div>
+				<div style="padding-right:350px;position: relative;float:right;width:250px;">
 					<ul id="header-topnav">
-						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu-desktop">桌面</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu-mail_box">邮件</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu-task">任务</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu-workPlan">计划</a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu-document">文档</a></li>
+						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu_desktop" ><!-- 桌面 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu_email"><!-- 邮件 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu_assign"><!-- 任务 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu_plan"><!-- 计划 --></a></li>
+						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu_doc"><!-- 文档 --></a></li>
 					</ul>
 				</div>
-				<div id="header-right">
+				
+			</div>
+			
+		</div>
+		<div id="header-right">
 					<div id="setting">
-						<div style="position:absolute;top:10px;padding-left:105px;z-index:99;">
+						<div style="position:relative;top:6px;padding-right:15px;z-index:99999;float:right;">
 							<a href="<%=basePath%>/help/manual.zip" target="blank">帮助</a>
 							<c:if test="${IS_MANAGER ==true}">
 								|&nbsp;<a href="#" onclick="App.clickTopTab('SysConfigView')">设置</a>
@@ -152,10 +156,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div id="down" class="down-tool">
-			</div>
+		<div id="down" class="down-tool">
 		</div>
-		
 	</body>
 </html>

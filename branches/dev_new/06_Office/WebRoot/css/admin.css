@@ -79,7 +79,7 @@ div button {
 }
 
 #header-main {
-	//width: 520px;
+	width: 320px;
 	float: left;
 	margin-left: 6px;
 	z-index:999px;
@@ -121,9 +121,9 @@ div button {
 
 #header-topnav li {
 	//background: url('../images/header-li.jpg') no-repeat;
-	background-image:url('../images/header-li.jpg');
+	//background-image:url('../images/header-li.jpg');
     background-repeat:no-repeat;
-    background-position:0px 0px;
+    background-position:4px 3px;
 }
 
 #header-topnav li a {
@@ -137,7 +137,7 @@ div button {
 	line-height: 50px;
 	position: relative;
 	text-decoration: none;
-	width: 80px;
+	width: 50px;
 }
 
 #header-topnav .commonli {
@@ -1709,13 +1709,41 @@ li .right {
 	position:absolute;
 	top:26px;
 	right:0px;
-	background-image:url();
-	background-repeat:no-repeat;
 	width:335px;
-	height:69px;
-	z-index:999;
+	height:50px;
+	z-index:999px;
 }
 .x-toolbar-banner{
 	border-color:#a9bfd3;
     background:transparent!important;
+}
+
+.menu_desktop{
+	background-image: url('../images/menus/menu_desktop.png') !important;
+	background-repeat: no-repeat;
+	background-position: 10% 50%"
+}
+
+.menu_email{
+	background-image: url('../images/menus/menu_email.png') !important;
+	background-repeat: no-repeat;
+	background-position: 10% 50%"
+}
+
+.menu_assign{
+	background-image: url('../images/menus/menu_task.png') !important;
+	background-repeat: no-repeat;
+	background-position: 10% 50%"
+}
+
+.menu_plan{
+	background-image: url('../images/menus/menu_plan.png') !important;
+	background-repeat: no-repeat;
+	background-position: 10% 50%"
+}
+
+.menu_doc{
+	background-image: url('../images/menus/menu_doc.png') !important;
+	background-repeat: no-repeat;
+	background-position: 10% 50%"
 }
