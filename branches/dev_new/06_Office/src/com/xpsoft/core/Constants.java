@@ -19,7 +19,7 @@ public class Constants {
 	public static final String FLOW_NEXT_TRANS = "nextTrans";
 	public static final String ARCHIES_ARCHIVESID = "archives.archivesId";
 	public static final String COMPANY_LOGO = "app.logoPath";
-	public static final String DEFAULT_LOGO = "/images/ht-logo.png";
+	public static final String DEFAULT_LOGO = "/images/xp-logo.png";
 	public static final String COMPANY_NAME = "app.companyName";
 	public static final String DEFAULT_COMPANYNAME = "北京极限软件有限公司";
 
