@@ -103,9 +103,10 @@ App.LoginWin = function(b) {
 		border : true,
 		closable : false,
 		resizable : false,
+		renderTo : 'loginArea',
 		buttonAlign : "center",
-		height : 275,
-		width : 460,
+		height : 220,
+		width : 350,
 		layout : {
 			type : "vbox",
 			align : "stretch"
@@ -119,24 +120,8 @@ App.LoginWin = function(b) {
 				{
 					xtype : "panel",
 					border : false,
-					bodyStyle : "padding-left:60px",
-					html : '<img src="' + __loginImage
-							+ '" style="height:55px;max-width:247px;"/>',
-					height : 50
-				},
-				{
-					xtype : "panel",
-					border : false,
 					layout : "column",
-					items : [
-							a,
-							{
-								xtype : "panel",
-								border : false,
-								columnWidth : 0.25,
-								html : '<img src="' + __ctxPath
-										+ '/images/login-user.jpg"/>'
-							} ]
+					items : [a]
 				} ],
 		buttons : [ {
 			text : "登录",
