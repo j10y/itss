@@ -24,7 +24,7 @@ public class LoginAction extends BaseAction {
 	private String username;
 	private String password;
 	private String checkCode;
-	/* 37 */private String key = "RememberAppUser";
+	private String key = "RememberAppUser";
 
 	@Resource
 	private AppUserService userService;
@@ -33,16 +33,14 @@ public class LoginAction extends BaseAction {
 	private SysConfigService sysConfigService;
 
 	@Resource(name = "authenticationManager")
-	/* 45 */private AuthenticationManager authenticationManager = null;
+	private AuthenticationManager authenticationManager = null;
 
 	public String login() {
-		/* 54 */StringBuffer msg = new StringBuffer("{msg:'");
+		StringBuffer msg = new StringBuffer("{msg:'");
 
-		/* 56 */SysConfig sysConfig = this.sysConfigService
-				.findByKey("codeConfig");
+		SysConfig sysConfig = this.sysConfigService.findByKey("codeConfig");
 
-		/* 58 */Captcha captcha = (Captcha) getSession().getAttribute(
-				"simpleCaptcha");
+		Captcha captcha = (Captcha) getSession().getAttribute("simpleCaptcha");
 		/* 59 */Boolean login = Boolean.valueOf(false);
 
 		/* 61 */String newPassword = null;
@@ -85,42 +83,39 @@ public class LoginAction extends BaseAction {
 			} else
 				msg.append("用户不存在.'");
 		}
-		/* 102 */if (login.booleanValue()) {
-			/* 103 */UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+		if (login.booleanValue()) {
+			UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
 					this.username, this.password);
-			/* 104 */SecurityContext securityContext = SecurityContextHolder
-					.getContext();
-			/* 105 */securityContext
-					.setAuthentication(this.authenticationManager
-							.authenticate(authRequest));
-			/* 106 */SecurityContextHolder.setContext(securityContext);
-			/* 107 */getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME",
+			SecurityContext securityContext = SecurityContextHolder.getContext();
+			securityContext.setAuthentication(this.authenticationManager.authenticate(authRequest));
+			SecurityContextHolder.setContext(securityContext);
+			getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME",
 					this.username);
-			/* 108 */String rememberMe = getRequest().getParameter(
+			String rememberMe = getRequest().getParameter(
 					"_spring_security_remember_me");
-			/* 109 */if ((rememberMe != null) && (rememberMe.equals("on"))) {
-				/* 111 */long tokenValiditySeconds = 1209600L;
-				/* 112 */long tokenExpiryTime = System.currentTimeMillis()
+			if ((rememberMe != null) && (rememberMe.equals("on"))) {
+				long tokenValiditySeconds = 1209600L;
+				long tokenExpiryTime = System.currentTimeMillis()
 						+ tokenValiditySeconds * 1000L;
 
-				/* 114 */String signatureValue = DigestUtils
+				String signatureValue = DigestUtils
 						.md5Hex(this.username + ":" + tokenExpiryTime + ":"
 								+ this.user.getPassword() + ":" + this.key);
 
-				/* 116 */String tokenValue = this.username + ":"
+				String tokenValue = this.username + ":"
 						+ tokenExpiryTime + ":" + signatureValue;
-				/* 117 */String tokenValueBase64 = new String(
+				String tokenValueBase64 = new String(
 						Base64.encodeBase64(tokenValue.getBytes()));
-				/* 118 */getResponse().addCookie(
+				getResponse().addCookie(
 						makeValidCookie(tokenExpiryTime, tokenValueBase64));
 			}
 
-			/* 122 */setJsonString("{success:true}");
+			setJsonString("{success:true}");
 		} else {
-			/* 124 */msg.append(",failure:true}");
-			/* 125 */setJsonString(msg.toString());
+			msg.append(",failure:true}");
+			setJsonString(msg.toString());
 		}
-		/* 127 */return "success";
+		return "success";
 	}
 
 	protected Cookie makeValidCookie(long expiryTime, String tokenValueBase64) {

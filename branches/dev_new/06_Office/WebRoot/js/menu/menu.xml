@@ -373,6 +373,9 @@
 			</Function>
 			<Function id="_FlowCheck" text="查看" iconCls="menu-list">
 				<url>/flow/processDetail.do</url>
+				<url>/flow/checkTask.do</url>
+				<url>/flow/myProcessRun.do</url>
+				<url>/flow/freeTransProcessActivity.do</url>
 			</Function>
 			<Function id="_FlowSetting" text="人员设置" iconCls="menu-manage">
 				<url>/flow/saveProUserAssign.do</url>

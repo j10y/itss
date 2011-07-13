@@ -71,8 +71,8 @@ App.LoginWin = function(b) {
 					width : 55,
 					xtype : "panel",
 					border : false,
-					bodyStyle : "font-size:12px;padding-left:12px",
-					html : '<a href="javascript:refeshCode()">看不清</a>'
+					bodyStyle : "font-size:12px;padding-left:5px",
+					html : '<a href="javascript:refeshCode()">换一张</a>'
 				} ];
 		var f = Ext.getCmp("codeContainer");
 		f.add(d);
