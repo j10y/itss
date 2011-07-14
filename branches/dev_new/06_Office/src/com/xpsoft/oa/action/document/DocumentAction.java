@@ -110,7 +110,7 @@
 /* 124 */       doc.setIsShared(Document.SHARED);
 /* 125 */       this.documentService.save(doc);
 /*     */     }
-/*     */ 
+/*     */     setJsonString("{'success':true,'msg':'共享成功'}");
 /* 128 */     return "success";
 /*     */   }
 /*     */ 

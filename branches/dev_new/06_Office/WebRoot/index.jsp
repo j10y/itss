@@ -123,7 +123,6 @@
 						<div id="currentTime"><span id="nowTime"></span><span id="nowTime2"></span></div>
 					</div>
 					<div class="clear"></div>
-					
 				</div>
 				<div style="padding-right:350px;position: relative;float:right;width:250px;">
 					<ul id="header-topnav">
@@ -142,9 +141,11 @@
 					<div id="setting">
 						<div style="position:relative;top:6px;padding-right:15px;z-index:99999;float:right;">
 							<a href="<%=basePath%>/help/manual.zip" target="blank">帮助</a>
+							<!-- 
 							<c:if test="${IS_MANAGER ==true}">
 								|&nbsp;<a href="#" onclick="App.clickTopTab('SysConfigView')">设置</a>
 							</c:if>
+							 -->
 						</div>
 					</div>
 				</div>

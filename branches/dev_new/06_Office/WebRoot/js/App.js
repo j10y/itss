@@ -69,6 +69,7 @@ App.clickTopTab = function(f, c, a, e) {
 	var d = b.getItem(f);
 	if (d == null) {
 		$ImportJs(f, function(g) {
+			Ext.apply(g,{closable:true});
 			d = b.add(g);
 			b.activate(d);
 		}, c);
@@ -76,6 +77,7 @@ App.clickTopTab = function(f, c, a, e) {
 		if (e != null) {
 			e.call(this);
 		}
+		Ext.apply(d,{closable:true});
 		b.activate(d);
 	}
 };
@@ -107,7 +109,6 @@ App.clickNode = function(a) {
 	if (a.id == null || a.id == "" || a.id.indexOf("xnode") != -1) {
 		return;
 	}
-	
 	App.clickTopTab(a.id);
 };
 App.MyDesktopClick = function() {

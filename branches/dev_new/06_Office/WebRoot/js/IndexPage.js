@@ -94,8 +94,7 @@ var IndexPage = Ext
 							enableTabScroll : true,
 							activeTab : 0,
 							defaults : {
-								autoScroll : true,
-								closable : true
+								autoScroll : true
 							},
 							items : [],
 							plugins: new Ext.ux.TabCloseMenu()

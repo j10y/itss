@@ -243,6 +243,11 @@
 	 
 	<Items id="SystemSetting" text="系统设置" iconCls="menu-system"
 		isPublic="false">
+		<Item id="SysConfigView" iconCls="menu-system-setting" text="系统配置">
+			<Function id="_SysConfigEdit" text="查看系统配置" iconCls="btn-edit">
+				<url>/system/loadSysConfig.do</url>
+			</Function>
+		</Item>
 		<Item id="AppUserView" iconCls="menu-appuser" text="员工管理">
 			<Function id="_AppUserQuery" text="查看员工" iconCls="menu-list">
 				<url>/system/listAppUser.do</url>

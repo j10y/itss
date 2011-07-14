@@ -687,6 +687,7 @@ PanelSelectorWin = Ext.extend(Ext.Window, {
 AppHome = Ext.extend(Ext.Panel, {
 	portalPanel : null,
 	toolbar : null,
+	closable:false,
 	constructor : function(a) {
 		Ext.applyIf(this, a);
 		this.initUIComponents();

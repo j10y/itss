@@ -220,7 +220,7 @@ public class StandSalaryAction extends BaseAction {
 			/* 220 */checkStandard.setStatus(Short.valueOf(STATUS_NOT_PASS));
 		}
 		/* 222 */this.standSalaryService.save(checkStandard);
-
+		setJsonString("{success:true,msg:'审核通过'}");
 		/* 224 */return "success";
 	}
 
