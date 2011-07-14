@@ -41,44 +41,44 @@ public class LoginAction extends BaseAction {
 		SysConfig sysConfig = this.sysConfigService.findByKey("codeConfig");
 
 		Captcha captcha = (Captcha) getSession().getAttribute("simpleCaptcha");
-		/* 59 */Boolean login = Boolean.valueOf(false);
+		Boolean login = Boolean.valueOf(false);
 
-		/* 61 */String newPassword = null;
+		String newPassword = null;
 
-		/* 63 */if ((!"".equals(this.username)) && (this.username != null)) {
-			/* 64 */setUser(this.userService.findByUserName(this.username));
+		if ((!"".equals(this.username)) && (this.username != null)) {
+			setUser(this.userService.findByUserName(this.username));
 
-			/* 66 */if (this.user != null) {
-				/* 68 */if (org.apache.commons.lang.StringUtils
+			if (this.user != null) {
+				if (org.apache.commons.lang.StringUtils
 						.isNotEmpty(this.password)) {
-					/* 70 */newPassword = StringUtil
+					newPassword = StringUtil
 							.encryptSha256(this.password);
 
-					/* 72 */if (this.user.getPassword().equalsIgnoreCase(
+					if (this.user.getPassword().equalsIgnoreCase(
 							newPassword)) {
-						/* 74 */if (sysConfig.getDataValue().equals(
+						if (sysConfig.getDataValue().equals(
 								SysConfig.CODE_OPEN)) {
-							/* 75 */if (captcha == null) {
-								/* 76 */msg.append("请刷新验证码再登录.'");
+							if (captcha == null) {
+								msg.append("请刷新验证码再登录.'");
 							}
-							/* 79 */else if (captcha.isCorrect(this.checkCode)) {
-								/* 81 */if (this.user.getStatus().shortValue() == 1)
-									/* 82 */login = Boolean.valueOf(true);
+							else if (captcha.isCorrect(this.checkCode)) {
+								if (this.user.getStatus().shortValue() == 1)
+									login = Boolean.valueOf(true);
 								else
-									/* 84 */msg.append("此用户已被禁用.'");
+									msg.append("此用户已被禁用.'");
 							}
-							/* 86 */else
+							else
 								msg.append("验证码不正确.'");
 
 						}
-						/* 90 */else if (this.user.getStatus().shortValue() == 1)
-							/* 91 */login = Boolean.valueOf(true);
+						else if (this.user.getStatus().shortValue() == 1)
+							login = Boolean.valueOf(true);
 						else
-							/* 93 */msg.append("此用户已被禁用.'");
+							msg.append("此用户已被禁用.'");
 					} else
-						/* 96 */msg.append("密码不正确.'");
+						msg.append("密码不正确.'");
 				} else {
-					/* 98 */msg.append("密码不能为空.'");
+					msg.append("密码不能为空.'");
 				}
 			} else
 				msg.append("用户不存在.'");
@@ -119,45 +119,45 @@ public class LoginAction extends BaseAction {
 	}
 
 	protected Cookie makeValidCookie(long expiryTime, String tokenValueBase64) {
-		/* 131 */HttpServletRequest request = getRequest();
-		/* 132 */Cookie cookie = new Cookie(
+		HttpServletRequest request = getRequest();
+		Cookie cookie = new Cookie(
 				"SPRING_SECURITY_REMEMBER_ME_COOKIE", tokenValueBase64);
-		/* 133 */cookie.setMaxAge(157680000);
-		/* 134 */cookie.setPath(org.springframework.util.StringUtils
+		cookie.setMaxAge(157680000);
+		cookie.setPath(org.springframework.util.StringUtils
 				.hasLength(request.getContextPath()) ? request.getContextPath()
 				: "/");
-		/* 135 */return cookie;
+		return cookie;
 	}
 
 	public AppUser getUser() {
-		/* 139 */return this.user;
+		return this.user;
 	}
 
 	public void setUser(AppUser user) {
-		/* 143 */this.user = user;
+		this.user = user;
 	}
 
 	public String getUsername() {
-		/* 147 */return this.username;
+		return this.username;
 	}
 
 	public void setUsername(String username) {
-		/* 151 */this.username = username;
+		this.username = username;
 	}
 
 	public String getPassword() {
-		/* 155 */return this.password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
-		/* 159 */this.password = password;
+		this.password = password;
 	}
 
 	public String getCheckCode() {
-		/* 163 */return this.checkCode;
+		return this.checkCode;
 	}
 
 	public void setCheckCode(String checkCode) {
-		/* 167 */this.checkCode = checkCode;
+		this.checkCode = checkCode;
 	}
 }
