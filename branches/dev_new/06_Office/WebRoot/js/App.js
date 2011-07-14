@@ -107,6 +107,7 @@ App.clickNode = function(a) {
 	if (a.id == null || a.id == "" || a.id.indexOf("xnode") != -1) {
 		return;
 	}
+	
 	App.clickTopTab(a.id);
 };
 App.MyDesktopClick = function() {
