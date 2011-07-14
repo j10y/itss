@@ -109,13 +109,12 @@ public class ErrandsRegisterAction extends BaseAction {
 		/* 129 */this.errandsRegister.setStatus(Short.valueOf((short) 0));
 		/* 130 */this.errandsRegisterService.save(this.errandsRegister);
 
-		/* 132 */if ((ErrandsRegister.FLAG_LEAVE.equals(this.errandsRegister
-				.getFlag())) &&
+		/* 132 */if ((ErrandsRegister.FLAG_LEAVE.equals(this.errandsRegister.getFlag())||ErrandsRegister.FLAG_OUT.equals(this.errandsRegister.getFlag())) &&
 		/* 133 */(isNew)) {
 			/* 134 */Map fieldMap = constructStartFlowMap(this.errandsRegister);
-
+			      
 			/* 136 */ProDefinition proDefintion = this.jbpmService
-					.getProDefinitionByKey("-requestHoliday");
+					.getProDefinitionByKey("pd6212082814169152003");
 
 			/* 138 */if (proDefintion != null) {
 				/* 139 */ProcessRun processRun = this.processRunService
@@ -125,7 +124,9 @@ public class ErrandsRegisterAction extends BaseAction {
 				/* 142 */processForm.setActivityName("开始");
 				/* 143 */processForm.setProcessRun(processRun);
 
-				/* 146 */FlowRunInfo runInfo = new FlowRunInfo();
+				//FlowRunInfo runInfo = new FlowRunInfo();
+						 FlowRunInfo runInfo = new FlowRunInfo(getRequest());
+						 runInfo.setParamFields(fieldMap);
 				/* 147 */runInfo.setStartFlow(true);
 
 				/* 149 */runInfo.setdAssignId(this.errandsRegister
