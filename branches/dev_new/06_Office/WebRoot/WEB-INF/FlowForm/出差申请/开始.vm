@@ -11,7 +11,7 @@
 				items : [{
 					xtype : 'textfield',
 					fieldLabel : '出差目的',
-					width : 300,
+					width : 200,
 					name : 'aim',
 					allowBlank:false,
 					value : '${aim}'
@@ -47,7 +47,7 @@
 				items : [{
 							xtype : 'textfield',
 							fieldLabel : '姓名',
-							width : 300,
+							width : 200,
 							name : 'fullname',
 							#if ($fullname=='')
 							value : '${currentUser.fullname}'
@@ -57,7 +57,7 @@
 						}, {
 							fieldLabel : '手机',
 							xtype : 'textfield',
-							width : 300,
+							width : 200,
 							name : 'mobile',
 							allowBlank:false,
 							#if ($mobile=='')
@@ -71,7 +71,7 @@
 				layout : 'form',
 				items : [{
 							fieldLabel : '邮箱',
-							width : 300,
+							width : 200,
 							xtype : 'textfield',
 							name : 'email',
 							vtype : 'email',
