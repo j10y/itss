@@ -584,14 +584,14 @@ public class JbpmServiceImpl implements JbpmService {
 	}
 
 	public List<Transition> getFreeTransitionsByTaskId(String taskId) {
-		/* 600 */TaskImpl task = (TaskImpl) this.taskService.getTask(taskId);
+		TaskImpl task = (TaskImpl) this.taskService.getTask(taskId);
 
-		/* 602 */List outTrans = new ArrayList();
+		List outTrans = new ArrayList();
 
-		/* 604 */if (task.getSuperTask() != null) {
-			/* 605 */task = task.getSuperTask();
+		if (task.getSuperTask() != null) {
+			task = task.getSuperTask();
 		}
-		/* 607 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
 		/* 608 */Environment env = null;
 		try {
 			/* 610 */env = environmentFactory.openEnvironment();
@@ -749,23 +749,23 @@ public class JbpmServiceImpl implements JbpmService {
 			/* 786 */ProcessRun processRun = this.processRunService
 					.getByPiId(executionId);
 			/* 787 */if (processRun != null) {
-				/* 788 */processRun.setPiId(null);
-				/* 789 */processRun
+				processRun.setPiId(null);
+				processRun
 						.setRunStatus(ProcessRun.RUN_STATUS_FINISHED);
-				/* 790 */this.processRunService.save(processRun);
+				this.processRunService.save(processRun);
 			}
-			/* 792 */return;
+			return;
 		}
 
-		/* 796 */String signUserIds = (String) variables.get("signUserIds");
+		String signUserIds = (String) variables.get("signUserIds");
 
-		/* 799 */if ((destName != null)
+		if ((destName != null)
 				&& (StringUtils.isNotEmpty(signUserIds))) {
-			/* 801 */List<Task> newTasks = getTasksByPiId(pi.getId());
-			/* 802 */for (Task nTask : newTasks) {
-				/* 803 */if (destName.equals(nTask.getName())) {
-					/* 804 */newTask(nTask.getId(), signUserIds);
-					/* 805 */break;
+			List<Task> newTasks = getTasksByPiId(pi.getId());
+			for (Task nTask : newTasks) {
+				if (destName.equals(nTask.getName())) {
+					newTask(nTask.getId(), signUserIds);
+					break;
 				}
 			}
 			/* 808 */return;
