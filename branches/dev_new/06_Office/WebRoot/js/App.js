@@ -89,6 +89,7 @@ App.MyDesktopClickTopTab = function(id, params, precall, callback) {
 	var tabItem = tabs.getItem(id);
 	if (tabItem == null) {
 		$ImportJs(id, function(view) {
+			Ext.apply(view,{closable:true});
 			tabItem = tabs.add(view);
 			tabs.activate(tabItem);
 		}, params);
@@ -101,6 +102,7 @@ App.MyDesktopClickTopTab = function(id, params, precall, callback) {
 			str += "();";
 		}
 		var view = eval(str);
+		Ext.apply(view,{closable:true});
 		tabItem = tabs.add(view);
 		tabs.activate(tabItem);
 	}

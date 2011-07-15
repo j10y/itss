@@ -97,7 +97,13 @@ var IndexPage = Ext
 								autoScroll : true
 							},
 							items : [],
-							plugins: new Ext.ux.TabCloseMenu()
+							plugins: new Ext.ux.TabCloseMenu(),
+							listeners : {
+								"beforeadd" : function(tab, com, index){
+										if(com.getId()!=undefined&&com.getId()!=""&&com.getId()!=null&&com.getId()=="AppHome")return;
+										Ext.apply(com, {closable: true});
+								}
+							}
 						});
 						IndexPage.superclass.constructor.call(this, {
 							layout : "border",
