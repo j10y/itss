@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!--  以下配置 指定由Spring 来管理Action的创建销毁，主要用于IOC begin-->
+	<constant name="struts.objectFactory"    
+    value="org.apache.struts2.spring.StrutsSpringObjectFactory"/>   
+	<!--  以下配置 指定由Spring 来管理Action的创建销毁，主要用于IOC end-->
+
+    <include file="test.xml"/>
+     
+</struts>

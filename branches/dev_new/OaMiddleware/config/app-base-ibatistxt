@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+    
+    <context:component-scan base-package="*"></context:component-scan>
+    
+	  <!-- dataSource config -->
+    <!-- dataSource config dbcp-->
+	<!-- bean id="dataSource" 
+		class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close"> 
+		<property name="driverClassName" 
+		value="${jdbc.driverClassName}" /> 
+		<property name="url" value="${jdbc.url}" /> 
+		<property name="username" value="${jdbc.username}" /> 
+		<property name="password" value="${jdbc.password}" /> 
+		<property name="maxActive" value="${jdbc.maxActive}" /> 
+		<property name="testWhileIdle" value="true" /> 
+		<property name="testOnBorrow" value="true" /> 
+	</bean- -->
+	
+	<!-- config properties -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:applicationResources.properties</value>
+			</list>
+		</property>
+	</bean>
+  
+
+ 	<!-- dataSource config c3p0 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">   
+        <property name="driverClass" value="${jdbc.driverClassName}" />          
+        <property name="jdbcUrl" value="${jdbc.url}" />          
+        <property name="user" value="${jdbc.username}" />          
+        <property name="password" value="${jdbc.password}" />               
+        <property name="minPoolSize" value="${jdbc.minPoolSize}" />        
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />        
+        <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />        
+        <property name="acquireIncrement" value="${jdbc.acquireIncrement}" />         
+        <property name="maxStatements" value="${jdbc.maxStatements}" />          
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />          
+        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />          
+        <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}" />          
+        <property name="breakAfterAcquireFailure" value="true" />              
+        <property name="testConnectionOnCheckout" value="false" />    
+    </bean>  
+	
+
+	<!-- 处理blob字
+	<bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" lazy-init="true" /> 
+	<bean id="oracleLobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler" lazy-init="true"> 
+		<property name="nativeJdbcExtractor"> 
+			<ref local="nativeJdbcExtractor" /> 
+		</property> 
+	</bean段 -->
+	
+	
+	<!-- spring'ibatis config -->
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation"> 
+        	<value>classpath:SqlMapConfig.xml</value>
+   		</property>    
+		<property name="mappingLocations">
+				<list>
+					<value>classpath*:com/${system.webAppPkgName}/**/entity/map/*.sqlMap.xml</value>
+				</list>
+		</property>
+		<property name="dataSource" ref="dataSource"/>
+		<!--property name="lobHandler">
+			<ref local="oracleLobHandler" />
+		</property-->
+	</bean>
+	
+
+	
+	<!-- Transction Intercetor' -->
+    <bean id="transactionIntercetorTemplate" abstract="true">
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="fetch*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="is*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="findSystemColumns">PROPAGATION_REQUIRED</prop>
+                <prop key="findUserColumn*">PROPAGATION_REQUIRED</prop>
+                <prop key="findSystemTableQueryColumn">PROPAGATION_REQUIRED</prop>
+                <prop key="findSystemTableRoleColumn">PROPAGATION_REQUIRED</prop>
+                <prop key="audit*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="pass*">PROPAGATION_REQUIRED</prop>
+                <prop key="submit*">PROPAGATION_REQUIRED</prop>
+                <prop key="modify*">PROPAGATION_REQUIRED</prop>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="insert*">PROPAGATION_REQUIRED</prop>
+                <prop key="import*">PROPAGATION_REQUIRED</prop>
+                <prop key="init*">PROPAGATION_REQUIRED</prop>
+                <prop key="synchroI*">PROPAGATION_REQUIRED</prop>
+                <prop key="post*">PROPAGATION_REQUIRED</prop>
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+                <prop key="load*">PROPAGATION_REQUIRED</prop>
+                <prop key="query*">PROPAGATION_REQUIRED</prop>
+                <prop key="export*">PROPAGATION_REQUIRED</prop>
+                <prop key="gen*">PROPAGATION_REQUIRED</prop>
+                <prop key="list*">PROPAGATION_REQUIRED</prop>
+                <prop key="for*">PROPAGATION_REQUIRED</prop>
+                <prop key="check*">PROPAGATION_REQUIRED</prop>
+                <prop key="end*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="before*">PROPAGATION_REQUIRED</prop>
+                <prop key="middle*">PROPAGATION_REQUIRED</prop>
+                <prop key="change*">PROPAGATION_REQUIRED</prop>
+                <prop key="down*">PROPAGATION_REQUIRED</prop>
+                <prop key="up*">PROPAGATION_REQUIRED</prop>
+                <prop key="exist*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="auth*">PROPAGATION_REQUIRED</prop>
+                <prop key="build*">PROPAGATION_REQUIRED</prop>
+                <prop key="show*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- Jdbc Transaction Interceptor Definition -->
+    <bean id="ibatisTransactionInterceptor"
+        class="org.springframework.transaction.interceptor.TransactionInterceptor"
+        parent="transactionIntercetorTemplate">
+        <property name="transactionManager">
+            <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+                <property name="dataSource">
+                    <ref bean="dataSource" />
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- autoProxyCreator -->
+    <bean id="autoProxyCreator"
+        class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+				<idref bean="ibatisTransactionInterceptor" />
+            </list>
+        </property>
+        <property name="beanNames">
+            <value>*Service</value> 
+        </property>
+    </bean> 
+	
+	<!-- base Dao config  -->
+	<bean id="baseDao"  class="com.xpsoft.framework.dao.BaseDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	<!-- applicationContext.xml文件用于公用模块的配置 -->  
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>applicationResources</value>
+				<value>exceptionInfo</value>
+				<value>applicationInfo</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- baseService -->
+	<bean id="baseService" class="com.xpsoft.framework.service.BaseService">
+		<property name="dao" ref="baseDao"></property>
+	</bean>
+	
+</beans>
+
+
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+		"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!-- iBatis SQL Map 文件 -->
+<sqlMap namespace="com.cssweb.framework3.entity.Sequence">
+     <parameterMap id="objectId" class="map" >  		
+		<parameter property="className" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/> 	
+		<parameter property="nextId" jdbcType="NUMERIC" javaType="long" mode="OUT"/> 
+	</parameterMap> 	
+	<procedure id="selectObjectsByParamNoPage" parameterMap="objectId"> 
+		{call proc_object_get_id (?, ?)} 
+	</procedure>
+</sqlMap>
