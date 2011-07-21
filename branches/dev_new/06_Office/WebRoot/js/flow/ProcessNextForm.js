@@ -229,6 +229,7 @@ ProcessNextForm = Ext
 											var userAssignNames = new Ext.form.TextField(
 													{
 														name : "nextAssignUserNames",
+														allowBlank:false,
 														width : 160,
 														readOnly : true
 													});
@@ -265,6 +266,13 @@ ProcessNextForm = Ext
 																				.msg(
 																						"操作信息",
 																						"请选择自由跳转的任务!");
+																		return;
+																	}
+																	if (flowAssignId == "") {
+																		Ext.ux.Toast
+																				.msg(
+																						"操作信息",
+																						"请选择下一任务执行人!");
 																		return;
 																	}
 																	var form = null;
