@@ -35,8 +35,14 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> extends
 		HibernateDaoSupport implements GenericDao<T, PK> {
 	protected Log logger = LogFactory.getLog(GenericDaoImpl.class);
 	protected JdbcTemplate jdbcTemplate;
+	protected JdbcTemplate jdbcTemplate2dp;
+	
 	protected Class persistType;
 	protected Map<String, String> querys = new HashMap();
+
+	public void setJdbcTemplate2dp(JdbcTemplate jdbcTemplate2dp) {
+		this.jdbcTemplate2dp = jdbcTemplate2dp;
+	}
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
