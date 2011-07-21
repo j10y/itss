@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xpsoft.oa.model.info">
+  <class name="CopyFoxBill" table="copyfoxbill">
+  	<id name="id" type="java.lang.Long">
+  		<generator class="native"></generator>
+  	</id>
+  	<property name="createDate" type="java.util.Date"></property>
+  	<property name="brandName" not-null="true"></property>
+  	<property name="brandId" type="java.lang.Long"></property>
+  	<property name="saleCode" type="java.lang.Long"></property>
+  	<property name="price" type="double"></property>
+  	<property name="receiptNum" type="string"></property>
+  	<property name="faxNum" type="integer"></property>
+  	<property name="copyNum" type="integer"></property>
+  	<property name="createUser" type="string"></property>
+  	<property name="shopId" type="integer"></property>
+  	<property name="shopName" type="string"></property> 	
+  </class>
+</hibernate-mapping>
