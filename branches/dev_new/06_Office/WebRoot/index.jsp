@@ -96,7 +96,11 @@
 				   	  storeTheme='ext-all';
 			   	  }
 			      Ext.util.CSS.swapStyleSheet("theme", __ctxPath+"/ext3/resources/css/"+storeTheme+".css");  
-		    });
+		    });	
+		    
+		    var	__appSupport = '<%=AppUtil.getPropertity("app.support")%>';
+		    var	__appSupportMail = '<%=AppUtil.getPropertity("app.supportMail")%>';
+		  
 	    </script>
 	    <script type="text/javascript" src="<%=basePath%>/js/IndexPage.js"></script>
 	    <script type="text/javascript" src="<%=basePath%>/js/App.home.js"></script>
