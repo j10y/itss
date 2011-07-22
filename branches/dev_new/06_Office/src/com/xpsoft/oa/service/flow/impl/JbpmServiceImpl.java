@@ -137,22 +137,22 @@ public class JbpmServiceImpl implements JbpmService {
 	@Resource
 	private ProcessRunService processRunService;
 
-	/* 95 */public Task getTaskById(String taskId) {
+	public Task getTaskById(String taskId) {
 		Task task = this.taskService.getTask(taskId);
 
-		/* 97 */return task;
+		return task;
 	}
 
 	public void assignTask(String taskId, String userId) {
-		/* 106 */this.taskService.assignTask(taskId, userId);
+		this.taskService.assignTask(taskId, userId);
 	}
 
 	public void doUnDeployProDefinition(Long defId) {
-		/* 116 */this.processRunService.removeByDefId(defId);
+		this.processRunService.removeByDefId(defId);
 
-		/* 118 */ProDefinition pd = (ProDefinition) this.proDefinitionService
+		ProDefinition pd = (ProDefinition) this.proDefinitionService
 				.get(defId);
-		/* 119 */if (pd != null) {
+		if (pd != null) {
 			/* 121 */this.repositoryService.deleteDeploymentCascade(pd
 					.getDeployId());
 
@@ -494,9 +494,9 @@ public class JbpmServiceImpl implements JbpmService {
 	}
 
 	public List<Transition> getTransitionsForSignalProcess(String piId) {
-		/* 493 */ProcessInstance pi = this.executionService.findProcessInstanceById(piId);
-		/* 494 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 495 */Environment env = environmentFactory.openEnvironment();
+		ProcessInstance pi = this.executionService.findProcessInstanceById(piId);
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = environmentFactory.openEnvironment();
 		try {
 			ExecutionImpl executionImpl = (ExecutionImpl) pi;
 			Activity activity = executionImpl.getActivity();
@@ -512,70 +512,70 @@ public class JbpmServiceImpl implements JbpmService {
 	}
 
 	public List<Transition> getTransitionsByTaskId(String taskId) {
-		/* 515 */TaskImpl task = (TaskImpl) this.taskService.getTask(taskId);
-		/* 516 */if (task.getSuperTask() != null) {
-			/* 517 */task = task.getSuperTask();
+		TaskImpl task = (TaskImpl) this.taskService.getTask(taskId);
+		if (task.getSuperTask() != null) {
+			task = task.getSuperTask();
 		}
-		/* 519 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 520 */Environment env = environmentFactory.openEnvironment();
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = environmentFactory.openEnvironment();
 		try {
-			/* 522 */ProcessDefinitionImpl pd = task.getProcessInstance()
+			ProcessDefinitionImpl pd = task.getProcessInstance()
 					.getProcessDefinition();
-			/* 523 */ActivityImpl activityFind = pd.findActivity(task
+			ActivityImpl activityFind = pd.findActivity(task
 					.getActivityName());
 
-			/* 525 */if (activityFind != null)
-				/* 526 */return activityFind.getOutgoingTransitions();
+			if (activityFind != null)
+				return activityFind.getOutgoingTransitions();
 		} finally {
-			/* 529 */env.close();
+			env.close();
 		}
-		/* 531 */return new ArrayList();
+		return new ArrayList();
 	}
 
 	public void addOutTransition(ProcessDefinitionImpl pd, String sourceName,
 			String destName) {
-		/* 542 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 543 */Environment env = null;
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = null;
 		try {
-			/* 545 */env = environmentFactory.openEnvironment();
+			env = environmentFactory.openEnvironment();
 
-			/* 548 */ActivityImpl sourceActivity = pd.findActivity(sourceName);
+			ActivityImpl sourceActivity = pd.findActivity(sourceName);
 
-			/* 550 */ActivityImpl destActivity = pd.findActivity(destName);
+			ActivityImpl destActivity = pd.findActivity(destName);
 
-			/* 553 */TransitionImpl transition = sourceActivity
+			TransitionImpl transition = sourceActivity
 					.createOutgoingTransition();
-			/* 554 */transition.setName("to" + destName);
-			/* 555 */transition.setDestination(destActivity);
+			transition.setName("to" + destName);
+			transition.setDestination(destActivity);
 
-			/* 557 */sourceActivity.addOutgoingTransition(transition);
+			sourceActivity.addOutgoingTransition(transition);
 		} catch (Exception ex) {
-			/* 560 */logger.error(ex.getMessage());
+			logger.error(ex.getMessage());
 		} finally {
-			/* 562 */if (env != null)
+			if (env != null)
 				env.close();
 		}
 	}
 
 	public void removeOutTransition(ProcessDefinitionImpl pd,
 			String sourceName, String destName) {
-		/* 573 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 574 */Environment env = null;
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = null;
 		try {
-			/* 576 */env = environmentFactory.openEnvironment();
+			env = environmentFactory.openEnvironment();
 
-			/* 578 */ActivityImpl sourceActivity = pd.findActivity(sourceName);
+			ActivityImpl sourceActivity = pd.findActivity(sourceName);
 
-			/* 581 */List<Transition> trans = sourceActivity.getOutgoingTransitions();
-			/* 582 */for (Transition tran : trans)
-				/* 583 */if (destName.equals(tran.getDestination().getName())) {
-					/* 584 */trans.remove(tran);
-					/* 585 */break;
+			List<Transition> trans = sourceActivity.getOutgoingTransitions();
+			for (Transition tran : trans)
+				if (destName.equals(tran.getDestination().getName())) {
+					trans.remove(tran);
+					break;
 				}
 		} catch (Exception ex) {
-			/* 589 */logger.error(ex.getMessage());
+			logger.error(ex.getMessage());
 		} finally {
-			/* 591 */if (env != null)
+			if (env != null)
 				env.close();
 		}
 	}
@@ -709,52 +709,52 @@ public class JbpmServiceImpl implements JbpmService {
 			}
 		}
 
-		/* 741 */if (!isTransitionExist) {
-			/* 742 */addOutTransition(pd, sourceName, destName);
+		if (!isTransitionExist&&destName!=null) {
+			addOutTransition(pd, sourceName, destName);
 		}
 
-		/* 745 */if (superTask != null) {
-			/* 746 */pi = superTask.getProcessInstance();
-			/* 747 */executionId = superTask.getExecutionId();
-			/* 748 */if (logger.isDebugEnabled()) {
-				/* 749 */logger.debug("Super task is not null, task name is:"
+		if (superTask != null) {
+			pi = superTask.getProcessInstance();
+			executionId = superTask.getExecutionId();
+			if (logger.isDebugEnabled()) {
+				logger.debug("Super task is not null, task name is:"
 						+ superTask.getActivityName());
 			}
 
-			/* 753 */if (superTask.getSubTasks() != null) {
-				/* 755 */if (superTask.getSubTasks().size() == 1) {
-					/* 756 */this.taskService.setVariables(taskId, variables);
-					/* 757 */clearSession();
+			if (superTask.getSubTasks() != null) {
+				if (superTask.getSubTasks().size() == 1) {
+					this.taskService.setVariables(taskId, variables);
+					clearSession();
 
-					/* 759 */this.taskService.completeTask(taskId);
+					this.taskService.completeTask(taskId);
 
-					/* 761 */this.taskService.completeTask(superTask.getId(),
+					this.taskService.completeTask(superTask.getId(),
 							transitionName);
 				} else {
-					/* 763 */this.taskService.setVariables(taskId, variables);
-					/* 764 */clearSession();
-					/* 765 */this.taskService.completeTask(taskId);
+					this.taskService.setVariables(taskId, variables);
+					clearSession();
+					this.taskService.completeTask(taskId);
 
-					/* 767 */return;
+					return;
 				}
 			}
 		} else {
-			/* 771 */pi = taskImpl.getProcessInstance();
-			/* 772 */executionId = taskImpl.getExecutionId();
-			/* 773 */this.taskService.setVariables(taskId, variables);
-			/* 774 */flush();
-			/* 775 */this.taskService.completeTask(taskId, transitionName);
+			pi = taskImpl.getProcessInstance();
+			executionId = taskImpl.getExecutionId();
+			this.taskService.setVariables(taskId, variables);
+			flush();
+			this.taskService.completeTask(taskId, transitionName);
 		}
 
-		/* 779 */if (!isTransitionExist) {
-			/* 780 */removeOutTransition(pd, sourceName, destName);
+		if (!isTransitionExist&&destName!=null) {
+			removeOutTransition(pd, sourceName, destName);
 		}
 
-		/* 784 */boolean isEndProcess = isProcessInstanceEnd(executionId);
-		/* 785 */if (isEndProcess) {
-			/* 786 */ProcessRun processRun = this.processRunService
+		boolean isEndProcess = isProcessInstanceEnd(executionId);
+		if (isEndProcess) {
+			ProcessRun processRun = this.processRunService
 					.getByPiId(executionId);
-			/* 787 */if (processRun != null) {
+			if (processRun != null) {
 				processRun.setPiId(null);
 				processRun
 						.setRunStatus(ProcessRun.RUN_STATUS_FINISHED);
@@ -774,66 +774,69 @@ public class JbpmServiceImpl implements JbpmService {
 					break;
 				}
 			}
-			/* 808 */return;
+			return;
+		}else if((destName == null)
+				&& (StringUtils.isNotEmpty(signUserIds))){
+			List<Task> newTasks = getTasksByPiId(pi.getId());
+			if(newTasks.size()>0){
+				Task nTask=newTasks.get(0);
+				newTask(nTask.getId(), signUserIds);
+			}else{
+				logger.debug("newTasks is null");
+			}
+			return;
 		}
-		/* 810 */destName = null;
+		destName = null;
 
-		/* 813 */String assignId = (String) variables.get("flowAssignId");
+		String assignId = (String) variables.get("flowAssignId");
 
-		/* 815 */assignTask(pi, null, assignId, destName);
+		assignTask(pi, null, assignId, destName);
 	}
 
 	protected boolean isProcessInstanceEnd(String executionId) {
-		/* 828 */HistoryProcessInstance hpi = this.historyService
+		HistoryProcessInstance hpi = this.historyService
 				.createHistoryProcessInstanceQuery()
 				.processInstanceId(executionId).uniqueResult();
-		/* 829 */if (hpi != null) {
-			/* 830 */String endActivityName = ((HistoryProcessInstanceImpl) hpi)
+		if (hpi != null) {
+			String endActivityName = ((HistoryProcessInstanceImpl) hpi)
 					.getEndActivityName();
-			/* 831 */if (endActivityName != null) {
-				/* 832 */return true;
+			if (endActivityName != null) {
+				return true;
 			}
 		}
-		/* 835 */return false;
+		return false;
 	}
 
 	public void newTask(String parentTaskId, String assignIds) {
-		/* 845 */TaskServiceImpl taskServiceImpl = (TaskServiceImpl) this.taskService;
-		/* 846 */Task parentTask = taskServiceImpl.getTask(parentTaskId);
+		TaskServiceImpl taskServiceImpl = (TaskServiceImpl) this.taskService;
+		Task parentTask = taskServiceImpl.getTask(parentTaskId);
 
-		/* 848 */if (assignIds != null) {
-			/* 849 */String[] userIds = assignIds.split("[,]");
-			/* 850 */for (int i = 0; i < userIds.length; i++) {
-				/* 851 */TaskImpl task = (TaskImpl) taskServiceImpl
+		if (assignIds != null) {
+			String[] userIds = assignIds.split("[,]");
+			for (int i = 0; i < userIds.length; i++) {
+				TaskImpl task = (TaskImpl) taskServiceImpl
 						.newTask(parentTaskId);
-				/* 852 */task.setAssignee(userIds[i]);
-				/* 853 */task.setName(parentTask.getName() + "-" + (i + 1));
-				/* 854 */task.setActivityName(parentTask.getName());
-				/* 855 */task.setDescription(parentTask.getDescription());
+				task.setAssignee(userIds[i]);
+				task.setName(parentTask.getName() + "-" + (i + 1));
+				task.setActivityName(parentTask.getName());
+				task.setDescription(parentTask.getDescription());
 
-				/* 857 */taskServiceImpl.saveTask(task);
+				taskServiceImpl.saveTask(task);
 			}
 		}
 	}
 
 	public void signalProcess(String executionId, String transitionName,
 			Map<String, Object> variables) {
-		/* 878 */this.executionService.setVariables(executionId, variables);
-		/* 879 */this.executionService.signalExecutionById(executionId,
+		this.executionService.setVariables(executionId, variables);
+		this.executionService.signalExecutionById(executionId,
 				transitionName);
 	}
 
 	public void endProcessInstance(String piId) {
-		/* 884 */ExecutionService executionService = this.processEngine
+		ExecutionService executionService = this.processEngine
 				.getExecutionService();
-		/* 885 */executionService.endProcessInstance(piId, "ended");
+		executionService.endProcessInstance(piId, "ended");
 	}
 
 }
-
-/*
- * Location:
- * C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6
- * -joffice\webapps\joffice1.3.1\WEB-INF\classes\ Qualified Name:
- * com.xpsoft.oa.service.flow.impl.JbpmServiceImpl JD-Core Version: 0.6.0
- */
