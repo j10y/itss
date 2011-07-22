@@ -38,6 +38,9 @@ public class Transform {
 	public Transform(Transition jbpmtran) {
 		/* 60 */this.name = jbpmtran.getName();
 		/* 61 */this.source = jbpmtran.getSource().getName();
-		/* 62 */this.destination = jbpmtran.getDestination().getName();
+		//if(jbpmtran.getDestination()!=null){
+			this.destination = jbpmtran.getDestination().getName();
+		//}
+		
 	}
 }
