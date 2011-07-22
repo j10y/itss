@@ -53,6 +53,10 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> extends
 	public T get(PK id) {
 		return (T) getHibernateTemplate().get(this.persistType, id);
 	}
+	
+	public T load(PK id) {
+		return (T) getHibernateTemplate().load(this.persistType, id);
+	}
 
 	public T save(T entity) {
 		getHibernateTemplate().saveOrUpdate(entity);
