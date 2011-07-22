@@ -100,6 +100,7 @@
 		    
 		    var	__appSupport = '<%=AppUtil.getPropertity("app.support")%>';
 		    var	__appSupportMail = '<%=AppUtil.getPropertity("app.supportMail")%>';
+		    var	__appListForwardNode = '<%=AppUtil.getPropertity("app.listForwardNode")%>';
 		  
 	    </script>
 	    <script type="text/javascript" src="<%=basePath%>/js/IndexPage.js"></script>

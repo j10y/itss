@@ -398,101 +398,98 @@ public class JbpmServiceImpl implements JbpmService {
 
 	public void assignTask(ProcessInstance pi, ProcessDefinition pd,
 			String assignId, String taskName) {
-		/* 411 */if (pd == null) {
-			/* 412 */pd = this.repositoryService.createProcessDefinitionQuery()
+		if (pd == null) {
+			pd = this.repositoryService.createProcessDefinitionQuery()
 					.processDefinitionId(pi.getProcessDefinitionId())
 					.uniqueResult();
 		}
 
-		/* 416 */List<Task> taskList = null;
+		List<Task> taskList = null;
 
-		/* 419 */if (StringUtils.isNotEmpty(taskName)) {
-			/* 420 */taskList = this.taskService.createTaskQuery()
+		if (StringUtils.isNotEmpty(taskName)) {
+			taskList = this.taskService.createTaskQuery()
 					.processInstanceId(pi.getId()).activityName(taskName)
 					.list();
 		}
 
-		/* 423 */if ((taskList == null) || (taskList.size() == 0)) {
-			/* 424 */taskList = getTasksByPiId(pi.getId());
+		if ((taskList == null) || (taskList.size() == 0)) {
+			taskList = getTasksByPiId(pi.getId());
 		}
 
-		/* 427 */for (Task task : taskList) {
-			/* 429 */if (StringUtils.isNotEmpty(assignId)) {
-				/* 430 */this.taskService.assignTask(task.getId(), assignId);
-			} else {
-				/* 435 */ProUserAssign assign = this.proUserAssignService
-						.getByDeployIdActivityName(pd.getDeploymentId(),
-								task.getActivityName());
-
-				/* 437 */if (assign != null) {
-					/* 440 */if ("__start".equals(assign.getUserId())) {
-						/* 442 */AppUser flowStartUser = (AppUser) this.executionService
-								.getVariable(pi.getId(), "flowStartUser");
-						/* 443 */if (flowStartUser != null)
-							/* 444 */this.taskService.assignTask(task.getId(),
-									flowStartUser.getUserId().toString());
+				for (Task task : taskList) {
+					if (StringUtils.isNotEmpty(assignId)) {
+						this.taskService.assignTask(task.getId(), assignId);
 					} else {
-						StringBuffer upIds;
-						Object localObject;
-						Long userId;
-						/* 446 */if ("__super".equals(assign.getUserId())) {
-							/* 447 */AppUser flowStartUser = (AppUser) this.executionService
-									.getVariable(pi.getId(), "flowStartUser");
-
-							/* 449 */if (flowStartUser != null) {
-								/* 450 */List superUserIds = this.userSubService
-										.upUser(flowStartUser.getUserId());
-								/* 451 */upIds = new StringBuffer();
-								/* 452 */for (localObject = superUserIds
-										.iterator(); ((Iterator) localObject)
-										.hasNext();) {
-									userId = (Long) ((Iterator) localObject)
-											.next();
-									/* 453 */upIds.append(userId).append(",");
-								}
-								/* 455 */if (superUserIds.size() > 0)
-									/* 456 */upIds
-											.deleteCharAt(upIds.length() - 1);
-								else {
-									/* 458 */upIds.append(flowStartUser
-											.getUserId());
-								}
-								/* 460 */this.taskService
+						ProUserAssign assign = this.proUserAssignService
+								.getByDeployIdActivityName(pd.getDeploymentId(),
+										task.getActivityName());
+		
+						if (assign != null) {
+							if ("__start".equals(assign.getUserId())) {
+								AppUser flowStartUser = (AppUser) this.executionService
+										.getVariable(pi.getId(), "flowStartUser");
+								if (flowStartUser != null)
+									this.taskService.assignTask(task.getId(),
+											flowStartUser.getUserId().toString());
+						} else {
+								StringBuffer upIds;
+								Object localObject;
+								Long userId;
+								if ("__super".equals(assign.getUserId())) {
+									AppUser flowStartUser = (AppUser) this.executionService
+											.getVariable(pi.getId(), "flowStartUser");
+		
+									if (flowStartUser != null) {
+										List superUserIds = this.userSubService
+												.upUser(flowStartUser.getUserId());
+										upIds = new StringBuffer();
+										for (localObject = superUserIds
+												.iterator(); ((Iterator) localObject)
+												.hasNext();) {
+											userId = (Long) ((Iterator) localObject)
+													.next();
+											upIds.append(userId).append(",");
+										}
+										if (superUserIds.size() > 0)
+											upIds.deleteCharAt(upIds.length() - 1);
+										else {
+											upIds.append(flowStartUser.getUserId());
+										}
+										this.taskService
 										.addTaskParticipatingUser(task.getId(),
-												upIds.toString(), "candidate");
-							}
-							/* 462 */} else if (StringUtils.isNotEmpty(assign
-								.getUserId())) {
-							/* 463 */String[] userIds = assign.getUserId()
-									.split("[,]");
-
-							/* 465 */if ((userIds != null)
-									&& (userIds.length > 1)) {
-
-								for (int upIds1 = 0; upIds1 < userIds.length; upIds1++) {
-									String uId = userIds[upIds1];
-									/* 467 */this.taskService
-											.addTaskParticipatingUser(
-													task.getId(), uId,
-													"candidate");
+														upIds.toString(), "candidate");
+									}
+								} else if (StringUtils.isNotEmpty(assign
+										.getUserId())) {
+									String[] userIds = assign.getUserId()
+											.split("[,]");
+		
+									if ((userIds != null)
+											&& (userIds.length > 1)) {
+		
+										for (int upIds1 = 0; upIds1 < userIds.length; upIds1++) {
+											String uId = userIds[upIds1];
+											this.taskService.addTaskParticipatingUser(
+															task.getId(), uId,
+															"candidate");
+										}
+									} else {
+										this.taskService.assignTask(
+												task.getId(), assign.getUserId());
+									}
 								}
-							} else {
-								/* 470 */this.taskService.assignTask(
-										task.getId(), assign.getUserId());
 							}
+							if (StringUtils.isNotEmpty(assign.getRoleId()))
+								this.taskService.addTaskParticipatingGroup(
+										task.getId(), assign.getRoleId(), "candidate");
+						} else {
+							AppUser flowStartUser = (AppUser) this.executionService
+									.getVariable(pi.getId(), "flowStartUser");
+							if (flowStartUser != null)
+								this.taskService.assignTask(task.getId(),
+										flowStartUser.getUserId().toString());
 						}
 					}
-					/* 474 */if (StringUtils.isNotEmpty(assign.getRoleId()))
-						/* 475 */this.taskService.addTaskParticipatingGroup(
-								task.getId(), assign.getRoleId(), "candidate");
-				} else {
-					/* 479 */AppUser flowStartUser = (AppUser) this.executionService
-							.getVariable(pi.getId(), "flowStartUser");
-					/* 480 */if (flowStartUser != null)
-						/* 481 */this.taskService.assignTask(task.getId(),
-								flowStartUser.getUserId().toString());
-				}
-			}
 		}
 	}
 
@@ -592,31 +589,40 @@ public class JbpmServiceImpl implements JbpmService {
 			task = task.getSuperTask();
 		}
 		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 608 */Environment env = null;
+		Environment env = null;
 		try {
-			/* 610 */env = environmentFactory.openEnvironment();
-			/* 611 */ProcessDefinitionImpl pd = task.getProcessInstance()
+				env = environmentFactory.openEnvironment();
+				ProcessDefinitionImpl pd = task.getProcessInstance()
 					.getProcessDefinition();
-			/* 612 */ActivityImpl curActivity = pd.findActivity(task
+				ActivityImpl curActivity = pd.findActivity(task
 					.getActivityName());
 
-			/* 615 */List<Node> allTaskNodes = getJumpNodesByDeployId(pd
+				List<Node> allTaskNodes = getJumpNodesByDeployId(pd
 					.getDeploymentId());
+				boolean listForwardNode = Boolean.valueOf(AppUtil.getPropertity("app.listForwardNode"));
+				for (Node taskNode : allTaskNodes) {
+						
+						//modified by awen for not skip some node on 2011-07-22 begin
+						if (taskNode.getName().equals(task.getActivityName())){
+							if(listForwardNode){
+								continue;
+							}else{
+								break;
+							}
+						}
+						//modified by awen for not skip some node on 2011-07-22 end
+						
+						TransitionImpl transition = curActivity
+							.createOutgoingTransition();
 
-			/* 620 */for (Node taskNode : allTaskNodes) {
-				/* 621 */if (taskNode.getName().equals(task.getActivityName()))
-					continue;
-				/* 623 */TransitionImpl transition = curActivity
-						.createOutgoingTransition();
-
-				/* 625 */transition.setName("to" + taskNode.getName());
-				/* 626 */transition.setDestination(pd.findActivity(taskNode
+						transition.setName("to" + taskNode.getName());
+						transition.setDestination(pd.findActivity(taskNode
 						.getName()));
 
-				/* 628 */curActivity.getOutgoingTransitions()
+						curActivity.getOutgoingTransitions()
 						.remove(transition);
 
-				/* 630 */outTrans.add(transition);
+						outTrans.add(transition);
 			}
 		} catch (Exception ex) {
 			/* 634 */logger.error(ex.getMessage());

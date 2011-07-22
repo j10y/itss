@@ -18,6 +18,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import com.google.gson.Gson;
 import com.xpsoft.core.jbpm.pv.ParamField;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -238,10 +239,11 @@ import flexjson.JSONSerializer;
 /* 278 */     sb.append("[");
  
 /* 280 */     List<Transition> trans = this.jbpmService.getFreeTransitionsByTaskId(this.taskId.toString());
+			  
  
 /* 282 */     for (Transition tran : trans) {
-/* 283 */       sb.append("[").append(gson.toJson(tran.getName())).append(",").append(gson.toJson(tran.getDestination().getName())).append("],");
-     }
+/* 283 */         sb.append("[").append(gson.toJson(tran.getName())).append(",").append(gson.toJson(tran.getDestination().getName())).append("],");
+     		  }
  
 /* 286 */     if (trans.size() > 0) {
 /* 287 */       sb.deleteCharAt(sb.length() - 1);
