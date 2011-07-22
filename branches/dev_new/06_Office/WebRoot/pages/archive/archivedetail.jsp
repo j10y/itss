@@ -13,7 +13,7 @@
 	ArchivesService arService = (ArchivesService)AppUtil.getBean("archivesService");
 	Archives arch=new Archives();
 	if(StringUtils.isNotEmpty(archiveId)&&archiveId.indexOf("$")==-1){
-		arch=arService.get(new Long(archiveId));
+		arch=arService.load(new Long(archiveId));
 	}
 	request.setAttribute("arch",arch);
 %>
