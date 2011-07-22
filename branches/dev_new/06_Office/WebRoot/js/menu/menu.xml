@@ -18,16 +18,16 @@
 	
 	<Items id="Archive" text="公文管理" iconCls="menu-archive" isPublic="false">
 		<Items id="ArchFlowConfView" text="公文配置" iconCls="menu-archive-setting">
-		   <Function id="_ArchFlowConfEdit" text="修改配置" iconCls="btn-edit">
-		      <url>/archive/saveArchFlowConf.do</url>
-		      <url>/archive/getArchFlowConf.do</url>
-		      <url>/archive/depListArchRecUser.do</url>
-		      <url>/archive/selectArchRecUser.do</url>
-		      <url>/archive/saveArchRecUser.do</url>
-		      <url>/flow/listProDefinition.do</url>
-		   </Function>
-		</Items>
-		<Items id="ArchiveIssue" text="发文管理" iconCls="menu-archive-issue">
+			<Item id="ArchFlowConfView" text="公文流程配置" iconCls="menu-archive-setting">
+			   <Function id="_ArchFlowConfEdit" text="修改配置" iconCls="btn-edit">
+			      <url>/archive/saveArchFlowConf.do</url>
+			      <url>/archive/getArchFlowConf.do</url>
+			      <url>/archive/depListArchRecUser.do</url>
+			      <url>/archive/selectArchRecUser.do</url>
+			      <url>/archive/saveArchRecUser.do</url>
+			      <url>/flow/listProDefinition.do</url>
+			   </Function>
+			</Item>
 			<Item id="ArchiveTypeTempView" text="公文类别、模板管理" iconCls="menu-archive-template">
 			    <Function id="_ArchiveTypeTempQuery" text="查看" iconCls="menu-list">
 			         <url>/archive/treeArchivesType.do</url>
@@ -68,6 +68,8 @@
 			         <url>/archive/multiDelArchTemplate.do</url>
 			    </Function>
 			</Item>
+		</Items>
+		<Items id="ArchiveIssue" text="发文管理" iconCls="menu-archive-issue">
 			<Item id="ArchivesDraftView" text="发文拟稿" iconCls="menu-archive-draft">
 			   <Function id="_AchivesDrafAdd" text="发文" iconCls="menu-add">
 			       <url>/archive/getFlowArchFlowConf.do</url>
