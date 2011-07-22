@@ -13,7 +13,9 @@ var ChangeTheme = new Ext.form.ComboBox({
 			[ "ext-all-css03", "粉红主题" ],
 			[ "xtheme-tp", "灰色主题" ],
 			[ "xtheme-default2", "紫色主题" ],
-			[ "xtheme-default16", "蓝绿色主题" ],
+			[ "xtheme-black", "黑色主题" ],
+			[ "xtheme-slate", "VISTA主题" ],
+			[ "xtheme-chocolate", "巧克力色主题" ],
 			[ "xtheme-access", "Access风格" ] ],
 	listeners : {
 		scope : this,
