@@ -8,15 +8,13 @@ var ChangeTheme = new Ext.form.ComboBox({
 	triggerAction : "all",
 	store : [
 			[ "ext-all", "缺省浅蓝" ],
-			[ "ext-all-css04", "灰白主题" ],
+			[ "ext-all-css04", "银白主题" ],
 			[ "ext-all-css05", "绿色主题" ],
 			[ "ext-all-css03", "粉红主题" ],
 			[ "xtheme-tp", "灰色主题" ],
-			[ "xtheme-default2", "灰蓝主题" ],
-			[ "xtheme-default16",
-					"绿色主题" ],
-			[ "xtheme-access",
-					"Access风格" ] ],
+			[ "xtheme-default2", "紫色主题" ],
+			[ "xtheme-default16", "蓝绿色主题" ],
+			[ "xtheme-access", "Access风格" ] ],
 	listeners : {
 		scope : this,
 		"select" : function(d, b, c) {
