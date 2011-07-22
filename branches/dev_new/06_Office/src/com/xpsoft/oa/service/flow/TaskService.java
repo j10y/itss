@@ -15,8 +15,3 @@ public abstract interface TaskService extends BaseService<TaskImpl>
 
   public abstract Set<Long> getHastenByActivityNameVarKeyLongVal(String paramString1, String paramString2, Long paramLong);
 }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.service.flow.TaskService
- * JD-Core Version:    0.6.0
- */

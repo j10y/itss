@@ -11,8 +11,3 @@ public abstract interface AppRoleService extends BaseService<AppRole>
 
   public abstract HashMap<String, Set<String>> getSecurityDataSource();
 }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.service.system.AppRoleService
- * JD-Core Version:    0.6.0
- */
