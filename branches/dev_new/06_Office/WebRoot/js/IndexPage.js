@@ -237,6 +237,8 @@ var IndexPage = Ext
 								b();
 							};
 						}, 100);
+						Ext.getCmp("SearchForm").render("searchFormDisplay");
+						Ext.getCmp("ChangeTheme").render("changeThemeDisplay");
 					},
 					loadWestMenu : function() {
 						var westPanel = Ext.getCmp("west-panel");
