@@ -5,8 +5,8 @@ var IndexPage = Ext
 					top : new Ext.Panel({
 						region : "north",
 						id : "__nortPanel",
-						contentEl : "app-header",
-						height : 60
+						contentEl : "header",
+						height : 90
 					}),
 					center : null,
 					west : new Ext.Panel({
@@ -112,7 +112,7 @@ var IndexPage = Ext
 						});
 						this.afterPropertySet();
 						this.loadWestMenu();
-						this.buildToolBar();
+						//this.buildToolBar();
 					},
 					buildToolBar : function(){
 						
