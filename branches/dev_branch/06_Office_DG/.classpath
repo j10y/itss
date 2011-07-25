@@ -50,9 +50,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.2.3-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/juel-engine.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/juel-impl.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/juel.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jxl-2.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.15.jar"/>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="Office"
+  name="06_Office_DG_20110725"
   id="myeclipse.1306516615154"
   context-root="/Office"
   j2ee-spec="5.0"
-  archive="Office.war">
+  archive="06_Office_DG_20110725.war">
   <attributes>
     <attribute name="webrootdir" value="/WebRoot" />
   </attributes>
