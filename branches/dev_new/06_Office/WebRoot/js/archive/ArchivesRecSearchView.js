@@ -1,4 +1,4 @@
-ArchivesRecCtrlView = Ext
+ArchivesRecSearchView = Ext
 		.extend(
 				Ext.Panel,
 				{
@@ -8,9 +8,9 @@ ArchivesRecCtrlView = Ext
 						}
 						Ext.apply(this, a);
 						this.initComponents();
-						ArchivesRecCtrlView.superclass.constructor.call(this, {
-							id : "ArchivesRecCtrlView",
-							title : "收文监控",
+						ArchivesRecSearchView.superclass.constructor.call(this, {
+							id : "ArchivesRecSearchView",
+							title : "收文查询",
 							iconCls : "menu-arch-controll",
 							region : "center",
 							layout : "border",
@@ -61,14 +61,14 @@ ArchivesRecCtrlView = Ext
 								handler : this.search.createCallback(this)
 							}, {
 								xtype : "hidden",
-								name : "Q_status_SN_GT",
-								value : 0
+								name : "Q_status_SN_EQ",
+								value : 7
 							} ]
 						});
 						this.store = new Ext.data.JsonStore({
 							url : __ctxPath + "/archive/listArchives.do",
 							baseParams : {
-								"Q_status_SN_GT" : 0,
+								"Q_status_SN_EQ" : 7,
 								"Q_archType_SN_EQ" : 1
 							},
 							root : "result",
@@ -96,13 +96,6 @@ ArchivesRecCtrlView = Ext
 							b.push({
 								iconCls : "btn-readdocument",
 								qtip : "查看",
-								style : "margin:0 3px 0 3px"
-							});
-						}
-						if (isGranted("_ArchivesRecHasten")) {
-							b.push({
-								iconCls : "btn-archives-remind",
-								qtip : "催办",
 								style : "margin:0 3px 0 3px"
 							});
 						}
@@ -224,7 +217,7 @@ ArchivesRecCtrlView = Ext
 												url : __ctxPath
 														+ "/archive/listArchives.do",
 												params : {
-													"Q_status_SN_GT" : 0,
+													"Q_status_SN_EQ" : 7,
 													"Q_archType_SN_EQ" : 1
 												},
 												success : function(c, d) {

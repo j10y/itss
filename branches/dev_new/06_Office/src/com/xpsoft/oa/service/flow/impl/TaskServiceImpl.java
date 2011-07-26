@@ -77,11 +77,11 @@ public class TaskServiceImpl extends BaseServiceImpl<TaskImpl> implements
 				/* 77 */List userlist = this.dao.getUserIdByTask(jtask
 						.getTaskId());
 				/* 78 */userIds.addAll(userlist);
-				/* 79 */List<Long> groupList = this.dao.getGroupByTask(jtask
+				/* 79 */List groupList = this.dao.getGroupByTask(jtask
 						.getTaskId());
-				/* 80 */for (Long l : groupList) {
+				/* 80 */for (Object l : groupList) {
 					/* 81 */List<AppUser> uList = this.appUserService
-							.findByRoleId(l);
+							.findByRoleId(new Long(l.toString()));
 					/* 82 */List idList = new ArrayList();
 					/* 83 */for (AppUser appUser : uList) {
 						/* 84 */idList.add(appUser.getUserId());

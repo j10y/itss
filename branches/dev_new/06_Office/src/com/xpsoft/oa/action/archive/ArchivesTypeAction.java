@@ -1,133 +1,153 @@
- package com.xpsoft.oa.action.archive;
- 
- import java.lang.reflect.Type;
+package com.xpsoft.oa.action.archive;
+
+import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.archive.ArchRecUser;
 import com.xpsoft.oa.model.archive.ArchivesType;
+import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchivesTypeService;
- 
- public class ArchivesTypeAction extends BaseAction
- {
- 
-   @Resource
-   private ArchivesTypeService archivesTypeService;
-   private ArchivesType archivesType;
-   private Long typeId;
- 
-   public Long getTypeId()
-   {
-/*  33 */     return this.typeId;
-   }
- 
-   public void setTypeId(Long typeId) {
-/*  37 */     this.typeId = typeId;
-   }
- 
-   public ArchivesType getArchivesType() {
-/*  41 */     return this.archivesType;
-   }
- 
-   public void setArchivesType(ArchivesType archivesType) {
-/*  45 */     this.archivesType = archivesType;
-   }
- 
-   public String combo()
-   {
-/*  53 */     StringBuffer sb = new StringBuffer();
- 
-/*  55 */     List<ArchivesType> dutySectionList = this.archivesTypeService.getAll();
-/*  56 */     sb.append("[");
-/*  57 */     for (ArchivesType dutySection : dutySectionList) {
-/*  58 */       sb.append("['").append(dutySection.getTypeId()).append("','").append(dutySection.getTypeName()).append("'],");
-     }
-/*  60 */     if (dutySectionList.size() > 0) {
-/*  61 */       sb.deleteCharAt(sb.length() - 1);
-     }
-/*  63 */     sb.append("]");
-/*  64 */     setJsonString(sb.toString());
-/*  65 */     return "success";
-   }
- 
-   public String tree()
-   {
-/*  74 */     List<ArchivesType> typeList = this.archivesTypeService.getAll();
- 
-/*  76 */     StringBuffer sb = new StringBuffer();
-/*  77 */     sb.append("[{id:'0',text:'所有公文分类',expanded:true,children:[");
-/*  78 */     for (ArchivesType type : typeList) {
-/*  79 */       sb.append("{id:'" + type.getTypeId()).append("',text:'" + type.getTypeName()).append("',leaf:true,expanded:true},");
-     }
-/*  81 */     if (typeList.size() > 0) {
-/*  82 */       sb.deleteCharAt(sb.length() - 1);
-     }
-/*  84 */     sb.append("]}]");
-/*  85 */     setJsonString(sb.toString());
-/*  86 */     return "success";
-   }
- 
-   public String list()
-   {
-/*  94 */     QueryFilter filter = new QueryFilter(getRequest());
-/*  95 */     List<ArchivesType> list = this.archivesTypeService.getAll(filter);
- 
-/*  97 */     Type type = new TypeToken<List<ArchivesType>>() {  }
-/*  97 */     .getType();
-/*  98 */     StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
-/*  99 */       .append(filter.getPagingBean().getTotalItems()).append(",result:");
- 
-/* 101 */     Gson gson = new Gson();
-/* 102 */     buff.append(gson.toJson(list, type));
-/* 103 */     buff.append("}");
- 
-/* 105 */     this.jsonString = buff.toString();
- 
-/* 107 */     return "success";
-   }
- 
-   public String multiDel()
-   {
-/* 115 */     String[] ids = getRequest().getParameterValues("ids");
-/* 116 */     if (ids != null) {
-/* 117 */       for (String id : ids) {
-/* 118 */         this.archivesTypeService.remove(new Long(id));
-       }
-     }
- 
-/* 122 */     this.jsonString = "{success:true}";
- 
-/* 124 */     return "success";
-   }
- 
-   public String get()
-   {
-/* 132 */     ArchivesType archivesType = (ArchivesType)this.archivesTypeService.get(this.typeId);
- 
-/* 134 */     Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
- 
-/* 136 */     StringBuffer sb = new StringBuffer("{success:true,data:");
-/* 137 */     sb.append(gson.toJson(archivesType));
-/* 138 */     sb.append("}");
-/* 139 */     setJsonString(sb.toString());
- 
-/* 141 */     return "success";
-   }
- 
-   public String save()
-   {
-/* 147 */     this.archivesTypeService.save(this.archivesType);
-/* 148 */     setJsonString("{success:true}");
-/* 149 */     return "success";
-   }
- }
 
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.action.archive.ArchivesTypeAction
- * JD-Core Version:    0.6.0
- */
+public class ArchivesTypeAction extends BaseAction {
+
+	@Resource
+	private ArchivesTypeService archivesTypeService;
+	private ArchivesType archivesType;
+	private Long typeId;
+
+	public Long getTypeId() {
+		return this.typeId;
+	}
+
+	public void setTypeId(Long typeId) {
+		this.typeId = typeId;
+	}
+
+	public ArchivesType getArchivesType() {
+		return this.archivesType;
+	}
+
+	public void setArchivesType(ArchivesType archivesType) {
+		this.archivesType = archivesType;
+	}
+
+	public String combo() {
+		StringBuffer sb = new StringBuffer();
+
+		List<ArchivesType> dutySectionList = this.archivesTypeService.getAll();
+		sb.append("[");
+		for (ArchivesType dutySection : dutySectionList) {
+			sb.append("['").append(dutySection.getTypeId()).append("','")
+					.append(dutySection.getTypeName()).append("','")
+					.append(dutySection.getProcessDefId()).append("'],");
+		}
+		if (dutySectionList.size() > 0) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		sb.append("]");
+		setJsonString(sb.toString());
+		return "success";
+	}
+
+	public String tree() {
+		List<ArchivesType> typeList = this.archivesTypeService.getAll();
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("[{id:'0',text:'所有公文分类',expanded:true,children:[");
+		for (ArchivesType type : typeList) {
+			sb.append("{id:'" + type.getTypeId())
+					.append("',text:'" + type.getTypeName())
+					.append("',leaf:true,expanded:true},");
+		}
+		if (typeList.size() > 0) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		sb.append("]}]");
+		setJsonString(sb.toString());
+		return "success";
+	}
+
+	public String list() {
+		QueryFilter filter = new QueryFilter(getRequest());
+		List<ArchivesType> list = this.archivesTypeService.getAll(filter);
+
+		Type type = new TypeToken<List<ArchivesType>>() {
+		}.getType();
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(
+						",result:");
+
+		Gson gson = new Gson();
+		buff.append(gson.toJson(list, type));
+		buff.append("}");
+
+		this.jsonString = buff.toString();
+
+		return "success";
+	}
+
+	public String multiDel() {
+		String[] ids = getRequest().getParameterValues("ids");
+		if (ids != null) {
+			for (String id : ids) {
+				this.archivesTypeService.remove(new Long(id));
+			}
+		}
+
+		this.jsonString = "{success:true}";
+
+		return "success";
+	}
+
+	public String get() {
+		ArchivesType archivesType = (ArchivesType) this.archivesTypeService
+				.get(this.typeId);
+
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+				.create();
+		StringBuffer sb = new StringBuffer("{success:true,data:");
+		sb.append(gson.toJson(archivesType));
+		sb.append("}");
+		setJsonString(sb.toString());
+
+		return "success";
+	}
+
+	public String save() {
+		this.archivesTypeService.save(this.archivesType);
+		setJsonString("{success:true}");
+		return "success";
+	}
+
+	public String saveList() {
+		String data = getRequest().getParameter("data");
+		if (StringUtils.isNotEmpty(data)) {
+			Gson gson = new Gson();
+			ArchivesType[] atl = gson.fromJson(data,
+					new com.google.gson.reflect.TypeToken<ArchivesType[]>() {
+					}.getType());
+			for (ArchivesType archivesType : atl) {
+				if (archivesType.getTypeId().longValue() == -1L) {
+					archivesType.setTypeId(null);
+				}
+				if (archivesType.getProcessDefId() != null) {
+					this.archivesTypeService.save(archivesType);
+				} else {
+					setJsonString("{success:false}");
+				}
+			}
+		}
+		setJsonString("{success:true}");
+		return "success";
+	}
+
+}

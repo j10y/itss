@@ -343,5 +343,6 @@ App.importJs = {
 	SystemLogView : [ __ctxPath + "/js/system/SystemLogView.js" ],
 	MyProcessRunView : [ __ctxPath + "/js/flow/MyProcessRunView.js",
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
-	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ]
+	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
+	ArchivesRecSearchView : [ __ctxPath + "/js/archive/ArchivesRecSearchView.js" ]
 };

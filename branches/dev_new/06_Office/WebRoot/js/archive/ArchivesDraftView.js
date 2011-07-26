@@ -11,8 +11,9 @@ ArchivesDraftView = Ext
 					formPanel : null,
 					constructor : function(a) {
 						Ext.applyIf(this, a);
-						Ext.Ajax
-								.request({
+						
+						//ArchFlowConf表保存了发文0和收文对应1流程
+						Ext.Ajax.request({
 									scope : this,
 									url : __ctxPath
 											+ "/archive/getFlowArchFlowConf.do?flowType="
@@ -25,6 +26,7 @@ ArchivesDraftView = Ext
 										}
 									}
 								});
+						
 						this.init();
 						ArchivesDraftView.superclass.constructor.call(this, {
 							title : "公文拟稿发文",
@@ -103,6 +105,11 @@ ArchivesDraftView = Ext
 						new showFlowPictureWin().show();
 					},
 					onSave : function(f, c) {
+						if(c.defId==""||c.defId==null
+								||c.defId==undefined||c.defId=="0"){
+							Ext.ux.Toast.msg("操作信息", "请指定相应发文流程！");
+							return;
+						}
 						if (this.store.getCount() == 0) {
 							Ext.ux.Toast.msg("操作信息", "请添加公文正文附件!");
 						} else {
@@ -615,18 +622,18 @@ ArchivesDraftView = Ext
 																			+ "/archive/comboArchivesType.do",
 																	fields : [
 																			"typeId",
-																			"typeName" ]
+																			"typeName",
+																			"processDefId" ]
 																}),
 														displayField : "typeName",
 														valueField : "typeId",
 														listeners : {
 															select : function(
 																	d, b, c) {
-																Ext
-																		.getCmp(
-																				"archives.typeName")
-																		.setValue(
-																				b.data.typeName);
+																Ext.getCmp("archives.typeName").setValue(b.data.typeName);
+																if(b.data.processDefId!=""&&b.data.processDefId!=null
+																		&&b.data.processDefId!=undefined&&b.data.processDefId!="0")
+																	Ext.getCmp("ArchivesDraftView").setDefId(b.data.processDefId);
 															}
 														}
 													}

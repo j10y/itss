@@ -28,7 +28,7 @@
 			      <url>/flow/listProDefinition.do</url>
 			   </Function>
 			</Item>
-			<Item id="ArchiveTypeTempView" text="公文类别、模板管理" iconCls="menu-archive-template">
+			<Item id="ArchiveTypeTempView" text="发文类别\模板管理" iconCls="menu-archive-template">
 			    <Function id="_ArchiveTypeTempQuery" text="查看" iconCls="menu-list">
 			         <url>/archive/treeArchivesType.do</url>
 			         <url>/archive/listArchTemplate.do</url>
@@ -66,6 +66,24 @@
 			         <url>/archive/treeArchivesType.do</url>
 			         <url>/archive/listArchTemplate.do</url>
 			         <url>/archive/multiDelArchTemplate.do</url>
+			    </Function>
+			</Item>
+			<Item id="ArchRecTypeView" text="收文类别" iconCls="menu-arch-rec-type">
+			    <Function id="_ArchRecTypeQuery" text="查看" iconCls="menu-list">
+			       <url>/archive/listArchRecType.do</url>
+			    </Function>
+			    <Function id="_ArchRecTypeAdd" text="添加" iconCls="menu-add">
+			       <url>/archive/listArchRecType.do</url>
+			       <url>/archive/saveArchRecType.do</url>
+			    </Function>
+			    <Function id="_ArchRecTypeEdit" text="编辑" iconCls="btn-edit">
+			       <url>/archive/listArchRecType.do</url>
+			       <url>/archive/saveArchRecType.do</url>
+			       <url>/archive/getArchRecType.do</url>
+			    </Function>
+			    <Function id="_ArchRecTypeDel" text="删除" iconCls="menu-del">
+			       <url>/archive/listArchRecType.do</url>
+			       <url>/archive/multiDelArchRecType.do</url>
 			    </Function>
 			</Item>
 		</Items>
@@ -222,23 +240,10 @@
 			      <url>/archive/listArchDispatch.do</url>
 			   </Function>
 			</Item>
-			<Item id="ArchRecTypeView" text="收文类别" iconCls="menu-arch-rec-type">
-			    <Function id="_ArchRecTypeQuery" text="查看" iconCls="menu-list">
-			       <url>/archive/listArchRecType.do</url>
-			    </Function>
-			    <Function id="_ArchRecTypeAdd" text="添加" iconCls="menu-add">
-			       <url>/archive/listArchRecType.do</url>
-			       <url>/archive/saveArchRecType.do</url>
-			    </Function>
-			    <Function id="_ArchRecTypeEdit" text="编辑" iconCls="btn-edit">
-			       <url>/archive/listArchRecType.do</url>
-			       <url>/archive/saveArchRecType.do</url>
-			       <url>/archive/getArchRecType.do</url>
-			    </Function>
-			    <Function id="_ArchRecTypeDel" text="删除" iconCls="menu-del">
-			       <url>/archive/listArchRecType.do</url>
-			       <url>/archive/multiDelArchRecType.do</url>
-			    </Function>
+			<Item id="ArchivesRecSearchView" text="收文查询" iconCls="menu-arch-reader">
+			   <Function id="_ArchivesRecFiledQuery" text="查看" iconCls="menu-list">
+			      <url>/archive/listArchives.do</url>
+			   </Function>
 			</Item>
 		</Items>
 	</Items>

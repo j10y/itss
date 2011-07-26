@@ -4,9 +4,13 @@
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.google.gson.Gson;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.archive.ArchRecType;
+import com.xpsoft.oa.model.archive.ArchivesType;
 import com.xpsoft.oa.service.archive.ArchRecTypeService;
 
 import flexjson.JSONSerializer;
@@ -59,7 +63,9 @@ import flexjson.JSONSerializer;
 /*  77 */     List<ArchRecType> list = this.archRecTypeService.getAll(filter);
 /*  78 */     StringBuffer sb = new StringBuffer("[");
 /*  79 */     for (ArchRecType type : list) {
-/*  80 */       sb.append("['").append(type.getRecTypeId()).append("','").append(type.getTypeName()).append("'],");
+/*  80 */       sb.append("['").append(type.getRecTypeId()).append("','")
+					.append(type.getTypeName()).append("','")
+					.append(type.getProcessDefId()).append("'],");
      }
 /*  82 */     if (list.size() > 0) {
 /*  83 */       sb.deleteCharAt(sb.length() - 1);
@@ -103,9 +109,26 @@ import flexjson.JSONSerializer;
 /* 131 */     setJsonString("{success:true}");
 /* 132 */     return "success";
    }
+   
+   public String saveList() {
+		String data = getRequest().getParameter("data");
+		if (StringUtils.isNotEmpty(data)) {
+			Gson gson = new Gson();
+			ArchRecType[] artl = gson.fromJson(data,
+					new com.google.gson.reflect.TypeToken<ArchRecType[]>() {
+					}.getType());
+			for (ArchRecType archRecType : artl) {
+				if (archRecType.getRecTypeId().longValue() == -1L) {
+					archRecType.setRecTypeId(null);
+				}
+				if (archRecType.getProcessDefId() != null) {
+					this.archRecTypeService.save(archRecType);
+				} else {
+					setJsonString("{success:false}");
+				}
+			}
+		}
+		setJsonString("{success:true}");
+		return "success";
+	}
  }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.action.archive.ArchRecTypeAction
- * JD-Core Version:    0.6.0
- */
