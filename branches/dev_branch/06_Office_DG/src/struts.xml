@@ -382,6 +382,17 @@
 			<result>/pages/document/fileDetail.jsp</result>
 		</action>
 	</package>
+	<package name="nameCard" extends="struts-default" namespace="/nameCard">	    
+		<action name="*NameCard" class="NameCardAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*NameCardAdd" class="NameCardAddAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*NameCardDel" class="NameCardDelAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+	</package>
 </struts>
 
 		

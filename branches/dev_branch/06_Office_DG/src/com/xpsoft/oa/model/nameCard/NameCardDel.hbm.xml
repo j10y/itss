@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.nameCard.NameCardDel"
+        table="namecard_del"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="nameCardDelId"
+            column="nameCardDelId"
+            type="java.lang.Long"
+            length="19"
+        >
+			<generator class="native"/>
+        </id>
+         <!--<property
+            name="cardNum"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="cardNum"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+         <many-to-one name="shop" class="com.xpsoft.oa.model.system.Department" not-null="false"/>
+		<many-to-one name="shoppingGuid"	class="com.xpsoft.oa.model.system.AppUser" not-null="false" lazy="true"/>
+		<property
+            name="type"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="type" 
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="refundAmount"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="refundAmount"
+            precision="18"
+            scale="2"
+            not-null="true"
+            unique="false"
+        />
+        <many-to-one name="handler"	class="com.xpsoft.oa.model.system.AppUser" not-null="false"/>
+		<property
+            name="handleTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="handleTime"
+            not-null="true"
+        />
+        <property
+            name="quitTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="quitTime"
+            not-null="true"
+        />
+        <property
+            name="status"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="status" 
+            not-null="true"
+            unique="false"
+        />
+     --></class>
+</hibernate-mapping>

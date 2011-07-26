@@ -355,7 +355,7 @@ public class AppUserAction extends BaseAction {
 		/* 338 */StringBuffer sb = new StringBuffer(
 				"{success:true,totalCounts:1,data:[");
 		/* 339 */sb.append(JsonUtil.getJSONSerializer(
-				new String[] { "accessionTime" })
+				new String[] { "accessionTime", "departureTime"})
 		/* 340 */.serialize(appUser));
 		/* 341 */sb.append("]}");
 		/* 342 */setJsonString(sb.toString());

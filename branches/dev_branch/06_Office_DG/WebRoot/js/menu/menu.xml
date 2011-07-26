@@ -269,6 +269,65 @@
 				<url>/system/multiDelAppUser.do</url>
 			</Function>
 		</Item>
+		<Item id="AppShoppingGuideView" iconCls="menu-appuser" text="导购管理">
+			<Function id="_AppShoppingGuideQuery" text="查看导购" iconCls="menu-list">
+				<url>/system/listAppUser.do</url>
+			</Function>
+			<Function id="_AppShoppingGuideAdd" text="添加导购" iconCls="menu-add">
+				<url>/system/listAppUser.do</url>
+				<url>/system/chooseRolesAppUser.do</url>
+				<url>/system/selectedRolesAppUser.do</url>
+				<url>/system/listDepartment.do</url>
+			</Function>
+			<Function id="_AppShoppingGuideEdit" text="编辑导购" iconCls="btn-edit">
+				<url>/system/listAppUser.do</url>
+				<url>/system/chooseRolesAppUser.do</url>
+				<url>/system/selectedRolesAppUser.do</url>
+				<url>/system/listDepartment.do</url>
+			</Function>
+			<Function id="_AppShoppingGuideDel" text="删除导购" iconCls="menu-del">
+				<url>/system/listAppUser.do</url>
+				<url>/system/multiDelAppUser.do</url>
+			</Function>
+		</Item>
+		<Items id="NameCardView" text="胸卡管理" iconCls="menu-card">
+			<Item id="NameCardAddView" text="办胸卡" iconCls="menu-card-add">
+				<Function id="_NameCardAddList" text="查看卡信息" iconCls="menu-list">
+					<url>/nameCard/listNameCardAdd.do</url>
+				</Function>
+				<Function id="_NameCardAddAdd" text="办理胸卡" iconCls="menu-add">
+					<url>/nameCard/listNameCardAdd.do</url>
+					<url>/nameCard/saveNameCardAdd.do</url>
+				</Function>
+				<Function id="_NameCardAddEdit" text="修改胸卡信息" iconCls="btn-edit">
+					<url>/nameCard/listNameCardAdd.do</url>
+					<url>/nameCard/saveNameCardAdd.do</url>
+					<url>/nameCard/getNameCardAdd.do</url>
+				</Function>
+				<Function id="_NameCardAddDel" text="删除胸卡" iconCls="menu-del">
+					<url>/nameCard/listNameCardAdd.do</url>
+					<url>/nameCard/mulDelNameCardAdd.do</url>
+				</Function>
+			</Item>
+			<Item id="NameCardDelView" text="退胸卡" iconCls="menu-card-del">
+			    <Function id="_NameCardDelList" text="查看卡信息" iconCls="menu-list">
+					<url>/nameCard/listNameCardDel.do</url>
+				</Function>
+				<Function id="_NameCardDelAdd" text="办理胸卡" iconCls="menu-add">
+					<url>/nameCard/listNameCardDel.do</url>
+					<url>/nameCard/saveNameCardDel.do</url>
+				</Function>
+				<Function id="_NameCardDelEdit" text="修改胸卡信息" iconCls="btn-edit">
+					<url>/nameCard/listNameCardDel.do</url>
+					<url>/nameCard/saveNameCardDel.do</url>
+					<url>/nameCard/getNameCardDel.do</url>
+				</Function>
+				<Function id="_NameCardDelDel" text="删除胸卡" iconCls="menu-del">
+					<url>/nameCard/listNameCardDel.do</url>
+					<url>/nameCard/mulDelNameCardDel.do</url>
+				</Function>
+			</Item>
+		</Items>
 		<Item id="AppRoleView" iconCls="menu-role" text="角色设置">
 			<Function id="_AppRoleList" text="查看角色" iconCls="menu-list">
 				<url>/system/listAppRole.do</url>

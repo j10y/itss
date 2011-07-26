@@ -58,6 +58,11 @@ App.importJs = {
 			__ctxPath + "/ext3/ux/ItemSelector.js",
 			__ctxPath + "/ext3/ux/MultiSelect.js",
 			__ctxPath + "/js/system/ResetPasswordForm.js" ],
+	AppShoppingGuideView : [ __ctxPath + "/js/system/AppShoppingGuideView.js",
+	                __ctxPath + "/js/system/AppShoppingGuideForm.js",
+	                __ctxPath + "/ext3/ux/ItemSelector.js",
+	                __ctxPath + "/ext3/ux/MultiSelect.js",
+	                __ctxPath + "/js/system/ResetPasswordForm.js" ],
 	ProfileForm : [ __ctxPath + "/js/system/ProfileForm.js",
 			__ctxPath + "/js/system/ResetPasswordForm.js" ],
 	NewsView : [ __ctxPath + "/js/info/NewsView.js",
@@ -343,5 +348,9 @@ App.importJs = {
 	SystemLogView : [ __ctxPath + "/js/system/SystemLogView.js" ],
 	MyProcessRunView : [ __ctxPath + "/js/flow/MyProcessRunView.js",
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
-	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ]
+	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
+    NameCardAddView : [ __ctxPath + "/js/nameCard/NameCardAddView.js",
+	    			__ctxPath + "/js/nameCard/NameCardAddForm.js" ],
+    NameCardDelView : [ __ctxPath + "/js/nameCard/NameCardDelView.js",
+    	    			__ctxPath + "/js/nameCard/NameCardDelForm.js" ]
 };

@@ -56,7 +56,7 @@ var IndexPage = Ext
 											xtype : "tbseparator"
 										},
 										new Ext.Toolbar.TextItem(
-												'技术支持 <a href="http://172.16.100.26/ITC/" target="_blank">上品折扣信息系统部</a>'),
+												'技术支持 <a href="' + __appSupportMail + '" target="_blank">' + __appSupport + '</a>'),
 										{
 											xtype : "tbseparator"
 										},

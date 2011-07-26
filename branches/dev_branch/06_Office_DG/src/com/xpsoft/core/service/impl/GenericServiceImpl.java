@@ -27,6 +27,9 @@
 /*    */   public T get(PK id) {
 /* 32 */     return this.dao.get(id);
 /*    */   }
+			public T load(PK id) {
+				return this.dao.load(id);
+			}
 /*    */ 
 /*    */   public T save(T entity) {
 /* 36 */     return this.dao.save(entity);

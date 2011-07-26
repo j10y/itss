@@ -1747,3 +1747,15 @@ li .right {
 	background-repeat: no-repeat;
 	background-position: 10% 50%;
 }
+
+.menu-card {
+	background-image: url('../images/menus/nameCard/card_menu.png') !important;
+}
+
+.menu-card-add {
+	background-image: url('../images/menus/nameCard/menu-card-add.png') !important;
+}
+
+.menu-card-del {
+	background-image: url('../images/menus/nameCard/menu-card-del.png') !important;
+}

@@ -295,4 +295,13 @@ public class AppUtil implements ApplicationContextAware {
 		}
 		return defaultName;
 	}
+	
+	public static String getPropertity(String key) {
+		try{
+			return (String) configMap.get(key);
+		}catch(RuntimeException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
 }
