@@ -517,4 +517,14 @@
      <bean id="appTipsService" class="com.xpsoft.oa.service.info.impl.AppTipsServiceImpl">
      	<constructor-arg index="0" ref="appTipsDao"/>
      </bean>
+     
+     <bean id="noticeNewsService" class="com.xpsoft.oa.service.info.impl.NoticeNewsServiceImpl">
+   	 	<constructor-arg index="0" ref="noticeNewsDao"/>
+   	 </bean>
+     <bean id="noticeNewsTypeService" class="com.xpsoft.oa.service.info.impl.NoticeNewsTypeServiceImpl">
+   	 	<constructor-arg index="0" ref="noticeNewsTypeDao"/>
+   	 </bean>
+   	 <bean id="noticeNewsCommentService" class="com.xpsoft.oa.service.info.impl.NoticeNewsCommentServiceImpl">
+   	 	<constructor-arg index="0" ref="noticeNewsCommentDao"/>
+   	 </bean>
 </beans>

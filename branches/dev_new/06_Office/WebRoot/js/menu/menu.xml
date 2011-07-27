@@ -558,6 +558,53 @@
 				<url>/info/multiDelNotice.do</url>
 			</Function>
 		</Item>
+		<Item id="NoticeNewView" iconCls="menu-news" text="通知管理">
+			<Function id="_NoticeNewQuery" text="查看通知" iconCls="menu-list">
+				<url>/info/categoryNoticeNew.do</url>
+				<url>/info/treeNoticeNewType.do</url>
+			</Function>
+			<Function id="_NoticeNewAdd" text="添加通知" iconCls="menu-add">
+				<url>/info/categoryNoticeNew.do</url>
+				<url>/info/treeNoticeNewType.do</url>
+				<url>/info/saveNoticeNew.do</url>
+			</Function>
+			<Function id="_NoticeNewEdit" text="编辑通知" iconCls="btn-edit">
+				<url>/info/categoryNoticeNew.do</url>
+				<url>/info/treeNoticeNewType.do</url>
+				<url>/info/saveNoticeNew.do</url>
+			</Function>
+			<Function id="_NoticeNewDel" text="删除通知" iconCls="menu-del">
+				<url>/info/categoryNoticeNew.do</url>
+				<url>/info/treeNewsNoticeType.do</url>
+				<url>/info/multiDelNoticeNew.do</url>
+			</Function>
+		</Item>
+		<Item id="NoticeNewCommentView" iconCls="menu-info" text="通知评论管理">
+			<Function id="_NoticeNewCommentQuery" text="查看评论" iconCls="menu-list">
+			</Function>
+			<Function id="_NoticeNewCommentDel" text="删除评论" iconCls="menu-del">
+				<url>/info/multiDelNoticeNewComment.do</url>
+			</Function>
+		</Item>
+		<Item id="NoticeNewTypeView" iconCls="menu-news_type" text="通知类别">
+			<Function id="_NoticeNewTypeQuery" text="查看通知类型" iconCls="menu-list">
+				<url>/info/listNoticeNewType.do</url>
+			</Function>
+			<Function id="_NoticeNewTypeAdd" text="添加通知类型" iconCls="menu-add">
+				<url>/info/listNoticeNewType.do</url>
+				<url>/info/addNoticeNewType.do</url>
+			</Function>
+			<Function id="_NoticeNewTypeEdit" text="修改通知类型" iconCls="btn-edit">
+				<url>/info/listNoticeNewType.do</url>
+				<url>/info/addNoticeNewType.do</url>
+				<url>/info/detailNoticeNewType.do</url>
+				<url>/info/sortNoticeNewType.do</url>
+			</Function>
+			<Function id="_NoticeNewTypeDel" text="删除通知类型" iconCls="menu-del">
+				<url>/info/listNoticeNewType.do</url>
+				<url>/info/removeNoticeNewType.do</url>
+			</Function>
+		</Item>
 	</Items>
 	<Items id="Communication" text="通讯管理" iconCls="menu-communicate"
 		isPublic="true">

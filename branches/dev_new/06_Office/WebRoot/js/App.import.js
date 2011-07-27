@@ -344,5 +344,14 @@ App.importJs = {
 	MyProcessRunView : [ __ctxPath + "/js/flow/MyProcessRunView.js",
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
 	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
-	ArchivesRecSearchView : [ __ctxPath + "/js/archive/ArchivesRecSearchView.js" ]
+	ArchivesRecSearchView : [ __ctxPath + "/js/archive/ArchivesRecSearchView.js" ],
+	NoticeNewDetail : [ __ctxPath + "/js/info/NoticeNewsDetail.js" ],
+	NoticeNewView : [ __ctxPath + "/js/info/NoticeNewView.js",
+	 			__ctxPath + "/js/info/NoticeNewForm.js",
+	 			__ctxPath + "/js/info/NoticeNewTypeTree.js",
+	 			__ctxPath + "/js/info/NoticeNewTypeForm.js" ],
+	NoticeNewCommentView : [ __ctxPath + "/js/info/NoticeNewCommentView.js",
+	       			__ctxPath + "/ext3/ux/RowExpander.js" ],
+	NoticeNewTypeView : [ __ctxPath + "/js/info/NoticeNewTypeView.js",
+ 			__ctxPath + "/js/info/NoticeNewTypeForm.js" ]
 };

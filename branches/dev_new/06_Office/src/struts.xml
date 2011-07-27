@@ -109,6 +109,18 @@
 		<action name="*AppTips" class="AppTipsAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		
+		<action name="*NoticeNew" class="NoticeNewsAction" method="{1}">
+			<result>${successResultValue}</result>
+			<result name="display">/pages/indexpages/noticeNewsListPage.jsp</result>
+			<result name="image">/pages/indexpages/deskNoticeNewsListPage.jsp</result>
+		</action>
+		<action name="*NoticeNewType" class="NoticeNewsTypeAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*NoticeNewComment" class="NoticeNewsCommentAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 
 	<package name="document" extends="struts-default" namespace="/document">

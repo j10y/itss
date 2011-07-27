@@ -11,13 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.google.gson.annotations.Expose;
 import com.xpsoft.core.model.BaseModel;
 
-/**
- * 通知<br>
- * 1,在新闻的基础上，增加附件上传、及记录那些人 阅读了
- * @author wchao
- *
- */
-public class News extends BaseModel {
+public class NoticeNews extends BaseModel {
 	/* 21 */public static Short ISDESKNEWS = Short.valueOf((short) 1);
 	/* 22 */public static Short NOTDESKNEWS = Short.valueOf((short) 0);
 
@@ -52,19 +46,26 @@ public class News extends BaseModel {
 	protected Short status;
 
 	@Expose
-	protected NewsType newsType;
+	protected NoticeNewsType newsType;
 
 	@Expose
 	protected String issuer;
 
 	@Expose
 	protected Short isDeskImage;
-	/* 49 */protected Set<NewsComment> newsComments = new HashSet();
+	/**
+	 *评论or阅读
+	 */
+	protected Set<NoticeNewsComment> newsComments = new HashSet();
+	/**
+	 * 附件
+	 */
+	protected Set noticeNewsDoc = new HashSet();
 
-	public News() {
+	public NoticeNews() {
 	}
 
-	public News(Long in_newsId) {
+	public NoticeNews(Long in_newsId) {
 		/* 63 */setNewsId(in_newsId);
 	}
 
@@ -76,19 +77,19 @@ public class News extends BaseModel {
 		/* 73 */this.isDeskImage = isDeskImage;
 	}
 
-	public Set<NewsComment> getNewsComments() {
+	public Set<NoticeNewsComment> getNewsComments() {
 		/* 77 */return this.newsComments;
 	}
 
-	public void setNewsComments(Set<NewsComment> newsComments) {
+	public void setNewsComments(Set<NoticeNewsComment> newsComments) {
 		/* 81 */this.newsComments = newsComments;
 	}
 
-	public NewsType getNewsType() {
+	public NoticeNewsType getNewsType() {
 		/* 85 */return this.newsType;
 	}
 
-	public void setNewsType(NewsType in_newsType) {
+	public void setNewsType(NoticeNewsType in_newsType) {
 		/* 89 */this.newsType = in_newsType;
 	}
 
@@ -109,7 +110,7 @@ public class News extends BaseModel {
 		/* 119 */if (aValue == null) {
 			/* 120 */this.newsType = null;
 			/* 121 */} else if (this.newsType == null) {
-			/* 122 */this.newsType = new NewsType();
+			/* 122 */this.newsType = new NoticeNewsType();
 			/* 123 */this.newsType.setTypeId(aValue);
 		} else {
 			/* 125 */this.newsType.setTypeId(aValue);
@@ -197,10 +198,10 @@ public class News extends BaseModel {
 	}
 
 	public boolean equals(Object object) {
-		/* 282 */if (!(object instanceof News)) {
+		/* 282 */if (!(object instanceof NoticeNews)) {
 			/* 283 */return false;
 		}
-		/* 285 */News rhs = (News) object;
+		/* 285 */NoticeNews rhs = (NoticeNews) object;
 		/* 286 */return new EqualsBuilder()
 		/* 287 */.append(this.newsId, rhs.newsId)
 		/* 288 */.append(this.subjectIcon, rhs.subjectIcon)
