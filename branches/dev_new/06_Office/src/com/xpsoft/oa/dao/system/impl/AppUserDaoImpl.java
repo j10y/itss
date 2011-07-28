@@ -43,7 +43,7 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 			/* 46 */String hql2 = "select count(*) from AppUser";
 			/* 47 */Object obj = findUnique(hql2, null);
 			/* 48 *///if (new Integer(obj.toString()).intValue() > 11) {
-				if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
+				if (AppUtil.getSysConfig().get("limit") != null && (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue())) {
 				/* 49 */user.setStatus(Short.valueOf((short) 0));
 			}
 		}
@@ -104,7 +104,7 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		/* 108 */String hql2 = "select count(*) from AppUser";
 		/* 109 */Object obj = findUnique(hql2, null);
 		/* 110 *///if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString())) {
-		if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
+		if (AppUtil.getSysConfig().get("limit") != null &&(new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue())) {
 			/* 111 */user.setStatus(Short.valueOf((short) 0));
 		}
 		/* 113 */return user;
