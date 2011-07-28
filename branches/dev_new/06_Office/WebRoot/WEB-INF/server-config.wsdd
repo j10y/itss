@@ -29,7 +29,7 @@
  </service>
  <service name="LoginServiceImpl" provider="java:RPC">
   <parameter name="allowedMethods" value="*"/>
-  <parameter name="className" value="com.xpsoft.webservice.action.login.Impl.LoginServiceImpl"/>
+  <parameter name="className" value="com.xpsoft.webservice.service.login.Impl.LoginServiceImpl"/>
  </service>
  
  <service name="AdminService" provider="java:MSG">
