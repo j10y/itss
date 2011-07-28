@@ -81,7 +81,7 @@ var NoticeNewCommentView = function() {
 																		{
 																			waitMsg : "正在提交查询",
 																			url : __ctxPath
-																					+ "/info/listNoticeNewComment.do",
+																					+ "/info/listNoticeNewComment.do?Q_flag_N_EQ=1",
 																			success : function(
 																					d,
 																					e) {
@@ -200,7 +200,7 @@ NoticeNewCommentView.prototype.grid = function() {
 NoticeNewCommentView.prototype.store = function() {
 	var a = new Ext.data.Store({
 		proxy : new Ext.data.HttpProxy({
-			url : __ctxPath + "/info/listNoticeNewComment.do"
+			url : __ctxPath + "/info/listNoticeNewComment.do?Q_flag_N_EQ=1"
 		}),
 		reader : new Ext.data.JsonReader({
 			root : "result",

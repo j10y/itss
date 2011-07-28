@@ -50,9 +50,7 @@ NoticeNewForm = Ext
 					initUIComponents : function() {
 						this.formPanel = this.setup();
 						if (this.newsId != null && this.newsId != "undefined") {
-							this.formPanel
-									.getForm()
-									.load(
+							this.formPanel.getForm().load(
 											{
 												deferredRender : false,
 												url : __ctxPath
@@ -60,6 +58,7 @@ NoticeNewForm = Ext
 														+ this.newsId,
 												waitMsg : "正在载入数据...",
 												success : function(d, f) {
+													//alert(Ext.encode(f.result));
 													var c = Ext
 															.getCmp("typeId");
 													var h = Ext
@@ -81,12 +80,37 @@ NoticeNewForm = Ext
 																		+ b.value
 																		+ '" border="0"/>');
 													}
+													//add by awen for add display file logic on edit mode on 2011-07-28 on
+													var datas = f.result.docs;
+													var dd = Ext.getCmp("noticeNewfileIds");
+													for(var e=0; e<datas.length; e++){
+														Ext.DomHelper.append(
+																Ext.getCmp("noticeNewFilePanel").body,
+																'<span><a href="#" onclick="FileAttachDetail.show('
+																		+ datas[e].fileId
+																		+ ')">'
+																		+ datas[e].docName
+																		+ '</a> <img class="img-delete" src="'
+																		+ __ctxPath
+																		+ '/images/system/delete.gif" onclick="NoticeNewForm.removeFile(this,'
+																		+ datas[e].fileId
+																		+ ')"/>&nbsp;|&nbsp;</span>');
+														//Ext.getCmp("noticeNewfileIds").setValue(Ext.getCmp("noticeNewfileIds").getValue() + "," + datas[e].fileId);
+														if (dd.getValue() != "") {
+															dd.setValue(dd.getValue()+ ",");
+														}
+														dd.setValue(dd.getValue()+ datas[e].fileId);
+														
+													}
+													
+													//add by awen for add display file logic on edit mode on 2011-07-28 end
 												},
 												failure : function(a, b) {
 													Ext.ux.Toast.msg("编辑",
 															"载入失败");
 												}
 											});
+
 						}
 						this.buttons = [
 								{
@@ -298,7 +322,94 @@ NoticeNewForm.prototype.setup = function() {
 							name : "news.content",
 							id : "content",
 							xtype : "fckeditor",
-							height : 300
+							height : 200
+						}, {
+							xtype : "fieldset",
+							title : "附件",
+							layout : "column",
+							items : [
+									{
+										columnWidth : 0.8,
+										layout : "form",
+										items : [ {
+											xtype : "panel",
+											id : "noticeNewFilePanel",
+											height : 50,
+											border : false,
+											autoScroll : true,
+											html : ""
+										} ]
+									},
+									{
+										columnWidth : 0.2,
+										border : false,
+										items : [
+												{
+													xtype : "button",
+													text : "添加附件",
+													iconCls : "menu-attachment",
+													handler : function() {
+														var c = App
+																.createUploadDialog({
+																	file_cat : "noticenew",
+																	callback : function(
+																			g) {
+																		var d = Ext
+																				.getCmp("noticeNewfileIds");
+																		var f = Ext
+																				.getCmp("noticeNewFilePanel");
+																		for ( var e = 0; e < g.length; e++) {
+																			if (d
+																					.getValue() != "") {
+																				d
+																						.setValue(d
+																								.getValue()
+																								+ ",");
+																			}
+																			d
+																					.setValue(d
+																							.getValue()
+																							+ g[e].fileId);
+																			Ext.DomHelper
+																					.append(
+																							f.body,
+																							'<span><a href="#" onclick="FileAttachDetail.show('
+																									+ g[e].fileId
+																									+ ')">'
+																									+ g[e].filename
+																									+ '</a> <img class="img-delete" src="'
+																									+ __ctxPath
+																									+ '/images/system/delete.gif" onclick="NoticeNewForm.removeFile(this,'
+																									+ g[e].fileId
+																									+ ')"/>&nbsp;|&nbsp;</span>');
+																		}
+																	}
+																});
+														c
+																.show(this);
+													}
+												},
+												{
+													xtype : "button",
+													text : "清除附件",
+													iconCls : "reset",
+													handler : function() {
+														var d = Ext
+																.getCmp("noticeNewfileIds");
+														var c = Ext
+																.getCmp("noticeNewFilePanel");
+														c.body
+																.update("");
+														d
+																.setValue("");
+													}
+												},
+												{
+													xtype : "hidden",
+													id : "noticeNewfileIds",
+													name : "noticeNewfileIds"
+												} ]
+									} ]
 						} ]
 			});
 	return a;
@@ -436,4 +547,16 @@ NoticeNewForm.upLoadNoticeNewIcon = function() {
 	} else {
 		b.show("queryBtn");
 	}
+};
+NoticeNewForm.removeFile = function(e, a) {
+	var b = Ext.getCmp("noticeNewfileIds");
+	var d = b.getValue();
+	if (d.indexOf(",") < 0) {
+		b.setValue("");
+	} else {
+		d = d.replace("," + a, "").replace(a + ",", "");
+		b.setValue(d);
+	}
+	var c = Ext.get(e.parentNode);
+	c.remove();
 };

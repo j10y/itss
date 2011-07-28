@@ -155,7 +155,7 @@
 		
  <!-- exported bi-directional one-to-many association to Contract --> 
 	<set name="newsComments"
-	     table="news_comment"
+	     table="notice_news_comment"
 	     lazy="true"
 	     inverse="true"
 	     cascade="save-update,delete-orphan"
@@ -168,5 +168,10 @@
 			class="com.xpsoft.oa.model.info.NoticeNewsComment"
 		/>
 	</set>
+	
+	<set name="noticeNewsDocs" table="noticenews_doc" lazy="true" inverse="false" cascade="save-update,delete-orphan" sort="unsorted">
+			<key column="noticeNewsId" />
+			<one-to-many class="com.xpsoft.oa.model.info.NoticeNewsDoc"/>
+		</set>
     </class>
 </hibernate-mapping>

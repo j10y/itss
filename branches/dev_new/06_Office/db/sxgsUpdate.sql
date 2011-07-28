@@ -75,3 +75,29 @@ CREATE TABLE `notice_news_comment` (
 -- ----------------------------
 -- Records of notice_news_comment
 -- ----------------------------
+
+
+--add noticenews file upload function
+
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `archives_doc`
+-- ----------------------------
+DROP TABLE IF EXISTS `noticenews_doc`;
+CREATE TABLE `noticenews_doc` (
+  `docId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fileId` bigint(20) DEFAULT NULL,
+  `noticeNewsId` bigint(20) DEFAULT NULL,
+  `creator` varchar(64) DEFAULT NULL COMMENT '拟稿人',
+  `creatorId` bigint(20) DEFAULT NULL COMMENT '拟稿人ID',
+  `docName` varchar(128) NOT NULL COMMENT '文档名称',
+  `docPath` varchar(128) NOT NULL COMMENT '文档路径',
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  `updatetime` datetime NOT NULL COMMENT '修改时间',
+  PRIMARY KEY (`docId`),
+  KEY `FK_NNSC_R_FA` (`fileId`),
+  KEY `FK_NNSD_R_NNS` (`noticeNewsId`),
+  CONSTRAINT `FK_NNSC_R_FA` FOREIGN KEY (`fileId`) REFERENCES `file_attach` (`fileId`),
+  CONSTRAINT `FK_NNSD_R_NNS` FOREIGN KEY (`noticeNewsId`) REFERENCES `notice_news` (`newsId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

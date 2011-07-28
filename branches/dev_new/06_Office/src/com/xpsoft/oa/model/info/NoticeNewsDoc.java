@@ -1,20 +1,17 @@
-package com.xpsoft.oa.model.archive;
+package com.xpsoft.oa.model.info;
+
+import java.util.Date;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.FileAttach;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class ArchivesDoc extends BaseModel {
-	/* 22 */public static short STATUS_MODIFY = 0;
-	/* 23 */public static short STATUS_MODIFY_END = 1;
-	/* 24 */public static int ORI_VERSION = 1;
+public class NoticeNewsDoc extends BaseModel {
 
 	@Expose
 	protected Long docId;
@@ -26,19 +23,7 @@ public class ArchivesDoc extends BaseModel {
 	protected Long creatorId;
 
 	@Expose
-	protected Long menderId;
-
-	@Expose
-	protected String mender;
-
-	@Expose
 	protected String docName;
-
-	@Expose
-	protected Short docStatus;
-
-	@Expose
-	protected Integer curVersion;
 
 	@Expose
 	protected String docPath;
@@ -51,30 +36,27 @@ public class ArchivesDoc extends BaseModel {
 
 	@Expose
 	protected FileAttach fileAttach;
-	protected Archives archives;
-	/* 53 */protected Set docHistorys = new HashSet();
+	protected NoticeNews noticeNews;
 
-	public ArchivesDoc() {
+	public NoticeNewsDoc() {
 	}
 
 	public void initUsers(AppUser curUser) {
 		/* 64 */setCreator(curUser.getFullname());
 		/* 65 */setCreatorId(curUser.getUserId());
 
-		/* 67 */setMender(curUser.getFullname());
-		/* 68 */setMenderId(curUser.getUserId());
 	}
 
-	public ArchivesDoc(Long in_docId) {
+	public NoticeNewsDoc(Long in_docId) {
 		/* 76 */setDocId(in_docId);
 	}
 
-	public Archives getArchives() {
-		/* 81 */return this.archives;
+	public NoticeNews getNoticeNews() {
+		return noticeNews;
 	}
 
-	public void setArchives(Archives in_archives) {
-		/* 85 */this.archives = in_archives;
+	public void setNoticeNews(NoticeNews noticeNews) {
+		this.noticeNews = noticeNews;
 	}
 
 	public FileAttach getFileAttach() {
@@ -83,14 +65,6 @@ public class ArchivesDoc extends BaseModel {
 
 	public void setFileAttach(FileAttach in_fileAttach) {
 		/* 93 */this.fileAttach = in_fileAttach;
-	}
-
-	public Set getDocHistorys() {
-		/* 97 */return this.docHistorys;
-	}
-
-	public void setDocHistorys(Set in_docHistorys) {
-		/* 101 */this.docHistorys = in_docHistorys;
 	}
 
 	public Long getDocId() {
@@ -117,19 +91,18 @@ public class ArchivesDoc extends BaseModel {
 		}
 	}
 
-	public Long getArchivesId() {
-		/* 145 */return getArchives() == null ? null : getArchives()
-				.getArchivesId();
+	public Long getNewsId() {
+		/* 145 */return getNoticeNews() == null ? null : getNoticeNews()
+				.getNewsId();
 	}
 
 	public void setArchivesId(Long aValue) {
-		/* 152 */if (aValue == null) {
-			/* 153 */this.archives = null;
-			/* 154 */} else if (this.archives == null) {
-			/* 155 */this.archives = new Archives(aValue);
-			/* 156 */this.archives.setVersion(new Integer(0));
+		if (aValue == null) {
+			this.noticeNews = null;
+		} else if (this.noticeNews == null) {
+			this.noticeNews = new NoticeNews(aValue);
 		} else {
-			/* 158 */this.archives.setArchivesId(aValue);
+			this.noticeNews.setNewsId(aValue);
 		}
 	}
 
@@ -149,21 +122,7 @@ public class ArchivesDoc extends BaseModel {
 		/* 189 */this.creatorId = aValue;
 	}
 
-	public Long getMenderId() {
-		/* 197 */return this.menderId;
-	}
 
-	public void setMenderId(Long aValue) {
-		/* 204 */this.menderId = aValue;
-	}
-
-	public String getMender() {
-		/* 212 */return this.mender;
-	}
-
-	public void setMender(String aValue) {
-		/* 219 */this.mender = aValue;
-	}
 
 	public String getDocName() {
 		/* 227 */return this.docName;
@@ -173,21 +132,6 @@ public class ArchivesDoc extends BaseModel {
 		/* 235 */this.docName = aValue;
 	}
 
-	public Short getDocStatus() {
-		/* 245 */return this.docStatus;
-	}
-
-	public void setDocStatus(Short aValue) {
-		/* 253 */this.docStatus = aValue;
-	}
-
-	public Integer getCurVersion() {
-		/* 262 */return this.curVersion;
-	}
-
-	public void setCurVersion(Integer aValue) {
-		/* 270 */this.curVersion = aValue;
-	}
 
 	public String getDocPath() {
 		/* 278 */return this.docPath;
@@ -214,19 +158,15 @@ public class ArchivesDoc extends BaseModel {
 	}
 
 	public boolean equals(Object object) {
-		/* 325 */if (!(object instanceof ArchivesDoc)) {
+		/* 325 */if (!(object instanceof NoticeNewsDoc)) {
 			/* 326 */return false;
 		}
-		/* 328 */ArchivesDoc rhs = (ArchivesDoc) object;
+		/* 328 */NoticeNewsDoc rhs = (NoticeNewsDoc) object;
 		/* 329 */return new EqualsBuilder()
 		/* 330 */.append(this.docId, rhs.docId)
 		/* 331 */.append(this.creator, rhs.creator)
 		/* 332 */.append(this.creatorId, rhs.creatorId)
-		/* 333 */.append(this.menderId, rhs.menderId)
-		/* 334 */.append(this.mender, rhs.mender)
 		/* 335 */.append(this.docName, rhs.docName)
-		/* 336 */.append(this.docStatus, rhs.docStatus)
-		/* 337 */.append(this.curVersion, rhs.curVersion)
 		/* 338 */.append(this.docPath, rhs.docPath)
 		/* 339 */.append(this.updatetime, rhs.updatetime)
 		/* 340 */.append(this.createtime, rhs.createtime)
@@ -238,11 +178,7 @@ public class ArchivesDoc extends BaseModel {
 		/* 349 */.append(this.docId)
 		/* 350 */.append(this.creator)
 		/* 351 */.append(this.creatorId)
-		/* 352 */.append(this.menderId)
-		/* 353 */.append(this.mender)
 		/* 354 */.append(this.docName)
-		/* 355 */.append(this.docStatus)
-		/* 356 */.append(this.curVersion)
 		/* 357 */.append(this.docPath)
 		/* 358 */.append(this.updatetime)
 		/* 359 */.append(this.createtime)
@@ -254,11 +190,7 @@ public class ArchivesDoc extends BaseModel {
 		/* 368 */.append("docId", this.docId)
 		/* 369 */.append("creator", this.creator)
 		/* 370 */.append("creatorId", this.creatorId)
-		/* 371 */.append("menderId", this.menderId)
-		/* 372 */.append("mender", this.mender)
 		/* 373 */.append("docName", this.docName)
-		/* 374 */.append("docStatus", this.docStatus)
-		/* 375 */.append("curVersion", this.curVersion)
 		/* 376 */.append("docPath", this.docPath)
 		/* 377 */.append("updatetime", this.updatetime)
 		/* 378 */.append("createtime", this.createtime)

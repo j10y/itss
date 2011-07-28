@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class NoticeNewsComment extends BaseModel {
 	protected Long commentId;
-	protected String content;
+	protected String content;//flag为1的时候内容为评论，flag为2的时候，content的内容为0（未读）或1（已读）
 	protected Date createtime;
 	protected String fullname;
 	protected NoticeNews news;

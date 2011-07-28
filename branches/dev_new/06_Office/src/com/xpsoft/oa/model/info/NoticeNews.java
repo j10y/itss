@@ -53,14 +53,17 @@ public class NoticeNews extends BaseModel {
 
 	@Expose
 	protected Short isDeskImage;
+	
 	/**
 	 *评论or阅读
 	 */
 	protected Set<NoticeNewsComment> newsComments = new HashSet();
+	
 	/**
 	 * 附件
 	 */
-	protected Set noticeNewsDoc = new HashSet();
+	@Expose
+	protected Set<NoticeNewsDoc> noticeNewsDocs = new HashSet();
 
 	public NoticeNews() {
 	}
@@ -259,4 +262,13 @@ public class NoticeNews extends BaseModel {
 	public Long getId() {
 		/* 353 */return this.newsId;
 	}
+
+	public Set<NoticeNewsDoc> getNoticeNewsDocs() {
+		return noticeNewsDocs;
+	}
+
+	public void setNoticeNewsDocs(Set noticeNewsDocs) {
+		this.noticeNewsDocs = noticeNewsDocs;
+	}
+	
 }

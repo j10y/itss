@@ -72,6 +72,31 @@ NewsPanelView = Ext.extend(Ext.ux.Portlet, {
 		} ];
 	}
 });
+NoticeNewsPanelView = Ext.extend(Ext.ux.Portlet, {
+	tools : null,
+	constructor : function(a) {
+		Ext.applyIf(this, a);
+		this.initTool();
+		NoticeNewsPanelView.superclass.constructor.call(this, {
+			id : "NoticeNewsPanelView",
+			title : "我的通知",
+			iconCls : "menu-news",
+			tools : this.tools,
+			autoLoad : {
+				url : __ctxPath + "/info/displayNoticeNew.do"
+			}
+		});
+	},
+	initTool : function() {
+		this.tools = [ {
+			id : "refresh",
+			handler : function() {
+				Ext.getCmp("NoticeNewsPanelView").getUpdater().update(
+						__ctxPath + "/info/displayNoticeNew.do");
+			}
+		} ];
+	}
+});
 MessagePanelView = Ext.extend(Ext.ux.Portlet, {
 	tools : null,
 	constructor : function(a) {
@@ -623,6 +648,12 @@ PanelSelectorWin = Ext.extend(Ext.Window, {
 					hideLabel : true,
 					id : "MyMailPanelViewCheckBox",
 					name : "MyMailPanelView"
+				}, {
+					xtype : "checkbox",
+					boxLabel : "我的通知",
+					hideLabel : true,
+					id : "NoticeNewsPanelViewCheckBox",
+					name : "NoticeNewsPanelView"
 				} ]
 			} ]
 		});
@@ -659,7 +690,7 @@ PanelSelectorWin = Ext.extend(Ext.Window, {
 								"CalendarPlanPanelView", "DepPlanPanelView",
 								"MyPlanPanelView", "DeskNewsPanelView",
 								"NoticeScollPanelView", "MyDocumentPanelView",
-								"MyMailPanelView" ];
+								"MyMailPanelView", "NoticeNewsPanelView"];
 						for ( var v = 0; v < array.length; v++) {
 							var check = Ext.getCmp(array[v] + "CheckBox");
 							if (check != null) {

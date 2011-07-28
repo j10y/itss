@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.info.NoticeNewsDoc"
+        table="noticenews_doc"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="docId"
+            column="docId"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+         <property
+            name="creator"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="creator"
+            length="64"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="creatorId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="creatorId"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="docName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="docName"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+
+        <property
+            name="docPath"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="docPath"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+
+        <property
+            name="createtime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="createtime"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        
+        <property
+            name="updatetime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="updatetime"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+     <!-- imported bi-directional many-to-one association to Archives -->
+		<many-to-one
+			name="noticeNews"
+			class="com.xpsoft.oa.model.info.NoticeNews"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="noticeNewsId" />
+		</many-to-one>
+    <!-- imported bi-directional many-to-one association to FileAttach -->
+		<many-to-one
+			name="fileAttach"
+			class="com.xpsoft.oa.model.system.FileAttach"
+            not-null="false"
+			fetch="select"
+			lazy="false"
+		>	
+			<column name="fileId" />
+		</many-to-one>
+   
+    </class>
+</hibernate-mapping>

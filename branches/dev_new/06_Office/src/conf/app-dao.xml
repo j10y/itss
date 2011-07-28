@@ -298,4 +298,5 @@
     <bean id="noticeNewsDao" class="com.xpsoft.oa.dao.info.impl.NoticeNewsDaoImpl" parent="baseDao"/>
     <bean id="noticeNewsTypeDao" class="com.xpsoft.oa.dao.info.impl.NoticeNewsTypeDaoImpl" parent="baseDao"/>
     <bean id="noticeNewsCommentDao" class="com.xpsoft.oa.dao.info.impl.NoticeNewsCommentDaoImpl" parent="baseDao"/>
+    <bean id="noticeNewsDocDao" class="com.xpsoft.oa.dao.info.impl.NoticeNewsDocDaoImpl" parent="baseDao"/>
 </beans>

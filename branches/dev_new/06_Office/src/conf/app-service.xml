@@ -527,4 +527,7 @@
    	 <bean id="noticeNewsCommentService" class="com.xpsoft.oa.service.info.impl.NoticeNewsCommentServiceImpl">
    	 	<constructor-arg index="0" ref="noticeNewsCommentDao"/>
    	 </bean>
+   	 <bean id="noticeNewsDocService" class="com.xpsoft.oa.service.info.impl.NoticeNewsDocServiceImpl">
+   	 	<constructor-arg index="0" ref="noticeNewsDocDao"/>
+   	 </bean>
 </beans>

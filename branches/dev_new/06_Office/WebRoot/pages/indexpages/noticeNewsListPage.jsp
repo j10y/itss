@@ -18,7 +18,7 @@
 				</c:otherwise>
 			</c:choose></td>
 			<td><a href="#"
-				onclick="App.MyDesktopClickTopTab('NewsDetail',${news.newsId})">${news.subject}</a></td>
+				onclick="App.MyDesktopClickTopTab('NoticeNewDetail',${news.newsId})">${news.subject}</a></td>
 			<td width="80" nowrap="nowrap"><a>${news.author}</a></td>
 			<td width="80" nowrap="nowrap"><a><fmt:formatDate
 				value="${news.updateTime}" pattern="yyyy-MM-dd" /></a></td>
@@ -27,4 +27,4 @@
 </table>
 </div>
 <div class="moreDiv"><span><a href="#"
-	onclick="App.clickTopTab('SearchNews')">更多...</a></span></div>
+	onclick="App.clickTopTab('SearchNoticeNew')">更多...</a></span></div>

@@ -40,7 +40,7 @@ var NoticeNewDetail = function(a) {
 														.load(
 																{
 																	url : __ctxPath
-																			+ "/pages/info/newsdetail.jsp?opt=_pre&newsId="
+																			+ "/pages/info/noticenewdetail.jsp?opt=_pre&newsId="
 																			+ b,
 																	callback : function() {
 																		var d = document
@@ -77,7 +77,7 @@ var NoticeNewDetail = function(a) {
 														.load(
 																{
 																	url : __ctxPath
-																			+ "/pages/info/newsdetail.jsp?opt=_next&newsId="
+																			+ "/pages/info/noticenewdetail.jsp?opt=_next&newsId="
 																			+ b,
 																	callback : function() {
 																		var d = document
@@ -111,7 +111,7 @@ var NoticeNewDetail = function(a) {
 							border : false,
 							autoLoad : {
 								url : __ctxPath
-										+ "/pages/info/newsdetail.jsp?newsId="
+										+ "/pages/info/noticenewdetail.jsp?newsId="
 										+ a
 							}
 						}),
@@ -159,7 +159,12 @@ var NoticeNewDetail = function(a) {
 										allowBlank : false,
 										name : "newsComment.content",
 										id : "newsCommentContent"
-									} ],
+									}, {
+										name : "newsComment.flag",
+										xtype : "hidden",
+										id : "newsCommentFlag",
+										value : 1
+									}  ],
 									buttonAlign : "center",
 									buttons : [
 											{
@@ -271,7 +276,7 @@ var NoticeNewCommentDisplayGrid = function(d) {
 	var b = new Ext.data.Store({
 		proxy : new Ext.data.HttpProxy({
 			url : __ctxPath
-					+ "/info/listNoticeNewComment.do?Q_news.newsId_L_EQ=" + d
+					+ "/info/listNoticeNewComment.do?Q_flag_N_EQ=1&Q_news.newsId_L_EQ=" + d
 		}),
 		reader : new Ext.data.JsonReader({
 			root : "result",
