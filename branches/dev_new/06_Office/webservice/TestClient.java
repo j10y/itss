@@ -14,12 +14,12 @@ public class TestClient {
 			Call call = (Call) service.createCall();
 			call.setTargetEndpointAddress(new java.net.URL(
 					"http://localhost:8080/services/LoginServiceImpl"));
-			call.setOperationName("Login");
+			call.setOperationName("getInfoCount");
 			/*
 			 * invoke方法的参数是Object数组,该数组元素个数与方法参数一致
 			 */
 			String translateText = (String) call
-					.invoke(new Object[] { "admin","2" });
+					.invoke(new Object[] { "1" });
 			System.out.println(translateText);
 		} catch (ServiceException e) {
 			e.printStackTrace();

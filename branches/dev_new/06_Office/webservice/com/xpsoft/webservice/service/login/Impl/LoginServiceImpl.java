@@ -1,10 +1,15 @@
 package com.xpsoft.webservice.service.login.Impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.StringUtil;
+import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.flow.TaskService;
 import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.webservice.service.login.LoginServie;
 
@@ -24,6 +29,13 @@ public class LoginServiceImpl implements LoginServie {
 		}else{
 			return "{\"success\":false,\"msg\":\"用户不存在！\",\"userid\":\"\",\"password\":\"\"}";
 		}
+	}
+
+	public String getInfoCount(String userId) {
+		TaskService flowTaskService= (TaskService) AppUtil.getBean("flowTaskService");
+		PagingBean pb = new PagingBean(0, 999999);
+		List tasks = flowTaskService.getTaskInfosByUserId(userId, pb);
+		return "{success:true, dytzCount :\"12\",dycyCount :\"23\", dbgwCount :\""+tasks.size()+"\", yytzCount :\"45\", yycyCount :\"78\"}";
 	}
 
 }
