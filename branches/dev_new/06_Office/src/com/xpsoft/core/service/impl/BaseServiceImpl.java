@@ -11,4 +11,10 @@ public class BaseServiceImpl<T> extends GenericServiceImpl<T, Long> implements
 	public BaseServiceImpl(GenericDao dao) {
 		super(dao);
 	}
+
+	public List findDataList(String sql) {
+		// TODO Auto-generated method stub
+		return dao.findDataList(sql);
+	}
+
 }
