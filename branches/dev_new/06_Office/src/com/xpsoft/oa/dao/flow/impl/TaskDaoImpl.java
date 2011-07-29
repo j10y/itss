@@ -27,26 +27,25 @@ import com.xpsoft.oa.model.system.AppUser;
  
    public List<TaskImpl> getTasksByUserId(String userId, PagingBean pb)
    {
-/*  32 */     AppUser user = (AppUser)getHibernateTemplate().load(AppUser.class, new Long(userId));
-/*  33 */     Iterator rolesIt = user.getRoles().iterator();
-/*  34 */     StringBuffer groupIds = new StringBuffer();
-/*  35 */     int i = 0;
-/*  36 */     while (rolesIt.hasNext()) {
-/*  37 */       if (i++ > 0) groupIds.append(",");
-/*  38 */       groupIds.append("'" + ((AppRole)rolesIt.next()).getRoleId().toString() + "'");
+     AppUser user = (AppUser)getHibernateTemplate().load(AppUser.class, new Long(userId));
+     Iterator rolesIt = user.getRoles().iterator();
+     StringBuffer groupIds = new StringBuffer();
+    int i = 0;
+     while (rolesIt.hasNext()) {
+       if (i++ > 0) groupIds.append(",");
+       groupIds.append("'" + ((AppRole)rolesIt.next()).getRoleId().toString() + "'");
+     } 
+     StringBuffer hqlSb = new StringBuffer();
+     hqlSb.append("select task from org.jbpm.pvm.internal.task.TaskImpl task left join task.participations pt where (task.assignee=? and (pt.userId=? or pt.userId is null))");
+     hqlSb.append(" or ( task.assignee is null and pt.type = 'candidate' and ((pt.userId=?)");
+ 
+     if (user.getRoles().size() > 0) {
+       hqlSb.append(" or (pt.groupId in (" + groupIds.toString() + "))");
      }
+     hqlSb.append("))");
+     hqlSb.append(" order by task.createTime desc");
  
-/*  46 */     StringBuffer hqlSb = new StringBuffer();
-/*  47 */     hqlSb.append("select task from org.jbpm.pvm.internal.task.TaskImpl task left join task.participations pt where task.assignee=?");
-/*  48 */     hqlSb.append(" or ( task.assignee is null and pt.type = 'candidate' and ((pt.userId=?)");
- 
-/*  50 */     if (user.getRoles().size() > 0) {
-/*  51 */       hqlSb.append(" or (pt.groupId in (" + groupIds.toString() + "))");
-     }
-/*  53 */     hqlSb.append("))");
-/*  54 */     hqlSb.append(" order by task.createTime desc");
- 
-/*  56 */     return findByHql(hqlSb.toString(), new Object[] { userId, userId }, pb);
+     return findByHql(hqlSb.toString(), new Object[] { userId, userId,userId }, pb);
    }
  
    public List<JbpmTask> getByActivityNameVarKeyLongVal(String activityName, String varKey, Long value)

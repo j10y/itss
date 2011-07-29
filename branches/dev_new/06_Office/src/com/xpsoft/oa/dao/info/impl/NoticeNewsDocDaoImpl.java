@@ -11,7 +11,6 @@ public class NoticeNewsDocDaoImpl extends BaseDaoImpl<NoticeNewsDoc> implements 
 		/* 19 */super(NoticeNewsDoc.class);
 	}
 
-	@Override
 	public List<NoticeNewsDoc> findByNoticeId(Long paramLong) {
 		String hql = "from NoticeNewsDoc vo where vo.noticeNews.newsId=?";
 		Object[] objs = { paramLong };

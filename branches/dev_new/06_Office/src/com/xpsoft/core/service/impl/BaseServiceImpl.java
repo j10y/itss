@@ -1,5 +1,8 @@
 package com.xpsoft.core.service.impl;
 
+
+import java.util.List;
+
 import com.xpsoft.core.dao.GenericDao;
 import com.xpsoft.core.service.BaseService;
 

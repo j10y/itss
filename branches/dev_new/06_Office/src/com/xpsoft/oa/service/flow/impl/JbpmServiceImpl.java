@@ -418,7 +418,17 @@ public class JbpmServiceImpl implements JbpmService {
 
 				for (Task task : taskList) {
 					if (StringUtils.isNotEmpty(assignId)) {
-						this.taskService.assignTask(task.getId(), assignId);
+						//当assignId时多个的时候，就遍历存入jbpm4_participation，但是只要有一个审批通过就被通过
+						String[]assignIds=assignId.split("[,]");
+						if(assignIds.length>1){
+							for(String asid:assignIds){
+								this.taskService.addTaskParticipatingUser(
+										task.getId(), asid,
+										"candidate");
+							}
+						}else{
+							this.taskService.assignTask(task.getId(), assignId);
+						}
 					} else {
 						ProUserAssign assign = this.proUserAssignService
 								.getByDeployIdActivityName(pd.getDeploymentId(),
@@ -764,7 +774,6 @@ public class JbpmServiceImpl implements JbpmService {
 		}
 
 		String signUserIds = (String) variables.get("signUserIds");
-
 		if ((destName != null)
 				&& (StringUtils.isNotEmpty(signUserIds))) {
 			List<Task> newTasks = getTasksByPiId(pi.getId());
