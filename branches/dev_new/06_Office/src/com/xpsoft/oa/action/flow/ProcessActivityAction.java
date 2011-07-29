@@ -297,17 +297,17 @@ import flexjson.JSONSerializer;
  
    protected ProDefinition getProDefinition()
    {
-/* 351 */     ProDefinition proDefinition = null;
-/* 352 */     if (this.runId != null) {
-/* 353 */       ProcessRun processRun = (ProcessRun)this.processRunService.get(this.runId);
-/* 354 */       proDefinition = processRun.getProDefinition();
-/* 355 */     } else if (this.defId != null) {
-/* 356 */       proDefinition = (ProDefinition)this.proDefinitionService.get(this.defId);
+     ProDefinition proDefinition = null;
+     if (this.runId != null) {
+       ProcessRun processRun = (ProcessRun)this.processRunService.get(this.runId);
+       proDefinition = processRun.getProDefinition();
+     } else if (this.defId != null) {
+       proDefinition = (ProDefinition)this.proDefinitionService.get(this.defId);
      } else {
-/* 358 */       ProcessRun processRun = this.processRunService.getByTaskId(this.taskId.toString());
-/* 359 */       proDefinition = processRun.getProDefinition();
+       ProcessRun processRun = this.processRunService.getByTaskId(this.taskId.toString());
+       proDefinition = processRun.getProDefinition();
      }
-/* 361 */     return proDefinition;
+     return proDefinition;
    }
  
    protected FlowRunInfo getFlowRunInfo()

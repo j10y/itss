@@ -5,6 +5,9 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 
@@ -49,48 +52,55 @@ public class FieldCommandImpl implements CriteriaCommand {
 	}
 
 	public Criteria execute(Criteria criteria) {
-		/* 66 */String[] propertys = this.property.split("[.]");
-
-		/* 68 */if ((propertys != null) && (propertys.length > 1) &&
-		/* 69 */(!"vo".equals(propertys[0]))) {
-			/* 70 */for (int i = 0; i < propertys.length - 1; i++) {
-				/* 72 */if (!this.filter.getAliasSet().contains(propertys[i])) {
-					/* 73 */criteria.createAlias(propertys[i], propertys[i]);
-					/* 74 */this.filter.getAliasSet().add(propertys[i]);
+		String[] propertys = this.property.split("[.]");
+		if ((propertys != null) && (propertys.length > 1) &&
+		(!"vo".equals(propertys[0]))) {
+			for (int i = 0; i < propertys.length - 1; i++) {
+				if (!this.filter.getAliasSet().contains(propertys[i])) {
+					criteria.createAlias(propertys[i], propertys[i]);
+					this.filter.getAliasSet().add(propertys[i]);
 				}
 			}
-
 		}
 
-		/* 80 */if ("LT".equals(this.operation))
-			/* 81 */criteria.add(Restrictions.lt(this.property, this.value));
-		/* 82 */else if ("GT".equals(this.operation))
-			/* 83 */criteria.add(Restrictions.gt(this.property, this.value));
-		/* 84 */else if ("LE".equals(this.operation))
-			/* 85 */criteria.add(Restrictions.le(this.property, this.value));
-		/* 86 */else if ("GE".equals(this.operation))
-			/* 87 */criteria.add(Restrictions.ge(this.property, this.value));
-		/* 88 */else if ("LK".equals(this.operation))
-			/* 89 */criteria.add(Restrictions.like(this.property,
+		if ("LT".equals(this.operation))
+			criteria.add(Restrictions.lt(this.property, this.value));
+		else if ("GT".equals(this.operation))
+			criteria.add(Restrictions.gt(this.property, this.value));
+		else if ("LE".equals(this.operation))
+			criteria.add(Restrictions.le(this.property, this.value));
+		else if ("GE".equals(this.operation))
+			criteria.add(Restrictions.ge(this.property, this.value));
+		else if ("LK".equals(this.operation))
+			criteria.add(Restrictions.like(this.property,
 					"%" + this.value + "%").ignoreCase());
-		/* 90 */else if ("LFK".equals(this.operation))
-			/* 91 */criteria.add(Restrictions.like(this.property,
+		else if ("LFK".equals(this.operation))
+			criteria.add(Restrictions.like(this.property,
 					this.value + "%").ignoreCase());
-		/* 92 */else if ("RHK".equals(this.operation))
-			/* 93 */criteria.add(Restrictions.like(this.property,
+		else if ("RHK".equals(this.operation))
+			criteria.add(Restrictions.like(this.property,
 					"%" + this.value).ignoreCase());
-		/* 94 */else if ("NULL".equals(this.operation))
-			/* 95 */criteria.add(Restrictions.isNull(this.property));
-		/* 96 */else if ("NOTNULL".equals(this.operation))
-			/* 97 */criteria.add(Restrictions.isNotNull(this.property));
-		/* 98 */else if ("EMP".equals(this.operation))
-			/* 99 */criteria.add(Restrictions.isEmpty(this.property));
-		/* 100 */else if ("NOTEMP".equals(this.operation))
-			/* 101 */criteria.add(Restrictions.isNotEmpty(this.property));
-		/* 102 */else if ("NEQ".equals(this.operation))
-			/* 103 */criteria.add(Restrictions.ne(this.property, this.value));
+		else if ("NULL".equals(this.operation))
+			criteria.add(Restrictions.isNull(this.property));
+		else if ("NOTNULL".equals(this.operation))
+			criteria.add(Restrictions.isNotNull(this.property));
+		else if ("EMP".equals(this.operation))
+			criteria.add(Restrictions.isEmpty(this.property));
+		else if ("NOTEMP".equals(this.operation))
+			criteria.add(Restrictions.isNotEmpty(this.property));
+		else if ("NEQ".equals(this.operation))
+			criteria.add(Restrictions.ne(this.property, this.value));
+		else if ("ORLIKE".equals(this.operation)){
+			String[] propertys2 = this.property.split("[,]");
+			Disjunction disjunction =Restrictions.disjunction();
+			for(String pro:propertys2){
+				Property prop = Property.forName(pro);
+				disjunction.add(prop.like(value+"",  MatchMode.ANYWHERE));
+			}
+			criteria.add(disjunction);
+		}
 		else {
-			/* 105 */criteria.add(Restrictions.eq(this.property, this.value));
+			criteria.add(Restrictions.eq(this.property, this.value));
 		}
 
 		/* 108 */return criteria;
