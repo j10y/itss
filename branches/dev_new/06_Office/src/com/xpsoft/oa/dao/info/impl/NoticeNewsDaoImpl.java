@@ -36,7 +36,7 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 				}
 		
 				if(searchContent==null){
-					hql.append(" and n.isAll=1 or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='0')");
+					hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='0')");
 				}
 		/* 39 */hql.append(" order by n.updateTime desc");
 		/* 40 */return findByHql(hql.toString(), params.toArray(), pb);
