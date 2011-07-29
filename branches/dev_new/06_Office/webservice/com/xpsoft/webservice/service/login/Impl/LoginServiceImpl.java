@@ -55,7 +55,13 @@ public class LoginServiceImpl implements LoginServie {
 				dbgwlist.add(task);
 			}
 		}
-		return "{success:true, dytzCount :\"0\",dycyCount :\""+dycylist.size()+"\", dbgwCount :\""+dbgwlist.size()+"\", yytzCount :\"0\", yycyCount :\""+list.size()+"\"}";
+		String sql="select newsId from (select newsId from notice_news_comment " +
+				" where notice_news_comment.flag=2 and notice_news_comment.content=0 and notice_news_comment.userId="+userId +
+				" union select newsId from notice_news where  notice_news.isAll=1 and newsId not in (select distinct newsId from notice_news_comment)) a";
+		List dytzlist=flowTaskService.findDataList(sql);
+		String yytzsql="select newsId from notice_news_comment where notice_news_comment.flag=2 and notice_news_comment.content=0 and notice_news_comment.userId="+userId;
+		List yytzlist=flowTaskService.findDataList(yytzsql);
+		return "{success:true, dytzCount :\""+dytzlist.size()+"\",dycyCount :\""+dycylist.size()+"\", dbgwCount :\""+dbgwlist.size()+"\", yytzCount :\""+yytzlist.size()+"\", yycyCount :\""+list.size()+"\"}";
 	}
 
 	public String findUserByUserName(String userName) {
