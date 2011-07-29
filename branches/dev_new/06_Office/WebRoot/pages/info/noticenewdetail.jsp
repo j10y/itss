@@ -2,19 +2,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.model.system.AppUser"%>
+<%@page import="com.xpsoft.oa.model.info.NoticeNewsComment"%>
+<%@page import="com.xpsoft.core.util.ContextUtil"%>
 <%@page import="com.xpsoft.oa.service.info.NoticeNewsService"%>
 <%@page import="com.xpsoft.oa.service.info.impl.NoticeNewsServiceImpl"%>
 <%@page import="com.xpsoft.core.web.paging.PagingBean"%>
 <%@page import="com.xpsoft.oa.model.info.NoticeNews"%>
 <%@page import="com.xpsoft.oa.model.info.NoticeNewsType"%>
 <%@page import="com.xpsoft.oa.service.info.NoticeNewsTypeService"%>
+<%@page import="com.xpsoft.oa.service.info.NoticeNewsCommentService"%>
 <%@page import="com.xpsoft.core.command.QueryFilter"%>
-<%@page import="java.util.List"%>
+<%@page import="java.util.*"%>
 <%
 	Long newsId = null;
 	String strId = request.getParameter("newsId");
 	String opt = request.getParameter("opt");
+	String currentUserId = request.getParameter("userId");
+	AppUser appUser  = ((com.xpsoft.oa.service.system.AppUserService)AppUtil.getBean("appUserService")).get(Long.valueOf(currentUserId));
 	NoticeNewsService newsService = (NoticeNewsService) AppUtil.getBean("noticeNewsService");
+	NoticeNewsCommentService newsCommentService = (NoticeNewsCommentService) AppUtil.getBean("noticeNewsCommentService");
 	//通过id得到NoticeNews
 	NoticeNews news = null;
 	if (strId != null && !"".equals(strId)) {
@@ -58,6 +65,33 @@
 	request.setAttribute("ctxPath",request.getContextPath());
 	//浏览后的新闻浏览次数加1
 	news.setViewCounts(news.getViewCounts()+1);
+	
+	//如果news为全部可见，那么需要在comment表中插入一条记录
+	if(news.getIsAll().equals(Short.valueOf("1"))){
+		NoticeNewsComment comment = new NoticeNewsComment();
+
+		comment.setAppUser(appUser);
+		comment.setFullname(appUser.getFullname());
+		comment.setFlag(Integer.valueOf("2"));//阅读
+		comment.setContent("1");//已读
+		comment.setCreatetime(new Date());
+		comment.setNews(news);
+		newsCommentService.save(comment);
+	}else{//如果news为非全部可见，那么需在comment表中修改一条记录
+		Map<String, String> map = new HashMap();
+		map.put("Q_flag_N_EQ", "2");//阅读人		
+		map.put("Q_news.newsId_L_EQ", news.getNewsId().toString());
+		com.xpsoft.core.command.QueryFilter paramQueryFilter = new com.xpsoft.core.command.QueryFilter(map);
+		List<NoticeNewsComment> comments = newsCommentService.getAll(paramQueryFilter);
+		for (NoticeNewsComment comment : comments) {	
+			if(comment.getAppUser().getUserId().equals(appUser.getUserId())){
+				comment.setContent("1");//已读
+				newsCommentService.save(comment);
+				break;
+			}
+			
+        }
+	}	
 	newsService.save(news);
 %>
 

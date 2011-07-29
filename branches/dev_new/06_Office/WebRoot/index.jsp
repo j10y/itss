@@ -7,6 +7,8 @@
 	String basePath=request.getContextPath();
 	//登录成功后，需要把该用户显示至在线用户
 	AppUtil.addOnlineUser(request.getSession().getId(), ContextUtil.getCurrentUser());
+	request.setAttribute("currentUserId", ContextUtil.getCurrentUser().getUserId());
+	request.setAttribute("currentUserFullname", ContextUtil.getCurrentUser().getFullname());
 	if(ContextUtil.getCurrentUser().getRights().contains("__ALL")){
 		request.setAttribute("IS_MANAGER",true);
 	}
@@ -17,6 +19,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="msthemecompatible" content="no">
 		<title><%=AppUtil.getCompanyName()%>－－办公协同管理系统</title>
+		<script type="text/javascript">
+			var __currentUserId = "${currentUserId}";
+			var __currentUserFullName = "${currentUserFullname}";
+		  
+	    </script>
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/resources/css/ext-all-notheme.css" />
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/resources/css/ext-patch.css" />
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/ux/css/Portal.css" />
@@ -148,7 +155,7 @@
 		<div id="header">
 			<div class="trl">
 				<a href="#" class="logo"><img alt="上品折扣网-www.shopin.net"
-						src="<%=basePath+AppUtil.getCompanyLogo()%>">
+						src="">
 				</a>
 				<p>
 					欢迎您，<security:authentication property="principal.fullname"/>

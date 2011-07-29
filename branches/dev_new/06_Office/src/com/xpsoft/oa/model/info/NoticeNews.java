@@ -54,6 +54,10 @@ public class NoticeNews extends BaseModel {
 	@Expose
 	protected Short isDeskImage;
 	
+	@Expose
+	protected Short isAll;//是否全部可见 0否 1是
+	
+	
 	/**
 	 *评论or阅读
 	 */
@@ -218,6 +222,7 @@ public class NoticeNews extends BaseModel {
 		/* 296 */.append(this.status, rhs.status)
 		/* 297 */.append(this.issuer, rhs.issuer)
 		/* 298 */.append(this.isDeskImage, rhs.isDeskImage)
+		/* 298 */.append(this.isAll, rhs.isAll)
 		/* 299 */.isEquals();
 	}
 
@@ -235,6 +240,7 @@ public class NoticeNews extends BaseModel {
 		/* 316 */.append(this.status)
 		/* 317 */.append(this.issuer)
 		/* 318 */.append(this.isDeskImage)
+		/* 318 */.append(this.isAll)
 		/* 319 */.toHashCode();
 	}
 
@@ -252,7 +258,22 @@ public class NoticeNews extends BaseModel {
 		/* 336 */.append("status", this.status)
 		/* 337 */.append("issuer", this.issuer)
 		/* 338 */.append("isDeskImage", this.isDeskImage)
+		/* 338 */.append("isAll", this.isAll)
 		/* 339 */.toString();
+	}
+	
+	
+
+	public Short getIsAll() {
+		return isAll;
+	}
+
+	public void setIsAll(Short isAll) {
+		this.isAll = isAll;
+	}
+
+	public void setNoticeNewsDocs(Set<NoticeNewsDoc> noticeNewsDocs) {
+		this.noticeNewsDocs = noticeNewsDocs;
 	}
 
 	public String getFirstKeyColumnName() {
@@ -265,10 +286,6 @@ public class NoticeNews extends BaseModel {
 
 	public Set<NoticeNewsDoc> getNoticeNewsDocs() {
 		return noticeNewsDocs;
-	}
-
-	public void setNoticeNewsDocs(Set noticeNewsDocs) {
-		this.noticeNewsDocs = noticeNewsDocs;
 	}
 	
 }

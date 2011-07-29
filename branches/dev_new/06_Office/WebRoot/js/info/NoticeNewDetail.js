@@ -41,7 +41,7 @@ var NoticeNewDetail = function(a) {
 																{
 																	url : __ctxPath
 																			+ "/pages/info/noticenewdetail.jsp?opt=_pre&newsId="
-																			+ b,
+																			+ b + "&userId=" + __currentUserId,
 																	callback : function() {
 																		var d = document
 																				.getElementById("__curNoticeNewId").value;
@@ -78,7 +78,7 @@ var NoticeNewDetail = function(a) {
 																{
 																	url : __ctxPath
 																			+ "/pages/info/noticenewdetail.jsp?opt=_next&newsId="
-																			+ b,
+																			+ b + "&userId=" + __currentUserId,
 																	callback : function() {
 																		var d = document
 																				.getElementById("__curNoticeNewId").value;
@@ -112,7 +112,7 @@ var NoticeNewDetail = function(a) {
 							autoLoad : {
 								url : __ctxPath
 										+ "/pages/info/noticenewdetail.jsp?newsId="
-										+ a
+										+ a  + "&userId=" + __currentUserId
 							}
 						}),
 						{

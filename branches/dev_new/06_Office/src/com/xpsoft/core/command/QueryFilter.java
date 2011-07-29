@@ -1,16 +1,21 @@
 package com.xpsoft.core.command;
 
-import com.xpsoft.core.util.ParamUtil;
-import com.xpsoft.core.web.paging.PagingBean;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.xpsoft.core.util.ParamUtil;
+import com.xpsoft.core.web.paging.PagingBean;
 
 public class QueryFilter {
 	public static final String ORDER_DESC = "desc";
@@ -40,6 +45,45 @@ public class QueryFilter {
 
 	public PagingBean getPagingBean() {
 		/* 70 */return this.pagingBean;
+	}
+	
+	/**
+	 * map形式创建，无分页，全部load
+	 * @param map
+	 */
+	public QueryFilter(Map<String, String> map) {
+		Set<String> set = map.keySet();
+		Iterator<String> iterator = set.iterator();
+		while (iterator.hasNext()) {
+			String paramName = (String) iterator.next();
+			if (paramName.startsWith("Q_")) {
+			String paramValue = map.get(paramName);
+				addFilter(paramName, paramValue);
+			}
+		}
+		Integer start = Integer.valueOf(0);
+		Integer limit = Integer.MAX_VALUE;
+
+		String s_start = map.get("start");
+		String s_limit = map.get("limit");
+		if (StringUtils.isNotEmpty(s_start)) {
+			start = new Integer(s_start);
+		}
+		if (StringUtils.isNotEmpty(s_limit)) {
+			limit = new Integer(s_limit);
+		}
+
+		String sort = map.get("sort");
+		String dir = map.get("dir");
+
+		if ((StringUtils.isNotEmpty(sort))
+				&& (StringUtils.isNotEmpty(dir))) {
+			addSorted(sort, dir);
+		}
+
+		this.pagingBean = new PagingBean(start.intValue(),
+				limit.intValue());
+
 	}
 
 	public QueryFilter(PagingBean pagingBean) {

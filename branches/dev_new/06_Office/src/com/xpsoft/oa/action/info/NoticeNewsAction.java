@@ -3,8 +3,10 @@ package com.xpsoft.oa.action.info;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -19,9 +21,12 @@ import com.xpsoft.core.util.StringUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.info.NoticeNews;
+import com.xpsoft.oa.model.info.NoticeNewsComment;
 import com.xpsoft.oa.model.info.NoticeNewsDoc;
 import com.xpsoft.oa.model.info.NoticeNewsType;
+import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.FileAttach;
+import com.xpsoft.oa.service.info.NoticeNewsCommentService;
 import com.xpsoft.oa.service.info.NoticeNewsDocService;
 import com.xpsoft.oa.service.info.NoticeNewsService;
 import com.xpsoft.oa.service.info.NoticeNewsTypeService;
@@ -47,6 +52,9 @@ public class NoticeNewsAction extends BaseAction {
 	
 	@Resource
     private NoticeNewsDocService noticeNewsDocService;
+	
+	@Resource
+    private NoticeNewsCommentService noticeNewsCommentService;
 	
 	public List<NoticeNews> getList() {
 		/* 43 */return this.list;
@@ -148,6 +156,20 @@ public class NoticeNewsAction extends BaseAction {
 						sb.append(",");
 					}
 				}
+				
+				sb.append("],comments:[");
+				
+				Iterator<NoticeNewsComment> iterator1 = news.getNewsComments().iterator();
+				NoticeNewsComment comment = null;
+				for(;iterator1.hasNext();){
+					comment = iterator1.next();
+					if(comment.getFlag()==(short)1)continue;//1为评论，2为阅读
+					sb.append("{\"userId\":\""+comment.getUserId() + "\",\"userName\":\"" + comment.getFullname() +"\"}");
+					if(iterator1.hasNext()){
+						sb.append(",");
+					}
+				}
+				
 		/* 140 */sb.append("]}");
 		/* 141 */setJsonString(sb.toString());
 
@@ -156,6 +178,14 @@ public class NoticeNewsAction extends BaseAction {
 
 	public String save() {
 		String noticeNewfileIds = getRequest().getParameter("noticeNewfileIds");
+		String readerIds = getRequest().getParameter("readerIds");
+		String readerNames = getRequest().getParameter("readerNames");
+		if (this.news.getIsAll()!=null){
+			this.news.setIsAll((short)1);
+		}else{
+			this.news.setIsAll((short)0);//全部可见
+		}
+		
 		/* 149 */String isDeskNews = getRequest().getParameter("isDeskImage");
 		/* 150 */if (StringUtils.isNotEmpty(isDeskNews))
 			/* 151 */this.news.setIsDeskImage(NoticeNews.ISDESKNEWS);
@@ -209,8 +239,38 @@ public class NoticeNewsAction extends BaseAction {
 	 
 	     }
 		
-		/* 178 */setJsonString("{success:true}");
-		/* 179 */return "success";
+		Map<String, String> map = new HashMap();
+		map.put("Q_flag_N_EQ", "2");//阅读人
+		if(this.news.getNewsId()!=null){			
+			map.put("Q_news.newsId_L_EQ", news.getNewsId().toString());
+			QueryFilter paramQueryFilter = new QueryFilter(map);
+			List<NoticeNewsComment> comments = this.noticeNewsCommentService.getAll(paramQueryFilter);
+			for (NoticeNewsComment comment : comments) {
+				this.noticeNewsCommentService.remove(comment);
+	        }			
+		}
+		
+		if (this.news.getIsAll().equals(Short.valueOf("0")) && StringUtils.isNotEmpty(readerIds)) {//重新修改人
+			String[] userIds = readerIds.split(",");
+			String[] userNames = readerNames.split(",");
+			int i=0;
+			for (String id : userIds) {
+				NoticeNewsComment comment = new NoticeNewsComment();
+				AppUser appUser = new AppUser();
+				appUser.setUserId(Long.valueOf(id));
+				comment.setAppUser(appUser);
+				comment.setFullname(userNames[i]);
+				comment.setFlag(Integer.valueOf("2"));//阅读
+				comment.setContent("0");//未读
+				comment.setCreatetime(new Date());
+				comment.setNews(this.news);
+				this.noticeNewsCommentService.save(comment);
+				i++;				
+			}
+		}
+		
+		setJsonString("{success:true}");
+		return "success";
 	}
 
 	public String category() {

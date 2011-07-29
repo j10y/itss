@@ -39,7 +39,7 @@ NoticeNewForm = Ext
 							iconCls : "menu-news",
 							width : 800,
 							minWidth : 799,
-							height : 550,
+							height : 650,
 							minHeight : 524,
 							maximizable : true,
 							modal : true,
@@ -100,6 +100,23 @@ NoticeNewForm = Ext
 															dd.setValue(dd.getValue()+ ",");
 														}
 														dd.setValue(dd.getValue()+ datas[e].fileId);
+														
+													}
+													
+													var datas1 = f.result.comments;
+													var dd1 = Ext.getCmp("readerIds");
+													var ee1 = Ext.getCmp("readerNames");
+													for(var e=0; e<datas1.length; e++){
+														
+														if (dd1.getValue() != "") {
+															dd1.setValue(dd1.getValue()+ ",");
+														}
+														dd1.setValue(dd1.getValue()+ datas1[e].userId);
+														
+														if (ee1.getValue() != "") {
+															ee1.setValue(ee1.getValue()+ ",");
+														}
+														ee1.setValue(ee1.getValue()+ datas1[e].userName);
 														
 													}
 													
@@ -238,6 +255,21 @@ NoticeNewForm.prototype.setup = function() {
 							}
 						},
 						{
+							fieldLabel : "是否全部可见",
+							name : "news.isAll",
+							id : "isAll",
+							xtype : "checkbox",
+							inputValue : "1",
+							handler : function(d) {
+								var isAll = d.getValue();
+								if (isAll) {
+									Ext.getCmp("readerNames").allowBlank=true;
+								} else {
+									Ext.getCmp("readerNames").allowBlank=false;
+								}
+							}
+						},
+						{
 							fieldLabel : "通知状态",
 							hiddenName : "news.status",
 							id : "status",
@@ -323,6 +355,37 @@ NoticeNewForm.prototype.setup = function() {
 							id : "content",
 							xtype : "fckeditor",
 							height : 200
+						}, {
+							xtype : "container",
+							layout : "column",
+							items : [ {
+								xtype : "label",
+								//style : "padding-left:0px",
+								width:60,
+								text : "接收人员:"
+							}, {
+								xtype : "textarea",
+								id : "readerNames",
+								//allowBlank : false,
+								emptyText : "请选择接收通知的人员，若已经选择全部可见则此处不用选择",
+								readOnly : true,
+								width:300,
+								name : "readerNames",
+								value : ""
+							}, {
+								xtype : "hidden",
+								id : "readerIds",
+								name : "readerIds"
+							}, {
+								xtype : "button",
+								text : "选择人员",
+								handler : function() {
+									UserSelector.getView(function(b, a) {
+										Ext.getCmp("readerNames").setValue(a);
+										Ext.getCmp("readerIds").setValue(b);
+									}).show();
+								}
+							}]
 						}, {
 							xtype : "fieldset",
 							title : "附件",

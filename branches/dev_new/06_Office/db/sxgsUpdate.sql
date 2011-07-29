@@ -101,3 +101,7 @@ CREATE TABLE `noticenews_doc` (
   CONSTRAINT `FK_NNSC_R_FA` FOREIGN KEY (`fileId`) REFERENCES `file_attach` (`fileId`),
   CONSTRAINT `FK_NNSD_R_NNS` FOREIGN KEY (`noticeNewsId`) REFERENCES `notice_news` (`newsId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--add column
+
+ALTER TABLE notice_news add COLUMN isAll SMALLINT(6) DEFAULT 0;

@@ -143,6 +143,18 @@
             unique="false"
         />
         
+        <property
+            name="isAll"
+            type="java.lang.Short"
+            update="true"
+            insert="true"
+            access="property"
+            column="isAll"
+            length="5"
+            not-null="false"
+            unique="false"
+        />
+        
      <!-- imported bi-directional many-to-one association to NewsType -->
 		<many-to-one
 			name="newsType"

@@ -1,13 +1,16 @@
 package com.xpsoft.oa.dao.info.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.xpsoft.core.Constants;
 import com.xpsoft.core.dao.impl.BaseDaoImpl;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.dao.info.NoticeNewsDao;
 import com.xpsoft.oa.model.info.NoticeNews;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.lang.StringUtils;
 
 public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements NoticeNewsDao {
 	public NoticeNewsDaoImpl() {
@@ -30,7 +33,11 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 			/* 35 */hql.append(" and (n.subject like ? or n.content like ?)");
 			/* 36 */params.add("%" + searchContent + "%");
 			/* 37 */params.add("%" + searchContent + "%");
-		}
+				}
+		
+				if(searchContent==null){
+					hql.append(" and n.isAll=1 or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='0')");
+				}
 		/* 39 */hql.append(" order by n.updateTime desc");
 		/* 40 */return findByHql(hql.toString(), params.toArray(), pb);
 	}

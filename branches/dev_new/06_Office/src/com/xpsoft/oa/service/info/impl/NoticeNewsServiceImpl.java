@@ -20,6 +20,10 @@ public class NoticeNewsServiceImpl extends BaseServiceImpl<NoticeNews> implement
 		return this.newsDao.findByTypeId(typeId, pb);
 	}
 
+	
+	/**
+	 * searchContent为null是portal中传来的，这里需要过滤是否自己的
+	 */
 	public List<NoticeNews> findBySearch(String searchContent, PagingBean pb) {
 		return this.newsDao.findBySearch(searchContent, pb);
 	}
