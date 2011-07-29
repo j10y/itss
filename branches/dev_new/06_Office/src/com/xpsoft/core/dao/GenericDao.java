@@ -34,4 +34,5 @@ public abstract interface GenericDao<T, PK extends Serializable>
   public abstract List<T> findByHql(String paramString, Object[] paramArrayOfObject, int paramInt1, int paramInt2);
 
   public abstract void flush();
+  public abstract List findDataList(String sql);
 }

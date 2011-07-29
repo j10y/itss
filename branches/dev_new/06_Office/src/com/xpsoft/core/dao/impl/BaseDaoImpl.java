@@ -19,5 +19,5 @@ public abstract class BaseDaoImpl<T> extends GenericDaoImpl<T, Long> implements 
 	public BaseDaoImpl(Class persistType) {
 		super(persistType);
 	}
-	
+
 }
