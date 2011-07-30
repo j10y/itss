@@ -106,9 +106,30 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 					params.add(typeId);
 				}
 				
-				hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='0')");
+				hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='0'");
+				
 				params.add(ContextUtil.getCurrentUserId());
 				params.add(ContextUtil.getCurrentUserId());
+				if (StringUtils.isNotEmpty(subject)&&StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and (comment.news.subject like ? or comment.news.content like ?)");
+					params.add("%" + searchContent + "%");
+					params.add("%" + searchContent + "%");
+				}else if (StringUtils.isNotEmpty(subject) && !StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and comment.news.subject like ?");
+						params.add("%" + subject + "%");
+				}else if (!StringUtils.isNotEmpty(subject) && StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and comment.news.content like ?");
+					params.add("%" + searchContent + "%");
+				}
+				if(typeId!=null){
+					hql.append(" and comment.news.newsType.typeId=?");
+					params.add(typeId);
+				}
+				if(StringUtils.isNotEmpty(deptName)){
+					hql.append(" and comment.news.dept.depName like ?");
+					params.add("%" + deptName + "%");
+				}	
+				hql.append(")");
 				
 				hql.append(" order by n.updateTime desc");
 				return findByHql(hql.toString(), params.toArray(), pb);
