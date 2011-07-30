@@ -27,6 +27,23 @@ public class NoticeNewsServiceImpl extends BaseServiceImpl<NoticeNews> implement
 	public List<NoticeNews> findBySearch(String searchContent, PagingBean pb) {
 		return this.newsDao.findBySearch(searchContent, pb);
 	}
+	
+	/**
+	 * 查询通知
+	 * @param subject 内容，根据内容like %%检索
+	 * @param searchContent 内容，根据内容like %%检索
+	 * @param deptName 部门名称，根据部门名称like %%检索
+	 * @param pb 分页器
+	 * @param hasRead true已读取 false未读
+	 * @return
+	 */
+	public List<NoticeNews> findByForPadSearch(String subject, String searchContent, String deptName, PagingBean pb, boolean hasRead) {
+		if(hasRead){
+			return this.newsDao.findByReadSearch(subject, searchContent, deptName, pb);		
+		}else{
+			return this.newsDao.findByNoReadSearch(subject, searchContent, deptName, pb);
+		}
+	}
 
 	public List<NoticeNews> findImageNews(PagingBean pb) {
 		return this.newsDao.findImageNews(pb);

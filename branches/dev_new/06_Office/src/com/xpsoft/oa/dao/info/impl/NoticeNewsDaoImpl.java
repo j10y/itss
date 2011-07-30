@@ -41,6 +41,67 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 		/* 39 */hql.append(" order by n.updateTime desc");
 		/* 40 */return findByHql(hql.toString(), params.toArray(), pb);
 	}
+	
+	public List<NoticeNews> findByReadSearch(String subject, String searchContent, String deptName, PagingBean pb) {
+				ArrayList params = new ArrayList();
+				StringBuffer hql = new StringBuffer(
+				"from NoticeNews n where n.status = ?");
+				params.add(Constants.FLAG_ACTIVATION);
+				
+				if (StringUtils.isNotEmpty(subject)&&StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and (n.subject like ? or n.content like ?)");
+					params.add("%" + searchContent + "%");
+					params.add("%" + searchContent + "%");
+				}else if (StringUtils.isNotEmpty(subject) && !StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and n.subject like ?");
+						params.add("%" + subject + "%");
+				}else if (!StringUtils.isNotEmpty(subject) && StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and n.content like ?");
+					params.add("%" + searchContent + "%");
+				}
+				
+				if(StringUtils.isNotEmpty(deptName)){
+					hql.append(" and n.dept.depName like ?");
+					params.add("%" + deptName + "%");
+				}
+				
+				hql.append(" and n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')");
+				params.add(ContextUtil.getCurrentUserId());
+				
+				hql.append(" order by n.updateTime desc");
+				return findByHql(hql.toString(), params.toArray(), pb);
+	}
+	
+	public List<NoticeNews> findByNoReadSearch(String subject, String searchContent, String deptName, PagingBean pb) {
+				ArrayList params = new ArrayList();
+				StringBuffer hql = new StringBuffer(
+				"from NoticeNews n where n.status = ?");
+				params.add(Constants.FLAG_ACTIVATION);
+				
+				if (StringUtils.isNotEmpty(subject)&&StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and (n.subject like ? or n.content like ?)");
+					params.add("%" + searchContent + "%");
+					params.add("%" + searchContent + "%");
+				}else if (StringUtils.isNotEmpty(subject) && !StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and n.subject like ?");
+						params.add("%" + subject + "%");
+				}else if (!StringUtils.isNotEmpty(subject) && StringUtils.isNotEmpty(searchContent)) {
+					hql.append(" and n.content like ?");
+					params.add("%" + searchContent + "%");
+				}
+				
+				if(StringUtils.isNotEmpty(deptName)){
+					hql.append(" and n.dept.depName like ?");
+					params.add("%" + deptName + "%");
+				}
+				
+				hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='0')");
+				params.add(ContextUtil.getCurrentUserId());
+				params.add(ContextUtil.getCurrentUserId());
+				
+				hql.append(" order by n.updateTime desc");
+				return findByHql(hql.toString(), params.toArray(), pb);
+	}
 
 	public List<NoticeNews> findImageNews(PagingBean pb) {
 		/* 45 */String hql = "from NoticeNews vo where vo.isDeskImage=1 order by vo.updateTime desc";

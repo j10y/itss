@@ -181,6 +181,24 @@
 		/>
 	</set>
 	
+	<many-to-one
+			name="appUser"
+			class="com.xpsoft.oa.model.system.AppUser"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="authorId" />
+	</many-to-one>
+	
+	<many-to-one
+			name="dept"
+			class="com.xpsoft.oa.model.system.Department"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="deptId" />
+	</many-to-one>
+	
 	<set name="noticeNewsDocs" table="noticenews_doc" lazy="true" inverse="false" cascade="save-update,delete-orphan" sort="unsorted">
 			<key column="noticeNewsId" />
 			<one-to-many class="com.xpsoft.oa.model.info.NoticeNewsDoc"/>

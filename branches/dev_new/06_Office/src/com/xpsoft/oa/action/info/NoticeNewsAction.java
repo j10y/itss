@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.StringUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.core.web.paging.PagingBean;
@@ -185,6 +186,9 @@ public class NoticeNewsAction extends BaseAction {
 		}else{
 			this.news.setIsAll((short)0);//全部可见
 		}
+		
+		this.news.setAppUser(ContextUtil.getCurrentUser());//当前人
+		this.news.setDept(ContextUtil.getCurrentUser().getDepartment());//当前人部门
 		
 		/* 149 */String isDeskNews = getRequest().getParameter("isDeskImage");
 		/* 150 */if (StringUtils.isNotEmpty(isDeskNews))

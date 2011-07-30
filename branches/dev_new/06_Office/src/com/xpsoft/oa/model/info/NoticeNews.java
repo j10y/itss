@@ -10,6 +10,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
 
 public class NoticeNews extends BaseModel {
 	/* 21 */public static Short ISDESKNEWS = Short.valueOf((short) 1);
@@ -23,9 +25,15 @@ public class NoticeNews extends BaseModel {
 
 	@Expose
 	protected String subject;
+	
+	@Expose
+	protected AppUser appUser;
 
 	@Expose
 	protected String author;
+	
+	@Expose
+	protected Department dept;
 
 	@Expose
 	protected Date createtime;
@@ -204,6 +212,20 @@ public class NoticeNews extends BaseModel {
 		/* 275 */this.issuer = issuer;
 	}
 
+	/**
+	 * @return the appUser
+	 */
+	public AppUser getAppUser() {
+		return appUser;
+	}
+
+	/**
+	 * @param appUser the appUser to set
+	 */
+	public void setAppUser(AppUser appUser) {
+		this.appUser = appUser;
+	}
+
 	public boolean equals(Object object) {
 		/* 282 */if (!(object instanceof NoticeNews)) {
 			/* 283 */return false;
@@ -261,8 +283,20 @@ public class NoticeNews extends BaseModel {
 		/* 338 */.append("isAll", this.isAll)
 		/* 339 */.toString();
 	}
-	
-	
+
+	/**
+	 * @return the dept
+	 */
+	public Department getDept() {
+		return dept;
+	}
+
+	/**
+	 * @param dept the dept to set
+	 */
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
 
 	public Short getIsAll() {
 		return isAll;
