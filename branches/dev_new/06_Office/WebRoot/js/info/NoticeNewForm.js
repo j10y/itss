@@ -39,9 +39,10 @@ NoticeNewForm = Ext
 							iconCls : "menu-news",
 							width : 800,
 							minWidth : 799,
-							height : 650,
+							height : 550,
 							minHeight : 524,
 							maximizable : true,
+							autoScroll:true,
 							modal : true,
 							buttonAlign : "center",
 							buttons : this.buttons
@@ -354,7 +355,7 @@ NoticeNewForm.prototype.setup = function() {
 							name : "news.content",
 							id : "content",
 							xtype : "fckeditor",
-							height : 200
+							height : 100
 						}, {
 							xtype : "container",
 							layout : "column",
@@ -369,7 +370,7 @@ NoticeNewForm.prototype.setup = function() {
 								//allowBlank : false,
 								emptyText : "请选择接收通知的人员，若已经选择全部可见则此处不用选择",
 								readOnly : true,
-								width:300,
+								width:500,
 								name : "readerNames",
 								value : ""
 							}, {
