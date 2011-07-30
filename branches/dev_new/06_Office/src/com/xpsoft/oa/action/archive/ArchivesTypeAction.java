@@ -48,7 +48,7 @@ public class ArchivesTypeAction extends BaseAction {
 		for (ArchivesType dutySection : dutySectionList) {
 			sb.append("['").append(dutySection.getTypeId()).append("','")
 					.append(dutySection.getTypeName()).append("','")
-					.append(dutySection.getProcessDefId()).append("'],");
+					.append(dutySection.getProcessDefId()!=null?dutySection.getProcessDefId():"0").append("'],");
 		}
 		if (dutySectionList.size() > 0) {
 			sb.deleteCharAt(sb.length() - 1);

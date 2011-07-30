@@ -65,7 +65,7 @@ import flexjson.JSONSerializer;
 /*  79 */     for (ArchRecType type : list) {
 /*  80 */       sb.append("['").append(type.getRecTypeId()).append("','")
 					.append(type.getTypeName()).append("','")
-					.append(type.getProcessDefId()).append("'],");
+					.append(type.getProcessDefId()!=null?type.getProcessDefId():0).append("'],");
      }
 /*  82 */     if (list.size() > 0) {
 /*  83 */       sb.deleteCharAt(sb.length() - 1);
