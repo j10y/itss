@@ -102,6 +102,11 @@ CREATE TABLE `noticenews_doc` (
   CONSTRAINT `FK_NNSD_R_NNS` FOREIGN KEY (`noticeNewsId`) REFERENCES `notice_news` (`newsId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
---add column
+-- add column
 
 ALTER TABLE notice_news add COLUMN isAll SMALLINT(6) DEFAULT 0;
+
+-- Alt Table notice_news
+
+ALTER TABLE notice_news add COLUMN authorId bigint(20) NOT NULL;
+ALTER TABLE notice_news add COLUMN deptId bigint(20) NOT NULL;
