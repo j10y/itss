@@ -530,4 +530,9 @@
    	 <bean id="noticeNewsDocService" class="com.xpsoft.oa.service.info.impl.NoticeNewsDocServiceImpl">
    	 	<constructor-arg index="0" ref="noticeNewsDocDao"/>
    	 </bean>
+   	 
+   	 <bean id="archRecFiledTypeService" class="com.xpsoft.oa.service.archive.impl.ArchRecFiledTypeServiceImpl">
+   	 	<constructor-arg index="0" ref="archRecFiledTypeDao"/>
+   	 </bean>
+   	 
 </beans>

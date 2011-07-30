@@ -316,6 +316,9 @@
 		<action name="*ArchRecType" class="ArchRecTypeAction" method="{1}">
 		    <result>${successResultValue}</result>
 		</action>
+		<action name="*ArchRecFiledType" class="ArchRecFiledTypeAction" method="{1}">
+		    <result>${successResultValue}</result>
+		</action>
 		<action name="*ArchivesHandle" class="ArchivesHandleAction" method="{1}">
 		    <result>${successResultValue}</result>
 		</action>

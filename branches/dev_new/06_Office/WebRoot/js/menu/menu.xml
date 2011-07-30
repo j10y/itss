@@ -86,6 +86,24 @@
 			       <url>/archive/multiDelArchRecType.do</url>
 			    </Function>
 			</Item>
+			<Item id="ArchRecFiledTypeView" text="收文归档类别" iconCls="menu-arch-rec-filed-type">
+			    <Function id="_ArchRecFiledTypeQuery" text="查看" iconCls="menu-list">
+			       <url>/archive/listArchRecFiledType.do</url>
+			    </Function>
+			    <Function id="_ArchRecFiledTypeAdd" text="添加" iconCls="menu-add">
+			       <url>/archive/listArchRecFiledType.do</url>
+			       <url>/archive/saveArchRecFiledType.do</url>
+			    </Function>
+			    <Function id="_ArchRecFiledTypeEdit" text="编辑" iconCls="btn-edit">
+			       <url>/archive/listArchRecFiledType.do</url>
+			       <url>/archive/saveArchRecFiledType.do</url>
+			       <url>/archive/getArchRecFiledType.do</url>
+			    </Function>
+			    <Function id="_ArchRecFiledTypeDel" text="删除" iconCls="menu-del">
+			       <url>/archive/listArchRecFiledType.do</url>
+			       <url>/archive/multiDelArchRecFiledType.do</url>
+			    </Function>
+			</Item>
 		</Items>
 		<Items id="ArchiveIssue" text="发文管理" iconCls="menu-archive-issue">
 			<Item id="ArchivesDraftView" text="发文拟稿" iconCls="menu-archive-draft">

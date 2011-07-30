@@ -353,5 +353,7 @@ App.importJs = {
 	NoticeNewCommentView : [ __ctxPath + "/js/info/NoticeNewCommentView.js",
 	       			__ctxPath + "/ext3/ux/RowExpander.js" ],
 	NoticeNewTypeView : [ __ctxPath + "/js/info/NoticeNewTypeView.js",
- 			__ctxPath + "/js/info/NoticeNewTypeForm.js" ]
+ 			__ctxPath + "/js/info/NoticeNewTypeForm.js" ],
+	ArchRecFiledTypeView : [ __ctxPath + "/js/archive/ArchRecFiledTypeView.js",
+			__ctxPath + "/js/archive/ArchRecFiledTypeForm.js" ]
 };

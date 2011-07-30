@@ -287,4 +287,5 @@
   <bean id="NoticeNewsTypeAction" class="com.xpsoft.oa.action.info.NoticeNewsTypeAction" scope="prototype">
   </bean>
   <bean id="NoticeNewsCommentAction" class="com.xpsoft.oa.action.info.NoticeNewsCommentAction" scope="prototype"/>
+  <bean id="ArchRecFiledTypeAction" class="com.xpsoft.oa.action.archive.ArchRecFiledTypeAction" scope="prototype"/>
 </beans>

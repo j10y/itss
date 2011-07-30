@@ -110,3 +110,17 @@ ALTER TABLE notice_news add COLUMN isAll SMALLINT(6) DEFAULT 0;
 
 ALTER TABLE notice_news add COLUMN authorId bigint(20) NOT NULL;
 ALTER TABLE notice_news add COLUMN deptId bigint(20) NOT NULL;
+
+
+-- Create Table 2011-07-30
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `arch_rec_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `arch_rec_filed_type`;
+CREATE TABLE `arch_rec_filed_type` (
+  `typeId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `typeName` varchar(128) NOT NULL COMMENT '分类名称',
+  PRIMARY KEY (`typeId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
