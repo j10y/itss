@@ -22,5 +22,5 @@ public abstract interface NoticeNewsService extends BaseService<NoticeNews>
 	 * @param hasRead true已读取 false未读
 	 * @return
 	 */
-	public List<NoticeNews> findByForPadSearch(String subject, String searchContent, String deptName, PagingBean pb, boolean hasRead);
+	public List<NoticeNews> findByForPadSearch(String subject, String searchContent, String deptName, Long typeId, PagingBean pb, boolean hasRead);
 }

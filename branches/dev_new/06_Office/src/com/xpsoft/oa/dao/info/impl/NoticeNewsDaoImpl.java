@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
 import com.xpsoft.core.Constants;
 import com.xpsoft.core.dao.impl.BaseDaoImpl;
@@ -42,7 +43,7 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 		/* 40 */return findByHql(hql.toString(), params.toArray(), pb);
 	}
 	
-	public List<NoticeNews> findByReadSearch(String subject, String searchContent, String deptName, PagingBean pb) {
+	public List<NoticeNews> findByReadSearch(String subject, String searchContent, String deptName, Long typeId, PagingBean pb) {
 				ArrayList params = new ArrayList();
 				StringBuffer hql = new StringBuffer(
 				"from NoticeNews n where n.status = ?");
@@ -63,6 +64,11 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 				if(StringUtils.isNotEmpty(deptName)){
 					hql.append(" and n.dept.depName like ?");
 					params.add("%" + deptName + "%");
+				}
+				
+				if(typeId!=null){
+					hql.append(" and n.newsType.typeId=?");
+					params.add(typeId);
 				}
 				
 				hql.append(" and n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')");
@@ -72,7 +78,7 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 				return findByHql(hql.toString(), params.toArray(), pb);
 	}
 	
-	public List<NoticeNews> findByNoReadSearch(String subject, String searchContent, String deptName, PagingBean pb) {
+	public List<NoticeNews> findByNoReadSearch(String subject, String searchContent, String deptName, Long typeId, PagingBean pb) {
 				ArrayList params = new ArrayList();
 				StringBuffer hql = new StringBuffer(
 				"from NoticeNews n where n.status = ?");
@@ -93,6 +99,11 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 				if(StringUtils.isNotEmpty(deptName)){
 					hql.append(" and n.dept.depName like ?");
 					params.add("%" + deptName + "%");
+				}
+				
+				if(typeId!=null){
+					hql.append(" and n.newsType.typeId=?");
+					params.add(typeId);
 				}
 				
 				hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='0')");

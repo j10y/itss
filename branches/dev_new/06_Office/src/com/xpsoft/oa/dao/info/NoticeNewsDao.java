@@ -18,18 +18,20 @@ public abstract interface NoticeNewsDao extends BaseDao<NoticeNews>
    * @param subject
    * @param searchContent
    * @param deptName
+   * @param typeId
    * @param pb
    * @return
    */
-  public List<NoticeNews> findByReadSearch(String subject, String searchContent, String deptName, PagingBean pb);
+  public List<NoticeNews> findByReadSearch(String subject, String searchContent, String deptName, Long typeId, PagingBean pb);
   
   /**
    * for pad 未读取
    * @param subject
    * @param searchContent
    * @param deptName
+   * @param typeId
    * @param pb
    * @return
    */
-  public List<NoticeNews> findByNoReadSearch(String subject, String searchContent, String deptName, PagingBean pb);
+  public List<NoticeNews> findByNoReadSearch(String subject, String searchContent, String deptName, Long typeId, PagingBean pb);
 }
