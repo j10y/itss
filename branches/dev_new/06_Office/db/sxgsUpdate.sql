@@ -124,3 +124,11 @@ CREATE TABLE `arch_rec_filed_type` (
   `typeName` varchar(128) NOT NULL COMMENT '分类名称',
   PRIMARY KEY (`typeId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO arch_rec_filed_type VALUES ('1', '人大文件');
+INSERT INTO arch_rec_filed_type VALUES ('2', '省级文件');
+INSERT INTO arch_rec_filed_type VALUES ('3', '市委文件');
+INSERT INTO arch_rec_filed_type VALUES ('4', '市政府文件');
+INSERT INTO arch_rec_filed_type VALUES ('5', '市直机关文件');
+INSERT INTO arch_rec_filed_type VALUES ('6', '政协文件');
+INSERT INTO arch_rec_filed_type VALUES ('7', '省局文件');
