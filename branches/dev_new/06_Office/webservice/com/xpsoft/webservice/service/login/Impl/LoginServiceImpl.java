@@ -3,9 +3,10 @@ package com.xpsoft.webservice.service.login.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.jbpm.pvm.internal.task.TaskImpl;
+import org.springframework.security.AuthenticationManager;
+import org.springframework.security.context.SecurityContext;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.jbpm.pv.TaskInfo;
@@ -20,7 +21,17 @@ import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.webservice.service.login.LoginServie;
 
 public class LoginServiceImpl implements LoginServie {
-	
+	public String filter(String userId,String passwd){
+		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
+		AppUser user=userService.get(Long.parseLong(userId));
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+				user.getUsername(), passwd);
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		AuthenticationManager authenticationManager=(AuthenticationManager) AppUtil.getBean("authenticationManager");
+		securityContext.setAuthentication(authenticationManager.authenticate(authRequest));
+		SecurityContextHolder.setContext(securityContext);
+		return null;
+	}
 	public String Login(String userName, String passwd) {
 		// TODO Auto-generated method stub
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
@@ -28,7 +39,7 @@ public class LoginServiceImpl implements LoginServie {
 		String newpasswd=StringUtil.encryptSha256(passwd);
 		if(user!=null){
 			if(user.getPassword().equalsIgnoreCase(newpasswd)){
-				return "{\"success\":true,\"userid\":"+user.getId()+",\"password\":\""+user.getPassword()+"\"}";
+				return "{\"success\":true,\"userid\":"+user.getId()+",\"password\":\""+passwd+"\"}";
 			}else{
 				return "{\"success\":false,\"msg\":\"密码错误\",\"userid\":\"\",\"password\":\"\"}";
 			}
@@ -37,7 +48,8 @@ public class LoginServiceImpl implements LoginServie {
 		}
 	}
 
-	public String getInfoCount(String userId) {
+	public String getInfoCount(String userId,String passwd) {
+		filter( userId,passwd);
 		TaskService flowTaskService= (TaskService) AppUtil.getBean("flowTaskService");
 		ArchDispatchService archDispatchService= (ArchDispatchService) AppUtil.getBean("archDispatchService");
 		PagingBean pb = new PagingBean(0, 999999);
@@ -59,19 +71,19 @@ public class LoginServiceImpl implements LoginServie {
 				" where notice_news_comment.flag=2 and notice_news_comment.content=0 and notice_news_comment.userId="+userId +
 				" union select newsId from notice_news where  notice_news.isAll=1 and newsId not in (select distinct newsId from notice_news_comment)) a";
 		List dytzlist=flowTaskService.findDataList(sql);
-		String yytzsql="select newsId from notice_news_comment where notice_news_comment.flag=2 and notice_news_comment.content=0 and notice_news_comment.userId="+userId;
+		String yytzsql="select newsId from notice_news_comment where notice_news_comment.flag=2 and notice_news_comment.content=1 and notice_news_comment.userId="+userId;
 		List yytzlist=flowTaskService.findDataList(yytzsql);
-		return "{success:true, dytzCount :\""+dytzlist.size()+"\",dycyCount :\""+dycylist.size()+"\", dbgwCount :\""+dbgwlist.size()+"\", yytzCount :\""+yytzlist.size()+"\", yycyCount :\""+list.size()+"\"}";
+		return "{success:true, dytzCount :\""+dytzlist.size()+"\",dycyCount :\""+dycylist.size()+"\", dbsxCount :\""+dbgwlist.size()+"\", yytzCount :\""+yytzlist.size()+"\", yycyCount :\""+list.size()+"\"}";
 	}
 
-	public String findUserByUserName(String userName) {
+	public String findUserByUserName(String userName,String userId,String passwd) {
 		// TODO Auto-generated method stub
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
 		PagingBean pb = new PagingBean(0, 999999);
 		QueryFilter filter = new QueryFilter(pb);
 		filter.addFilter("Q_username,fullname_S_ORLIKE", userName);
 		List<AppUser> list=userService.getAll(filter);
-		String json="{data:[";
+		String json="{\"success\":true,data:[";
 		for(AppUser ap:list){
 			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"/"+ap.getUsername()+"\"},";
 		}
