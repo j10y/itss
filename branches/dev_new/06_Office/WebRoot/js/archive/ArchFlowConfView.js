@@ -131,8 +131,7 @@ ArchFlowConfView = Ext
 												} ]
 									} ]
 								});
-						Ext.Ajax
-								.request({
+						Ext.Ajax.request({
 									url : __ctxPath
 											+ "/archive/getArchFlowConf.do",
 									success : function(h, j) {
@@ -351,31 +350,29 @@ ArchFlowConfView = Ext
 						this.sendArchstore.load();
 						var g = new Ext.grid.CheckboxSelectionModel();
 						var sendCheckLine = 0;
-						var c = 0;
-						var e = 0;
+						//var c = 0;
+						//var e = 0;
 						var sendArchFlowCombo = new Ext.form.ComboBox({
 							mode : "local",
 							anchor : "74%",
 							allowBlank : false,
 							editable : false,
-							valueField : "name",
-							displayField : "name",
+							valueField : "processDefName",
+							displayField : "processDefName",
 							triggerAction : "all",
 							store : new Ext.data.SimpleStore({
 								url : __ctxPath 
 										+ "/flow/selectProDefinition.do",
 								params : {
-									typeId : this.typeId == null ? 0 : this.typeId
 								},
-								fields : [ "defId", "name"]
+								fields : [ "defId", "processDefName"]
 							}),
 							listeners : {
 								select : function(l, h, k) {
-									var j = Ext.getCmp("SendArchFlowConfGrid")
-											.getStore();
+									var j = Ext.getCmp("SendArchFlowConfGrid").getStore();
 									var m = j.getAt(sendCheckLine);
 									m.set("processDefId", h.data.defId);
-									m.set("processDefName", h.data.name);
+									m.set("processDefName", h.data.processDefName);
 								}
 							}
 						});
@@ -390,20 +387,7 @@ ArchFlowConfView = Ext
 											},
 											{
 												header : "发文类型",
-												dataIndex : "typeName",
-												renderer : function(l, k, h) {
-													var m = "";
-													var n = h.data.depLevel;
-													if (n != null && !isNaN(n)) {
-														for ( var j = 2; j <= n; j++) {
-															m += '<img src="'
-																	+ __ctxPath
-																	+ '/images/system/down.gif"/>';
-														}
-													}
-													m += l;
-													return m;
-												}
+												dataIndex : "typeName"
 											}, {
 												header : "流程定义ID",
 												dataIndex : "processDefId",
@@ -483,6 +467,7 @@ ArchFlowConfView = Ext
 						this.sendArchFlowGridPanel = new Ext.grid.EditorGridPanel({
 							id : "SendArchFlowConfGrid",
 							title : "发文流程配置",
+							region : "center",
 							stripeRows : true,
 							tbar : this.sendTopbar,
 							store : this.sendArchstore,
@@ -513,25 +498,25 @@ ArchFlowConfView = Ext
 							fields : [ "recTypeId", "typeName","processDefId","processDefName"]
 						});
 						this.recArchstore.load();
-						var g = new Ext.grid.CheckboxSelectionModel();
+						//var g = new Ext.grid.CheckboxSelectionModel();
 						var recCheckLine = 0;
-						var c = 0;
-						var e = 0;
+						//var c = 0;
+						//var e = 0;
 						var recArchFlowCombo = new Ext.form.ComboBox({
 							mode : "local",
 							anchor : "74%",
 							allowBlank : false,
 							editable : false,
-							valueField : "name",
-							displayField : "name",
+							valueField : "processDefName",
+							displayField : "processDefName",
 							triggerAction : "all",
 							store : new Ext.data.SimpleStore({
 								url : __ctxPath 
 										+ "/flow/selectProDefinition.do",
 								params : {
-									typeId : this.typeId == null ? 0 : this.typeId
+									typeId : 1
 								},
-								fields : [ "defId", "name"]
+								fields : [ "defId", "processDefName"]
 							}),
 							listeners : {
 								select : function(l, h, k) {
@@ -539,7 +524,7 @@ ArchFlowConfView = Ext
 											.getStore();
 									var m = j.getAt(recCheckLine);
 									m.set("processDefId", h.data.defId);
-									m.set("processDefName", h.data.name);
+									m.set("processDefName", h.data.processDefName);
 								}
 							}
 						});
@@ -553,21 +538,8 @@ ArchFlowConfView = Ext
 												hidden : true
 											},
 											{
-												header : "发文类型",
-												dataIndex : "typeName",
-												renderer : function(l, k, h) {
-													var m = "";
-													var n = h.data.depLevel;
-													if (n != null && !isNaN(n)) {
-														for ( var j = 2; j <= n; j++) {
-															m += '<img src="'
-																	+ __ctxPath
-																	+ '/images/system/down.gif"/>';
-														}
-													}
-													m += l;
-													return m;
-												}
+												header : "收文类型",
+												dataIndex : "typeName"
 											}, {
 												header : "流程定义ID",
 												dataIndex : "processDefId",

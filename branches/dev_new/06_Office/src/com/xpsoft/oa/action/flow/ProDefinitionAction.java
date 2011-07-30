@@ -189,8 +189,13 @@ public class ProDefinitionAction extends BaseAction {
 
 		StringBuffer sb = new StringBuffer("[");
 
-		for(ProDefinition proDef : list){
-			sb.append("['").append(proDef.getDefId()).append("','").append(proDef.getName()).append("'],");
+		for(int i=0; i< list.size(); i++){
+			sb.append("['").append(list.get(i).getDefId()).append("','").append(list.get(i).getName());
+			if(i<list.size()-1){
+				sb.append("'],");
+			}else{
+				sb.append("']");
+			}
 		}
 		
 		sb.append("]");

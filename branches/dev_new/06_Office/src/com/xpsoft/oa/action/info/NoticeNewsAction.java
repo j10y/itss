@@ -308,51 +308,48 @@ public class NoticeNewsAction extends BaseAction {
 	}
 
 	public String search() {
-		/* 217 */PagingBean pb = getInitPagingBean();
-		/* 218 */String searchContent = getRequest().getParameter(
+		PagingBean pb = getInitPagingBean();
+		String searchContent = getRequest().getParameter(
 				"searchContent");
-		/* 219 */List<NoticeNews> list = this.noticeNewsService.findBySearch(
+		List<NoticeNews> list = this.noticeNewsService.findBySearch(
 				searchContent, pb);
-		/* 220 */Type type = new TypeToken<List<NoticeNews>>() {
-		}
-		/* 220 */.getType();
-		/* 221 */StringBuffer buff = new StringBuffer(
-				"{success:true,'totalCounts':")
-		/* 222 */.append(pb.getTotalItems()).append(",result:");
+		Type type = new TypeToken<List<NoticeNews>>() {}.getType();
+		StringBuffer buff = new StringBuffer(
+				"{success:true,'totalCounts':").append(pb.getTotalItems()).append(",result:");
 
-		/* 224 */Gson gson = new GsonBuilder()
+		Gson gson = new GsonBuilder()
 				.excludeFieldsWithoutExposeAnnotation().create();
-		/* 225 */buff.append(gson.toJson(list, type));
-		/* 226 */buff.append("}");
+		buff.append(gson.toJson(list, type));
+		buff.append("}");
 
-		/* 228 */this.jsonString = buff.toString();
+		this.jsonString = buff.toString();
 
-		/* 230 */return "success";
+		return "success";
 	}
 
 	public String display() {
-		/* 237 */PagingBean pb = new PagingBean(0, 8);
+		PagingBean pb = new PagingBean(0, 8);
 
-		/* 239 */List list = this.noticeNewsService.findBySearch(null, pb);
-		/* 240 */getRequest().setAttribute("newsList", list);
-		/* 241 */return "display";
+		List list = this.noticeNewsService.findBySearch(null, pb);
+		getRequest().setAttribute("newsList", list);
+		return "display";
 	}
 
 	public String image() {
-		/* 250 */PagingBean pb = new PagingBean(0, 8);
+		PagingBean pb = new PagingBean(0, 8);
 
-		/* 252 */List<NoticeNews> list = this.noticeNewsService
+		List<NoticeNews> list = this.noticeNewsService
 				.findImageNews(pb);
-		/* 253 */List newList = new ArrayList();
-		/* 254 */for (NoticeNews news : list) {
-			/* 255 */String content = StringUtil.html2Text(news.getContent());
-			/* 256 */if (content.length() > 250) {
-				/* 257 */content = content.substring(0, 250);
+		List newList = new ArrayList();
+		for (NoticeNews news : list) {
+			String content = StringUtil.html2Text(news.getContent());
+			if (content.length() > 250) {
+				content = content.substring(0, 250);
 			}
-			/* 259 */news.setContent(content);
-			/* 260 */newList.add(news);
+			news.setContent(content);
+			newList.add(news);
 		}
-		/* 262 */getRequest().setAttribute("imageNewsList", newList);
-		/* 263 */return "image";
+		getRequest().setAttribute("imageNewsList", newList);
+		return "image";
 	}
 }

@@ -155,7 +155,7 @@
 		<div id="header">
 			<div class="trl">
 				<a href="#" class="logo"><img alt="上品折扣网-www.shopin.net"
-						src="">
+						src="<%=AppUtil.getCompanyLogo() %>">
 				</a>
 				<p>
 					欢迎您，<security:authentication property="principal.fullname"/>
