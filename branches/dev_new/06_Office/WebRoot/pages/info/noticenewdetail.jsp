@@ -67,22 +67,24 @@
 	news.setViewCounts(news.getViewCounts()+1);
 	
 	//如果news为全部可见，那么需要在comment表中插入一条记录
+	Map<String, String> map = new HashMap();
+	map.put("Q_flag_N_EQ", "2");//阅读人		
+	map.put("Q_news.newsId_L_EQ", news.getNewsId().toString());
+	map.put("Q_appUser.userId_L_EQ", appUser.getUserId().toString());
+	com.xpsoft.core.command.QueryFilter paramQueryFilter = new com.xpsoft.core.command.QueryFilter(map);
+	List<NoticeNewsComment> comments = newsCommentService.getAll(paramQueryFilter);
 	if(news.getIsAll().equals(Short.valueOf("1"))){
-		NoticeNewsComment comment = new NoticeNewsComment();
-
-		comment.setAppUser(appUser);
-		comment.setFullname(appUser.getFullname());
-		comment.setFlag(Integer.valueOf("2"));//阅读
-		comment.setContent("1");//已读
-		comment.setCreatetime(new Date());
-		comment.setNews(news);
-		newsCommentService.save(comment);
-	}else{//如果news为非全部可见，那么需在comment表中修改一条记录
-		Map<String, String> map = new HashMap();
-		map.put("Q_flag_N_EQ", "2");//阅读人		
-		map.put("Q_news.newsId_L_EQ", news.getNewsId().toString());
-		com.xpsoft.core.command.QueryFilter paramQueryFilter = new com.xpsoft.core.command.QueryFilter(map);
-		List<NoticeNewsComment> comments = newsCommentService.getAll(paramQueryFilter);
+		if(comments.size()<=0){
+			NoticeNewsComment comment = new NoticeNewsComment();
+			comment.setAppUser(appUser);
+			comment.setFullname(appUser.getFullname());
+			comment.setFlag(Integer.valueOf("2"));//阅读
+			comment.setContent("1");//已读
+			comment.setCreatetime(new Date());
+			comment.setNews(news);
+			newsCommentService.save(comment);
+		}
+	}else{//如果news为非全部可见，那么需在comment表中修改一条记录		
 		for (NoticeNewsComment comment : comments) {	
 			if(comment.getAppUser().getUserId().equals(appUser.getUserId())){
 				comment.setContent("1");//已读

@@ -122,12 +122,12 @@ ArchivesRecForm = Ext
 												xtype : "hidden",
 												id : "ArchivesRecForm.orgArchivesId"
 											},
-											{
-												fieldLabel : "发文部门ID",
-												name : "archives.depId",
-												xtype : "hidden",
-												id : "ArchivesRecForm.depId"
-											},
+//											{
+//												fieldLabel : "发文部门ID",
+//												name : "archives.depId",
+//												xtype : "hidden",
+//												id : "ArchivesRecForm.depId"
+//											},
 											{
 												fieldLabel : "公文状态",
 												xtype : "hidden",
@@ -254,10 +254,51 @@ ArchivesRecForm = Ext
 																					id : "ArchivesRecForm.depSignNo",
 																					allowBlank : false
 																				},
+//																				{
+//																					fieldLabel : "发文机关或部门",
+//																					name : "archives.issueDep",
+//																					id : "ArchivesRecForm.issueDep"
+//																				},
 																				{
-																					fieldLabel : "发文机关或部门",
-																					name : "archives.issueDep",
-																					id : "ArchivesRecForm.issueDep"
+																					xtype : "container",
+																					layout : "column",
+																					style : "padding-left:0px;margin-left:0px;",
+																					height : 30,
+																					defaults : {
+																						style : "padding:5px 0px 2px 0px;",
+																						border : false
+																					},
+																					items : [
+																					{
+																						xtype : "label",
+																						text : "发文部门或单位:",
+																						width : 106
+																					},
+																					{
+																						name : "archives.issueDep",
+																						id : "ArchivesRecForm.issueDep",
+																						xtype : "textfield",
+																						width : "70%",
+																						allowBlank : false,
+																						readOnly : true
+																					},
+																					{
+																						name : "archives.depId",
+																						id : "ArchivesRecForm.depId",
+																						xtype : "hidden"
+																					},
+																					{
+																						xtype : "button",
+																						iconCls : "menu-department",
+																						text : "选择部门",
+																						handler : function() {
+																							DepSelector.getView(function(b,c) {
+																												Ext.getCmp("ArchivesRecForm.issueDep").setValue(c);
+																												Ext.getCmp("ArchivesRecForm.depId").setValue(b);
+																											},
+																											true).show();
+																						}
+																					} ]
 																				},
 																				{
 																					fieldLabel : "文件标题",
