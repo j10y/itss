@@ -163,22 +163,22 @@ import flexjson.JSONSerializer;
  
    public String check()
    {
-/* 187 */     Task task = this.jbpmService.getTaskById(String.valueOf(this.taskId));
+     Task task = this.jbpmService.getTaskById(String.valueOf(this.taskId));
  
-/* 189 */     if (task != null) {
-/* 190 */       String assignId = task.getAssignee();
-/* 191 */       Long curUserId = ContextUtil.getCurrentUserId();
+     if (task != null) {
+       String assignId = task.getAssignee();
+       Long curUserId = ContextUtil.getCurrentUserId();
  
-/* 194 */       if (curUserId.toString().equals(assignId)) {
-/* 195 */         this.jsonString = "{success:true,isValid:true,msg:''}";
-/* 196 */       } else if (StringUtils.isNotEmpty(assignId)) {
-/* 197 */         this.jsonString = "{success:true,isValid:false,msg:'该任务已经被其他成员锁定执行！'}";
+       if (curUserId.toString().equals(assignId)) {
+         this.jsonString = "{success:true,isValid:true,msg:''}";
+       } else if (StringUtils.isNotEmpty(assignId)) {
+         this.jsonString = "{success:true,isValid:false,msg:'该任务已经被其他成员锁定执行！'}";
        } else {
-/* 199 */         this.jbpmService.assignTask(task.getId(), curUserId.toString());
-/* 200 */         this.jsonString = "{success:true,isValid:true,msg:'该任务已经被您锁定执行!'}";
+         this.jbpmService.assignTask(task.getId(), curUserId.toString());
+         this.jsonString = "{success:true,isValid:true,msg:'该任务已经被您锁定执行!'}";
        }
      } else {
-/* 203 */       this.jsonString = "{success:true,isValid:false,msg:'该任务已经完成了'}";
+       this.jsonString = "{success:true,isValid:false,msg:'该任务已经完成了'}";
      }
  
 /* 206 */     return "success";
