@@ -441,57 +441,57 @@ public class JbpmServiceImpl implements JbpmService {
 								if (flowStartUser != null)
 									this.taskService.assignTask(task.getId(),
 											flowStartUser.getUserId().toString());
-						} else {
-								StringBuffer upIds;
-								Object localObject;
-								Long userId;
-								if ("__super".equals(assign.getUserId())) {
-									AppUser flowStartUser = (AppUser) this.executionService
-											.getVariable(pi.getId(), "flowStartUser");
-		
-									if (flowStartUser != null) {
-										List superUserIds = this.userSubService
-												.upUser(flowStartUser.getUserId());
-										upIds = new StringBuffer();
-										for (localObject = superUserIds
-												.iterator(); ((Iterator) localObject)
-												.hasNext();) {
-											userId = (Long) ((Iterator) localObject)
-													.next();
-											upIds.append(userId).append(",");
+							} else {
+									StringBuffer upIds;
+									Object localObject;
+									Long userId;
+									if ("__super".equals(assign.getUserId())) {
+										AppUser flowStartUser = (AppUser) this.executionService
+												.getVariable(pi.getId(), "flowStartUser");
+			
+										if (flowStartUser != null) {
+											List superUserIds = this.userSubService
+													.upUser(flowStartUser.getUserId());
+											upIds = new StringBuffer();
+											for (localObject = superUserIds
+													.iterator(); ((Iterator) localObject)
+													.hasNext();) {
+												userId = (Long) ((Iterator) localObject)
+														.next();
+												upIds.append(userId).append(",");
+											}
+											if (superUserIds.size() > 0)
+												upIds.deleteCharAt(upIds.length() - 1);
+											else {
+												upIds.append(flowStartUser.getUserId());
+											}
+											this.taskService
+											.addTaskParticipatingUser(task.getId(),
+															upIds.toString(), "candidate");
 										}
-										if (superUserIds.size() > 0)
-											upIds.deleteCharAt(upIds.length() - 1);
-										else {
-											upIds.append(flowStartUser.getUserId());
+									} else if (StringUtils.isNotEmpty(assign
+											.getUserId())) {
+										String[] userIds = assign.getUserId()
+												.split("[,]");
+			
+										if ((userIds != null)
+												&& (userIds.length > 1)) {
+			
+											for (int upIds1 = 0; upIds1 < userIds.length; upIds1++) {
+												String uId = userIds[upIds1];
+												this.taskService.addTaskParticipatingUser(
+																task.getId(), uId,
+																"candidate");
+											}
+										} else {
+											this.taskService.assignTask(
+													task.getId(), assign.getUserId());
 										}
-										this.taskService
-										.addTaskParticipatingUser(task.getId(),
-														upIds.toString(), "candidate");
-									}
-								} else if (StringUtils.isNotEmpty(assign
-										.getUserId())) {
-									String[] userIds = assign.getUserId()
-											.split("[,]");
-		
-									if ((userIds != null)
-											&& (userIds.length > 1)) {
-		
-										for (int upIds1 = 0; upIds1 < userIds.length; upIds1++) {
-											String uId = userIds[upIds1];
-											this.taskService.addTaskParticipatingUser(
-															task.getId(), uId,
-															"candidate");
-										}
-									} else {
-										this.taskService.assignTask(
-												task.getId(), assign.getUserId());
 									}
 								}
-							}
-							if (StringUtils.isNotEmpty(assign.getRoleId()))
-								this.taskService.addTaskParticipatingGroup(
-										task.getId(), assign.getRoleId(), "candidate");
+								if (StringUtils.isNotEmpty(assign.getRoleId()))
+									this.taskService.addTaskParticipatingGroup(
+											task.getId(), assign.getRoleId(), "candidate");
 						} else {
 							AppUser flowStartUser = (AppUser) this.executionService
 									.getVariable(pi.getId(), "flowStartUser");
