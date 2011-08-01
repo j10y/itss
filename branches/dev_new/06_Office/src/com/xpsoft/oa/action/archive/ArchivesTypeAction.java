@@ -2,6 +2,7 @@ package com.xpsoft.oa.action.archive;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -11,9 +12,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.archive.ArchRecUser;
 import com.xpsoft.oa.model.archive.ArchivesType;
+import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchivesTypeService;
 
@@ -44,11 +47,21 @@ public class ArchivesTypeAction extends BaseAction {
 		StringBuffer sb = new StringBuffer();
 
 		List<ArchivesType> dutySectionList = this.archivesTypeService.getAll();
+		//根据提交人部门获取部门负责人
+		AppUser appUser= ContextUtil.getCurrentUser();
+		String sql="select * from arch_rec_user where depId="+appUser.getDepartment().getDepId();
+		List list=this.archivesTypeService.findDataList(sql);
+		String charge="1";
+		if(list!=null&&list.size()>0){
+			charge=((Map)list.get(0)).get("userId").toString();
+		}
 		sb.append("[");
 		for (ArchivesType dutySection : dutySectionList) {
 			sb.append("['").append(dutySection.getTypeId()).append("','")
 					.append(dutySection.getTypeName()).append("','")
-					.append(dutySection.getProcessDefId()!=null?dutySection.getProcessDefId():"0").append("'],");
+					.append(dutySection.getProcessDefId()!=null?dutySection.getProcessDefId():"0").append("','")
+					.append(charge)
+					.append("'],");
 		}
 		if (dutySectionList.size() > 0) {
 			sb.deleteCharAt(sb.length() - 1);
@@ -111,12 +124,19 @@ public class ArchivesTypeAction extends BaseAction {
 	public String get() {
 		ArchivesType archivesType = (ArchivesType) this.archivesTypeService
 				.get(this.typeId);
-
+		//根据提交人部门获取部门负责人
+		AppUser appUser= ContextUtil.getCurrentUser();
+		String sql="select * from arch_rec_user where depId="+appUser.getDepartment().getDepId();
+		List list=this.archivesTypeService.findDataList(sql);
+		String charge="1";
+		if(list!=null&&list.size()>0){
+			charge=((Map)list.get(0)).get("userId").toString();
+		}
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
 				.create();
 		StringBuffer sb = new StringBuffer("{success:true,data:");
 		sb.append(gson.toJson(archivesType));
-		sb.append("}");
+		sb.append(",charge:'"+charge+"'}");
 		setJsonString(sb.toString());
 
 		return "success";
