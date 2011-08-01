@@ -11,4 +11,5 @@
 	<field name="archives.privacyLevel" label="秘密等级" type="varchar" length="50"/>
 	<field name="archives.urgentLevel" label="紧急程度" type="varchar" length="50"/>
 	<field name="archives.keywords" label="主题词" type="varchar" length="256"/>
+	<field name="flowAssignId" label="负责人" type="varchar" length="256" isShowed="false" />
 </fields>
