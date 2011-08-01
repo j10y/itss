@@ -154,7 +154,7 @@
 
 		<div id="header">
 			<div class="trl">
-				<a href="#" class="logo"><img alt="上品折扣网-www.shopin.net"
+				<a href="#" class="logo"><img alt="<%=AppUtil.getCompanyName()%>－－办公协同管理系统"
 						src="<%=AppUtil.getCompanyLogo() %>">
 				</a>
 				<p>
