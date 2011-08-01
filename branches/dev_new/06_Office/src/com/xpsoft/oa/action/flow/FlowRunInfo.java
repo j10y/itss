@@ -27,7 +27,11 @@
 /*     */   {
 /*  71 */     if ("true".equals(req.getParameter("startFlow"))) {
 /*  72 */       this.isStartFlow = true;
-/*     */     }
+				String flowAssignId = req.getParameter("flowAssignId");
+			    if (StringUtils.isNotEmpty(flowAssignId)) {
+			         this.variables.put("flowAssignId", flowAssignId);
+			    }
+			 }
 /*     */     else {
 /*  75 */       String signUserIds = req.getParameter("signUserIds");
 /*  76 */       if (StringUtils.isNotEmpty(signUserIds)) {
