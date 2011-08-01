@@ -608,7 +608,7 @@ ArchivesDraftView = Ext
 													layout : "form",
 													items : {
 														fieldLabel : "公文类型",
-														id : "archives.typeId",
+														id : "archives.typeId.combo",
 														hiddenName : "archives.typeId",
 														xtype : "combo",
 														allowBlank : false,
@@ -873,7 +873,7 @@ ArchivesDraftView = Ext
 														scope : this,
 														url : __ctxPath
 																+ "/archive/getArchivesType.do?typeId="
-																+ Ext.getCmp("archives.typeId").getValue(),
+																+ Ext.getCmp("archives.typeId.combo").getValue(),
 														success : function(b, c) {
 															var d = Ext.util.JSON
 																	.decode(b.responseText);
