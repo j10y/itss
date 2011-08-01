@@ -11,6 +11,8 @@ public abstract interface NoticeNewsDao extends BaseDao<NoticeNews>
 
   public abstract List<NoticeNews> findBySearch(String paramString, PagingBean paramPagingBean);
 
+  public abstract List<NoticeNews> findBySearch(String paramString, PagingBean paramPagingBean,  boolean hasRead);
+  
   public abstract List<NoticeNews> findImageNews(PagingBean paramPagingBean);
   
   /**

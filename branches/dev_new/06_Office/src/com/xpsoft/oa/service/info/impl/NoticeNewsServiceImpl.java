@@ -29,6 +29,13 @@ public class NoticeNewsServiceImpl extends BaseServiceImpl<NoticeNews> implement
 	}
 	
 	/**
+	 * searchContent为null是portal中传来的，这里需要过滤是否自己的
+	 */
+	public List<NoticeNews> findBySearch(String searchContent, PagingBean pb,  boolean hasRead) {
+		return this.newsDao.findBySearch(searchContent, pb, hasRead);
+	}
+	
+	/**
 	 * 查询通知
 	 * @param subject 内容，根据内容like %%检索
 	 * @param searchContent 内容，根据内容like %%检索

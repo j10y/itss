@@ -608,6 +608,7 @@ ArchivesDraftView = Ext
 													layout : "form",
 													items : {
 														fieldLabel : "公文类型",
+														id : "archives.typeId",
 														hiddenName : "archives.typeId",
 														xtype : "combo",
 														allowBlank : false,
@@ -867,6 +868,22 @@ ArchivesDraftView = Ext
 														+ this.archivesId,
 												waitMsg : "正在载入数据...",
 												success : function(b, c) {
+													//制定发文类型对应的流程
+													Ext.Ajax.request({
+														scope : this,
+														url : __ctxPath
+																+ "/archive/getArchivesType.do?typeId="
+																+ Ext.getCmp("archives.typeId").getValue(),
+														success : function(b, c) {
+															var d = Ext.util.JSON
+																	.decode(b.responseText);
+															if (d.success) {
+																if(d.data.processDefId!=""&&d.data.processDefId!=null
+																		&&d.data.processDefId!=undefined&&d.data.processDefId!="0")
+																	Ext.getCmp("ArchivesDraftView").setDefId(d.data.processDefId);
+															}
+														}
+													});
 												},
 												failure : function(b, c) {
 												}

@@ -10,6 +10,8 @@ public abstract interface NoticeNewsService extends BaseService<NoticeNews>
   public abstract List<NoticeNews> findByTypeId(Long paramLong, PagingBean paramPagingBean);
 
   public abstract List<NoticeNews> findBySearch(String paramString, PagingBean paramPagingBean);
+  
+  public abstract List<NoticeNews> findBySearch(String paramString, PagingBean paramPagingBean,  boolean hasRead);
 
   public abstract List<NoticeNews> findImageNews(PagingBean paramPagingBean);
   

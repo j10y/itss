@@ -36,9 +36,35 @@ public class NoticeNewsDaoImpl extends BaseDaoImpl<NoticeNews> implements Notice
 			/* 37 */params.add("%" + searchContent + "%");
 				}
 		
-				if(searchContent==null){
+				//if(searchContent==null){
 					hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='0')");
-				}
+				//}
+		/* 39 */hql.append(" order by n.updateTime desc");
+		/* 40 */return findByHql(hql.toString(), params.toArray(), pb);
+	}
+	
+	public List<NoticeNews> findBySearch(String searchContent, PagingBean pb, boolean hasRead) {
+		/* 31 */ArrayList params = new ArrayList();
+		/* 32 */StringBuffer hql = new StringBuffer(
+		"from NoticeNews n where n.status = ?");
+		/* 33 */params.add(Constants.FLAG_ACTIVATION);
+		/* 34 */if (StringUtils.isNotEmpty(searchContent)) {
+			/* 35 */hql.append(" and (n.subject like ? or n.content like ?)");
+			/* 36 */params.add("%" + searchContent + "%");
+			/* 37 */params.add("%" + searchContent + "%");
+		}
+		
+		//if(searchContent==null){
+		//hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId="+ContextUtil.getCurrentUserId()+" and comment.flag=2 and comment.content='0')");
+		//}
+		if(hasRead){
+			hql.append(" and n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')");
+			params.add(ContextUtil.getCurrentUserId());
+		}else{
+			hql.append(" and n.isAll=1 and (n.newsId not in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='1')) or n.newsId in (select comment.news.newsId from NoticeNewsComment comment where comment.appUser.userId=? and comment.flag=2 and comment.content='0')");
+			params.add(ContextUtil.getCurrentUserId());
+			params.add(ContextUtil.getCurrentUserId());
+		}
 		/* 39 */hql.append(" order by n.updateTime desc");
 		/* 40 */return findByHql(hql.toString(), params.toArray(), pb);
 	}

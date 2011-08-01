@@ -311,8 +311,13 @@ public class NoticeNewsAction extends BaseAction {
 		PagingBean pb = getInitPagingBean();
 		String searchContent = getRequest().getParameter(
 				"searchContent");
+		
+		String hasRead = getRequest().getParameter(
+		"hasRead");
+		
 		List<NoticeNews> list = this.noticeNewsService.findBySearch(
-				searchContent, pb);
+				searchContent, pb, (hasRead!=null ? Boolean.valueOf(hasRead) : false));
+		
 		Type type = new TypeToken<List<NoticeNews>>() {}.getType();
 		StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':").append(pb.getTotalItems()).append(",result:");

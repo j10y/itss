@@ -1487,6 +1487,11 @@ li .right {
 		!important;
 }
 
+.btn-seal {
+	background-image: url('../images/btn/seal.png')
+		!important;
+}
+
 .menu-jobchange {
 	background-image: url('../images/menus/hrm/job_change.gif') !important;
 }
