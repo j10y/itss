@@ -8,6 +8,12 @@ ArchivesDraftView = Ext
 					getDefId : function() {
 						return this.defId;
 					},
+					setCharge : function(a) {
+						this.charge = a;
+					},
+					getCharge: function() {
+						return this.charge;
+					},
 					formPanel : null,
 					constructor : function(a) {
 						Ext.applyIf(this, a);
@@ -145,6 +151,7 @@ ArchivesDraftView = Ext
 																			scope : this,
 																			params : {
 																				defId : c.defId,
+																				flowAssignId:c.charge,
 																				startFlow : true
 																			},
 																			success : function(
@@ -624,7 +631,8 @@ ArchivesDraftView = Ext
 																	fields : [
 																			"typeId",
 																			"typeName",
-																			"processDefId" ]
+																			"processDefId",
+																			"charge"]
 																}),
 														displayField : "typeName",
 														valueField : "typeId",
@@ -635,6 +643,11 @@ ArchivesDraftView = Ext
 																if(b.data.processDefId!=""&&b.data.processDefId!=null
 																		&&b.data.processDefId!=undefined&&b.data.processDefId!="0")
 																	Ext.getCmp("ArchivesDraftView").setDefId(b.data.processDefId);
+																if(b.data.charge!=""&&b.data.charge!=null&&b.data.charge!=undefined){
+																	Ext.getCmp("ArchivesDraftView").setCharge(b.data.charge);
+																}else{
+																	Ext.Msg.alert("信息", "请你先配置好提交人的负责人！");
+																}	
 															}
 														}
 													}
@@ -881,6 +894,11 @@ ArchivesDraftView = Ext
 																if(d.data.processDefId!=""&&d.data.processDefId!=null
 																		&&d.data.processDefId!=undefined&&d.data.processDefId!="0")
 																	Ext.getCmp("ArchivesDraftView").setDefId(d.data.processDefId);
+																if(d.charge!=""&&d.charge!=null&&d.charge!=undefined){
+																	Ext.getCmp("ArchivesDraftView").setCharge(d.charge);
+																}else{
+																	Ext.Msg.alert("信息", "请你先配置好提交人的负责人！");
+																}
 															}
 														}
 													});
