@@ -28,7 +28,7 @@ import com.xpsoft.webservice.service.notice.NoticeService;
 
 public class NoticeServiceImpl implements NoticeService {
 	private String getType(String type){
-		if(type.equals("doc")){
+		if(type.equals("doc")||type.equals("docx")){
 			return "0";
 		}else if(type.equals("xls")){
 			return "1";
