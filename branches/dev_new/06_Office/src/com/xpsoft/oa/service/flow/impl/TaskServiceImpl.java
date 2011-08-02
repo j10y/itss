@@ -44,27 +44,27 @@ public class TaskServiceImpl extends BaseServiceImpl<TaskImpl> implements
 	}
 
 	public List<TaskInfo> getTaskInfosByUserId(String userId, PagingBean pb) {
-		/* 50 */List<TaskImpl> list = getTasksByUserId(userId, pb);
-		/* 51 */List taskInfoList = new ArrayList();
-		/* 52 */for (TaskImpl taskImpl : list) {
-			/* 53 */TaskInfo taskInfo = new TaskInfo(taskImpl);
-			/* 54 */if (taskImpl.getAssignee() != null) {
-				/* 55 */AppUser user = (AppUser) this.appUserService
+		List<TaskImpl> list = getTasksByUserId(userId, pb);
+		List taskInfoList = new ArrayList();
+		for (TaskImpl taskImpl : list) {
+			TaskInfo taskInfo = new TaskInfo(taskImpl);
+			if (taskImpl.getAssignee() != null) {
+				AppUser user = (AppUser) this.appUserService
 						.get(new Long(taskImpl.getAssignee()));
-				/* 56 */taskInfo.setAssignee(user.getFullname());
+				taskInfo.setAssignee(user.getFullname());
 			}
 
-			/* 59 */ProcessRun processRun = this.processRunService
+			ProcessRun processRun = this.processRunService
 					.getByPiId(taskImpl.getExecutionId());
-			/* 60 */if (processRun != null) {
-				/* 61 */taskInfo.setTaskName(processRun.getProDefinition()
+			if (processRun != null) {
+				taskInfo.setTaskName(processRun.getProDefinition()
 						.getName() + "--" + taskImpl.getActivityName());
-				/* 62 */taskInfo.setActivityName(taskImpl.getActivityName());
+				taskInfo.setActivityName(taskImpl.getActivityName());
 			}
 
-			/* 65 */taskInfoList.add(taskInfo);
+			taskInfoList.add(taskInfo);
 		}
-		/* 67 */return taskInfoList;
+		return taskInfoList;
 	}
 
 	public Set<Long> getHastenByActivityNameVarKeyLongVal(String activityName,
