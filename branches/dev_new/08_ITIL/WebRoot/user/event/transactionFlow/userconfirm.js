@@ -218,7 +218,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		  								Ext.getCmp('btn_back').enable();
 										return false;
 									}
-									endEvent();
+									//endEvent();
 								},this);
 							}else{
 								endEvent();
