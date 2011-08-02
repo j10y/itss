@@ -1,7 +1,12 @@
 package com.xpsoft.framework.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,6 +16,11 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.axis.client.Call;
+import org.apache.axis.client.Service;
+
+import net.sf.json.JSONObject;
 
 
 /**
@@ -159,6 +169,28 @@ public final class HttpUtil {
 				
 		}
 		return map;
+	}
+	
+	/**
+	 * 中文编码成utf8
+	 * @Methods Name encodeUTF8
+	 * @Create In Jul 27, 2011 By likang
+	 * @param value
+	 * @return String
+	 */
+	public static String encodeUTF8(String value) {
+		// TODO Auto-generated method stub
+		if (value != null) {
+			try {
+				value = URLEncoder.encode(value, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return value;
+		} else {
+			return "";
+		}
 	}
     
     /**
@@ -543,5 +575,59 @@ public final class HttpUtil {
 			}
 		}
 		return value;
+	}
+	
+	/**
+	 * 通过url读取json对象
+	 * @Methods Name getJsonObjectByUrl
+	 * @Create In Jul 27, 2011 By likang
+	 * @param url
+	 * @return
+	 * @throws Exception JSONObject
+	 */
+	public static JSONObject getJsonObjectByUrl(String url) throws Exception {
+		 System.out.println(url);
+		 URL accessUrl = new URL(url);
+         HttpURLConnection conn = (HttpURLConnection) accessUrl.openConnection();  
+         conn.setDoOutput(true);  
+         conn.setUseCaches(false);  
+         conn.setDefaultUseCaches(false); 
+         //设置超时时间为5秒
+         conn.setConnectTimeout(5000);  
+         conn.getOutputStream();
+         conn.connect();  
+     	 InputStream inputStream = conn.getInputStream();  
+     	 //读回注意编码
+		 java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(inputStream,"UTF-8"));  
+		 String currentLine = "";  
+		 String backJsonString = "";  
+		 while ((currentLine = reader.readLine()) != null) {
+			backJsonString+=currentLine;  
+		 }
+		JSONObject backJsonObejct = JSONObject.fromObject(backJsonString);
+		return backJsonObejct;
+	}
+	
+	/**
+	 * 通过webserice返回json对象
+	 * @Methods Name getWebserviceJsonStrByUrl
+	 * @Create In Jul 29, 2011 By likang
+	 * @param url	webservice地址
+	 * @param methodName 调用方法名称
+	 * @param paramArr	 参数数组
+	 * @return
+	 * @throws Exception JSONObject
+	 */
+	public static JSONObject getWebserviceJsonStrByUrl(String url,String methodName, Object[] paramArr) throws Exception {
+		JSONObject backJsonObejct = new JSONObject();
+		System.out.println(url);
+	        Service service = new Service();
+	        Call call = (Call) service.createCall();
+	        call.setTargetEndpointAddress(new java.net.URL(url));
+	        call.setOperationName(methodName);
+	        String backJsonString = (String) call.invoke(paramArr);
+	        System.out.println("接收到：" + backJsonString);
+			backJsonObejct = JSONObject.fromObject(backJsonString);
+	    return backJsonObejct;
 	}
 }

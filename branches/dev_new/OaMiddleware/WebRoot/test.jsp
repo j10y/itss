@@ -27,6 +27,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  
+   <form action="${webpath}/oa/downFileNetOaAction.action" method="post" >
+      	姓名：<input type="text" name="name">
+      	<input type="submit" value="提交">
+    </form>
+  
+  
+  
+  
+  
+  
+  
     <form action="${webpath}/ssh2/testForexAction.action" method="post" >
       	姓名：<input type="text" name="name">
       	<input type="submit" value="提交">

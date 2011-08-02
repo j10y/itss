@@ -14,6 +14,28 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:applicationContext*.xml</param-value>
    </context-param>
+   
+   <servlet>
+    <servlet-name>downFile</servlet-name>
+    <servlet-class>com.xpsoft.framework.util.DownFileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>downFile</servlet-name>
+    <url-pattern>/downFile</url-pattern>
+  </servlet-mapping>
+   
+     <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
 	<!-- 以下是struts2使用的用于清除或销毁某些对象的过滤器,要保证在struts过滤器映射之前配置这一项 --> 
 	<filter> 
 		<filter-name>struts-cleanup</filter-name> 
@@ -32,18 +54,6 @@
         <filter-name>struts2</filter-name>
         <url-pattern>*.action</url-pattern>
     </filter-mapping>
-  <filter>
-    <filter-name>encodingFilter</filter-name>
-    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-    <init-param>
-      <param-name>encoding</param-name>
-      <param-value>UTF-8</param-value>
-    </init-param>
-    <init-param>
-      <param-name>forceEncoding</param-name>
-      <param-value>true</param-value>
-    </init-param>
-  </filter>
 	<!-- 监听器,用于初始化log4j日志框架的 --> 
 	<listener> 
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> 

@@ -16,6 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.xpsoft.framework.cache.CacheManager;
 import com.xpsoft.framework.context.ContextHolder;
 import com.xpsoft.framework.util.PropertiesUtil;
+import com.xpsoft.netoa.util.InitSys;
 
 
 /**
@@ -30,7 +31,6 @@ public class DefaultContextLoaderListener extends ContextLoaderListener {
 	private final Log logger = LogFactory.getLog(getClass());
 	
 	public void contextInitialized(ServletContextEvent event) {
-		
 		super.contextInitialized(event);
 		logger.info("load WebApplicationContext into ContextHolder");
 		WebApplicationContext context = WebApplicationContextUtils.   
@@ -38,10 +38,11 @@ public class DefaultContextLoaderListener extends ContextLoaderListener {
 		ContextHolder.getInstance().setApplicationContext(context);  
 		ContextHolder.getInstance().setLocal(Locale.getDefault());
 		//加载缓存
-		CacheManager.getInstance();
 		//初始化页码大小
 		initPageSize(event);
 		ServletContext servletContext = event.getServletContext();
+		//初始化用户密码map，用于每次功能操作的安全验证
+		InitSys.getInstance().initUserCheckMap(servletContext);
 	}
 	
 	/**

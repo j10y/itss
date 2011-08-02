@@ -11,5 +11,5 @@
 	<!--  以下配置 指定由Spring 来管理Action的创建销毁，主要用于IOC end-->
 
     <include file="test.xml"/>
-     
+      <include file="oa.xml"/>
 </struts>

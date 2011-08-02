@@ -1,10 +1,15 @@
 package com.xpsoft.framework.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +68,113 @@ public class FileDownloaderUtil {
 		os.flush();
 		os.close();
 	}
+	
+	/**
+	 * 读取url的文件到byte数组
+	 * @Methods Name readFileByUrl
+	 * @Create In Jul 22, 2011 By likang
+	 * @param httpUrl
+	 * @return byte[]
+	 */
+	public static byte[] readFileByUrl(String httpUrl) {
+		Date before = new Date();
+		long star = before.getTime();
+		byte[] datas = null;
+		try {
+			InputStream in;
+			URL url = new java.net.URL(httpUrl);
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestProperty("User-Agent", "Mozilla/4.0");
+			connection.connect();
+			in = connection.getInputStream();
+			datas = StaticHtml.InputStreamToByte(in);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Date after = new Date();
+			long end = after.getTime();
+			long ttime = end - star;
+			System.out.println("执行时间:" + ttime / 3600 + "秒");
+		}
+		return datas;
+	}
+	
+	
+	/**
+	 * 下载文件
+	 * @Methods Name downloadFile
+	 * @Create In Jul 22, 2011 By likang
+	 * @param response
+	 * @param fileName
+	 * @param bytes
+	 * @throws IOException void
+	 */
+	public static void downloadFile(HttpServletResponse response, String fileName, byte bytes[])
+		throws IOException {
+		response.setContentType("application/x-msdownload;charset=UTF-8");
+		response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName,"utf-8"));
+	    response.addHeader("Content-Length", "" + bytes.length);
+//	    	   response.setContentType("application/octet-stream");
+		response.setCharacterEncoding("UTF-8");
+		OutputStream os = response.getOutputStream();
+		os.write(bytes, 0, bytes.length);
+		os.flush();
+		os.close();
+	}
+	
+	
+	/**
+	 * 一边从其他服务器读取，一边向客户端返回
+	 * @Methods Name downAndLoadFileTogether
+	 * @Create In Jul 28, 2011 By likang
+	 * @param httpUrl
+	 * @param response
+	 * @param fileName void
+	 */
+	public static void downAndLoadFileTogether(String httpUrl,HttpServletResponse response,String fileName) {
+		Date before = new Date();
+		long star = before.getTime();
+		try {
+			response.setContentType("application/x-msdownload;charset=UTF-8");
+			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName,"utf-8"));
+//		    	   response.setContentType("application/octet-stream");
+			response.setCharacterEncoding("UTF-8");
+			OutputStream os = response.getOutputStream();
+			InputStream in;
+			URL url = new java.net.URL(httpUrl);
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestProperty("User-Agent", "Mozilla/4.0");
+			connection.connect();
+			in = connection.getInputStream();
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			// 至少用1K的缓冲
+			byte[] bs = new byte[1024]; 
+			int len = -1;
+			while ((len = in.read(bs)) != -1) {
+				os.write(bs, 0, len);    
+				os.flush();
+			}
+//		    response.addHeader("Content-Length", "" + bytes.length);
+			os.close();
+			bos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Date after = new Date();
+			long end = after.getTime();
+			long ttime = end - star;
+			System.out.println("执行时间:" + ttime / 3600 + "秒");
+		}
+	}
+	
+	
+	
+	
+	
 
 	/**
 	 * 只显示，不下载

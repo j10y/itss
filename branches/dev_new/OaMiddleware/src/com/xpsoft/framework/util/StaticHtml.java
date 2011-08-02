@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
@@ -116,7 +117,31 @@ public class StaticHtml {
 		} finally {
 		}
 	}
-
+	
+	
+	// 存储文件
+	public static synchronized void writeFile(String filePath, byte[] bytes,
+			String flag) {
+		try {
+			File writeFile = new File(filePath);
+			boolean isExit = writeFile.exists();
+			if (isExit != true) {
+				writeFile.createNewFile();
+			} else {
+				if (!flag.equals("NO")) {
+					writeFile.delete();
+					writeFile.createNewFile();
+				}
+			}
+			FileOutputStream fos = new FileOutputStream(filePath);
+			fos.write(bytes, 0, bytes.length);
+			fos.flush();
+			fos.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+		}
+	}
 	public static void writeFile(String filePathAndName, String fileContent) {
 		try {
 			File f = new File(filePathAndName);
