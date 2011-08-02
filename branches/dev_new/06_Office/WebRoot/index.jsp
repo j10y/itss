@@ -155,7 +155,7 @@
 		<div id="header">
 			<div class="trl">
 				<a href="#" class="logo"><img alt="<%=AppUtil.getCompanyName()%>－－办公协同管理系统"
-						src="<%=basePath%><%=AppUtil.getCompanyLogo() %>">
+						src="">
 				</a>
 				<p>
 					欢迎您，<security:authentication property="principal.fullname"/>

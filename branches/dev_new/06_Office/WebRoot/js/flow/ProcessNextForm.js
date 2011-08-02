@@ -378,12 +378,8 @@ ProcessNextForm = Ext
 														destName : e
 													},
 													success : function(h, j) {
-														Ext.ux.Toast
-																.msg("操作信息",
-																		"成功保存！");
-														AppUtil
-																.removeTab("ProcessForm"
-																		+ d);
+														Ext.ux.Toast.msg("操作信息", "成功保存！");
+														AppUtil.removeTab("ProcessForm" + d);
 														var k = Ext
 																.getCmp("MyTaskGrid");
 														var i = Ext

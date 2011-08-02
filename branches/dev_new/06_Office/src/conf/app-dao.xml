@@ -301,4 +301,8 @@
     <bean id="noticeNewsDocDao" class="com.xpsoft.oa.dao.info.impl.NoticeNewsDocDaoImpl" parent="baseDao"/>
     
     <bean id="archRecFiledTypeDao" class="com.xpsoft.oa.dao.archive.impl.ArchRecFiledTypeDaoImpl" parent="baseDao"/>
+    
+    <bean id="leaveTypeDao" class="com.xpsoft.oa.dao.personal.impl.LeaveTypeDaoImpl" parent="baseDao"/>
+    
+    <bean id="leaveLeaderReadDao" class="com.xpsoft.oa.dao.personal.impl.LeaveLeaderReadDaoImpl" parent="baseDao"/>
 </beans>

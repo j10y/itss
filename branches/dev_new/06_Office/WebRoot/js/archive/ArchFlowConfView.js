@@ -364,6 +364,7 @@ ArchFlowConfView = Ext
 								url : __ctxPath 
 										+ "/flow/selectProDefinition.do",
 								params : {
+									typeId : 1
 								},
 								fields : [ "defId", "processDefName"]
 							}),

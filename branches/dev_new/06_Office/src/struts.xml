@@ -292,6 +292,12 @@
 		<action name="*ErrandsRegister" class="ErrandsRegisterAction" method="{1}">
 		  <result>${successResultValue}</result>
 		</action>
+		<action name="*LeaveType" class="LeaveTypeAction" method="{1}">
+		  <result>${successResultValue}</result>
+		</action>
+		<action name="*LeaveLeaderReads" class="LeaveLeaderReadAction" method="{1}">
+		  <result>${successResultValue}</result>
+		</action>
 	</package>
 	
 	<package name="archive" extends="struts-default" namespace="/archive">

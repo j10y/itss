@@ -288,4 +288,6 @@
   </bean>
   <bean id="NoticeNewsCommentAction" class="com.xpsoft.oa.action.info.NoticeNewsCommentAction" scope="prototype"/>
   <bean id="ArchRecFiledTypeAction" class="com.xpsoft.oa.action.archive.ArchRecFiledTypeAction" scope="prototype"/>
+  <bean id="LeaveTypeAction" class="com.xpsoft.oa.action.personal.LeaveTypeAction" scope="prototype"/>
+  <bean id="LeaveLeaderReadAction" class="com.xpsoft.oa.action.personal.LeaveLeaderReadAction" scope="prototype"/>
 </beans>

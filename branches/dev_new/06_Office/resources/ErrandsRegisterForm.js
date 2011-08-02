@@ -18,7 +18,10 @@ var ErrandsRegisterForm = function(c) {
 							handler : function() {
 								var d = Ext.getCmp("ErrandsRegisterForm");
 								if (d.getForm().isValid()) {
-									d.getForm().submit({
+									d
+											.getForm()
+											.submit(
+													{
 														method : "post",
 														waitMsg : "正在提交数据...",
 														success : function(e, f) {
@@ -95,10 +98,6 @@ ErrandsRegisterForm.prototype.setup = function() {
 			name : "errandsRegister.approvalName",
 			id : "approvalName"
 		}, {
-			xtype : "hidden",
-			name : "errandsRegister.approvalId",
-			id : "approvalId"
-		}, {
 			fieldLabel : "描述",
 			xtype : "textarea",
 			name : "errandsRegister.descp",
@@ -119,41 +118,28 @@ ErrandsRegisterForm.prototype.setup = function() {
 			allowBlank : false,
 			id : "endTime"
 		}, {
-
-			xtype : "hidden",
-			name : "errandsRegister.leaveTypeId",
-			id : "leaveTypeId"
-		}, {
-
-			xtype : "hidden",
-			name : "processDefId",
-			id : "processDefId"
-		}, {
-
-			fieldLabel : "请假类型",
-			hiddenName : "errandsRegister.leaveTypeName",
-			id : "leaveTypeName",
-			emptyText : "请选择请假类型",
+			fieldLabel : "审批人",
+			hiddenName : "errandsRegister.approvalId",
+			id : "approvalId",
+			emptyText : "请选择审批人",
 			xtype : "combo",
 			mode : "local",
 			anchor : "98%",
 			allowBlank : false,
 			editable : false,
-			valueField : "typeName",
-			displayField : "typeName",
+			valueField : "id",
+			displayField : "name",
 			triggerAction : "all",
 			store : new Ext.data.SimpleStore({
 				autoLoad : true,
-				url : __ctxPath + "/personal/comboLeaveType.do",
-				fields : [ "typeId", "typeName", "processDefId"]
+				url : __ctxPath + "/system/upUserAppUser.do",
+				fields : [ "id", "name" ]
 			}),
 			listeners : {
 				select : function(d, b, c) {
-					Ext.getCmp("leaveTypeId").setValue(b.data.typeId);
-					Ext.getCmp("processDefId").setValue(b.data.processDefId);
+					Ext.getCmp("approvalName").setValue(b.data.name);
 				}
 			}
-		
 		} ]
 	});
 	if (this.dateId != null && this.dateId != "undefined") {
@@ -176,22 +162,6 @@ ErrandsRegisterForm.prototype.setup = function() {
 						Ext.ux.Toast.msg("编辑", "载入失败");
 					}
 				});
-	}else{
-		//初始化，获取当前人的部门负责人，写入审批人信息
-		
-		Ext.Ajax.request({
-			url : __ctxPath
-					+ "/archive/getByCurrentUserArchRecUser.do",
-			success : function(h, j) {
-				var k = Ext.util.JSON
-						.decode(h.responseText).data;
-				Ext.getCmp("approvalId").setValue(
-						k.userId);
-				Ext.getCmp("approvalName").setValue(
-						k.fullname);
-			}
-		});
-		
 	}
 	return a;
 };

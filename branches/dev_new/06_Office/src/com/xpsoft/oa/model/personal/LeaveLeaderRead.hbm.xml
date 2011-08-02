@@ -6,140 +6,127 @@
 
 <hibernate-mapping>
     <class
-        name="com.xpsoft.oa.model.personal.ErrandsRegister"
-        table="errands_register"
+        name="com.xpsoft.oa.model.personal.LeaveLeaderRead"
+        table="leave_leader_read"
         select-before-update="false"
         dynamic-update="false"
         dynamic-insert="false"
         optimistic-lock="version"
     >
 		<id
-            name="dateId"
-            column="dateId"
+            name="readId"
+            column="readId"
             type="java.lang.Long"
             length="19"
         >
             <generator class="native"/>
         </id>
          <property
-            name="approvalId"
+            name="leaderName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="leaderName"
+            length="64"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="userId"
             type="java.lang.Long"
             update="true"
             insert="true"
             access="property"
-            column="approvalId"
+            column="userId"
             length="19"
             not-null="true"
             unique="false"
         />
         <property
-            name="descp"
+            name="leaderOpinion"
             type="java.lang.String"
             update="true"
             insert="true"
             access="property"
-            column="descp"
-            length="500"
-            not-null="true"
-            unique="false"
-        />
-        <property
-            name="startTime"
-            type="java.util.Date"
-            update="true"
-            insert="true"
-            access="property"
-            column="startTime"
-            length="19"
-            not-null="true"
-            unique="false"
-        />
-        <property
-            name="endTime"
-            type="java.util.Date"
-            update="true"
-            insert="true"
-            access="property"
-            column="endTime"
-            length="19"
-            not-null="true"
-            unique="false"
-        />
-        <property
-            name="status"
-            type="java.lang.Short"
-            update="true"
-            insert="true"
-            access="property"
-            column="status"
-            length="5"
-            not-null="true"
-            unique="false"
-        />
-        <property
-            name="approvalOption"
-            type="java.lang.String"
-            update="true"
-            insert="true"
-            access="property"
-            column="approvalOption"
-            length="500"
-            not-null="false"
-            unique="false"
-        />
-        <property
-            name="approvalName"
-            type="java.lang.String"
-            update="true"
-            insert="true"
-            access="property"
-            column="approvalName"
+            column="leaderOpinion"
             length="128"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="createtime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="createtime"
+            length="19"
             not-null="true"
             unique="false"
         />
         <property
-            name="flag"
+            name="depLevel"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="depLevel"
+            length="10"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="depName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="depName"
+            length="128"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="isPass"
             type="java.lang.Short"
             update="true"
             insert="true"
             access="property"
-            column="flag"
+            column="isPass"
             length="5"
+            not-null="true"
+            unique="false"
+        />
+         <property
+            name="checkName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="checkName"
+            length="128"
             not-null="false"
             unique="false"
         />
-     <!-- imported bi-directional many-to-one association to AppUser -->
+     <!-- imported bi-directional many-to-one association to ArchivesDep
 		<many-to-one
-			name="appUser"
-			class="com.xpsoft.oa.model.system.AppUser"
+			name="archivesDep"
+			class="com.xpsoft.oa.model.archive.ArchivesDep"
             not-null="false"
 			fetch="select"
 		>	
-			<column name="userId" />
+			<column name="depArchId" />
 		</many-to-one>
-		
-		<property
-            name="leaveTypeId"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="leaveTypeId"
-            length="19"
+		 -->
+    <!-- imported bi-directional many-to-one association to Archives -->
+		<many-to-one
+			name="errandsRegister"
+			class="com.xpsoft.oa.model.personal.ErrandsRegister"
             not-null="false"
-            unique="false"
-        />
-        <property
-            name="leaveTypeName"
-            type="java.lang.String"
-            update="true"
-            insert="true"
-            access="property"
-            column="leaveTypeName"
-            length="19"
-            not-null="false"
-            unique="false"
-        /> 
+			fetch="select"
+		>	
+			<column name="dateId" />
+		</many-to-one>
     </class>
 </hibernate-mapping>

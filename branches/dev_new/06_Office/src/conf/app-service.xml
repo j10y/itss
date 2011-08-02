@@ -535,4 +535,10 @@
    	 	<constructor-arg index="0" ref="archRecFiledTypeDao"/>
    	 </bean>
    	 
+   	 <bean id="leaveTypeService" class="com.xpsoft.oa.service.personal.impl.LeaveTypeServiceImpl">
+   	 	<constructor-arg index="0" ref="leaveTypeDao"/>
+   	 </bean>
+   	 <bean id="leaveLeaderReadService" class="com.xpsoft.oa.service.personal.impl.LeaveLeaderReadServiceImpl">
+   	 	<constructor-arg index="0" ref="leaveLeaderReadDao"/>
+   	 </bean>
 </beans>

@@ -132,3 +132,22 @@ INSERT INTO arch_rec_filed_type VALUES ('4', '市政府文件');
 INSERT INTO arch_rec_filed_type VALUES ('5', '市直机关文件');
 INSERT INTO arch_rec_filed_type VALUES ('6', '政协文件');
 INSERT INTO arch_rec_filed_type VALUES ('7', '省局文件');
+
+
+-- Crea Table 2011-8-2
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `leave_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `leave_type`;
+CREATE TABLE `leave_type` (
+  `typeId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `typeName` varchar(128) NOT NULL COMMENT '分类名称',
+  `processDefId` bigint(20) DEFAULT NULL,
+  `processDefName` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`typeId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+ALTER TABLE errands_register add COLUMN leaveTypeId bigint(20) NOT NULL;
+ALTER TABLE errands_register add COLUMN leaveTypeName varchar(128) NOT NULL;

@@ -11,7 +11,7 @@
 			{
 				select:{
 					fn:function(field,record,index){//select : ( Ext.form.ComboBox combo, Ext.data.Record record, Number index ) 
-						var options=Ext.getCmp('approvalOption');
+						var options=Ext.getCmp('superOption');
 						if(options!=null){
 							options.setValue(field.getValue());
 						}
@@ -22,8 +22,8 @@
 	{
 		fieldLabel:'审批意见',
 		xtype:'textarea',
-		id:'approvalOption',
-		name:'approvalOption',
+		id:'superOption',
+		name:'superOption',
 		allowBlank:false,
 		anchor:'90%'
 	}

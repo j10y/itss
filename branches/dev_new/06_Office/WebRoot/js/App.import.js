@@ -357,5 +357,7 @@ App.importJs = {
 	ArchRecFiledTypeView : [ __ctxPath + "/js/archive/ArchRecFiledTypeView.js",
 			__ctxPath + "/js/archive/ArchRecFiledTypeForm.js" ],
 	SearchNoticeNew : [ __ctxPath + "/js/search/SearchNoticeNew.js",
-   			__ctxPath + "/js/info/NoticeNewDetail.js" ]
+   			__ctxPath + "/js/info/NoticeNewDetail.js" ],
+	LeaveTypeView : [ __ctxPath + "/js/personal/LeaveTypeView.js",
+	     			__ctxPath + "/js/personal/LeaveTypeForm.js" ]
 };

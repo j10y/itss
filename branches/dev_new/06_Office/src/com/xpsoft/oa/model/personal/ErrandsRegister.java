@@ -1,252 +1,213 @@
-/*     */package com.xpsoft.oa.model.personal;
+package com.xpsoft.oa.model.personal;
 
-/*     */
-/*     */import com.xpsoft.core.model.BaseModel;
-/*     */
-import com.xpsoft.oa.model.system.AppUser;
-/*     */
 import java.util.Date;
-/*     */
+
 import org.apache.commons.lang.builder.EqualsBuilder;
-/*     */
 import org.apache.commons.lang.builder.HashCodeBuilder;
-/*     */
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/*     */
-/*     */public class ErrandsRegister extends BaseModel
-/*     */{
-	/*     */protected Long dateId;
-	/*     */protected Long approvalId;
-	/*     */protected String descp;
-	/*     */protected Date startTime;
-	/*     */protected Date endTime;
-	/*     */protected Short status;
-	/*     */protected String approvalOption;
-	/*     */protected String approvalName;
-	/*     */protected Short flag;
-	/*     */protected AppUser appUser;
-	/* 34 */public static final Short STATUS_UNCHECKED = Short
+import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.system.AppUser;
+
+public class ErrandsRegister extends BaseModel {
+	protected Long dateId;
+	protected Long approvalId;
+	protected String descp;
+	protected Date startTime;
+	protected Date endTime;
+	protected Short status;
+	protected String approvalOption;
+	protected String approvalName;
+	protected Short flag;
+	protected AppUser appUser;
+	
+	//请假类型
+	protected Long leaveTypeId;
+	protected String leaveTypeName;
+	
+	public static final Short STATUS_UNCHECKED = Short
 			.valueOf((short) 0);
-	/*     */
-	/* 38 */public static final Short STATUS_APPROVAL = Short
+
+	public static final Short STATUS_APPROVAL = Short
 			.valueOf((short) 1);
-	/*     */
-	/* 42 */public static final Short STATUS_UNAPPROVAL = Short
+
+	public static final Short STATUS_UNAPPROVAL = Short
 			.valueOf((short) 2);
-	/*     */
-	/* 45 */public static final Short FLAG_OVERTIME = Short.valueOf((short) 0);
-	/*     */
-	/* 47 */public static final Short FLAG_LEAVE = Short.valueOf((short) 1);
-	/*     */
-	/* 49 */public static final Short FLAG_OUT = Short.valueOf((short) 2);
 
-	/*     */
-	/*     */public ErrandsRegister()
-	/*     */{
-		/*     */}
+	public static final Short FLAG_OVERTIME = Short.valueOf((short) 0);
 
-	/*     */
-	/*     */public ErrandsRegister(Long in_dateId)
-	/*     */{
-		/* 64 */setDateId(in_dateId);
-		/*     */}
+	public static final Short FLAG_LEAVE = Short.valueOf((short) 1);
 
-	/*     */
-	/*     */public AppUser getAppUser()
-	/*     */{
-		/* 69 */return this.appUser;
-		/*     */}
+	public static final Short FLAG_OUT = Short.valueOf((short) 2);
 
-	/*     */
-	/*     */public void setAppUser(AppUser in_appUser) {
-		/* 73 */this.appUser = in_appUser;
-		/*     */}
+	public ErrandsRegister() {
+	}
 
-	/*     */
-	/*     */public Long getDateId()
-	/*     */{
-		/* 82 */return this.dateId;
-		/*     */}
+	public ErrandsRegister(Long in_dateId) {
+		setDateId(in_dateId);
+	}
 
-	/*     */
-	/*     */public void setDateId(Long aValue)
-	/*     */{
-		/* 89 */this.dateId = aValue;
-		/*     */}
+	public AppUser getAppUser() {
+		return this.appUser;
+	}
 
-	/*     */
-	/*     */public Long getUserId()
-	/*     */{
-		/* 97 */return getAppUser() == null ? null : getAppUser().getUserId();
-		/*     */}
+	public void setAppUser(AppUser in_appUser) {
+		this.appUser = in_appUser;
+	}
 
-	/*     */
-	/*     */public void setUserId(Long aValue)
-	/*     */{
-		/* 105 */if (aValue == null) {
-			/* 106 */this.appUser = null;
-			/* 107 */} else if (this.appUser == null) {
-			/* 108 */this.appUser = new AppUser(aValue);
-			/* 109 */this.appUser.setVersion(new Integer(0));
-			/*     */} else {
-			/* 111 */this.appUser.setUserId(aValue);
-			/*     */}
-		/*     */}
+	public Long getDateId() {
+		return this.dateId;
+	}
 
-	/*     */
-	/*     */public String getDescp()
-	/*     */{
-		/* 120 */return this.descp;
-		/*     */}
+	public void setDateId(Long aValue) {
+		this.dateId = aValue;
+	}
 
-	/*     */
-	/*     */public void setDescp(String aValue)
-	/*     */{
-		/* 128 */this.descp = aValue;
-		/*     */}
+	public Long getUserId() {
+		return getAppUser() == null ? null : getAppUser().getUserId();
+	}
 
-	/*     */
-	/*     */public Date getStartTime()
-	/*     */{
-		/* 136 */return this.startTime;
-		/*     */}
+	public void setUserId(Long aValue) {
+		if (aValue == null) {
+			this.appUser = null;
+		} else if (this.appUser == null) {
+			this.appUser = new AppUser(aValue);
+			this.appUser.setVersion(new Integer(0));
+		} else {
+			this.appUser.setUserId(aValue);
+		}
+	}
 
-	/*     */
-	/*     */public void setStartTime(Date aValue)
-	/*     */{
-		/* 144 */this.startTime = aValue;
-		/*     */}
+	public String getDescp() {
+		return this.descp;
+	}
 
-	/*     */
-	/*     */public Date getEndTime()
-	/*     */{
-		/* 152 */return this.endTime;
-		/*     */}
+	public void setDescp(String aValue) {
+		this.descp = aValue;
+	}
 
-	/*     */
-	/*     */public void setEndTime(Date aValue)
-	/*     */{
-		/* 160 */this.endTime = aValue;
-		/*     */}
+	public Date getStartTime() {
+		return this.startTime;
+	}
 
-	/*     */
-	/*     */public Long getApprovalId()
-	/*     */{
-		/* 167 */return this.approvalId;
-		/*     */}
+	public void setStartTime(Date aValue) {
+		this.startTime = aValue;
+	}
 
-	/*     */
-	/*     */public void setApprovalId(Long aValue)
-	/*     */{
-		/* 174 */this.approvalId = aValue;
-		/*     */}
+	public Date getEndTime() {
+		return this.endTime;
+	}
 
-	/*     */
-	/*     */public Short getStatus()
-	/*     */{
-		/* 182 */return this.status;
-		/*     */}
+	public void setEndTime(Date aValue) {
+		this.endTime = aValue;
+	}
 
-	/*     */
-	/*     */public void setStatus(Short aValue)
-	/*     */{
-		/* 190 */this.status = aValue;
-		/*     */}
+	public Long getApprovalId() {
+		return this.approvalId;
+	}
 
-	/*     */
-	/*     */public String getApprovalOption()
-	/*     */{
-		/* 198 */return this.approvalOption;
-		/*     */}
+	public void setApprovalId(Long aValue) {
+		this.approvalId = aValue;
+	}
 
-	/*     */
-	/*     */public void setApprovalOption(String aValue)
-	/*     */{
-		/* 205 */this.approvalOption = aValue;
-		/*     */}
+	public Short getStatus() {
+		return this.status;
+	}
 
-	/*     */
-	/*     */public String getApprovalName()
-	/*     */{
-		/* 213 */return this.approvalName;
-		/*     */}
+	public void setStatus(Short aValue) {
+		this.status = aValue;
+	}
 
-	/*     */
-	/*     */public void setApprovalName(String aValue)
-	/*     */{
-		/* 221 */this.approvalName = aValue;
-		/*     */}
+	public String getApprovalOption() {
+		return this.approvalOption;
+	}
 
-	/*     */
-	/*     */public Short getFlag()
-	/*     */{
-		/* 231 */return this.flag;
-		/*     */}
+	public void setApprovalOption(String aValue) {
+		this.approvalOption = aValue;
+	}
 
-	/*     */
-	/*     */public void setFlag(Short aValue)
-	/*     */{
-		/* 238 */this.flag = aValue;
-		/*     */}
+	public String getApprovalName() {
+		return this.approvalName;
+	}
 
-	/*     */
-	/*     */public boolean equals(Object object)
-	/*     */{
-		/* 245 */if (!(object instanceof ErrandsRegister)) {
-			/* 246 */return false;
-			/*     */}
-		/* 248 */ErrandsRegister rhs = (ErrandsRegister) object;
-		/* 249 */return new EqualsBuilder()
-		/* 250 */.append(this.dateId, rhs.dateId)
-		/* 251 */.append(this.approvalId, rhs.approvalId)
-		/* 252 */.append(this.descp, rhs.descp)
-		/* 253 */.append(this.startTime, rhs.startTime)
-		/* 254 */.append(this.endTime, rhs.endTime)
-		/* 255 */.append(this.status, rhs.status)
-		/* 256 */.append(this.approvalOption, rhs.approvalOption)
-		/* 257 */.append(this.approvalName, rhs.approvalName)
-		/* 258 */.append(this.flag, rhs.flag)
-		/* 259 */.isEquals();
-		/*     */}
+	public void setApprovalName(String aValue) {
+		this.approvalName = aValue;
+	}
 
-	/*     */
-	/*     */public int hashCode()
-	/*     */{
-		/* 266 */return new HashCodeBuilder(-82280557, -700257973)
-		/* 267 */.append(this.dateId)
-		/* 268 */.append(this.approvalId)
-		/* 269 */.append(this.descp)
-		/* 270 */.append(this.startTime)
-		/* 271 */.append(this.endTime)
-		/* 272 */.append(this.status)
-		/* 273 */.append(this.approvalOption)
-		/* 274 */.append(this.approvalName)
-		/* 275 */.append(this.flag)
-		/* 276 */.toHashCode();
-		/*     */}
+	public Short getFlag() {
+		return this.flag;
+	}
 
-	/*     */
-	/*     */public String toString()
-	/*     */{
-		/* 283 */return new ToStringBuilder(this)
-		/* 284 */.append("dateId", this.dateId)
-		/* 285 */.append("userId", this.approvalId)
-		/* 286 */.append("descp", this.descp)
-		/* 287 */.append("startTime", this.startTime)
-		/* 288 */.append("endTime", this.endTime)
-		/* 289 */.append("status", this.status)
-		/* 290 */.append("approvalOption", this.approvalOption)
-		/* 291 */.append("approvalName", this.approvalName)
-		/* 292 */.append("flag", this.flag)
-		/* 293 */.toString();
-		/*     */}
-	/*     */
+	public void setFlag(Short aValue) {
+		this.flag = aValue;
+	}
+
+	public Long getLeaveTypeId() {
+		return leaveTypeId;
+	}
+
+	public void setLeaveTypeId(Long leaveTypeId) {
+		this.leaveTypeId = leaveTypeId;
+	}
+
+	public String getLeaveTypeName() {
+		return leaveTypeName;
+	}
+
+	public void setLeaveTypeName(String leaveTypeName) {
+		this.leaveTypeName = leaveTypeName;
+	}
+
+	public boolean equals(Object object) {
+		if (!(object instanceof ErrandsRegister)) {
+			return false;
+		}
+		ErrandsRegister rhs = (ErrandsRegister) object;
+		return new EqualsBuilder()
+			.append(this.dateId, rhs.dateId)
+			.append(this.approvalId, rhs.approvalId)
+			.append(this.descp, rhs.descp)
+			.append(this.startTime, rhs.startTime)
+			.append(this.endTime, rhs.endTime)
+			.append(this.status, rhs.status)
+			.append(this.approvalOption, rhs.approvalOption)
+			.append(this.approvalName, rhs.approvalName)
+			.append(this.flag, rhs.flag)
+			.append(this.leaveTypeId, this.leaveTypeId)
+			.append(this.leaveTypeName, this.leaveTypeName)
+			.isEquals();
+	}
+
+	public int hashCode() {
+		return new HashCodeBuilder(-82280557, -700257973)
+			.append(this.dateId)
+			.append(this.approvalId)
+			.append(this.descp)
+			.append(this.startTime)
+			.append(this.endTime)
+			.append(this.status)
+			.append(this.approvalOption)
+			.append(this.approvalName)
+			.append(this.flag)
+			.append(this.leaveTypeId)
+			.append(this.leaveTypeName)
+			.toHashCode();
+	}
+
+	public String toString() {
+		return new ToStringBuilder(this)
+			.append("dateId", this.dateId)
+			.append("userId", this.approvalId)
+			.append("descp", this.descp)
+			.append("startTime", this.startTime)
+			.append("endTime", this.endTime)
+			.append("status", this.status)
+			.append("approvalOption", this.approvalOption)
+			.append("approvalName", this.approvalName)
+			.append("flag", this.flag)
+			.append("leaveTypeId", this.leaveTypeId)
+			.append("leaveTypeName", this.leaveTypeName)
+			.toString();
+	}
+
 }
-
-/*
- * Location:
- * C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6
- * -joffice\webapps\joffice1.3.1\WEB-INF\classes\ Qualified Name:
- * com.xpsoft.oa.model.personal.ErrandsRegister JD-Core Version: 0.6.0
- */

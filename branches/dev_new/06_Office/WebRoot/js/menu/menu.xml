@@ -677,6 +677,24 @@
 			<Item id="SignInOffView" text="上下班签到" iconCls="menu-signInOff" />
 			<Item id="ErrandsRegisterView" text="请假登记" iconCls="menu-holiday" />
 			<Item id="ErrandsRegisterOutView" text="外出登记" iconCls="menu-errands" />
+			<Item id="LeaveTypeView" text="请假类别\流程配置" iconCls="menu-arch-rec-type">
+			    <Function id="_LeaveTypeQuery" text="查看" iconCls="menu-list">
+			       <url>/personal/listLeaveType.do</url>
+			    </Function>
+			    <Function id="_LeaveTypeAdd" text="添加" iconCls="menu-add">
+			       <url>/personal/listLeaveType.do</url>
+			       <url>/personal/saveLeaveType.do</url>
+			    </Function>
+			    <Function id="_LeaveTypeEdit" text="编辑" iconCls="btn-edit">
+			       <url>/personal/listLeaveType.do</url>
+			       <url>/personal/saveLeaveType.do</url>
+			       <url>/personal/getLeaveType.do</url>
+			    </Function>
+			    <Function id="_LeaveTypeDel" text="删除" iconCls="menu-del">
+			       <url>/personal/listLeaveType.do</url>
+			       <url>/personal/multiDelLeaveType.do</url>
+			    </Function>
+			</Item>
 		</Items>
 		<Items id="DutyManager" text="考勤管理" iconCls="menu-dutySetting"
 			isPublic="false">
