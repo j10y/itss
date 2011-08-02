@@ -35,6 +35,10 @@
   <parameter name="allowedMethods" value="*"/>
   <parameter name="className" value="com.xpsoft.webservice.service.notice.Impl.NoticeServiceImpl"/>
  </service>
+ <service name="FlowServiceImpl" provider="java:RPC">
+  <parameter name="allowedMethods" value="*"/>
+  <parameter name="className" value="com.xpsoft.webservice.service.flow.Impl.FlowServiceImpl"/>
+ </service>
  <service name="AdminService" provider="java:MSG">
   <parameter name="allowedMethods" value="AdminService"/>
   <parameter name="enableRemoteAdmin" value="false"/>
