@@ -70,6 +70,22 @@ public class LeaveLeaderReadAction extends BaseAction {
 		/* 91 */this.leaderRead = leaderRead;
 	}
 
+	public LeaveLeaderRead getLeaderRead() {
+		return leaderRead;
+	}
+
+	public void setLeaderRead(LeaveLeaderRead leaderRead) {
+		this.leaderRead = leaderRead;
+	}
+
+	public ErrandsRegister getErrandsRegister() {
+		return errandsRegister;
+	}
+
+	public void setErrandsRegister(ErrandsRegister errandsRegister) {
+		this.errandsRegister = errandsRegister;
+	}
+
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
 		filter.addFilter("Q_userId_L_EQ", ContextUtil.getCurrentUserId()

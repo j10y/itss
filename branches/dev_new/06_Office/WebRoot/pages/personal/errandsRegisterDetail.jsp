@@ -30,6 +30,13 @@
 		<td>${errandsRegister.endTime}</td>
 	</tr>
 	<tr>
+		<th>请假类型</th>
+		<td>
+			${errandsRegister.leaveTypeName}
+		</td>
+	</tr>
+	<!-- 
+	<tr>
 		<th>审批人</th>
 		<td>
 			${errandsRegister.approvalName}
@@ -55,4 +62,5 @@
 		<th>审批意见</th>
 		<td>${errandsRegister.approvalOption}</td>
 	</tr>
+	 -->
 </table>

@@ -48,9 +48,32 @@ var ErrandsRegisterView = function() {
 												format : "Y-m-d H:i:s",
 												name : "Q_endTime_D_LE",
 												editable : false
+											},{
+												text : "请假类型:"
 											},
 											{
-												text : "审批状态"
+
+												fieldLabel : "请假类型",
+												hiddenName : "Q_leaveTypeId_L_EQ",
+												emptyText : "请选择请假类型",
+												xtype : "combo",
+												mode : "local",
+												anchor : "98%",
+												width : 80,
+												allowBlank : false,
+												editable : false,
+												valueField : "typeId",
+												displayField : "typeName",
+												triggerAction : "all",
+												store : new Ext.data.SimpleStore({
+													autoLoad : true,
+													url : __ctxPath + "/personal/comboLeaveType.do",
+													fields : [ "typeId", "typeName", "processDefId"]
+												})
+											
+											},
+											{
+												text : "审批状态:"
 											},
 											{
 												xtype : "combo",
@@ -59,9 +82,11 @@ var ErrandsRegisterView = function() {
 												width : 80,
 												editable : false,
 												triggerAction : "all",
-												store : [ [ "0", "未审批" ],
-														[ "1", "通过审批" ],
-														[ "2", "未通过审批" ] ]
+												store : [ [ "1", "待部门负责人审批" ],
+															[ "2", "待分管领导审批" ],
+															[ "3", "待主管领导审批" ],
+															[ "4", "待人事登记" ],
+															[ "5", "审批通过" ] ]
 											},
 											{
 												xtype : "button",
@@ -130,6 +155,10 @@ ErrandsRegisterView.prototype.grid = function() {
 							dataIndex : "descp"
 						},
 						{
+							header : "请假类型",
+							dataIndex : "leaveTypeName"
+						},
+						{
 							header : "开始日期",
 							dataIndex : "startTime"
 						},
@@ -141,24 +170,25 @@ ErrandsRegisterView.prototype.grid = function() {
 							header : "审批状态",
 							dataIndex : "status",
 							renderer : function(e) {
-								if (e == "0") {
-									return "未审批";
-								}
 								if (e == "1") {
-									return '<font color="green">通过审批</font>';
+									return "<font color='red'>待部门负责人审批</font>";
 								}
 								if (e == "2") {
-									return '<font color="red">未通过审批</font>';
+									return "<font color='red'>待分管领导审批</font>";
+								}
+								if (e == "3") {
+								    return '<font color="red">待主管领导审批</font>';
+								}
+								if (e == "4") {
+									return '<font color="red">待人事登记</font>';
+								}
+								if (e == "5") {
+									return '<font color="green">审批通过</font>';
+								}
+								if (e == "6") {
+									return '<font color="red">未通过</font>';
 								}
 							}
-						},
-						{
-							header : "审批意见",
-							dataIndex : "approvalOption"
-						},
-						{
-							header : "审批人",
-							dataIndex : "approvalName"
 						},
 						{
 							header : "管理",
@@ -167,9 +197,11 @@ ErrandsRegisterView.prototype.grid = function() {
 							sortable : false,
 							renderer : function(h, g, e, k, f) {
 								var j = e.data.dateId;
-								var i = '<button title="删除" value=" " class="btn-del" onclick="ErrandsRegisterView.remove('
-										+ j + ')">&nbsp;&nbsp;</button>';
-								i += '&nbsp;<button title="详细" value=" " class="btn-showDetail" onclick="ErrandsRegisterView.detail('
+//								var i = '<button title="删除" value=" " class="btn-del" onclick="ErrandsRegisterView.remove('
+//										+ j + ')">&nbsp;&nbsp;</button>';
+//								i += '&nbsp;<button title="详细" value=" " class="btn-showDetail" onclick="ErrandsRegisterView.detail('
+//										+ j + ')">&nbsp;&nbsp;</button>';
+								var i = '<button title="详细" value=" " class="btn-showDetail" onclick="ErrandsRegisterView.detail('
 										+ j + ')">&nbsp;&nbsp;</button>';
 								return i;
 							}
@@ -236,7 +268,7 @@ ErrandsRegisterView.prototype.store = function() {
 				name : "userName",
 				mapping : "appUser.fullname"
 			}, "descp", "startTime", "endTime", "approvalId", "status",
-					"approvalOption", "approvalName", "flag" ]
+					"approvalOption", "approvalName", "flag", "leaveTypeName" ]
 		}),
 		remoteSort : true
 	});

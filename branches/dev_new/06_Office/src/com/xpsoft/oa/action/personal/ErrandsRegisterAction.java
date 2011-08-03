@@ -111,7 +111,8 @@ public class ErrandsRegisterAction extends BaseAction {
 		boolean isNew = this.errandsRegister.getDateId() == null;
 
 		this.errandsRegister.setAppUser(ContextUtil.getCurrentUser());
-		this.errandsRegister.setStatus(Short.valueOf((short) 0));
+//		this.errandsRegister.setStatus(Short.valueOf((short) 0));
+		this.errandsRegister.setStatus(ErrandsRegister.STATUS_DEPT_APPROVAL);
 		this.errandsRegisterService.save(this.errandsRegister);
 
 		if ((ErrandsRegister.FLAG_LEAVE.equals(this.errandsRegister.getFlag())||ErrandsRegister.FLAG_OUT.equals(this.errandsRegister.getFlag())) && (isNew)) {

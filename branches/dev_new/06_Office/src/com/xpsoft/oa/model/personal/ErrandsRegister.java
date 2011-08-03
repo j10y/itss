@@ -28,11 +28,35 @@ public class ErrandsRegister extends BaseModel {
 	public static final Short STATUS_UNCHECKED = Short
 			.valueOf((short) 0);
 
-	public static final Short STATUS_APPROVAL = Short
-			.valueOf((short) 1);
+//	public static final Short STATUS_APPROVAL = Short
+//			.valueOf((short) 1);
+//
+//	public static final Short STATUS_UNAPPROVAL = Short
+//			.valueOf((short) 2);
+	
+	//部门负责人审批
+	public static final Short STATUS_DEPT_APPROVAL = Short
+	.valueOf((short) 1);
+	
+	//分管领导审批中
+	public static final Short STATUS_CHARGE_APPROVAL = Short
+	.valueOf((short) 2);
+	
+	//主管领导审批中
+	public static final Short STATUS_HEAD_APPROVAL = Short
+	.valueOf((short) 3);
 
+	//人事登记
+	public static final Short STATUS_HR_APPROVAL = Short
+	.valueOf((short) 4);
+	
+	//通过
+	public static final Short STATUS_APPROVAL = Short
+	.valueOf((short) 5);
+	
+	//未通过
 	public static final Short STATUS_UNAPPROVAL = Short
-			.valueOf((short) 2);
+	.valueOf((short) 6);
 
 	public static final Short FLAG_OVERTIME = Short.valueOf((short) 0);
 
