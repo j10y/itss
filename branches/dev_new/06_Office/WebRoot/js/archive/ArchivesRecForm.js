@@ -538,24 +538,25 @@ ArchivesRecForm = Ext
 																				+ ')"/>&nbsp;|&nbsp;</span>');
 													}
 													
-													//制定发文类型对应的流程
-													Ext.Ajax.request({
-														scope : this,
-														url : __ctxPath
-																+ "/archive/getArchRecType.do?recTypeId="
-																+ Ext.getCmp("ArchivesRecForm.recTypeId").getValue(),
-														success : function(b, c) {
-															var d = Ext.util.JSON
-																	.decode(b.responseText);
-															if (d.success) {
-																if(d.data.processDefId!=""&&d.data.processDefId!=null
-																		&&d.data.processDefId!=undefined&&d.data.processDefId!="0")
-																	alert(Ext.getCmp("ArchivesRecForm").defId);
-																	Ext.getCmp("ArchivesRecForm").setDefId(d.data.processDefId);
-																	alert(Ext.getCmp("ArchivesRecForm").defId);
+													//指定发文类型对应的流程
+													var recTypeId = Ext.getCmp("ArchivesRecForm.recTypeId").getValue();
+													if(recTypeId!="" && recTypeId!=null && recTypeId != undefined && recTypeId != 0){
+														Ext.Ajax.request({
+															scope : this,
+															url : __ctxPath
+																	+ "/archive/getArchRecType.do?recTypeId="
+																	+ Ext.getCmp("ArchivesRecForm.recTypeId").getValue(),
+															success : function(b, c) {
+																var d = Ext.util.JSON
+																		.decode(b.responseText);
+																if (d.success) {
+																	if(d.data.processDefId!=""&&d.data.processDefId!=null
+																			&&d.data.processDefId!=undefined&&d.data.processDefId!="0")
+																		Ext.getCmp("ArchivesRecForm").setDefId(d.data.processDefId);
+																}
 															}
-														}
-													});
+														});
+													}													
 												},
 												failure : function(c, d) {
 												}
