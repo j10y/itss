@@ -142,7 +142,7 @@ LeaveAuditFlowView = Ext.extend(Ext.Panel, {
 					},{
 						name : 'errandsRegisterStatus',
 						xtype : 'hidden',
-						value :  4 //4代表请假状态为已经部门审核，待人事登记
+						value :  4 //4代表请假状态为已经局长审批，待人事登记
 					}]
 		});
 	}
