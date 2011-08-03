@@ -17,7 +17,7 @@ LeaveAuditFlowView = Ext.extend(Ext.Panel, {
 		Ext.applyIf(this, _cfg);
 		this.init();
 		LeaveAuditFlowView.superclass.constructor.call(this, {
-					title : '部门负责人审批',
+					title : '人事登记',
 					id : 'LeaveAuditFlowView',
 					layout : 'column',
 					defaults : {

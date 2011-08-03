@@ -60,7 +60,7 @@ var ErrandsRegisterView = function() {
 												mode : "local",
 												anchor : "98%",
 												width : 80,
-												allowBlank : false,
+												allowBlank : true,
 												editable : false,
 												valueField : "typeId",
 												displayField : "typeName",
