@@ -65,16 +65,18 @@ public class TestClient {
 			Service service = new Service();
 			Call call = (Call) service.createCall();
 			call.setTargetEndpointAddress(new java.net.URL(
-					"http://localhost:8080/services/FlowServiceImpl"));
-			call.setOperationName("getDbsxDetail");
+					"http://localhost:8080/Office/services/FlowServiceImpl"));
+			call.setOperationName("saveProcessAndToNext");
 			//call.setOperationName("getInfoCount");
 			/*
 			 * invoke方法的参数是Object数组,该数组元素个数与方法参数一致
 			 */
-			String translateText = (String) call
-					.invoke(new Object[] { "1","1","承办传阅","71"});
+//			String translateText = (String) call
+//					.invoke(new Object[] { "1","1","部门负责人审批","54"});
 //			String translateText = (String) call
 //			.invoke(new Object[] { "1","1"});
+			String translateText = (String) call
+			.invoke(new Object[] { "1","1","15","54","部门负责人审批","审批","审批同意",null,null,null});
 			System.out.println(translateText);
 		} catch (ServiceException e) {
 			e.printStackTrace();

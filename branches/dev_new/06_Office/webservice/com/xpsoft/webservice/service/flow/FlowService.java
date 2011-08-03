@@ -11,4 +11,6 @@ public interface FlowService {
 	
 	public String getYycyDetail(String userId, String passwd,String id);
 	
+	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass);
+	
 }

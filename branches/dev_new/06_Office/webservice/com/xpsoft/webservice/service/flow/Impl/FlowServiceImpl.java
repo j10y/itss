@@ -1,6 +1,7 @@
 package com.xpsoft.webservice.service.flow.Impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.xpsoft.oa.model.flow.ProcessRun;
 import com.xpsoft.oa.model.flow.Transform;
 import com.xpsoft.oa.model.info.NoticeNewsDoc;
 import com.xpsoft.oa.model.personal.ErrandsRegister;
+import com.xpsoft.oa.model.personal.LeaveLeaderRead;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.archive.ArchDispatchService;
 import com.xpsoft.oa.service.archive.ArchivesService;
@@ -46,6 +48,7 @@ import com.xpsoft.oa.service.flow.ProcessFormService;
 import com.xpsoft.oa.service.flow.ProcessRunService;
 import com.xpsoft.oa.service.flow.TaskService;
 import com.xpsoft.oa.service.personal.ErrandsRegisterService;
+import com.xpsoft.oa.service.personal.LeaveLeaderReadService;
 import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.webservice.service.flow.FlowService;
 
@@ -468,14 +471,13 @@ public class FlowServiceImpl implements FlowService {
 		json += "]}";
 		return json;
 	}
-	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue){
+	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass){
 		filter(userId, passwd);
 		this.setActivityName(activityName);
 		this.setTaskId(taskId);
 		this.parmap.put("activityName", activityName);
 		this.parmap.put("taskId", taskId);
 		this.parmap.put("signalName", signalName);
-		FlowRunInfo flowRunInfo = getFlowRunInfo();
 		ProDefinition proDefinition = getProDefinition();
 		String processName = proDefinition.getName();
 		ProcessRunService processRunService = (ProcessRunService) AppUtil
@@ -487,12 +489,56 @@ public class FlowServiceImpl implements FlowService {
 		if(checkboxvalue!=null&&checkboxvalue.length()>0){
 			
 		}
-		if(processName.equals("请假-短")||processName.equals("请假-中")||processName.equals("请假-长")){
-			
+		try {
+			if(processName.equals("请假-短")||processName.equals("请假-中")||processName.equals("请假-长")){
+				 ErrandsRegisterService errandsRegisterService=(ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
+				 LeaveLeaderReadService leaveLeaderReadService=(LeaveLeaderReadService) AppUtil.getBean("leaveLeaderReadService");
+				 ErrandsRegister errandsRegister = ((ErrandsRegister)errandsRegisterService.get(Long.parseLong(id)));
+				 LeaveLeaderRead leaderRead=new LeaveLeaderRead();
+				 String errandsRegisterStatus="";
+				 if(activityName.equals("部门负责人审批")){
+					 if(processName.equals("请假-短")){
+						 errandsRegisterStatus ="4";
+					 }else if(processName.equals("请假-中")){
+						 errandsRegisterStatus ="2";
+					 }else if(processName.equals("请假-长")){
+						 errandsRegisterStatus ="3";
+					 }
+				}else if(activityName.equals("分管局长审批")){
+					if(processName.equals("请假-中")){
+						 errandsRegisterStatus ="3";
+					 }else if(processName.equals("请假-长")){
+						 errandsRegisterStatus ="4";
+					 }
+				}else if(activityName.equals("局长审批")){
+					if(processName.equals("请假-中")){
+						 errandsRegisterStatus ="4";
+					}
+				}else if(activityName.equals("人事登记")){
+					errandsRegisterStatus ="4";
+				}
+				 if (StringUtils.isNotEmpty(errandsRegisterStatus)) {
+					 errandsRegister.setStatus(Short.valueOf(Short.parseShort(errandsRegisterStatus)));
+				 }
+				 errandsRegisterService.save(errandsRegister);
+				 leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+				 leaderRead.setUserId(ContextUtil.getCurrentUserId());
+				 leaderRead.setErrandsRegister(errandsRegister);
+				 leaderRead.setCreatetime(new Date());
+				 leaderRead.setIsPass(LeaveLeaderRead.IS_PASS);
+				 leaderRead=leaveLeaderReadService.save(leaderRead);
+				 this.parmap.put("leaderRead.readId", leaderRead.getReadId());
+				 this.parmap.put("leaderRead.leaderOpinion", commentDesc);
+				 this.parmap.put("errandsRegister.dateId", id);
+			}
+			FlowRunInfo flowRunInfo = getFlowRunInfo();
+			processRunService.saveAndNextStep(flowRunInfo);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return "{success:false}";
 		}
-		processRunService.saveAndNextStep(flowRunInfo);
 		
-		return null;
+		return "{success:true}";
 	}
 	protected Map<String, ParamField> constructFieldMap() {
 		JbpmService jbpmService = (JbpmService) AppUtil.getBean("jbpmService");
