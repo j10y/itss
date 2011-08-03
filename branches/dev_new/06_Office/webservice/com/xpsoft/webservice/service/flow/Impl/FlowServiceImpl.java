@@ -475,12 +475,21 @@ public class FlowServiceImpl implements FlowService {
 		this.parmap.put("activityName", activityName);
 		this.parmap.put("taskId", taskId);
 		this.parmap.put("signalName", signalName);
+		FlowRunInfo flowRunInfo = getFlowRunInfo();
+		ProDefinition proDefinition = getProDefinition();
+		String processName = proDefinition.getName();
+		ProcessRunService processRunService = (ProcessRunService) AppUtil
+		.getBean("processRunService");
 		if(nextuser!=null&&nextuser.length()>0){
 			this.parmap.put("signUserIds", nextuser);
 		}
-		FlowRunInfo flowRunInfo = getFlowRunInfo();
-		ProcessRunService processRunService = (ProcessRunService) AppUtil
-		.getBean("processRunService");
+		//1局长2分管局长3全有
+		if(checkboxvalue!=null&&checkboxvalue.length()>0){
+			
+		}
+		if(processName.equals("请假-短")||processName.equals("请假-中")||processName.equals("请假-长")){
+			
+		}
 		processRunService.saveAndNextStep(flowRunInfo);
 		
 		return null;

@@ -72,7 +72,9 @@ public class TestClient {
 			 * invoke方法的参数是Object数组,该数组元素个数与方法参数一致
 			 */
 			String translateText = (String) call
-					.invoke(new Object[] { "1","1","科室审核","40"});
+					.invoke(new Object[] { "1","1","承办传阅","71"});
+//			String translateText = (String) call
+//			.invoke(new Object[] { "1","1"});
 			System.out.println(translateText);
 		} catch (ServiceException e) {
 			e.printStackTrace();
