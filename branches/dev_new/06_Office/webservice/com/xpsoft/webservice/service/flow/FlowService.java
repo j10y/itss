@@ -9,6 +9,6 @@ public interface FlowService {
 	
 	public String getYycyList(String userId, String passwd,String passType,String title,String pageNum,String pageSize);
 	
-	public String getycyDetail(String userId, String passwd,String id);
+	public String getYycyDetail(String userId, String passwd,String id);
 	
 }

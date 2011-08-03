@@ -418,7 +418,7 @@ public class FlowServiceImpl implements FlowService {
 		return json;
 	}
 
-	public String getycyDetail(String userId, String passwd, String id) {
+	public String getYycyDetail(String userId, String passwd, String id) {
 		// TODO Auto-generated method stub
 		ArchivesService arService = (ArchivesService)AppUtil.getBean("archivesService");
 		Archives archives=arService.load(new Long(id));
@@ -468,7 +468,20 @@ public class FlowServiceImpl implements FlowService {
 		json += "]}";
 		return json;
 	}
-	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName){
+	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue){
+		filter(userId, passwd);
+		this.setActivityName(activityName);
+		this.setTaskId(taskId);
+		this.parmap.put("activityName", activityName);
+		this.parmap.put("taskId", taskId);
+		this.parmap.put("signalName", signalName);
+		if(nextuser!=null&&nextuser.length()>0){
+			this.parmap.put("signUserIds", nextuser);
+		}
+		FlowRunInfo flowRunInfo = getFlowRunInfo();
+		ProcessRunService processRunService = (ProcessRunService) AppUtil
+		.getBean("processRunService");
+		processRunService.saveAndNextStep(flowRunInfo);
 		
 		return null;
 	}
