@@ -73,48 +73,48 @@
    }
    public FlowRunInfo(Map parmap)
    {
-     if ("true".equals(parmap.get("startFlow")+"")) {
+     if ("true".equals(parmap.get("startFlow")!=null?parmap.get("startFlow").toString():null)) {
        this.isStartFlow = true;
-				String flowAssignId = parmap.get("flowAssignId")+"";
+				String flowAssignId = parmap.get("flowAssignId")!=null?parmap.get("flowAssignId").toString():null;
 			    if (StringUtils.isNotEmpty(flowAssignId)) {
 			         this.variables.put("flowAssignId", flowAssignId);
 			    }
 			 }
      else {
-       String signUserIds = parmap.get("signUserIds")+"";
+       String signUserIds = parmap.get("signUserIds")!=null?parmap.get("signUserIds").toString():null;
        if (StringUtils.isNotEmpty(signUserIds)) {
          this.variables.put("signUserIds", signUserIds);
        }
  
-       String flowAssignId = parmap.get("flowAssignId")+"";
+       String flowAssignId = parmap.get("flowAssignId")!=null?parmap.get("flowAssignId").toString():null;
        if (StringUtils.isNotEmpty(flowAssignId)) {
          this.variables.put("flowAssignId", flowAssignId);
        }
 
  
-       String pTaskId = parmap.get("taskId")+"";
+       String pTaskId = parmap.get("taskId")!=null?parmap.get("taskId").toString():null;
        if (StringUtils.isNotEmpty(pTaskId)) {
          this.taskId = pTaskId;
        }
  
-       String pPiId = parmap.get("piId")+"";
+       String pPiId = parmap.get("piId")!=null?parmap.get("piId").toString():null;
  
        if (StringUtils.isNotEmpty(pPiId)) {
          this.piId = pPiId;
        }
  
-       String pActivityName = parmap.get("activityName")+"";
+       String pActivityName = parmap.get("activityName")!=null?parmap.get("activityName").toString():null;
        if (StringUtils.isNotEmpty(pActivityName)) {
          this.activityName = pActivityName;
        }
  
-       String pDestName = parmap.get("destName")+"";
+       String pDestName = parmap.get("destName")!=null?parmap.get("destName").toString():null;
  
        if (StringUtils.isNotEmpty(pDestName)) {
          this.destName = pDestName;
        }
  
-       String pSignName = parmap.get("signalName")+"";
+       String pSignName = parmap.get("signalName")!=null?parmap.get("signalName").toString():null;
        if (StringUtils.isNotEmpty(pSignName))
          this.transitionName = pSignName;
      }
