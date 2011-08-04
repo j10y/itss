@@ -47,7 +47,6 @@ public class AppUserServiceImpl extends BaseServiceImpl<AppUser> implements
 		/* 56 */return this.dao.findByDepId(depId);
 	}
 
-	@Override
 	public List findByRoleIds(Long[] roleIds) {
 		// TODO Auto-generated method stub
 		return this.dao.findByRoleIds(roleIds);

@@ -235,7 +235,6 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		/* 242 */return findByHql(hql, objs);
 	}
 
-	@Override
 	public List findByRoleIds(Long[] roleIds) {
 		String ids = "";
 		for(int i=0; i< roleIds.length; i++){
