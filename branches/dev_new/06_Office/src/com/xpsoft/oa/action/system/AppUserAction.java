@@ -622,5 +622,30 @@ public class AppUserAction extends BaseAction {
 		/* 632 */this.jsonString = "{success:true}";
 		/* 633 */return "success";
 	}
+	
+	public String findByRoleIds() {
+		String strRoleId = getRequest().getParameter("roleIds");
+		String [] roles = strRoleId.split(",");
+		Long [] roleIds = new Long [roles.length]; 
+		for(int i=0; i<roles.length; i++){
+			roleIds [i] = new Long(roles[i]); 
+		}
+		if (StringUtils.isNotEmpty(strRoleId)) {
+			List<AppUser> userList = this.appUserService.findByRoleIds(roleIds);
+			Type type = new TypeToken<List<AppUser>>() {}.getType();
+
+			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+			/* 274 */.append(userList.size()).append(",result:");
+			/* 275 */Gson gson = new GsonBuilder()
+			/* 276 */.excludeFieldsWithoutExposeAnnotation().create();
+			/* 277 */buff.append(gson.toJson(userList, type));
+			/* 278 */buff.append("}");
+
+			/* 280 */this.jsonString = buff.toString();
+		} else {
+			/* 282 */this.jsonString = "{success:false}";
+		}
+		/* 284 */return "success";
+	}
 
 }

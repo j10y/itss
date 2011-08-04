@@ -1,24 +1,25 @@
 package com.xpsoft.oa.action.system;
 
+import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.dom4j.Document;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.system.AppFunction;
 import com.xpsoft.oa.model.system.AppRole;
 import com.xpsoft.oa.service.system.AppFunctionService;
 import com.xpsoft.oa.service.system.AppRoleService;
-import java.lang.reflect.Type;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.lang.StringUtils;
-import org.dom4j.Document;
 
 public class AppRoleAction extends BaseAction {
 
@@ -184,5 +185,24 @@ public class AppRoleAction extends BaseAction {
 			/* 211 */setJsonString("{success:false}");
 		}
 		/* 213 */return "success";
+	}
+	
+	/**
+	 * 查询指定局长或分局长Id
+	 * @return
+	 */
+	public String getAssignId(){
+		
+		String type = getRequest().getParameter("type");
+		String roleIds = "";
+		if(type!=null && type.equals("1")){
+			roleIds = AppUtil.getPropertity("role.leaderId");
+		}else if(type!=null && type.equals("2")){
+			roleIds = AppUtil.getPropertity("role.proxyLeaderId");
+		}else{
+			roleIds = AppUtil.getPropertity("role.leaderId") + "," + AppUtil.getPropertity("role.proxyLeaderId");
+		}
+		setJsonString("{success:true, roleIds:'"+ roleIds +"'}");
+		return "success";
 	}
 }

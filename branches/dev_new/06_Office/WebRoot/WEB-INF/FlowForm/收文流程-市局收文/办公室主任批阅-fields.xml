@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fields>
+	<field name="handleOpinion" label="办公室主任批阅意见" type="varchar" length="320" isShowed="true"/>
+	<field name="cruArchDepId" label="部门签收" type="long" isShowed="false"/>
+	<field name="flowAssignId" label="领导批示人员" type="varchar" length="320" isShowed="false"/>
+</fields>

@@ -11,6 +11,62 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class Archives extends BaseModel {
+	
+	
+	/**
+	 * 之前状态字段代表的含义 ：
+	 * 
+	 * 原来发文：
+	 * 
+	 * 0:草稿
+	 * 1:待核稿
+	 * 2:待审核
+	 * 3:待审批
+	 * 4:待签发
+	 * 5:待校对
+	 * 6:待分发
+	 * 7:归档结束
+	 * 
+	 * 现在发文：
+	 *   市局发文文
+	 * 0:草稿
+	 * 1:待核稿
+	 * 2:待签发
+	 * 3:待承办
+	 * 4:待盖章 
+	 * 5:
+	 * 6:
+	 * 7:归档结束
+	 * 
+ 	 *   请示报告
+	 * 0:草稿
+	   5:待部门负责人审核
+	   6:待分管领导审核
+	 * 7:归档结束
+	 * 8:待局长审核
+	 * 
+	 * 原来收文：
+	 * 0:草稿
+	 * 1:等待拟办
+	 * 2:拟办中
+	 * 3:等待领导批示
+	 * 4:等待分发
+	 * 5:等待阅读处理
+	 * 6:阅读处理中
+	 * 7:收文归档
+	 * 
+	 * 现在收文状态
+	 * 0:草稿
+	 * 1:待办公室传阅
+	 * 2:待办公室主任批阅
+	 * 3:待分管或局领导批示
+	 * 4:待科室主任传阅
+	 * 5:待科室承办人处理并归档
+	 * 6:状态未使用
+	 * 7:收文归档
+	 */
+
+	
 	/* 25 */public static final Short STATUS_DRAFT = Short.valueOf((short) 0);
 
 	/* 29 */public static final Short STATUS_ISSUE = Short.valueOf((short) 1);
@@ -84,7 +140,7 @@ public class Archives extends BaseModel {
 	protected String sources;
 
 	@Expose
-	protected Short archType;
+	protected Short archType;//发文0或收文1
 
 	@Expose
 	protected String recDepIds;
@@ -114,16 +170,16 @@ public class Archives extends BaseModel {
 	protected ArchRecType archRecType;
 
 	@Expose
-	/* 125 */protected Set archivesHandles = new HashSet();
+	protected Set archivesHandles = new HashSet();
 
 	@Expose
-	/* 127 */protected Set archivesDeps = new HashSet();
+	protected Set archivesDeps = new HashSet();//收文待收
 
 	@Expose
-	/* 129 */protected Set archivesDocs = new HashSet();
-	/* 130 */protected Set leaders = new HashSet();
-	/* 131 */protected Set archivesDispatch = new HashSet();
-	/* 132 */protected Set archivesAttends = new HashSet();
+	protected Set archivesDocs = new HashSet();
+	protected Set leaders = new HashSet();
+	protected Set archivesDispatch = new HashSet();//分发
+	protected Set archivesAttends = new HashSet();
 
 	public Set getArchivesAttends() {
 		/* 136 */return this.archivesAttends;

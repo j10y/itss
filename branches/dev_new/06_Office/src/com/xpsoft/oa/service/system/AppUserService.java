@@ -21,4 +21,6 @@ public abstract interface AppUserService extends BaseService<AppUser>
   public abstract List<AppUser> findSubAppUserByRole(Long paramLong, Set<Long> paramSet, PagingBean paramPagingBean);
 
   public abstract List<AppUser> findByDepId(Long paramLong);
+  
+  public abstract List findByRoleIds(Long [] roleIds);
 }

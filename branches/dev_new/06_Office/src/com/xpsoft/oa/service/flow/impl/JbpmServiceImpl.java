@@ -107,7 +107,7 @@ import org.jbpm.pvm.internal.svc.TaskServiceImpl;
 import org.jbpm.pvm.internal.task.TaskImpl;
 
 public class JbpmServiceImpl implements JbpmService {
-	/* 61 */private static final Log logger = LogFactory
+	private static final Log logger = LogFactory
 			.getLog(JbpmServiceImpl.class);
 
 	@Resource

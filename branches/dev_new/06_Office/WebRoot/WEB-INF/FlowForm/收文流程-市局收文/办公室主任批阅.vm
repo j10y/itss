@@ -1,0 +1,201 @@
+OfficeHeaderReadForm = Ext.extend(Ext.Panel, {
+			taskId:null,
+			setTaskId:function(vId){
+			   this.taskId=vId;
+			},
+			getTaskId:function(){
+			   return this.taskId;
+			},
+			// 内嵌FormPanel
+			formPanel : null,
+			displayPanel:null,
+			// 构造函数
+			constructor : function(_cfg) {
+				Ext.applyIf(this, _cfg);
+				// 必须先初始化组件
+				this.initUIComponents();
+				OfficeHeaderReadForm.superclass.constructor.call(this, {
+							//id : 'OfficeHeaderReadFormWin',
+							layout : 'form',
+							items : [this.displayPanel,this.formPanel],
+							modal : true,
+							height : 450,
+							width : 600,
+//							autoScroll:true,
+							maximizable : true,
+							buttonAlign : 'center',
+							buttons : this.buttons
+						});
+			},// end of the constructor
+			// 初始化组件
+			initUIComponents : function() {
+			    this.displayPanel=new Ext.Panel({
+				      id:'ArchivesHandleDisplayPanel',
+				      autoScroll : true,
+				      height:280,
+				      border:false,
+				      autoLoad:{url:__ctxPath+'/pages/archive/archivedetail.jsp?archiveId=${archives_archivesId}'}
+				});
+				this.formPanel = new Ext.FormPanel({
+							layout : 'form',
+							bodyStyle : 'padding:10px 10px 10px 10px',
+							border : false,
+							autoScroll :false,
+							url : __ctxPath + '/archive/saveLeaderRead.do',
+							id : 'OfficeHeaderReadForm',
+							defaults : {
+								anchor : '98%,98%'
+							},
+							items : [{
+									   xtype:'hidden',
+									   name:'archivesId',
+									   value:'${archives_archivesId}'
+									},{
+									   xtype:'hidden',
+									   name:'cruArchDepId',
+									   value:'${cruArchDepId}'
+									},{
+										fieldLabel : '审批人',
+										xtype:'radiogroup',
+										id : 'flowAssignIdRadioGroup',
+										items:[{
+											fieldLabel : '局长',
+											labelAlign: 'right',
+											name : 'flowAssignIdRadio',
+											checked:true,
+											xtype:'radio',
+											inputValue :'1'
+										}, {
+											fieldLabel : '分管局长',
+											name : 'flowAssignIdRadio',
+											labelAlign: 'right',
+											xtype:'radio',
+											inputValue:'2'
+										}, {
+											fieldLabel : '局长或分管局长',
+											name : 'flowAssignIdRadio',
+											labelAlign: 'right',
+											xtype:'radio',
+											inputValue:'3'
+										}]
+									},{
+										fieldLabel : '审批意见',
+										name : 'leaderOpinion',
+										allowBlank:false;
+										xtype:'textarea'
+									}, {
+										fieldLabel : '0=尚未批',
+										name : 'isPass',
+										xtype:'hidden',
+										value:1
+									}
+
+							]
+						});
+				// 初始化功能按钮
+				this.buttons = [
+						    #set ($count=0)
+							#foreach ($v in $nextTrans)
+								#if($count>0)
+								,
+								#end
+								new Ext.Button({
+								   iconCls:'btn-transition',
+								   text:'转至[${v.destination}]',
+								   handler:this.save.createCallback(this.formPanel,this,'${v.name}','${v.source}')
+								})
+								#set ($count=$count+1)
+							#end
+						];
+			},// end of the initcomponents
+			/**
+			 * 保存
+			 */
+			save : function(formPanel, panel,signalName,activityName) {
+				if (formPanel.getForm().isValid()) {
+					
+					//获取下个节点的审批人
+					var checkValue = Ext.getCmp("flowAssignIdRadioGroup").getValue().getRawValue();
+					
+					var userIds = "";
+					var roleIds = "";
+					Ext.Ajax.request({
+								scope : this,
+								url :__ctxPath + "/system/getAssignIdAppRole.do",
+								params : {
+									type : checkValue
+								},
+								success : function(b, c) {
+									var d = Ext.util.JSON
+											.decode(b.responseText);
+									if (d.success) {
+										roleIds = d.roleIds
+									}
+									
+									Ext.Ajax.request({
+									scope : this,
+									url :__ctxPath + "/system/findByRoleIdsAppUser.do",
+									params : {
+										roleIds : roleIds
+									},
+									success : function(b, c) {
+										var d = Ext.util.JSON
+												.decode(b.responseText);
+										if (d.success) {
+											for(var i=0; i<d.result.length; i++){
+												userIds += d.result[i].userId;
+												if(i<d.result.length-1){
+													userIds += ",";
+												}
+											}											
+												
+											formPanel.getForm().submit({
+												method : 'POST',
+												waitMsg : '正在提交数据...',
+												success : function(fp, action) {
+													formPanel.getForm().submit({
+												            url:__ctxPath+ "/flow/nextProcessActivity.do",
+															method:'post',
+															params:{taskId:panel.taskId,signalName:signalName,activityName:activityName,flowAssignId:userIds},
+															success : function(fp, action) {
+															    Ext.ux.Toast.msg('操作信息','成功保存！');
+															    AppUtil.removeTab('ProcessForm'+panel.taskId);
+																var myTaskView=Ext.getCmp("MyTaskGrid");
+																var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+																if(appHomeTaskGrid!=null){
+																	appHomeTaskGrid.getStore().reload();
+																}
+																if(myTaskView!=null){
+																	//AppUtil.activateTab(taskView);
+																	myTaskView.getStore().reload();
+																}
+															},
+															failure : function(fp, action) {
+																Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+															}
+												    });
+													var gridPanel = Ext
+															.getCmp('ArchivesHandleGrid');
+													if (gridPanel != null) {
+														gridPanel.getStore().reload();
+													}
+												},
+												failure : function(fp, action) {
+													Ext.MessageBox.show({
+																title : '操作信息',
+																msg : '信息保存出错，请联系管理员！',
+																buttons : Ext.MessageBox.OK,
+																icon : Ext.MessageBox.ERROR
+															});
+													window.close();
+												}
+											});
+											
+										}
+									}
+								});
+								}
+							});
+				}
+			}// end of save
+		})

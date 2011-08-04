@@ -28,9 +28,6 @@ public abstract interface AppUserDao extends BaseDao<AppUser>
   public abstract List<AppUser> findSubAppUserByRole(Long paramLong, Set<Long> paramSet, PagingBean paramPagingBean);
 
   public abstract List<AppUser> findByDepId(Long paramLong);
-}
 
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.dao.system.AppUserDao
- * JD-Core Version:    0.6.0
- */
+  public abstract List findByRoleIds(Long[] roleIds);
+}

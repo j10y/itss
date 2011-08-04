@@ -56,6 +56,7 @@
      <th width="15%">内容</th>
      <td colspan="5">${arch.shortContent}</td>
   </tr>
+  <!--
   <tr>
      <th width="15%">拟办意见</th>
      <td colspan="5">
@@ -89,5 +90,6 @@
        </ul>
     </td>
   </tr>
+  -->
 </table>
 
