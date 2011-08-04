@@ -127,7 +127,7 @@ public class FlowServiceImpl implements FlowService {
 		List<TaskInfo> tasks = flowTaskService.getTaskInfosByUserId(userId, pb);
 		List<Map> dycylist = new ArrayList();
 		for (TaskInfo task : tasks) {
-			if (task.getTaskName().equals("承办传阅")) {
+			if (task.getTaskName().equals("科室主任传阅")) {
 				Map map = new HashMap();
 				map.put("taskid", task.getTaskId());
 				map.put("taskName", task.getTaskName());
@@ -153,7 +153,7 @@ public class FlowServiceImpl implements FlowService {
 		List<TaskInfo> tasks = flowTaskService.getTaskInfosByUserId(userId, pb);
 		List<Map> dycylist = new ArrayList();
 		for (TaskInfo task : tasks) {
-			if (!task.getTaskName().equals("承办传阅")) {
+			if (!task.getTaskName().equals("科室主任传阅")) {
 				Map map = new HashMap();
 				map.put("taskid", task.getTaskId());
 				map.put("taskName", task.getTaskName());
@@ -307,7 +307,7 @@ public class FlowServiceImpl implements FlowService {
 			}else{
 				json += "boxstatus:false,";
 			}
-			if(this.activityName.equals("分管局长/局长批示")||this.activityName.equals("科室主任传阅")){
+			if(this.activityName.equals("分管或主管领导批示")||this.activityName.equals("科室主任传阅")){
 				json += "userquery:true,";
 			}else{
 				json += "userquery:false,";
@@ -562,6 +562,7 @@ public class FlowServiceImpl implements FlowService {
 				 leaderRead.setErrandsRegister(errandsRegister);
 				 leaderRead.setCreatetime(new Date());
 				 leaderRead.setIsPass(LeaveLeaderRead.IS_PASS);
+				 leaderRead.setLeaderOpinion(commentDesc);
 				 leaderRead=leaveLeaderReadService.save(leaderRead);
 				 this.parmap.put("leaderRead.readId", leaderRead.getReadId());
 				 this.parmap.put("leaderRead.leaderOpinion", commentDesc);
@@ -587,6 +588,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
+					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
 					this.parmap.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
@@ -604,6 +606,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
+					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
 					this.parmap.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
@@ -681,6 +684,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
+					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
 					this.parmap.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
@@ -704,7 +708,47 @@ public class FlowServiceImpl implements FlowService {
 					this.parmap.put("archivesAttend.attendId", archivesAttend.getAttendId());
 				}
 			}else if(processName.equals("收文流程")||processName.equals("收文流程-市局收文")){
-				
+				ArchivesService archivesService = (ArchivesService) AppUtil.getBean("archivesService");
+				LeaderReadService leaderReadService= (LeaderReadService) AppUtil.getBean("leaderReadService");
+				if(activityName.equals("办公室传阅")){
+					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+					String archivesStatus = "2";
+					if (StringUtils.isNotEmpty(archivesStatus)) {
+						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+					}
+					archivesService.save(archives);
+					LeaderRead leaderRead=new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+					leaderRead.setUserId(ContextUtil.getCurrentUserId());
+					leaderRead.setArchives(archives);
+					leaderRead.setCreatetime(new Date());
+					leaderRead.setIsPass(LeaderRead.IS_PASS);
+					leaderRead.setLeaderOpinion(commentDesc);
+					leaderReadService.save(leaderRead);
+					this.parmap.put("leaderOpinion", commentDesc);
+				}else if(activityName.equals("办公室主任批阅")){
+					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+					String archivesStatus = "3";
+					if (StringUtils.isNotEmpty(archivesStatus)) {
+						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+					}
+					archivesService.save(archives);
+					LeaderRead leaderRead=new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+					leaderRead.setUserId(ContextUtil.getCurrentUserId());
+					leaderRead.setArchives(archives);
+					leaderRead.setCreatetime(new Date());
+					leaderRead.setIsPass(LeaderRead.IS_PASS);
+					leaderRead.setLeaderOpinion(commentDesc);
+					leaderReadService.save(leaderRead);
+					this.parmap.put("leaderOpinion", commentDesc);
+				}else if(activityName.equals("分管或主管领导批示")){
+					
+				}else if(activityName.equals("科室主任传阅")){
+					
+				}else if(activityName.equals("承办归档")){
+					
+				}
 			}
 			FlowRunInfo flowRunInfo = getFlowRunInfo();
 			processRunService.saveAndNextStep(flowRunInfo);
