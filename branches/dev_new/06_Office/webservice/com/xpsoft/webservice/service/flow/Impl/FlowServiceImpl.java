@@ -532,7 +532,7 @@ public class FlowServiceImpl implements FlowService {
 				 ErrandsRegister errandsRegister = ((ErrandsRegister)errandsRegisterService.get(Long.parseLong(id)));
 				 LeaveLeaderRead leaderRead=new LeaveLeaderRead();
 				 String errandsRegisterStatus="";
-				 if(activityName.equals("部门负责人审批")){
+				 if(activityName.equals("部门负责人审批")){//1
 					 if(processName.equals("请假-短")){
 						 errandsRegisterStatus ="4";
 					 }else if(processName.equals("请假-中")){
@@ -540,18 +540,18 @@ public class FlowServiceImpl implements FlowService {
 					 }else if(processName.equals("请假-长")){
 						 errandsRegisterStatus ="3";
 					 }
-				}else if(activityName.equals("分管局长审批")){
+				}else if(activityName.equals("分管局长审批")){//2
 					if(processName.equals("请假-中")){
 						 errandsRegisterStatus ="3";
-					 }else if(processName.equals("请假-长")){
-						 errandsRegisterStatus ="4";
 					 }
-				}else if(activityName.equals("局长审批")){
+				}else if(activityName.equals("局长审批")){//3
 					if(processName.equals("请假-中")){
 						 errandsRegisterStatus ="4";
-					}
-				}else if(activityName.equals("人事登记")){
-					errandsRegisterStatus ="4";
+					}else if(processName.equals("请假-长")){
+						 errandsRegisterStatus ="4";
+					 }
+				}else if(activityName.equals("人事登记")){//4
+					errandsRegisterStatus ="5";
 				}
 				 if (StringUtils.isNotEmpty(errandsRegisterStatus)) {
 					 errandsRegister.setStatus(Short.valueOf(Short.parseShort(errandsRegisterStatus)));
@@ -572,8 +572,8 @@ public class FlowServiceImpl implements FlowService {
 				DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
 				ArchRecUserService archRecUserService=(ArchRecUserService) AppUtil.getBean("archRecUserService");
 				ArchivesDepService archivesDepService=(ArchivesDepService) AppUtil.getBean("archivesDepService");
-				ShortMessageService messageService=(ShortMessageService) AppUtil.getBean("messageService");
-				ArchivesAttendService archivesAttendService=(ArchivesAttendService)AppUtil.getBean("messageService");
+				ShortMessageService messageService=(ShortMessageService) AppUtil.getBean("shortMessageService");
+				ArchivesAttendService archivesAttendService=(ArchivesAttendService)AppUtil.getBean("archivesAttendService");
 				if(activityName.equals("部门负责人")){
 					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
 					String archivesStatus = "6";
@@ -608,7 +608,7 @@ public class FlowServiceImpl implements FlowService {
 					this.parmap.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
 					this.parmap.put("archives.archivesId", id);
-				}else if(activityName.equals("局长审核")&&activityName.equals("编号盖章分发")){
+				}else if(activityName.equals("局长审核")||activityName.equals("编号盖章分发")){
 					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
 					String depIds =archives.getRecDepIds();
 					StringBuffer msg = new StringBuffer("");
@@ -732,7 +732,7 @@ public class FlowServiceImpl implements FlowService {
 			ParamField pf = (ParamField) map.get(name);
 
 			pf.setName(pf.getName().replace(".", "_"));
-			pf.setValue(parmap.get(name).toString());
+			pf.setValue(parmap.get(name)!=null?parmap.get(name).toString():null);
 		}
 		return map;
 	}
