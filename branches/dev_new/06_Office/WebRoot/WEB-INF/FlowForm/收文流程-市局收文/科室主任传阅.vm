@@ -63,20 +63,20 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 						items : [{
 									xtype : 'label',
 									style : 'padding-left:0px',
-									text : '收文人员',
+									text : '承办归档人员',
 									width : 101
 								}, {
 									xtype : 'textarea',
 									width : 300,
-									id : 'readerNames'+'${archives_archivesId}',
+									id : 'signUserNames',
 									allowBlank:false,
-									blankText:'请选择接收公文的人员',
+									blankText:'请选择承办归档人员',
 									readOnly:true,
-									name : 'readerNames'
+									name : 'signUserNames'
 								}, {
 									xtype : 'hidden',
-									id : 'readerIds'+'${archives_archivesId}',
-									name : 'readerIds'
+									id : 'signUserIds',
+									name : 'signUserIds'
 								}, {
 									xtype : 'button',
 									text : '选择人员',
@@ -84,74 +84,35 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 									handler : function() {
 										UserSelector.getView(
 												function(id, name) {
-													Ext.getCmp('readerNames'+'${archives_archivesId}')
+													Ext.getCmp('signUserNames')
 															.setValue(name);
-													Ext.getCmp('readerIds'+'${archives_archivesId}')
+													Ext.getCmp('signUserIds')
 															.setValue(id);
 												}).show();
 
 									}
 								}]
-
-					}, {
-									xtype : 'container',
-									style:'padding-left:0px;padding-top:3px;',
-									layout : 'column',
-									items : [{
-												xtype : 'label',
-												style : 'padding-left:0px',
-												text : '承办人员',
-												width : 101
-											}, {
-												xtype : 'textarea',
-												width : 300,
-												id : 'undertakeNames'+'${archives_archivesId}',
-												allowBlank:false,
-												blankText:'请选择承办人员',
-												readOnly:true,
-												name : 'undertakeNames'
-											}, {
-												xtype : 'hidden',
-												id : 'undertakeIds'+'${archives_archivesId}',
-												name : 'undertakeIds'
-											}, {
-												xtype : 'button',
-												text : '选择人员',
-												iconCls:'btn-mail_recipient',
-												handler : function() {
-													UserSelector.getView(
-															function(id, name) {
-																Ext
-																		.getCmp('undertakeNames'+'${archives_archivesId}')
-																		.setValue(name);
-																Ext
-																		.getCmp('undertakeIds'+'${archives_archivesId}')
-																		.setValue(id);
-															}).show();
-
-												}
-											}]
-
+	
+						},{
+						   xtype : 'container',
+							style:'padding-left:0px;padding-top:3px;',
+							layout : 'column',
+							items : [{
+									xtype : 'label',
+									style : 'padding-left:0px',
+									text : '批示意见',
+									width : 101
 								},{
-								   xtype : 'container',
-									style:'padding-left:0px;padding-top:3px;',
-									layout : 'column',
-									items : [{
-												xtype : 'label',
-												style : 'padding-left:0px',
-												text : '分发意见',
-												width : 101
-											},{
-											    xtype:'textarea',
-											    width : 300,
-											    name:'readFeedback'
-											},{
-											    xtype:'hidden',
-											    name:'archUserType',
-											    value:2
-											}]
-									}
-			]
+								    xtype:'textarea',
+								    width : 300,
+								    name:'handleOpinion',
+								    allowBlank:false
+								},{
+								    xtype:'hidden',
+								    name:'archUserType',
+								    value:2
+								}]
+						}]
 		});
 		
 		// 初始化功能按钮
@@ -194,10 +155,6 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 	 */
 	save : function(formPanel, panel,signalName,activityName) {
 		if (formPanel.getForm().isValid()) {
-		    var readerIds=Ext.getCmp('readerIds'+'${archives_archivesId}').getValue();
-			var undertakeIds=Ext.getCmp('undertakeIds'+'${archives_archivesId}').getValue();
-		    var ids=uniqueArray(readerIds.split(',').concat(undertakeIds.split(',')));
-		    Ext.getCmp('signUserIds').setValue(ids);
             formPanel.getForm().submit({
 								method : 'POST',
 								waitMsg : '正在提交数据...',
@@ -205,7 +162,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 								formPanel.getForm().submit({
 							            url:__ctxPath+ "/flow/nextProcessActivity.do",
 										method:'post',
-										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName},
+										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName,signUserIds:Ext.getCmp('signUserIds').getValue()},
 										success : function(fp, action) {
 										    Ext.ux.Toast.msg('操作信息','成功保存！');
 										    AppUtil.removeTab('ProcessForm'+panel.taskId);

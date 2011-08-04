@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.archive;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
@@ -30,6 +31,16 @@ public class ArchivesHandleAction extends BaseAction {
 	private String handleOpinion;
 	private Short isPass;
 	private Long archiveId;
+	
+	//归档部门
+	protected Long filedDeptId;
+
+	protected String filedDeptName;
+	
+	//归档类型
+	protected Long recFiledTypeId;
+
+	protected String recFiledTypeName;
 
 	public Long getArchiveId() {
 		/* 47 */return this.archiveId;
@@ -134,6 +145,10 @@ public class ArchivesHandleAction extends BaseAction {
 			arh.setIsPass(this.isPass);
 			arh.setUserId(user.getUserId());
 			arh.setUserFullname(user.getFullname());
+			arh.setFiledDeptId(this.filedDeptId);
+			arh.setFiledDeptName(this.filedDeptName);
+			arh.setRecFiledTypeId(this.recFiledTypeId);
+			arh.setRecFiledTypeName(this.recFiledTypeName);
 			this.archivesHandleService.save(arh);
 			String signIds = getRequest().getParameter("handlerUserIds");
 			if (StringUtils.isNotEmpty(signIds)) {

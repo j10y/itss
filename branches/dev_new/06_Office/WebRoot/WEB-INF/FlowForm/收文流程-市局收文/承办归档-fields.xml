@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fields>
-	<field name="readFeedback" label="阅读处理意见:" type="varchar" length="320" isShowed="true"/>
+	<field name="handleOpinion" label="承办归档意见" type="varchar" length="320" isShowed="true"/>
+	<field name="cruArchDepId" label="部门签收" type="long" isShowed="false"/>
 </fields>

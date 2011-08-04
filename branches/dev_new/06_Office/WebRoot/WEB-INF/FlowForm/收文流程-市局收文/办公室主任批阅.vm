@@ -80,8 +80,8 @@ OfficeHeaderReadForm = Ext.extend(Ext.Panel, {
 										}]
 									},{
 										fieldLabel : '审批意见',
-										name : 'leaderOpinion',
-										allowBlank:false;
+										name : 'handleOpinion',
+										allowBlank:false,
 										xtype:'textarea'
 									}, {
 										fieldLabel : '0=尚未批',

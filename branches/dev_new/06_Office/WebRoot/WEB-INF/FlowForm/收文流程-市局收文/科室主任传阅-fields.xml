@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fields>
-	<field name="signUserIds" label="科室主任传阅人员" type="varchar" length="320" isShowed="false"/>
+	<field name="signUserIds" label="承办归档人员" type="varchar" length="320" isShowed="false"/>
 	<field name="cruArchDepId" label="部门签收" type="long" isShowed="false"/>
+	<field name="handleOpinion" label="科室主任传阅意见" type="varchar" length="320" isShowed="true"/>
 </fields>

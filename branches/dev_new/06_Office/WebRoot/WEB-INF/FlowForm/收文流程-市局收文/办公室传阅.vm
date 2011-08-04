@@ -56,7 +56,7 @@ OfficeReadForm = Ext.extend(Ext.Panel, {
 									   value:'${cruArchDepId}'
 									},{
 										fieldLabel : '审批意见',
-										name : 'leaderOpinion',
+										name : 'handleOpinion',
 										xtype:'textarea'
 									}, {
 										fieldLabel : '0=尚未批',

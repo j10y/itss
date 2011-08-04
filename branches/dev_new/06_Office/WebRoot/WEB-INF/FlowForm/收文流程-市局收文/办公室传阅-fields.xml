@@ -2,5 +2,4 @@
 <fields>
 	<field name="handleOpinion" label="办公室传阅意见" type="varchar" length="320" isShowed="true"/>
 	<field name="cruArchDepId" label="部门签收" type="long" isShowed="false"/>
-	<field name="leaderOpinion" label="领导批示" type="varchar" length="320" isShowed="true"/>
 </fields>

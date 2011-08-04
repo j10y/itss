@@ -87,6 +87,21 @@
             not-null="true"
             unique="false"
         />
+        
+		<property name="filedDeptId" type="java.lang.Long" update="true"
+			insert="true" access="property" column="filedDeptId" length="19"
+			not-null="false" unique="false" />
+        <property name="filedDeptName" type="java.lang.String" update="true"
+			insert="true" access="property" column="filedDeptName" length="256"
+			not-null="false" unique="false" />
+			
+		<property name="recFiledTypeId" type="java.lang.Long" update="true"
+			insert="true" access="property" column="recFiledTypeId" length="19"
+			not-null="false" unique="false" />
+        <property name="recFiledTypeName" type="java.lang.String" update="true"
+			insert="true" access="property" column="recFiledTypeName" length="256"
+			not-null="false" unique="false" />
+			
      <!-- imported bi-directional many-to-one association to Archives -->
 		<many-to-one
 			name="archives"

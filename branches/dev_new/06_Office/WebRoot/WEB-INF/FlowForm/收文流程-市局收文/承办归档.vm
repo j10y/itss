@@ -1,4 +1,4 @@
-ArchReadForm = Ext.extend(Ext.Panel, {
+ArchivesHandleForm = Ext.extend(Ext.Panel, {
 			taskId:null,
 			setTaskId:function(vId){
 			   this.taskId=vId;
@@ -6,17 +6,17 @@ ArchReadForm = Ext.extend(Ext.Panel, {
 			getTaskId:function(){
 			   return this.taskId;
 			},
-			
 			// 内嵌FormPanel
 			formPanel : null,
+			// 内嵌FormPanel
 			displayPanel : null,
 			// 构造函数
 			constructor : function(_cfg) {
 				Ext.applyIf(this, _cfg);
 				// 必须先初始化组件
 				this.initUIComponents();
-				ArchReadForm.superclass.constructor.call(this, {
-							id : 'ArchReadFormWin',
+				ArchivesHandleForm.superclass.constructor.call(this, {
+							//id : 'ArchivesHandleFormWin',
 							layout : 'form',
 							items : [this.displayPanel,this.formPanel],
 							modal : true,
@@ -32,64 +32,153 @@ ArchReadForm = Ext.extend(Ext.Panel, {
 				this.displayPanel=new Ext.Panel({
 				      id:'ArchivesHandleDisplayPanel',
 				      autoScroll : true,
-				      height:280,
+				      height:200,
 				      border:false,
 				      autoLoad:{url:__ctxPath+'/pages/archive/archivedetail.jsp?archiveId=${archives_archivesId}'}
-		         });
+				});
 				this.formPanel = new Ext.FormPanel({
 							layout : 'form',
 							bodyStyle : 'padding:10px 10px 10px 10px',
 							border : false,
-							url : __ctxPath + '/archive/saveArchDispatch.do',
-							id : 'ArchReadForm',
+							url : __ctxPath + '/archive/saveArchivesHandle.do',
+							id : 'ArchivesHandleForm',
 							defaults : {
 								anchor : '98%,98%'
 							},
 							items : [{
-									   xtype:'hidden',
-									   name:'archivesId',
-									   value:'${archives_archivesId}'
-									},{
-									   xtype:'hidden',
-									   name:'undertakeUserIds',
-								       value:'${signUserIds}'
-									},{
-									    xtype:'hidden',
-									    name:'cruArchDepId',
-									    value:'${cruArchDepId}'
+								   xtype:'hidden',
+								   name:'archiveId',
+								   value:'${archives_archivesId}'
+								},{
+								   xtype:'hidden',
+								   name:'handlerUserIds',
+								   value:'${signUserIds}'
+								},{
+								    xtype:'hidden',
+								    name:'cruArchDepId',
+								    value:'${cruArchDepId}'
+								},{
+									xtype : "container",
+									layout : "column",
+									style : "padding-left:0px;margin-left:0px;",
+									height : 30,
+									defaults : {
+										style : "padding:5px 0px 2px 0px;",
+										border : false
 									},
-								     #set($v=",")
-							         #set($vb="$v${currentUser.userId}$v")
-							         #set($vc="$v${undertakeIds}$v") 
-								     #if($vc.indexOf($vb)!=-1)
-								        {
-								          xtype:'hidden',
-								          name:'archUserType',
-								          value:1
-								        },
-								        {
-										fieldLabel : '处理意见',
-										name : 'readFeedback',
-										xtype : 'textarea',
-										id : 'readFeedback',
-									   }
-								     #else
-								       {
-								          xtype:'hidden',
-								          name:'archUserType',
-								          value:0
-								        },{
-										fieldLabel : '反馈意见',
-										name : 'readFeedback',
-										xtype : 'textarea',
-										id : 'readFeedback',
-									   }
-								     #end
-									]
+									items : [
+											{
+												xtype : "label",
+												text : "归档部门:",
+												width : 106
+											},
+											{
+												name : "filedDeptName",
+												id : "filedDeptName",
+												xtype : "textfield",
+												width : "65%",
+												value : curUserInfo.depName,
+												allowBlank : false,
+												readOnly : true
+											},
+											{
+												name : "filedDeptId",
+												id : "filedDeptId",
+												value : curUserInfo.depId,
+												xtype : "hidden"
+											},
+											{
+												xtype : "button",
+												iconCls : "menu-department",
+												text : "选择部门",
+												allowBlank:false,
+												handler : function() {
+													DepSelector
+															.getView(
+																	function(
+																			b,
+																			c) {
+																		Ext
+																				.getCmp(
+																						"filedDeptName")
+																				.setValue(
+																						c);
+																		Ext
+																				.getCmp(
+																						"filedDeptId")
+																				.setValue(
+																						b);
+																	},
+																	true)
+															.show();
+												}
+											} ]
+								},{
+								
+									xtype : "container",
+									layout : "column",
+									style : "padding-left:0px;margin-left:0px;",
+									height : 30,
+									defaults : {
+										style : "padding:5px 0px 2px 0px;",
+										border : false
+									},
+									items : [
+											{
+												xtype : "label",
+												text : "归档类型:",
+												width : 106
+											},
+											{
+												name : "recFiledTypeId",
+												id : "recFiledTypeId",
+												xtype : "textfield",
+												width : "65%",
+												xtype : "hidden"
+
+											},
+											{
+
+												fieldLabel : "归档类型",
+												hiddenName : "recFiledTypeName",
+												xtype : "combo",
+												mode : "local",
+												anchor : "74%",
+												allowBlank : false,
+												editable : false,
+												valueField : "recFiledTypeName",
+												displayField : "recFiledTypeName",
+												triggerAction : "all",
+												store : new Ext.data.SimpleStore(
+														{
+															autoLoad : true,
+															url : __ctxPath
+																	+ "/archive/comboArchRecFiledType.do",
+															fields : [ "id",
+																	"recFiledTypeName"]
+														}),
+												listeners : {
+													select : function(
+															d, b, c) {
+															Ext.getCmp("recFiledTypeId").setValue(b.data.id);
+													}
+												}
+											} ]
+								},{
+								fieldLabel : '承办归档意见',
+								name : 'handleOpinion',
+								xtype:'textarea'
+							    },{
+								fieldLabel : '0=初始化状态',
+								name : 'isPass',
+								xtype:'hidden',
+								value:1
+							    }
+							]
 						});
 				// 初始化功能按钮
 				this.buttons = [
-				           #set ($count=0)
+				            #set ($count=0)
 							#foreach ($v in $nextTrans)
 								#if($count>0)
 								,
@@ -101,47 +190,45 @@ ArchReadForm = Ext.extend(Ext.Panel, {
 								})
 								#set ($count=$count+1)
 							#end
-						];
+				];
 			},// end of the initcomponents
 			/**
-			 * 取消
-			 * 
-			 * @param {}
-			 *            window
+			 * 保存记录
 			 */
-			cancel : function(window) {
-				window.close();
-			},
-			/**
-			 * 保存
-			 */
-			save : function(formPanel, panel,signalName,activityName) {
+			save : function(formPanel, panel,signalName,activityName){
 				if (formPanel.getForm().isValid()) {
+					alert(Ext.encode(formPanel.getForm().getValues()));
+					return;
 					formPanel.getForm().submit({
 								method : 'POST',
 								waitMsg : '正在提交数据...',
 								success : function(fp, action) {
-								formPanel.getForm().submit({
-							            url:__ctxPath+ "/flow/nextProcessActivity.do",
-										method:'post',
-										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName},
-										success : function(fp, action) {
-										    Ext.ux.Toast.msg('操作信息','成功保存！');
-										    AppUtil.removeTab('ProcessForm'+panel.taskId);
-											var myTaskView=Ext.getCmp("MyTaskGrid");
-											var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
-											if(appHomeTaskGrid!=null){
-												appHomeTaskGrid.getStore().reload();
+									formPanel.getForm().submit({
+								            url:__ctxPath+ "/flow/nextProcessActivity.do",
+											method:'post',
+											params:{taskId:panel.taskId,signalName:signalName,activityName:activityName},
+											success : function(fp, action) {
+											    Ext.ux.Toast.msg('操作信息','成功保存！');
+											    AppUtil.removeTab('ProcessForm'+panel.taskId);
+												var myTaskView=Ext.getCmp("MyTaskGrid");
+												var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+												if(appHomeTaskGrid!=null){
+													appHomeTaskGrid.getStore().reload();
+												}
+												if(myTaskView!=null){
+													//AppUtil.activateTab(taskView);
+													myTaskView.getStore().reload();
+												}
+											},
+											failure : function(fp, action) {
+												Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
 											}
-											if(myTaskView!=null){
-												//AppUtil.activateTab(taskView);
-												myTaskView.getStore().reload();
-											}
-										},
-										failure : function(fp, action) {
-											Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
-										}
-							    });
+								    });
+									var gridPanel = Ext
+											.getCmp('ArchivesHandleGrid');
+									if (gridPanel != null) {
+										gridPanel.getStore().reload();
+									}
 								},
 								failure : function(fp, action) {
 									Ext.MessageBox.show({
@@ -150,6 +237,16 @@ ArchReadForm = Ext.extend(Ext.Panel, {
 												buttons : Ext.MessageBox.OK,
 												icon : Ext.MessageBox.ERROR
 											});
+									            AppUtil.removeTab('ProcessForm'+panel.taskId);
+												var myTaskView=Ext.getCmp("MyTaskGrid");
+												var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+												if(appHomeTaskGrid!=null){
+													appHomeTaskGrid.getStore().reload();
+												}
+												if(myTaskView!=null){
+													//AppUtil.activateTab(taskView);
+													myTaskView.getStore().reload();
+												}
 								}
 							});
 				}
