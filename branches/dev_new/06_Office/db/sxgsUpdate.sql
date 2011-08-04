@@ -151,3 +151,10 @@ CREATE TABLE `leave_type` (
 
 ALTER TABLE errands_register add COLUMN leaveTypeId bigint(20) NOT NULL;
 ALTER TABLE errands_register add COLUMN leaveTypeName varchar(128) NOT NULL;
+
+--2011-08-04
+ALTER TABLE archives_handle add COLUMN recFiledTypeId bigint(20) ;
+ALTER TABLE archives_handle add COLUMN recFiledTypeName varchar(128) ;
+
+ALTER TABLE archives_handle add COLUMN filedDeptId bigint(20) ;
+ALTER TABLE archives_handle add COLUMN filedDeptName varchar(128) ;
