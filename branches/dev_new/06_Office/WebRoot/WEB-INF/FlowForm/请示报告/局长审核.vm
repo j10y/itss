@@ -121,7 +121,7 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 					},{
 						name : 'archivesStatus',
 						xtype : 'hidden',
-						value : 7 //7代表已分发,归档状态
+						value : 7 //7代表归档状态
 					}]
 		});
 	}// end of init

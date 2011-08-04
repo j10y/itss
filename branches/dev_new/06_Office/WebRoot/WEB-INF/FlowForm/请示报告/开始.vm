@@ -739,7 +739,7 @@ ArchivesDraftFolwView = Ext.extend(Ext.Panel, {
 									name : 'archives.fileCounts',
 									id : 'archivesFlow.fileCounts',
 									xtype : 'hidden',
-									value : '0'
+									value : '5'
 								}]
 						// end of the field set items
 					},// end of fieldset

@@ -159,7 +159,7 @@ ArchivesAuditFlowView = Ext.extend(Ext.Panel, {
 					},{
 						name : 'archivesStatus',
 						xtype : 'hidden',
-						value : 3 //3代表公文状态为已经部门审核，待领导审批中
+						value : 6 //
 					}]
 		});
 	}// end of init

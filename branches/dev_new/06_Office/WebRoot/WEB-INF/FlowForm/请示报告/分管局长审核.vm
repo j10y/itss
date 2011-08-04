@@ -159,7 +159,7 @@ ArchivesLeadFlowView = Ext.extend(Ext.Panel, {
 					},{
 						name : 'archivesStatus',
 						xtype : 'hidden',
-						value :  4 //4代表公文状态为已经领导审核，待主管签发中
+						value : 8 //8待局长审核
 					}]
 		});
 	}// end of init
