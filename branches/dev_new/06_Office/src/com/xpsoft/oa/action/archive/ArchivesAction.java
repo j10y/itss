@@ -390,6 +390,7 @@ public class ArchivesAction extends BaseAction {
 
 		String depIds = this.archives.getRecDepIds();
 		StringBuffer msg = new StringBuffer("");
+		//获取不需要进入收文签收的发文类型类型
 		String archivesTypeName= AppUtil.getPropertity("app.unrefArchivesTypeName");
 		if (StringUtils.isNotEmpty(depIds)
 				&& !this.archives.getArchivesType().getTypeName()
