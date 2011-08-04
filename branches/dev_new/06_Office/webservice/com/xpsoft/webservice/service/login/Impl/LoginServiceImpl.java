@@ -61,7 +61,7 @@ public class LoginServiceImpl implements LoginServie {
 		List<TaskInfo> dycylist=new ArrayList();
 		List<TaskInfo> dbgwlist=new ArrayList();
 		for(TaskInfo task:tasks){
-			if(task.getTaskName().equals("承办传阅")){
+			if(task.getTaskName().equals("科室主任传阅")){
 				dycylist.add(task);
 			}else{
 				dbgwlist.add(task);
