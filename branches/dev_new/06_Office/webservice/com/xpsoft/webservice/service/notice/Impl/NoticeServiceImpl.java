@@ -114,7 +114,7 @@ public class NoticeServiceImpl implements NoticeService {
 		if (noticeId != null && !"".equals(noticeId)) {
 			newsId = new Long(noticeId);
 			news = newsService.get(newsId);
-			//如果news为全部可见，那么需要在comment表中插入一条记录
+			//如果news为全部可见,那么需要在comment表中插入一条记录
 			if(news.getIsAll().equals(Short.valueOf("1"))){
 				Map<String, String> map = new HashMap();
 				map.put("Q_flag_N_EQ", "2");//阅读人		
@@ -133,7 +133,7 @@ public class NoticeServiceImpl implements NoticeService {
 					comment.setNews(news);
 					newsCommentService.save(comment);
 				}
-			}else{//如果news为非全部可见，那么需在comment表中修改一条记录
+			}else{//如果news为非全部可见,那么需在comment表中修改一条记录
 				Map<String, String> map = new HashMap();
 				map.put("Q_flag_N_EQ", "2");//阅读人		
 				map.put("Q_news.newsId_L_EQ", news.getNewsId().toString());
@@ -204,10 +204,10 @@ public class NoticeServiceImpl implements NoticeService {
 			comment.setFlag(1);
 			comment.setFullname(ContextUtil.getCurrentUser().getFullname());
 			newsCommentService.save(comment);
-			return "{success：true}";
+			return "{success:true}";
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
-			return "{success：false}";
+			return "{success:false}";
 		}
 	}
 }

@@ -49,11 +49,11 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 						id : 'archivesId',
 						xtype : 'hidden',
 						value : '${archives_archivesId}'
-					},{
+					}/*,{
 					    xtype:'hidden',
 					    name:'signUserIds',
 					    id:'signUserIds'
-					},{
+					}*/,{
 					    xtype:'hidden',
 					    name:'cruArchDepId',
 					    value:'${cruArchDepId}'
@@ -179,13 +179,11 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 																
 								//__ctxPath + '/archive/saveArchDispatch.do',
 								//获取下一步承办人
-								alert(action.result.msg);
-								return;
 										
 								formPanel.getForm().submit({
 							            url:__ctxPath+ "/flow/nextProcessActivity.do",
 										method:'post',
-										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName,signUserIds:Ext.getCmp('signUserIds').getValue()},
+										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName,signUserIds:action.result.signUserIds},
 										success : function(fp, action) {
 										    Ext.ux.Toast.msg('操作信息','成功保存！');
 										    AppUtil.removeTab('ProcessForm'+panel.taskId);

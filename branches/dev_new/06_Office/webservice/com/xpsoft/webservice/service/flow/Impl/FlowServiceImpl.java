@@ -165,7 +165,7 @@ public class FlowServiceImpl implements FlowService {
 				map.put("taskid", task.getTaskId());
 				map.put("taskName", task.getTaskName());
 				map.put("nodeName", task.getActivityName());
-				map.put("author", task.getAssignee());
+				map.put("author", task.getAssignee()!=null?task.getAssignee().toString():"");
 				map.put("createDate", task.getCreateTime() != null ? task
 						.getCreateTime().toString().substring(0, 19) : "");
 				dycylist.add(map);
@@ -247,7 +247,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "type:\"0\",";
 			json += "boxstatus:false,";
 			json += "userquery:false,";
-			json += "boxstatus:false,";
+			json += "showgdlx:false,";
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
 					+ "\"},";
@@ -393,7 +393,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "type:\"2\",";
 			json += "boxstatus:false,";
 			json += "userquery:false,";
-			json += "boxstatus:false,";
+			json += "showgdlx:false,";
 			json += "data:[";
 			json += "{label:\"开始时间\",value:\"" + errandsRegister.getStartTime()
 					+ "\"},";
@@ -422,7 +422,7 @@ public class FlowServiceImpl implements FlowService {
 			if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
 				json = json.substring(0, json.length() - 1);
 			}
-			json += "]}";
+			json += "],accessories:[]}";
 		}
 		return json;
 	}
@@ -484,7 +484,7 @@ public class FlowServiceImpl implements FlowService {
 		json += "type:\"1\",";
 		json += "boxstatus:false,";
 		json += "userquery:false,";
-		json += "boxstatus:false,";
+		json += "showgdlx:false,";
 		json += "data:[";
 		json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo() + "\"},";
 		json += "{label:\"发文人\",value:\"" + archives.getIssuer() + "\"},";
@@ -930,7 +930,7 @@ public class FlowServiceImpl implements FlowService {
 					archivesService.save(archives);
 					ArchDispatch archDispatch = new ArchDispatch();
 					archDispatch.setArchives(archives);
-					archDispatch.setArchUserType((short) 0);
+					archDispatch.setArchUserType((short) 1);
 					archDispatch.setUserId(user.getUserId());
 					archDispatch.setFullname(user.getFullname());
 					archDispatch.setDispatchTime(new Date());
