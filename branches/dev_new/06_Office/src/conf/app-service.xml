@@ -541,4 +541,7 @@
    	 <bean id="leaveLeaderReadService" class="com.xpsoft.oa.service.personal.impl.LeaveLeaderReadServiceImpl">
    	 	<constructor-arg index="0" ref="leaveLeaderReadDao"/>
    	 </bean>
+   	 <bean id="undertakesService" class="com.xpsoft.oa.service.archive.impl.ArchUnderTakesServiceImpl">
+   	 	<constructor-arg index="0" ref="undertakesDao"/>
+   	 </bean>
 </beans>
