@@ -30,11 +30,14 @@ import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.action.flow.FlowRunInfo;
 import com.xpsoft.oa.action.flow.ProcessActivityAssistant;
 import com.xpsoft.oa.model.archive.ArchDispatch;
+import com.xpsoft.oa.model.archive.ArchRecFiledType;
+import com.xpsoft.oa.model.archive.ArchRecType;
 import com.xpsoft.oa.model.archive.ArchRecUser;
 import com.xpsoft.oa.model.archive.Archives;
 import com.xpsoft.oa.model.archive.ArchivesAttend;
 import com.xpsoft.oa.model.archive.ArchivesDep;
 import com.xpsoft.oa.model.archive.ArchivesDoc;
+import com.xpsoft.oa.model.archive.ArchivesHandle;
 import com.xpsoft.oa.model.archive.LeaderRead;
 import com.xpsoft.oa.model.flow.FormData;
 import com.xpsoft.oa.model.flow.ProDefinition;
@@ -47,9 +50,13 @@ import com.xpsoft.oa.model.personal.LeaveLeaderRead;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchDispatchService;
+import com.xpsoft.oa.service.archive.ArchRecFiledTypeService;
+import com.xpsoft.oa.service.archive.ArchRecTypeService;
 import com.xpsoft.oa.service.archive.ArchRecUserService;
+import com.xpsoft.oa.service.archive.ArchUnderTakesService;
 import com.xpsoft.oa.service.archive.ArchivesAttendService;
 import com.xpsoft.oa.service.archive.ArchivesDepService;
+import com.xpsoft.oa.service.archive.ArchivesHandleService;
 import com.xpsoft.oa.service.archive.ArchivesService;
 import com.xpsoft.oa.service.archive.LeaderReadService;
 import com.xpsoft.oa.service.flow.JbpmService;
@@ -240,6 +247,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "type:\"0\",";
 			json += "boxstatus:false,";
 			json += "userquery:false,";
+			json += "boxstatus:false,";
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
 					+ "\"},";
@@ -259,7 +267,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "{label:\"内容\",value:\"" + archives.getShortContent()
 					+ "\"},";
 			for (ProcessForm pf : pformlist) {
-				if(!pf.getActivityName().equals("开始")){
+				if (!pf.getActivityName().equals("开始")) {
 					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
 							+ "\"},";
 					json += "{label:\"审批人\",value:\"" + pf.getCreatorName()
@@ -292,7 +300,8 @@ public class FlowServiceImpl implements FlowService {
 				}
 			}
 			json += "]}";
-		} else if (processName.equals("收文流程")||processName.equals("收文流程-市局收文")) {
+		} else if (processName.equals("收文流程")
+				|| processName.equals("收文流程-市局收文")) {
 			String id = model.get("archives_archivesId").toString();
 			Archives archives = archivesService.get(Long.parseLong(id));
 			json += "title:\"" + archives.getSubject() + "\",";
@@ -302,15 +311,21 @@ public class FlowServiceImpl implements FlowService {
 			json += "taskId: \"" + this.taskId + "\",";
 			json += "signalName: \"" + tf.getName() + "\",";
 			json += "type:\"1\",";
-			if(this.activityName.equals("办公室主任批阅")){
+			if (this.activityName.equals("办公室主任批阅")) {
 				json += "boxstatus:true,";
-			}else{
+			} else {
 				json += "boxstatus:false,";
 			}
-			if(this.activityName.equals("分管或主管领导批示")||this.activityName.equals("科室主任传阅")){
+			if (this.activityName.equals("分管或主管领导批示")
+					|| this.activityName.equals("科室主任传阅")) {
 				json += "userquery:true,";
-			}else{
+			} else {
 				json += "userquery:false,";
+			}
+			if (this.activityName.equals("承办归档")) {
+				json += "showgdlx:true,";
+			} else {
+				json += "showgdlx:false,";
 			}
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
@@ -318,8 +333,8 @@ public class FlowServiceImpl implements FlowService {
 			json += "{label:\"发文人\",value:\"" + archives.getIssuer() + "\"},";
 			json += "{label:\"发文机关\",value:\"" + archives.getIssueDep()
 					+ "\"},";
-			json += "{label:\"来文类型\",value:\"" + archives.getArchRecType().getTypeName()
-					+ "\"},";
+			json += "{label:\"来文类型\",value:\""
+					+ archives.getArchRecType().getTypeName() + "\"},";
 			json += "{label:\"主题词\",value:\"" + archives.getKeywords() + "\"},";
 			json += "{label:\"公文来源\",value:\"" + archives.getSources() + "\"},";
 			json += "{label:\"紧急程度\",value:\"" + archives.getUrgentLevel()
@@ -329,7 +344,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "{label:\"内容\",value:\"" + archives.getShortContent()
 					+ "\"},";
 			for (ProcessForm pf : pformlist) {
-				if(!pf.getActivityName().equals("开始")){
+				if (!pf.getActivityName().equals("开始")) {
 					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
 							+ "\"},";
 					json += "{label:\"审批人\",value:\"" + pf.getCreatorName()
@@ -362,88 +377,103 @@ public class FlowServiceImpl implements FlowService {
 				}
 			}
 			json += "]}";
-		} else if (processName.equals("请假-短")||processName.equals("请假-中")||processName.equals("请假-长")) {
-				String dateId=model.get("dateId").toString();
-				 ErrandsRegisterService errandsRegisterService=(ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
-				 ErrandsRegister errandsRegister = (ErrandsRegister)errandsRegisterService.get(Long.parseLong(dateId));
-				 json += "title:\"" + processName + "\",";
-					json += "createDate:\"" + errandsRegister.getStartTime() + "\",";
-					json += "id:\"" + dateId + "\",";
-					json += "activityName: \"" + this.activityName + "\",";
-					json += "taskId: \"" + this.taskId + "\",";
-					json += "signalName: \"" + tf.getName() + "\",";
-					json += "type:\"2\",";
-					json += "boxstatus:false,";
-					json += "userquery:false,";
-					json += "data:[";
-					json += "{label:\"开始时间\",value:\"" +errandsRegister.getStartTime()
+		} else if (processName.equals("请假-短") || processName.equals("请假-中")
+				|| processName.equals("请假-长")) {
+			String dateId = model.get("dateId").toString();
+			ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil
+					.getBean("errandsRegisterService");
+			ErrandsRegister errandsRegister = (ErrandsRegister) errandsRegisterService
+					.get(Long.parseLong(dateId));
+			json += "title:\"" + processName + "\",";
+			json += "createDate:\"" + errandsRegister.getStartTime() + "\",";
+			json += "id:\"" + dateId + "\",";
+			json += "activityName: \"" + this.activityName + "\",";
+			json += "taskId: \"" + this.taskId + "\",";
+			json += "signalName: \"" + tf.getName() + "\",";
+			json += "type:\"2\",";
+			json += "boxstatus:false,";
+			json += "userquery:false,";
+			json += "boxstatus:false,";
+			json += "data:[";
+			json += "{label:\"开始时间\",value:\"" + errandsRegister.getStartTime()
+					+ "\"},";
+			json += "{label:\"结束时间\",value:\"" + errandsRegister.getEndTime()
+					+ "\"},";
+			json += "{label:\"描述\",value:\"" + errandsRegister.getDescp()
+					+ "\"},";
+			json += "{label:\"请假类型\",value:\""
+					+ errandsRegister.getLeaveTypeName() + "\"},";
+			for (ProcessForm pf : pformlist) {
+				if (!pf.getActivityName().equals("开始")) {
+					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
 							+ "\"},";
-					json += "{label:\"结束时间\",value:\"" +errandsRegister.getEndTime()
-					+ "\"},";
-					json += "{label:\"描述\",value:\"" +errandsRegister.getDescp()
-					+ "\"},";
-					json += "{label:\"请假类型\",value:\"" +errandsRegister.getLeaveTypeName()
-					+ "\"},";
-					for (ProcessForm pf : pformlist) {
-						if(!pf.getActivityName().equals("开始")){
-							json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
-									+ "\"},";
-							json += "{label:\"审批人\",value:\"" + pf.getCreatorName()
-									+ "\"},";
-							Iterator<FormData> foemdates = pf.getFormDatas().iterator();
-							for (; foemdates.hasNext();) {
-								FormData fd = foemdates.next();
-								if (fd.getIsShowed() == 1) {
-									json += "{label:\"" + fd.getFieldLabel()
-											+ "\",value:\"" + fd.getVal() + "\"},";
-								}
-							}
+					json += "{label:\"审批人\",value:\"" + pf.getCreatorName()
+							+ "\"},";
+					Iterator<FormData> foemdates = pf.getFormDatas().iterator();
+					for (; foemdates.hasNext();) {
+						FormData fd = foemdates.next();
+						if (fd.getIsShowed() == 1) {
+							json += "{label:\"" + fd.getFieldLabel()
+									+ "\",value:\"" + fd.getVal() + "\"},";
 						}
 					}
-					if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
-						json = json.substring(0, json.length() - 1);
-					}
-					json += "]}";
+				}
+			}
+			if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
+				json = json.substring(0, json.length() - 1);
+			}
+			json += "]}";
 		}
 		return json;
 	}
-	public String getYycyList(String userId, String passwd,String passType,String title,String pageNum,String pageSize) {
-		filter( userId,passwd);
-		Integer start=0;
-		Integer limit=10;
-		if(pageNum!=null&&pageSize!=null){
-			start=(Integer.parseInt(pageNum)-1)*Integer.parseInt(pageSize);
-			limit=start+Integer.parseInt(pageSize);
+
+	public String getYycyList(String userId, String passwd, String passType,
+			String title, String pageNum, String pageSize) {
+		filter(userId, passwd);
+		Integer start = 0;
+		Integer limit = 10;
+		if (pageNum != null && pageSize != null) {
+			start = (Integer.parseInt(pageNum) - 1)
+					* Integer.parseInt(pageSize);
+			limit = start + Integer.parseInt(pageSize);
 		}
-		PagingBean pb=new PagingBean(start,limit);
-		ArchDispatchService archDispatchService= (ArchDispatchService) AppUtil.getBean("archDispatchService");
+		PagingBean pb = new PagingBean(start, limit);
+		ArchDispatchService archDispatchService = (ArchDispatchService) AppUtil
+				.getBean("archDispatchService");
 		QueryFilter filter = new QueryFilter(pb);
 		filter.addFilter("Q_userId_L_EQ", userId);
-		filter.addFilter("Q_archUserType_SN_EQ","0");
-		if(title!=null&&title.length()>0){
-			filter.addFilter("Q_subject_S_LK",title);
+		filter.addFilter("Q_archUserType_SN_EQ", "0");
+		if (title != null && title.length() > 0) {
+			filter.addFilter("Q_subject_S_LK", title);
 		}
-		if(passType.equals("0")){
-			filter.addFilter("Q_archives.status_SN_EQ","4");
-		}else if(passType.equals("1")){
-			filter.addFilter("Q_archives.status_SN_NEQ", "4");
+		if (passType.equals("0")) {
+			filter.addFilter("Q_archives.status_SN_EQ", "6");
+		} else if (passType.equals("1")) {
+			filter.addFilter("Q_archives.status_SN_NEQ", "6");
 		}
 		List<ArchDispatch> list = archDispatchService.getAll(filter);
-		String json="{success:true,totalCount:\""+pb.getTotalItems()+"\",data:[";
-		for(ArchDispatch ad:list){
-			json+="{id:\""+ad.getArchivesId()+"\",title:\""+ad.getSubject()+"\",gwzh :\""+ad.getArchives().getArchivesNo()+"\",author :\""+ad.getArchives().getIssuer()+"\", department:\""+ad.getArchives().getIssueDep()+"\",createDate :\""+ad.getArchives().getIssueDate()+"\"},";
+		String json = "{success:true,totalCount:\"" + pb.getTotalItems()
+				+ "\",data:[";
+		for (ArchDispatch ad : list) {
+			json += "{id:\"" + ad.getArchivesId() + "\",title:\""
+					+ ad.getSubject() + "\",gwzh :\""
+					+ ad.getArchives().getArchivesNo() + "\",author :\""
+					+ ad.getArchives().getIssuer() + "\", department:\""
+					+ ad.getArchives().getIssueDep() + "\",createDate :\""
+					+ ad.getArchives().getIssueDate() + "\"},";
 		}
-		if(list!=null&&list.size()>0){
-			json=json.substring(0,json.length()-1);
+		if (list != null && list.size() > 0) {
+			json = json.substring(0, json.length() - 1);
 		}
-			json+="]}";
+		json += "]}";
 		return json;
 	}
 
 	public String getYycyDetail(String userId, String passwd, String id) {
 		// TODO Auto-generated method stub
-		ArchivesService arService = (ArchivesService)AppUtil.getBean("archivesService");
-		Archives archives=arService.load(new Long(id));
+		ArchivesService arService = (ArchivesService) AppUtil
+				.getBean("archivesService");
+		Archives archives = arService.load(new Long(id));
 		String json = "{success:true,";
 		json += "title:\"" + archives.getSubject() + "\",";
 		json += "createDate:\"" + archives.getCreatetime() + "\",";
@@ -454,29 +484,25 @@ public class FlowServiceImpl implements FlowService {
 		json += "type:\"1\",";
 		json += "boxstatus:false,";
 		json += "userquery:false,";
+		json += "boxstatus:false,";
 		json += "data:[";
-		json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
-				+ "\"},";
+		json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo() + "\"},";
 		json += "{label:\"发文人\",value:\"" + archives.getIssuer() + "\"},";
-		json += "{label:\"发文机关\",value:\"" + archives.getIssueDep()
-				+ "\"},";
-		json += "{label:\"来文类型\",value:\"" + archives.getArchRecType().getTypeName()
-				+ "\"},";
+		json += "{label:\"发文机关\",value:\"" + archives.getIssueDep() + "\"},";
+		json += "{label:\"来文类型\",value:\""
+				+ archives.getArchRecType().getTypeName() + "\"},";
 		json += "{label:\"主题词\",value:\"" + archives.getKeywords() + "\"},";
 		json += "{label:\"公文来源\",value:\"" + archives.getSources() + "\"},";
-		json += "{label:\"紧急程度\",value:\"" + archives.getUrgentLevel()
-				+ "\"},";
+		json += "{label:\"紧急程度\",value:\"" + archives.getUrgentLevel() + "\"},";
 		json += "{label:\"秘密等级\",value:\"" + archives.getPrivacyLevel()
 				+ "\"},";
-		json += "{label:\"内容\",value:\"" + archives.getShortContent()
-				+ "\"},";		
+		json += "{label:\"内容\",value:\"" + archives.getShortContent() + "\"},";
 		if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
 			json = json.substring(0, json.length() - 1);
 		}
 		json += "],";
 		json += "accessories:[";
-		Iterator<ArchivesDoc> iterator = archives.getArchivesDocs()
-				.iterator();
+		Iterator<ArchivesDoc> iterator = archives.getArchivesDocs().iterator();
 		ArchivesDoc doc = null;
 		for (; iterator.hasNext();) {
 			doc = iterator.next();
@@ -490,7 +516,11 @@ public class FlowServiceImpl implements FlowService {
 		json += "]}";
 		return json;
 	}
-	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass){
+
+	public String saveProcessAndToNext(String userId, String passwd, String id,
+			String taskId, String activityName, String signalName,
+			String commentDesc, String nextuser, String checkboxvalue,
+			String ispass, String gdlx) {
 		filter(userId, passwd);
 		this.setActivityName(activityName);
 		this.setTaskId(taskId);
@@ -500,123 +530,150 @@ public class FlowServiceImpl implements FlowService {
 		ProDefinition proDefinition = getProDefinition();
 		String processName = proDefinition.getName();
 		ProcessRunService processRunService = (ProcessRunService) AppUtil
-		.getBean("processRunService");
-		if(nextuser!=null&&nextuser.length()>0){
+				.getBean("processRunService");
+		if (nextuser != null && nextuser.length() > 0) {
 			this.parmap.put("signUserIds", nextuser);
 		}
-		//1局长2分管局长3全有
-		if(checkboxvalue!=null&&checkboxvalue.length()>0){
-			String sql="select app_user.* from user_role,app_role,app_user " +
-					"where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
-			if(checkboxvalue.equals("1")){
-				sql+="and app_role.roleName='局长'";
-			}else if(checkboxvalue.equals("2")){
-				sql+="and (app_role.roleName='副局长' or app_role.roleName='分管局长')";
-			}else if(checkboxvalue.equals("3")){
-				sql+="and (app_role.roleName='副局长' or app_role.roleName='分管局长' or app_role.roleName='局长')";
+		// 1局长2分管局长3全有
+		if (checkboxvalue != null && checkboxvalue.length() > 0) {
+			String sql = "select app_user.* from user_role,app_role,app_user "
+					+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
+			if (checkboxvalue.equals("1")) {
+				sql += "and app_role.roleName='局长'";
+			} else if (checkboxvalue.equals("2")) {
+				sql += "and (app_role.roleName='副局长' or app_role.roleName='分管局长')";
+			} else if (checkboxvalue.equals("3")) {
+				sql += "and (app_role.roleName='副局长' or app_role.roleName='分管局长' or app_role.roleName='局长')";
 			}
-			List<Map> list=processRunService.findDataList(sql);
-			String flowAssignId="";
-			for(Map map:list){
-				flowAssignId+=map.get("userId").toString()+",";
+			List<Map> list = processRunService.findDataList(sql);
+			String flowAssignId = "";
+			for (Map map : list) {
+				flowAssignId += map.get("userId").toString() + ",";
 			}
-			if(list.size()>0){
-				flowAssignId=flowAssignId.substring(0,flowAssignId.length()-1);
+			if (list.size() > 0) {
+				flowAssignId = flowAssignId.substring(0,
+						flowAssignId.length() - 1);
 				this.parmap.put("flowAssignId", flowAssignId);
 			}
 		}
 		try {
-			if(processName.equals("请假-短")||processName.equals("请假-中")||processName.equals("请假-长")){
-				 ErrandsRegisterService errandsRegisterService=(ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
-				 LeaveLeaderReadService leaveLeaderReadService=(LeaveLeaderReadService) AppUtil.getBean("leaveLeaderReadService");
-				 ErrandsRegister errandsRegister = ((ErrandsRegister)errandsRegisterService.get(Long.parseLong(id)));
-				 LeaveLeaderRead leaderRead=new LeaveLeaderRead();
-				 String errandsRegisterStatus="";
-				 if(activityName.equals("部门负责人审批")){//1
-					 if(processName.equals("请假-短")){
-						 errandsRegisterStatus ="4";
-					 }else if(processName.equals("请假-中")){
-						 errandsRegisterStatus ="2";
-					 }else if(processName.equals("请假-长")){
-						 errandsRegisterStatus ="3";
-					 }
-				}else if(activityName.equals("分管局长审批")){//2
-					if(processName.equals("请假-中")){
-						 errandsRegisterStatus ="3";
-					 }
-				}else if(activityName.equals("局长审批")){//3
-					if(processName.equals("请假-中")){
-						 errandsRegisterStatus ="4";
-					}else if(processName.equals("请假-长")){
-						 errandsRegisterStatus ="4";
-					 }
-				}else if(activityName.equals("人事登记")){//4
-					errandsRegisterStatus ="5";
+			if (processName.equals("请假-短") || processName.equals("请假-中")
+					|| processName.equals("请假-长")) {
+				ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil
+						.getBean("errandsRegisterService");
+				LeaveLeaderReadService leaveLeaderReadService = (LeaveLeaderReadService) AppUtil
+						.getBean("leaveLeaderReadService");
+				ErrandsRegister errandsRegister = ((ErrandsRegister) errandsRegisterService
+						.get(Long.parseLong(id)));
+				LeaveLeaderRead leaderRead = new LeaveLeaderRead();
+				String errandsRegisterStatus = "";
+				if (activityName.equals("部门负责人审批")) {// 1
+					if (processName.equals("请假-短")) {
+						errandsRegisterStatus = "4";
+					} else if (processName.equals("请假-中")) {
+						errandsRegisterStatus = "2";
+					} else if (processName.equals("请假-长")) {
+						errandsRegisterStatus = "3";
+					}
+				} else if (activityName.equals("分管局长审批")) {// 2
+					if (processName.equals("请假-中")) {
+						errandsRegisterStatus = "3";
+					}
+				} else if (activityName.equals("局长审批")) {// 3
+					if (processName.equals("请假-中")) {
+						errandsRegisterStatus = "4";
+					} else if (processName.equals("请假-长")) {
+						errandsRegisterStatus = "4";
+					}
+				} else if (activityName.equals("人事登记")) {// 4
+					errandsRegisterStatus = "5";
 				}
-				 if (StringUtils.isNotEmpty(errandsRegisterStatus)) {
-					 errandsRegister.setStatus(Short.valueOf(Short.parseShort(errandsRegisterStatus)));
-				 }
-				 errandsRegisterService.save(errandsRegister);
-				 leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
-				 leaderRead.setUserId(ContextUtil.getCurrentUserId());
-				 leaderRead.setErrandsRegister(errandsRegister);
-				 leaderRead.setCreatetime(new Date());
-				 leaderRead.setIsPass(LeaveLeaderRead.IS_PASS);
-				 leaderRead.setLeaderOpinion(commentDesc);
-				 leaderRead=leaveLeaderReadService.save(leaderRead);
-				 this.parmap.put("leaderRead.readId", leaderRead.getReadId());
-				 this.parmap.put("leaderRead.leaderOpinion", commentDesc);
-				 this.parmap.put("errandsRegister.dateId", id);
-			}else if(processName.equals("发文流程") || processName.equals("请示报告")|| processName.equals("发文流程-市局发文")){
-				ArchivesService archivesService = (ArchivesService) AppUtil.getBean("archivesService");
-				LeaderReadService leaderReadService= (LeaderReadService) AppUtil.getBean("leaderReadService");
-				DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
-				ArchRecUserService archRecUserService=(ArchRecUserService) AppUtil.getBean("archRecUserService");
-				ArchivesDepService archivesDepService=(ArchivesDepService) AppUtil.getBean("archivesDepService");
-				ShortMessageService messageService=(ShortMessageService) AppUtil.getBean("shortMessageService");
-				ArchivesAttendService archivesAttendService=(ArchivesAttendService)AppUtil.getBean("archivesAttendService");
-				if(activityName.equals("部门负责人")){
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+				if (StringUtils.isNotEmpty(errandsRegisterStatus)) {
+					errandsRegister.setStatus(Short.valueOf(Short
+							.parseShort(errandsRegisterStatus)));
+				}
+				errandsRegisterService.save(errandsRegister);
+				leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+						.getFullname());
+				leaderRead.setUserId(ContextUtil.getCurrentUserId());
+				leaderRead.setErrandsRegister(errandsRegister);
+				leaderRead.setCreatetime(new Date());
+				leaderRead.setIsPass(LeaveLeaderRead.IS_PASS);
+				leaderRead.setLeaderOpinion(commentDesc);
+				leaderRead = leaveLeaderReadService.save(leaderRead);
+				this.parmap.put("leaderRead.readId", leaderRead.getReadId());
+				this.parmap.put("leaderRead.leaderOpinion", commentDesc);
+				this.parmap.put("errandsRegister.dateId", id);
+			} else if (processName.equals("发文流程") || processName.equals("请示报告")
+					|| processName.equals("发文流程-市局发文")) {
+				ArchivesService archivesService = (ArchivesService) AppUtil
+						.getBean("archivesService");
+				LeaderReadService leaderReadService = (LeaderReadService) AppUtil
+						.getBean("leaderReadService");
+				DepartmentService departmentService = (DepartmentService) AppUtil
+						.getBean("departmentService");
+				ArchRecUserService archRecUserService = (ArchRecUserService) AppUtil
+						.getBean("archRecUserService");
+				ArchivesDepService archivesDepService = (ArchivesDepService) AppUtil
+						.getBean("archivesDepService");
+				ShortMessageService messageService = (ShortMessageService) AppUtil
+						.getBean("shortMessageService");
+				ArchivesAttendService archivesAttendService = (ArchivesAttendService) AppUtil
+						.getBean("archivesAttendService");
+
+				if (activityName.equals("部门负责人")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
 					String archivesStatus = "6";
 					if (StringUtils.isNotEmpty(archivesStatus)) {
-						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					LeaderRead leaderRead=new LeaderRead();
-					leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+					LeaderRead leaderRead = new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+							.getFullname());
 					leaderRead.setUserId(ContextUtil.getCurrentUserId());
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
-					this.parmap.put("leaderRead.readId", leaderRead.getReadId());
+					this.parmap
+							.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
 					this.parmap.put("archives.archivesId", id);
-				}else if(activityName.equals("分管局长审核")){
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+				} else if (activityName.equals("分管局长审核")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
 					String archivesStatus = "8";
 					if (StringUtils.isNotEmpty(archivesStatus)) {
-						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					LeaderRead leaderRead=new LeaderRead();
-					leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+					LeaderRead leaderRead = new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+							.getFullname());
 					leaderRead.setUserId(ContextUtil.getCurrentUserId());
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
-					this.parmap.put("leaderRead.readId", leaderRead.getReadId());
+					this.parmap
+							.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
 					this.parmap.put("archives.archivesId", id);
-				}else if(activityName.equals("局长审核")||activityName.equals("编号盖章分发")){
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
-					String depIds =archives.getRecDepIds();
+				} else if (activityName.equals("局长审核")
+						|| activityName.equals("编号盖章分发")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
+					String depIds = archives.getRecDepIds();
 					StringBuffer msg = new StringBuffer("");
-					//获取不需要进入收文签收的发文类型类型
-					String archivesTypeName= AppUtil.getPropertity("app.unrefArchivesTypeName");
+					// 获取不需要进入收文签收的发文类型类型
+					String archivesTypeName = AppUtil
+							.getPropertity("app.unrefArchivesTypeName");
 					if (StringUtils.isNotEmpty(depIds)
 							&& !archives.getArchivesType().getTypeName()
 									.equals(archivesTypeName)) {
@@ -634,19 +691,24 @@ public class FlowServiceImpl implements FlowService {
 								archivesDep.setDepartment(department);
 								archivesDep.setArchives(archives);
 								archivesDep.setIsMain(ArchivesDep.RECEIVE_MAIN);
-								archivesDep.setStatus(ArchivesDep.STATUS_UNSIGNED);
+								archivesDep
+										.setStatus(ArchivesDep.STATUS_UNSIGNED);
 								if ((archRecUser != null)
 										&& (archRecUser.getUserId() != null)) {
-									archivesDep.setSignUserID(archRecUser.getUserId());
-									archivesDep.setSignFullname(archRecUser.getFullname());
-									recIds.append(archRecUser.getUserId()).append(",");
+									archivesDep.setSignUserID(archRecUser
+											.getUserId());
+									archivesDep.setSignFullname(archRecUser
+											.getFullname());
+									recIds.append(archRecUser.getUserId())
+											.append(",");
 								}
 								archivesDepService.save(archivesDep);
 							}
 							if (StringUtils.isNotEmpty(recIds.toString())) {
 								String content = "您有新的公文,请及时签收.";
 								messageService.save(AppUser.SYSTEM_USER, recIds
-										.toString(), content, ShortMessage.MSG_TYPE_TASK);
+										.toString(), content,
+										ShortMessage.MSG_TYPE_TASK);
 							}
 						}
 					}
@@ -654,100 +716,230 @@ public class FlowServiceImpl implements FlowService {
 					archivesService.save(archives);
 					this.parmap.put("distributeOpinion", commentDesc);
 					this.parmap.put("archives.archivesId", id);
-				}else if(activityName.equals("科室负责人核稿")){
+				} else if (activityName.equals("科室负责人核稿")) {
 					String archivesStatus = "2";
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
 					if (StringUtils.isNotEmpty(archivesStatus)) {
-						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					ArchivesAttend archivesAttend=new ArchivesAttend();
+					ArchivesAttend archivesAttend = new ArchivesAttend();
 					archivesAttend.setArchives(archives);
 					archivesAttend.setUserID(ContextUtil.getCurrentUserId());
-					archivesAttend.setFullname(ContextUtil.getCurrentUser().getFullname());
+					archivesAttend.setFullname(ContextUtil.getCurrentUser()
+							.getFullname());
 					archivesAttend.setExecuteTime(new Date());
 					archivesAttend.setAttendType("2");
-					archivesAttend=archivesAttendService.save(archivesAttend);
+					archivesAttend = archivesAttendService.save(archivesAttend);
 					this.parmap.put("archivesAttend.memo", commentDesc);
 					this.parmap.put("archives.archivesId", id);
-					this.parmap.put("archivesAttend.attendId", archivesAttend.getAttendId());
-				}else if(activityName.equals("分管或局领导签发")){
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+					this.parmap.put("archivesAttend.attendId", archivesAttend
+							.getAttendId());
+				} else if (activityName.equals("分管或局领导签发")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
 					String archivesStatus = "3";
 					if (StringUtils.isNotEmpty(archivesStatus)) {
-						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					LeaderRead leaderRead=new LeaderRead();
-					leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+					LeaderRead leaderRead = new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+							.getFullname());
 					leaderRead.setUserId(ContextUtil.getCurrentUserId());
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
-					this.parmap.put("leaderRead.readId", leaderRead.getReadId());
+					this.parmap
+							.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
 					this.parmap.put("archives.archivesId", id);
-				}else if(activityName.equals("办公室主任承办")){
+				} else if (activityName.equals("办公室主任承办")) {
 					String archivesStatus = "4";
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
 					if (StringUtils.isNotEmpty(archivesStatus)) {
-						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					ArchivesAttend archivesAttend=new ArchivesAttend();
+					ArchivesAttend archivesAttend = new ArchivesAttend();
 					archivesAttend.setArchives(archives);
 					archivesAttend.setUserID(ContextUtil.getCurrentUserId());
-					archivesAttend.setFullname(ContextUtil.getCurrentUser().getFullname());
+					archivesAttend.setFullname(ContextUtil.getCurrentUser()
+							.getFullname());
 					archivesAttend.setExecuteTime(new Date());
 					archivesAttend.setAttendType("1");
-					archivesAttend=archivesAttendService.save(archivesAttend);
+					archivesAttend = archivesAttendService.save(archivesAttend);
 					this.parmap.put("archivesAttend.memo", commentDesc);
 					this.parmap.put("archives.archivesId", id);
-					this.parmap.put("archivesAttend.attendId", archivesAttend.getAttendId());
+					this.parmap.put("archivesAttend.attendId", archivesAttend
+							.getAttendId());
 				}
-			}else if(processName.equals("收文流程")||processName.equals("收文流程-市局收文")){
-				ArchivesService archivesService = (ArchivesService) AppUtil.getBean("archivesService");
-				LeaderReadService leaderReadService= (LeaderReadService) AppUtil.getBean("leaderReadService");
-				if(activityName.equals("办公室传阅")){
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+			} else if (processName.equals("收文流程")
+					|| processName.equals("收文流程-市局收文")) {
+				ArchivesService archivesService = (ArchivesService) AppUtil
+						.getBean("archivesService");
+				LeaderReadService leaderReadService = (LeaderReadService) AppUtil
+						.getBean("leaderReadService");
+				ArchDispatchService archDispatchService = (ArchDispatchService) AppUtil
+						.getBean("archDispatchService");
+				ProcessFormService processFormService = (ProcessFormService) AppUtil
+						.getBean("processFormService");
+				ArchUnderTakesService undertakesService = (ArchUnderTakesService) AppUtil
+						.getBean("undertakesService");
+				ArchivesHandleService archivesHandleService = (ArchivesHandleService) AppUtil
+						.getBean("archivesHandleService");
+				ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil
+						.getBean("archRecFiledTypeService");
+				ProcessRun processRun = processRunService
+						.getByTaskId(this.taskId.toString());
+				Map processRunVars = processFormService.getVariables(processRun
+						.getRunId());
+				if (activityName.equals("办公室传阅")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
 					String archivesStatus = "2";
 					if (StringUtils.isNotEmpty(archivesStatus)) {
-						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					LeaderRead leaderRead=new LeaderRead();
-					leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+					LeaderRead leaderRead = new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+							.getFullname());
 					leaderRead.setUserId(ContextUtil.getCurrentUserId());
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
-					this.parmap.put("leaderOpinion", commentDesc);
-				}else if(activityName.equals("办公室主任批阅")){
-					Archives archives = ((Archives)archivesService.get(Long.parseLong(id)));
+					this.parmap.put("handleOpinion", commentDesc);
+				} else if (activityName.equals("办公室主任批阅")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
 					String archivesStatus = "3";
 					if (StringUtils.isNotEmpty(archivesStatus)) {
-						archives.setStatus(Short.valueOf(Short.parseShort(archivesStatus)));
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					LeaderRead leaderRead=new LeaderRead();
-					leaderRead.setLeaderName(ContextUtil.getCurrentUser().getFullname());
+					LeaderRead leaderRead = new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+							.getFullname());
 					leaderRead.setUserId(ContextUtil.getCurrentUserId());
 					leaderRead.setArchives(archives);
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
 					leaderReadService.save(leaderRead);
-					this.parmap.put("leaderOpinion", commentDesc);
-				}else if(activityName.equals("分管或主管领导批示")){
-					
-				}else if(activityName.equals("科室主任传阅")){
-					
-				}else if(activityName.equals("承办归档")){
-					
+					this.parmap.put("handleOpinion", commentDesc);
+				} else if (activityName.equals("分管或主管领导批示")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
+					String archivesStatus = "4";
+					if (StringUtils.isNotEmpty(archivesStatus)) {
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
+					}
+					archivesService.save(archives);
+					ArchDispatch archDispatch = new ArchDispatch();
+					AppUser user = ContextUtil.getCurrentUser();
+					archDispatch.setArchives(archives);
+					archDispatch.setArchUserType(ArchDispatch.IS_DISPATCH);
+					archDispatch.setUserId(user.getUserId());
+					archDispatch.setFullname(user.getFullname());
+					archDispatch.setDispatchTime(new Date());
+					archDispatch.setSubject(archives.getSubject());
+					archDispatch.setIsRead(ArchDispatch.HAVE_READ);
+					archDispatch.setReadFeedback(commentDesc);
+					archDispatchService.save(archDispatch);
+					this.parmap.put("handleOpinion", commentDesc);
+				} else if (activityName.equals("科室主任传阅")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
+					String upsignUserIds = processRunVars.get("signUserIds") != null ? processRunVars
+							.get("signUserIds").toString()
+							: null;
+					if (StringUtils.isNotEmpty(upsignUserIds)) {
+						ArchDispatch archDispatch = new ArchDispatch();
+						AppUser user = ContextUtil.getCurrentUser();
+						archDispatch.setArchives(archives);
+						archDispatch.setArchUserType((short) 0);
+						archDispatch.setUserId(user.getUserId());
+						archDispatch.setFullname(user.getFullname());
+						archDispatch.setDispatchTime(new Date());
+						archDispatch.setSubject(archives.getSubject());
+						archDispatch.setIsRead(ArchDispatch.HAVE_READ);
+						archDispatch.setReadFeedback(commentDesc);
+						archDispatchService.save(archDispatch);
+						int recordSize = archDispatchService
+								.countArchDispatch(Long.parseLong(id));
+						String archivesStatus = "4";
+						String[] signId = upsignUserIds.split(",");
+						if (signId.length == recordSize) {
+							archivesStatus = "5";
+							String suids =undertakesService.saveArchUnderTakesByArchId(id,
+									this.parmap.get("signUserIds").toString());
+							this.parmap.put("signUserIds", suids);
+						} else {
+							archivesStatus = "6";
+							String suids = undertakesService
+									.saveArchUnderTakesByArchId(id, this.parmap
+											.get("signUserIds").toString());
+						}
+						if (StringUtils.isNotEmpty(archivesStatus)) {
+							archives.setStatus(Short.valueOf(Short
+									.parseShort(archivesStatus)));
+						}
+						archivesService.save(archives);
+						this.parmap.put("handleOpinion", commentDesc);
+					} else {
+						System.out
+								.println("---------------------所有审批人没有获取到-------------------");
+						return "{success:false}";
+					}
+				} else if (activityName.equals("承办归档")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
+					ArchRecFiledType art = archRecFiledTypeService.get(Long
+							.parseLong(gdlx));
+					ArchivesHandle arh = new ArchivesHandle();
+					AppUser user = ContextUtil.getCurrentUser();
+					arh.setArchives(archives);
+					arh.setCreatetime(new Date());
+					arh.setFillTime(new Date());
+					arh.setHandleOpinion(commentDesc);
+					arh.setIsPass((short) 1);
+					arh.setUserId(user.getUserId());
+					arh.setUserFullname(user.getFullname());
+					arh.setFiledDeptId(user.getDepartment().getDepId());
+					arh.setFiledDeptName(user.getDepartment().getDepName());
+					arh.setRecFiledTypeId(art.getRecFiledTypeId());
+					arh.setRecFiledTypeName(art.getTypeName());
+					archivesHandleService.save(arh);
+					String archivesStatus = "7";
+					if (StringUtils.isNotEmpty(archivesStatus)) {
+						archives.setStatus(Short.valueOf(Short
+								.parseShort(archivesStatus)));
+					}
+					archivesService.save(archives);
+					ArchDispatch archDispatch = new ArchDispatch();
+					archDispatch.setArchives(archives);
+					archDispatch.setArchUserType((short) 0);
+					archDispatch.setUserId(user.getUserId());
+					archDispatch.setFullname(user.getFullname());
+					archDispatch.setDispatchTime(new Date());
+					archDispatch.setSubject(archives.getSubject());
+					archDispatch.setIsRead(ArchDispatch.HAVE_READ);
+					archDispatch.setReadFeedback(commentDesc);
+					archDispatchService.save(archDispatch);
+					this.parmap.put("handleOpinion", commentDesc);
 				}
 			}
 			FlowRunInfo flowRunInfo = getFlowRunInfo();
@@ -756,9 +948,10 @@ public class FlowServiceImpl implements FlowService {
 			// TODO Auto-generated catch block
 			return "{success:false}";
 		}
-		
+
 		return "{success:true}";
 	}
+
 	protected Map<String, ParamField> constructFieldMap() {
 		JbpmService jbpmService = (JbpmService) AppUtil.getBean("jbpmService");
 		ProDefinition proDefinition = getProDefinition();
@@ -776,7 +969,8 @@ public class FlowServiceImpl implements FlowService {
 			ParamField pf = (ParamField) map.get(name);
 
 			pf.setName(pf.getName().replace(".", "_"));
-			pf.setValue(parmap.get(name)!=null?parmap.get(name).toString():null);
+			pf.setValue(parmap.get(name) != null ? parmap.get(name).toString()
+					: null);
 		}
 		return map;
 	}
@@ -797,5 +991,17 @@ public class FlowServiceImpl implements FlowService {
 		return info;
 	}
 
-	
+	public String getGdlx() {
+		// TODO Auto-generated method stub
+		ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil
+				.getBean("archRecFiledTypeService");
+		String sql = "select typeId as id,typeName as name from arch_rec_filed_type";
+		List list = archRecFiledTypeService.findDataList(sql);
+		StringBuffer buff = new StringBuffer("{success:true,").append("data:");
+		Gson gson = new Gson();
+		buff.append(gson.toJson(list));
+		buff.append("}");
+		return buff.toString();
+	}
+
 }
