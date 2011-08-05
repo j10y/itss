@@ -864,7 +864,9 @@ public class FlowServiceImpl implements FlowService {
 				} else if (activityName.equals("科室主任传阅")) {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
-					String upsignUserIds = undertakesService.findArchUnderTakesUpSignByArchId(id);
+					String upsignUserIds = processRunVars.get("signUserIds") != null ? processRunVars
+							.get("signUserIds").toString()
+							: null;
 					if (StringUtils.isNotEmpty(upsignUserIds)) {
 						ArchDispatch archDispatch = new ArchDispatch();
 						AppUser user = ContextUtil.getCurrentUser();
