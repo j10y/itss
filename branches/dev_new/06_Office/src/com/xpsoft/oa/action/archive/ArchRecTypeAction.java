@@ -118,11 +118,15 @@ import flexjson.JSONSerializer;
 					new com.google.gson.reflect.TypeToken<ArchRecType[]>() {
 					}.getType());
 			for (ArchRecType archRecType : artl) {
+				ArchRecType art = (ArchRecType)this.archRecTypeService.get(archRecType.getRecTypeId());
+				art.setProcessDefId(archRecType.getProcessDefId());
+				art.setProcessDefName(archRecType.getProcessDefName());
 				if (archRecType.getRecTypeId().longValue() == -1L) {
 					archRecType.setRecTypeId(null);
 				}
 				if (archRecType.getProcessDefId() != null) {
-					this.archRecTypeService.save(archRecType);
+//					this.archRecTypeService.save(archRecType);
+					this.archRecTypeService.save(art);
 				} else {
 					setJsonString("{success:false}");
 				}
