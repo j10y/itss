@@ -78,11 +78,11 @@ public class TestClient {
 			 * invoke方法的参数是Object数组,该数组元素个数与方法参数一致
 //			 */
 //			String translateText = (String) call
-//					.invoke(new Object[] { "1","1","科室主任传阅","125"});
+//					.invoke(new Object[] { "1","1","部门负责人审批","70"});
 //			String translateText = (String) call
-//			.invoke(new Object[] { "2","1"});
+//			.invoke(new Object[] { "1","1"});
 			String translateText = (String) call
-			.invoke(new Object[] { "2","1","22","134","科室主任传阅","传阅","审批同意","2",null,null,null});
+			.invoke(new Object[] { "1","1","3","70","部门负责人审批","审批","审批不同意","",null,"false",null});
 //			String translateText = (String) call
 //			.invoke(new Object[] { "1","1","0",null,null,null});
 //			String translateText = (String) call
