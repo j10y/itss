@@ -64,7 +64,7 @@ public class NoticeServiceImpl implements NoticeService {
 		Integer limit=10;
 		if(pageNum!=null&&pageSize!=null){
 			start=(Integer.parseInt(pageNum)-1)*Integer.parseInt(pageSize);
-			limit=start+Integer.parseInt(pageSize);
+			limit=Integer.parseInt(pageSize);
 		}
 		PagingBean pb=new PagingBean(start,limit);
 		List<NoticeNews> list=noticeNewsService.findByForPadSearch(title, null, department,null, pb, false);
@@ -86,7 +86,7 @@ public class NoticeServiceImpl implements NoticeService {
 		Integer limit=10;
 		if(pageNum!=null&&pageSize!=null){
 			start=(Integer.parseInt(pageNum)-1)*Integer.parseInt(pageSize);
-			limit=start+Integer.parseInt(pageSize);
+			limit=Integer.parseInt(pageSize);
 		}
 		PagingBean pb=new PagingBean(start,limit);
 		Long ntypeid=noticeTypeId!=null?Long.parseLong(noticeTypeId):null;
