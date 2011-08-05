@@ -11,9 +11,12 @@ public abstract interface ArchDispatchDao extends BaseDao<ArchDispatch>
   public abstract List<ArchDispatch> findByUser(AppUser paramAppUser, PagingBean paramPagingBean);
 
   public abstract List<ArchDispatch> findRecordByArc(Long paramLong);
+  
+  /**
+   * 0,传阅 1承办
+   * @param archivesId
+   * @param type
+   * @return
+   */
+  public List<ArchDispatch> findRecordByArc(Long archivesId, Short type);
 }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.dao.archive.ArchDispatchDao
- * JD-Core Version:    0.6.0
- */

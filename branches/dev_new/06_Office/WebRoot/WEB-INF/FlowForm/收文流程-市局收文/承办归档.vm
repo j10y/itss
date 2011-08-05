@@ -188,11 +188,14 @@ ArchivesHandleForm = Ext.extend(Ext.Panel, {
 								xtype : 'hidden',
 								id : 'readFeedback'
 							    },{
-								fieldLabel : '0=初始化状态',
-								name : 'status',
-								xtype:'hidden',
-								value:7
-							    }
+								    xtype:'hidden',
+								    name:'archUserType',
+								    value:1 //0为传阅   1承办
+								},{
+								    xtype:'hidden',
+								    name:'undertakeUserIds',
+								    value:'${signUserIds}'
+								}
 							]
 						});
 				// 初始化功能按钮
@@ -225,9 +228,9 @@ ArchivesHandleForm = Ext.extend(Ext.Panel, {
 									//__ctxPath + '/archive/saveArchDispatch.do',
 									Ext.Ajax.request({
 										url : __ctxPath
-												+ "/archive/saveArchDispatch.do",
+												+ "/archive/saveNewArchDispatch.do",
 										params : {
-											undertakeIds:'${signUserIds}',
+											undertakeUserIds:'${signUserIds}',
 											archivesId:'${archives_archivesId}',
 											archUserType: '1',
 											readFeedback : Ext.getCmp("handleOpinion").getValue(),

@@ -195,7 +195,10 @@
 				<b:value>/flow/lockTask.do</b:value>
 				<b:value>/flow/processDetail.do</b:value>
 				<b:value>/flow/unlockTask.do</b:value>
-				
+				<b:value>/flow/freeTransProcessActivity.do</b:value>
+
+				<b:value>/archive/comboArchRecFiledType.do</b:value>
+				<b:value>/archive/saveNewArchDispatch.do</b:value>				
 				<b:value>/archive/saveArchives.do</b:value>
 				<b:value>/archive/saveArchivesHandle.do</b:value>
 				<b:value>/archive/saveLeaderRead.do</b:value>

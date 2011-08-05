@@ -140,7 +140,7 @@ ArchivesRecView = Ext
 																			if (c == 6) {
 																				return '<font color="green">阅读处理中</font>';
 																			} else {
-																				return '<font color="#777">收文归档</font>';
+																				return '<font color="#green">收文归档</font>';
 																			}
 																		}
 																	}

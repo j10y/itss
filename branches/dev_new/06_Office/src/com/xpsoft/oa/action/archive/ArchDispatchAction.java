@@ -12,6 +12,7 @@ import com.xpsoft.oa.model.archive.ArchivesDep;
 import com.xpsoft.oa.model.system.AppRole;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.archive.ArchDispatchService;
+import com.xpsoft.oa.service.archive.ArchUnderTakesService;
 import com.xpsoft.oa.service.archive.ArchivesDepService;
 import com.xpsoft.oa.service.archive.ArchivesService;
 import com.xpsoft.oa.service.system.AppRoleService;
@@ -41,6 +42,10 @@ public class ArchDispatchAction extends BaseAction {
 
 	@Resource
 	private ArchivesDepService archivesDepService;
+	
+	@Resource
+	ArchUnderTakesService undertakesService;
+	
 	private Long dispatchId;
 	private Long archivesId;
 	private Short archUserType;
@@ -156,7 +161,6 @@ public class ArchDispatchAction extends BaseAction {
 	}
 
 	public String save() {
-		Short status = getRequest().getParameter("status")!=null && !getRequest().getParameter("status").equals("")? Short.valueOf(getRequest().getParameter("status")) : (short)-1;
 		/* 194 */Archives archives = (Archives) this.archivesService
 				.get(this.archivesId);
 		/* 195 */if (archives != null) {
@@ -174,9 +178,7 @@ public class ArchDispatchAction extends BaseAction {
 
 			/* 208 */if (this.archUserType.compareTo(ArchDispatch.IS_DISPATCH) == 0) {
 				/* 209 */archives.setStatus(Archives.STATUS_READ);
-						if(!status.equals(Short.valueOf("-1"))){
-							/* 209 */archives.setStatus(status);							
-						}
+
 				/* 210 */this.archivesService.save(archives);
 			} else {
 				/* 212 */String signUserIds = getRequest().getParameter(
@@ -210,9 +212,6 @@ public class ArchDispatchAction extends BaseAction {
 						}
 
 						/* 229 */archives.setStatus(Archives.STATUS_END);
-						if(!status.equals(Short.valueOf("-1"))){
-							/* 209 */archives.setStatus(status);							
-						}
 					} else {
 						/* 231 */int recordSize = this.archDispatchService
 								.countArchDispatch(archives.getArchivesId());
@@ -257,6 +256,113 @@ public class ArchDispatchAction extends BaseAction {
 			/* 258 */setJsonString("{success:false}");
 		}
 		/* 260 */return "success";
+	}
+	
+	/**
+	 * 为市局发文做的变动
+	 * @return
+	 */
+	public String saveNew() {
+			Archives archives = (Archives) this.archivesService
+				.get(this.archivesId);
+			String userList = null; 
+			if (archives != null) {
+				ArchDispatch archDispatch = new ArchDispatch();
+				AppUser user = ContextUtil.getCurrentUser();
+				archDispatch.setArchives(archives);
+				archDispatch.setArchUserType(this.archUserType);
+				archDispatch.setUserId(user.getUserId());
+				archDispatch.setFullname(user.getFullname());
+				archDispatch.setDispatchTime(new Date());
+				archDispatch.setSubject(archives.getSubject());
+				archDispatch.setIsRead(ArchDispatch.HAVE_READ);
+				archDispatch.setReadFeedback(this.readFeedback);
+				this.archDispatchService.save(archDispatch);
+
+				if (this.archUserType.compareTo(ArchDispatch.IS_DISPATCH) == 0) {//
+					archives.setStatus(Archives.STATUS_READ);
+					this.archivesService.save(archives);
+				} else {
+					String signUserIds = getRequest().getParameter(
+						"undertakeUserIds");//上一步审批人
+					String cruArchDepId = getRequest().getParameter(
+						"cruArchDepId");
+					if (StringUtils.isNotEmpty(signUserIds)) {
+						String[] signId = signUserIds.split(",");
+						int size = signId.length;
+						if (size < 2) {
+							if ((this.archUserType.compareTo(ArchDispatch.IS_UNDERTAKE) == 0)
+								&&(StringUtils.isNotEmpty(cruArchDepId))
+								&&(cruArchDepId.indexOf("$") == -1)) {
+								ArchivesDep archivesDep = (ArchivesDep) this.archivesDepService
+									.get(new Long(cruArchDepId));
+								StringBuffer sb = new StringBuffer("<div>"
+									+ this.readFeedback);
+								SimpleDateFormat sdf = new SimpleDateFormat();
+								sdf.format(new Date());
+								sb.append("--").append(ContextUtil.getCurrentUser()
+											.getFullname()).append("--")
+									.append(sdf.format(new Date()))
+									.append("</div>");
+								archivesDep.setHandleFeedback(sb
+									.toString());
+								this.archivesDepService.save(archivesDep);
+							}
+							if(this.archUserType.compareTo(Short.valueOf("0")) == 0){//传阅结束
+								archives.setStatus(Archives.STATUS_READ);//进入承办归档环节
+								userList = undertakesService.saveArchUnderTakesByArchId(archives.getArchivesId().toString(), getRequest().getParameter("signUserIds"));
+							}else{//承办结束
+								archives.setStatus(Archives.STATUS_END);
+							}							
+						} else {
+							int recordSize = this.archDispatchService
+									.countArchDispatch(archives.getArchivesId(), this.archUserType);
+							if ((this.archUserType
+									.compareTo(ArchDispatch.IS_UNDERTAKE) == 0)
+									&&(StringUtils.isNotEmpty(cruArchDepId))
+									&& (cruArchDepId.indexOf("$") == -1)) {
+								ArchivesDep archivesDep = (ArchivesDep) this.archivesDepService
+										.get(new Long(cruArchDepId));
+								StringBuffer sb = new StringBuffer();
+								if (archivesDep.getHandleFeedback() != null) {
+									sb.append(archivesDep.getHandleFeedback());
+								}
+								sb.append("<div>" + this.readFeedback);
+								SimpleDateFormat sdf = new SimpleDateFormat();
+								sdf.format(new Date());
+								sb.append("--").append(ContextUtil.getCurrentUser()
+										.getFullname()).append("--")
+										.append(sdf.format(new Date()))
+										.append("</div>");
+								archivesDep.setHandleFeedback(sb.toString());
+								this.archivesDepService.save(archivesDep);
+							}
+							if(this.archUserType.compareTo(Short.valueOf("1")) == 0){//承办
+//								if (size == recordSize)
+								if (size <= recordSize){
+									archives.setStatus(Archives.STATUS_END);
+									userList = undertakesService.saveArchUnderTakesByArchId(archives.getArchivesId().toString(), getRequest().getParameter("signUserIds"));
+								}else {
+									userList = undertakesService.saveArchUnderTakesByArchId(archives.getArchivesId().toString(), getRequest().getParameter("signUserIds"));
+								}
+							}else{
+								//传阅中	
+								if (size > recordSize){
+									archives.setStatus(Archives.STATUS_READING);
+								}else{
+									archives.setStatus(Archives.STATUS_READ);									
+								}
+									
+							}
+						}
+					}
+					this.archivesService.save(archives);
+				}
+			setJsonString("{success:true,signUserIds:'" + (userList!=null ? userList : "") + "',rowCount:'"+(userList!=null ? userList.split(",").length : "0")+"'}");
+		} else {
+			setJsonString("{success:false}");
+		}
+		return "success";
 	}
 
 	public String read() {

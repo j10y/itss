@@ -62,7 +62,7 @@ public class Archives extends BaseModel {
 	 * 3:待分管或局领导批示
 	 * 4:待科室主任传阅
 	 * 5:待科室承办人处理并归档
-	 * 6:状态未使用
+	 * 6:阅读中
 	 * 7:收文归档
 	 */
 

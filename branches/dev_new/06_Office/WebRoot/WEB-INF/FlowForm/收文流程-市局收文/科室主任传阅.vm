@@ -38,7 +38,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 			layout : 'form',
 			bodyStyle : 'padding:10px 10px 10px 10px',
 			border : false,
-			url : __ctxPath + '/archive/saveArchDispatch.do',
+			url : __ctxPath + '/archive/saveNewArchDispatch.do',
 			id : 'ArchDistributeForm',
 			defaults : {
 				anchor : '98%,98%'
@@ -123,7 +123,11 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 								},{
 								    xtype:'hidden',
 								    name:'archUserType',
-								    value:1 //0为传阅   1承办
+								    value:0 //0为传阅   1承办
+								},{
+								    xtype:'hidden',
+								    name:'undertakeUserIds',
+								    value:'${signUserIds}'
 								}]
 						}]
 		});
@@ -172,40 +176,12 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 								method : 'POST',
 								waitMsg : '正在提交数据...',
 								success : function(fp, action) {
-								
-								
+																
 								//__ctxPath + '/archive/saveArchDispatch.do',
-								//分配承办处理人
-								Ext.Ajax.request({
-									url : __ctxPath
-											+ "/archive/saveArchDispatch.do",
-									params : {
-										undertakeNames:Ext.getCmp("signUserNames").getValue(),
-										undertakeIds:Ext.getCmp("signUserIds").getValue(),
-										archivesId:'${archives_archivesId}',
-										archUserType: '2',
-										readFeedback : Ext.getCmp("handleOpinion").getValue()												
-									},
-									success : function(h, j) {
+								//获取下一步承办人
+								alert(action.result.msg);
+								return;
 										
-									}
-								});
-								//传阅
-								Ext.Ajax.request({
-									url : __ctxPath
-											+ "/archive/saveArchDispatch.do",
-									params : {
-										undertakeIds:'${signUserIds}',
-										archivesId:'${archives_archivesId}',
-										archUserType: '0',
-										readFeedback : Ext.getCmp("handleOpinion").getValue(),
-										cruArchDepId : '${cruArchDepId}'												
-									},
-									success : function(h, j) {
-										
-									}
-								});
-											
 								formPanel.getForm().submit({
 							            url:__ctxPath+ "/flow/nextProcessActivity.do",
 										method:'post',
