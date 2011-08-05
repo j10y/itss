@@ -305,4 +305,5 @@
     <bean id="leaveTypeDao" class="com.xpsoft.oa.dao.personal.impl.LeaveTypeDaoImpl" parent="baseDao"/>
     
     <bean id="leaveLeaderReadDao" class="com.xpsoft.oa.dao.personal.impl.LeaveLeaderReadDaoImpl" parent="baseDao"/>
+    <bean id="undertakesDao" class="com.xpsoft.oa.dao.archive.impl.ArchUnderTakesDaoImpl" parent="baseDao"/>
 </beans>
