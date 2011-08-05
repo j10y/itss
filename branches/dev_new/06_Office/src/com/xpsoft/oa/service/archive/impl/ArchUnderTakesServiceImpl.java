@@ -56,6 +56,9 @@ public class ArchUnderTakesServiceImpl extends BaseServiceImpl<ArchUnderTakes>
 				newids+=",";
 			}
 		}
+		if(newids.lastIndexOf(",")==newids.length()-1){
+			newids=	newids.substring(0,newids.length()-1);
+		}
 		//ArchUnderTakes aut=new ArchUnderTakes();
 		aut.setArchivesId(Long.parseLong(id));
 		aut.setUserIds(newids);
