@@ -25,20 +25,21 @@ public class ArchUnderTakesServiceImpl extends BaseServiceImpl<ArchUnderTakes>
 		List<Map> list=this.findDataList(sql);
 		String ids="";
 		if(list!=null&&list.size()>0){
-			for(Map map:list){
-				ids+=map.get("userids").toString()+",";
-			}
-			ids=ids.substring(0,ids.length()-1);
+			ids=list.get(0).get("id").toString();
 		}
 		return  ids;
 	}	
 	public String saveArchUnderTakesByArchId(String id,String userids){
 		String ids=this.findArchUnderTakesByArchId(id);
+		ArchUnderTakes aut=new ArchUnderTakes();
 		Set users=new HashSet();
-		if(ids!=null&&ids.length()>0){
-			String[] s=ids.split(",");
-			for(int i=0;i<s.length;i++){
-				users.add(s[i]);
+		if(ids.length()>0){
+			aut=this.get(Long.parseLong(ids));
+			if(aut.getUserIds()!=null&&aut.getUserIds().length()>0){
+				String[] s=aut.getUserIds().split(",");
+				for(int i=0;i<s.length;i++){
+					users.add(s[i]);
+				}
 			}
 		}
 		if(userids!=null&&userids.length()>0){
@@ -55,10 +56,34 @@ public class ArchUnderTakesServiceImpl extends BaseServiceImpl<ArchUnderTakes>
 				newids+=",";
 			}
 		}
-		ArchUnderTakes aut=new ArchUnderTakes();
+		//ArchUnderTakes aut=new ArchUnderTakes();
 		aut.setArchivesId(Long.parseLong(id));
 		aut.setUserIds(newids);
 		this.dao.save(aut);
 		return newids;
+	}
+
+	public String findArchUnderTakesUpSignByArchId(String id) {
+		// TODO Auto-generated method stub
+		String sql="select * from arch_rec_undertakes where archivesid="+id;
+		List<Map> list=this.findDataList(sql);
+		String ids="";
+		if(list!=null&&list.size()>0){
+			ids=list.get(0).get("upSignUserIds").toString();
+		}
+		return  ids;
+	}
+
+	public String saveArchUnderTakesByArchIdAndSign(String id,
+			String upsignUserIds) {
+		// TODO Auto-generated method stub
+		String ids=this.findArchUnderTakesByArchId(id);
+		ArchUnderTakes aut=new ArchUnderTakes();
+		if(ids==null||ids.length()==0){
+			aut.setArchivesId(Long.parseLong(id));
+			aut.setUpSignUserIds(upsignUserIds);
+			this.save(aut);
+		}
+		return null;
 	}
 }

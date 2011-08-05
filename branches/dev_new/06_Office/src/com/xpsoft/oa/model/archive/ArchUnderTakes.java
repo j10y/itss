@@ -6,6 +6,13 @@ public class ArchUnderTakes extends BaseModel{
 	private Long id;
 	private Long archivesId;
 	private String userIds;
+	private String upSignUserIds;	
+	public String getUpSignUserIds() {
+		return upSignUserIds;
+	}
+	public void setUpSignUserIds(String upSignUserIds) {
+		this.upSignUserIds = upSignUserIds;
+	}
 	public Long getId() {
 		return id;
 	}

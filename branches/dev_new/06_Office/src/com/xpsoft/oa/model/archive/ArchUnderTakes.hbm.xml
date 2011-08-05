@@ -42,6 +42,17 @@
             length="128"
             not-null="false"
             unique="false"
+        />    
+        <property
+           name="upSignUserIds"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="upSignUserIds"
+            length="128"
+            not-null="false"
+            unique="false"
         />         
     </class>
 </hibernate-mapping>
