@@ -150,7 +150,7 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 					},{
 						name : 'archivesStatus',
 						xtype : 'hidden',
-						value : 6 //6代表公文状态为已校对,待发文中
+						value : 4 //6代表公文状态为已校对,待发文中
 					}]
 		});
 	}// end of init

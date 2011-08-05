@@ -387,7 +387,7 @@ public class ArchivesAction extends BaseAction {
 			this.archivesId = this.archives.getArchivesId();
 		}
 		this.archives = ((Archives) this.archivesService.get(this.archivesId));
-
+		this.archives.setArchivesNo(getRequest().getParameter("archivesNo"));
 		String depIds = this.archives.getRecDepIds();
 		StringBuffer msg = new StringBuffer("");
 		//获取不需要进入收文签收的发文类型类型
@@ -492,5 +492,15 @@ public class ArchivesAction extends BaseAction {
 		}
 		/* 491 */this.jsonString = "{success:true}";
 		/* 492 */return "success";
+	}
+	
+	public String modStatus() {
+		String archivesId = getRequest().getParameter("archivesId");
+		Short status = Short.valueOf(getRequest().getParameter("status"));
+		this.archives = ((Archives) this.archivesService.get(this.archivesId));
+		this.archives.setStatus(status);
+		this.archivesService.save(this.archives);
+		this.jsonString = "{success:true}";
+		return "success";
 	}
 }

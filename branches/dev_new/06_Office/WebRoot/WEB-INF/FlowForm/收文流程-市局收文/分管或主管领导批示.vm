@@ -38,7 +38,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 			layout : 'form',
 			bodyStyle : 'padding:10px 10px 10px 10px',
 			border : false,
-			url : __ctxPath + '/archive/saveArchDispatch.do',
+			url : __ctxPath + '/archive/saveLeaderRead.do',
 			id : 'ArchDistributeForm',
 			defaults : {
 				anchor : '98%,98%'
@@ -106,12 +106,34 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 								    xtype:'textarea',
 								    width : 300,
 								    name:'handleOpinion',
+								    id:'handleOpinion',
+								    listeners : {
+								    	"change" : function(field, newValue, oldValue ){
+								    		Ext.getCmp("leaderOpinion").setValue(newValue);
+								    	},
+								    	"valid" : function(field){
+								    		Ext.getCmp("leaderOpinion").setValue(field.getValue());
+								    	}
+								    },
 								    allowBlank:false
 								},{
 								    xtype:'hidden',
-								    name:'archUserType',
-								    value:2
+								    name:'status',
+								    value:4
 								}]
+						},{
+						   xtype:'hidden',
+						   name:'cruArchDepId',
+						   value:'${cruArchDepId}'
+						},{
+						    id : "leaderOpinion",
+							name : 'leaderOpinion',
+							xtype:'hidden'
+						}, {
+							fieldLabel : '0=尚未批',
+							name : 'isPass',
+							xtype:'hidden',
+							value:1
 						}]
 		});
 		
@@ -164,6 +186,27 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 										method:'post',
 										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName,signUserIds:Ext.getCmp('signUserIds').getValue()},
 										success : function(fp, action) {
+											//领导做了公文分发中的分发传阅人的功能
+											
+											//__ctxPath + '/archive/saveArchDispatch.do',
+											Ext.Ajax.request({
+												url : __ctxPath
+														+ "/archive/saveArchDispatch.do",
+												params : {
+													readerNames:Ext.getCmp("signUserNames").getValue(),
+													readerIds:Ext.getCmp("signUserIds").getValue(),
+													archivesId:'${archives_archivesId}',
+													archUserType: '2',
+													status:'4',
+													readFeedback : Ext.getCmp("handleOpinion").getValue()												
+												},
+												success : function(h, j) {
+													
+												}
+											});
+											
+											
+										
 										    Ext.ux.Toast.msg('操作信息','成功保存！');
 										    AppUtil.removeTab('ProcessForm'+panel.taskId);
 											var myTaskView=Ext.getCmp("MyTaskGrid");

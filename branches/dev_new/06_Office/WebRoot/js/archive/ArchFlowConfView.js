@@ -496,7 +496,7 @@ ArchFlowConfView = Ext
 							root : "result",
 							totalProperty : "totalCounts",
 							remoteSort : true,
-							fields : [ "recTypeId", "typeName","processDefId","processDefName"]
+							fields : [ "recTypeId", "typeName", "depId", "department.depId", "processDefId","processDefName"]
 						});
 						this.recArchstore.load();
 						//var g = new Ext.grid.CheckboxSelectionModel();
@@ -537,6 +537,16 @@ ArchFlowConfView = Ext
 												header : "recTypeId",
 												dataIndex : "recTypeId",
 												hidden : true
+											},
+											{
+												header : "收文部门",
+												dataIndex : "depId",
+												hidden:true
+											},
+											{
+												header : "收文部门",
+												dataIndex : "department.depId",
+												hidden:true
 											},
 											{
 												header : "收文类型",

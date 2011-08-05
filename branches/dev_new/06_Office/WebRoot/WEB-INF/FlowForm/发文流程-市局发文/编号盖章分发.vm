@@ -121,6 +121,11 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 						xtype : 'hidden',
 						value : '${archives_archivesId}'
 					},{
+						fieldLabel : '发文编号',
+						name : 'archivesNo',
+						xtype:'textfield',
+						allowBlank:false
+					},{
 						fieldLabel : '分发意见',
 						name : 'distributeOpinion',
 						xtype:'textarea'

@@ -41,7 +41,7 @@ OfficeReadForm = Ext.extend(Ext.Panel, {
 							bodyStyle : 'padding:10px 10px 10px 10px',
 							border : false,
 							autoScroll :false,
-							url : __ctxPath + '/archive/saveLeaderRead.do',
+							url : __ctxPath + '/archive/modStatusArchives.do',
 							id : 'OfficeReadForm',
 							defaults : {
 								anchor : '98%,98%'
@@ -63,6 +63,10 @@ OfficeReadForm = Ext.extend(Ext.Panel, {
 										name : 'isPass',
 										xtype:'hidden',
 										value:1
+									}, {
+										name : 'status',
+										xtype:'hidden',
+										value:2
 									}
 
 							]

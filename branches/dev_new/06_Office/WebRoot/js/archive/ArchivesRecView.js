@@ -123,19 +123,19 @@ ArchivesRecView = Ext
 														return '<font color="red">草稿</font>';
 													} else {
 														if (c == 1) {
-															return '<font color="green">等待拟办</font>';
+															return '<font color="green">待办公室传阅</font>';
 														} else {
 															if (c == 2) {
-																return '<font color="green">拟办中</font>';
+																return '<font color="green">待办公室主任批阅</font>';
 															} else {
 																if (c == 3) {
-																	return '<font color="green">等待领导批示</font>';
+																	return '<font color="green">待分管或局领导批示</font>';
 																} else {
 																	if (c == 4) {
-																		return '<font color="green">等待分发</font>';
+																		return '<font color="green">待科室主任传阅</font>';
 																	} else {
 																		if (c == 5) {
-																			return '<font color="green">等待阅读处理</font>';
+																			return '<font color="green">待科室承办人处理并归档</font>';
 																		} else {
 																			if (c == 6) {
 																				return '<font color="green">阅读处理中</font>';

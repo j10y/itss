@@ -168,7 +168,7 @@ ArchivesRecForm = Ext
 														Ext.getCmp("ArchivesRecForm").setDefId(b.data.processDefId);
 													}
 												}
-											},
+											},/*
 											{
 												xtype : "container",
 												layout : "column",
@@ -217,7 +217,7 @@ ArchivesRecForm = Ext
 																		.show();
 															}
 														} ]
-											},
+											},*/
 											{
 												xtype : "fieldset",
 												title : "公文基本信息",

@@ -100,17 +100,30 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 							items : [{
 									xtype : 'label',
 									style : 'padding-left:0px',
-									text : '批示意见',
+									text : '反馈意见',
 									width : 101
 								},{
 								    xtype:'textarea',
 								    width : 300,
 								    name:'handleOpinion',
-								    allowBlank:false
+								    id:'handleOpinion',
+								    allowBlank:false,
+								    listeners : {
+								    	"change" : function(field, newValue, oldValue ){
+								    		Ext.getCmp("readFeedback").setValue(newValue);
+								    	},
+								    	"valid" : function(field){
+								    		Ext.getCmp("readFeedback").setValue(field.getValue());
+								    	}
+								    },
+								},{
+								    xtype:'hidden',
+								    name:'readFeedback',
+								    id:'readFeedback'
 								},{
 								    xtype:'hidden',
 								    name:'archUserType',
-								    value:2
+								    value:1 //0为传阅   1承办
 								}]
 						}]
 		});
@@ -158,7 +171,41 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
             formPanel.getForm().submit({
 								method : 'POST',
 								waitMsg : '正在提交数据...',
-								success : function(fp, action) {			
+								success : function(fp, action) {
+								
+								
+								//__ctxPath + '/archive/saveArchDispatch.do',
+								//分配承办处理人
+								Ext.Ajax.request({
+									url : __ctxPath
+											+ "/archive/saveArchDispatch.do",
+									params : {
+										undertakeNames:Ext.getCmp("signUserNames").getValue(),
+										undertakeIds:Ext.getCmp("signUserIds").getValue(),
+										archivesId:'${archives_archivesId}',
+										archUserType: '2',
+										readFeedback : Ext.getCmp("handleOpinion").getValue()												
+									},
+									success : function(h, j) {
+										
+									}
+								});
+								//传阅
+								Ext.Ajax.request({
+									url : __ctxPath
+											+ "/archive/saveArchDispatch.do",
+									params : {
+										undertakeIds:'${signUserIds}',
+										archivesId:'${archives_archivesId}',
+										archUserType: '0',
+										readFeedback : Ext.getCmp("handleOpinion").getValue(),
+										cruArchDepId : '${cruArchDepId}'												
+									},
+									success : function(h, j) {
+										
+									}
+								});
+											
 								formPanel.getForm().submit({
 							            url:__ctxPath+ "/flow/nextProcessActivity.do",
 										method:'post',

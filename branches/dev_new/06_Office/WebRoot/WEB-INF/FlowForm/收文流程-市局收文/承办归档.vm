@@ -167,12 +167,31 @@ ArchivesHandleForm = Ext.extend(Ext.Panel, {
 								},{
 								fieldLabel : '承办归档意见',
 								name : 'handleOpinion',
-								xtype:'textarea'
+								id : 'handleOpinion',
+								xtype:'textarea',
+							    listeners : {
+							    	"change" : function(field, newValue, oldValue ){
+							    		Ext.getCmp("readFeedback").setValue(newValue);
+							    	},
+							    	"valid" : function(field){
+							    		Ext.getCmp("readFeedback").setValue(field.getValue());
+							    	}
+							    },
 							    },{
 								fieldLabel : '0=初始化状态',
 								name : 'isPass',
 								xtype:'hidden',
 								value:1
+							    },{
+								fieldLabel : '处理意见',
+								name : 'readFeedback',
+								xtype : 'hidden',
+								id : 'readFeedback'
+							    },{
+								fieldLabel : '0=初始化状态',
+								name : 'status',
+								xtype:'hidden',
+								value:7
 							    }
 							]
 						});
@@ -197,12 +216,28 @@ ArchivesHandleForm = Ext.extend(Ext.Panel, {
 			 */
 			save : function(formPanel, panel,signalName,activityName){
 				if (formPanel.getForm().isValid()) {
-					alert(Ext.encode(formPanel.getForm().getValues()));
-					return;
+					
 					formPanel.getForm().submit({
 								method : 'POST',
 								waitMsg : '正在提交数据...',
 								success : function(fp, action) {
+								
+									//__ctxPath + '/archive/saveArchDispatch.do',
+									Ext.Ajax.request({
+										url : __ctxPath
+												+ "/archive/saveArchDispatch.do",
+										params : {
+											undertakeIds:'${signUserIds}',
+											archivesId:'${archives_archivesId}',
+											archUserType: '1',
+											readFeedback : Ext.getCmp("handleOpinion").getValue(),
+											cruArchDepId : '${cruArchDepId}'												
+										},
+										success : function(h, j) {
+											
+										}
+									});
+								
 									formPanel.getForm().submit({
 								            url:__ctxPath+ "/flow/nextProcessActivity.do",
 											method:'post',

@@ -159,7 +159,7 @@ ArchivesUssueFlowView = Ext.extend(Ext.Panel, {
 					},{
 						name : 'archivesStatus',
 						xtype : 'hidden',
-						value : 5 //5代表公文状态为已经主管签发,等校对中
+						value : 3 
 					}]
 		});
 	}// end of init

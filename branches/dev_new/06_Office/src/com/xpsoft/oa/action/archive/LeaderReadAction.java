@@ -122,6 +122,7 @@ public class LeaderReadAction extends BaseAction {
 
 	public String save() {
 		String strArchivesId = getRequest().getParameter("archivesId");
+		Short status = getRequest().getParameter("status")!=null && !getRequest().getParameter("status").equals("")? Short.valueOf(getRequest().getParameter("status")) : (short)-1;
 		if (StringUtils.isNotEmpty(strArchivesId)) {
 			LeaderRead leader = new LeaderRead();
 			Archives archives = (Archives) this.archivesService.get(new Long(strArchivesId));
@@ -134,6 +135,10 @@ public class LeaderReadAction extends BaseAction {
 			leader.setCreatetime(new Date());
 			this.leaderReadService.save(leader);
 			archives.setStatus(Archives.STATUS_DISPATCH);
+			if(!status.equals(Short.valueOf("-1"))){
+				archives.setStatus(status);
+			}
+			
 			this.archivesService.save(archives);
 		}
 		setJsonString("{success:true}");

@@ -224,7 +224,7 @@
 			      <url>/archive/multiDelArchives.do</url>
 			   </Function>
 			</Item>
-			<Item id="ArchivesHandleView" text="收文拟办" iconCls="menu-arch-handler">
+			<Item id="ArchivesHandleView" text="收文归档" iconCls="menu-arch-handler">
 			   <Function id="_ArchivesHandleQuery" text="查看" iconCls="menu-list">
 			      <url>/archive/listArchivesHandle.do</url>
 			   </Function>

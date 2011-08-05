@@ -3,4 +3,6 @@
 	<field name="signUserIds" label="科室主任传阅人员" type="varchar" length="320" isShowed="false"/>
 	<field name="cruArchDepId" label="部门签收" type="long" isShowed="false"/>
 	<field name="handleOpinion" label="分管或主管领导批示意见" type="varchar" length="320" isShowed="true"/>
+	<field name="leaderOpinion" label="分管或主管领导批示意见" type="varchar" length="320" isShowed="true"/>
+	<field name="readerIds" label="阅读人员" type="varchar" length="320" isShowed="false"/>
 </fields>

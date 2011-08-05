@@ -111,6 +111,10 @@ ArchivesDraftView = Ext
 						new showFlowPictureWin().show();
 					},
 					onSave : function(f, c) {
+						//设置空编号
+						if(Ext.getCmp("archives.archivesNo").getValue()==""){
+							Ext.getCmp("archives.archivesNo").setValue("空编号");
+						}
 						if(c.defId==""||c.defId==null
 								||c.defId==undefined||c.defId=="0"){
 							Ext.ux.Toast.msg("操作信息", "请指定相应发文流程！");
@@ -188,6 +192,10 @@ ArchivesDraftView = Ext
 						}
 					},
 					onDraft : function() {
+						//设置空编号
+						if(Ext.getCmp("archives.archivesNo").getValue()==""){
+							Ext.getCmp("archives.archivesNo").setValue("空编号");
+						}
 						if (this.formPanel.getForm().isValid()) {
 							var b = [];
 							for ( var d = 0, c = this.store.getCount(); d < c; d++) {
@@ -228,6 +236,10 @@ ArchivesDraftView = Ext
 						this.onSave(a, this);
 					},
 					finish : function() {
+						//设置空编号
+						if(Ext.getCmp("archives.archivesNo").getValue()==""){
+							Ext.getCmp("archives.archivesNo").setValue("空编号");
+						}
 						if (this.formPanel.getForm().isValid()) {
 							var b = [];
 							for ( var d = 0, c = this.store.getCount(); d < c; d++) {

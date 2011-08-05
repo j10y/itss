@@ -134,6 +134,7 @@ public class ArchivesHandleAction extends BaseAction {
 	}
 
 	public String save() {
+		Short status = getRequest().getParameter("status")!=null&&!getRequest().getParameter("status").equals("") ? Short.valueOf(getRequest().getParameter("status")): (short)-1;
 		ArchivesHandle arh = new ArchivesHandle();
 		AppUser user = ContextUtil.getCurrentUser();
 		Archives archives = (Archives) this.archivesService
@@ -165,9 +166,47 @@ public class ArchivesHandleAction extends BaseAction {
 					archives.setStatus(Archives.STATUS_HANDLEING);
 				}
 			}
+			if(!status.equals(Short.valueOf("-1"))){
+				archives.setStatus(Archives.STATUS_HANDLEING);
+			}else{
+				archives.setStatus(status);
+			}
 			this.archivesService.save(archives);
+			
 		}
 		setJsonString("{success:true}");
 		return "success";
+	}
+
+	public Long getFiledDeptId() {
+		return filedDeptId;
+	}
+
+	public void setFiledDeptId(Long filedDeptId) {
+		this.filedDeptId = filedDeptId;
+	}
+
+	public String getFiledDeptName() {
+		return filedDeptName;
+	}
+
+	public void setFiledDeptName(String filedDeptName) {
+		this.filedDeptName = filedDeptName;
+	}
+
+	public Long getRecFiledTypeId() {
+		return recFiledTypeId;
+	}
+
+	public void setRecFiledTypeId(Long recFiledTypeId) {
+		this.recFiledTypeId = recFiledTypeId;
+	}
+
+	public String getRecFiledTypeName() {
+		return recFiledTypeName;
+	}
+
+	public void setRecFiledTypeName(String recFiledTypeName) {
+		this.recFiledTypeName = recFiledTypeName;
 	}
 }
