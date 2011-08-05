@@ -50,7 +50,7 @@ public class ArchUnderTakesServiceImpl extends BaseServiceImpl<ArchUnderTakes>
 		}
 		String newids="";
 		Iterator it=users.iterator();
-		if(it.hasNext()){
+		while(it.hasNext()){
 			newids+=it.next().toString();
 			if(it.hasNext()){
 				newids+=",";

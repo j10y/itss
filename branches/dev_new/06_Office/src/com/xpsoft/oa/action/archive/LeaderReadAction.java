@@ -9,6 +9,7 @@ import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.archive.Archives;
 import com.xpsoft.oa.model.archive.LeaderRead;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.archive.ArchUnderTakesService;
 import com.xpsoft.oa.service.archive.ArchivesService;
 import com.xpsoft.oa.service.archive.LeaderReadService;
 import com.xpsoft.oa.service.system.AppUserService;
@@ -30,6 +31,10 @@ public class LeaderReadAction extends BaseAction {
 
 	@Resource
 	private AppUserService appUserService;
+	
+	@Resource
+	ArchUnderTakesService undertakesService;
+	
 	private Long readId;
 	private String leaderOpinion;
 	private Short isPass;
@@ -138,6 +143,9 @@ public class LeaderReadAction extends BaseAction {
 			if(!status.equals(Short.valueOf("-1"))){
 				archives.setStatus(status);
 			}
+			
+			//
+			undertakesService.saveArchUnderTakesByArchIdAndSign(strArchivesId,  getRequest().getParameter("signUserIds"));
 			
 			this.archivesService.save(archives);
 		}

@@ -341,15 +341,15 @@ public class ArchDispatchAction extends BaseAction {
 //								if (size == recordSize)
 								if (size <= recordSize){
 									archives.setStatus(Archives.STATUS_END);
-									userList = undertakesService.saveArchUnderTakesByArchId(archives.getArchivesId().toString(), getRequest().getParameter("signUserIds"));
 								}else {
-									userList = undertakesService.saveArchUnderTakesByArchId(archives.getArchivesId().toString(), getRequest().getParameter("signUserIds"));
 								}
 							}else{
 								//传阅中	
 								if (size > recordSize){
+									userList = undertakesService.saveArchUnderTakesByArchId(archives.getArchivesId().toString(), getRequest().getParameter("signUserIds"));
 									archives.setStatus(Archives.STATUS_READING);
 								}else{
+									userList = undertakesService.saveArchUnderTakesByArchId(archives.getArchivesId().toString(), getRequest().getParameter("signUserIds"));
 									archives.setStatus(Archives.STATUS_READ);									
 								}
 									
