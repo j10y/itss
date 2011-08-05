@@ -860,12 +860,11 @@ public class FlowServiceImpl implements FlowService {
 					archDispatch.setReadFeedback(commentDesc);
 					archDispatchService.save(archDispatch);
 					this.parmap.put("handleOpinion", commentDesc);
+					undertakesService.saveArchUnderTakesByArchIdAndSign(id,  this.parmap.get("signUserIds").toString());
 				} else if (activityName.equals("科室主任传阅")) {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
-					String upsignUserIds = processRunVars.get("signUserIds") != null ? processRunVars
-							.get("signUserIds").toString()
-							: null;
+					String upsignUserIds = undertakesService.findArchUnderTakesUpSignByArchId(id);
 					if (StringUtils.isNotEmpty(upsignUserIds)) {
 						ArchDispatch archDispatch = new ArchDispatch();
 						AppUser user = ContextUtil.getCurrentUser();
