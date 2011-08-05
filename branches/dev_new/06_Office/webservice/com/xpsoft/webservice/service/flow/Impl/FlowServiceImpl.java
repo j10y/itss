@@ -435,7 +435,7 @@ public class FlowServiceImpl implements FlowService {
 		if (pageNum != null && pageSize != null) {
 			start = (Integer.parseInt(pageNum) - 1)
 					* Integer.parseInt(pageSize);
-			limit = start + Integer.parseInt(pageSize);
+			limit = Integer.parseInt(pageSize);
 		}
 		PagingBean pb = new PagingBean(start, limit);
 		ArchDispatchService archDispatchService = (ArchDispatchService) AppUtil
@@ -524,9 +524,15 @@ public class FlowServiceImpl implements FlowService {
 		filter(userId, passwd);
 		this.setActivityName(activityName);
 		this.setTaskId(taskId);
-		this.parmap.put("activityName", activityName);
-		this.parmap.put("taskId", taskId);
-		this.parmap.put("signalName", signalName);
+		if(ispass!=null&&ispass.length()>0&&ispass.equals("false")){
+			this.parmap.put("activityName", "开始");
+			this.parmap.put("taskId", taskId);
+			this.parmap.put("signalName", "开始");
+		}else{
+			this.parmap.put("activityName", activityName);
+			this.parmap.put("taskId", taskId);
+			this.parmap.put("signalName", signalName);
+		}
 		ProDefinition proDefinition = getProDefinition();
 		String processName = proDefinition.getName();
 		ProcessRunService processRunService = (ProcessRunService) AppUtil
@@ -591,6 +597,11 @@ public class FlowServiceImpl implements FlowService {
 				if (StringUtils.isNotEmpty(errandsRegisterStatus)) {
 					errandsRegister.setStatus(Short.valueOf(Short
 							.parseShort(errandsRegisterStatus)));
+				}
+				if(ispass!=null&&ispass.length()>0&&ispass.equals("false")){
+					errandsRegister.setStatus(Short.valueOf(Short
+							.parseShort("1")));
+					this.parmap.put("flowAssignId", errandsRegister.getApprovalId());
 				}
 				errandsRegisterService.save(errandsRegister);
 				leaderRead.setLeaderName(ContextUtil.getCurrentUser()
