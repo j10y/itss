@@ -158,3 +158,15 @@ ALTER TABLE archives_handle add COLUMN recFiledTypeName varchar(128) ;
 
 ALTER TABLE archives_handle add COLUMN filedDeptId bigint(20) ;
 ALTER TABLE archives_handle add COLUMN filedDeptName varchar(128) ;
+
+-- ----------------------------
+-- Table structure for `arch_rec_undertakes`
+-- ----------------------------
+DROP TABLE IF EXISTS `arch_rec_undertakes`;
+CREATE TABLE `arch_rec_undertakes` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `archivesid` bigint(20) DEFAULT NULL COMMENT '收文id',
+  `userids` varchar(255) DEFAULT NULL COMMENT '承办人',
+  `upSignUserIds` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
