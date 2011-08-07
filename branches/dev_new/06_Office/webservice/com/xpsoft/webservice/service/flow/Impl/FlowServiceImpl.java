@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.velocity.tools.generic.DateTool;
+import org.jbpm.api.ProcessInstance;
 import org.jbpm.pvm.internal.model.Transition;
 import org.springframework.security.AuthenticationManager;
 import org.springframework.security.context.SecurityContext;
@@ -522,12 +523,27 @@ public class FlowServiceImpl implements FlowService {
 			String commentDesc, String nextuser, String checkboxvalue,
 			String ispass, String gdlx) {
 		filter(userId, passwd);
+		ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
+		LeaveLeaderReadService leaveLeaderReadService = (LeaveLeaderReadService) AppUtil.getBean("leaveLeaderReadService");
+		ArchivesService archivesService = (ArchivesService) AppUtil.getBean("archivesService");
+		LeaderReadService leaderReadService = (LeaderReadService) AppUtil.getBean("leaderReadService");
+		DepartmentService departmentService = (DepartmentService) AppUtil.getBean("departmentService");
+		ArchRecUserService archRecUserService = (ArchRecUserService) AppUtil.getBean("archRecUserService");
+		ArchivesDepService archivesDepService = (ArchivesDepService) AppUtil.getBean("archivesDepService");
+		ShortMessageService messageService = (ShortMessageService) AppUtil.getBean("shortMessageService");
+		ArchivesAttendService archivesAttendService = (ArchivesAttendService) AppUtil.getBean("archivesAttendService");
+		ArchDispatchService archDispatchService = (ArchDispatchService) AppUtil.getBean("archDispatchService");
+		ProcessFormService processFormService = (ProcessFormService) AppUtil.getBean("processFormService");
+		ArchUnderTakesService undertakesService = (ArchUnderTakesService) AppUtil.getBean("undertakesService");
+		ArchivesHandleService archivesHandleService = (ArchivesHandleService) AppUtil.getBean("archivesHandleService");
+		ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil.getBean("archRecFiledTypeService");
 		this.setActivityName(activityName);
 		this.setTaskId(taskId);
+		JbpmService jbpmService=(JbpmService) AppUtil.getBean("jbpmService");
 		if(ispass!=null&&ispass.length()>0&&ispass.equals("false")){
-			this.parmap.put("activityName", "开始");
-			this.parmap.put("taskId", taskId);
-			this.parmap.put("signalName", "开始");
+			ProcessInstance pi=jbpmService.getProcessInstanceByTaskId(taskId);
+			jbpmService.endProcessInstance(pi.getId());
+			return "{success:true}";
 		}else{
 			this.parmap.put("activityName", activityName);
 			this.parmap.put("taskId", taskId);
@@ -565,10 +581,7 @@ public class FlowServiceImpl implements FlowService {
 		try {
 			if (processName.equals("请假-短") || processName.equals("请假-中")
 					|| processName.equals("请假-长")) {
-				ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil
-						.getBean("errandsRegisterService");
-				LeaveLeaderReadService leaveLeaderReadService = (LeaveLeaderReadService) AppUtil
-						.getBean("leaveLeaderReadService");
+				
 				ErrandsRegister errandsRegister = ((ErrandsRegister) errandsRegisterService
 						.get(Long.parseLong(id)));
 				LeaveLeaderRead leaderRead = new LeaveLeaderRead();
@@ -598,11 +611,6 @@ public class FlowServiceImpl implements FlowService {
 					errandsRegister.setStatus(Short.valueOf(Short
 							.parseShort(errandsRegisterStatus)));
 				}
-				if(ispass!=null&&ispass.length()>0&&ispass.equals("false")){
-					errandsRegister.setStatus(Short.valueOf(Short
-							.parseShort("1")));
-					this.parmap.put("flowAssignId", errandsRegister.getApprovalId());
-				}
 				errandsRegisterService.save(errandsRegister);
 				leaderRead.setLeaderName(ContextUtil.getCurrentUser()
 						.getFullname());
@@ -617,21 +625,6 @@ public class FlowServiceImpl implements FlowService {
 				this.parmap.put("errandsRegister.dateId", id);
 			} else if (processName.equals("发文流程") || processName.equals("请示报告")
 					|| processName.equals("发文流程-市局发文")) {
-				ArchivesService archivesService = (ArchivesService) AppUtil
-						.getBean("archivesService");
-				LeaderReadService leaderReadService = (LeaderReadService) AppUtil
-						.getBean("leaderReadService");
-				DepartmentService departmentService = (DepartmentService) AppUtil
-						.getBean("departmentService");
-				ArchRecUserService archRecUserService = (ArchRecUserService) AppUtil
-						.getBean("archRecUserService");
-				ArchivesDepService archivesDepService = (ArchivesDepService) AppUtil
-						.getBean("archivesDepService");
-				ShortMessageService messageService = (ShortMessageService) AppUtil
-						.getBean("shortMessageService");
-				ArchivesAttendService archivesAttendService = (ArchivesAttendService) AppUtil
-						.getBean("archivesAttendService");
-
 				if (activityName.equals("部门负责人")) {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
@@ -794,20 +787,6 @@ public class FlowServiceImpl implements FlowService {
 				}
 			} else if (processName.equals("收文流程")
 					|| processName.equals("收文流程-市局收文")) {
-				ArchivesService archivesService = (ArchivesService) AppUtil
-						.getBean("archivesService");
-				LeaderReadService leaderReadService = (LeaderReadService) AppUtil
-						.getBean("leaderReadService");
-				ArchDispatchService archDispatchService = (ArchDispatchService) AppUtil
-						.getBean("archDispatchService");
-				ProcessFormService processFormService = (ProcessFormService) AppUtil
-						.getBean("processFormService");
-				ArchUnderTakesService undertakesService = (ArchUnderTakesService) AppUtil
-						.getBean("undertakesService");
-				ArchivesHandleService archivesHandleService = (ArchivesHandleService) AppUtil
-						.getBean("archivesHandleService");
-				ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil
-						.getBean("archRecFiledTypeService");
 				ProcessRun processRun = processRunService
 						.getByTaskId(this.taskId.toString());
 				Map processRunVars = processFormService.getVariables(processRun
