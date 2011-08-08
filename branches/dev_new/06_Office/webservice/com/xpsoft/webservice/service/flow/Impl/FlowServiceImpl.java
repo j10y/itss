@@ -249,6 +249,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "boxstatus:false,";
 			json += "userquery:false,";
 			json += "showgdlx:false,";
+			json += "showBack:true,";
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
 					+ "\"},";
@@ -328,6 +329,11 @@ public class FlowServiceImpl implements FlowService {
 			} else {
 				json += "showgdlx:false,";
 			}
+			if ( this.activityName.equals("科室主任传阅")||this.activityName.equals("承办归档")) {
+				json += "showBack:false,";
+			} else {
+				json += "showBack:true,";
+			}
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
 					+ "\"},";
@@ -395,6 +401,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "boxstatus:false,";
 			json += "userquery:false,";
 			json += "showgdlx:false,";
+			json += "showBack:true,";
 			json += "data:[";
 			json += "{label:\"开始时间\",value:\"" + errandsRegister.getStartTime()
 					+ "\"},";
