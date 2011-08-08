@@ -553,6 +553,10 @@ public class FlowServiceImpl implements FlowService {
 				.getBean("processRunService");
 		if(ispass!=null&&ispass.length()>0&&ispass.equals("false")){
 			ProcessInstance pi=jbpmService.getProcessInstanceByTaskId(taskId);
+			ProcessRun processRun = processRunService.getByTaskId(this.taskId.toString());
+			processRun.setRunStatus(ProcessRun.RUN_STATUS_FINISHED);
+	        processRun.setPiId(null);
+	        processRunService.save(processRun);
 			jbpmService.endProcessInstance(pi.getId());
 			if (processName.equals("请假-短") || processName.equals("请假-中")
 					|| processName.equals("请假-长")) {
@@ -835,10 +839,10 @@ public class FlowServiceImpl implements FlowService {
 				}
 			} else if (processName.equals("收文流程")
 					|| processName.equals("收文流程-市局收文")) {
-				ProcessRun processRun = processRunService
-						.getByTaskId(this.taskId.toString());
-				Map processRunVars = processFormService.getVariables(processRun
-						.getRunId());
+//				ProcessRun processRun = processRunService
+//						.getByTaskId(this.taskId.toString());
+//				Map processRunVars = processFormService.getVariables(processRun
+//						.getRunId());
 				if (activityName.equals("办公室传阅")) {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
