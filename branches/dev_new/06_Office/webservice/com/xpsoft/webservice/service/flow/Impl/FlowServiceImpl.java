@@ -540,19 +540,54 @@ public class FlowServiceImpl implements FlowService {
 		this.setActivityName(activityName);
 		this.setTaskId(taskId);
 		JbpmService jbpmService=(JbpmService) AppUtil.getBean("jbpmService");
+		ProDefinition proDefinition = getProDefinition();
+		String processName = proDefinition.getName();
+		ProcessRunService processRunService = (ProcessRunService) AppUtil
+				.getBean("processRunService");
 		if(ispass!=null&&ispass.length()>0&&ispass.equals("false")){
 			ProcessInstance pi=jbpmService.getProcessInstanceByTaskId(taskId);
 			jbpmService.endProcessInstance(pi.getId());
+			if (processName.equals("请假-短") || processName.equals("请假-中")
+					|| processName.equals("请假-长")) {
+				ErrandsRegister errandsRegister = ((ErrandsRegister) errandsRegisterService
+						.get(Long.parseLong(id)));
+				errandsRegister.setStatus(Short.valueOf(Short
+							.parseShort("6")));
+				errandsRegisterService.save(errandsRegister);
+				LeaveLeaderRead leaderRead = new LeaveLeaderRead();
+				leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+						.getFullname());
+				leaderRead.setUserId(ContextUtil.getCurrentUserId());
+				leaderRead.setErrandsRegister(errandsRegister);
+				leaderRead.setCreatetime(new Date());
+				leaderRead.setIsPass(LeaveLeaderRead.NOT_PASS);
+				leaderRead.setLeaderOpinion(commentDesc);
+				leaderRead = leaveLeaderReadService.save(leaderRead);
+			} else if (processName.equals("发文流程") || processName.equals("请示报告")
+					|| processName.equals("发文流程-市局发文")||processName.equals("收文流程")
+					|| processName.equals("收文流程-市局收文")) {
+				Archives archives = ((Archives) archivesService.get(Long
+						.parseLong(id)));
+				archives.setStatus(Short.valueOf(Short
+							.parseShort("0")));
+				archivesService.save(archives);
+				LeaderRead leaderRead = new LeaderRead();
+				leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+						.getFullname());
+				leaderRead.setUserId(ContextUtil.getCurrentUserId());
+				leaderRead.setArchives(archives);
+				leaderRead.setCreatetime(new Date());
+				leaderRead.setIsPass(LeaderRead.NOT_PASS);
+				leaderRead.setLeaderOpinion(commentDesc);
+				leaderReadService.save(leaderRead);
+			}
 			return "{success:true}";
 		}else{
 			this.parmap.put("activityName", activityName);
 			this.parmap.put("taskId", taskId);
 			this.parmap.put("signalName", signalName);
 		}
-		ProDefinition proDefinition = getProDefinition();
-		String processName = proDefinition.getName();
-		ProcessRunService processRunService = (ProcessRunService) AppUtil
-				.getBean("processRunService");
+		
 		if (nextuser != null && nextuser.length() > 0) {
 			this.parmap.put("signUserIds", nextuser);
 		}
