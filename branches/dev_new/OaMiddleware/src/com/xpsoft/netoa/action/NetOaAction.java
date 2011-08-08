@@ -66,7 +66,7 @@ public class NetOaAction extends BaseAction{
 			String url = super.getRequest().getParameter("url");
 			String name = super.getRequest().getParameter("name");
 			if (url != null && name != null) {
-				url = OAURLDOWN + url;
+				url = OAURLDOWN + "/attachFiles/" + url;
 				byte [] bytes = FileDownloaderUtil.readFileByUrl(url);
 				FileDownloaderUtil.downloadFile(super.getResponse(), name, bytes);
 //				FileDownloaderUtil.downAndLoadFileTogether(url, super.getResponse(), name);
@@ -219,6 +219,38 @@ public class NetOaAction extends BaseAction{
 		return null;
 	}
 	
+	
+	/**
+	 * 1.4.	查询归档类型
+	 * @Methods Name queryGdlx
+	 * @Create In Aug 5, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String queryGdlx() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("data", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			//public String findUserByUserName(String userName)
+			if (userid != null && UserCheckMap.get(userid) != null) {
+				String methodName = "getGdlx";
+				//通过webserice返回json对象
+				Object [] paramArr = new Object[]{};
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
 	
 	
 	public String testws() throws Exception  {
@@ -554,45 +586,30 @@ public class NetOaAction extends BaseAction{
 		jo.put("success", false);
 		jo.put("data", new JSONArray());
 		//访问oa的url
-		String accessUrl = OAURL + "/22222";
-		StringBuffer url = new StringBuffer();
-		url.append(OAURL);
-		url.append(accessUrl);
+		String accessUrl = OAURL + "/FlowServiceImpl";
 		try {
 			String userid = super.getRequest().getParameter("userid");
-			String title = super.getRequest().getParameter("title");
 			String password = UserCheckMap.get(userid); 
 			if (userid != null && password != null) {
-				url.append("?");
-				url.append("userid="+HttpUtil.encodeUTF8(userid));
-				url.append("&title="+HttpUtil.encodeUTF8(title));
 				//调用接口方法 
-				String methodName = "";
-				//public String Login(String userName, String passwd)
-				Object [] paramArr = new Object[]{};
+				String methodName = "getDycyList";
+				//public String getDycyList(String userId, String passwd)
+				Object [] paramArr = new Object[]{userid,password};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
 				jo = backJsonObejct;
 			} 
 		} catch (Exception e) {
+			e.printStackTrace();
 			jo.put("success", true);
 			JSONArray jArray = new JSONArray();
-			jArray.add("{id:\"1\",title:\"假我们都是好通知1\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\",taskid:10002}");
-			jArray.add("{id:\"2\",title:\"假我们都是好通知2\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"11\",title:\"假我们都是好通知3\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"12\",title:\"假我们都是好通知4\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"13\",title:\"假我们都是好通知5\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"14\",title:\"假我们都是好通知6\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"15\",title:\"假我们都是好通知7\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"16\",title:\"假我们都是好通知8\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"17\",title:\"假我们都是好通知9\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"18\",title:\"假我们都是好通知10\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"19\",title:\"假我们都是好通知11\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"10\",title:\"假我们都是好通知22\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"100\",title:\"假我们都是好通知223\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+			jArray.add("{taskid:\"1\",nodeName:\"假发文核稿\", author :\"超级管理员\", createDate :\"2011-7-16 12:34\"}");
+			jArray.add("{taskid:\"10\",nodeName:\"假领导审批\", author :\"网络\", createDate :\"2011-7-16 12:34\"}");
+			jArray.add("{taskid:\"12\",nodeName:\"假领导审批\", author :\"啊鸡鸡\", createDate :\"2011-7-16 12:34\"}");
+			jArray.add("{taskid:\"14\",nodeName:\"假请假审批\", author :\"中文啊\", createDate :\"2011-7-16 12:34\"}");
+			jArray.add("{taskid:\"15\",nodeName:\"假请假审批\", author :\"阿鸡是个X\",createDate :\"2011-7-16 12:34\"}");
 			jo.put("data", jArray);
-			// TODO: handle exception
 		}
 		//输出json
 		printJson(jo);
@@ -601,7 +618,7 @@ public class NetOaAction extends BaseAction{
 	
 	
 	/**
-	 * 4.	待阅传阅-4.2.	点击列表查看详细内容(5.  已阅传阅-5.2.	点击列表查看详细内容) 同
+	 * 4.	待阅传阅-4.2.	点击列表查看详细内容
 	 * @Methods Name queryDycyDetail
 	 * @Create In Jul 27, 2011 By likang
 	 * @return
@@ -640,39 +657,41 @@ public class NetOaAction extends BaseAction{
 		jo.put("title", "");
 		jo.put("createDate", "");
 		jo.put("activityName", "");
+		jo.put("taskId","false");
+		jo.put("signalName","false");
+		jo.put("type","");
+		jo.put("boxstatus",false);
+		jo.put("userquery",false);
 		jo.put("data", new JSONArray());
 		jo.put("accessories", new JSONArray());
 		//访问oa的url
-		String accessUrl = "aa";
-		StringBuffer url = new StringBuffer();
-		url.append(OAURL);
-		url.append(accessUrl);
+		String accessUrl = OAURL + "/FlowServiceImpl";
 		try {
 			String userid = super.getRequest().getParameter("userid");
-			String id = super.getRequest().getParameter("id");
 			String taskid = super.getRequest().getParameter("taskid");
+			String activityName = super.getRequest().getParameter("activityName");
 			String password = UserCheckMap.get(userid); 
-			if (userid != null && id != null && taskid != null && password != null) {
-				url.append("?");
-				url.append("userid="+HttpUtil.encodeUTF8(userid));
-				url.append("&id="+HttpUtil.encodeUTF8(id));
-				url.append("&taskeid="+HttpUtil.encodeUTF8(taskid));
+			if (userid != null && taskid != null && password != null) {
 				//调用接口方法 
-				String methodName = "";
-				//public String Login(String userName, String passwd)
-				Object [] paramArr = new Object[]{};
+				String methodName = "getDbsxDetail";
+				//public String getDbsxDetail(String userId, String passwd,String activityName, String taskId)
+				Object [] paramArr = new Object[]{userid,password,activityName,taskid};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
 				jo = backJsonObejct;
 			} 
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 			jo.put("success", true);
 			jo.put("title", "22222222222(待审批)");
 			jo.put("createDate", "2011-07-22 12:10:00");
 			jo.put("activityName", "发文核稿");
 			jo.put("type", "0");
+			jo.put("id", "88");
+			jo.put("taskId", "100");
+			jo.put("signalName", "审核");
 			jo.put("boxstatus", false);
 			jo.put("userquery", false);
 			JSONArray jArrayD = new JSONArray();
@@ -684,14 +703,14 @@ public class NetOaAction extends BaseAction{
 			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
 			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
 			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
-				jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
-				jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
-				jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
-				jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
-				jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
-				jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
-				jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
-				jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
+			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
+			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
+			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
+			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
+			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
+			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
+			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
+			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
 			jo.put("data", jArrayD);
 			JSONArray jArray = new JSONArray();
 			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
@@ -715,32 +734,29 @@ public class NetOaAction extends BaseAction{
 		id=1&commentDesc=我没啥意见&userid=99&taskId=99999&activityName=发文核稿(pad端不显示，可能用来审批传入参数)
 	 */
 	public String submitSpcy() throws Exception  {
-		boolean isSafe = this.isSafeAccess();
+//		boolean isSafe = this.isSafeAccess();
 		JSONObject jo = new JSONObject();
 		jo.put("success", false);
 		//访问oa的url
-		String accessUrl = "aa";
-		StringBuffer url = new StringBuffer();
-		url.append(OAURL);
-		url.append(accessUrl);
+		String accessUrl = OAURL + "/FlowServiceImpl";
 		try {
 			String userid = super.getRequest().getParameter("userid");
 			String id = super.getRequest().getParameter("id");
 			String commentDesc = super.getRequest().getParameter("commentDesc");
 			String taskId = super.getRequest().getParameter("taskid");
 			String activityName = super.getRequest().getParameter("activityName");
+			//（id用逗号隔开）
+			String nextuser = super.getRequest().getParameter("nextuser");
 			String password = UserCheckMap.get(userid); 
-			if (userid != null && id != null && commentDesc != null && taskId != null && password != null) {
-				url.append("?");
-				url.append("userid="+HttpUtil.encodeUTF8(userid));
-				url.append("&id="+HttpUtil.encodeUTF8(id));
-				url.append("&taskId="+HttpUtil.encodeUTF8(taskId));
-				url.append("&commentDesc="+HttpUtil.encodeUTF8(commentDesc));
-				url.append("&activityName="+HttpUtil.encodeUTF8(activityName));
+			//(1局长2分管局长3全有)
+			String checkboxvalue = super.getRequest().getParameter("checkboxvalue");
+			String signalName = super.getRequest().getParameter("signalName");
+			String gdlx = super.getRequest().getParameter("gdlx");
+			if (userid != null && id != null && commentDesc != null && taskId != null && password != null && signalName != null) {
 				//调用接口方法 
-				String methodName = "";
-				//public String Login(String userName, String passwd)
-				Object [] paramArr = new Object[]{};
+				String methodName = "saveProcessAndToNext";
+				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx)
+				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,null,gdlx};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
@@ -748,6 +764,7 @@ public class NetOaAction extends BaseAction{
 			} 
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		//输出json
 		printJson(jo);
@@ -771,35 +788,32 @@ public class NetOaAction extends BaseAction{
 	public String queryYycy() throws Exception  {
 		JSONObject jo = new JSONObject();
 		jo.put("success", false);
+		jo.put("totalCount", "0");
 		jo.put("data", new JSONArray());
 		//访问oa的url
-		String accessUrl = OAURL + "/LoginServiceImpl";
-		StringBuffer url = new StringBuffer();
-		url.append(OAURL);
-		url.append(accessUrl);
+		String accessUrl = OAURL + "/FlowServiceImpl";
 		try {
 			String userid = super.getRequest().getParameter("userid");
 			String title = super.getRequest().getParameter("title");
 			String passType = super.getRequest().getParameter("passType");
+			String pageNum = super.getRequest().getParameter("pageNum");
+			String pageSize = super.getRequest().getParameter("pageSize");
 			String password = UserCheckMap.get(userid); 
-			if (userid != null && password != null) {
-				url.append("?");
-				url.append("userid="+HttpUtil.encodeUTF8(userid));
-				url.append("&title="+HttpUtil.encodeUTF8(title));
-				//passType=0传阅中 passType=1传阅完成
-				url.append("&passType="+HttpUtil.encodeUTF8(passType));
+			if (userid != null && password != null && pageNum != null && pageSize != null) {
 				//调用接口方法 
-				String methodName = "";
-				//public String Login(String userName, String passwd)
-				Object [] paramArr = new Object[]{};
+				String methodName = "getYycyList";
+				//public String getYycyList(String userId, String passwd,String passType,String title,String pageNum,String pageSize) 
+				Object [] paramArr = new Object[]{userid,password,passType,title,pageNum,pageSize};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
 				jo = backJsonObejct;
 			} 
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 			jo.put("success", true);
+			jo.put("totalCount", "13");
 			JSONArray jArray = new JSONArray();
 			jArray.add("{id:\"1\",title:\"假我们都是好通知1\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\",taskid:10002}");
 			jArray.add("{id:\"2\",title:\"假我们都是好通知2\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
@@ -816,6 +830,83 @@ public class NetOaAction extends BaseAction{
 			jArray.add("{id:\"100\",title:\"假我们都是好通知223\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
 			jo.put("data", jArray);
 			// TODO: handle exception
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
+	
+	/**
+	 * 5.  已阅传阅-5.2.	点击列表查看详细内容 
+	 * @Methods Name queryYycyDetail
+	 * @Create In Jul 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String queryYycyDetail() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("title", "");
+		jo.put("createDate", "");
+		jo.put("activityName", "");
+		jo.put("taskId","false");
+		jo.put("signalName","false");
+		jo.put("type","");
+		jo.put("boxstatus",false);
+		jo.put("userquery",false);
+		jo.put("data", new JSONArray());
+		jo.put("accessories", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			String id = super.getRequest().getParameter("id");
+			String password = UserCheckMap.get(userid); 
+			if (userid != null && id != null && password != null) {
+				//调用接口方法 
+				String methodName = "getYycyDetail";
+				//public String getYycyDetail(String userId, String passwd, String id) 
+				Object [] paramArr = new Object[]{userid,password,id};
+				//通过webserice返回json对象
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				//如果有success字符返回则成功
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+			jo.put("success", true);
+			jo.put("title", "22222222222(待审批)");
+			jo.put("createDate", "2011-07-22 12:10:00");
+			jo.put("activityName", "发文核稿");
+			jo.put("type", "0");
+			jo.put("id", "88");
+			jo.put("boxstatus", false);
+			jo.put("userquery", false);
+			jo.put("taskId","false");
+			jo.put("signalName","false");
+			JSONArray jArrayD = new JSONArray();
+			jArrayD.add("{label:\"假来文文字号\",value:\"1111111\"}");
+			jArrayD.add("{label:\"假发文人\",value:\"超级管理员\"}");
+			jArrayD.add("{label:\"假发文机关\",value:\"信息部门\"}");
+			jArrayD.add("{label:\"假来文类型\",value:\"三星\"}");
+			jArrayD.add("{label:\"假主题词\",value:\"2222222\"}");
+			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
+			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
+			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
+			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
+			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
+			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
+			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
+			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
+			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
+			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
+			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
+			jo.put("data", jArrayD);
+			JSONArray jArray = new JSONArray();
+			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+			jo.put("accessories", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -840,21 +931,16 @@ public class NetOaAction extends BaseAction{
 		jo.put("success", false);
 		jo.put("data", new JSONArray());
 		//访问oa的url
-		String accessUrl = OAURL + "/222";
-		StringBuffer url = new StringBuffer();
-		url.append(OAURL);
-		url.append(accessUrl);
+		String accessUrl = OAURL + "/FlowServiceImpl";
 		try {
 			String userid = super.getRequest().getParameter("userid");
 			String password = UserCheckMap.get(userid); 
 			if (userid != null && password != null) {
-				url.append("?");
-				url.append("userid="+HttpUtil.encodeUTF8(userid));
 				//passType=0传阅中 passType=1传阅完成
 				//调用接口方法 
-				String methodName = "";
-				//public String Login(String userName, String passwd)
-				Object [] paramArr = new Object[]{};
+				String methodName = "getDbsxList";
+				//public String getDbsxList(String userId, String passwd) 
+				Object [] paramArr = new Object[]{userid,password};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
@@ -918,39 +1004,44 @@ public class NetOaAction extends BaseAction{
 		jo.put("title", "");
 		jo.put("createDate", "");
 		jo.put("activityName", "");
+		jo.put("taskId","false");
+		jo.put("signalName","false");
+		jo.put("type","");
+		jo.put("boxstatus",false);
+		jo.put("userquery",false);
 		jo.put("data", new JSONArray());
 		jo.put("accessories", new JSONArray());
 		//访问oa的url
-		String accessUrl = "aa";
+		String accessUrl = OAURL + "/FlowServiceImpl";
 		StringBuffer url = new StringBuffer();
 		url.append(OAURL);
 		url.append(accessUrl);
 		try {
 			String userid = super.getRequest().getParameter("userid");
-//			String id = super.getRequest().getParameter("id");
 			String taskid = super.getRequest().getParameter("taskid");
 			String password = UserCheckMap.get(userid); 
+			String activityName = super.getRequest().getParameter("activityName");
 			if (userid != null && taskid != null && password != null) {
-				url.append("?");
-				url.append("userid="+HttpUtil.encodeUTF8(userid));
-//				url.append("&id="+HttpUtil.encodeUTF8(id));
-				url.append("&taskeid="+HttpUtil.encodeUTF8(taskid));
 				//调用接口方法 
-				String methodName = "";
-				//public String Login(String userName, String passwd)
-				Object [] paramArr = new Object[]{};
+				String methodName = "getDbsxDetail";
+				//public String getDbsxDetail(String userId, String passwd,String activityName, String taskId)
+				Object [] paramArr = new Object[]{userid,password,activityName,taskid};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
 				jo = backJsonObejct;
 			} 
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 			jo.put("success", true);
 			jo.put("title", "22222222222(待审批)");
 			jo.put("createDate", "2011-07-22 12:10:00");
 			jo.put("activityName", "发文核稿");
 			jo.put("type", "0");
+			jo.put("id", "88");
+			jo.put("taskId", "100");
+			jo.put("signalName", "审核");
 			jo.put("boxstatus", false);
 			jo.put("userquery", false);
 			JSONArray jArrayD = new JSONArray();
@@ -962,14 +1053,14 @@ public class NetOaAction extends BaseAction{
 			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
 			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
 			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
-				jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
-				jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
-				jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
-				jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
-				jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
-				jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
-				jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
-				jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
+			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
+			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
+			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
+			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
+			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
+			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
+			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
+			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
 			jo.put("data", jArrayD);
 			JSONArray jArray = new JSONArray();
 			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
@@ -998,14 +1089,10 @@ public class NetOaAction extends BaseAction{
 		JSONObject jo = new JSONObject();
 		jo.put("success", false);
 		//访问oa的url
-		String accessUrl = "aa";
-		StringBuffer url = new StringBuffer();
-		url.append(OAURL);
-		url.append(accessUrl);
+		String accessUrl = OAURL + "/FlowServiceImpl";
 		try {
 			String userid = super.getRequest().getParameter("userid");
-//			String id = super.getRequest().getParameter("id");
-//			id != null
+			String id = super.getRequest().getParameter("id");
 			String commentDesc = super.getRequest().getParameter("commentDesc");
 			String taskId = super.getRequest().getParameter("taskid");
 			String activityName = super.getRequest().getParameter("activityName");
@@ -1014,19 +1101,13 @@ public class NetOaAction extends BaseAction{
 			String password = UserCheckMap.get(userid); 
 			//(1局长2分管局长3全有)
 			String checkboxvalue = super.getRequest().getParameter("checkboxvalue");
-			if (userid != null && commentDesc != null && taskId != null && password != null) {
-				url.append("?");
-				url.append("userid="+HttpUtil.encodeUTF8(userid));
-//				url.append("&id="+HttpUtil.encodeUTF8(id));
-				url.append("&taskId="+HttpUtil.encodeUTF8(taskId));
-				url.append("&commentDesc="+HttpUtil.encodeUTF8(commentDesc));
-				url.append("&activityName="+HttpUtil.encodeUTF8(activityName));
-				url.append("&nextuser="+nextuser);
-				url.append("&checkboxvalue="+HttpUtil.encodeUTF8(checkboxvalue));
+			String signalName = super.getRequest().getParameter("signalName");
+			String gdlx = super.getRequest().getParameter("gdlx");
+			if (userid != null && commentDesc != null && taskId != null && password != null && signalName != null) {
 				//调用接口方法 
-				String methodName = "";
-				//public String Login(String userName, String passwd)
-				Object [] paramArr = new Object[]{};
+				String methodName = "saveProcessAndToNext";
+				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx)
+				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,null,gdlx};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
@@ -1034,6 +1115,7 @@ public class NetOaAction extends BaseAction{
 			} 
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		//输出json
 		printJson(jo);
@@ -1052,6 +1134,7 @@ public class NetOaAction extends BaseAction{
 		pw.append(jo.toString());
 		pw.flush();
 		pw.close();
+//		System.out.println(super.getRequest().getHeader("user-agent"));
 	}
 	
 	
@@ -1078,30 +1161,29 @@ public class NetOaAction extends BaseAction{
 	 * @param args void
 	 */
 	public static void main(String[] args) {
-			try {
-				//xfire提供的ws
-				String endpoint = "http://127.0.0.1:8080/HelloWebservice/services/HelloWebservice";
-				endpoint = "http://127.0.0.1:8080/axis4webservice/services/SayHello";
-		        Service service = new Service();
-		        Call call = (Call) service.createCall();
-		        call.setTargetEndpointAddress(new java.net.URL(endpoint));
-		        //要调用的方法名
-		        call.setOperationName("getName");
-		        int a = 1000;
-				List list = new ArrayList<String>();
+		try {
+			//xfire提供的ws
+			String endpoint = "http://127.0.0.1:8080/HelloWebservice/services/HelloWebservice";
+			endpoint = "http://127.0.0.1:8080/axis4webservice/services/SayHello";
+	        Service service = new Service();
+	        Call call = (Call) service.createCall();
+	        call.setTargetEndpointAddress(new java.net.URL(endpoint));
+	        //要调用的方法名
+	        call.setOperationName("getName");
+	        int a = 1000;
+			List list = new ArrayList<String>();
 //				list.add("hah");
 //				list.add("中文");
-				  //设置参数
+			  //设置参数
 //		           call.addParameter("message", XMLType.XSD_STRING, ParameterMode.IN);
 //		        //设置参数
 //		           call.setReturnType(XMLType.XSD_STRING);
-		        //要传入ws的参数注意参数不能多不能少
-				//"哈哈这个是用的"
-		        Object ret = call.invoke(new Object[] {"中文",200299});
-		        System.out.println(ret);
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		    }
-
+	        //要传入ws的参数注意参数不能多不能少
+			//"哈哈这个是用的"
+	        Object ret = call.invoke(new Object[] {"中文",200299});
+	        System.out.println(ret);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 }

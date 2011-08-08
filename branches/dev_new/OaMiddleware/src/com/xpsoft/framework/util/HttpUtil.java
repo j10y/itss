@@ -609,6 +609,72 @@ public final class HttpUtil {
 	}
 	
 	/**
+	 * 通过url读取json字符串
+	 * @Methods Name getJsonStringByUrl
+	 * @Create In Aug 2, 2011 By likang
+	 * @param url
+	 * @return
+	 * @throws Exception String
+	 */
+	public static String getJsonStringByUrl(String url) throws Exception {
+		 System.out.println(url);
+		 URL accessUrl = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) accessUrl.openConnection();  
+        conn.setDoOutput(true);  
+        conn.setUseCaches(false);  
+        conn.setDefaultUseCaches(false); 
+        //设置超时时间为5秒
+        conn.setConnectTimeout(5000);  
+        conn.getOutputStream();
+        conn.connect();  
+    	 InputStream inputStream = conn.getInputStream();  
+    	 //读回注意编码
+		 java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(inputStream,"UTF-8"));  
+		 String currentLine = "";  
+		 String backJsonString = "";  
+		 while ((currentLine = reader.readLine()) != null) {
+			backJsonString+=currentLine;  
+		 }
+		return backJsonString;
+	}
+	
+	/**
+	 * 将
+	 * a=1&name=李康&sex=1&desc=这是一个申请的网站&page=1&title=&dept=信息管理部
+	 * 转换为
+	 * 
+	 * @Methods Name encodeParamString
+	 * @Create In Aug 2, 2011 By Administrator
+	 * @param paramString
+	 * @return String
+	 */
+	public static String encodeParamString(String paramString) {
+		System.out.println(paramString);
+		String backString = "";
+		StringBuffer sb = new StringBuffer();
+		if (paramString != null) {
+			String [] paramArr = paramString.split("&");
+			for (int i = 0; i < paramArr.length; i++) {
+				String [] keyValueArr = paramArr[i].split("=");
+				if (keyValueArr.length == 2) {
+					sb.append(keyValueArr[0]);
+					sb.append("=");
+					sb.append(encodeUTF8(keyValueArr[1]));
+					sb.append("&");
+				} else {
+					sb.append(keyValueArr[0]);
+					sb.append("=");
+					sb.append("&");
+				}
+			}
+		}
+		if (sb.toString().endsWith("&")) {
+			backString = sb.toString().substring(0,sb.toString().length()-1);
+		}
+		return backString;
+	}
+	
+	/**
 	 * 通过webserice返回json对象
 	 * @Methods Name getWebserviceJsonStrByUrl
 	 * @Create In Jul 29, 2011 By likang
@@ -629,5 +695,23 @@ public final class HttpUtil {
 	        System.out.println("接收到：" + backJsonString);
 			backJsonObejct = JSONObject.fromObject(backJsonString);
 	    return backJsonObejct;
+	}
+	
+	/**
+	 * 剔出了<html>的标签 
+	 * @Methods Name clearHtml
+	 * @Create In Aug 5, 2011 By likang
+	 * @param source
+	 * @return String
+	 */
+	public static String clearHtml(String source) {
+		if (source != null) {
+			source = source.replaceAll("</?[^>]+>","");   //剔出了<html>的标签
+			source = source.replace("&nbsp;",""); 
+			return source;
+		} else {
+			return "";
+		}
+		
 	}
 }

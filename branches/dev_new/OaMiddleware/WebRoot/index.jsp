@@ -14,10 +14,7 @@
 	</script>
 		<title>User</title>
 	</head>
-	<body onload="a()">
-		<form action="${webpath}/test/testAction!add.action" method="post" >
-      	姓名：<input type="text" name="name">
-      	<input type="submit" value="提交">
-    </form>
+	<body>
+	${webpath}
 	</body>
 </html>
