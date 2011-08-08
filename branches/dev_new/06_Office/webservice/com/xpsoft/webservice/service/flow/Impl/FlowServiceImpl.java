@@ -568,7 +568,8 @@ public class FlowServiceImpl implements FlowService {
 				leaderRead.setErrandsRegister(errandsRegister);
 				leaderRead.setCreatetime(new Date());
 				leaderRead.setIsPass(LeaveLeaderRead.NOT_PASS);
-				leaderRead.setLeaderOpinion(commentDesc);
+				leaderRead.setLeaderOpinion("打回");
+				leaderRead.setCheckName(activityName);
 				leaderRead = leaveLeaderReadService.save(leaderRead);
 			} else if (processName.equals("发文流程") || processName.equals("请示报告")
 					|| processName.equals("发文流程-市局发文")||processName.equals("收文流程")
@@ -585,7 +586,8 @@ public class FlowServiceImpl implements FlowService {
 				leaderRead.setArchives(archives);
 				leaderRead.setCreatetime(new Date());
 				leaderRead.setIsPass(LeaderRead.NOT_PASS);
-				leaderRead.setLeaderOpinion(commentDesc);
+				leaderRead.setLeaderOpinion("打回");
+				leaderRead.setCheckName(activityName);
 				leaderReadService.save(leaderRead);
 			}
 			return "{success:true}";
@@ -661,6 +663,7 @@ public class FlowServiceImpl implements FlowService {
 				leaderRead.setCreatetime(new Date());
 				leaderRead.setIsPass(LeaveLeaderRead.IS_PASS);
 				leaderRead.setLeaderOpinion(commentDesc);
+				leaderRead.setCheckName(activityName);
 				leaderRead = leaveLeaderReadService.save(leaderRead);
 				this.parmap.put("leaderRead.readId", leaderRead.getReadId());
 				this.parmap.put("leaderRead.leaderOpinion", commentDesc);
@@ -684,6 +687,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
+					leaderRead.setCheckName(activityName);
 					leaderReadService.save(leaderRead);
 					this.parmap
 							.put("leaderRead.readId", leaderRead.getReadId());
@@ -706,6 +710,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
+					leaderRead.setCheckName(activityName);
 					leaderReadService.save(leaderRead);
 					this.parmap
 							.put("leaderRead.readId", leaderRead.getReadId());
@@ -800,6 +805,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
+					leaderRead.setCheckName(activityName);
 					leaderReadService.save(leaderRead);
 					this.parmap
 							.put("leaderRead.readId", leaderRead.getReadId());
@@ -850,6 +856,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
+					leaderRead.setCheckName(activityName);
 					leaderReadService.save(leaderRead);
 					this.parmap.put("handleOpinion", commentDesc);
 				} else if (activityName.equals("办公室主任批阅")) {
@@ -869,6 +876,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderRead.setCreatetime(new Date());
 					leaderRead.setIsPass(LeaderRead.IS_PASS);
 					leaderRead.setLeaderOpinion(commentDesc);
+					leaderRead.setCheckName(activityName);
 					leaderReadService.save(leaderRead);
 					this.parmap.put("handleOpinion", commentDesc);
 				} else if (activityName.equals("分管或主管领导批示")) {
