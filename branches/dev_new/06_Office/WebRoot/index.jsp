@@ -156,7 +156,7 @@
 			<div class="trl">
 				<a href="#" class="logo"><img alt="<%=AppUtil.getCompanyName()%>－－办公协同管理系统" src="<%=basePath%><%=AppUtil.getCompanyLogo()%>" />
 				</a>
-				<p>
+				<p style="font : bold 14px arial,tahoma,verdana,helvetica;">
 					欢迎您，<security:authentication property="principal.fullname"/>
 					<a href="<%=basePath%>/j_logout.do">注销</a>
 					<nobr><span id="nowTime"></span><span id="nowTime2"></span></nobr>
