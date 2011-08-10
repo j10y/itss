@@ -235,6 +235,7 @@ public class FlowServiceImpl implements FlowService {
 		}
 		String json = "{success:true,";
 		// ”0”,(0发文流程，1收文流程，2请假流程)
+		Gson gson = new Gson();
 		if (processName.equals("发文流程") || processName.equals("请示报告")
 				|| processName.equals("发文流程-市局发文")) {
 			String id = model.get("archives_archivesId").toString();
@@ -266,8 +267,7 @@ public class FlowServiceImpl implements FlowService {
 					+ "\"},";
 			json += "{label:\"签收部门\",value:\"" + archives.getRecDepNames()
 					+ "\"},";
-			json += "{label:\"内容\",value:\"" + archives.getShortContent()
-					+ "\"},";
+			json += "{label:\"内容\",value:" +( archives.getShortContent()!=null?gson.toJson( archives.getShortContent()):"\"\"") + "},";
 			for (ProcessForm pf : pformlist) {
 				if (!pf.getActivityName().equals("开始")) {
 					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
@@ -279,7 +279,7 @@ public class FlowServiceImpl implements FlowService {
 						FormData fd = foemdates.next();
 						if (fd.getIsShowed() == 1) {
 							json += "{label:\"" + fd.getFieldLabel()
-									+ "\",value:\"" + fd.getVal() + "\"},";
+									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
 						}
 					}
 				}
@@ -348,8 +348,7 @@ public class FlowServiceImpl implements FlowService {
 					+ "\"},";
 			json += "{label:\"秘密等级\",value:\"" + archives.getPrivacyLevel()
 					+ "\"},";
-			json += "{label:\"内容\",value:\"" + archives.getShortContent()
-					+ "\"},";
+			json += "{label:\"内容\",value:" +( archives.getShortContent()!=null?gson.toJson( archives.getShortContent()):"\"\"") + "},";
 			for (ProcessForm pf : pformlist) {
 				if (!pf.getActivityName().equals("开始")) {
 					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
@@ -361,7 +360,7 @@ public class FlowServiceImpl implements FlowService {
 						FormData fd = foemdates.next();
 						if (fd.getIsShowed() == 1) {
 							json += "{label:\"" + fd.getFieldLabel()
-									+ "\",value:\"" + fd.getVal() + "\"},";
+									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
 						}
 					}
 				}
@@ -407,8 +406,8 @@ public class FlowServiceImpl implements FlowService {
 					+ "\"},";
 			json += "{label:\"结束时间\",value:\"" + errandsRegister.getEndTime()
 					+ "\"},";
-			json += "{label:\"描述\",value:\"" + errandsRegister.getDescp()
-					+ "\"},";
+			
+			json += "{label:\"描述\",value:" +( errandsRegister.getDescp()!=null?gson.toJson( errandsRegister.getDescp()):"\"\"") + "},";
 			json += "{label:\"请假类型\",value:\""
 					+ errandsRegister.getLeaveTypeName() + "\"},";
 			for (ProcessForm pf : pformlist) {
@@ -422,7 +421,7 @@ public class FlowServiceImpl implements FlowService {
 						FormData fd = foemdates.next();
 						if (fd.getIsShowed() == 1) {
 							json += "{label:\"" + fd.getFieldLabel()
-									+ "\",value:\"" + fd.getVal() + "\"},";
+									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
 						}
 					}
 				}
@@ -504,7 +503,8 @@ public class FlowServiceImpl implements FlowService {
 		json += "{label:\"紧急程度\",value:\"" + archives.getUrgentLevel() + "\"},";
 		json += "{label:\"秘密等级\",value:\"" + archives.getPrivacyLevel()
 				+ "\"},";
-		json += "{label:\"内容\",value:\"" + archives.getShortContent() + "\"},";
+		Gson gson = new Gson();
+		json += "{label:\"内容\",value:" +( archives.getShortContent()!=null?gson.toJson( archives.getShortContent()):"\"\"") + "},";
 		if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
 			json = json.substring(0, json.length() - 1);
 		}
@@ -609,11 +609,11 @@ public class FlowServiceImpl implements FlowService {
 			String sql = "select app_user.* from user_role,app_role,app_user "
 					+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
 			if (checkboxvalue.equals("1")) {
-				sql += "and app_role.roleName='局长'";
+				sql += "and app_role.roleId="+AppUtil.getPropertity("role.leaderId");
 			} else if (checkboxvalue.equals("2")) {
-				sql += "and (app_role.roleName='副局长' or app_role.roleName='分管局长')";
+				sql += "and app_role.roleId="+AppUtil.getPropertity("role.proxyLeaderId");
 			} else if (checkboxvalue.equals("3")) {
-				sql += "and (app_role.roleName='副局长' or app_role.roleName='分管局长' or app_role.roleName='局长')";
+				sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId="+AppUtil.getPropertity("role.proxyLeaderId")+")";
 			}
 			List<Map> list = processRunService.findDataList(sql);
 			String flowAssignId = "";
@@ -626,6 +626,7 @@ public class FlowServiceImpl implements FlowService {
 				this.parmap.put("flowAssignId", flowAssignId);
 			}
 		}
+		
 		try {
 			if (processName.equals("请假-短") || processName.equals("请假-中")
 					|| processName.equals("请假-长")) {
