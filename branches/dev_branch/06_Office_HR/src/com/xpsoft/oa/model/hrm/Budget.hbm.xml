@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.hrm.Budget"
+        table="hr_bg_budget"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="budgetId"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        
+        <many-to-one name="belongDept" not-null="true" class="com.xpsoft.oa.model.system.Department" column="belongDept"></many-to-one>
+        
+        <property
+            name="beginDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="beginDate"
+        />
+        <property
+            name="endDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="endDate"
+        />
+        <property
+            name="remark"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="remark"
+        />
+        <property
+            name="createDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="createDate"
+        />
+        <many-to-one name="createPerson" not-null="true" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
+        <property
+            name="modifyDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="modifyDate"
+        />
+        <many-to-one name="modifyPerson" not-null="true" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
+        
+        <property
+            name="publishStatus"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="publishStatus"
+            length="32"
+            not-null="false"
+            unique="false"
+        />   
+    </class>
+</hibernate-mapping>

@@ -53,6 +53,7 @@
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/Ext.ux.grid.RowActions.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/DateTimeField.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/TabCloseMenu.js"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/TableFormLayout.js"></script>
 	
 		<script type="text/javascript" src="<%=basePath%>/js/core/SystemCalendar.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/core/TreeSelector.js"></script>

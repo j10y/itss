@@ -282,4 +282,5 @@
  <bean id="SystemLogAction" class="com.xpsoft.oa.action.system.SystemLogAction" scope="prototype"/>
 <!-- end:  Generated for SystemLog From Template: app-action.xml.beansvm  -->
   <bean id="AppTipsAction" class="com.xpsoft.oa.action.info.AppTipsAction" scope="prototype"/>
+  <bean id="BudgetAction" class="com.xpsoft.oa.action.hrm.BudgetAction" scope="prototype"/>
 </beans>

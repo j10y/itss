@@ -517,4 +517,7 @@
      <bean id="appTipsService" class="com.xpsoft.oa.service.info.impl.AppTipsServiceImpl">
      	<constructor-arg index="0" ref="appTipsDao"/>
      </bean>
+     <bean id="budgetService" class="com.xpsoft.oa.service.hrm.impl.BudgetServiceImpl">
+     	<constructor-arg index="0" ref="budgetDao"/>
+     </bean>
 </beans>

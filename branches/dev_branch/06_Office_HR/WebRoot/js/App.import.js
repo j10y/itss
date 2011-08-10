@@ -343,5 +343,7 @@ App.importJs = {
 	SystemLogView : [ __ctxPath + "/js/system/SystemLogView.js" ],
 	MyProcessRunView : [ __ctxPath + "/js/flow/MyProcessRunView.js",
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
-	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ]
+	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
+	BudgetView : [ __ctxPath + "/js/budget/BudgetView.js",
+	        			__ctxPath + "/js/budget/BudgetForm.js" ]
 };

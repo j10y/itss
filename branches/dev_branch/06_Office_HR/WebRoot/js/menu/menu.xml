@@ -1421,5 +1421,26 @@
 				<url>/hrm/listResume.do</url>
 			</Function>
 		</Item>
+		<Items id="Budget" text="预算管理" iconCls="menu-budget"
+			isPublic="false">
+			<Item id="BudgetView" text="预算管理" iconCls="menu-budget">
+			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
+			       <url>/budget/listBudget.do</url>
+			    </Function>
+			    <Function id="_BudgetAdd" text="添加" iconCls="menu-add">
+			       <url>/budget/listBudget.do</url>
+			       <url>/budget/saveBudget.do</url>
+			    </Function>
+			    <Function id="_BudgetEdit" text="编辑" iconCls="btn-edit">
+			       <url>/budget/listBudget.do</url>
+			       <url>/budget/saveBudget.do</url>
+			       <url>/budget/getBudget.do</url>
+			    </Function>
+			    <Function id="_BudgetDel" text="删除" iconCls="menu-del">
+			       <url>/budget/listBudget.do</url>
+			       <url>/budget/multiDelBudget.do</url>
+			    </Function>
+			</Item>
+		</Items>
 	</Items>
 </Menus>
