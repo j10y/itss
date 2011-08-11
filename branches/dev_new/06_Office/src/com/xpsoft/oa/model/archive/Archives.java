@@ -37,6 +37,7 @@ public class Archives extends BaseModel {
 	 * 5:
 	 * 6:
 	 * 7:归档结束
+	 * 9:编号
 	 * 
  	 *   请示报告
 	 * 0:草稿
