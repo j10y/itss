@@ -520,4 +520,7 @@
      <bean id="budgetService" class="com.xpsoft.oa.service.hrm.impl.BudgetServiceImpl">
      	<constructor-arg index="0" ref="budgetDao"/>
      </bean>
+     <bean id="budgetItemService" class="com.xpsoft.oa.service.hrm.impl.BudgetItemServiceImpl">
+     	<constructor-arg index="0" ref="budgetItemDao"/>
+     </bean>
 </beans>

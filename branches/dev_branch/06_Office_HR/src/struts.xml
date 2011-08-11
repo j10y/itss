@@ -362,6 +362,9 @@
 		<action name="*Budget" class="BudgetAction" method="{1}">
 		   <result>${successResultValue}</result>
 		</action>
+		<action name="*BudgetItem" class="BudgetItemAction" method="{1}">
+		   <result>${successResultValue}</result>
+		</action>
 	</package>
  	<package name="default" extends="struts-default">
 		<default-action-ref name="defaultAction"/>

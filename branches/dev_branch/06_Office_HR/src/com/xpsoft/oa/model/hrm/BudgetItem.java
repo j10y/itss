@@ -15,13 +15,13 @@ public class BudgetItem extends BaseModel{
 	protected Long budgetItemId;
 	protected Budget budget;
 	
-	protected String code;
-	protected String  name;
-	protected String key;
-	protected Double value;
-	protected Double threshold;
-	protected BudgetItem parent;
-	protected Integer deleteFlag;
+	protected String code;//编号
+	protected String  name;//名称
+	protected String key;//缩写 key为mysql的关键字
+	protected Double value;//预算金额 value为mysql的关键字
+	protected Double threshold;//控制阀值
+	protected BudgetItem parent;//父
+	protected Integer deleteFlag;//删除标记 0未删除 1删除
 	
 	public Long getBudgetItemId() {
 		return budgetItemId;

@@ -6,23 +6,36 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.google.gson.annotations.Expose;
 import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 
 public class Budget extends BaseModel{
 	
+	@Expose
 	protected Long budgetId;
+	@Expose
 	protected String  name;
+	@Expose
 	protected Department belongDept;
+	@Expose
 	protected Date beginDate;
+	@Expose
 	protected Date endDate;
+	@Expose
 	protected String remark;
+	@Expose
 	protected Date createDate;
+	@Expose
 	protected AppUser createPerson;
+	@Expose
 	protected Date modifyDate;
+	@Expose
 	protected AppUser modifyPerson;
+	@Expose
 	protected Integer publishStatus;
+	
 	public Long getBudgetId() {
 		return budgetId;
 	}
@@ -95,7 +108,7 @@ public class Budget extends BaseModel{
 		return new HashCodeBuilder(-82280557, -700257973)
 	       .append(this.budgetId)
 	       .append(this.name)
-	       .append(this.belongDept)
+	       .append(this.getBelongDept())
 	       .append(this.beginDate)
 	       .append(this.endDate)
 	       .append(this.createDate)
@@ -115,7 +128,7 @@ public class Budget extends BaseModel{
 		return new EqualsBuilder()
 			.append(this.budgetId, rhs.budgetId)
 			.append(this.name, rhs.name)
-			.append(this.belongDept, rhs.belongDept)
+			.append(this.getBelongDept(), rhs.getBelongDept())
 			.append(this.beginDate, rhs.beginDate)
 			.append(this.endDate, rhs.endDate)
 			.append(this.createDate, rhs.createDate)
@@ -131,7 +144,7 @@ public class Budget extends BaseModel{
 		return new ToStringBuilder(this)
 			.append("budgetId", this.budgetId)
 			.append("name", this.name)
-			.append("department", this.belongDept.getDepName())
+			.append("department", this.getBelongDept().getDepName())
 			.append("beginDate", this.beginDate)
 			.append("endDate", this.endDate)
 			.append("createDate", this.createDate)
@@ -142,4 +155,6 @@ public class Budget extends BaseModel{
 			.append("publishStatus", this.publishStatus)
 			.toString();
 	}
+
+	
 }

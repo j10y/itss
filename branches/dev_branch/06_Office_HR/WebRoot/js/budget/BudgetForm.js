@@ -7,56 +7,109 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			id : "BudgetFormWin",
 			layout : "border",
 			scope : this,
-			items : [this.leftTypePanel,this.itemFormPanel, {xtype:'container', height:100, region:'north', items: this.mainFormPanel}],
-			//modal : true,
-			//height : 400,
-			//iconCls : "menu-arch-rec-type",
-			//width : 600,
+//			items : [this.leftTypePanel,this.itemFormPanel, {xtype:'container', height:150, region:'north', items: this.mainFormPanel}],
+			items : [this.leftTypePanel,this.itemFormPanel, this.mainFormPanel],
 			maximizable : true,
-			title : "预算详细信息"/*,
-			buttonAlign : "center",
-			buttons : this.buttons*/
+			title : "预算详细信息"
 		});
 	},
 	initUIComponents : function() {
 		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
-		var b = new TreeSelector("BudgetForm.depName", a, "所属部门", "belongDept.depId",
+		var b = new TreeSelector("BudgetForm.depName", a, "所属部门", "budget.depId",
 				false);
 		
 		/**
 		 * 预算主panel
 		 */
 		this.mainFormPanel = new Ext.FormPanel({
+			id:"mainFormPanel",
+			region:"north",
+			title:"预算基本信息",
 			layout : "tableform",
 			layoutConfig:{
 				columns:2
 			},
-			height:100,
+			height:150,
 			frame:true,
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
 			url : __ctxPath + "/budget/saveBudget.do",
-			id : "BudgetForm1",
 			defaults : {
 				anchor : "98%,98%"
 			},
 			defaultType : "textfield",
+			reader : new Ext.data.JsonReader({
+				root : "data"
+			}, [ {
+				name : "budget.budgetId",
+				mapping : "budgetId"
+			}, {
+				name : "budget.belongDept.depId",
+				mapping : "belongDept.depId"
+			}, {
+				name : "budget.depId",
+				mapping : "belongDept.depId"
+			}, {
+				name : "budget.name",
+				mapping : "name"
+			},  {
+				name : "budget.beginDate",
+				mapping : "beginDate"
+			}, {
+				name : "budget.endDate",
+				mapping : "endDate"
+			} ]),
 			items : [ {
 				name : "budget.budgetId",
-				id : "budgetId1",
+				id : "budget.budgetId",
 				xtype : "hidden",
 				value : this.budgetId == null ? "" : this.budgetId
 			}, {
 				xtype : "hidden",
 				name : "budget.belongDept.depId",
-				id : "belongDept.depId1"
+				id : "budget.belongDept.depId"
 			}, {
-				fieldLabel : "名称",
+				fieldLabel : "预算名称",
 				allowBlank : false,
 				name : "budget.name",
-				id : "name1"
-			}, b ]
+				id : "budget.name"
+			}, b 
+			, {
+				fieldLabel : "起始时间",
+				allowBlank : false,
+				name : "budget.beginDate",
+				id : "budget.beginDate",
+				xtype:"datefield",
+				format:"Y-m-d"
+			},{
+				fieldLabel : "结束时间",
+				allowBlank : false,
+				name : "budget.endDate",
+				id : "budget.endDate",
+				xtype:"datefield",
+				format:"Y-m-d"
+			}],
+			buttonAlign : "right",
+			buttons : [{
+				text : "提交",
+				iconCls : "btn-submit",
+				handler : this.submit.createCallback(this)
+			},{
+				text : "保存",
+				iconCls : "btn-save",
+				handler : this.save.createCallback(this)
+			}, {
+				text : "重置",
+				iconCls : "btn-reset",
+				handler : this.reset.createCallback(this)
+			}/*, {
+				text : "取消",
+				iconCls : "btn-cancel",
+				handler : this.cancel.createCallback(this)
+			}*/]
+			
 		});
+		
 		
 		/**
 		 * 成本要素详细信息
@@ -67,33 +120,61 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			region: 'center',
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/budget/saveBudget.do",
+			url : __ctxPath + "/budget/saveBudgetItem.do",
 			id : "BudgetForm",
 			defaults : {
 				anchor : "98%,98%"
 			},
 			defaultType : "textfield",
 			items : [ {
-				name : "budget.budgetId",
-				id : "budgetId",
+				name : "budgetItem.budgetItemId",
+				id : "budgetItemId",
 				xtype : "hidden",
-				value : this.budgetId == null ? "" : this.budgetId
+				value : this.budgetItemId == null ? "" : this.budgetItemId
 			}, {
 				xtype : "hidden",
-				name : "budget.belongDept.depId",
-				id : "belongDept.depId"
+				name : "budgetItem.budget.budgetId",
+				id : "budget.budgetId"
 			}, {
-				fieldLabel : "名称",
+				fieldLabel : "成本要素名称",
 				allowBlank : false,
-				name : "budget.name",
+				name : "budgetItem.name",
 				id : "name"
-			}, b ]
+			}, {
+				fieldLabel : "成本要素编号",
+				allowBlank : false,
+				name : "budgetItem.code",
+				id : "code"
+			}, {
+				fieldLabel : "成本要素缩写",
+				allowBlank : false,
+				name : "budgetItem.key",
+				id : "key"
+			}, {
+				fieldLabel : "预算金额",
+				allowBlank : false,
+				name : "budgetItem.value",
+				id : "value"
+			}, {
+				fieldLabel : "控制阀值",
+				allowBlank : false,
+				name : "budgetItem.threshold",
+				id : "threshold"
+			}, {
+				xtype : "hidden",
+				name : "budgetItem.parent.budgetItemId",
+				id : "parent.budgetItemId"
+			}, {
+				xtype : "hidden",
+				name : "budgetItem.deleteFlag",
+				id : "deleteFlag"
+			} ]
 		});
 		
 		
 		
 		if (this.budgetId != null && this.budgetId != "undefined") {
-			this.formPanel.getForm().load(
+			this.mainFormPanel.getForm().load(
 					{
 						deferredRender : false,
 						url : __ctxPath
@@ -101,12 +182,15 @@ BudgetForm = Ext.extend(Ext.Panel, {
 								+ this.budgetId,
 						waitMsg : "正在载入数据...",
 						success : function(c, d) {
+							alert(Ext.encode(d.result.data));
+							return;
 							var e = d.result.data.department;
 							Ext.getCmp("BudgetForm.depName").setValue(
 									e.depName);
 							Ext.getCmp("depId").setValue(e.depId);
 						},
 						failure : function(c, d) {
+							
 						}
 					});
 		}
@@ -126,9 +210,9 @@ BudgetForm = Ext.extend(Ext.Panel, {
 		} ];
 		
 		var b = [];
-		if (isGranted("_ArchivesTypeAdd")) {
+		if (isGranted("_BudgetItemAdd")) {
 			b.push({
-				text : "新建分类",
+				text : "新建子成本要素",
 				scope : this,
 				iconCls : "btn-add",
 				handler : function() {
@@ -136,9 +220,9 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				}
 			});
 		}
-		if (isGranted("_ArchivesTypeEdit")) {
+		if (isGranted("_BudgetItemEdit")) {
 			b.push({
-				text : "修改分类",
+				text : "修改成本要素",
 				scope : this,
 				iconCls : "btn-edit",
 				handler : function() {
@@ -148,9 +232,9 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				}
 			});
 		}
-		if (isGranted("_ArchivesTypeDel")) {
+		if (isGranted("_BudgetItemDel")) {
 			b.push({
-				text : "删除分类",
+				text : "删除删除",
 				scope : this,
 				iconCls : "btn-delete",
 				handler : function() {
@@ -175,15 +259,16 @@ BudgetForm = Ext.extend(Ext.Panel, {
 		}
 		this.leftTypePanel = new xpsoft.ux.TreePanelEditor({
 			region : "west",
-			id : "archivesTypeTree",
+			id : "budgetItemTree",
 			title : "成本要素",
 			collapsible : true,
 			split : true,
 			width : 200,
-			url : __ctxPath + "/archive/treeArchivesType.do",
+			url : __ctxPath + "/budget/treeBudgetItem.do",
 			scope : this,
 			onclick : function(e) {
-				var d = e.id;
+				alert("获取详细信息！");
+				/*var d = e.id;
 				if (e.id == 0) {
 					a.setTitle("所有模板");
 					d = null;
@@ -192,9 +277,9 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				}
 				a.setTypeId(e.id);
 				var c = a.gridPanel.getStore();
-				c.url = __ctxPath + "/archive/listArchTemplate.do";
+				c.url = __ctxPath + "/budget/listBudgetItem.do";
 				c.baseParams = {
-					"Q_archivesType.typeId_L_EQ" : d
+					"Q_budgetItem.budgetItemId_L_EQ" : d
 				};
 				c.params = {
 					start : 0,
@@ -205,7 +290,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 						start : 0,
 						limit : 25
 					}
-				});
+				});*/
 			},
 			contextMenuItems : b
 		});
@@ -216,9 +301,9 @@ BudgetForm = Ext.extend(Ext.Panel, {
 	cancel : function(a) {
 		a.close();
 	},
-	save : function(a, b) {
-		if (a.getForm().isValid()) {
-			a.getForm().submit({
+	save : function(a) {
+		if (a.mainFormPanel.getForm().isValid()) {
+			a.mainFormPanel.getForm().submit({
 				method : "POST",
 				waitMsg : "正在提交数据...",
 				success : function(c, e) {
@@ -227,7 +312,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 					if (d != null) {
 						d.getStore().reload();
 					}
-					b.close();
+					a.close();
 				},
 				failure : function(c, d) {
 					Ext.MessageBox.show({
@@ -236,9 +321,13 @@ BudgetForm = Ext.extend(Ext.Panel, {
 						buttons : Ext.MessageBox.OK,
 						icon : Ext.MessageBox.ERROR
 					});
-					b.close();
+					a.close();
 				}
 			});
 		}
+	},
+	submit : function(a, b) {
+		
+		
 	}
 });

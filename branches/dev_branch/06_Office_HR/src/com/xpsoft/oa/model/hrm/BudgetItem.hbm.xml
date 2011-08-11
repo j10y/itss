@@ -54,7 +54,7 @@
             update="true"
             insert="true"
             access="property"
-            column="ctrlvalue"
+            column="budgetvalue"
         />
         <property
             name="threshold"

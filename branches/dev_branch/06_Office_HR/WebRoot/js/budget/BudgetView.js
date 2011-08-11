@@ -65,7 +65,13 @@ BudgetView = Ext.extend(Ext.Panel, {
 			}, "name", {
 				name : "depName",
 				mapping : "belongDept.depName"
-			} ]
+			}, "beginDate" 
+			, "endDate" 
+			, "createDate"
+			, "createPerson", {
+				name : "createPerson",
+				mapping : "createPerson.fullname"
+			}]
 		});
 		this.store.setDefaultSort("budgetId", "desc");
 		this.store.load({
@@ -106,7 +112,19 @@ BudgetView = Ext.extend(Ext.Panel, {
 			}, {
 				header : "所属部门",
 				dataIndex : "depName"
-			}, this.rowActions ],
+			}, {
+				header : "开始时间",
+				dataIndex : "beginDate"
+			}, {
+				header : "结束时间",
+				dataIndex : "endDate"
+			}, {
+				header : "创建人",
+				dataIndex : "createPerson"
+			}, {
+				header : "创建时间",
+				dataIndex : "createDate"
+			}, this.rowActions ], 
 			defaults : {
 				sortable : true,
 				menuDisabled : false,
@@ -121,7 +139,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (isGranted("_BudgetAdd")) {
 			this.topbar.add({
 				iconCls : "btn-add",
-				text : "添加分类",
+				text : "添加预算",
 				xtype : "button",
 				handler : this.createRecord
 			});
@@ -129,7 +147,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (isGranted("_BudgetDel")) {
 			this.topbar.add({
 				iconCls : "btn-del",
-				text : "删除分类",
+				text : "删除预算",
 				xtype : "button",
 				handler : this.delRecords,
 				scope : this
@@ -225,10 +243,17 @@ BudgetView = Ext.extend(Ext.Panel, {
 		}
 		this.delByIds(d);
 	},
-	editRecord : function(a) {
-		new BudgetForm({
-			budgetId : a.data.budgetId
-		}).show();
+	editRecord : function(l) {		
+		var a = Ext.getCmp("centerTabPanel");
+		var b = Ext.getCmp("BudgetFormWin");
+		if (b != null) {
+			a.remove("BudgetFormWin");
+		}
+		b = new BudgetForm({
+			budgetId : l.data.budgetId
+		});
+		a.add(b);
+		a.activate(b);
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch (d) {

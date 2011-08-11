@@ -22,6 +22,16 @@
             <generator class="native"/>
         </id>
         
+        <property
+            name="name"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="name"
+            not-null="true"
+        />
+        
         <many-to-one name="belongDept" not-null="true" class="com.xpsoft.oa.model.system.Department" column="belongDept"></many-to-one>
         
         <property
@@ -65,7 +75,7 @@
             access="property"
             column="modifyDate"
         />
-        <many-to-one name="modifyPerson" not-null="true" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
+        <many-to-one name="modifyPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
         
         <property
             name="publishStatus"

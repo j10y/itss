@@ -295,4 +295,5 @@
 <!-- end:  Generated for SystemLog From Template: app-dao.xml.beansvm  -->
     <bean id="appTipsDao" class="com.xpsoft.oa.dao.info.impl.AppTipsDaoImpl" parent="baseDao"/>
     <bean id="budgetDao" class="com.xpsoft.oa.dao.hrm.impl.BudgetDaoImpl" parent="baseDao"/>
+    <bean id="budgetItemDao" class="com.xpsoft.oa.dao.hrm.impl.BudgetItemDaoImpl" parent="baseDao"/>
 </beans>

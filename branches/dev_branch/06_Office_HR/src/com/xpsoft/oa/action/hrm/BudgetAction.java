@@ -1,12 +1,17 @@
 package com.xpsoft.oa.action.hrm;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.Budget;
+import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.BudgetService;
 
 import flexjson.JSONSerializer;
@@ -35,22 +40,24 @@ public class BudgetAction extends BaseAction {
 	}
 
 	public String list() {
-		/* 55 */QueryFilter filter = new QueryFilter(getRequest());
-		/* 56 */List list = this.budgetService.getAll(filter);
+		QueryFilter filter = new QueryFilter(getRequest());
+		List list = this.budgetService.getAll(filter);
 
-		/* 59 */StringBuffer buff = new StringBuffer(
-				"{success:true,'totalCounts':")
-		/* 60 */.append(filter.getPagingBean().getTotalItems()).append(
-				",result:");
+		StringBuffer buff = new StringBuffer(
+			"{success:true,'totalCounts':")
+			.append(filter.getPagingBean().getTotalItems()).append(
+			",result:");
 
-		/* 64 */JSONSerializer serializer = new JSONSerializer();
-		/* 65 */buff.append(serializer.exclude(new String[] { "class" })
-				.serialize(list));
-		/* 66 */buff.append("}");
+//		JSONSerializer serializer = new JSONSerializer();
+		JSONSerializer serializer = JsonUtil
+		.getJSONSerializer(new String[] { "beginDate", "endDate", "createDate", "modifyDate" });
+		buff.append(serializer.exclude(new String[] { "class" })
+			.serialize(list));
+		buff.append("}");
 
-		/* 68 */this.jsonString = buff.toString();
+		this.jsonString = buff.toString();
 
-		/* 70 */return "success";
+		return "success";
 	}
 
 	public String combo() {
@@ -83,24 +90,33 @@ public class BudgetAction extends BaseAction {
 	}
 
 	public String get() {
-		/* 113 */Budget budget = (Budget) this.budgetService.get(this.budgetId);
+		Budget budget = (Budget) this.budgetService.get(this.budgetId);
 
-		/* 117 */StringBuffer sb = new StringBuffer("{success:true,data:");
+		StringBuffer sb = new StringBuffer("{success:true,totalCounts:1,data:[");
 
-		/* 119 */JSONSerializer serializer = new JSONSerializer();
-		/* 120 */sb
-				.append(serializer.exclude(
+		//JSONSerializer serializer = new JSONSerializer();
+		JSONSerializer serializer = JsonUtil
+		.getJSONSerializer(new String[] { "beginDate", "endDate", "createDate", "modifyDate" });
+		sb.append(serializer.exclude(
 						new String[] { "class", "department.class" })
 						.serialize(budget));
-		/* 121 */sb.append("}");
-		/* 122 */setJsonString(sb.toString());
-
-		/* 124 */return "success";
+		sb.append("]}");
+		setJsonString(sb.toString());
+		return "success";
 	}
 
 	public String save() {
-		/* 130 */this.budgetService.save(this.budget);
-		/* 131 */setJsonString("{success:true}");
-		/* 132 */return "success";
+		AppUser user = ContextUtil.getCurrentUser();
+		if(this.budget.getBudgetId()!=null){
+			this.budget.setModifyDate(new Date());
+			this.budget.setModifyPerson(user);
+		}else{
+			this.budget.setCreateDate(new Date());
+			this.budget.setCreatePerson(user);
+		}
+		this.budget.setBelongDept(new Department(Long.valueOf(getRequest().getParameter("budget.belongDept.depId"))));
+		this.budgetService.save(this.budget);
+		setJsonString("{success:true}");
+		return "success";
 	}
 }
