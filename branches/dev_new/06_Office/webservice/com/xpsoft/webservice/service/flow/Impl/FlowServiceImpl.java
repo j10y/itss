@@ -721,8 +721,13 @@ public class FlowServiceImpl implements FlowService {
 							.put("leaderRead.readId", leaderRead.getReadId());
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
 					this.parmap.put("archives.archivesId", id);
+				}else if (activityName.equals("编号录入")) {
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
+					archives.setStatus(Short.valueOf(Short.parseShort("4")));
+					archivesService.save(archives);
 				} else if (activityName.equals("局长审核")
-						|| activityName.equals("编号盖章分发")) {
+						|| activityName.equals("盖章分发")) {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
 					String depIds = archives.getRecDepIds();
@@ -817,7 +822,7 @@ public class FlowServiceImpl implements FlowService {
 					this.parmap.put("leaderRead.leaderOpinion", commentDesc);
 					this.parmap.put("archives.archivesId", id);
 				} else if (activityName.equals("办公室主任承办")) {
-					String archivesStatus = "4";
+					String archivesStatus = "9";
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
 					if (StringUtils.isNotEmpty(archivesStatus)) {
