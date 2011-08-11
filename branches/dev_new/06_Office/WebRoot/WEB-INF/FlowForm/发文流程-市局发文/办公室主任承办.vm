@@ -135,7 +135,7 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 						id : 'attendId',
 						xtype : 'hidden'
 					},{
-						fieldLabel : '校对意见',
+						fieldLabel : '承办意见',
 						name : 'archivesAttend.memo',
 						xtype:'textarea',
 						id : 'memo'
@@ -150,7 +150,7 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 					},{
 						name : 'archivesStatus',
 						xtype : 'hidden',
-						value : 4 //6代表公文状态为已校对,待发文中
+						value : 9 //6代表公文状态为已校对,待发文中
 					}]
 		});
 	}// end of init
