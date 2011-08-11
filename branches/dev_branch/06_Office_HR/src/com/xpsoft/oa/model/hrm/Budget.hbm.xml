@@ -61,12 +61,12 @@
         <property
             name="createDate"
             type="java.util.Date"
-            update="true"
+            update="false"
             insert="true"
             access="property"
             column="createDate"
         />
-        <many-to-one name="createPerson" not-null="true" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
+        <many-to-one name="createPerson" not-null="true" update="false" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
         <property
             name="modifyDate"
             type="java.util.Date"

@@ -15,7 +15,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 	},
 	initUIComponents : function() {
 		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
-		var b = new TreeSelector("BudgetForm.depName", a, "所属部门", "budget.depId",
+		var b = new TreeSelector("budget.belongDept.depName", a, "所属部门", "budget.belongDept.depId",
 				false);
 		
 		/**
@@ -47,12 +47,15 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				name : "budget.belongDept.depId",
 				mapping : "belongDept.depId"
 			}, {
+				name : "budget.belongDept.depName",
+				mapping : "belongDept.depName"
+			}, {
 				name : "budget.depId",
 				mapping : "belongDept.depId"
 			}, {
 				name : "budget.name",
 				mapping : "name"
-			},  {
+			}, {
 				name : "budget.beginDate",
 				mapping : "beginDate"
 			}, {
@@ -80,14 +83,16 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				name : "budget.beginDate",
 				id : "budget.beginDate",
 				xtype:"datefield",
-				format:"Y-m-d"
+				format:"Y-m-d",
+				length:50
 			},{
 				fieldLabel : "结束时间",
 				allowBlank : false,
 				name : "budget.endDate",
 				id : "budget.endDate",
 				xtype:"datefield",
-				format:"Y-m-d"
+				format:"Y-m-d",
+				length:50
 			}],
 			buttonAlign : "right",
 			buttons : [{
@@ -134,7 +139,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			}, {
 				xtype : "hidden",
 				name : "budgetItem.budget.budgetId",
-				id : "budget.budgetId"
+				id : "budgetItem.budgetId"
 			}, {
 				fieldLabel : "成本要素名称",
 				allowBlank : false,
@@ -216,7 +221,14 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				scope : this,
 				iconCls : "btn-add",
 				handler : function() {
-					new ArchivesTypeForm().show();
+					//首先校验是否已经保存预算主数据
+					var budgetId = Ext.getCmp("budget.budgetId").getValue();
+					if(budgetId==null || budgetId=="" || budgetId==undefined|| budgetId==0){
+						Ext.ux.Toast.msg("操作信息", "请首先保存预算基本信息！");
+					}else{
+						new BudgetItemWin({budgetId : budgetId,parentBudgetItemId : Ext.getCmp("budgetItemTree").selectedNode.id}).show();
+					}
+					
 				}
 			});
 		}
@@ -226,9 +238,19 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				scope : this,
 				iconCls : "btn-edit",
 				handler : function() {
-					new ArchivesTypeForm({
-						typeId : this.leftTypePanel.selectedNode.id
-					}).show();
+					//首先校验是否已经保存预算主数据
+					var selectedNode = Ext.getCmp("budgetItemTree").selectedNode.id;
+					if(selectedNode==0){
+						Ext.ux.Toast.msg("操作信息", "根节点【" + Ext.getCmp("budgetItemTree").selectedNode.text + "】不可以修改！");
+					}else{
+						//load
+						var budgetId = Ext.getCmp("budget.budgetId").getValue();
+						if(budgetId==null || budgetId=="" || budgetId==undefined|| budgetId==0){
+							Ext.ux.Toast.msg("操作信息", "请首先保存预算基本信息！");
+						}else{
+							new BudgetItemWin({budgetId : budgetId,parentBudgetItemId : Ext.getCmp("budgetItemTree").selectedNode.id}).show();
+						}
+					}
 				}
 			});
 		}
@@ -264,7 +286,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			collapsible : true,
 			split : true,
 			width : 200,
-			url : __ctxPath + "/budget/treeBudgetItem.do",
+			url : __ctxPath + "/budget/treeBudgetItem.do?budgetId=" + (this.budgetId == null ? "0" : this.budgetId),
 			scope : this,
 			onclick : function(e) {
 				alert("获取详细信息！");
@@ -296,7 +318,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 		});
 	},
 	reset : function(a) {
-		a.getForm().reset();
+		a.mainFormPanel.getForm().reset();
 	},
 	cancel : function(a) {
 		a.close();
@@ -307,6 +329,9 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				method : "POST",
 				waitMsg : "正在提交数据...",
 				success : function(c, e) {
+					var data = Ext.decode(e.response.responseText);
+					Ext.getCmp("budget.budgetId").setValue(data.budgetId);
+					alert(Ext.getCmp("budget.budgetId").getValue());
 					Ext.ux.Toast.msg("操作信息", "成功保存信息！");
 					var d = Ext.getCmp("BudgetGrid");
 					if (d != null) {

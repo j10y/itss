@@ -65,7 +65,7 @@
             column="threshold"
         />
         
-        <many-to-one name="parent" not-null="true" class="com.xpsoft.oa.model.hrm.BudgetItem" column="parentId"></many-to-one>
+        <many-to-one name="parent" not-null="false" class="com.xpsoft.oa.model.hrm.BudgetItem" column="parentId"></many-to-one>
         
         <property
             name="deleteFlag"

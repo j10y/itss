@@ -345,5 +345,6 @@ App.importJs = {
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
 	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
 	BudgetView : [ __ctxPath + "/js/budget/BudgetView.js",
-	        			__ctxPath + "/js/budget/BudgetForm.js" ]
+	        			__ctxPath + "/js/budget/BudgetForm.js",
+	        			__ctxPath + "/js/budget/BudgetItemWin.js" ]
 };

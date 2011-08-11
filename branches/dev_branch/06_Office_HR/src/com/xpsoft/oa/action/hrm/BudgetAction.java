@@ -101,7 +101,7 @@ public class BudgetAction extends BaseAction {
 						new String[] { "class", "department.class" })
 						.serialize(budget));
 		sb.append("]}");
-		setJsonString(sb.toString());
+		setJsonString(sb.toString().replaceAll("\\s[\\d]{2}:[\\d]{2}:[\\d]{2}", ""));
 		return "success";
 	}
 
@@ -110,13 +110,17 @@ public class BudgetAction extends BaseAction {
 		if(this.budget.getBudgetId()!=null){
 			this.budget.setModifyDate(new Date());
 			this.budget.setModifyPerson(user);
+			//创建人和创建时间永远不变
+//			Budget budget = this.budgetService.get(this.budget.getBudgetId());
+//			this.budget.setCreateDate(budget.getCreateDate());
+//			this.budget.setCreatePerson(budget.getCreatePerson());
 		}else{
 			this.budget.setCreateDate(new Date());
 			this.budget.setCreatePerson(user);
 		}
 		this.budget.setBelongDept(new Department(Long.valueOf(getRequest().getParameter("budget.belongDept.depId"))));
 		this.budgetService.save(this.budget);
-		setJsonString("{success:true}");
+		setJsonString("{success:true,budgetId:'" + budget.getBudgetId() + "'}");
 		return "success";
 	}
 }

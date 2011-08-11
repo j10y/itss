@@ -1,13 +1,18 @@
 package com.xpsoft.oa.action.hrm;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.oa.model.archive.ArchivesType;
+import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
+import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.BudgetItemService;
 
 import flexjson.JSONSerializer;
@@ -100,14 +105,38 @@ public class BudgetItemAction extends BaseAction {
 	}
 
 	public String save() {
-		/* 130 */this.budgetItemService.save(this.budgetItem);
-		/* 131 */setJsonString("{success:true}");
-		/* 132 */return "success";
+		AppUser user = ContextUtil.getCurrentUser();
+		
+		BudgetItem parent = getRequest().getParameter("budgetItem.parent.budgetItemId")!=null && 
+			!getRequest().getParameter("budgetItem.parent.budgetItemId").equals("0") ? 
+			new BudgetItem() : null;
+		if(parent!=null){
+			parent.setBudgetItemId(Long.valueOf(getRequest().getParameter("budgetItem.parent.budgetItemId")));
+		}
+		this.budgetItem.setParent(parent);
+		
+		Budget budget = new Budget();
+		budget.setBudgetId(Long.valueOf(getRequest().getParameter("budgetItem.budget.budgetId")));
+		this.budgetItem.setBudget(budget);
+		this.budgetItem.setDeleteFlag(Integer.valueOf(0));//未删除
+		this.budgetItemService.save(this.budgetItem);
+		setJsonString("{success:true, budgetItemId:'" + this.budgetItem.getBudgetItemId() + "'}");
+		return "success";
 	}
 	
 	public String tree(){
-		List<BudgetItem> itemList = this.budgetItemService.getAll();
+		List<BudgetItem> itemList = null;
+		if(getRequest().getParameter("budgetId")!=null){
+			Map map = new HashMap();
+			map.put("Q_budget.budgetId_L_EQ", getRequest().getParameter("budgetId"));
+			QueryFilter paramQueryFilter = new QueryFilter(map);
+			itemList = this.budgetItemService.getAll(paramQueryFilter);
+		}else{
+			itemList = new ArrayList();
+		}
 	 
+		//这里需要对其进行树形结构的json重组
+		
 		StringBuffer sb = new StringBuffer();
 		sb.append("[{id:'0',text:'所有成本要素',expanded:true,children:[");
 		for (BudgetItem item : itemList) {
