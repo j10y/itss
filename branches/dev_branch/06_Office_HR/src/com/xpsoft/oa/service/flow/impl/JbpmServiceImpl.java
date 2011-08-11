@@ -107,7 +107,7 @@ import org.jbpm.pvm.internal.svc.TaskServiceImpl;
 import org.jbpm.pvm.internal.task.TaskImpl;
 
 public class JbpmServiceImpl implements JbpmService {
-	/* 61 */private static final Log logger = LogFactory
+	private static final Log logger = LogFactory
 			.getLog(JbpmServiceImpl.class);
 
 	@Resource
@@ -137,22 +137,22 @@ public class JbpmServiceImpl implements JbpmService {
 	@Resource
 	private ProcessRunService processRunService;
 
-	/* 95 */public Task getTaskById(String taskId) {
+	public Task getTaskById(String taskId) {
 		Task task = this.taskService.getTask(taskId);
 
-		/* 97 */return task;
+		return task;
 	}
 
 	public void assignTask(String taskId, String userId) {
-		/* 106 */this.taskService.assignTask(taskId, userId);
+		this.taskService.assignTask(taskId, userId);
 	}
 
 	public void doUnDeployProDefinition(Long defId) {
-		/* 116 */this.processRunService.removeByDefId(defId);
+		this.processRunService.removeByDefId(defId);
 
-		/* 118 */ProDefinition pd = (ProDefinition) this.proDefinitionService
+		ProDefinition pd = (ProDefinition) this.proDefinitionService
 				.get(defId);
-		/* 119 */if (pd != null) {
+		if (pd != null) {
 			/* 121 */this.repositoryService.deleteDeploymentCascade(pd
 					.getDeployId());
 
@@ -398,108 +398,115 @@ public class JbpmServiceImpl implements JbpmService {
 
 	public void assignTask(ProcessInstance pi, ProcessDefinition pd,
 			String assignId, String taskName) {
-		/* 411 */if (pd == null) {
-			/* 412 */pd = this.repositoryService.createProcessDefinitionQuery()
+		if (pd == null) {
+			pd = this.repositoryService.createProcessDefinitionQuery()
 					.processDefinitionId(pi.getProcessDefinitionId())
 					.uniqueResult();
 		}
 
-		/* 416 */List<Task> taskList = null;
+		List<Task> taskList = null;
 
-		/* 419 */if (StringUtils.isNotEmpty(taskName)) {
-			/* 420 */taskList = this.taskService.createTaskQuery()
+		if (StringUtils.isNotEmpty(taskName)) {
+			taskList = this.taskService.createTaskQuery()
 					.processInstanceId(pi.getId()).activityName(taskName)
 					.list();
 		}
 
-		/* 423 */if ((taskList == null) || (taskList.size() == 0)) {
-			/* 424 */taskList = getTasksByPiId(pi.getId());
+		if ((taskList == null) || (taskList.size() == 0)) {
+			taskList = getTasksByPiId(pi.getId());
 		}
 
-		/* 427 */for (Task task : taskList) {
-			/* 429 */if (StringUtils.isNotEmpty(assignId)) {
-				/* 430 */this.taskService.assignTask(task.getId(), assignId);
-			} else {
-				/* 435 */ProUserAssign assign = this.proUserAssignService
-						.getByDeployIdActivityName(pd.getDeploymentId(),
-								task.getActivityName());
-
-				/* 437 */if (assign != null) {
-					/* 440 */if ("__start".equals(assign.getUserId())) {
-						/* 442 */AppUser flowStartUser = (AppUser) this.executionService
-								.getVariable(pi.getId(), "flowStartUser");
-						/* 443 */if (flowStartUser != null)
-							/* 444 */this.taskService.assignTask(task.getId(),
-									flowStartUser.getUserId().toString());
+				for (Task task : taskList) {
+					if (StringUtils.isNotEmpty(assignId)) {
+						//当assignId时多个的时候，就遍历存入jbpm4_participation，但是只要有一个审批通过就被通过
+						String[]assignIds=assignId.split("[,]");
+						if(assignIds.length>1){
+							for(String asid:assignIds){
+								this.taskService.addTaskParticipatingUser(
+										task.getId(), asid,
+										"candidate");
+							}
+						}else{
+							this.taskService.assignTask(task.getId(), assignId);
+						}
 					} else {
-						StringBuffer upIds;
-						Object localObject;
-						Long userId;
-						/* 446 */if ("__super".equals(assign.getUserId())) {
-							/* 447 */AppUser flowStartUser = (AppUser) this.executionService
-									.getVariable(pi.getId(), "flowStartUser");
-
-							/* 449 */if (flowStartUser != null) {
-								/* 450 */List superUserIds = this.userSubService
-										.upUser(flowStartUser.getUserId());
-								/* 451 */upIds = new StringBuffer();
-								/* 452 */for (localObject = superUserIds
-										.iterator(); ((Iterator) localObject)
-										.hasNext();) {
-									userId = (Long) ((Iterator) localObject)
-											.next();
-									/* 453 */upIds.append(userId).append(",");
-								}
-								/* 455 */if (superUserIds.size() > 0)
-									/* 456 */upIds
-											.deleteCharAt(upIds.length() - 1);
-								else {
-									/* 458 */upIds.append(flowStartUser
-											.getUserId());
-								}
-								/* 460 */this.taskService
-										.addTaskParticipatingUser(task.getId(),
-												upIds.toString(), "candidate");
-							}
-							/* 462 */} else if (StringUtils.isNotEmpty(assign
-								.getUserId())) {
-							/* 463 */String[] userIds = assign.getUserId()
-									.split("[,]");
-
-							/* 465 */if ((userIds != null)
-									&& (userIds.length > 1)) {
-
-								for (int upIds1 = 0; upIds1 < userIds.length; upIds1++) {
-									String uId = userIds[upIds1];
-									/* 467 */this.taskService
-											.addTaskParticipatingUser(
-													task.getId(), uId,
-													"candidate");
-								}
+						ProUserAssign assign = this.proUserAssignService
+								.getByDeployIdActivityName(pd.getDeploymentId(),
+										task.getActivityName());
+		
+						if (assign != null) {
+							if ("__start".equals(assign.getUserId())) {
+								AppUser flowStartUser = (AppUser) this.executionService
+										.getVariable(pi.getId(), "flowStartUser");
+								if (flowStartUser != null)
+									this.taskService.assignTask(task.getId(),
+											flowStartUser.getUserId().toString());
 							} else {
-								/* 470 */this.taskService.assignTask(
-										task.getId(), assign.getUserId());
-							}
+									StringBuffer upIds;
+									Object localObject;
+									Long userId;
+									if ("__super".equals(assign.getUserId())) {
+										AppUser flowStartUser = (AppUser) this.executionService
+												.getVariable(pi.getId(), "flowStartUser");
+			
+										if (flowStartUser != null) {
+											List superUserIds = this.userSubService
+													.upUser(flowStartUser.getUserId());
+											upIds = new StringBuffer();
+											for (localObject = superUserIds
+													.iterator(); ((Iterator) localObject)
+													.hasNext();) {
+												userId = (Long) ((Iterator) localObject)
+														.next();
+												upIds.append(userId).append(",");
+											}
+											if (superUserIds.size() > 0)
+												upIds.deleteCharAt(upIds.length() - 1);
+											else {
+												upIds.append(flowStartUser.getUserId());
+											}
+											this.taskService
+											.addTaskParticipatingUser(task.getId(),
+															upIds.toString(), "candidate");
+										}
+									} else if (StringUtils.isNotEmpty(assign
+											.getUserId())) {
+										String[] userIds = assign.getUserId()
+												.split("[,]");
+			
+										if ((userIds != null)
+												&& (userIds.length > 1)) {
+			
+											for (int upIds1 = 0; upIds1 < userIds.length; upIds1++) {
+												String uId = userIds[upIds1];
+												this.taskService.addTaskParticipatingUser(
+																task.getId(), uId,
+																"candidate");
+											}
+										} else {
+											this.taskService.assignTask(
+													task.getId(), assign.getUserId());
+										}
+									}
+								}
+								if (StringUtils.isNotEmpty(assign.getRoleId()))
+									this.taskService.addTaskParticipatingGroup(
+											task.getId(), assign.getRoleId(), "candidate");
+						} else {
+							AppUser flowStartUser = (AppUser) this.executionService
+									.getVariable(pi.getId(), "flowStartUser");
+							if (flowStartUser != null)
+								this.taskService.assignTask(task.getId(),
+										flowStartUser.getUserId().toString());
 						}
 					}
-					/* 474 */if (StringUtils.isNotEmpty(assign.getRoleId()))
-						/* 475 */this.taskService.addTaskParticipatingGroup(
-								task.getId(), assign.getRoleId(), "candidate");
-				} else {
-					/* 479 */AppUser flowStartUser = (AppUser) this.executionService
-							.getVariable(pi.getId(), "flowStartUser");
-					/* 480 */if (flowStartUser != null)
-						/* 481 */this.taskService.assignTask(task.getId(),
-								flowStartUser.getUserId().toString());
-				}
-			}
 		}
 	}
 
 	public List<Transition> getTransitionsForSignalProcess(String piId) {
-		/* 493 */ProcessInstance pi = this.executionService.findProcessInstanceById(piId);
-		/* 494 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 495 */Environment env = environmentFactory.openEnvironment();
+		ProcessInstance pi = this.executionService.findProcessInstanceById(piId);
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = environmentFactory.openEnvironment();
 		try {
 			ExecutionImpl executionImpl = (ExecutionImpl) pi;
 			Activity activity = executionImpl.getActivity();
@@ -515,70 +522,70 @@ public class JbpmServiceImpl implements JbpmService {
 	}
 
 	public List<Transition> getTransitionsByTaskId(String taskId) {
-		/* 515 */TaskImpl task = (TaskImpl) this.taskService.getTask(taskId);
-		/* 516 */if (task.getSuperTask() != null) {
-			/* 517 */task = task.getSuperTask();
+		TaskImpl task = (TaskImpl) this.taskService.getTask(taskId);
+		if (task.getSuperTask() != null) {
+			task = task.getSuperTask();
 		}
-		/* 519 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 520 */Environment env = environmentFactory.openEnvironment();
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = environmentFactory.openEnvironment();
 		try {
-			/* 522 */ProcessDefinitionImpl pd = task.getProcessInstance()
+			ProcessDefinitionImpl pd = task.getProcessInstance()
 					.getProcessDefinition();
-			/* 523 */ActivityImpl activityFind = pd.findActivity(task
+			ActivityImpl activityFind = pd.findActivity(task
 					.getActivityName());
 
-			/* 525 */if (activityFind != null)
-				/* 526 */return activityFind.getOutgoingTransitions();
+			if (activityFind != null)
+				return activityFind.getOutgoingTransitions();
 		} finally {
-			/* 529 */env.close();
+			env.close();
 		}
-		/* 531 */return new ArrayList();
+		return new ArrayList();
 	}
 
 	public void addOutTransition(ProcessDefinitionImpl pd, String sourceName,
 			String destName) {
-		/* 542 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 543 */Environment env = null;
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = null;
 		try {
-			/* 545 */env = environmentFactory.openEnvironment();
+			env = environmentFactory.openEnvironment();
 
-			/* 548 */ActivityImpl sourceActivity = pd.findActivity(sourceName);
+			ActivityImpl sourceActivity = pd.findActivity(sourceName);
 
-			/* 550 */ActivityImpl destActivity = pd.findActivity(destName);
+			ActivityImpl destActivity = pd.findActivity(destName);
 
-			/* 553 */TransitionImpl transition = sourceActivity
+			TransitionImpl transition = sourceActivity
 					.createOutgoingTransition();
-			/* 554 */transition.setName("to" + destName);
-			/* 555 */transition.setDestination(destActivity);
+			transition.setName("to" + destName);
+			transition.setDestination(destActivity);
 
-			/* 557 */sourceActivity.addOutgoingTransition(transition);
+			sourceActivity.addOutgoingTransition(transition);
 		} catch (Exception ex) {
-			/* 560 */logger.error(ex.getMessage());
+			logger.error(ex.getMessage());
 		} finally {
-			/* 562 */if (env != null)
+			if (env != null)
 				env.close();
 		}
 	}
 
 	public void removeOutTransition(ProcessDefinitionImpl pd,
 			String sourceName, String destName) {
-		/* 573 */EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 574 */Environment env = null;
+		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
+		Environment env = null;
 		try {
-			/* 576 */env = environmentFactory.openEnvironment();
+			env = environmentFactory.openEnvironment();
 
-			/* 578 */ActivityImpl sourceActivity = pd.findActivity(sourceName);
+			ActivityImpl sourceActivity = pd.findActivity(sourceName);
 
-			/* 581 */List<Transition> trans = sourceActivity.getOutgoingTransitions();
-			/* 582 */for (Transition tran : trans)
-				/* 583 */if (destName.equals(tran.getDestination().getName())) {
-					/* 584 */trans.remove(tran);
-					/* 585 */break;
+			List<Transition> trans = sourceActivity.getOutgoingTransitions();
+			for (Transition tran : trans)
+				if (destName.equals(tran.getDestination().getName())) {
+					trans.remove(tran);
+					break;
 				}
 		} catch (Exception ex) {
-			/* 589 */logger.error(ex.getMessage());
+			logger.error(ex.getMessage());
 		} finally {
-			/* 591 */if (env != null)
+			if (env != null)
 				env.close();
 		}
 	}
@@ -592,31 +599,40 @@ public class JbpmServiceImpl implements JbpmService {
 			task = task.getSuperTask();
 		}
 		EnvironmentFactory environmentFactory = (EnvironmentFactory) this.processEngine;
-		/* 608 */Environment env = null;
+		Environment env = null;
 		try {
-			/* 610 */env = environmentFactory.openEnvironment();
-			/* 611 */ProcessDefinitionImpl pd = task.getProcessInstance()
+				env = environmentFactory.openEnvironment();
+				ProcessDefinitionImpl pd = task.getProcessInstance()
 					.getProcessDefinition();
-			/* 612 */ActivityImpl curActivity = pd.findActivity(task
+				ActivityImpl curActivity = pd.findActivity(task
 					.getActivityName());
 
-			/* 615 */List<Node> allTaskNodes = getJumpNodesByDeployId(pd
+				List<Node> allTaskNodes = getJumpNodesByDeployId(pd
 					.getDeploymentId());
+				boolean listForwardNode = Boolean.valueOf(AppUtil.getPropertity("app.listForwardNode"));
+				for (Node taskNode : allTaskNodes) {
+						
+						//modified by awen for not skip some node on 2011-07-22 begin
+						if (taskNode.getName().equals(task.getActivityName())){
+							if(listForwardNode){
+								continue;
+							}else{
+								break;
+							}
+						}
+						//modified by awen for not skip some node on 2011-07-22 end
+						
+						TransitionImpl transition = curActivity
+							.createOutgoingTransition();
 
-			/* 620 */for (Node taskNode : allTaskNodes) {
-				/* 621 */if (taskNode.getName().equals(task.getActivityName()))
-					continue;
-				/* 623 */TransitionImpl transition = curActivity
-						.createOutgoingTransition();
-
-				/* 625 */transition.setName("to" + taskNode.getName());
-				/* 626 */transition.setDestination(pd.findActivity(taskNode
+						transition.setName("to" + taskNode.getName());
+						transition.setDestination(pd.findActivity(taskNode
 						.getName()));
 
-				/* 628 */curActivity.getOutgoingTransitions()
+						curActivity.getOutgoingTransitions()
 						.remove(transition);
 
-				/* 630 */outTrans.add(transition);
+						outTrans.add(transition);
 			}
 		} catch (Exception ex) {
 			/* 634 */logger.error(ex.getMessage());
@@ -703,52 +719,52 @@ public class JbpmServiceImpl implements JbpmService {
 			}
 		}
 
-		/* 741 */if (!isTransitionExist) {
-			/* 742 */addOutTransition(pd, sourceName, destName);
+		if (!isTransitionExist&&destName!=null) {
+			addOutTransition(pd, sourceName, destName);
 		}
 
-		/* 745 */if (superTask != null) {
-			/* 746 */pi = superTask.getProcessInstance();
-			/* 747 */executionId = superTask.getExecutionId();
-			/* 748 */if (logger.isDebugEnabled()) {
-				/* 749 */logger.debug("Super task is not null, task name is:"
+		if (superTask != null) {
+			pi = superTask.getProcessInstance();
+			executionId = superTask.getExecutionId();
+			if (logger.isDebugEnabled()) {
+				logger.debug("Super task is not null, task name is:"
 						+ superTask.getActivityName());
 			}
 
-			/* 753 */if (superTask.getSubTasks() != null) {
-				/* 755 */if (superTask.getSubTasks().size() == 1) {
-					/* 756 */this.taskService.setVariables(taskId, variables);
-					/* 757 */clearSession();
+			if (superTask.getSubTasks() != null) {
+				if (superTask.getSubTasks().size() == 1) {
+					this.taskService.setVariables(taskId, variables);
+					clearSession();
 
-					/* 759 */this.taskService.completeTask(taskId);
+					this.taskService.completeTask(taskId);
 
-					/* 761 */this.taskService.completeTask(superTask.getId(),
+					this.taskService.completeTask(superTask.getId(),
 							transitionName);
 				} else {
-					/* 763 */this.taskService.setVariables(taskId, variables);
-					/* 764 */clearSession();
-					/* 765 */this.taskService.completeTask(taskId);
+					this.taskService.setVariables(taskId, variables);
+					clearSession();
+					this.taskService.completeTask(taskId);
 
-					/* 767 */return;
+					return;
 				}
 			}
 		} else {
-			/* 771 */pi = taskImpl.getProcessInstance();
-			/* 772 */executionId = taskImpl.getExecutionId();
-			/* 773 */this.taskService.setVariables(taskId, variables);
-			/* 774 */flush();
-			/* 775 */this.taskService.completeTask(taskId, transitionName);
+			pi = taskImpl.getProcessInstance();
+			executionId = taskImpl.getExecutionId();
+			this.taskService.setVariables(taskId, variables);
+			flush();
+			this.taskService.completeTask(taskId, transitionName);
 		}
 
-		/* 779 */if (!isTransitionExist) {
-			/* 780 */removeOutTransition(pd, sourceName, destName);
+		if (!isTransitionExist&&destName!=null) {
+			removeOutTransition(pd, sourceName, destName);
 		}
 
-		/* 784 */boolean isEndProcess = isProcessInstanceEnd(executionId);
-		/* 785 */if (isEndProcess) {
-			/* 786 */ProcessRun processRun = this.processRunService
+		boolean isEndProcess = isProcessInstanceEnd(executionId);
+		if (isEndProcess) {
+			ProcessRun processRun = this.processRunService
 					.getByPiId(executionId);
-			/* 787 */if (processRun != null) {
+			if (processRun != null) {
 				processRun.setPiId(null);
 				processRun
 						.setRunStatus(ProcessRun.RUN_STATUS_FINISHED);
@@ -758,7 +774,6 @@ public class JbpmServiceImpl implements JbpmService {
 		}
 
 		String signUserIds = (String) variables.get("signUserIds");
-
 		if ((destName != null)
 				&& (StringUtils.isNotEmpty(signUserIds))) {
 			List<Task> newTasks = getTasksByPiId(pi.getId());
@@ -768,66 +783,69 @@ public class JbpmServiceImpl implements JbpmService {
 					break;
 				}
 			}
-			/* 808 */return;
+			return;
+		}else if((destName == null)
+				&& (StringUtils.isNotEmpty(signUserIds))){
+			List<Task> newTasks = getTasksByPiId(pi.getId());
+			if(newTasks.size()>0){
+				Task nTask=newTasks.get(0);
+				newTask(nTask.getId(), signUserIds);
+			}else{
+				logger.debug("newTasks is null");
+			}
+			return;
 		}
-		/* 810 */destName = null;
+		destName = null;
 
-		/* 813 */String assignId = (String) variables.get("flowAssignId");
+		String assignId = (String) variables.get("flowAssignId");
 
-		/* 815 */assignTask(pi, null, assignId, destName);
+		assignTask(pi, null, assignId, destName);
 	}
 
 	protected boolean isProcessInstanceEnd(String executionId) {
-		/* 828 */HistoryProcessInstance hpi = this.historyService
+		HistoryProcessInstance hpi = this.historyService
 				.createHistoryProcessInstanceQuery()
 				.processInstanceId(executionId).uniqueResult();
-		/* 829 */if (hpi != null) {
-			/* 830 */String endActivityName = ((HistoryProcessInstanceImpl) hpi)
+		if (hpi != null) {
+			String endActivityName = ((HistoryProcessInstanceImpl) hpi)
 					.getEndActivityName();
-			/* 831 */if (endActivityName != null) {
-				/* 832 */return true;
+			if (endActivityName != null) {
+				return true;
 			}
 		}
-		/* 835 */return false;
+		return false;
 	}
 
 	public void newTask(String parentTaskId, String assignIds) {
-		/* 845 */TaskServiceImpl taskServiceImpl = (TaskServiceImpl) this.taskService;
-		/* 846 */Task parentTask = taskServiceImpl.getTask(parentTaskId);
+		TaskServiceImpl taskServiceImpl = (TaskServiceImpl) this.taskService;
+		Task parentTask = taskServiceImpl.getTask(parentTaskId);
 
-		/* 848 */if (assignIds != null) {
-			/* 849 */String[] userIds = assignIds.split("[,]");
-			/* 850 */for (int i = 0; i < userIds.length; i++) {
-				/* 851 */TaskImpl task = (TaskImpl) taskServiceImpl
+		if (assignIds != null) {
+			String[] userIds = assignIds.split("[,]");
+			for (int i = 0; i < userIds.length; i++) {
+				TaskImpl task = (TaskImpl) taskServiceImpl
 						.newTask(parentTaskId);
-				/* 852 */task.setAssignee(userIds[i]);
-				/* 853 */task.setName(parentTask.getName() + "-" + (i + 1));
-				/* 854 */task.setActivityName(parentTask.getName());
-				/* 855 */task.setDescription(parentTask.getDescription());
+				task.setAssignee(userIds[i]);
+				task.setName(parentTask.getName() + "-" + (i + 1));
+				task.setActivityName(parentTask.getName());
+				task.setDescription(parentTask.getDescription());
 
-				/* 857 */taskServiceImpl.saveTask(task);
+				taskServiceImpl.saveTask(task);
 			}
 		}
 	}
 
 	public void signalProcess(String executionId, String transitionName,
 			Map<String, Object> variables) {
-		/* 878 */this.executionService.setVariables(executionId, variables);
-		/* 879 */this.executionService.signalExecutionById(executionId,
+		this.executionService.setVariables(executionId, variables);
+		this.executionService.signalExecutionById(executionId,
 				transitionName);
 	}
 
 	public void endProcessInstance(String piId) {
-		/* 884 */ExecutionService executionService = this.processEngine
+		ExecutionService executionService = this.processEngine
 				.getExecutionService();
-		/* 885 */executionService.endProcessInstance(piId, "ended");
+		executionService.endProcessInstance(piId, "ended");
 	}
 
 }
-
-/*
- * Location:
- * C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6
- * -joffice\webapps\joffice1.3.1\WEB-INF\classes\ Qualified Name:
- * com.xpsoft.oa.service.flow.impl.JbpmServiceImpl JD-Core Version: 0.6.0
- */
