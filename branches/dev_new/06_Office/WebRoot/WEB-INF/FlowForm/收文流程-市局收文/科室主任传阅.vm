@@ -115,7 +115,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 								    	"valid" : function(field){
 								    		Ext.getCmp("readFeedback").setValue(field.getValue());
 								    	}
-								    },
+								    }
 								},{
 								    xtype:'hidden',
 								    name:'readFeedback',
