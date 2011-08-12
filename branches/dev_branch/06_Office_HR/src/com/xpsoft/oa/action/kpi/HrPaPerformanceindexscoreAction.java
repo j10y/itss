@@ -17,6 +17,7 @@ import com.xpsoft.oa.service.kpi.HrPaPisruleService;
 import flexjson.JSONSerializer;
 
 public class HrPaPerformanceindexscoreAction extends BaseAction{
+	//定性考核和定量考核关键字，对应数据库里边的ID
 	private final static long QUALITATIVE_ASSESSMENT = 12;
 	private final static long QUANTITATIVE_ASSESSMENT = 13;
 	@Resource
