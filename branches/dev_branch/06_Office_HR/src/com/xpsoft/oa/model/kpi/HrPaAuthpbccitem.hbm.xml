@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.kpi.HrPaAuthpbccitem"
+        table="hr_pa_authpbcitem"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+    	<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        />
+        <property
+            name="apbcId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="apbcId"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="akpiItemId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="akpiItemId"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+         <property
+            name="result"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="result"
+            length="20"
+            not-null="false"
+            unique="false"
+        />
+    </class>
+</hibernate-mapping>
