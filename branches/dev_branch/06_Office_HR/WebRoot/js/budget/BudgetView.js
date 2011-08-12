@@ -55,7 +55,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			} ]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listBudget.do",
+			url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_NEQ=4",
 			root : "result",
 			totalProperty : "totalCounts",
 			remoteSort : true,
@@ -67,6 +67,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 				mapping : "belongDept.depName"
 			}, "beginDate" 
 			, "endDate" 
+			, "publishStatus"
 			, "createDate"
 			, "createPerson", {
 				name : "createPerson",
@@ -85,6 +86,13 @@ BudgetView = Ext.extend(Ext.Panel, {
 			b.push({
 				iconCls : "btn-del",
 				qtip : "删除",
+				style : "margin:0 3px 0 3px"
+			});
+		}
+		if (isGranted("_BudgetView")) {
+			b.push({
+				iconCls : "btn-preview",
+				qtip : "查询详情",
 				style : "margin:0 3px 0 3px"
 			});
 		}
@@ -118,6 +126,29 @@ BudgetView = Ext.extend(Ext.Panel, {
 			}, {
 				header : "结束时间",
 				dataIndex : "endDate"
+			}, {
+				header : "状态",
+				dataIndex : "publishStatus",
+				renderer : function(v){
+					// 0：草稿  1：审核中 2：退回 3：审核完毕，发布 4：删除标记'
+					if(v==0){
+						return "<font color='red'>草稿</font>"
+					}else{
+						if(v==1){
+							return "<font color='red'>审核中</font>"
+						}else{
+							if(v==2){
+								return "<font color='red'>退回</font>"
+							}else{
+								if(v==3){
+									return "<font color='green'>已发布</font>"
+								}else{
+									return "<font color='red'>已删除</font>"
+								}
+							}
+						}
+					}
+				}
 			}, {
 				header : "创建人",
 				dataIndex : "createPerson"
@@ -192,7 +223,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询",
-				url : __ctxPath + "/budget/listBudget.do",
+				url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_NEQ=4",
 				success : function(c, d) {
 					var b = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(b);
@@ -220,7 +251,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 					},
 					method : "POST",
 					success : function(c, d) {
-						Ext.ux.Toast.msg("操作信息", "成功删除该！");
+						Ext.ux.Toast.msg("操作信息", "成功删除该记录！");
 						Ext.getCmp("BudgetGrid").getStore().reload();
 					},
 					failure : function(c, d) {
@@ -255,8 +286,23 @@ BudgetView = Ext.extend(Ext.Panel, {
 		a.add(b);
 		a.activate(b);
 	},
+	viewByIds : function(l) {		
+		var a = Ext.getCmp("centerTabPanel");
+		var b = Ext.getCmp("BudgetFormView");
+		if (b != null) {
+			a.remove("BudgetFormView");
+		}
+		b = new BudgetFormView({
+			budgetId : l.data.budgetId
+		});
+		a.add(b);
+		a.activate(b);
+	},
 	onRowAction : function(c, a, d, e, b) {
 		switch (d) {
+		case "btn-preview":
+			this.viewByIds(a);
+			break;
 		case "btn-del":
 			this.delByIds(a.data.budgetId);
 			break;

@@ -34,6 +34,44 @@ BudgetItemWin = Ext.extend(Ext.Window, {
 				anchor : "98%,98%"
 			},
 			defaultType : "textfield",
+			reader : new Ext.data.JsonReader({
+				root : "data"
+			}, [ {
+				name : "budgetItem.budgetItemId",
+				mapping : "budgetItemId"
+			}, {
+				name : "budgetItem.budget.budgetId",
+				mapping : "budget.budgetId"
+			}, {
+				name : "budgetItem.name",
+				mapping : "name"
+			}, {
+				name : "budgetItem.code",
+				mapping : "code"
+			}, {
+				name : "budgetItem.key",
+				mapping : "key"
+			}, {
+				name : "budgetItem.value",
+				mapping : "value"
+			}, {
+				name : "budgetItem.threshold",
+				mapping : "threshold"
+			}, {
+				name : "budgetItem.parent.budgetItemId",
+				//mapping : "parent.budgetItemId",
+				mapping : "parent",
+				convert : function(v, rec){
+					if(v!=null){
+						return v.budgetItemId;
+					}else{
+						return 0;
+					}
+				}
+			}, {
+				name : "budgetItem.deleteFlag",
+				mapping : "deleteFlag"
+			} ]),
 			items : [ {
 				name : "budgetItem.budgetItemId",
 				id : "budgetItem.budgetItemId",
@@ -86,16 +124,37 @@ BudgetItemWin = Ext.extend(Ext.Window, {
 			text : "保存",
 			iconCls : "btn-save",
 			handler : this.save.createCallback(this.formPanel, this)
-		}, {
+		}/*, {
 			text : "重置",
 			iconCls : "btn-reset",
 			handler : this.reset.createCallback(this.formPanel)
-		}, {
+		}*/, {
 			text : "取消",
 			iconCls : "btn-cancel",
 			handler : this.cancel.createCallback(this)
 		} ];
 		this.buttons = buttons;
+		
+		if (this.budgetItemId != null && this.budgetItemId != "undefined") {
+			this.formPanel.getForm().load({
+				deferredRender : false,
+				url : __ctxPath
+						+ "/budget/getBudgetItem.do?budgetItemId="
+						+ this.budgetItemId,
+				waitMsg : "正在载入数据...",
+				success : function(c, d) {
+					//alert(d.response.responseText);
+					return;
+					var e = d.result.data.department;
+					Ext.getCmp("BudgetForm.depName").setValue(
+							e.depName);
+					Ext.getCmp("depId").setValue(e.depId);
+				},
+				failure : function(c, d) {
+					
+				}
+			});
+		}
 		
 	},
 	reset : function(a) {
