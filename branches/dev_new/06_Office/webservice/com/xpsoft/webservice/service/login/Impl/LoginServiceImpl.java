@@ -15,9 +15,11 @@ import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.StringUtil;
 import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchDispatchService;
 import com.xpsoft.oa.service.flow.TaskService;
 import com.xpsoft.oa.service.system.AppUserService;
+import com.xpsoft.oa.service.system.DepartmentService;
 import com.xpsoft.webservice.service.login.LoginServie;
 
 public class LoginServiceImpl implements LoginServie {
@@ -81,7 +83,9 @@ public class LoginServiceImpl implements LoginServie {
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
 		PagingBean pb = new PagingBean(0, 999999);
 		QueryFilter filter = new QueryFilter(pb);
-		filter.addFilter("Q_username,fullname_S_ORLIKE", userName);
+		if(userName!=null&&userName.length()>0){
+			filter.addFilter("Q_username,fullname_S_ORLIKE", userName);
+		}
 		List<AppUser> list=userService.getAll(filter);
 		String json="{\"success\":true,data:[";
 		for(AppUser ap:list){
@@ -93,5 +97,60 @@ public class LoginServiceImpl implements LoginServie {
 		json+="]}";
 		return json;
 	}
-
+	public String findUserByUserName(String userName,String userId,String passwd,String departId) {
+		// TODO Auto-generated method stub
+		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
+		PagingBean pb = new PagingBean(0, 999999);
+		QueryFilter filter = new QueryFilter(pb);
+		if(userName!=null&&userName.length()>0){
+			filter.addFilter("Q_username,fullname_S_ORLIKE", userName);
+		}
+		if(departId!=null&&departId.length()>0){
+			filter.addFilter("Q_department.depId_L_EQ", departId);
+		}
+		List<AppUser> list=userService.getAll(filter);
+		String json="{\"success\":true,data:[";
+		for(AppUser ap:list){
+			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"/"+ap.getUsername()+"\"},";
+		}
+		if(list.size()>0){
+			json=json.substring(0,json.length()-1);
+		}
+		json+="]}";
+		return json;
+	}
+	public String findDepartment() {
+		// TODO Auto-generated method stub
+		DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
+		PagingBean pb = new PagingBean(0, 999999);
+		QueryFilter filter = new QueryFilter(pb);
+		
+		List<Department> list=departmentService.getAll(filter);
+		String json="{\"success\":true,data:[";
+		for(Department ap:list){
+			json+="{id:\""+ap.getDepId()+"\",name:\""+ap.getDepName()+"\"},";
+		}
+		if(list.size()>0){
+			json=json.substring(0,json.length()-1);
+		}
+		json+="]}";
+		return json;
+	}
+	public String findUserByDepartId(String departId) {
+		// TODO Auto-generated method stub
+		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
+		PagingBean pb = new PagingBean(0, 999999);
+		QueryFilter filter = new QueryFilter(pb);
+		filter.addFilter("Q_department.depId_L_EQ", departId);
+		List<AppUser> list=userService.getAll(filter);
+		String json="{\"success\":true,data:[";
+		for(AppUser ap:list){
+			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"/"+ap.getUsername()+"\"},";
+		}
+		if(list.size()>0){
+			json=json.substring(0,json.length()-1);
+		}
+		json+="]}";
+		return json;
+	}		
 }
