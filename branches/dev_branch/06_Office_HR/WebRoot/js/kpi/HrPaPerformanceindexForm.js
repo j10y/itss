@@ -1,3 +1,4 @@
+
 HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 	formPanel : null,
 	constructor : function(a) {
@@ -65,7 +66,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 									url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
 									method : "post",
 									params : {
-										parentId : 2
+										parentId : 2          //考核类型的根节点ID
 									},
 									success : function(f) {
 										var e = Ext.util.JSON.decode(f.responseText);
@@ -98,7 +99,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 									url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
 									method : "post",
 									params : {
-										parentId : 3
+										parentId : 3          //考核频度的根节点ID
 									},
 									success : function(f) {
 										var e = Ext.util.JSON.decode(f.responseText);
@@ -131,7 +132,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 									url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
 									method : "post",
 									params : {
-										parentId : 4
+										parentId : 4          //考核方式的根节点ID
 									},
 									success : function(f) {
 										var e = Ext.util.JSON.decode(f.responseText);

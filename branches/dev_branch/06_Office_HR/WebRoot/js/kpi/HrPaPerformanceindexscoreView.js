@@ -1,3 +1,4 @@
+//定性考核和定量考核关键字，对应数据库里边的ID
 var QUALITATIVE_ASSESSMENT = 12;
 var QUANTITATIVE_ASSESSMENT = 13;
 HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
