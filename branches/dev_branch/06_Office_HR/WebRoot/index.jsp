@@ -21,6 +21,7 @@
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/resources/css/ext-patch.css" />
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/ux/css/Portal.css" />
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/ux/css/Ext.ux.UploadDialog.css" />
+		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/ux/treegrid/treegrid.css" />
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/css/admin.css"/>
 		
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/ux/css/ux-all.css"/>
@@ -55,6 +56,14 @@
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/TabCloseMenu.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/TableFormLayout.js"></script>
 	
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/treegrid/TreeGrid.js"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/treegrid/TreeGridColumnResizer.js"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/treegrid/TreeGridColumns.js"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/treegrid/TreeGridLoader.js"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/treegrid/TreeGridNodeUI.js"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/treegrid/TreeGridSorter.js"></script>
+		
+		
 		<script type="text/javascript" src="<%=basePath%>/js/core/SystemCalendar.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/core/TreeSelector.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/core/date.js"></script>
