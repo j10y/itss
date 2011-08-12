@@ -67,7 +67,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		this.store.load({
 			params : {
 				start : 0,
-				limit : 5,
+				limit : 25,
 				Q_piId_L_EQ : this.piId,
 				paMode : this.paMode
 			}
@@ -278,7 +278,7 @@ HrPaPerformanceindexscoreView.remove = function(b, t) {
 					a.getStore().reload({
 						params : {
 							start : 0,
-							limit : 5,
+							limit : 25,
 							Q_piId_L_EQ : t.piId,
 							paMode : t.paMode
 						}
