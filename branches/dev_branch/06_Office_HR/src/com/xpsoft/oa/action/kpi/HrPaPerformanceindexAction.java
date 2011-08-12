@@ -105,7 +105,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			hpp.setCreatePerson(this.hrPaPerformanceindex.getCreatePerson());
 		}
 		//2. 新增和修改没有区别的项
-		hpp.setPublishStatus(0);//处于草稿状态
+		hpp.setPublishStatus(0);//考核项目只要有改动，就强制改变为草稿状态
 		hpp.setPaName(this.hrPaPerformanceindex.getPaName());
 		hpp.setPaType(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paType")));
 		hpp.setPaFrequency(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paFrequency")));
