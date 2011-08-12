@@ -128,10 +128,9 @@ public class HrPaPerformanceindexAction extends BaseAction {
 	
 	public String publish() {
 		long piId = Long.parseLong(this.getRequest().getParameter("piId"));
-		this.hrPaperformanceindexService.saveToPublish(piId);
-		
-		this.jsonString = "{success:true}";
-		
+		boolean flag = this.hrPaperformanceindexService.saveToPublish(piId);
+		System.out.println(flag);
+		this.jsonString = "{success:true,flag:" + String.valueOf(flag) + "}";
 		return "success";
 	}
 }
