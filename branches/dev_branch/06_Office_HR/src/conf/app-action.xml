@@ -284,4 +284,18 @@
   <bean id="AppTipsAction" class="com.xpsoft.oa.action.info.AppTipsAction" scope="prototype"/>
   <bean id="BudgetAction" class="com.xpsoft.oa.action.hrm.BudgetAction" scope="prototype"/>
   <bean id="BudgetItemAction" class="com.xpsoft.oa.action.hrm.BudgetItemAction" scope="prototype"/>
+<!-- start:  Generated for Package pei From Template: app-action.xml.beansvm -->
+  <bean id="HrPaAcreachedAction" class="com.xpsoft.oa.action.kpi.HrPaAcreachedAction" scope="prototype"/>
+  <bean id="HrPaAssessmentcriteriaAction" class="com.xpsoft.oa.action.kpi.HrPaAssessmentcriteriaAction" scope="prototype"/>
+  <bean id="HrPaAssessmenttasksassignedAction" class="com.xpsoft.oa.action.kpi.HrPaAssessmenttasksassignedAction" scope="prototype"/>
+  <bean id="HrPaAuthorizepbcAction" class="com.xpsoft.oa.action.kpi.HrPaAuthorizepbcAction" scope="prototype"/>
+  <bean id="HrPaAuthpbccitemAction" class="com.xpsoft.oa.action.kpi.HrPaAuthpbccitemAction" scope="prototype"/>
+  <bean id="HrPaCategoryAction" class="com.xpsoft.oa.action.kpi.HrPaCategoryAction" scope="prototype"/>
+  <bean id="HrPaDatadictionaryAction" class="com.xpsoft.oa.action.kpi.HrPaDatadictionaryAction" scope="prototype"/>
+  <bean id="HrPaKpiitemAction" class="com.xpsoft.oa.action.kpi.HrPaKpiitemAction" scope="prototype"/>
+  <bean id="HrPaKpipbcAction" class="com.xpsoft.oa.action.kpi.HrPaKpipbcAction" scope="prototype"/>
+  <bean id="HrPaPerformanceindexscoreAction" class="com.xpsoft.oa.action.kpi.HrPaPerformanceindexscoreAction" scope="prototype"/>
+  <bean id="HrPaPerformanceindexAction" class="com.xpsoft.oa.action.kpi.HrPaPerformanceindexAction" scope="prototype"/>
+  <bean id="HrPaPisruleAction" class="com.xpsoft.oa.action.kpi.HrPaPisruleAction" scope="prototype"/>
+<!-- end:  Generated for Package pei From Template: app-action.xml.beansvm -->
 </beans>

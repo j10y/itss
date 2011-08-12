@@ -296,4 +296,19 @@
     <bean id="appTipsDao" class="com.xpsoft.oa.dao.info.impl.AppTipsDaoImpl" parent="baseDao"/>
     <bean id="budgetDao" class="com.xpsoft.oa.dao.hrm.impl.BudgetDaoImpl" parent="baseDao"/>
     <bean id="budgetItemDao" class="com.xpsoft.oa.dao.hrm.impl.BudgetItemDaoImpl" parent="baseDao"/>
+<!-- start:  Generated for Package pei From Template: app-dao.xml.beansvm -->
+	<bean id="hrPaAcreachedDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaAcreachedDaoImpl" parent="baseDao"/>
+	<bean id="hrPaAssessmentcriteriaDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaAssessmentcriteriaDaoImpl" parent="baseDao"/>
+	<bean id="hrPaAssessmenttasksassignedDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaAssessmenttasksassignedDaoImpl" parent="baseDao"/>
+	<bean id="hrPaAuthorizepbcDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaAuthorizepbcDaoImpl" parent="baseDao"/>
+	<bean id="hrPaAuthpbccitemDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaAuthpbccitemDaoImpl" parent="baseDao"/>
+	<bean id="hrPaCategoryDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaCategoryDaoImpl" parent="baseDao"/>
+	<bean id="hrPaDatadictionaryDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaDatadictionaryDaoImpl" parent="baseDao"/>
+	<bean id="hrPaKpiitemDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiitemDaoImpl" parent="baseDao"/>
+	<bean id="hrPaKpipbcDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpipbcDaoImpl" parent="baseDao"/>
+	<bean id="hrPaPerformanceindexDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPerformanceindexDaoImpl" parent="baseDao"/>
+	<bean id="hrPaPerformanceindexscoreDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPerformanceindexscoreDaoImpl" parent="baseDao"/>
+	<bean id="hrPaPisruleDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPisruleDaoImpl" parent="baseDao"/>
+<!-- end:  Generated for Package pei From Template: app-dao.xml.beansvm -->
+    
 </beans>

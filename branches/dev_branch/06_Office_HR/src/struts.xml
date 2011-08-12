@@ -393,6 +393,20 @@
 			<result>/pages/document/fileDetail.jsp</result>
 		</action>
 	</package>
+	<package name="kpi" extends="struts-default" namespace="/kpi">
+		<action name="*HrPaPerformanceindex" class="HrPaPerformanceindexAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaDatadictionary" class="HrPaDatadictionaryAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaPerformanceindexscore" class="HrPaPerformanceindexscoreAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaAssessmentcriteria" class="HrPaAssessmentcriteriaAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+	</package>
 </struts>
 
 		

@@ -517,10 +517,48 @@
      <bean id="appTipsService" class="com.xpsoft.oa.service.info.impl.AppTipsServiceImpl">
      	<constructor-arg index="0" ref="appTipsDao"/>
      </bean>
-     <bean id="budgetService" class="com.xpsoft.oa.service.hrm.impl.BudgetServiceImpl">
+	 <bean id="budgetService" class="com.xpsoft.oa.service.hrm.impl.BudgetServiceImpl">
      	<constructor-arg index="0" ref="budgetDao"/>
      </bean>
      <bean id="budgetItemService" class="com.xpsoft.oa.service.hrm.impl.BudgetItemServiceImpl">
      	<constructor-arg index="0" ref="budgetItemDao"/>
      </bean>
+<!-- start:  Generated for Package pei From Template: app-service.xml.beansvm -->
+	<bean id="hrPaAcreachedService" class="com.xpsoft.oa.service.kpi.impl.HrPaAcreachedServiceImpl">
+		<constructor-arg index="0" ref="hrPaAcreachedDao"/>
+	</bean>
+	<bean id="hrPaAssessmentcriteriaService" class="com.xpsoft.oa.service.kpi.impl.HrPaAssessmentcriteriaServiceImpl">
+		<constructor-arg index="0" ref="hrPaAssessmentcriteriaDao"/>
+	</bean>
+	<bean id="hrPaAssessmenttasksassignedService" class="com.xpsoft.oa.service.kpi.impl.HrPaAssessmenttasksassignedServiceImpl">
+		<constructor-arg index="0" ref="hrPaAssessmenttasksassignedDao"/>
+	</bean>
+	<bean id="hrPaAuthorizepbcService" class="com.xpsoft.oa.service.kpi.impl.HrPaAuthorizepbcServiceImpl">
+		<constructor-arg index="0" ref="hrPaAuthorizepbcDao"/>
+	</bean>
+	<bean id="hrPaAuthpbccitemService" class="com.xpsoft.oa.service.kpi.impl.HrPaAuthpbccitemServiceImpl">
+		<constructor-arg index="0" ref="hrPaAuthpbccitemDao"/>
+	</bean>
+	<bean id="hrPaCategoryService" class="com.xpsoft.oa.service.kpi.impl.HrPaCategoryServiceImpl">
+		<constructor-arg index="0" ref="hrPaCategoryDao"/>
+	</bean>
+	<bean id="hrPaDatadictionaryService" class="com.xpsoft.oa.service.kpi.impl.HrPaDatadictionaryServiceImpl">
+		<constructor-arg index="0" ref="hrPaDatadictionaryDao"/>
+	</bean>
+	<bean id="hrPaKpiitemService" class="com.xpsoft.oa.service.kpi.impl.HrPaKpiitemServiceImpl">
+		<constructor-arg index="0" ref="hrPaKpiitemDao"/>
+	</bean>
+	<bean id="hrPaKpipbcService" class="com.xpsoft.oa.service.kpi.impl.HrPaKpipbcServiceImpl">
+		<constructor-arg index="0" ref="hrPaKpipbcDao"/>
+	</bean>
+	<bean id="hrPaPerformanceindexscoreService" class="com.xpsoft.oa.service.kpi.impl.HrPaPerformanceindexscoreServiceImpl">
+		<constructor-arg index="0" ref="hrPaPerformanceindexscoreDao"/>
+	</bean>
+	<bean id="hrPaPerformanceindexService" class="com.xpsoft.oa.service.kpi.impl.HrPaPerformanceindexServiceImpl">
+		<constructor-arg index="0" ref="hrPaPerformanceindexDao"/>
+	</bean>
+	<bean id="hrPaPisruleService" class="com.xpsoft.oa.service.kpi.impl.HrPaPisruleServiceImpl">
+		<constructor-arg index="0" ref="hrPaPisruleDao"/>
+	</bean>
+<!-- end:  Generated for Package pei From Template: app-service.xml.beansvm -->
 </beans>
