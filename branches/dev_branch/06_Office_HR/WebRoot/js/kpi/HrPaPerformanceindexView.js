@@ -67,7 +67,8 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 				"paName",
 				"type",
 				"frequency",
-				"mode"
+				"mode",
+				"publishStatus"
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -128,6 +129,26 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 						return d.name;
 					}
 					
+				}, {
+					header : "状态",
+					dataIndex : "publishStatus",
+					renderer : function(d) {
+						if(d == 0) {        //草稿
+							return "草稿";
+						}
+						if(d == 1) {        //审核中
+							return "审核中";
+						}
+						if(d == 2) {        //退回
+							return "退回";
+						}
+						if(d == 3) {        //审核完毕，发布
+							return "已发布";
+						}
+						if(d == 4) {        //删除标记
+							return "已删除";
+						}
+					}
 				},
 				this.rowActions
 			],
