@@ -1442,5 +1442,11 @@
 			    </Function>
 			</Item>
 		</Items>
+		<Items id="KpiManage" text="绩效管理" isPublic="false">
+			<Item id="HrPaPerformanceindexView" text="考核项目管理" iconCls="" isPublic="false">
+				
+			</Item>
+		</Items>
+		
 	</Items>
 </Menus>

@@ -346,5 +346,10 @@ App.importJs = {
 	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
 	BudgetView : [ __ctxPath + "/js/budget/BudgetView.js",
 	        			__ctxPath + "/js/budget/BudgetForm.js",
-	        			__ctxPath + "/js/budget/BudgetItemWin.js" ]
+	        			__ctxPath + "/js/budget/BudgetItemWin.js" ],
+	HrPaPerformanceindexView : [__ctxPath + "/js/kpi/HrPaPerformanceindexView.js",
+			__ctxPath + "/js/kpi/HrPaPerformanceindexForm.js",
+			__ctxPath + "/js/kpi/HrPaPerformanceindexscoreView.js",
+			__ctxPath + "/js/kpi/HrPaPerformanceindexscoreForm1.js",
+			__ctxPath + "/js/kpi/HrPaPerformanceindexscoreForm2.js"]
 };
