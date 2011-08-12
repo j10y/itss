@@ -41,22 +41,23 @@ public class BudgetItemAction extends BaseAction {
 	}
 
 	public String list() {
-		/* 55 */QueryFilter filter = new QueryFilter(getRequest());
-		/* 56 */List list = this.budgetItemService.getAll(filter);
+		QueryFilter filter = new QueryFilter(getRequest());
+		List list = this.budgetItemService.getAll(filter);
 
-		/* 59 */StringBuffer buff = new StringBuffer(
+		StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':")
-		/* 60 */.append(filter.getPagingBean().getTotalItems()).append(
+		.append(filter.getPagingBean().getTotalItems()).append(
 				",result:");
 
-		/* 64 */JSONSerializer serializer = new JSONSerializer();
-		/* 65 */buff.append(serializer.exclude(new String[] { "class" })
+		JSONSerializer serializer = new JSONSerializer();
+		buff.append(serializer.exclude(new String[] { "class" })
 				.serialize(list));
-		/* 66 */buff.append("}");
+		buff.append("}");
 
-		/* 68 */this.jsonString = buff.toString();
-
-		/* 70 */return "success";
+		this.jsonString = buff.toString();
+//		this.jsonString = "[{task:'Project: Shopping', duration:13.25, user:'Tommy Maintz', iconCls:'task-folder', expanded: " +
+//		"true, children:[{task:'Housewares',duration:1.25,user:'Tommy Maintz',iconCls:'task-folder'}]}]";
+		return "success";
 	}
 
 	public String combo() {
@@ -76,10 +77,14 @@ public class BudgetItemAction extends BaseAction {
 	}
 
 	public String multiDel() {
-		/* 96 */String[] ids = getRequest().getParameterValues("ids");
-		/* 97 */if (ids != null) {
-			/* 98 */for (String id : ids) {
-				/* 99 */this.budgetItemService.remove(new Long(id));
+		String[] ids = getRequest().getParameterValues("ids");
+		if (ids != null) {
+			for (String id : ids) {
+				//this.budgetItemService.remove(new Long(id));
+				//逻辑删除
+				BudgetItem budgetItem = this.budgetItemService.get(new Long(id));
+				budgetItem.setDeleteFlag(new Integer(1));
+				this.budgetItemService.save(budgetItem);
 			}
 		}
 
@@ -91,15 +96,16 @@ public class BudgetItemAction extends BaseAction {
 	public String get() {
 		/* 113 */BudgetItem budgetItem = (BudgetItem) this.budgetItemService.get(this.budgetItemId);
 
-		/* 117 */StringBuffer sb = new StringBuffer("{success:true,data:");
+		/* 117 */StringBuffer sb = new StringBuffer("{success:true,totalCounts:1,data:[");
 
 		/* 119 */JSONSerializer serializer = new JSONSerializer();
 		/* 120 */sb
 				.append(serializer.exclude(
 						new String[] { "class", "department.class" })
 						.serialize(budgetItem));
-		/* 121 */sb.append("}");
+		/* 121 */sb.append("]}");
 		/* 122 */setJsonString(sb.toString());
+		//setJsonString("{success:true,totalCounts:1,data:[{'budget':{'beginDate':1312992000000,'belongDept':{'class':'com.xpsoft.oa.model.system.Department_$$_javassist_122','depDesc':'维护系统','depId':1,'depLevel':2,'depName':'信息部门','parentId':0,'path':'0.1.'},'budgetId':1,'class':'com.xpsoft.oa.model.hrm.Budget_$$_javassist_62','createDate':1313047728000,'createPerson':{'accessionTime':1261065600000,'accountNonExpired':true,'accountNonLocked':true,'address':null,'businessEmail':'csx@jee-soft.cn','class':'com.xpsoft.oa.model.system.AppUser_$$_javassist_133','credentialsNonExpired':true,'delFlag':0,'department':{'class':'com.xpsoft.oa.model.system.Department_$$_javassist_122','depDesc':'维护系统','depId':1,'depLevel':2,'depName':'信息部门','parentId':0,'path':'0.1.'},'education':null,'email':'csx@jee-soft.cn','enabled':true,'familyName':'超级管理员','fax':null,'firstKeyColumnName':'userId','fullname':'超级管理员','functionRights':'','givenName':'超级管理员','id':'1','mobile':null,'password':'a4ayc/80/OGda4BO/1o/V0etpOqiLx1JwB5S3beHW0s=','phone':null,'photo':null,'position':null,'status':1,'title':1,'userId':1,'username':'admin','zip':null},'endDate':1313078400000,'modifyDate':1313113100000,'modifyPerson':{'accessionTime':1261065600000,'accountNonExpired':true,'accountNonLocked':true,'address':null,'businessEmail':'csx@jee-soft.cn','class':'com.xpsoft.oa.model.system.AppUser_$$_javassist_133','credentialsNonExpired':true,'delFlag':0,'department':{'class':'com.xpsoft.oa.model.system.Department_$$_javassist_122','depDesc':'维护系统','depId':1,'depLevel':2,'depName':'信息部门','parentId':0,'path':'0.1.'},'education':null,'email':'csx@jee-soft.cn','enabled':true,'familyName':'超级管理员','fax':null,'firstKeyColumnName':'userId','fullname':'超级管理员','functionRights':'','givenName':'超级管理员','id':'1','mobile':null,'password':'a4ayc/80/OGda4BO/1o/V0etpOqiLx1JwB5S3beHW0s=','phone':null,'photo':null,'position':null,'status':1,'title':1,'userId':1,'username':'admin','zip':null},'name':'2011IT预算','publishStatus':null,'remark':null},'budgetItemId':1,'code':'1.1','deleteFlag':0,'key':'cost','name':'成本','parent':{budgetItemId:0},'threshold':0.1,'value':100.0}]}");
 
 		/* 124 */return "success";
 	}
@@ -129,6 +135,7 @@ public class BudgetItemAction extends BaseAction {
 		if(getRequest().getParameter("budgetId")!=null){
 			Map map = new HashMap();
 			map.put("Q_budget.budgetId_L_EQ", getRequest().getParameter("budgetId"));
+			map.put("Q_deleteFlag_N_EQ", "0");
 			QueryFilter paramQueryFilter = new QueryFilter(map);
 			itemList = this.budgetItemService.getAll(paramQueryFilter);
 		}else{

@@ -34,7 +34,7 @@ public class Budget extends BaseModel{
 	@Expose
 	protected AppUser modifyPerson;
 	@Expose
-	protected Integer publishStatus;
+	protected Integer publishStatus;// 0：草稿  1：审核中 2：退回 3：审核完毕，发布 4：删除标记'
 	
 	public Long getBudgetId() {
 		return budgetId;

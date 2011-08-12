@@ -85,7 +85,7 @@
             access="property"
             column="publishStatus"
             length="32"
-            not-null="false"
+            not-null="true"
             unique="false"
         />   
     </class>

@@ -55,7 +55,7 @@ public class BudgetAction extends BaseAction {
 			.serialize(list));
 		buff.append("}");
 
-		this.jsonString = buff.toString();
+		this.jsonString = buff.toString();	
 
 		return "success";
 	}
@@ -77,10 +77,13 @@ public class BudgetAction extends BaseAction {
 	}
 
 	public String multiDel() {
-		/* 96 */String[] ids = getRequest().getParameterValues("ids");
-		/* 97 */if (ids != null) {
-			/* 98 */for (String id : ids) {
-				/* 99 */this.budgetService.remove(new Long(id));
+		String[] ids = getRequest().getParameterValues("ids");
+		if (ids != null) {
+			for (String id : ids) {
+				//this.budgetService.remove(new Long(id));
+				Budget budget =  this.budgetService.get(new Long(id));
+				budget.setPublishStatus(new Integer("4"));
+				this.budgetService.save(budget);
 			}
 		}
 
@@ -118,6 +121,8 @@ public class BudgetAction extends BaseAction {
 			this.budget.setCreateDate(new Date());
 			this.budget.setCreatePerson(user);
 		}
+		this.budget.setPublishStatus(new Integer("0"));
+		
 		this.budget.setBelongDept(new Department(Long.valueOf(getRequest().getParameter("budget.belongDept.depId"))));
 		this.budgetService.save(this.budget);
 		setJsonString("{success:true,budgetId:'" + budget.getBudgetId() + "'}");

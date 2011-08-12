@@ -45,7 +45,7 @@
         <property
             name="inputDate"
             type="java.util.Date"
-            update="true"
+            update="false"
             insert="true"
             access="property"
             column="inputDate"
