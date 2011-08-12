@@ -20,7 +20,9 @@ public class HrPaDatadictionaryDaoImpl extends BaseDaoImpl<HrPaDatadictionary>
 	public HrPaDatadictionaryDaoImpl(){
 		super(HrPaDatadictionary.class);
 	}
-	
+	/*
+	 * 分类取得项目考核类型、项目考核频度、项目考核方式关键字
+	 * */
 	public Map<Long, String> getAllByParentId(long parentId){
 		final String hql = "select id, name from HrPaDatadictionary where parentId=?";
 		final long item = parentId;

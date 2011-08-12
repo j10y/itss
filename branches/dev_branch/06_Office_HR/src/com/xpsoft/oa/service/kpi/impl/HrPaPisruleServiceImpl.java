@@ -13,7 +13,9 @@ public class HrPaPisruleServiceImpl extends BaseServiceImpl<HrPaPisrule>
 		super(dao);
 		this.dao = dao;
 	}
-	
+	/*
+	 * 通过外键pisId删除定量得分关联的规则
+	 * */
 	public void removeByPisId(long pisId) {
 		this.dao.removeByPisId(pisId);
 	}

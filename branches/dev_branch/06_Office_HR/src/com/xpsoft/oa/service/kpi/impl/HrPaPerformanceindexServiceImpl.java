@@ -23,7 +23,9 @@ public class HrPaPerformanceindexServiceImpl extends BaseServiceImpl<HrPaPerform
 		super(dao);
 		this.dao = dao;
 	}
-	
+	/*
+	 * 发布考核项目
+	 * */
 	public boolean saveToPublish(long piId) {
 		HrPaPerformanceindexscoreService hrPaPerformanceindexscoreService = 
 				(HrPaPerformanceindexscoreService)AppUtil.getBean("hrPaPerformanceindexscoreService");
@@ -31,6 +33,7 @@ public class HrPaPerformanceindexServiceImpl extends BaseServiceImpl<HrPaPerform
 		map.put("Q_piId_L_EQ", String.valueOf(piId));
 		QueryFilter filter = new QueryFilter(map);
 		List<HrPaPerformanceindexscore> list = hrPaPerformanceindexscoreService.getAll(filter);
+		//考核项目没有得分
 		if(list.size() == 0 || list.size() > 5) {
 			return false;
 		}
@@ -38,6 +41,7 @@ public class HrPaPerformanceindexServiceImpl extends BaseServiceImpl<HrPaPerform
 		for(int i = 0; i < list.size(); i++) {
 			set.add(list.get(i).getPisScore());
 		}
+		//考核项目有重复得分
 		if(set.size() < list.size()) {
 			return false;
 		}

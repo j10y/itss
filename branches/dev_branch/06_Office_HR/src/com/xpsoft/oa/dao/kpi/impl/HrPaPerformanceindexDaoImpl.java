@@ -16,7 +16,9 @@ public class HrPaPerformanceindexDaoImpl extends BaseDaoImpl<HrPaPerformanceinde
 	public HrPaPerformanceindexDaoImpl(){
 		super(HrPaPerformanceindex.class);
 	}
-	
+	/*
+	 * 发布考核项目
+	 * */
 	public void saveToPublish(long piId) {
 		final String hql = "update HrPaPerformanceindex set publishStatus=3 where id=?";
 		final long item = piId;

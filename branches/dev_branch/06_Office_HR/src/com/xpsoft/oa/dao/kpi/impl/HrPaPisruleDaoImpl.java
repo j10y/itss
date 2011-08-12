@@ -13,7 +13,9 @@ public class HrPaPisruleDaoImpl extends BaseDaoImpl<HrPaPisrule>
 	public HrPaPisruleDaoImpl(){
 		super(HrPaPisrule.class);
 	}
-	
+	/*
+	 * 通过外键pisId删除定量得分关联的规则
+	 * */
 	public void removeByPisId(long pisId) {
 		final String hql = "delete from HrPaPisrule where pisId=?";
 		final long item = pisId;

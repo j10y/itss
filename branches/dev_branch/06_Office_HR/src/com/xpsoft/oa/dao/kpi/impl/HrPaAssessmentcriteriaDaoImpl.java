@@ -20,7 +20,9 @@ public class HrPaAssessmentcriteriaDaoImpl extends BaseDaoImpl<HrPaAssessmentcri
 	public HrPaAssessmentcriteriaDaoImpl(){
 		super(HrPaAssessmentcriteria.class);
 	}
-	
+	/*
+	 * 取得所有考核标准关键字和名称
+	 * */
 	public Map<String, String> getKeyAndName() {
 		final String hql = "select acKey, acName from HrPaAssessmentcriteria";
 		

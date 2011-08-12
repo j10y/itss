@@ -13,7 +13,9 @@ public class HrPaPerformanceindexscoreDaoImpl extends BaseDaoImpl<HrPaPerformanc
 	public HrPaPerformanceindexscoreDaoImpl(){
 		super(HrPaPerformanceindexscore.class);
 	}
-	
+	/*
+	 * 通过外键piId批量删除考核项目关联的得分
+	 * */
 	public void removeByPiId(long piId) {
 		final String hql = "delete from HrPaPerformanceindexscore where piId=?";
 		final long item = piId;

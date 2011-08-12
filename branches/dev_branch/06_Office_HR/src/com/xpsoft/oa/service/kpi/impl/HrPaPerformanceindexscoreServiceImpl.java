@@ -23,7 +23,9 @@ public class HrPaPerformanceindexscoreServiceImpl extends BaseServiceImpl<HrPaPe
 		super(dao);
 		this.dao = dao;
 	}
-	
+	/*
+	 * 通过外键piId批量删除考核项目关联的得分
+	 * */
 	public void removeByPiId(long piId) {
 		HrPaPisruleService hrPaPisruleService = (HrPaPisruleService)AppUtil.getBean("hrPaPisruleService");
 		Map<String, String> map = new HashMap<String, String>();
