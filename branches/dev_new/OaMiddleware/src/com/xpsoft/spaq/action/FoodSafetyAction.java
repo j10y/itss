@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -37,6 +38,7 @@ import com.xpsoft.padoa.test.entity.LoginSendLog;
 import com.xpsoft.padoa.test.entity.User;
 import com.xpsoft.padoa.test.service.UserService;
 import com.xpsoft.framework.context.ContextHolder;
+import com.xpsoft.framework.util.DateUtil;
 import com.xpsoft.framework.util.FileDownloaderUtil;
 import com.xpsoft.framework.util.HttpUtil;
 import com.xpsoft.framework.util.PropertiesUtil;
@@ -50,12 +52,10 @@ import com.xpsoft.framework.web.adapter.struts2.BaseAction;
  * @Author likang
  * @Create In Aug 2, 2011
  */
-public class FoodSafety extends BaseAction{
+public class FoodSafetyAction extends BaseAction{
 	
 	//中间件访问oa地址 webservice
-	public static final String FoodSafetyUrl = PropertiesUtil.getProperties("system.oa.webserviceUrl");
-	//中间件访问oa地址
-	public static final String OAURLDOWN = PropertiesUtil.getProperties("system.oa.url");
+	public static final String FoodSafetyUrl = PropertiesUtil.getProperties("system.spaq.url");
 	
 	/**
 	 * 转发pad端请求到食品安全系统
@@ -66,23 +66,33 @@ public class FoodSafety extends BaseAction{
 	 */
 	public String forwardRequest() throws Exception  {
 		JSONObject jo = new JSONObject();
-		jo.put("success", false);
+		jo.put("success", "false");
 		String jsonString = jo.toString();
 		//访问食品安全的url
-		String accessUrl = "";
 		StringBuffer url = new StringBuffer();
-		url.append(FoodSafetyUrl);
-		url.append(accessUrl);
+		System.out.println("-------------begin at:"+DateUtil.getCurrentDateTimeString()+"---------------------------");
 		try {
 			//得到所有参数
-			String paramString = super.getRequest().getParameter("");
+			String paramString = super.getRequest().getParameter("param");
+			//得到target数字
+			String target = super.getRequest().getParameter("target");
+			System.out.println("target:"+target);
 			//解码
-			if (accessUrl != null) {
-				url.append("?");
-				url.append(HttpUtil.encodeParamString(paramString));
-				//读取json
-				jsonString = HttpUtil.getJsonStringByUrl(url.toString());
-			} 
+			if (target != null) {
+				String targetUrl = PropertiesUtil.getProperties(target);
+				if (targetUrl != null) {
+					url.append(FoodSafetyUrl);
+					url.append(targetUrl);
+					url.append("?");
+					String paramStringEncode = HttpUtil.encodeParamString(paramString);
+					url.append(paramStringEncode);
+					System.out.println("原参数:" +paramString);
+					System.out.println("转码后:" +paramStringEncode);
+					//读取json
+					jsonString = HttpUtil.getJsonStringByUrl(url.toString());
+				}
+				
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -92,13 +102,22 @@ public class FoodSafety extends BaseAction{
 		pw.append(jsonString);
 		pw.flush();
 		pw.close();
+		System.out.println("-------------end at:"+DateUtil.getCurrentDateTimeString()+"---------------------------");
 		return null;
 	}
 	
 	public static void main(String args[]) {
+		String aString = "billCode=晋C0000100009&startDate=20090101&endDate=20110808&pageNum=1&pageSize=15";
+		try {
+			System.out.println(URLEncoder.encode(aString,"utf-8"));
+			System.out.println(URLDecoder.decode("billCode=%E6%99%8BC0000100009&startDate=20090101&endDate=20110808&pageNum=1&pageSize=15", "utf-8"));
 		
-		System.out.println(HttpUtil.encodeParamString("id=15&commentDesc=没问题，你可以修改家了&userid=1&taskId=54&activityName=部门负责人审批&nextuser=&checkboxvalue="));
-		System.out.println(HttpUtil.encodeParamString("taskid=分发"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		System.out.println(HttpUtil.encodeParamString("a=阳泉"));
+//		System.out.println(HttpUtil.encodeParamString("taskid=分发"));
 	}
 	
 }

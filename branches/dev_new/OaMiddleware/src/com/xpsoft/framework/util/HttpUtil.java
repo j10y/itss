@@ -617,7 +617,7 @@ public final class HttpUtil {
 	 * @throws Exception String
 	 */
 	public static String getJsonStringByUrl(String url) throws Exception {
-		 System.out.println(url);
+		 System.out.println("访问:"+url);
 		 URL accessUrl = new URL(url);
         HttpURLConnection conn = (HttpURLConnection) accessUrl.openConnection();  
         conn.setDoOutput(true);  
@@ -635,6 +635,7 @@ public final class HttpUtil {
 		 while ((currentLine = reader.readLine()) != null) {
 			backJsonString+=currentLine;  
 		 }
+		 System.out.println("接收:" + backJsonString);
 		return backJsonString;
 	}
 	
@@ -649,7 +650,6 @@ public final class HttpUtil {
 	 * @return String
 	 */
 	public static String encodeParamString(String paramString) {
-		System.out.println(paramString);
 		String backString = "";
 		StringBuffer sb = new StringBuffer();
 		if (paramString != null) {

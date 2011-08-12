@@ -32,7 +32,10 @@
         <action name="*NetOaAction" class="com.xpsoft.netoa.action.NetOaAction" method="{1}">
             <result>/insertOk.jsp</result>
         </action>
-        
+        <action name="*SpaqAction" class="com.xpsoft.spaq.action.FoodSafetyAction" method="{1}">
+            <result>/insertOk.jsp</result>
+        </action>
+		
     </package>
     
 </struts>

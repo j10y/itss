@@ -202,11 +202,12 @@ public class NetOaAction extends BaseAction{
 		try {
 			String name = super.getRequest().getParameter("name");
 			String userid = super.getRequest().getParameter("userid");
-			//public String findUserByUserName(String userName)
+			String departId = super.getRequest().getParameter("deptId");
+			//public String findUserByUserName(String userName,String userId,String passwd,String departId)
 			if (name != null && userid != null && UserCheckMap.get(userid) != null) {
 				String methodName = "findUserByUserName";
 				//通过webserice返回json对象
-				Object [] paramArr = new Object[]{name, userid,UserCheckMap.get(userid)};
+				Object [] paramArr = new Object[]{name, userid,UserCheckMap.get(userid),departId};
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				jo = backJsonObejct;
 			} 
@@ -441,12 +442,12 @@ public class NetOaAction extends BaseAction{
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			jo.put("success", true);
-			JSONArray jArray = new JSONArray();
-			jArray.add("{typeId:\"1\",typeName:\"假城市创建通知\"}");
-			jArray.add("{typeId:\"21\",typeName:\"假全系统通知\"}");
-			jArray.add("{typeId:\"13\",typeName:\"假鼎城区通知\"}");
-			jo.put("data", jArray);
+//			jo.put("success", true);
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{typeId:\"1\",typeName:\"假城市创建通知\"}");
+//			jArray.add("{typeId:\"21\",typeName:\"假全系统通知\"}");
+//			jArray.add("{typeId:\"13\",typeName:\"假鼎城区通知\"}");
+//			jo.put("data", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -489,24 +490,24 @@ public class NetOaAction extends BaseAction{
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
-			jo.put("success", true);
-			jo.put("totalCount", "13");
-			JSONArray jArray = new JSONArray();
-			jArray.add("{id:\"1\",title:\"假我们都是好通知1\", department:\"办公室\",author :\"张三丰1\",createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"2\",title:\"假我们都是好通知2\", department:\"办公室\",author :\"张三丰1\",  createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"11\",title:\"假我们都是好通知3\", department:\"办公室\",author :\"张三丰1\",  createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"12\",title:\"假我们都是好通知4\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"13\",title:\"假我们都是好通知5\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"14\",title:\"假我们都是好通知6\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"15\",title:\"假我们都是好通知7\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"16\",title:\"假我们都是好通知8\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"17\",title:\"假我们都是好通知9\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"18\",title:\"假我们都是好通知10\", department:\"办公室\",author :\"张三丰1\",  createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"19\",title:\"假我们都是好通知11\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"10\",title:\"假我们都是好通知22\", department:\"办公室\",  author :\"张三丰1\",createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{id:\"100\",title:\"假我们都是好通知223\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
-			jo.put("data", jArray);
+//			// TODO: handle exception
+//			jo.put("success", true);
+//			jo.put("totalCount", "13");
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{id:\"1\",title:\"假我们都是好通知1\", department:\"办公室\",author :\"张三丰1\",createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"2\",title:\"假我们都是好通知2\", department:\"办公室\",author :\"张三丰1\",  createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"11\",title:\"假我们都是好通知3\", department:\"办公室\",author :\"张三丰1\",  createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"12\",title:\"假我们都是好通知4\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"13\",title:\"假我们都是好通知5\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"14\",title:\"假我们都是好通知6\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"15\",title:\"假我们都是好通知7\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"16\",title:\"假我们都是好通知8\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"17\",title:\"假我们都是好通知9\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"18\",title:\"假我们都是好通知10\", department:\"办公室\",author :\"张三丰1\",  createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"19\",title:\"假我们都是好通知11\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"10\",title:\"假我们都是好通知22\", department:\"办公室\",  author :\"张三丰1\",createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{id:\"100\",title:\"假我们都是好通知223\", department:\"办公室\", author :\"张三丰1\", createDate :\"2011-7-16 12:34\"}");
+//			jo.put("data", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -551,15 +552,15 @@ public class NetOaAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
-			jo.put("success", true);
-			jo.put("clickrate", "100");
-			jo.put("department", "假加班开发部");
-			jo.put("desc", "假加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。");
-			jo.put("commentDesc", "假我看过这个破玩意。");
-			JSONArray jArray = new JSONArray();
-			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jo.put("accessories", jArray);
+//			jo.put("success", true);
+//			jo.put("clickrate", "100");
+//			jo.put("department", "假加班开发部");
+//			jo.put("desc", "假加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。加班开发部，在扯淡。");
+//			jo.put("commentDesc", "假我看过这个破玩意。");
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jo.put("accessories", jArray);
 
 		}
 		//输出json
@@ -602,14 +603,14 @@ public class NetOaAction extends BaseAction{
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
-			jo.put("success", true);
-			JSONArray jArray = new JSONArray();
-			jArray.add("{taskid:\"1\",nodeName:\"假发文核稿\", author :\"超级管理员\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"10\",nodeName:\"假领导审批\", author :\"网络\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"12\",nodeName:\"假领导审批\", author :\"啊鸡鸡\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"14\",nodeName:\"假请假审批\", author :\"中文啊\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"15\",nodeName:\"假请假审批\", author :\"阿鸡是个X\",createDate :\"2011-7-16 12:34\"}");
-			jo.put("data", jArray);
+//			jo.put("success", true);
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{taskid:\"1\",nodeName:\"假发文核稿\", author :\"超级管理员\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"10\",nodeName:\"假领导审批\", author :\"网络\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"12\",nodeName:\"假领导审批\", author :\"啊鸡鸡\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"14\",nodeName:\"假请假审批\", author :\"中文啊\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"15\",nodeName:\"假请假审批\", author :\"阿鸡是个X\",createDate :\"2011-7-16 12:34\"}");
+//			jo.put("data", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -684,38 +685,38 @@ public class NetOaAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
-			jo.put("success", true);
-			jo.put("title", "22222222222(待审批)");
-			jo.put("createDate", "2011-07-22 12:10:00");
-			jo.put("activityName", "发文核稿");
-			jo.put("type", "0");
-			jo.put("id", "88");
-			jo.put("taskId", "100");
-			jo.put("signalName", "审核");
-			jo.put("boxstatus", false);
-			jo.put("userquery", false);
-			JSONArray jArrayD = new JSONArray();
-			jArrayD.add("{label:\"假来文文字号\",value:\"1111111\"}");
-			jArrayD.add("{label:\"假发文人\",value:\"超级管理员\"}");
-			jArrayD.add("{label:\"假发文机关\",value:\"信息部门\"}");
-			jArrayD.add("{label:\"假来文类型\",value:\"三星\"}");
-			jArrayD.add("{label:\"假主题词\",value:\"2222222\"}");
-			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
-			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
-			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
-			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
-			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
-			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
-			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
-			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
-			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
-			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
-			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
-			jo.put("data", jArrayD);
-			JSONArray jArray = new JSONArray();
-			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jo.put("accessories", jArray);
+//			jo.put("success", true);
+//			jo.put("title", "22222222222(待审批)");
+//			jo.put("createDate", "2011-07-22 12:10:00");
+//			jo.put("activityName", "发文核稿");
+//			jo.put("type", "0");
+//			jo.put("id", "88");
+//			jo.put("taskId", "100");
+//			jo.put("signalName", "审核");
+//			jo.put("boxstatus", false);
+//			jo.put("userquery", false);
+//			JSONArray jArrayD = new JSONArray();
+//			jArrayD.add("{label:\"假来文文字号\",value:\"1111111\"}");
+//			jArrayD.add("{label:\"假发文人\",value:\"超级管理员\"}");
+//			jArrayD.add("{label:\"假发文机关\",value:\"信息部门\"}");
+//			jArrayD.add("{label:\"假来文类型\",value:\"三星\"}");
+//			jArrayD.add("{label:\"假主题词\",value:\"2222222\"}");
+//			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
+//			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
+//			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
+//			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
+//			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
+//			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
+//			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
+//			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
+//			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
+//			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
+//			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
+//			jo.put("data", jArrayD);
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jo.put("accessories", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -811,24 +812,24 @@ public class NetOaAction extends BaseAction{
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
-			jo.put("success", true);
-			jo.put("totalCount", "13");
-			JSONArray jArray = new JSONArray();
-			jArray.add("{id:\"1\",title:\"假我们都是好通知1\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\",taskid:10002}");
-			jArray.add("{id:\"2\",title:\"假我们都是好通知2\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"11\",title:\"假我们都是好通知3\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"12\",title:\"假我们都是好通知4\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"13\",title:\"假我们都是好通知5\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"14\",title:\"假我们都是好通知6\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"15\",title:\"假我们都是好通知7\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"16\",title:\"假我们都是好通知8\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"17\",title:\"假我们都是好通知9\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"18\",title:\"假我们都是好通知10\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"19\",title:\"假我们都是好通知11\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"10\",title:\"假我们都是好通知22\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jArray.add("{id:\"100\",title:\"假我们都是好通知223\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
-			jo.put("data", jArray);
+//			// TODO: handle exception
+//			jo.put("success", true);
+//			jo.put("totalCount", "13");
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{id:\"1\",title:\"假我们都是好通知1\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\",taskid:10002}");
+//			jArray.add("{id:\"2\",title:\"假我们都是好通知2\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"11\",title:\"假我们都是好通知3\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"12\",title:\"假我们都是好通知4\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"13\",title:\"假我们都是好通知5\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"14\",title:\"假我们都是好通知6\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"15\",title:\"假我们都是好通知7\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"16\",title:\"假我们都是好通知8\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"17\",title:\"假我们都是好通知9\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"18\",title:\"假我们都是好通知10\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"19\",title:\"假我们都是好通知11\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"10\",title:\"假我们都是好通知22\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jArray.add("{id:\"100\",title:\"假我们都是好通知223\",gwzh :\"00001\", department:\"办公室\",  createDate :\"2011-7-16 12:34\", taskid:10002}");
+//			jo.put("data", jArray);
 			// TODO: handle exception
 		}
 		//输出json
@@ -875,38 +876,38 @@ public class NetOaAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
-			jo.put("success", true);
-			jo.put("title", "22222222222(待审批)");
-			jo.put("createDate", "2011-07-22 12:10:00");
-			jo.put("activityName", "发文核稿");
-			jo.put("type", "0");
-			jo.put("id", "88");
-			jo.put("boxstatus", false);
-			jo.put("userquery", false);
-			jo.put("taskId","false");
-			jo.put("signalName","false");
-			JSONArray jArrayD = new JSONArray();
-			jArrayD.add("{label:\"假来文文字号\",value:\"1111111\"}");
-			jArrayD.add("{label:\"假发文人\",value:\"超级管理员\"}");
-			jArrayD.add("{label:\"假发文机关\",value:\"信息部门\"}");
-			jArrayD.add("{label:\"假来文类型\",value:\"三星\"}");
-			jArrayD.add("{label:\"假主题词\",value:\"2222222\"}");
-			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
-			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
-			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
-			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
-			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
-			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
-			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
-			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
-			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
-			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
-			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
-			jo.put("data", jArrayD);
-			JSONArray jArray = new JSONArray();
-			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jo.put("accessories", jArray);
+//			jo.put("success", true);
+//			jo.put("title", "22222222222(待审批)");
+//			jo.put("createDate", "2011-07-22 12:10:00");
+//			jo.put("activityName", "发文核稿");
+//			jo.put("type", "0");
+//			jo.put("id", "88");
+//			jo.put("boxstatus", false);
+//			jo.put("userquery", false);
+//			jo.put("taskId","false");
+//			jo.put("signalName","false");
+//			JSONArray jArrayD = new JSONArray();
+//			jArrayD.add("{label:\"假来文文字号\",value:\"1111111\"}");
+//			jArrayD.add("{label:\"假发文人\",value:\"超级管理员\"}");
+//			jArrayD.add("{label:\"假发文机关\",value:\"信息部门\"}");
+//			jArrayD.add("{label:\"假来文类型\",value:\"三星\"}");
+//			jArrayD.add("{label:\"假主题词\",value:\"2222222\"}");
+//			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
+//			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
+//			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
+//			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
+//			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
+//			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
+//			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
+//			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
+//			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
+//			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
+//			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
+//			jo.put("data", jArrayD);
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jo.put("accessories", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -948,14 +949,14 @@ public class NetOaAction extends BaseAction{
 			} 
 		} catch (Exception e) {
 			// TODO: handle exception
-			jo.put("success", true);
-			JSONArray jArray = new JSONArray();
-			jArray.add("{taskid:\"1\",nodeName:\"假发文核稿\", author :\"超级管理员\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"10\",nodeName:\"假领导审批\", author :\"网络\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"12\",nodeName:\"假领导审批\", author :\"啊鸡鸡\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"14\",nodeName:\"假请假审批\", author :\"中文啊\", createDate :\"2011-7-16 12:34\"}");
-			jArray.add("{taskid:\"15\",nodeName:\"假请假审批\", author :\"阿鸡是个X\",createDate :\"2011-7-16 12:34\"}");
-			jo.put("data", jArray);
+//			jo.put("success", true);
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{taskid:\"1\",nodeName:\"假发文核稿\", author :\"超级管理员\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"10\",nodeName:\"假领导审批\", author :\"网络\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"12\",nodeName:\"假领导审批\", author :\"啊鸡鸡\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"14\",nodeName:\"假请假审批\", author :\"中文啊\", createDate :\"2011-7-16 12:34\"}");
+//			jArray.add("{taskid:\"15\",nodeName:\"假请假审批\", author :\"阿鸡是个X\",createDate :\"2011-7-16 12:34\"}");
+//			jo.put("data", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -1004,11 +1005,15 @@ public class NetOaAction extends BaseAction{
 		jo.put("title", "");
 		jo.put("createDate", "");
 		jo.put("activityName", "");
-		jo.put("taskId","false");
-		jo.put("signalName","false");
+		jo.put("taskId","");
+		jo.put("signalName","");
 		jo.put("type","");
 		jo.put("boxstatus",false);
 		jo.put("userquery",false);
+		jo.put("showgdlx",false);
+		jo.put("showback",false);
+		jo.put("showbh",false);
+		jo.put("isdx",false);
 		jo.put("data", new JSONArray());
 		jo.put("accessories", new JSONArray());
 		//访问oa的url
@@ -1034,38 +1039,38 @@ public class NetOaAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
-			jo.put("success", true);
-			jo.put("title", "22222222222(待审批)");
-			jo.put("createDate", "2011-07-22 12:10:00");
-			jo.put("activityName", "发文核稿");
-			jo.put("type", "0");
-			jo.put("id", "88");
-			jo.put("taskId", "100");
-			jo.put("signalName", "审核");
-			jo.put("boxstatus", false);
-			jo.put("userquery", false);
-			JSONArray jArrayD = new JSONArray();
-			jArrayD.add("{label:\"假来文文字号\",value:\"1111111\"}");
-			jArrayD.add("{label:\"假发文人\",value:\"超级管理员\"}");
-			jArrayD.add("{label:\"假发文机关\",value:\"信息部门\"}");
-			jArrayD.add("{label:\"假来文类型\",value:\"三星\"}");
-			jArrayD.add("{label:\"假主题词\",value:\"2222222\"}");
-			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
-			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
-			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
-			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
-			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
-			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
-			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
-			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
-			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
-			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
-			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
-			jo.put("data", jArrayD);
-			JSONArray jArray = new JSONArray();
-			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
-			jo.put("accessories", jArray);
+//			jo.put("success", true);
+//			jo.put("title", "22222222222(待审批)");
+//			jo.put("createDate", "2011-07-22 12:10:00");
+//			jo.put("activityName", "发文核稿");
+//			jo.put("type", "0");
+//			jo.put("id", "88");
+//			jo.put("taskId", "100");
+//			jo.put("signalName", "审核");
+//			jo.put("boxstatus", false);
+//			jo.put("userquery", false);
+//			JSONArray jArrayD = new JSONArray();
+//			jArrayD.add("{label:\"假来文文字号\",value:\"1111111\"}");
+//			jArrayD.add("{label:\"假发文人\",value:\"超级管理员\"}");
+//			jArrayD.add("{label:\"假发文机关\",value:\"信息部门\"}");
+//			jArrayD.add("{label:\"假来文类型\",value:\"三星\"}");
+//			jArrayD.add("{label:\"假主题词\",value:\"2222222\"}");
+//			jArrayD.add("{label:\"假公文来源\",value:\"22\"}");
+//			jArrayD.add("{label:\"假紧急程度\",value:\"特级\"}");
+//			jArrayD.add("{label:\"假秘密等级\",value:\"机密\"}");
+//			jArrayD.add("{label:\"假签收部门\",value:\"信息部门\"}");
+//			jArrayD.add("{label:\"假内容\",value:\"哈哈哈哈\"}");
+//			jArrayD.add("{label:\"审批流程名称\",value:\"[发文核稿]\"}");
+//			jArrayD.add("{label:\"核稿人\",value:\"zp\"}");
+//			jArrayD.add("{label:\"核稿意见\",value:\"aaaaaaaaaaaaaaaaa\"}");
+//			jArrayD.add("{label:\"审批流程名称\",value:\"[科室审核]\"}");
+//			jArrayD.add("{label:\"审批人\",value:\"张领导\"}");
+//			jArrayD.add("{label:\"审批意见\",value:\"没有意见哈\"}");
+//			jo.put("data", jArrayD);
+//			JSONArray jArray = new JSONArray();
+//			jArray.add("{name:\" 附件名称1.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jArray.add("{name:\" 附件名称2.txt\",url:\"/attachFiles/hrm/201107/2ae833ae7d884a70a4bad80fa6b533c8.txt\",type:\"0\"}");
+//			jo.put("accessories", jArray);
 		}
 		//输出json
 		printJson(jo);
@@ -1103,11 +1108,15 @@ public class NetOaAction extends BaseAction{
 			String checkboxvalue = super.getRequest().getParameter("checkboxvalue");
 			String signalName = super.getRequest().getParameter("signalName");
 			String gdlx = super.getRequest().getParameter("gdlx");
-			if (userid != null && commentDesc != null && taskId != null && password != null && signalName != null) {
+			//编号
+			String bh = super.getRequest().getParameter("bh");
+			//增加审批驳回
+			String ispass = super.getRequest().getParameter("ispass");
+			if (userid != null && id != null && activityName != null && commentDesc != null && taskId != null && password != null && signalName != null) {
 				//调用接口方法 
 				String methodName = "saveProcessAndToNext";
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx)
-				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,null,gdlx};
+				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,ispass,gdlx};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功

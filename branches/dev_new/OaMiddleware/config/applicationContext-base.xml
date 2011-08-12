@@ -42,7 +42,7 @@
 			<list>
 				<value>applicationResources</value>
 				<value>exceptionInfo</value>
-				<value>applicationInfo</value>
+				<value>spaqurl</value>
 			</list>
 		</property>
 	</bean>
