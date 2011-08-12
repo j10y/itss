@@ -298,4 +298,5 @@
   <bean id="HrPaPerformanceindexAction" class="com.xpsoft.oa.action.kpi.HrPaPerformanceindexAction" scope="prototype"/>
   <bean id="HrPaPisruleAction" class="com.xpsoft.oa.action.kpi.HrPaPisruleAction" scope="prototype"/>
 <!-- end:  Generated for Package pei From Template: app-action.xml.beansvm -->
+  <bean id="RealExecutionAction" class="com.xpsoft.oa.action.hrm.RealExecutionAction" scope="prototype"/>
 </beans>

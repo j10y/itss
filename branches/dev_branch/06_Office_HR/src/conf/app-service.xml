@@ -523,6 +523,9 @@
      <bean id="budgetItemService" class="com.xpsoft.oa.service.hrm.impl.BudgetItemServiceImpl">
      	<constructor-arg index="0" ref="budgetItemDao"/>
      </bean>
+     <bean id="realExecutionService" class="com.xpsoft.oa.service.hrm.impl.RealExecutionServiceImpl">
+     	<constructor-arg index="0" ref="realExecutionDao"/>
+     </bean>
 <!-- start:  Generated for Package pei From Template: app-service.xml.beansvm -->
 	<bean id="hrPaAcreachedService" class="com.xpsoft.oa.service.kpi.impl.HrPaAcreachedServiceImpl">
 		<constructor-arg index="0" ref="hrPaAcreachedDao"/>

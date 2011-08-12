@@ -1441,6 +1441,24 @@
 			       <url>/budget/multiDelBudget.do</url>
 			    </Function>
 			</Item>
+			<Item id="RealExecutionView" text="执行跟踪" iconCls="menu-budget">
+			    <Function id="_RealExecutionQuery" text="查看" iconCls="menu-list">
+			       <url>/budget/listRealExecution.do</url>
+			    </Function>
+			    <Function id="_RealExecutionAdd" text="添加" iconCls="menu-add">
+			       <url>/budget/listRealExecution.do</url>
+			       <url>/budget/saveRealExecution.do</url>
+			    </Function>
+			    <Function id="_RealExecutionEdit" text="编辑" iconCls="btn-edit">
+			       <url>/budget/listRealExecution.do</url>
+			       <url>/budget/saveRealExecution.do</url>
+			       <url>/budget/getRealExecution.do</url>
+			    </Function>
+			    <Function id="_RealExecutionDel" text="删除" iconCls="menu-del">
+			       <url>/budget/listRealExecution.do</url>
+			       <url>/budget/multiDelRealExecution.do</url>
+			    </Function>
+			</Item>
 		</Items>
 		<Items id="KpiManage" text="绩效管理" isPublic="false">
 			<Item id="HrPaPerformanceindexView" text="考核项目管理" iconCls="" isPublic="false">

@@ -310,5 +310,5 @@
 	<bean id="hrPaPerformanceindexscoreDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPerformanceindexscoreDaoImpl" parent="baseDao"/>
 	<bean id="hrPaPisruleDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPisruleDaoImpl" parent="baseDao"/>
 <!-- end:  Generated for Package pei From Template: app-dao.xml.beansvm -->
-    
+    <bean id="realExecutionDao" class="com.xpsoft.oa.dao.hrm.impl.RealExecutionDaoImpl" parent="baseDao"/>
 </beans>
