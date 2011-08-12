@@ -159,7 +159,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				Ext.getCmp("hrPaPerformanceindexscoreView").close();
 			});
 		});
-		this.rowActions.on("actions", this.onRowAction, this);
+		this.rowActions.on("action", this.onRowAction, this);
 	},
 	cancel : function(a) {
 		Ext.getCmp("HrPaPerformanceindexView").gridPanel.store.reload({
@@ -222,7 +222,6 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		}
 	},
 	editHrPaPerformanceindexscore : function(a) {
-		alert(11);
 		this.close();
 		if(a.data.pisType == QUALITATIVE_ASSESSMENT) {
 			new HrPaPerformanceindexscoreForm1({
