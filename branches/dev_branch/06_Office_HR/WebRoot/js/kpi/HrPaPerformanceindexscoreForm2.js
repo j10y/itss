@@ -270,7 +270,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	save : function(a, b) {
-		if(isNaN(Ext.getCmp("pisScore").getValue())) {
+		if(isNaN(Ext.getCmp("pisScore").getValue()) || Ext.getCmp("pisScore").getValue() < 1 || Ext.getCmp("pisScore").getValue() > 5) {
 			Ext.MessageBox.show({
 				title : "操作信息",
 				msg : "得分必须是1-5之间的数字，请重新填写。",
