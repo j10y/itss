@@ -176,15 +176,25 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				piId : b.piId
 			},
 			method : "post",
-			success : function() {
-				Ext.ux.Toast.msg("提示信息","发布成功！");
-				Ext.getCmp("HrPaPerformanceindexView").gridPanel.store.reload({
-					params : {
-						start : 0,
-						limit : 25
-					}
-				});
-				b.close();
+			success : function(d) {
+				var e = Ext.util.JSON.decode(d.responseText);
+				if(e.flag) {
+					Ext.ux.Toast.msg("提示信息","发布成功！");
+					Ext.getCmp("HrPaPerformanceindexView").gridPanel.store.reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+					b.close();
+				} else {
+					Ext.MessageBox.show({
+						title : "操作信息",
+						msg : "发布失败，请联系管理员！",
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+				}
 			},
 			failure : function() {
 				Ext.MessageBox.show({
