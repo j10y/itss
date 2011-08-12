@@ -44,12 +44,7 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					text : "查询条件：考核项目名称"
 				}, {
 					fieldLabel : "考核项目名称：",
-					name : "Q_paName",
-					xtype : "textfield"
-				}, {
-					text : "考核项目类型："
-				}, {
-					name : "Q_paType",
+					name : "Q_paName_S_LK",
 					xtype : "textfield"
 				}, {
 					xtype : "button",
@@ -196,7 +191,16 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		this.rowActions.on("action", this.onRowAction, this);
 	},
 	search : function(a) {
-		
+		if(a.searchPanel.getForm().isValid()) {
+			a.searchPanel.getForm().submit({
+				waitMsg : "正在提交查询……",
+				url : __ctxPath + "/kpi/listHrPaPerformanceindex.do",
+				success : function(c, d) {
+					var e = Ext.util.JSON.decode(d.response.responseText);
+					a.gridPanel.getStore().loadData(e);
+				}
+			});
+		}
 	},
 	addHrPaPerformanceindex : function() {
 		new HrPaPerformanceindexForm().show();
