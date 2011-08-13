@@ -240,6 +240,17 @@ ArchivesDraftView = Ext
 						if(Ext.getCmp("archives.archivesNo").getValue()==""){
 							Ext.getCmp("archives.archivesNo").setValue("空编号");
 						}
+						//密级、紧急程度、标题、内容
+						if(Ext.getCmp("archives.privacyLevel").getValue()==""){
+							Ext.getCmp("archives.privacyLevel").setValue("空");
+						}
+						if(Ext.getCmp("archives.urgentLevel").getValue()==""){
+							Ext.getCmp("archives.urgentLevel").setValue("空");
+						}
+						if(Ext.getCmp("archives.subject").getValue()==""){
+							Ext.getCmp("archives.subject").setValue("无标题");
+						}
+						
 						if (this.formPanel.getForm().isValid()) {
 							var b = [];
 							for ( var d = 0, c = this.store.getCount(); d < c; d++) {
@@ -681,7 +692,7 @@ ArchivesDraftView = Ext
 																name : "archives.archivesNo",
 																id : "archives.archivesNo",
 																xtype : "textfield",
-																allowBlank : false,
+																//allowBlank : false,
 																anchor : "100%"
 															}
 														},
@@ -708,7 +719,7 @@ ArchivesDraftView = Ext
 																				id : "archives.privacyLevel",
 																				triggerAction : "all",
 																				lazyRender : true,
-																				allowBlank : false,
+																				//allowBlank : false,
 																				emptyText : "选择密级",
 																				xtype : "combo",
 																				store : [
@@ -728,7 +739,7 @@ ArchivesDraftView = Ext
 																				id : "archives.urgentLevel",
 																				triggerAction : "all",
 																				lazyRender : true,
-																				allowBlank : false,
+																				//allowBlank : false,
 																				emptyText : "选择紧急程度",
 																				xtype : "combo",
 																				store : [
@@ -744,8 +755,8 @@ ArchivesDraftView = Ext
 															fieldLabel : "文件标题",
 															name : "archives.subject",
 															id : "archives.subject",
-															xtype : "textfield",
-															allowBlank : false
+															xtype : "textfield"//,
+															//allowBlank : false
 														},
 														{
 															xtype : "container",

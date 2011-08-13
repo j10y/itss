@@ -18,7 +18,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 					layout : 'form',
 					items : [this.displayPanel,this.formPanel],
 					modal : true,
-					height : 580,
+					height : 420,
 					width : 600,
 					maximizable : true,
 					buttonAlign : 'center',
@@ -30,7 +30,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 		this.displayPanel=new Ext.Panel({
 				      id:'ArchivesHandleDisplayPanel',
 				      autoScroll : true,
-				      height:280,
+				      height:200,
 				      border:false,
 				      autoLoad:{url:__ctxPath+'/pages/archive/archivedetail.jsp?archiveId=${archives_archivesId}'}
 		});

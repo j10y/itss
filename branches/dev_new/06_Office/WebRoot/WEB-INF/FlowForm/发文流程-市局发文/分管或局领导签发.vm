@@ -39,7 +39,7 @@ ArchivesUssueFlowView = Ext.extend(Ext.Panel, {
 									})
 									#set ($count=$count+1)
 								#end
-								, new Ext.Button({
+								/*, new Ext.Button({
 									iconCls : 'btn-edit',
 									text : '修改公文',
 									scope : this,
@@ -49,7 +49,7 @@ ArchivesUssueFlowView = Ext.extend(Ext.Panel, {
 											detailPanel : this.detailPanel
 										}).show();
 									}
-								})
+								})*/
 								],
 					buttonAlign : 'center',
 					items : [this.detailPanel,this.formPanel]

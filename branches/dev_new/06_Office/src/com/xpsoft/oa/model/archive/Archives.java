@@ -65,6 +65,7 @@ public class Archives extends BaseModel {
 	 * 5:待科室承办人处理并归档
 	 * 6:阅读中
 	 * 7:收文归档
+	 * 8:待指定科室传阅人
 	 */
 
 	

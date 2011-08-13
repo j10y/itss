@@ -165,18 +165,18 @@ ArchivesHandleForm = Ext.extend(Ext.Panel, {
 												}
 											} ]
 								},{
-								fieldLabel : '承办归档意见',
-								name : 'handleOpinion',
-								id : 'handleOpinion',
-								xtype:'textarea',
-							    listeners : {
-							    	"change" : function(field, newValue, oldValue ){
-							    		Ext.getCmp("readFeedback").setValue(newValue);
-							    	},
-							    	"valid" : function(field){
-							    		Ext.getCmp("readFeedback").setValue(field.getValue());
-							    	}
-							    },
+									fieldLabel : '承办归档意见',
+									name : 'handleOpinion',
+									id : 'handleOpinion',
+									xtype:'textarea',
+								    listeners : {
+								    	"change" : function(field, newValue, oldValue ){
+								    		Ext.getCmp("readFeedback").setValue(newValue);
+								    	},
+								    	"valid" : function(field){
+								    		Ext.getCmp("readFeedback").setValue(field.getValue());
+								    	}
+								    }
 							    },{
 								fieldLabel : '0=初始化状态',
 								name : 'isPass',

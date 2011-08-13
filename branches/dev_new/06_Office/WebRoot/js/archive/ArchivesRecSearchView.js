@@ -142,29 +142,33 @@ ArchivesRecSearchView = Ext
 											{
 												header : "公文状态",
 												dataIndex : "status",
-												renderer : function(d) {
-													if (d == 0) {
+												renderer : function(c) {
+													if (c == 0) {
 														return '<font color="red">草稿</font>';
 													} else {
-														if (d == 1) {
-															return '<font color="green">等待拟办</font>';
+														if (c == 1) {
+															return '<font color="green">待办公室传阅</font>';
 														} else {
-															if (d == 2) {
-																return '<font color="green">拟办中</font>';
+															if (c == 2) {
+																return '<font color="green">待办公室主任批阅</font>';
 															} else {
-																if (d == 3) {
-																	return '<font color="green">等待领导批示</font>';
+																if (c == 3) {
+																	return '<font color="green">待分管或局领导批示</font>';
 																} else {
-																	if (d == 4) {
-																		return '<font color="green">等待分发</font>';
+																	if (c == 4) {
+																		return '<font color="green">待科室主任传阅</font>';
 																	} else {
-																		if (d == 5) {
-																			return '<font color="green">等待阅读处理</font>';
+																		if (c == 5) {
+																			return '<font color="green">待科室承办人处理并归档</font>';
 																		} else {
-																			if (d == 6) {
+																			if (c == 6) {
 																				return '<font color="green">阅读处理中</font>';
 																			} else {
-																				return '<font color="#777">收文归档</font>';
+																				if (c == 7) {
+																					return '<font color="#green">收文归档</font>';
+																				} else {
+																					return '<font color="red">待指定科室传阅人</font>';
+																				}																				
 																			}
 																		}
 																	}

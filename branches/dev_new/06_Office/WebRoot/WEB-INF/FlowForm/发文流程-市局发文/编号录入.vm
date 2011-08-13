@@ -104,7 +104,7 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 			layout : 'form',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/archive/handOutArchives.do',
+			url : __ctxPath + '/archive/numberArchives.do',
 			//id : 'ArchivesForm',
 			defaults : {
 				anchor : '94%,96%'

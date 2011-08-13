@@ -151,7 +151,11 @@ ArchivesIssueSearch = Ext
 																				if (c == "7") {
 																					return '<font color="green">归档</font>';
 																				} else {
-																					return '<font color="red">待局长审核</font>';																					
+																					if (c == "8") {
+																						return '<font color="red">待局长审核</font>';	
+																					} else {
+																						return '<font color="red">待编号</font>';																					
+																					}																				
 																				}
 																			}
 																		}

@@ -387,7 +387,7 @@ public class ArchivesAction extends BaseAction {
 			this.archivesId = this.archives.getArchivesId();
 		}
 		this.archives = ((Archives) this.archivesService.get(this.archivesId));
-		this.archives.setArchivesNo(getRequest().getParameter("archivesNo"));
+		//this.archives.setArchivesNo(getRequest().getParameter("archivesNo"));
 		String depIds = this.archives.getRecDepIds();
 		StringBuffer msg = new StringBuffer("");
 		//获取不需要进入收文签收的发文类型类型
@@ -440,6 +440,28 @@ public class ArchivesAction extends BaseAction {
 			this.archives.setStatus(Short.valueOf(Short
 					.parseShort(archivesStatus)));
 		}
+		this.archivesService.save(this.archives);
+		return "success";
+	}
+	
+	/**
+	 * 编号
+	 * @return
+	 */
+	public String number() {
+		if (this.archivesId == null) {
+			this.archivesId = this.archives.getArchivesId();
+		}
+		this.archives = ((Archives) this.archivesService.get(this.archivesId));
+		this.archives.setArchivesNo(getRequest().getParameter("archivesNo"));
+		
+		String archivesStatus = getRequest().getParameter(
+		"archivesStatus");
+		if (StringUtils.isNotEmpty(archivesStatus)) {
+			this.archives.setStatus(Short.valueOf(Short
+					.parseShort(archivesStatus)));
+		}
+		
 		this.archivesService.save(this.archives);
 		return "success";
 	}
