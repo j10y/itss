@@ -31,10 +31,6 @@ public class LeaderReadAction extends BaseAction {
 
 	@Resource
 	private AppUserService appUserService;
-	
-	@Resource
-	ArchUnderTakesService undertakesService;
-	
 	private Long readId;
 	private String leaderOpinion;
 	private Short isPass;
@@ -143,10 +139,6 @@ public class LeaderReadAction extends BaseAction {
 			if(!status.equals(Short.valueOf("-1"))){
 				archives.setStatus(status);
 			}
-			
-			//
-			undertakesService.saveArchUnderTakesByArchIdAndSign(strArchivesId,  getRequest().getParameter("signUserIds"));
-			
 			this.archivesService.save(archives);
 		}
 		setJsonString("{success:true}");

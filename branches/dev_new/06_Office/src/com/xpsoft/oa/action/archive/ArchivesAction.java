@@ -33,6 +33,7 @@ import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.model.system.FileAttach;
 import com.xpsoft.oa.service.archive.ArchHastenService;
 import com.xpsoft.oa.service.archive.ArchRecUserService;
+import com.xpsoft.oa.service.archive.ArchUnderTakesService;
 import com.xpsoft.oa.service.archive.ArchivesDepService;
 import com.xpsoft.oa.service.archive.ArchivesDocService;
 import com.xpsoft.oa.service.archive.ArchivesService;
@@ -84,6 +85,10 @@ public class ArchivesAction extends BaseAction {
 
 	@Resource
 	private ArchHastenService archHastenService;
+	
+	@Resource
+	private ArchUnderTakesService undertakesService;
+	
 	private Long archivesId;
 
 	public Long getArchivesId() {
@@ -519,6 +524,9 @@ public class ArchivesAction extends BaseAction {
 	public String modStatus() {
 		String archivesId = getRequest().getParameter("archivesId");
 		Short status = Short.valueOf(getRequest().getParameter("status"));
+		if(getRequest().getParameter("signUserIds")!=null&&getRequest().getParameter("signUserIds").length()>0){
+			undertakesService.saveArchUnderTakesByArchIdAndSign(archivesId,  getRequest().getParameter("signUserIds"));
+		}
 		this.archives = ((Archives) this.archivesService.get(this.archivesId));
 		this.archives.setStatus(status);
 		this.archivesService.save(this.archives);
