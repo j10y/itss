@@ -251,6 +251,12 @@ public class FlowServiceImpl implements FlowService {
 			json += "userquery:false,";
 			json += "showgdlx:false,";
 			json += "showBack:true,";
+			if(activityName.equals("编号录入")){
+				json += "showbh:true,";
+			}else{
+				json += "showbh:false,";
+			}
+			json += "isdx:false,";
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
 					+ "\"},";
@@ -318,7 +324,7 @@ public class FlowServiceImpl implements FlowService {
 			} else {
 				json += "boxstatus:false,";
 			}
-			if (this.activityName.equals("分管或主管领导批示")
+			if (this.activityName.equals("分管或主管领导批示")||activityName.equals("指定传阅人")
 					|| this.activityName.equals("科室主任传阅")) {
 				json += "userquery:true,";
 			} else {
@@ -333,6 +339,12 @@ public class FlowServiceImpl implements FlowService {
 				json += "showBack:false,";
 			} else {
 				json += "showBack:true,";
+			}
+			json += "showbh:false,";
+			if(activityName.equals("分管或主管领导批示")){
+				json += "isdx:true,";
+			}else{
+				json += "isdx:false,";
 			}
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
@@ -401,6 +413,8 @@ public class FlowServiceImpl implements FlowService {
 			json += "userquery:false,";
 			json += "showgdlx:false,";
 			json += "showBack:true,";
+			json += "showbh:false,";
+			json += "isdx:false,";
 			json += "data:[";
 			json += "{label:\"开始时间\",value:\"" + errandsRegister.getStartTime()
 					+ "\"},";
@@ -528,7 +542,7 @@ public class FlowServiceImpl implements FlowService {
 	public String saveProcessAndToNext(String userId, String passwd, String id,
 			String taskId, String activityName, String signalName,
 			String commentDesc, String nextuser, String checkboxvalue,
-			String ispass, String gdlx) {
+			String ispass, String gdlx,String bh) {
 		filter(userId, passwd);
 		ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
 		LeaveLeaderReadService leaveLeaderReadService = (LeaveLeaderReadService) AppUtil.getBean("leaveLeaderReadService");
@@ -725,7 +739,10 @@ public class FlowServiceImpl implements FlowService {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
 					archives.setStatus(Short.valueOf(Short.parseShort("4")));
+					archives.setArchivesNo(bh);
 					archivesService.save(archives);
+					this.parmap.put("archives.archivesId", id);
+					this.parmap.put("distributeOpinion", commentDesc);
 				} else if (activityName.equals("局长审核")
 						|| activityName.equals("盖章分发")) {
 					Archives archives = ((Archives) archivesService.get(Long
@@ -892,23 +909,29 @@ public class FlowServiceImpl implements FlowService {
 				} else if (activityName.equals("分管或主管领导批示")) {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
-					String archivesStatus = "4";
+					String archivesStatus = "8";
 					if (StringUtils.isNotEmpty(archivesStatus)) {
 						archives.setStatus(Short.valueOf(Short
 								.parseShort(archivesStatus)));
 					}
 					archivesService.save(archives);
-					ArchDispatch archDispatch = new ArchDispatch();
-					AppUser user = ContextUtil.getCurrentUser();
-					archDispatch.setArchives(archives);
-					archDispatch.setArchUserType(ArchDispatch.IS_DISPATCH);
-					archDispatch.setUserId(user.getUserId());
-					archDispatch.setFullname(user.getFullname());
-					archDispatch.setDispatchTime(new Date());
-					archDispatch.setSubject(archives.getSubject());
-					archDispatch.setIsRead(ArchDispatch.HAVE_READ);
-					archDispatch.setReadFeedback(commentDesc);
-					archDispatchService.save(archDispatch);
+					LeaderRead leaderRead = new LeaderRead();
+					leaderRead.setLeaderName(ContextUtil.getCurrentUser()
+							.getFullname());
+					leaderRead.setUserId(ContextUtil.getCurrentUserId());
+					leaderRead.setArchives(archives);
+					leaderRead.setCreatetime(new Date());
+					leaderRead.setIsPass(LeaderRead.IS_PASS);
+					leaderRead.setLeaderOpinion(commentDesc);
+					leaderRead.setCheckName(activityName);
+					leaderReadService.save(leaderRead);
+					this.parmap.put("leaderOpinion", commentDesc);
+				}else if (activityName.equals("指定传阅人")){
+					Archives archives = ((Archives) archivesService.get(Long
+							.parseLong(id)));
+					archives.setStatus(Short.valueOf(Short
+								.parseShort("4")));
+					archivesService.save(archives);
 					this.parmap.put("handleOpinion", commentDesc);
 					undertakesService.saveArchUnderTakesByArchIdAndSign(id,  this.parmap.get("signUserIds").toString());
 				} else if (activityName.equals("科室主任传阅")) {

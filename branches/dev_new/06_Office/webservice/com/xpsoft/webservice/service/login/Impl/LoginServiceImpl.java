@@ -41,7 +41,7 @@ public class LoginServiceImpl implements LoginServie {
 		String newpasswd=StringUtil.encryptSha256(passwd);
 		if(user!=null){
 			if(user.getPassword().equalsIgnoreCase(newpasswd)){
-				return "{\"success\":true,\"userid\":"+user.getId()+",\"password\":\""+passwd+",\"deptId\":\""+user.getDepartment().getDepId()+"\"}";
+				return "{\"success\":true,\"userid\":"+user.getId()+",\"password\":\""+passwd+"\",\"deptId\":\""+user.getDepartment().getDepId()+"\"}";
 			}else{
 				return "{\"success\":false,\"msg\":\"密码错误\",\"userid\":\"\",\"password\":\"\",\"deptId\":\"\"}";
 			}
