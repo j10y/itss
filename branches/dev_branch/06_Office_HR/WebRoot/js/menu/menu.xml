@@ -1461,10 +1461,22 @@
 			</Item>
 		</Items>
 		<Items id="KpiManage" text="绩效管理" isPublic="false">
-			<Item id="HrPaPerformanceindexView" text="考核项目管理" iconCls="" isPublic="false">
-				
+			<Item id="HrPaPerformanceindexView" text="考核项目管理" iconCls="">
+				<Function id="_PaDel" text="删除" iconCls="menu-del">
+					<url>/kpi/multiDelHrPaPerformanceindex.do</url>
+				</Function>
+				<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+					<url>/kpi/editHrPaPerformanceindex.do</url>
+				</Function>
+			</Item>
+			<Item id="HrPaAssessmentcriteriaView" text="考核标准管理" iconCls="">
+				<Function id="_AcDel" text="删除" iconCls="menu-del">
+					<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
+				</Function>
+				<Function id="_AcEdit" text="编辑" iconCls="menu-edit">
+					<url>/kpi/editHrPaAssessmentcriteria.do</url>
+				</Function>
 			</Item>
 		</Items>
-		
 	</Items>
 </Menus>
