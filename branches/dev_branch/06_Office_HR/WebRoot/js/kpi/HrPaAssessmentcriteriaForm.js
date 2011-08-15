@@ -1,0 +1,179 @@
+HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
+	formPanel : null,
+	constructor : function(a) {
+		if(a == null) {
+			a = {};
+		}
+		Ext.apply(this, a);
+		this.initComponents();
+		HrPaAssessmentcriteriaForm.superclass.constructor.call(this, {
+			id : "hrPaAssessmentcriteriaFormWin",
+			layout : "fit",
+			items : this.formPanel,
+			modal : true,
+			height : 270,
+			width : 400,
+			title : "绩效考核标准录入",
+			buttonAlign : "center",
+			buttons : this.buttons
+		});
+	},
+	initComponents : function() {
+		this.formPanel = new Ext.FormPanel({
+			layout : "form",
+			bodyStyle : "padding:10px 10px 10px 10px",
+			border : false,
+			url : __ctxPath + "/kpi/saveHrPaAssessmentcriteria.do",
+			id : "HrPaAssessmentcriteriaForm",
+			defaults : {
+				anchor : "98%,98%"
+			},
+			defaultType : "textfield",
+			items : [
+				{
+					name : "hrPaAssessmentcriteria.id",
+					id : "acId",
+					xtype : "hidden",
+					value : this.acId == null ? "" : this.acId
+				}, {
+					fieldLabel : "考核标准名称",
+					labelStyle : "text-align:right",
+					name : "hrPaAssessmentcriteria.acName",
+					id : "acName",
+					allowBlank : false,
+					blankText : "考核标准名称不能为空！"
+				}, {
+					fieldLabel : "考核标准关键字",
+					labelStyle : "text-align:right",
+					name : "hrPaAssessmentcriteria.acKey",
+					id : "acKey",
+					allowBlank : false,
+					blankText : "考核标准关键字不能为空！"
+				}, {
+					fieldLabel : "是否定量考核",
+					labelStyle : "text-align:right",
+					xtype : "checkboxgroup",
+					columns : 1,
+					items : [
+						{
+							boxLabel : "是",
+							name : "hrPaAssessmentcriteria.isSalesAC",
+							id : "isSalesAC",
+							inputValue : 1
+						}
+					]
+				}, {
+					fieldLabel : "考核标准描述",
+					labelStyle : "text-align:right",
+					name : "hrPaAssessmentcriteria.acDesc",
+					height : 100,
+					id : "acDesc",
+					xtype : "textarea"
+				}, {
+					fieldLabel : "创建时间",
+					name : "hrPaAssessmentcriteria.createDate",
+					id : "createDate",
+					xtype : "hidden"
+				}, {
+					fieldLabel : "创建人",
+					name : "hrPaAssessmentcriteria.createPerson",
+					id : "createPerson",
+					xtype : "hidden"
+				}, {
+					fieldLabel : "状态",
+					name : "hrPaAssessmentcriteria.publishStatus",
+					id : "publishStatus",
+					xtype : "hidden"
+				}
+			]
+		});
+		if(this.acId != null && this.acId != "undefined") {
+			this.formPanel.getForm().load({
+				deferredRender : false,
+				url : __ctxPath + "/kpi/getHrPaAssessmentcriteria.do?id=" + this.acId,
+				waitMsg : "正在载入数据……",
+				success : function(f, d) {
+					var e = Ext.util.JSON.decode(d.response.responseText);
+					if(e.data.isSalesAC == "1") {
+						Ext.getCmp("isSalesAC").setValue(true);
+					}
+				},
+				failure : function() {
+					
+				}
+			});
+		}
+		this.buttons = [
+			{
+				text : "取消",
+				handler : this.cancel.createCallback(this)
+			}, {
+				text : "保存草稿",
+				handler : this.saveAsDraft.createCallback(this.formPanel, this)
+			}, {
+				text : "确认发布",
+				handler : this.saveToPublish.createCallback(this.formPanel, this)
+			}
+		];
+	},
+	cancel : function(a) {
+		a.close();
+	},
+	saveAsDraft : function(a, b) {
+		if(a.getForm().isValid()) {
+			Ext.getCmp("publishStatus").setValue(0);
+			a.getForm().submit({
+				method : "post",
+				
+				waitMsg : "正在提交数据……",
+				success : function(c, d) {
+					Ext.ux.Toast.msg("提示信息","保存草稿成功！");
+					Ext.getCmp("hrPaAssessmentcriteriaView").gridPanel.store.reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+					b.close();
+				},
+				failure : function(c, d) {
+					Ext.MessageBox.show({
+						title : "操作信息",
+						msg : "信息录入有误，请核实！",
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+					return ;
+				}
+			});
+		}
+	},
+	saveToPublish : function(a, b) {
+		if(a.getForm().isValid()) {
+			Ext.getCmp("publishStatus").setValue(1);
+			a.getForm().submit({
+				method : "post",
+				waitMsg : "正在提交数据……",
+				success : function(c, d) {
+					Ext.ux.Toast.msg("提示信息","发布成功！");
+					Ext.getCmp("hrPaAssessmentcriteriaView").gridPanel.store.reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+					b.close();
+				},
+				failure : function(c, d) {
+					Ext.MessageBox.show({
+						title : "操作信息",
+						msg : "信息录入有误，请核实！",
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+					return ;
+				}
+			});
+		}
+	}
+});
