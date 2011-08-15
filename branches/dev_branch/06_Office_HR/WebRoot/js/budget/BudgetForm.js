@@ -155,6 +155,16 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				name : "threshold",
 				mapping : "threshold"
 			}, {
+				name : "thresholdTmp",
+				mapping : "threshold",
+				convert : function(v, rec){
+					if(v!=null){
+						return v*100;
+					}else{
+						return 0;
+					}
+				}
+			}, {
 				name : "parent.budgetItemId",
 				//mapping : "parent.budgetItemId",
 				mapping : "parent",
@@ -199,10 +209,18 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				name : "budgetItem.value",
 				id : "value"
 			}, {
-				fieldLabel : "控制阀值",
-				readOnly : true,
+				xtype : "hidden",
 				name : "budgetItem.threshold",
 				id : "threshold"
+			}, {
+				fieldLabel : "控制阀值(%)",
+				readOnly : true,
+				id : "thresholdTmp",
+				listeners : {
+					change : function(field, newValue, oldValue){
+						Ext.getCmp("threshold").setValue(newValue/100);
+					}
+				}
 			}, {
 				xtype : "hidden",
 				name : "budgetItem.parent.budgetItemId",

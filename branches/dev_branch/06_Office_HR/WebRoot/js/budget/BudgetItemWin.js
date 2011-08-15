@@ -58,6 +58,16 @@ BudgetItemWin = Ext.extend(Ext.Window, {
 				name : "budgetItem.threshold",
 				mapping : "threshold"
 			}, {
+				name : "budgetItem.thresholdTmp",
+				mapping : "threshold",
+				convert : function(v, rec){
+					if(v!=null){
+						return v*100;
+					}else{
+						return 0;
+					}
+				}
+			}, {
 				name : "budgetItem.parent.budgetItemId",
 				//mapping : "parent.budgetItemId",
 				mapping : "parent",
@@ -102,11 +112,26 @@ BudgetItemWin = Ext.extend(Ext.Window, {
 				allowBlank : false,
 				name : "budgetItem.value",
 				id : "budgetItem.value"
-			}, {
-				fieldLabel : "控制阀值",
+			}/*, {
+				fieldLabel : "控制阀值(%)",
 				allowBlank : false,
 				name : "budgetItem.threshold",
 				id : "budgetItem.threshold"
+					
+			}*/			
+			, {
+				xtype : "hidden",
+				name : "budgetItem.threshold",
+				id : "budgetItem.threshold"
+			}, {
+				fieldLabel : "控制阀值(%)",
+				readOnly : true,
+				id : "budgetItem.thresholdTmp",
+				listeners : {
+					change : function(field, newValue, oldValue){
+						Ext.getCmp("budgetItem.threshold").setValue(newValue/100);
+					}
+				}
 			}, {
 				xtype : "hidden",
 				name : "budgetItem.parent.budgetItemId",

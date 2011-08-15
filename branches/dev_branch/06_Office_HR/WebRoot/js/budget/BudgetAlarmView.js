@@ -1,4 +1,4 @@
-BudgetView = Ext.extend(Ext.Panel, {
+BudgetAlarmView = Ext.extend(Ext.Panel, {
 	searchPanel : null,
 	gridPanel : null,
 	store : null,
@@ -6,9 +6,9 @@ BudgetView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		Ext.applyIf(this, a);
 		this.initUIComponents();
-		BudgetView.superclass.constructor.call(this, {
-			id : "BudgetView",
-			title : "预算管理",
+		BudgetAlarmView.superclass.constructor.call(this, {
+			id : "BudgetAlarmView",
+			title : "预算监控",
 			iconCls : "menu-arch-rec-type",
 			region : "center",
 			layout : "border",
@@ -55,7 +55,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			} ]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_NEQ=4&alarm=true",
+			url : __ctxPath + "/budget/listAlarmBudget.do?Q_publishStatus_N_EQ=3",
 			root : "result",
 			totalProperty : "totalCounts",
 			remoteSort : true,
@@ -82,20 +82,15 @@ BudgetView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if (isGranted("_BudgetDel")) {
+
+		if (isGranted("_BudgetAlarmView")) {
 			b.push({
-				iconCls : "btn-del",
-				qtip : "删除",
+				iconCls : "btn-preview",
+				qtip : "查询详情",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-		if (isGranted("_BudgetEdit")) {
-			b.push({
-				iconCls : "btn-edit",
-				qtip : "编辑",
-				style : "margin:0 3px 0 3px"
-			});
-		}
+
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -107,6 +102,24 @@ BudgetView = Ext.extend(Ext.Panel, {
 				header : "budgetId",
 				dataIndex : "budgetId",
 				hidden : true
+			}, {
+				header : "告警信息",
+				dataIndex : "alarmStatus",
+				renderer : function(v){
+					if(v==""){
+            			return "---";
+            		}else{
+            			if(v=="0"){
+            				return "<img src='" + __ctxPath + "/images/budget/alarm_green.png'></img>绿色安全";
+            			}else{
+            				if(v=="1"){
+            					return "<img src='" + __ctxPath + "/images/budget/alarm_yellow.png'></img>黄色警报";
+            				}else{
+            					return "<img src='" + __ctxPath + "/images/budget/alarm_red.png'></img>红色危险";
+            				}
+            			}
+            		}
+				}
 			}, {
 				header : "名称",
 				dataIndex : "name"
@@ -160,23 +173,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			bodyStyle : "text-align:left",
 			items : []
 		});
-		if (isGranted("_BudgetAdd")) {
-			this.topbar.add({
-				iconCls : "btn-add",
-				text : "添加预算",
-				xtype : "button",
-				handler : this.createRecord
-			});
-		}
-		if (isGranted("_BudgetDel")) {
-			this.topbar.add({
-				iconCls : "btn-del",
-				text : "删除预算",
-				xtype : "button",
-				handler : this.delRecords,
-				scope : this
-			});
-		}
+		
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "BudgetGrid",
 			region : "center",
@@ -216,7 +213,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询",
-				url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_NEQ=4&alarm=true",
+				url : __ctxPath + "/budget/listAlarmBudget.do?Q_publishStatus_N_EQ=3",
 				success : function(c, d) {
 					var b = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(b);
@@ -263,11 +260,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		}
 		var d = Array();
 		for ( var b = 0; b < a.length; b++) {
-			if(a[b].data.publishStatus!=3)//3为已经发布
 			d.push(a[b].data.budgetId);
-		}
-		if(a.length>=1 && d.length==0){
-			Ext.ux.Toast.msg("信息", "不允许删除已经发布预算记录！");
 		}
 		this.delByIds(d);
 	},
@@ -301,13 +294,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			this.viewByIds(a);
 			break;
 		case "btn-del":
-			{
-				if(a.data.publishStatus==3){
-					Ext.ux.Toast.msg("信息", "不允许删除已经发布预算记录！");
-				}else{
-					this.delByIds(a.data.budgetId)
-				}
-			};
+			this.delByIds(a.data.budgetId);
 			break;
 		case "btn-edit":
 			this.editRecord(a);

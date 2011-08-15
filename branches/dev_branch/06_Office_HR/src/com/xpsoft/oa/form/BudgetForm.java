@@ -1,4 +1,4 @@
-package com.xpsoft.oa.model.hrm;
+package com.xpsoft.oa.form;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 
-public class Budget extends BaseModel{
+public class BudgetForm{
 	
 	@Expose
 	protected Long budgetId;
@@ -36,7 +36,9 @@ public class Budget extends BaseModel{
 	@Expose
 	protected Integer publishStatus;// 0：草稿  1：审核中 2：退回 3：审核完毕，发布 4：删除标记'
 	
+	protected String alarmStatus;
 	
+	//从小到大越来越严重
 	public static final String ALARM_GREEN="0";
 	public static final String ALARM_YELLOW="1";
 	public static final String ALARM_RED="2";
@@ -109,6 +111,12 @@ public class Budget extends BaseModel{
 	}
 
 	
+	public String getAlarmStatus() {
+		return alarmStatus;
+	}
+	public void setAlarmStatus(String alarmStatus) {
+		this.alarmStatus = alarmStatus;
+	}
 	public int hashCode() {
 		return new HashCodeBuilder(-82280557, -700257973)
 	       .append(this.budgetId)
@@ -122,14 +130,15 @@ public class Budget extends BaseModel{
 	       .append(this.modifyPerson)
 	       .append(this.remark)
 	       .append(this.publishStatus)
+	       .append(this.alarmStatus)
 	       .toHashCode();
 	}
 	@Override
 	public boolean equals(Object object) {
-		if (!(object instanceof Budget)) {
+		if (!(object instanceof BudgetForm)) {
 			return false;
 		}
-		Budget rhs = (Budget)object;
+		BudgetForm rhs = (BudgetForm)object;
 		return new EqualsBuilder()
 			.append(this.budgetId, rhs.budgetId)
 			.append(this.name, rhs.name)
@@ -142,6 +151,7 @@ public class Budget extends BaseModel{
 			.append(this.modifyPerson, rhs.modifyPerson)
 			.append(this.remark, rhs.remark)
 			.append(this.publishStatus, rhs.publishStatus)
+			.append(this.alarmStatus, rhs.alarmStatus)
 			.isEquals();
 	}
 	@Override
@@ -158,6 +168,7 @@ public class Budget extends BaseModel{
 			.append("modifyPerson", this.modifyPerson)
 			.append("remark", this.remark)
 			.append("publishStatus", this.publishStatus)
+			.append("alarmStatus", this.alarmStatus)
 			.toString();
 	}
 

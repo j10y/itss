@@ -2,6 +2,7 @@ package com.xpsoft.oa.action.hrm;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -126,6 +127,24 @@ public class RealExecutionAction extends BaseAction {
 		
 		this.realExecutionService.save(this.realExecution);
 		setJsonString("{success:true,realExecutionId:'" + realExecution.getRealExecutionId() + "'}");
+		return "success";
+	}
+	
+	public String tree() {
+
+		//List list = this.realExecutionService.getAll(filter);
+
+		List<Map> list = this.realExecutionService.treeStatics(Long.valueOf(1));
+		
+
+		StringBuffer buff = new StringBuffer();
+
+		JSONSerializer serializer = new JSONSerializer();
+		buff.append(serializer.exclude(new String[] { "class" })
+			.serialize(list));
+		
+		this.jsonString = buff.toString();
+		
 		return "success";
 	}
 

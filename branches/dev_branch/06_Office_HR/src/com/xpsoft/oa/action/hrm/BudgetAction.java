@@ -1,18 +1,25 @@
 package com.xpsoft.oa.action.hrm;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.form.BudgetForm;
 import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.BudgetService;
+import com.xpsoft.oa.service.hrm.RealExecutionService;
 
 import flexjson.JSONSerializer;
 
@@ -20,6 +27,10 @@ public class BudgetAction extends BaseAction {
 
 	@Resource
 	private BudgetService budgetService;
+	
+	@Resource
+	private RealExecutionService realExecutionService;
+	
 	private Budget budget;
 	private Long budgetId;
 
@@ -53,6 +64,58 @@ public class BudgetAction extends BaseAction {
 		.getJSONSerializer(new String[] { "beginDate", "endDate", "createDate", "modifyDate" });
 		buff.append(serializer.exclude(new String[] { "class" })
 			.serialize(list));
+		buff.append("}");
+
+		this.jsonString = buff.toString();	
+
+		return "success";
+	}
+	
+	public String listAlarm() {
+		QueryFilter filter = new QueryFilter(getRequest());
+		List<Budget> list = this.budgetService.getAll(filter);
+		List result = new ArrayList();
+		for(Budget budget : list){
+			BudgetForm budgetDto = new BudgetForm();
+			try {
+				BeanUtils.copyProperties(budgetDto, budget);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//设置alarmStatus
+			List<Map> tree = realExecutionService.treeStatics(budget.getBudgetId());
+			int alarmStatus = -1;
+			try {
+				for(Map map : tree){
+					if(map.get("leaf")!=null &&map.get("leaf").equals("true")){//叶子结点
+						String alarm = map.get("alarm").toString();
+						if(Integer.valueOf(alarm).intValue()>alarmStatus){
+							alarmStatus = Integer.valueOf(alarm);
+						}
+					}
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			budgetDto.setAlarmStatus(alarmStatus + "");
+			result.add(budgetDto);
+		}
+
+		StringBuffer buff = new StringBuffer(
+			"{success:true,'totalCounts':")
+			.append(filter.getPagingBean().getTotalItems()).append(
+			",result:");
+
+//		JSONSerializer serializer = new JSONSerializer();
+		JSONSerializer serializer = JsonUtil
+		.getJSONSerializer(new String[] { "beginDate", "endDate", "createDate", "modifyDate" });
+		buff.append(serializer.exclude(new String[] { "class" })
+			.serialize(result));
 		buff.append("}");
 
 		this.jsonString = buff.toString();	

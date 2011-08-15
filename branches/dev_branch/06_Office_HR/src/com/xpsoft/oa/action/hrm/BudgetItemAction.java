@@ -41,6 +41,7 @@ public class BudgetItemAction extends BaseAction {
 	}
 
 	public String list() {
+		
 		QueryFilter filter = new QueryFilter(getRequest());
 		List list = this.budgetItemService.getAll(filter);
 
@@ -55,10 +56,10 @@ public class BudgetItemAction extends BaseAction {
 		buff.append("}");
 
 		this.jsonString = buff.toString();
-//		this.jsonString = "[{task:'Project: Shopping', duration:13.25, user:'Tommy Maintz', iconCls:'task-folder', expanded: " +
-//		"true, children:[{task:'Housewares',duration:1.25,user:'Tommy Maintz',iconCls:'task-folder'}]}]";
+		
 		return "success";
 	}
+	
 
 	public String combo() {
 		QueryFilter filter = new QueryFilter(getRequest());

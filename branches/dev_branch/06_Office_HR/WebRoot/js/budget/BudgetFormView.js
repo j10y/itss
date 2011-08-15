@@ -10,7 +10,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 //			items : [this.leftTypePanel,this.itemFormPanel, {xtype:'container', height:150, region:'north', items: this.mainFormPanel}],
 			items : [this.mainFormPanel, this.treeGrid],
 			maximizable : true,
-			title : "预算详细信息"
+			title : "预算预警详细信息"
 		});
 	},
 	initUIComponents : function() {
@@ -97,34 +97,54 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 			
 		});
 		
+		if (this.budgetId != null && this.budgetId != "undefined") {
+			this.mainFormPanel.getForm().load({
+				deferredRender : false,
+				url : __ctxPath
+						+ "/budget/getBudget.do?budgetId="
+						+ this.budgetId,
+				waitMsg : "正在载入数据...",
+				success : function(c, d) {
+					return;
+					var e = d.result.data.department;
+					Ext.getCmp("BudgetForm.depName").setValue(
+							e.depName);
+					Ext.getCmp("depId").setValue(e.depId);
+				},
+				failure : function(c, d) {
+					
+				}
+			});
+		}
 		
-		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listBudgetItem.do",
-			root : "result",
-			totalProperty : "totalCounts",
-			remoteSort : true,
-			fields : [ {
-				name : "budgetId",
-				type : "int"
-			}, "name", {
-				name : "depName",
-				mapping : "belongDept.depName"
-			}, "beginDate" 
-			, "endDate" 
-			, "publishStatus"
-			, "createDate"
-			, "createPerson", {
-				name : "createPerson",
-				mapping : "createPerson.fullname"
-			}]
-		});
-		this.store.setDefaultSort("budgetId", "desc");
-		this.store.load({
-			params : {
-				start : 0,
-				limit : 25
-			}
-		});
+		
+//		this.store = new Ext.data.JsonStore({
+//			url : __ctxPath + "/budget/listBudgetItem.do",
+//			root : "result",
+//			totalProperty : "totalCounts",
+//			remoteSort : true,
+//			fields : [ {
+//				name : "budgetId",
+//				type : "int"
+//			}, "name", {
+//				name : "depName",
+//				mapping : "belongDept.depName"
+//			}, "beginDate" 
+//			, "endDate" 
+//			, "publishStatus"
+//			, "createDate"
+//			, "createPerson", {
+//				name : "createPerson",
+//				mapping : "createPerson.fullname"
+//			}]
+//		});
+//		this.store.setDefaultSort("budgetId", "desc");
+//		this.store.load({
+//			params : {
+//				start : 0,
+//				limit : 25
+//			}
+//		});
 		var c = new Ext.grid.CheckboxSelectionModel();
 		var a = new Ext.grid.ColumnModel({
 			columns : [ c, new Ext.grid.RowNumberer(), {
@@ -191,21 +211,42 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 			stripeRows : true,
 			tbar : this.topbar,
 			//store : this.store,
-			dataUrl: __ctxPath + "/budget/listBudgetItem.do",
+			dataUrl: __ctxPath + "/budget/treeRealExecution.do",
 			trackMouseOver : true,
 			disableSelection : false,
 			loadMask : true,
 			autoHeight : true,
 			columns:[{
-	            header: 'Task',
-	            dataIndex: 'task',
+	            header: '告警',
+	            dataIndex: 'alarm',
+	            width: 230,
+	            tpl: new Ext.XTemplate('{alarm:this.alarm}', {
+	            	alarm: function(v) {
+	            		if(v==""){
+	            			return "---";
+	            		}else{
+	            			if(v=="0"){
+	            				return "<img src='" + __ctxPath + "/images/budget/alarm_green.png'></img>绿色安全";
+	            			}else{
+	            				if(v=="1"){
+	            					return "<img src='" + __ctxPath + "/images/budget/alarm_yellow.png'></img>黄色警报";
+	            				}else{
+	            					return "<img src='" + __ctxPath + "/images/budget/alarm_red.png'></img>红色危险";
+	            				}
+	            			}
+	            		}
+	                }
+	            })
+	        }, {
+	            header: '成本要素名称',
+	            dataIndex: 'name',
 	            width: 230
-	        },{
-	            header: 'Duration',
+	        }, {
+	            header: '成本要素编号',
 	            width: 100,
-	            dataIndex: 'duration',
+	            dataIndex: 'code',
 	            align: 'center',
-	            sortType: 'asFloat',
+	            sortType: 'asFloat'/*,
 	            tpl: new Ext.XTemplate('{duration:this.formatHours}', {
 	                formatHours: function(v) {
 	                    if(v < 1) {
@@ -217,11 +258,28 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 	                        return v + ' hour' + (v === 1 ? '' : 's');
 	                    }
 	                }
-	            })
-	        },{
-	            header: 'Assigned To',
+	            })*/
+	        }, {
+	            header: '缩写',
 	            width: 150,
-	            dataIndex: 'user'
+	            dataIndex: 'key'
+	        }, {
+	            header: '预算金额',
+	            width: 150,
+	            dataIndex: 'value'
+	        }, {
+	            header: '控制阀值',
+	            width: 150,
+	            dataIndex: 'threshold',
+	            tpl: new Ext.XTemplate('{threshold:this.formatDouble}', {
+	            	formatDouble: function(v) {
+	                    return v*100 + "%";
+	                }
+	            })
+	        }, {
+	            header: '已执行值',
+	            width: 150,
+	            dataIndex: 'realValue'
 	        }],
 			defaults : {
 				sortable : true,
@@ -233,14 +291,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 				forceFit : true,
 				autoFill : true,
 				forceFit : true
-			},
-			bbar : new Ext.PagingToolbar({
-				pageSize : 25,
-				store : this.store,
-				displayInfo : true,
-				displayMsg : "当前页记录索引{0}-{1}， 共{2}条记录",
-				emptyMsg : "当前没有记录"
-			})
+			}
 		});
 		
 		
