@@ -1,7 +1,10 @@
 package com.xpsoft.core.service;
 
+import java.util.List;
+
 public abstract interface BaseService<T> extends GenericService<T, Long>
 {
+	public List findDataList(String sql);
 }
 
 /* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
