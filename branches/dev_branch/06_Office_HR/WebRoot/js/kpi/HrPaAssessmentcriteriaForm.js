@@ -7,7 +7,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 		Ext.apply(this, a);
 		this.initComponents();
 		HrPaAssessmentcriteriaForm.superclass.constructor.call(this, {
-			id : "hrPaAssessmentcriteriaFormWin",
+			id : "HrPaAssessmentcriteriaFormWin",
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
@@ -128,7 +128,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在提交数据……",
 				success : function(c, d) {
 					Ext.ux.Toast.msg("提示信息","保存草稿成功！");
-					Ext.getCmp("hrPaAssessmentcriteriaView").gridPanel.store.reload({
+					Ext.getCmp("HrPaAssessmentcriteriaView").gridPanel.store.reload({
 						params : {
 							start : 0,
 							limit : 25
@@ -156,7 +156,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在提交数据……",
 				success : function(c, d) {
 					Ext.ux.Toast.msg("提示信息","发布成功！");
-					Ext.getCmp("hrPaAssessmentcriteriaView").gridPanel.store.reload({
+					Ext.getCmp("HrPaAssessmentcriteriaView").gridPanel.store.reload({
 						params : {
 							start : 0,
 							limit : 25
