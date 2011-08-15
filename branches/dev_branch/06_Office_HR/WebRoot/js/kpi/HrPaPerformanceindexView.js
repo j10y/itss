@@ -54,7 +54,7 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/kpi/listHrPaPerformanceindex.do",
+			url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_NEQ=4",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -134,19 +134,19 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					dataIndex : "publishStatus",
 					renderer : function(d) {
 						if(d == 0) {        //草稿
-							return "草稿";
+							return "<font color='red'>草稿</font>";
 						}
 						if(d == 1) {        //审核中
-							return "审核中";
+							return "<font color='red'>审核中</font>";
 						}
 						if(d == 2) {        //退回
-							return "退回";
+							return "<font color='red'>退回</font>";
 						}
 						if(d == 3) {        //审核完毕，发布
-							return "已发布";
+							return "<font color='green'>已发布</font>";
 						}
 						if(d == 4) {        //删除标记
-							return "已删除";
+							return "<font color='red'>已删除</font>";
 						}
 					}
 				},
@@ -178,6 +178,7 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
+			stripeRows : true,
 			tbar : this.topbar,
 			closable : true,
 			store : this.store,
@@ -215,7 +216,7 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/kpi/listHrPaPerformanceindex.do",
+				url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_NEQ=4",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
