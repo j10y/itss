@@ -430,4 +430,8 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> extends
 	public void setQuerys(Map<String, String> querys) {
 		this.querys = querys;
 	}
+	public List findDataList(String sql) {
+		List list=this.jdbcTemplate.queryForList(sql);
+		return list;
+	}
 }
