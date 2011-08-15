@@ -496,11 +496,7 @@ ArchivesRecForm = Ext
 																.setValue(
 																		d.recTypeId);
 													}
-													Ext
-															.getCmp(
-																	"ArchivesRecForm.handelUIds")
-															.setValue(
-																	f.handlerUids);
+													//Ext.getCmp("ArchivesRecForm.handelUIds").setValue(f.handlerUids);
 													Ext
 															.getCmp(
 																	"ArchivesRecForm.createtime")
