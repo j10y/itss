@@ -409,6 +409,9 @@
 		<action name="*HrPaAssessmentcriteria" class="HrPaAssessmentcriteriaAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*HrPaAssessmentcriteria" class="HrPaAssessmentcriteriaAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 </struts>
 
