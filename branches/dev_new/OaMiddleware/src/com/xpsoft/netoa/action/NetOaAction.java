@@ -757,7 +757,8 @@ public class NetOaAction extends BaseAction{
 				//调用接口方法 
 				String methodName = "saveProcessAndToNext";
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx)
-				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,null,gdlx};
+				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh)
+				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,null,gdlx,null};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
@@ -1116,7 +1117,8 @@ public class NetOaAction extends BaseAction{
 				//调用接口方法 
 				String methodName = "saveProcessAndToNext";
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx)
-				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,ispass,gdlx};
+				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh)
+				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,ispass,gdlx,bh};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
