@@ -354,5 +354,7 @@ App.importJs = {
 			__ctxPath + "/js/kpi/HrPaPerformanceindexForm.js",
 			__ctxPath + "/js/kpi/HrPaPerformanceindexscoreView.js",
 			__ctxPath + "/js/kpi/HrPaPerformanceindexscoreForm1.js",
-			__ctxPath + "/js/kpi/HrPaPerformanceindexscoreForm2.js"]
+			__ctxPath + "/js/kpi/HrPaPerformanceindexscoreForm2.js"],
+	HrPaAssessmentcriteriaView : [__ctxPath + "/js/kpi/HrPaAssessmentcriteriaView.js",
+			__ctxPath + "/js/kpi/HrPaAssessmentcriteriaForm.js"]
 };
