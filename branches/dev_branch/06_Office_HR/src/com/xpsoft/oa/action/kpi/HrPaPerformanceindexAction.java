@@ -1,20 +1,15 @@
 package com.xpsoft.oa.action.kpi;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.struts2.ServletActionContext;
-
 import com.xpsoft.core.command.QueryFilter;
-import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
 import com.xpsoft.oa.service.kpi.HrPaPerformanceindexService;
-import com.xpsoft.oa.service.kpi.HrPaPerformanceindexscoreService;
 
 import flexjson.JSONSerializer;
 
@@ -65,11 +60,11 @@ public class HrPaPerformanceindexAction extends BaseAction {
 	
 	public String multiDel(){
 		String[] ids = this.getRequest().getParameterValues("ids");
-		HrPaPerformanceindexscoreService hrPaPerformanceindexscoreService = (HrPaPerformanceindexscoreService)AppUtil.getBean("hrPaPerformanceindexscoreService");
 		if(ids != null) {
 			for(String id : ids) {
-				hrPaPerformanceindexscoreService.removeByPiId(Long.parseLong(id));
-				this.hrPaperformanceindexService.remove(new Long(id));
+				HrPaPerformanceindex hpp = this.hrPaperformanceindexService.get(new Long(id));
+				hpp.setPublishStatus(4);//置为已删除状态
+				this.hrPaperformanceindexService.save(hpp);
 			}
 		}
 		
