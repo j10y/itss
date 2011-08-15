@@ -324,7 +324,7 @@ public class FlowServiceImpl implements FlowService {
 			} else {
 				json += "boxstatus:false,";
 			}
-			if (this.activityName.equals("分管或主管领导批示")||activityName.equals("指定传阅人")
+			if (activityName.equals("指定传阅人")
 					|| this.activityName.equals("科室主任传阅")) {
 				json += "userquery:true,";
 			} else {
@@ -341,11 +341,7 @@ public class FlowServiceImpl implements FlowService {
 				json += "showBack:true,";
 			}
 			json += "showbh:false,";
-			if(activityName.equals("分管或主管领导批示")){
-				json += "isdx:true,";
-			}else{
-				json += "isdx:false,";
-			}
+			json += "isdx:false,";
 			json += "data:[";
 			json += "{label:\"来文文字号\",value:\"" + archives.getArchivesNo()
 					+ "\"},";
