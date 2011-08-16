@@ -33,7 +33,7 @@
             unique="false"
         />
         <many-to-one name="belongDept" not-null="false" class="com.xpsoft.oa.model.system.Department" column="belongDept"></many-to-one>
-        <many-to-one name="belongPost" not-null="false" class="com.xpsoft.oa.model.hrm.Job" column="Job"></many-to-one>
+        <many-to-one name="belongPost" not-null="false" class="com.xpsoft.oa.model.hrm.Job" column="belongPost"></many-to-one>
         <many-to-one name="frequency" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaDatadictionary" column="frequency"></many-to-one>
         <property
             name="createDate"
