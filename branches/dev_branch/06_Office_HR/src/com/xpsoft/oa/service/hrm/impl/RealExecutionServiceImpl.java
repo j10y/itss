@@ -48,8 +48,7 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 				rootNode.put("realValue", objs[1].toString());
 				rootNode.put("iconCls", "task-folder");
 				rootNode.put("expanded", "false");
-				rootNode.put("leaf", "true");
-				
+				rootNode.put("leaf", "true");				
 				rootNode.put("alarm", alarm(item.getValue(), item.getThreshold(), Double.valueOf(objs[1].toString())));
 				result.add(rootNode);//可能有多个根节点的情况
 				iterator.remove();//删除
@@ -94,7 +93,7 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 		while(iterator.hasNext()){
 			Object [] objs = iterator.next();
 			BudgetItem item = (BudgetItem) objs[0];
-			if(item.getParent()!=null && item.getParent().equals(parentNode)){
+			if(item.getParent()!=null && item.getParent().getBudgetItemId().toString().equals(parentNode.get("id"))){
 				hasChild = true;//有孩子
 				
 				Map node = null;
@@ -108,10 +107,11 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 				node.put("value", item.getValue());
 				node.put("threshold", item.getThreshold());
 				node.put("realValue", objs[1].toString());				
+				node.put("leaf", "true");
 				parentNode.put("iconCls", "task-folder");
 				parentNode.put("expanded", "true");
 				parentNode.put("leaf", "false");
-				//parentNode.
+				parentNode.remove("leaf");
 				if(parentNode.get("children")!=null){
 					((List)(parentNode.get("children"))).add(node);
 				}else{

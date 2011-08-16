@@ -5,8 +5,8 @@ var IndexPage = Ext
 					top : new Ext.Panel({
 						region : "north",
 						id : "__nortPanel",
-						contentEl : "app-header",
-						height : 60
+						contentEl : "header",
+						height : 90
 					}),
 					center : null,
 					west : new Ext.Panel({
@@ -56,7 +56,7 @@ var IndexPage = Ext
 											xtype : "tbseparator"
 										},
 										new Ext.Toolbar.TextItem(
-												'技术支持 <a href="http://172.16.100.26/ITC/" target="_blank">上品折扣信息系统部</a>'),
+												'技术支持 <a href="' + __appSupportMail + '" target="_blank">' + __appSupport + '</a>'),
 										{
 											xtype : "tbseparator"
 										},
@@ -112,7 +112,7 @@ var IndexPage = Ext
 						});
 						this.afterPropertySet();
 						this.loadWestMenu();
-						this.buildToolBar();
+						//this.buildToolBar();
 					},
 					buildToolBar : function(){
 						
@@ -237,6 +237,8 @@ var IndexPage = Ext
 								b();
 							};
 						}, 100);
+						Ext.getCmp("SearchForm").render("searchFormDisplay");
+						Ext.getCmp("ChangeTheme").render("changeThemeDisplay");
 					},
 					loadWestMenu : function() {
 						var westPanel = Ext.getCmp("west-panel");

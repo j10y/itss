@@ -310,7 +310,15 @@ BudgetView = Ext.extend(Ext.Panel, {
 			};
 			break;
 		case "btn-edit":
-			this.editRecord(a);
+			{
+				if(a.data.publishStatus==1){
+					Ext.ux.Toast.msg("信息", "不允许修改审批中预算记录！");
+				}else if(a.data.publishStatus==3){
+					Ext.ux.Toast.msg("信息", "不允许修改已经发布预算记录！");
+				}else{
+					this.editRecord(a);
+				}
+			};
 			break;
 		default:
 			break;

@@ -2,6 +2,7 @@ package com.xpsoft.oa.action.hrm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -144,17 +145,87 @@ public class BudgetItemAction extends BaseAction {
 		}
 	 
 		//这里需要对其进行树形结构的json重组
+		List<Map> result = new ArrayList();//结果
+		Iterator<BudgetItem> iterator = itemList.iterator();
+		while(iterator.hasNext()){
+			BudgetItem item = iterator.next();
+			if(item.getParent()==null){
+				Map rootNode = new HashMap();
+				rootNode.put("id", item.getBudgetItemId().toString());
+				rootNode.put("text", item.getName());
+				rootNode.put("iconCls", "task-folder");
+				rootNode.put("leaf", "true");
+				rootNode.put("expanded", "false");
+
+				result.add(rootNode);//可能有多个根节点的情况
+				iterator.remove();//删除
+			}
+		}
 		
+		for(Map node : result){//所有root
+			cascade(node, itemList);
+		}
+		
+		StringBuffer buff = new StringBuffer();
+
+		JSONSerializer serializer = new JSONSerializer();
+		buff.append(serializer.exclude(new String[] { "class" })
+			.serialize(result));
+		
+//		this.jsonString = buff.toString();
+		
+		
+//		StringBuffer sb = new StringBuffer();
+//		sb.append("[{id:'0',text:'所有成本要素',expanded:true,children:[");
+//		for (BudgetItem item : itemList) {
+//			sb.append("{id:'" + item.getBudgetItemId()).append("',text:'" + item.getName()).append("',leaf:true,expanded:true},");
+//		}
+//		if (itemList.size() > 0) {
+//			sb.deleteCharAt(sb.length() - 1);
+//		}
+//		sb.append("]}]");
 		StringBuffer sb = new StringBuffer();
-		sb.append("[{id:'0',text:'所有成本要素',expanded:true,children:[");
-		for (BudgetItem item : itemList) {
-			sb.append("{id:'" + item.getBudgetItemId()).append("',text:'" + item.getName()).append("',leaf:true,expanded:true},");
-		}
-		if (itemList.size() > 0) {
-			sb.deleteCharAt(sb.length() - 1);
-		}
-		sb.append("]}]");
+		sb.append("[{id:'0',text:'所有成本要素',expanded:true,children:");
+		sb.append(buff.toString());
+		sb.append("}]");
 		setJsonString(sb.toString());
 		return "success";
+	}
+	
+	/**
+	 * 递归组装treeGrid树
+	 */
+	private void cascade(Map parentNode, List resource){
+		boolean hasChild = false;
+		Iterator<BudgetItem> iterator = resource.iterator();
+		while(iterator.hasNext()){
+			BudgetItem item = iterator.next();
+			if(item.getParent()!=null && item.getParent().getBudgetItemId().toString().equals(parentNode.get("id"))){
+				hasChild = true;//有孩子
+				Map node = new HashMap();
+				Map rootNode = new HashMap();
+				node.put("id", item.getBudgetItemId().toString());
+				node.put("text", item.getName());
+				node.put("iconCls", "task-folder");
+				node.put("leaf", "true");
+				node.put("expanded", "false");
+				parentNode.put("iconCls", "task-folder");
+				parentNode.put("expanded", "true");
+				parentNode.remove("leaf");
+				//parentNode.
+				if(parentNode.get("children")!=null){
+					((List)(parentNode.get("children"))).add(node);
+				}else{
+					List list = new ArrayList();
+					list.add(node);
+					parentNode.put("children", list);
+				}
+				iterator.remove();//删除
+				cascade(node, resource);
+			}
+		}
+		if(hasChild){
+			parentNode.put("expanded", "true");
+		}
 	}
 }

@@ -5,6 +5,7 @@ import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.core.web.paging.PagingBean;
+import com.xpsoft.oa.model.archive.ArchivesType;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
@@ -83,7 +84,7 @@ public class EmpProfileAction extends BaseAction {
 				.get(this.profileId);
 
 		/* 110 */JSONSerializer json = JsonUtil.getJSONSerializer(new String[] {
-				"birthday", "startWorkDate", "createtime", "checktime" });
+				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime" });
 
 		/* 113 */StringBuffer sb = new StringBuffer("{success:true,data:[");
 
@@ -174,10 +175,3 @@ public class EmpProfileAction extends BaseAction {
 		/* 199 */return "success";
 	}
 }
-
-/*
- * Location:
- * C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6
- * -joffice\webapps\joffice1.3.1\WEB-INF\classes\ Qualified Name:
- * com.xpsoft.oa.action.hrm.EmpProfileAction JD-Core Version: 0.6.0
- */

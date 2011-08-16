@@ -125,7 +125,6 @@ BudgetItemWin = Ext.extend(Ext.Window, {
 				id : "budgetItem.threshold"
 			}, {
 				fieldLabel : "控制阀值(%)",
-				readOnly : true,
 				id : "budgetItem.thresholdTmp",
 				listeners : {
 					change : function(field, newValue, oldValue){

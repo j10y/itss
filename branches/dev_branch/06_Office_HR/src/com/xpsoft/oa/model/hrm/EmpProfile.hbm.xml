@@ -548,5 +548,64 @@
 		>	
 			<column name="standardId" />
 		</many-to-one>
+		
+        <property
+            name="insurance"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="insurance"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="provident"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="provident"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="perCoefficient"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="perCoefficient"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="accessionTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="accessionTime"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="departureTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="departureTime"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
     </class>
 </hibernate-mapping>

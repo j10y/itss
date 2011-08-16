@@ -40,23 +40,33 @@ body {
 </style>
 <script type="text/javascript">
 		function checkForm(){
-				var username = document.getElementById("username").value;
-				var password = document.getElementById("password").value;
+				var checkBlank=true;
+				checkBlank=Ext.getCmp("namefield").isValid();
+				checkBlank=Ext.getCmp("pwdfield").isValid();
+				<c:if test="${codeEnabled eq 1}">
+					checkBlank=Ext.getCmp("codefield").isValid();					
+				</c:if>
+				if(!checkBlank){
+					Ext.Msg.alert("提示", "请正确输入登陆信息！");
+					return;
+				}
+				var username = Ext.getCmp("namefield").getValue();
+				var password = Ext.getCmp("pwdfield").getValue();
 				var checkCode = "";
-				if(username==""){
+				/*if(username==""){
 						Ext.Msg.alert("提示", "用户名不能为空！");
 						return;
 				}
 				if(password==""){
 					Ext.Msg.alert("提示", "密码不能为空！");
 						return;
-				}
+				}*/
 				<c:if test="${codeEnabled eq 1}">
-					checkCode = document.getElementById("checkCode").value;
-					if(checkCode==""){
+					checkCode = Ext.getCmp("codefield").getValue();
+					/*if(checkCode==""){
 							Ext.Msg.alert("提示", "验证码不能为空！");
 							return;
-					}
+					}*/
 				</c:if>
 				Ext.Ajax.request({
 					url : __ctxPath + "/login.do",
@@ -71,6 +81,7 @@ body {
 					}
 				});
 		}
+		
 		function handleLoginResult(a) {
 			if (a.success) {
 				var b = new Ext.ProgressBar({
@@ -87,17 +98,29 @@ body {
 				});
 			}
 		}
+		
 		function refeshCode() {
 			var a = document.getElementById("loginCode");
 			a.innerHTML='<img border="0" height="30" width="150" src="' + __ctxPath
 					+ '/CaptchaImg?rand=' + Math.random() + '"/>';
 		}
+		
 		document.onkeydown = function(e){
 			if(!e) e = window.event;//火狐中是window.event
 			if((e.keyCode || e.which) == 13){
 					checkForm();
 			}
 		}
+		Ext.onReady(function(){	
+
+		    Ext.QuickTips.init();
+		    Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
+			var username = new Ext.form.TextField({id:"namefield",allowBlank:false,width:200,name:"username",renderTo :"username"});
+			var password = new Ext.form.TextField({id:"pwdfield",allowBlank:false,width:200,name:"password",inputType:"password",renderTo :"password"});
+			var password = new Ext.form.TextField({id:"codefield",allowBlank:false,width:200,name:"checkCode",renderTo :"checkCode"});
+		});
+
+		
 </script>
 <link href="<%=request.getContextPath() %>/css/css.css" rel="stylesheet" type="text/css" />
 </head>
@@ -128,19 +151,28 @@ body {
             </tr>
             <tr>
               <td width="28%" class="blue"><div align="right">用户名：</div></td>
-              <td width="59%"><input id="username" name="username" type="text" class="black" value="" size="27" /></td>
+              <!-- 
+              <td width="59%"><input id="username" name="username" type="text" class="black" value="" size="27" width="200px"/></div></td>
+               -->
+              <td width="59%"><div id="username"></div></td>
               <td width="13%">&nbsp;</td>
             </tr>
             <tr>
-              <td class="blue"><div align="right">密　码：</div></td>
-              <td><input id="password" name="password" type="password" class="black" value="" size="27" /></td>
-              <td>&nbsp;</td>
+              <td width="28%" class="blue"><div align="right">密　码：</div></td>
+              <!-- 
+              <td width="59%"><input id="password" name="password" type="password" class="black" value="" size="27" width="200px"/></td>
+               -->
+              <td width="59%"><div id="password"></div></td>
+              <td width="13%">&nbsp;</td>
             </tr>
             <c:if test="${codeEnabled eq 1}">
             <tr>
-              <td class="blue"><div align="right">验证码 ：</div></td>
-              <td><input id="checkCode" name="checkCode" type="text" class="black" value="" size="27" /></td>
-              <td>&nbsp;</td>
+              <td width="28%" class="blue"><div align="right">验证码 ：</div></td>
+              <!-- 
+              <td width="59%"><input id="checkCode" name="checkCode" type="text" class="black" value="" size="27" width="200px"/></td>
+               -->
+              <td width="59%"><div id="checkCode"></div></td>
+              <td width="13%">&nbsp;</td>
             </tr>
             <tr>
               <td class="blue"></td>

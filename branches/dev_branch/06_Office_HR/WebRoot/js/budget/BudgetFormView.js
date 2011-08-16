@@ -29,7 +29,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 			layoutConfig:{
 				columns:2
 			},
-			height:150,
+			height:200,
 			frame:true,
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
@@ -61,6 +61,9 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 			}, {
 				name : "budget.endDate",
 				mapping : "endDate"
+			}, {
+				name : "budget.remark",
+				mapping : "remark"
 			} ]),
 			items : [ {
 				name : "budget.budgetId",
@@ -93,6 +96,12 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 				xtype:"datefield",
 				format:"Y-m-d",
 				length:50
+			}, {
+				xtype:"textarea",
+				fieldLabel : "备注信息",
+				name : "budget.remark",
+				id : "budget.remark",
+				colspan:2
 			}]
 			
 		});

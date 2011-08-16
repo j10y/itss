@@ -218,17 +218,28 @@ ProcessNextForm = Ext
 														displayField : "destName",
 														valueField : "signalName"
 													});
-											rightPanel.add(new Ext.form.Label({
-												text : "跳转任务:"
-											}));
+											if(__appListForwardNode=="true"){
+												rightPanel.add(new Ext.form.Label({
+													html : "跳转任务",
+													height: 60
+												}));
+											}else{
+												rightPanel.add(new Ext.form.Label({
+													html : "跳转任务:<br><font color='red'>尽可选择当前任务之前的任务进行跳转</font>",
+													height: 60
+												}));
+											}
+											
 											rightPanel.add(freeTransCombo);
 											rightPanel.add({
 												xtype : "label",
-												text : "下一任务执行人:"
+												height: 60,
+												html : "下一任务执行人:<br/><font color='red'>未选择执行人按照流程设置的默认审批人处理</font>"
 											});
 											var userAssignNames = new Ext.form.TextField(
 													{
 														name : "nextAssignUserNames",
+														//allowBlank:false,
 														width : 160,
 														readOnly : true
 													});
@@ -267,6 +278,12 @@ ProcessNextForm = Ext
 																						"请选择自由跳转的任务!");
 																		return;
 																	}
+//																	if (flowAssignId == "") {
+//																		Ext.ux.Toast.msg(
+//																						"操作信息",
+//																						"请选择下一任务执行人!");
+//																		return;
+//																	}
 																	var form = null;
 																	if (!isFormPanel) {
 																		form = formPanel.formPanel
@@ -361,12 +378,8 @@ ProcessNextForm = Ext
 														destName : e
 													},
 													success : function(h, j) {
-														Ext.ux.Toast
-																.msg("操作信息",
-																		"成功保存！");
-														AppUtil
-																.removeTab("ProcessForm"
-																		+ d);
+														Ext.ux.Toast.msg("操作信息", "成功保存！");
+														AppUtil.removeTab("ProcessForm" + d);
 														var k = Ext
 																.getCmp("MyTaskGrid");
 														var i = Ext

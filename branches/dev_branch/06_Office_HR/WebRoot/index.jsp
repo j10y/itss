@@ -107,10 +107,38 @@
 			   	  }
 			      Ext.util.CSS.swapStyleSheet("theme", __ctxPath+"/ext3/resources/css/"+storeTheme+".css");  
 		    });
+		    var	__appSupport = '<%=AppUtil.getPropertity("app.support")%>';
+		    var	__appSupportMail = '<%=AppUtil.getPropertity("app.supportMail")%>';
+		    var	__appListForwardNode = '<%=AppUtil.getPropertity("app.listForwardNode")%>';
 	    </script>
 	    <script type="text/javascript" src="<%=basePath%>/js/IndexPage.js"></script>
 	    <script type="text/javascript" src="<%=basePath%>/js/App.home.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/App.js"></script>	
+		<style>
+		 --* { margin:0 auto; padding:0;}
+		 #header { background:url(images/tlbg.gif) 0 0 repeat-x; height:90px; position:relative;}
+		 .headers { background:url(images/tshadow.gif) repeat-x; height:5px; width:100%; overflow:hidden;}
+		 #header a { _behavior: url("iepngfix.htc");}
+		 #header img { border:none;}
+		 .trl {padding:15px 10px;}
+		 .trl  .logo { width:160px; float:left;}
+		 .trl p { line-height:24px; font-size:12px; padding:6px; padding-left:100px; width:290px; float:left;}
+		 .trnav { width:526px; position:absolute; right:0; top:0; height:90px; background:url(images/trbg2.gif) no-repeat;}
+		 .trform { height:20px; font-size:12px; padding-left:22px; padding-top:5px; padding-bottom:5px; overflow:hidden}
+		 .trab { padding-top:6px; padding-left:142px;}
+		 .tra1,.tra2,.tra3,.tra4,.tra5 { display:block; width:48px; height:48px; margin:0 12px; background:url(images/ben48.png) no-repeat; _background:url(images/ben48.gif) no-repeat; float:left; _cursor:pointer}
+		 .tra1 { background-position:0 -48px;}
+		 .tra2 { background-position:-48px -48px;}
+		 .tra3 { background-position:-96px -48px;}
+		 .tra4 { background-position:-144px -48px;}
+		 .tra5 { background-position:-192px -48px;}
+		 .tra1:hover { background-position:0 0;}
+		 .tra2:hover { background-position:-48px 0;}
+		 .tra3:hover { background-position:-96px 0;}
+		 .tra4:hover { background-position:-144px 0;}
+		 .tra5:hover { background-position:-192px 0;}
+		 .ssbtn { background:url(images/ssbtn.gif); width:51px; height:20px; border:none; cursor:pointer}
+		</style>
 	</head>
 	<body >
 		<div id="loading">
@@ -121,45 +149,37 @@
              </div>
          </div>
         <div id="loading-mask"></div>
-		
-		<div id="app-header">
-			<div id="up">
-				<div id="header-left">
-					<img id ="CompanyLogo" src="<%=basePath+AppUtil.getCompanyLogo()%>" height="50" style="max-width:230px;"/>
-				</div>
-				<div id="header-main">
-					<div id="topInfoPanel" style="float:left;padding-bottom: 4px">
-						<div id="welcomeMsg">欢迎您，<security:authentication property="principal.fullname"/>，[<a href="<%=basePath%>/j_logout.do">注销</a>]</div>
-						<div id="currentTime"><span id="nowTime"></span><span id="nowTime2"></span></div>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div style="padding-right:350px;position: relative;float:right;width:250px;">
-					<ul id="header-topnav">
-						<li class="activeli"><a href="#" onclick="App.MyDesktopClick()" class="menu_desktop" title="桌面"><!-- 桌面 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="menu_email" title="邮件"><!-- 邮件 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="menu_assign" title="任务"><!-- 任务 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('WorkPlanView')" class="menu_plan" title="计划"><!-- 计划 --></a></li>
-						<li class="commonli"><a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="menu_doc" title="文档"><!-- 文档 --></a></li>
-					</ul>
-				</div>
-				
+
+		<div id="header">
+			<div class="trl">
+				<a href="#" class="logo"><img alt="<%=AppUtil.getCompanyName()%>－－办公协同管理系统" src="<%=basePath%><%=AppUtil.getCompanyLogo()%>" />
+				</a>
+				<p style="font : bold 14px arial,tahoma,verdana,helvetica;">
+					欢迎您，<security:authentication property="principal.fullname"/>
+					<a href="<%=basePath%>/j_logout.do">注销</a>
+					<nobr><span id="nowTime"></span><span id="nowTime2"></span></nobr>
+				</p>
 			</div>
-			
-		</div>
-		<div id="header-right">
-					<div id="setting">
-						<div style="position:relative;top:6px;padding-right:15px;z-index:99999;float:right;">
+			<div class="trnav">
+				<div class="trform">
+					<div id="searchFormDisplay"></div>
+					<div id="changeThemeDisplay" style="position:relative;top:-22px;padding-right:30px;z-index:99999;float:right;"></div>
+					<div style="position:relative;top:-15px;right:-130px;z-index:99999;float:right;">
 							<a href="<%=basePath%>/help/manual.zip" target="blank">帮助</a>
-							<!-- 
-							<c:if test="${IS_MANAGER ==true}">
-								|&nbsp;<a href="#" onclick="App.clickTopTab('SysConfigView')">设置</a>
-							</c:if>
-							 -->
-						</div>
 					</div>
+					 <!-- 
+					 <div id="tool" style="position:relative;padding-left:100px;z-index:99999;float:right;"></div>
+					  -->
 				</div>
-		<div id="down" class="down-tool">
+				<div class="trab">
+					<a href="#" onclick="App.MyDesktopClick()" class="tra1" title="桌面"></a>
+					<a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="tra2" title="邮件"></a>
+					<a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="tra3" title="任务"></a>
+					<a href="#" onclick="App.clickTopTab('WorkPlanView')" class="tra4" title="计划"></a>
+					<a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="tra5" title="文档"></a>
+				</div>
+			</div>
 		</div>
+		<div class="headers"></div>
 	</body>
 </html>
