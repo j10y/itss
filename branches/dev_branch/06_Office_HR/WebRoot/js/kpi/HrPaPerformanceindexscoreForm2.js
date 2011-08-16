@@ -111,7 +111,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 									hidden : true,
 									listeners : {
 										click : function(d) {
-											Ext.getCmp("formula").setValue("{" + Ext.getCmp("formula").getValue() + Ext.getCmp("acName").getValue() + "_t}");
+											Ext.getCmp("formula").setValue(Ext.getCmp("formula").getValue() + "{" + Ext.getCmp("acName").getValue() + "_t}");
 										}
 									}
 								}
@@ -128,7 +128,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 									hidden : true,
 									listeners : {
 										click : function(d) {
-											Ext.getCmp("formula").setValue("{" + Ext.getCmp("formula").getValue() + Ext.getCmp("acName").getValue() + "_r}");
+											Ext.getCmp("formula").setValue(Ext.getCmp("formula").getValue() + "{" + Ext.getCmp("acName").getValue() + "_r}");
 										}
 									}
 								}
