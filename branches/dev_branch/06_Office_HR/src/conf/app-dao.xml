@@ -311,4 +311,6 @@
 	<bean id="hrPaPisruleDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPisruleDaoImpl" parent="baseDao"/>
 <!-- end:  Generated for Package pei From Template: app-dao.xml.beansvm -->
     <bean id="realExecutionDao" class="com.xpsoft.oa.dao.hrm.impl.RealExecutionDaoImpl" parent="baseDao"/>
+    <bean id="taskSchedulerDao" class="com.xpsoft.oa.dao.scheduler.impl.TaskSchedulerDaoImpl" parent="baseDao"/>
+    
 </beans>

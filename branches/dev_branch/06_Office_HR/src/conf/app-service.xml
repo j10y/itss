@@ -563,5 +563,9 @@
 	<bean id="hrPaPisruleService" class="com.xpsoft.oa.service.kpi.impl.HrPaPisruleServiceImpl">
 		<constructor-arg index="0" ref="hrPaPisruleDao"/>
 	</bean>
+	<bean id="taskSchedulerService" class="com.xpsoft.oa.service.scheduler.impl.TaskSchedulerServiceImpl">
+		<constructor-arg index="0" ref="taskSchedulerDao"/>
+	</bean>
+	
 <!-- end:  Generated for Package pei From Template: app-service.xml.beansvm -->
 </beans>
