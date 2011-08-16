@@ -4,8 +4,8 @@ import com.xpsoft.core.model.BaseModel;
 
 public class HrPaKpiitem extends BaseModel {
 	protected long id;
-	protected long pbcId;
-	protected long piId;
+	protected HrPaKpipbc pbc;
+	protected HrPaPerformanceindex pi;
 	protected double weight;
 	protected double result;
 	
@@ -19,20 +19,20 @@ public class HrPaKpiitem extends BaseModel {
 		this.id = id;
 	}
 
-	public long getPbcId() {
-		return pbcId;
+	public HrPaKpipbc getPbc() {
+		return pbc;
 	}
 
-	public void setPbcId(long pbcId) {
-		this.pbcId = pbcId;
+	public void setPbc(HrPaKpipbc pbc) {
+		this.pbc = pbc;
 	}
 
-	public long getPiId() {
-		return piId;
+	public HrPaPerformanceindex getPi() {
+		return pi;
 	}
 
-	public void setPiId(long piId) {
-		this.piId = piId;
+	public void setPi(HrPaPerformanceindex pi) {
+		this.pi = pi;
 	}
 
 	public double getWeight() {

@@ -3,19 +3,22 @@ package com.xpsoft.oa.model.kpi;
 import java.util.Date;
 
 import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.hrm.Job;
+import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
 
 public class HrPaKpipbc extends BaseModel {
 	protected long id;
 	protected String pbcName;
-	protected long belongDept;
-	protected long belongPost;
-	protected long frequency;
+	protected Department belongDept;
+	protected Job belongPost;
+	protected HrPaDatadictionary frequency;
 	protected Date createDate;
-	protected long createPerson;
+	protected AppUser createPerson;
 	protected int publishStatus;
 	protected int totalScore;
 	protected Date modifyDate;
-	protected long modifyPerson;
+	protected AppUser modifyPerson;
 	
 	public HrPaKpipbc(){}
 
@@ -35,27 +38,27 @@ public class HrPaKpipbc extends BaseModel {
 		this.pbcName = pbcName;
 	}
 
-	public long getBelongDept() {
+	public Department getBelongDept() {
 		return belongDept;
 	}
 
-	public void setBelongDept(long belongDept) {
+	public void setBelongDept(Department belongDept) {
 		this.belongDept = belongDept;
 	}
 
-	public long getBelongPost() {
+	public Job getBelongPost() {
 		return belongPost;
 	}
 
-	public void setBelongPost(long belongPost) {
+	public void setBelongPost(Job belongPost) {
 		this.belongPost = belongPost;
 	}
 
-	public long getFrequency() {
+	public HrPaDatadictionary getFrequency() {
 		return frequency;
 	}
 
-	public void setFrequency(long frequency) {
+	public void setFrequency(HrPaDatadictionary frequency) {
 		this.frequency = frequency;
 	}
 
@@ -67,11 +70,11 @@ public class HrPaKpipbc extends BaseModel {
 		this.createDate = createDate;
 	}
 
-	public long getCreatePerson() {
+	public AppUser getCreatePerson() {
 		return createPerson;
 	}
 
-	public void setCreatePerson(long createPerson) {
+	public void setCreatePerson(AppUser createPerson) {
 		this.createPerson = createPerson;
 	}
 
@@ -99,11 +102,11 @@ public class HrPaKpipbc extends BaseModel {
 		this.modifyDate = modifyDate;
 	}
 
-	public long getModifyPerson() {
+	public AppUser getModifyPerson() {
 		return modifyPerson;
 	}
 
-	public void setModifyPerson(long modifyPerson) {
+	public void setModifyPerson(AppUser modifyPerson) {
 		this.modifyPerson = modifyPerson;
 	}
 }

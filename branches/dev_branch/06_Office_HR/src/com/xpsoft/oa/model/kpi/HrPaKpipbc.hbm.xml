@@ -32,39 +32,9 @@
             not-null="false"
             unique="false"
         />
-        <property
-            name="belongDept"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="belongDept"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
-        <property
-            name="belongPost"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="belongPost"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
-        <property
-            name="frequency"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="frequency"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="belongDept" not-null="false" class="com.xpsoft.oa.model.system.Department" column="belongDept"></many-to-one>
+        <many-to-one name="belongPost" not-null="false" class="com.xpsoft.oa.model.hrm.Job" column="Job"></many-to-one>
+        <many-to-one name="frequency" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaDatadictionary" column="frequency"></many-to-one>
         <property
             name="createDate"
             type="java.util.Date"
@@ -76,17 +46,7 @@
             not-null="false"
             unique="false"
         />
-        <property
-            name="createPerson"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="createPerson"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="createPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
         <property
             name="publishStatus"
             type="java.lang.Integer"
@@ -120,16 +80,6 @@
             not-null="false"
             unique="false"
         />
-        <property
-            name="modifyPerson"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="modifyPerson"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="modifyPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
     </class>
 </hibernate-mapping>

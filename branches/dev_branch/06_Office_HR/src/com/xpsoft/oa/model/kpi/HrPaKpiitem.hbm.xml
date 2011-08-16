@@ -21,28 +21,8 @@
         >
             <generator class="native"/>
         </id>
-         <property
-            name="pbcId"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="pbcId"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
-        <property
-            name="piId"
-            type="java.lang.String"
-            update="true"
-            insert="true"
-            access="property"
-            column="piId"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="pbc" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaKpipbc" column="pbcId"></many-to-one>
+        <many-to-one name="pi" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaPerformanceindex" column="piId"></many-to-one>
         <property
             name="weight"
             type="java.lang.Double"
