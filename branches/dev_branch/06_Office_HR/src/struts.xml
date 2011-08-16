@@ -413,6 +413,11 @@
 			<result>${successResultValue}</result>
 		</action>
 	</package>
+	<package name="scheduler" extends="struts-default" namespace="/scheduler">
+		<action name="*TaskScheduler" class="TaskSchedulerAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+	</package>
 </struts>
 
 		
