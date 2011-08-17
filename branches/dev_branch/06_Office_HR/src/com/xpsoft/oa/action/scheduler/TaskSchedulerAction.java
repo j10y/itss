@@ -157,9 +157,13 @@ public class TaskSchedulerAction extends BaseAction{
 		taskScheduler.setRunTime(runTime);
 		taskScheduler.setDesc(desc);
 		taskScheduler.setTaskName(taskName);
-		System.out.println("---------------------------------"+runTime+"-------"+desc+"------------------------------------------");
-		taskSchedulerService.save(taskScheduler);
-		this.setJobTime(taskScheduler.getCronTrigger(), taskScheduler.getRunTime());
+		boolean flag=this.setJobTime(taskScheduler.getCronTrigger(), taskScheduler.getRunTime());
+		if(flag==true){
+			taskSchedulerService.save(taskScheduler);
+			this.jsonString = new String("{success:true}");
+		}else{
+			this.jsonString = new String("{success:false}");
+		}
 		 return "success";
 	}
 	
