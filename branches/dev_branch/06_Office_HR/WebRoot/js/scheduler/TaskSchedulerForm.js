@@ -76,6 +76,7 @@ TaskSchedulerForm = Ext.extend(Ext.Window, {
 							}
 						}else{
 							Ext.getCmp("taskScheduler.month").enable();
+							Ext.getCmp("taskScheduler.day").enable();
 						}
 					}
 				}
