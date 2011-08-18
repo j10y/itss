@@ -237,6 +237,11 @@
 				<b:value>/info/listAppTips.do</b:value>
 				<b:value>/info/saveAppTips.do</b:value>
 				<b:value>/info/multiDelAppTips.do</b:value>
+				
+				<b:value>/scheduler/saveTaskScheduler.do</b:value>
+				<b:value>/scheduler/listTaskScheduler.do</b:value>
+				<b:value>/scheduler/multiDelTaskScheduler.do</b:value>
+				<b:value>/scheduler/getTaskScheduler.do</b:value>
 			</b:set>
 		</b:property>
 	</b:bean>
