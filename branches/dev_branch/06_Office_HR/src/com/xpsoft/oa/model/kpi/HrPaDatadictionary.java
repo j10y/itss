@@ -8,6 +8,10 @@ public class HrPaDatadictionary extends BaseModel {
 	protected long parentId;
 	
 	public HrPaDatadictionary(){}
+	
+	public HrPaDatadictionary(long id) {
+		this.id = id;
+	}
 
 	public long getId() {
 		return id;
