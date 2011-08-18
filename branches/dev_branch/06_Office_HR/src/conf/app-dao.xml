@@ -311,6 +311,10 @@
 	<bean id="hrPaPisruleDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPisruleDaoImpl" parent="baseDao"/>
 	<bean id="hrPaKpiPBC2UserDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiPBC2UserDaoImpl" parent="baseDao"/>
 	<bean id="hrPaKpiitem2userDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiitem2userDaoImpl" parent="baseDao"/>
+	
+	<bean id="hrPaKpiPBC2UserCmpDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiPBC2UserCmpDaoImpl" parent="baseDao"/>
+	<bean id="hrPaKpiitem2userCmpDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiitem2userCmpDaoImpl" parent="baseDao"/>
+	
 <!-- end:  Generated for Package pei From Template: app-dao.xml.beansvm -->
     <bean id="realExecutionDao" class="com.xpsoft.oa.dao.hrm.impl.RealExecutionDaoImpl" parent="baseDao"/>
     <bean id="taskSchedulerDao" class="com.xpsoft.oa.dao.scheduler.impl.TaskSchedulerDaoImpl" parent="baseDao"/>
