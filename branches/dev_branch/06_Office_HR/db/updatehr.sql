@@ -18,8 +18,7 @@ CREATE TABLE `hr_pa_kpiitem2usercmp` (
   `pbcId` bigint(20) DEFAULT NULL COMMENT '考核模板ID',
   `piId` bigint(20) DEFAULT NULL COMMENT '考核指标ID',
   `weight` double DEFAULT NULL COMMENT '权值',
-  `result` double DEFAULT NULL COMMENT '考核最后得分',
-  PRIMARY KEY (`id`)
+  `result` double DEFAULT NULL COMMENT '考核最后得分'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='每个人所属的KPIPBC的内容，来源于KPIItem表，是该表的数据拷贝。\r\n\r\n不同岗位所属的PB';
 
 -- ----------------------------
@@ -41,9 +40,12 @@ CREATE TABLE `hr_pa_kpipbc2usercmp` (
   `publishStatus` int(11) DEFAULT NULL COMMENT '发布状态\r\n            0：草稿\r\n            1：审核中\r\n            2：退回\r\n            3：审核完毕，发布\r\n            4：删除标记',
   `totalScore` float DEFAULT NULL,
   `modifyDate` datetime DEFAULT NULL,
-  `modifyPerson` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `modifyPerson` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='每个人所属的最终PBC\r\n\r\n该表内容来源于根据每个人所属的不同的岗位的PBC合并后的结果。';
+
+-- ----------------------------
+-- Records of hr_pa_kpipbc2usercmp
+-- ----------------------------
 
 --2011-08-18
 
