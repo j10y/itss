@@ -1,16 +1,18 @@
 package com.xpsoft.oa.action.system;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.system.Dictionary;
 import com.xpsoft.oa.service.system.DictionaryService;
-import java.lang.reflect.Type;
-import java.util.List;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 public class DictionaryAction extends BaseAction {
 
@@ -66,18 +68,43 @@ public class DictionaryAction extends BaseAction {
 	}
 
 	public String load() {
-		/* 78 */List<String> list = this.dictionaryService
-				.getAllByItemName(this.itemName);
-		/* 79 */StringBuffer buff = new StringBuffer("[");
-		/* 80 */for (String itemName : list) {
-			/* 81 */buff.append("'").append(itemName).append("',");
+		List<String> list = this.dictionaryService.getAllByItemName(this.itemName);
+		StringBuffer buff = new StringBuffer("[");
+		for (String itemName : list) {
+			buff.append("'").append(itemName).append("',");
 		}
-		/* 83 */if (list.size() > 0) {
-			/* 84 */buff.deleteCharAt(buff.length() - 1);
+		if (list.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
 		}
-		/* 86 */buff.append("]");
-		/* 87 */setJsonString(buff.toString());
-		/* 88 */return "success";
+		buff.append("]");
+		setJsonString(buff.toString());
+		return "success";
+	}
+	
+	
+	public String combo() {
+		Map map = new HashMap();
+		map.put("Q_itemName_S_EQ", this.itemName);
+		QueryFilter filter = new QueryFilter(map);
+		List<Dictionary> list = this.dictionaryService.getAll(filter);
+
+		StringBuffer buff = new StringBuffer("[");
+		for(int i=0; i<list.size(); i++){
+			buff.append("[");
+			buff.append("'").append(list.get(i).getDicId())
+				.append("','").append(list.get(i).getItemValue())
+				.append("'");
+			if(i<list.size()-1){
+				buff.append("],");
+			}else{
+				buff.append("]");
+			}
+		}
+		buff.append("]");
+
+		this.jsonString = buff.toString();
+
+		return "success";
 	}
 
 	public String multiDel() {

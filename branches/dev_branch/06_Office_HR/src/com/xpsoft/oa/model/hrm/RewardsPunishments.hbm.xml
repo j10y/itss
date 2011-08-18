@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.hrm.RewardsPunishments"
+        table="hr_sr_rewardsPunishments"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="rpId"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+              
+        <many-to-one name="appUser" not-null="true" class="com.xpsoft.oa.model.system.AppUser" column="userId"></many-to-one>
+
+		<property
+            name="amount"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="amount"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+
+        <property
+            name="remark"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="remark"
+        />
+        
+        <property
+            name="rpTypeStr"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="rpTypeStr"
+        />
+        
+        <many-to-one name="rpType" not-null="true" update="false" class="com.xpsoft.oa.model.system.Dictionary" column="rpType"></many-to-one>
+        
+        <many-to-one name="empProfile" not-null="true" update="false" class="com.xpsoft.oa.model.hrm.EmpProfile" column="profileId"></many-to-one>
+        
+        <property
+            name="createDate"
+            type="java.util.Date"
+            update="false"
+            insert="true"
+            access="property"
+            column="createDate"
+        />
+        <many-to-one name="createPerson" not-null="true" update="false" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
+        
+        <!--
+        <property
+            name="modifyDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="modifyDate"
+        />
+        <many-to-one name="modifyPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
+        -->
+        
+    </class>
+</hibernate-mapping>

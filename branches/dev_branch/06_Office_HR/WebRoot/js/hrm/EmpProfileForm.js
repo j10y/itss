@@ -256,17 +256,6 @@ EmpProfileForm = Ext
 														mapping : "perCoefficient"
 													},
 													{
-														name : "empProfileForm.perCoefficientCombo",
-														mapping : "perCoefficient",
-														convert : function(v, rec){
-															if(v!=null){
-																return v*100;
-															}else{
-																return 0;
-															}
-														}
-													},
-													{
 														name : "empProfileForm.accessionTime",
 														mapping : "accessionTime"
 													},
@@ -858,19 +847,9 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.insurance"
 																	},
 																	{
-																		xtype : 'hidden',
-																		fieldLabel : "绩效系数",
+																		fieldLabel : "绩效基数",
 																		name : "empProfile.perCoefficient",
 																		id : "empProfileForm.perCoefficient"
-																	},
-																	{
-																		fieldLabel : "绩效系数(%)",
-																		id : "empProfileForm.perCoefficientCombo",
-																		listeners : {
-																			change : function(field, newValue, oldValue){
-																				Ext.getCmp("empProfileForm.perCoefficient").setValue(newValue/100);
-																			}
-																		}
 																	} ]
 														},
 														{

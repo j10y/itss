@@ -125,7 +125,8 @@ RealExecutionForm = Ext.extend(Ext.Window, {
 				fieldLabel : "执行值",
 				name : "realExecution.realValue",
 				id : "realValue",
-				allowBlank : false
+				allowBlank : false,
+				xtype:"numberfield"
 			}, {
 				fieldLabel : "月份",
 				id : "month",

@@ -314,5 +314,8 @@
 <!-- end:  Generated for Package pei From Template: app-dao.xml.beansvm -->
     <bean id="realExecutionDao" class="com.xpsoft.oa.dao.hrm.impl.RealExecutionDaoImpl" parent="baseDao"/>
     <bean id="taskSchedulerDao" class="com.xpsoft.oa.dao.scheduler.impl.TaskSchedulerDaoImpl" parent="baseDao"/>
+    <bean id="rewardsPunishmentsDao" class="com.xpsoft.oa.dao.hrm.impl.RewardsPunishmentsDaoImpl" parent="baseDao"/>
+    <bean id="incomeTaxDao" class="com.xpsoft.oa.dao.hrm.impl.IncomeTaxDaoImpl" parent="baseDao"/>
+    <bean id="incomeTaxItemDao" class="com.xpsoft.oa.dao.hrm.impl.IncomeTaxItemDaoImpl" parent="baseDao"/>
     
 </beans>

@@ -574,4 +574,14 @@
 	</bean>
 	
 <!-- end:  Generated for Package pei From Template: app-service.xml.beansvm -->
+	<bean id="rewardsPunishmentsService" class="com.xpsoft.oa.service.hrm.impl.RewardsPunishmentsServiceImpl">
+		<constructor-arg index="0" ref="rewardsPunishmentsDao"/>
+	</bean>
+	<bean id="incomeTaxService" class="com.xpsoft.oa.service.hrm.impl.IncomeTaxServiceImpl">
+		<constructor-arg index="0" ref="incomeTaxDao"/>
+	</bean>
+	<bean id="incomeTaxItemService" class="com.xpsoft.oa.service.hrm.impl.IncomeTaxItemServiceImpl">
+		<constructor-arg index="0" ref="incomeTaxItemDao"/>
+	</bean>
+
 </beans>

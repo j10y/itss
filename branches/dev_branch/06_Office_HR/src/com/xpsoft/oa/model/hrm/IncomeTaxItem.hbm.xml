@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.hrm.IncomeTaxItem"
+        table="hr_sr_incomeTaxItem"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="itiId"
+            type="java.lang.Long"
+            length="19"
+            column="id"
+        >
+            <generator class="native"/>
+        </id>
+
+        <many-to-one name="incomeTax" not-null="true" update="true" class="com.xpsoft.oa.model.hrm.IncomeTax" column="itId"></many-to-one>
+		
+		<property
+            name="limitAmount"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="limitAmount"
+        />
+        <property
+            name="lowerAmount"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="lowerAmount"
+        />
+        <property
+            name="taxValue"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="taxValue"
+        />
+ 
+    </class>
+</hibernate-mapping>

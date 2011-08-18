@@ -1300,6 +1300,30 @@
 					<url>/hrm/listStandSalary.do</url>
 					<url>/hrm/checkStandSalary.do</url>
 				</Function>
+			</Item>		
+			<Item id="IncomeTaxView" iconCls="menu-incomeTax" text="个税信息">
+				<Function id="_IncomeTaxEdit" text="个税信息修改" iconCls="btn-edit">
+					<url>/system/listIncomeTax.do</url>
+					<url>/system/addIncomeTax.do</url>
+				</Function>
+			</Item>	
+			<Item id="RewardsPunishmentsView" text="人员奖惩" iconCls="menu-RewardsPunishments">
+			    <Function id="_RewardsPunishmentsQuery" iconCls="menu-list" text="查看">
+					<url>/rewardsPunishments/listRewardsPunishments.do</url>
+				</Function>
+				<Function id="_RewardsPunishmentsAdd" iconCls="menu-add" text="添加">
+					<url>/rewardsPunishments/listRewardsPunishments.do</url>
+					<url>/rewardsPunishments/saveRewardsPunishments.do</url>
+				</Function>
+				<Function id="_RewardsPunishmentsEdit" iconCls="btn-edit" text="编辑">
+					<url>/rewardsPunishments/listRewardsPunishments.do</url>
+					<url>/rewardsPunishments/saveRewardsPunishments.do</url>
+					<url>/rewardsPunishments/getRewardsPunishment.do</url>
+				</Function>
+				<Function id="_RewardsPunishmentsDel" iconCls="menu-del" text="删除">
+					<url>/rewardsPunishments/listRewardsPunishments.do</url>
+					<url>/rewardsPunishments/multiDelRewardsPunishments.do</url>
+				</Function>
 			</Item>
 			<Item id="SalaryPayoffForm" text="发放登记" iconCls="menu-add-salay">
 			    <Function id="_SalaryPayoffReg" text="登记" iconCls="menu-add">

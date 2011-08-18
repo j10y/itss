@@ -111,7 +111,8 @@ BudgetItemWin = Ext.extend(Ext.Window, {
 				fieldLabel : "预算金额",
 				allowBlank : false,
 				name : "budgetItem.value",
-				id : "budgetItem.value"
+				id : "budgetItem.value",
+				xtype:"numberfield"
 			}/*, {
 				fieldLabel : "控制阀值(%)",
 				allowBlank : false,
@@ -130,7 +131,8 @@ BudgetItemWin = Ext.extend(Ext.Window, {
 					change : function(field, newValue, oldValue){
 						Ext.getCmp("budgetItem.threshold").setValue(newValue/100);
 					}
-				}
+				},
+				xtype:"numberfield"
 			}, {
 				xtype : "hidden",
 				name : "budgetItem.parent.budgetItemId",

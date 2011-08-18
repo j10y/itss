@@ -418,6 +418,21 @@
 			<result>${successResultValue}</result>
 		</action>
 	</package>
+	<package name="rewardsPunishments" extends="struts-default" namespace="/rewardsPunishments">
+		<action name="*RewardsPunishments" class="RewardsPunishmentsAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+	</package>
+	<package name="incomeTax" extends="struts-default" namespace="/incomeTax">
+		<action name="*IncomeTax" class="IncomeTaxAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+	</package>
+	<package name="incomeTaxItem" extends="struts-default" namespace="/incomeTaxItem">
+		<action name="*IncomeTaxItem" class="IncomeTaxItemAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+	</package>
 </struts>
 
 		

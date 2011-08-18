@@ -361,5 +361,9 @@ App.importJs = {
 			__ctxPath + "/js/kpi/HrPaAssessmentcriteriaForm.js"],
 	TaskSchedulerView : [ __ctxPath + "/js/scheduler/TaskSchedulerView.js",
 	 __ctxPath + "/js/scheduler/TaskSchedulerForm.js"
-	]
+	], 
+	RewardsPunishmentsView : [ __ctxPath + "/js/rewardsPunishments/RewardsPunishmentsView.js",
+             	 __ctxPath + "/js/rewardsPunishments/RewardsPunishmentsForm.js"],
+ 	IncomeTaxView : [ __ctxPath + "/js/incomeTax/IncomeTaxView.js",
+ 	                 __ctxPath + "/js/incomeTax/IncomeTaxItemForm.js"]
 };

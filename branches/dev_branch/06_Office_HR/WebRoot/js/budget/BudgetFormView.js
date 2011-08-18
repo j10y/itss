@@ -125,89 +125,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 				}
 			});
 		}
-		
-		
-//		this.store = new Ext.data.JsonStore({
-//			url : __ctxPath + "/budget/listBudgetItem.do",
-//			root : "result",
-//			totalProperty : "totalCounts",
-//			remoteSort : true,
-//			fields : [ {
-//				name : "budgetId",
-//				type : "int"
-//			}, "name", {
-//				name : "depName",
-//				mapping : "belongDept.depName"
-//			}, "beginDate" 
-//			, "endDate" 
-//			, "publishStatus"
-//			, "createDate"
-//			, "createPerson", {
-//				name : "createPerson",
-//				mapping : "createPerson.fullname"
-//			}]
-//		});
-//		this.store.setDefaultSort("budgetId", "desc");
-//		this.store.load({
-//			params : {
-//				start : 0,
-//				limit : 25
-//			}
-//		});
-		var c = new Ext.grid.CheckboxSelectionModel();
-		var a = new Ext.grid.ColumnModel({
-			columns : [ c, new Ext.grid.RowNumberer(), {
-				header : "budgetId",
-				dataIndex : "budgetId",
-				hidden : true
-			}, {
-				header : "名称",
-				dataIndex : "name"
-			}, {
-				header : "所属部门",
-				dataIndex : "depName"
-			}, {
-				header : "开始时间",
-				dataIndex : "beginDate"
-			}, {
-				header : "结束时间",
-				dataIndex : "endDate"
-			}, {
-				header : "状态",
-				dataIndex : "publishStatus",
-				renderer : function(v){
-					// 0：草稿  1：审核中 2：退回 3：审核完毕，发布 4：删除标记'
-					if(v==0){
-						return "<font color='red'>草稿</font>"
-					}else{
-						if(v==1){
-							return "<font color='red'>审核中</font>"
-						}else{
-							if(v==2){
-								return "<font color='red'>退回</font>"
-							}else{
-								if(v==3){
-									return "<font color='green'>已发布</font>"
-								}else{
-									return "<font color='red'>已删除</font>"
-								}
-							}
-						}
-					}
-				}
-			}, {
-				header : "创建人",
-				dataIndex : "createPerson"
-			}, {
-				header : "创建时间",
-				dataIndex : "createDate"
-			}], 
-			defaults : {
-				sortable : true,
-				menuDisabled : false,
-				width : 100
-			}
-		});
+				
 		this.topbar = new Ext.Toolbar({
 			height : 30,
 			bodyStyle : "text-align:left",
@@ -254,20 +172,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 	            header: '成本要素编号',
 	            width: 100,
 	            dataIndex: 'code',
-	            align: 'center',
-	            sortType: 'asFloat'/*,
-	            tpl: new Ext.XTemplate('{duration:this.formatHours}', {
-	                formatHours: function(v) {
-	                    if(v < 1) {
-	                        return Math.round(v * 60) + ' mins';
-	                    } else if (Math.floor(v) !== v) {
-	                        var min = v - Math.floor(v);
-	                        return Math.floor(v) + 'h ' + Math.round(min * 60) + 'm';
-	                    } else {
-	                        return v + ' hour' + (v === 1 ? '' : 's');
-	                    }
-	                }
-	            })*/
+	            align: 'center'
 	        }, {
 	            header: '缩写',
 	            width: 150,
@@ -282,6 +187,9 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 	            dataIndex: 'threshold',
 	            tpl: new Ext.XTemplate('{threshold:this.formatDouble}', {
 	            	formatDouble: function(v) {
+	            		if(v=null||v==undefined){
+	            			return "";
+	            		}
 	                    return v*100 + "%";
 	                }
 	            })
@@ -295,7 +203,6 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 				menuDisabled : false,
 				width : 100
 			},
-			sm : c,
 			viewConfig : {
 				forceFit : true,
 				autoFill : true,

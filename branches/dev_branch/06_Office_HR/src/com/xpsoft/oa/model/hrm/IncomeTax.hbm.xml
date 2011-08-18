@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.hrm.IncomeTax"
+        table="hr_sr_incomeTax"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="itId"
+            type="java.lang.Long"
+            length="19"
+            column="id"
+        >
+            <generator class="native"/>
+        </id>
+        
+        <property
+            name="name"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="name"
+            not-null="true"
+        />
+        
+        <property
+            name="beginDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="beginDate"
+        />
+        <property
+            name="endDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="endDate"
+        />
+        <property
+            name="remark"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="remark"
+        />
+        <property
+            name="publishDate"
+            type="java.util.Date"
+            update="false"
+            insert="true"
+            access="property"
+            column="publishDate"
+        />
+        <many-to-one name="publishPerson" not-null="true" update="false" class="com.xpsoft.oa.model.system.AppUser" column="publishPerson"></many-to-one>
+		
+		<property
+            name="basicAmount"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="basicAmount"
+        />
+ 
+    </class>
+</hibernate-mapping>

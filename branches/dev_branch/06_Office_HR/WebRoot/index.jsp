@@ -16,6 +16,9 @@
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="msthemecompatible" content="no">
+		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+		<META HTTP-EQUIV="Expires" CONTENT="0"> 
 		<title><%=AppUtil.getCompanyName()%>－－办公协同管理系统</title>
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/resources/css/ext-all-notheme.css" />
 		<link rel="stylesheet" type="text/css" href="<%=basePath%>/ext3/resources/css/ext-patch.css" />
