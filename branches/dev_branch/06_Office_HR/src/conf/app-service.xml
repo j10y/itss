@@ -567,7 +567,7 @@
 		<constructor-arg index="0" ref="hrPaKpiPBC2UserDao"/>
 	</bean>
 	<bean id="hrPaKpiitem2userService" class="com.xpsoft.oa.service.kpi.impl.HrPaKpiitem2userServiceImpl">
-		<constructor-arg index="0" ref="HrPaKpiitem2userDao"/>
+		<constructor-arg index="0" ref="hrPaKpiitem2userDao"/>
 	</bean>
 	<bean id="taskSchedulerService" class="com.xpsoft.oa.service.scheduler.impl.TaskSchedulerServiceImpl">
 		<constructor-arg index="0" ref="taskSchedulerDao"/>
