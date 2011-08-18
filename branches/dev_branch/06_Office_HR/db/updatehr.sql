@@ -44,3 +44,76 @@ CREATE TABLE `hr_pa_kpipbc2usercmp` (
   `modifyPerson` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='每个人所属的最终PBC\r\n\r\n该表内容来源于根据每个人所属的不同的岗位的PBC合并后的结果。';
+
+--2011-08-18
+
+--修改档案管理表
+ALTER TABLE emp_profile ADD COLUMN accessionTime datetime default null COMMENT '入职日期';
+ALTER TABLE emp_profile ADD COLUMN departureTime datetime default null COMMENT '离职日期';
+ALTER TABLE emp_profile ADD COLUMN perCoefficient decimal(18,2) DEFAULT NULL COMMENT '绩效系数';
+ALTER TABLE emp_profile ADD COLUMN provident decimal(18,2) DEFAULT NULL COMMENT '公积金';
+ALTER TABLE emp_profile ADD COLUMN insurance decimal(18,2) DEFAULT NULL COMMENT '社保';
+
+
+drop table if exists hr_sr_rewardsPunishments;
+
+--添加人员奖惩表、个税、个税条目表
+create table hr_sr_rewardsPunishments
+(
+   id                   bigint not null AUTO_INCREMENT,
+   userId               bigint comment '被奖惩人',
+   rpType               bigint comment '奖惩类型 来源于字典表',
+   rpTypeStr            varchar(32) comment '奖惩类型',
+   amount               decimal,
+   remark               varchar(512) comment '奖惩备注',
+   profileId            bigint comment '人员档案ID',
+   createDate datetime DEFAULT NULL comment '创建人',
+   createPerson bigint(20) DEFAULT NULL comment '创建日期',
+   primary key (id)
+);
+
+alter table hr_sr_rewardsPunishments comment '人员奖惩表';
+
+alter table hr_sr_rewardsPunishments add constraint FK_Reference_30 foreign key (profileId)
+
+insert into dictionary(itemName,itemValue) values("奖惩类型","奖励");
+insert into dictionary(itemName,itemValue) values("奖惩类型","惩罚");
+
+
+drop table if exists hr_sr_incomeTax;
+
+/*==============================================================*/
+/* Table: hr_sr_incomeTax                                       */
+/*==============================================================*/
+create table hr_sr_incomeTax
+(
+   id                   bigint not null AUTO_INCREMENT,
+   name                 varchar(128) comment '名称',
+   beginDate            datetime comment '开始执行时间',
+   endDate              datetime comment '执行结束时间',
+   basicAmount          decimal comment '个税起征点',
+   publishDate          datetime comment '发布时间',
+   publishPerson        bigint comment '发布人',
+   remark               varchar(512) comment '备注',
+   primary key (id)
+);
+
+alter table hr_sr_incomeTax comment '个人所得税基准表';
+
+drop table if exists hr_sr_incomeTaxItem;
+
+/*==============================================================*/
+/* Table: hr_sr_incomeTaxItem                                   */
+/*==============================================================*/
+create table hr_sr_incomeTaxItem
+(
+   id                   bigint not null AUTO_INCREMENT,
+   itId                 bigint comment '所得税模板',
+   limitAmount          decimal comment '上限金额',
+   lowerAmount          decimal comment '下限金额',
+   taxValue             double comment '适用税率',
+   primary key (id)
+);
+
+alter table hr_sr_incomeTaxItem add constraint FK_Reference_28 foreign key (itId)
+      references hr_sr_incomeTax (id) on delete restrict on update restrict;
