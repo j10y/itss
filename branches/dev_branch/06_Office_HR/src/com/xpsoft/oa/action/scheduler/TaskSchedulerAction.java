@@ -147,7 +147,7 @@ public class TaskSchedulerAction extends BaseAction{
 			}
 		}else if(cycle.equals("每天")){
 			runTime=times[2]+" "+times[1]+" "+times[0]+" * * ?";
-			desc="每天,"+datetime;
+			desc="每天/"+datetime;
 		}
 		if(taskScheduler.getId()!=null){
 			taskScheduler=taskSchedulerService.get(taskScheduler.getId());
