@@ -6,8 +6,8 @@
 
 <hibernate-mapping>
     <class
-        name="com.xpsoft.oa.model.kpi.HrPaKpiitem2user"
-        table="hr_pa_kpiitem2user"
+        name="com.xpsoft.oa.model.kpi.HrPaKpiitem2userCmp"
+        table="hr_pa_kpiitem2usercmp"
         select-before-update="false"
         dynamic-update="false"
         dynamic-insert="false"
@@ -21,7 +21,7 @@
         >
             <generator class="native"/>
         </id>
-        <many-to-one name="pbc2User" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaKpiPBC2User" column="pbcId"></many-to-one>
+        <many-to-one name="pbc2User" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaKpiPBC2UserCmp" column="pbcId"></many-to-one>
         <property
         	name="piId"
         	type="java.lang.Long"
