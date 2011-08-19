@@ -67,7 +67,7 @@ public class EmpProfile extends BaseModel {
 	//社保、公积金、绩效系数
 	protected BigDecimal provident;//公积金
 	protected BigDecimal insurance;//保险
-	protected BigDecimal perCoefficient;//绩效系数, performanceCoefficient
+	protected BigDecimal perCoefficient;//绩效基数, performanceCoefficient
 	//入职时间、离职时间
 	protected Date accessionTime;//入职时间
 	
