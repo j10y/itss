@@ -24,6 +24,8 @@ public class IncomeTaxItem extends BaseModel{
 	@Expose
 	protected BigDecimal taxValue;
 
+	@Expose
+	protected BigDecimal deductValue;
 
 	public IncomeTax getIncomeTax() {
 		return incomeTax;
@@ -55,6 +57,14 @@ public class IncomeTaxItem extends BaseModel{
 	public void setTaxValue(BigDecimal taxValue) {
 		this.taxValue = taxValue;
 	}
+	
+	
+	public BigDecimal getDeductValue() {
+		return deductValue;
+	}
+	public void setDeductValue(BigDecimal deductValue) {
+		this.deductValue = deductValue;
+	}
 	public int hashCode() {
 		return new HashCodeBuilder(-82280557, -700257973)
 	       .append(this.itiId)
@@ -62,6 +72,7 @@ public class IncomeTaxItem extends BaseModel{
 	       .append(this.limitAmount)
 	       .append(this.lowerAmount)
 	       .append(this.taxValue)
+	       .append(this.deductValue)
 	       .toHashCode();
 	}
 	@Override
@@ -76,6 +87,7 @@ public class IncomeTaxItem extends BaseModel{
 			.append(this.limitAmount, rhs.limitAmount)
 			.append(this.lowerAmount, rhs.lowerAmount)
 			.append(this.taxValue, rhs.taxValue)
+			.append(this.deductValue, rhs.deductValue)
 			.isEquals();
 	}
 	@Override
@@ -86,6 +98,7 @@ public class IncomeTaxItem extends BaseModel{
 			.append("limitAmount", this.limitAmount)
 			.append("lowerAmount", this.lowerAmount)
 			.append("taxValue", this.taxValue)
+			.append("deductValue", this.deductValue)
 			.toString();
 	}
 

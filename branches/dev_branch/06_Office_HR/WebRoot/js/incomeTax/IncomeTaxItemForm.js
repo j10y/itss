@@ -49,6 +49,9 @@ IncomeTaxItemForm = Ext.extend(Ext.Window, {
 				name : "incomeTaxItemForm.taxValue",
 				mapping : "taxValue"
 			}, {
+				name : "incomeTaxItemForm.deductValue",
+				mapping : "deductValue"
+			}, {
 				name : "incomeTaxItemForm.taxValueTmp",
 				mapping : "taxValue",
 				convert : function(v, rec){
@@ -95,6 +98,12 @@ IncomeTaxItemForm = Ext.extend(Ext.Window, {
 						Ext.getCmp("incomeTaxItemForm.taxValue").setValue(newValue/100);
 					}
 				},
+				xtype:"numberfield"
+			}, {
+				fieldLabel : "速算扣除数",
+				name : "incomeTaxItem.deductValue",
+				id : "incomeTaxItemForm.deductValue",
+				allowBlank : false,
 				xtype:"numberfield"
 			}  ]
 		});

@@ -162,7 +162,8 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 					           {name : "incomeTax", mapping : "incomeTax.name"}, 
 					           "limitAmount", 
 					           "lowerAmount", 
-					           "taxValue"]
+					           "taxValue",
+					           "deductValue"]
 				});
 		this.store.setDefaultSort("itiId", "desc");
 		this.store.load({
@@ -205,6 +206,9 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 				renderer : function(v){
 					return v*100;
 				}
+			}, {
+				header : "速算扣除数",
+				dataIndex : "deductValue"
 			}, this.rowActions ],
 			defaults : {
 				sortable : true,

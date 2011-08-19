@@ -48,6 +48,14 @@
             access="property"
             column="taxValue"
         />
+        <property
+            name="deductValue"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="deductValue"
+        />
  
     </class>
 </hibernate-mapping>
