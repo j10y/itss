@@ -65,14 +65,17 @@ public class TestClient {
 			Service service = new Service();
 			Call call = (Call) service.createCall();
 			call.setTargetEndpointAddress(new java.net.URL(
-					"http://localhost:8080/services/FlowServiceImpl"));
-			call.setOperationName("saveProcessAndToNext");
+					"http://localhost:8080/services/LoginServiceImpl"));
+			//call.setOperationName("saveProcessAndToNext");
 //			call.setOperationName("getDbsxList");
 //			call.setOperationName("getDbsxDetail");
 //			call.setOperationName("getDycyList");
 //			call.setOperationName("getYycyList");
 //			call.setOperationName("getYycyDetail");
 //			call.setOperationName("getGdlx");
+			call.setOperationName("Login");
+			String translateText = (String) call
+			.invoke(new Object[] { "admin","1"});
 			
 			/*
 			 * invoke方法的参数是Object数组,该数组元素个数与方法参数一致
@@ -81,8 +84,8 @@ public class TestClient {
 //					.invoke(new Object[] { "1","1","部门负责人审批","70"});
 //			String translateText = (String) call
 //			.invoke(new Object[] { "1","1"});
-			String translateText = (String) call
-			.invoke(new Object[] { "1","1","3","70","部门负责人审批","审批","审批不同意","",null,"false",null});
+//			String translateText = (String) call
+//			.invoke(new Object[] { "1","1","3","70","部门负责人审批","审批","审批不同意","",null,"false",null});
 //			String translateText = (String) call
 //			.invoke(new Object[] { "1","1","0",null,null,null});
 //			String translateText = (String) call
