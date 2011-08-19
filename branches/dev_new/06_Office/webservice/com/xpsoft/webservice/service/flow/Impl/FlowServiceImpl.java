@@ -416,7 +416,10 @@ public class FlowServiceImpl implements FlowService {
 					+ "\"},";
 			json += "{label:\"结束时间\",value:\"" + errandsRegister.getEndTime()
 					+ "\"},";
-			
+			json += "{label:\"申请人\",value:\"" + errandsRegister.getAppUser().getFullname()
+			+ "\"},";
+			json += "{label:\"部门\",value:\"" + errandsRegister.getAppUser().getDepartment().getDepName()
+			+ "\"},";
 			json += "{label:\"描述\",value:" +( errandsRegister.getDescp()!=null?gson.toJson( errandsRegister.getDescp()):"\"\"") + "},";
 			json += "{label:\"请假类型\",value:\""
 					+ errandsRegister.getLeaveTypeName() + "\"},";
