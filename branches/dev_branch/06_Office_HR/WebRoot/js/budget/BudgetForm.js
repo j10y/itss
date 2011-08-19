@@ -364,9 +364,22 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			scope : this,
 			showContextMenu : (this.isEdit==true ? true:false),
 			onclick : function(e) {
-
+				
 				var budgetItemId = e.id;
 				if(budgetItemId!="0"){
+					if(e.leaf==undefined || e.leaf==null || e.leaf==false){
+
+						//初始化
+						
+						Ext.getCmp("itemFormPanel").getForm().setValues({
+							"budgetItem.name" : e.attributes.data.name,
+							"budgetItem.code" : e.attributes.data.code,
+							"budgetItem.key" : e.attributes.data.key,
+							"budgetItem.value" : "",
+							"thresholdTmp" : ""
+						});
+						return ;
+					}
 					Ext.getCmp("itemFormPanel").getForm().load({
 						deferredRender : false,
 						url : __ctxPath

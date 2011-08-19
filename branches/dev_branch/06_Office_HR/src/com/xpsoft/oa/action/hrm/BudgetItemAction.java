@@ -153,6 +153,7 @@ public class BudgetItemAction extends BaseAction {
 				Map rootNode = new HashMap();
 				rootNode.put("id", item.getBudgetItemId().toString());
 				rootNode.put("text", item.getName());
+				rootNode.put("data", item);
 				rootNode.put("iconCls", "task-folder");
 				rootNode.put("leaf", "true");
 				rootNode.put("expanded", "false");
@@ -206,6 +207,7 @@ public class BudgetItemAction extends BaseAction {
 				Map rootNode = new HashMap();
 				node.put("id", item.getBudgetItemId().toString());
 				node.put("text", item.getName());
+				node.put("data", item);
 				node.put("iconCls", "task-folder");
 				node.put("leaf", "true");
 				node.put("expanded", "false");
