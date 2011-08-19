@@ -1175,7 +1175,7 @@
 	</Items>
 	<Items id="Hrm" text="人力资源管理" iconCls="menu-hrm-briefcase" isPublic="false">
 		<Items id="HrmManage" text="人力资源档案管理" iconCls="menu-hrm">
-			<Item id="JobView" text="职位管理" iconCls="menu-job">
+			<Item id="JobView" text="岗位管理" iconCls="menu-job">
 				<Function id="_JobQuery" text="查看" iconCls="menu-list">
 					<url>/hrm/listJob.do</url>
 				</Function>
@@ -1192,7 +1192,7 @@
 					<url>/hrm/listJob.do</url>
 					<url>/hrm/multiDelJob.do</url>
 				</Function>
-				<Function id="_JobRec" text="恢复职位"
+				<Function id="_JobRec" text="恢复岗位"
 					iconCls="btn-empProfile-recovery">
 					<url>/hrm/listJob.do</url>
 					<url>/hrm/recoveryJob.do</url>

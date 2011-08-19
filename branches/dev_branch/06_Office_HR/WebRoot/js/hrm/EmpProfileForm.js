@@ -844,12 +844,14 @@ EmpProfileForm = Ext
 																	{
 																		fieldLabel : "社会保险",
 																		name : "empProfile.insurance",
-																		id : "empProfileForm.insurance"
+																		id : "empProfileForm.insurance",
+																		xtype:"numberfield"
 																	},
 																	{
 																		fieldLabel : "绩效基数",
 																		name : "empProfile.perCoefficient",
-																		id : "empProfileForm.perCoefficient"
+																		id : "empProfileForm.perCoefficient",
+																		xtype:"numberfield"
 																	} ]
 														},
 														{
@@ -990,7 +992,8 @@ EmpProfileForm = Ext
 																	{
 																		fieldLabel : "公积金",
 																		name : "empProfile.provident",
-																		id : "empProfileForm.provident"
+																		id : "empProfileForm.provident",
+																		xtype:"numberfield"
 																	} ]
 														},
 														{
