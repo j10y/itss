@@ -119,3 +119,75 @@ create table hr_sr_incomeTaxItem
 
 alter table hr_sr_incomeTaxItem add constraint FK_Reference_28 foreign key (itId)
       references hr_sr_incomeTax (id) on delete restrict on update restrict;
+alter table hr_sr_incomeTaxItem add column deductValue decimal comment '速算扣除数';
+      
+-- 2011-08-19      
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `hr_pa_datadictionary`
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_pa_datadictionary`;
+CREATE TABLE `hr_pa_datadictionary` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) DEFAULT NULL COMMENT '分类名称',
+  `parentId` bigint(20) DEFAULT NULL COMMENT '父类型ID',
+  PRIMARY KEY (`id`),
+  KEY `FK_Reference_11` (`parentId`),
+  CONSTRAINT `FK_Reference_11` FOREIGN KEY (`parentId`) REFERENCES `hr_pa_datadictionary` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='数据字典表';
+
+-- ----------------------------
+-- Records of hr_pa_datadictionary
+-- ----------------------------
+INSERT INTO hr_pa_datadictionary VALUES ('1', '数据字典基础字段', '1');
+INSERT INTO hr_pa_datadictionary VALUES ('2', '考核项目类型', '1');
+INSERT INTO hr_pa_datadictionary VALUES ('3', '考核频度', '1');
+INSERT INTO hr_pa_datadictionary VALUES ('4', '考核方式', '1');
+INSERT INTO hr_pa_datadictionary VALUES ('5', '销售类', '2');
+INSERT INTO hr_pa_datadictionary VALUES ('6', '非销售类', '2');
+INSERT INTO hr_pa_datadictionary VALUES ('7', '一个月', '3');
+INSERT INTO hr_pa_datadictionary VALUES ('8', '两个月', '3');
+INSERT INTO hr_pa_datadictionary VALUES ('9', '一个季度', '3');
+INSERT INTO hr_pa_datadictionary VALUES ('10', '半年', '3');
+INSERT INTO hr_pa_datadictionary VALUES ('11', '一年', '3');
+INSERT INTO hr_pa_datadictionary VALUES ('12', '定性考核', '4');
+INSERT INTO hr_pa_datadictionary VALUES ('13', '定量考核', '4');
+
+-- ----------------------------
+-- Table structure for `hr_pa_kpiitem2user`
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_pa_kpiitem2user`;
+CREATE TABLE `hr_pa_kpiitem2user` (
+  `id` bigint(20) NOT NULL,
+  `pbcId` bigint(20) DEFAULT NULL COMMENT '考核模板ID',
+  `piId` bigint(20) DEFAULT NULL COMMENT '考核指标ID',
+  `weight` double DEFAULT NULL COMMENT '权值',
+  `result` double DEFAULT NULL COMMENT '考核最后得分',
+  PRIMARY KEY (`id`),
+  KEY `FK_Reference_31` (`pbcId`),
+  KEY `FK_Reference_32` (`piId`),
+  CONSTRAINT `FK_Reference_31` FOREIGN KEY (`pbcId`) REFERENCES `hr_pa_kpipbc2user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='每个人所属的KPIPBC的内容，来源于KPIItem表，是该表的数据拷贝。\r\n\r\n不同岗位所属的PB';
+
+-- ----------------------------
+-- Records of hr_pa_kpiitem2user
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `hr_pa_kpipbc2user`
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_pa_kpipbc2user`;
+CREATE TABLE `hr_pa_kpipbc2user` (
+  `id` bigint(20) NOT NULL,
+  `pbcName` varchar(150) DEFAULT NULL,
+  `fromPBC` varchar(200) DEFAULT NULL COMMENT '记录来源于那些PBC\r\n            \r\n            内容为用‘,’分割的kbiPBC表的id字符串',
+  `belongUser` bigint(20) DEFAULT NULL,
+  `frequency` bigint(20) DEFAULT NULL COMMENT '频度',
+  `createPerson` bigint(20) DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `publishStatus` int(11) DEFAULT NULL COMMENT '发布状态\r\n            0：草稿\r\n            1：审核中\r\n            2：退回\r\n            3：审核完毕，发布\r\n            4：删除标记',
+  `totalScore` float DEFAULT NULL,
+  `modifyDate` datetime DEFAULT NULL,
+  `modifyPerson` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='每个人所属的最终PBC\r\n\r\n该表内容来源于根据每个人所属的不同的岗位的PBC合并后的结果。';
