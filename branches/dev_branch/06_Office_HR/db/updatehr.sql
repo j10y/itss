@@ -76,7 +76,7 @@ create table hr_sr_rewardsPunishments
 
 alter table hr_sr_rewardsPunishments comment '人员奖惩表';
 
-alter table hr_sr_rewardsPunishments add constraint FK_Reference_30 foreign key (profileId)
+alter table hr_sr_rewardsPunishments add constraint FK_Reference_30 foreign key (profileId) REFERENCES `emp_profile` (`profileId`);
 
 insert into dictionary(itemName,itemValue) values("奖惩类型","奖励");
 insert into dictionary(itemName,itemValue) values("奖惩类型","惩罚");
