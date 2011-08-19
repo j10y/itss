@@ -1497,22 +1497,90 @@
 			 -->
 		</Items>
 		<Items id="KpiManage" text="绩效管理" isPublic="false">
-			<Item id="HrPaPerformanceindexView" text="考核项目管理" iconCls="">
-				<Function id="_PaDel" text="删除" iconCls="menu-del">
-					<url>/kpi/multiDelHrPaPerformanceindex.do</url>
-				</Function>
-				<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
-					<url>/kpi/editHrPaPerformanceindex.do</url>
-				</Function>
-			</Item>
-			<Item id="HrPaAssessmentcriteriaView" text="考核标准管理" iconCls="">
-				<Function id="_AcDel" text="删除" iconCls="menu-del">
-					<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
-				</Function>
-				<Function id="_AcEdit" text="编辑" iconCls="menu-edit">
-					<url>/kpi/editHrPaAssessmentcriteria.do</url>
-				</Function>
-			</Item>
+			<Items id="HrPaPerformanceindexManage" text="考核项目管理">
+				<Item id="DraftHrPaPerformanceindexView" text="草稿管理">
+					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaPerformanceindex.do</url>
+						<url>/kpi/saveHrPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+						<url>/kpi/editHrPaPerformanceindex.do</url>
+					</Function>
+				</Item>
+				<Item id="InAuditHrPaPerformanceindexView" text="审核中项目">
+				</Item>
+				<Item id="PublishHrPaPerformanceindexView" text="已发布项目">
+					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaPerformanceindex.do</url>
+						<url>/kpi/saveHrPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+						<url>/kpi/editHrPaPerformanceindex.do</url>
+					</Function>
+				</Item>
+			</Items>
+			<Items id="HrPaAssessmentcriteriaManage" text="考核标准管理">
+				<Item id="DraftHrPaAssessmentcriteriaView" text="草稿管理">
+					<Function id="_AcAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaAssessmentcriteria.do</url>
+						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_AcDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_AcEdit" text="编辑" iconCls="menu-edit">
+						<url>/kpi/editHrPaAssessmentcriteria.do</url>
+					</Function>
+				</Item>
+				<Item id="InAuditHrPaAssessmentcriteriaView" text="审核中标准">
+				</Item>
+				<Item id="PublishHrPaAssessmentcriteriaView" text="已发布标准">
+					<Function id="_AcAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaAssessmentcriteria.do</url>
+						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_AcDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_AcEdit" text="编辑" iconCls="menu-edit">
+						<url>/kpi/editHrPaAssessmentcriteria.do</url>
+					</Function>
+				</Item>
+			</Items>
+			<Items id="HrPaKpipbcManage" text="考核模板管理">
+				<Item id="DraftHrPaKpipbcView" text="草稿管理">
+					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaKpipbc.do</url>
+						<url>/kpi/saveHrPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+						<url>/kpi/editHrPaKpipbc.do</url>
+					</Function>
+				</Item>
+				<Item id="InAuditHrPaKpipbcView" text="审核中模板">
+				</Item>
+				<Item id="PublishHrPaKpipbcView" text="已发布模板">
+					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaKpipbc.do</url>
+						<url>/kpi/saveHrPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+						<url>/kpi/editHrPaKpipbc.do</url>
+					</Function>
+				</Item>
+			</Items>
 		</Items>
 		<Items id="TaskScheduler" text="计算任务设定" isPublic="false">
 			<Item id="TaskSchedulerView" text="计算任务设定" iconCls="" isPublic="false">
