@@ -1,24 +1,24 @@
-HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
+InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		if(a == null) {
 			a = {};
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		HrPaPerformanceindexView.superclass.constructor.call(this, {
-			id : "HrPaPerformanceindexView",
-			title : "考核项目管理",
+		InAuditHrPaAssessmentcriteriaView.superclass.constructor.call(this, {
+			id : "InAuditHrPaAssessmentcriteriaView",
+			title : "考核标准管理",
+			region : "center",
+			layout : "border",
 			items : [
 				this.searchPanel,
 				this.gridPanel
 			]
 		});
 	},
-	typeId : null,
 	searchPanel : null,
 	gridPanel : null,
 	store : null,
-	topbar : null,
 	initComponents : function() {
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
@@ -41,10 +41,16 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：考核项目名称"
+					text : "查询条件：考核标准名称"
 				}, {
-					fieldLabel : "考核项目名称：",
-					name : "Q_paName_S_LK",
+					fieldLabel : "考核标准关名称",
+					name : "Q_acName_S_LK",
+					xtype : "textfield"
+				}, {
+					text : "考核标准关键字"
+				}, {
+					fieldLabel : "考核标准关键字",
+					name : "Q_acKey_S_LK",
 					xtype : "textfield"
 				}, {
 					xtype : "button",
@@ -54,7 +60,7 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_NEQ=4",
+			url : __ctxPath + "/kpi/listHrPaAssessmentcriteria.do?Q_publishStatus_N_EQ=1",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -64,10 +70,8 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					name : "id",
 					type : "int"
 				},
-				"paName",
-				"type",
-				"frequency",
-				"mode",
+				"acName",
+				"acKey",
 				"publishStatus"
 			]
 		});
@@ -79,17 +83,10 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_PaDel")) {
-			b.push({
-				iconCls : "btn-del",
-				qtip : "删除",
-				style : "margin:0 3px 0 3px"
-			});
-		}
-		if(isGranted("_PaEdit")) {
+		if(isGranted("_AcEdit")) {
 			b.push({
 				iconCls : "btn-edit",
-				qtip : "编辑",
+				qtip : "查看",
 				style : "margin:0 3px 0 3px"
 			});
 		}
@@ -108,27 +105,11 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "考核项目名称",
-					dataIndex : "paName"
+					header : "考核标准名称",
+					dataIndex : "acName"
 				}, {
-					header : "考核项目类型",
-					dataIndex : "type",
-					renderer : function(d) {
-						return d.name;
-					}
-				}, {
-					header : "考核频度",
-					dataIndex : "frequency",
-					renderer : function(d) {
-						return d.name;
-					}
-				}, {
-					header : "考核方式",
-					dataIndex : "mode",
-					renderer : function(d) {
-						return d.name;
-					}
-					
+					header : "考核标准关键字",
+					dataIndex : "acKey"
 				}, {
 					header : "状态",
 					dataIndex : "publishStatus",
@@ -158,29 +139,14 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 				width : 100
 			}
 		});
-		this.topbar = new Ext.Toolbar({
-			height : 30,
-			bodyStyle : "text-align:left",
-			items : []
-		});
-		this.topbar.add(new Ext.Button({
-			iconCls : "btn-add",
-			text : "增加考核项目",
-			handler : this.addHrPaPerformanceindex
-		}));
-		this.topbar.add(new Ext.Button({
-			iconCls : "btn-del",
-			text : "删除考核项目",
-			handler : this.delHrPaPerformanceindex
-		}));
 		this.gridPanel = new Ext.grid.GridPanel({
-			id : "HrPaPerformanceindexGrid",
+			id : "InAuditHrPaAssessmentcriteriaGrid",
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
 			stripeRows : true,
 			tbar : this.topbar,
-			closable : true,
+			closeable : true,
 			store : this.store,
 			trackMouseOver : true,
 			disableSelection : false,
@@ -203,9 +169,9 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_PaEdit")) {
-					new HrPaPerformanceindexForm({
-						piId : e.data.id
+				if(isGranted("_AcEdit")) {
+					new HrPaAssessmentcriteriaFormView({
+						acId : e.data.id
 					}).show();
 				}
 			});
@@ -216,7 +182,7 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_NEQ=4",
+				url : __ctxPath + "/kpi/listHrPaAssessmentcriteria.do?Q_publishStatus_N_EQ=1",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
@@ -224,60 +190,18 @@ HrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			});
 		}
 	},
-	addHrPaPerformanceindex : function() {
-		new HrPaPerformanceindexForm().show();
-	},
-	delHrPaPerformanceindex : function() {
-		var e = Ext.getCmp("HrPaPerformanceindexGrid");
-		var c = e.getSelectionModel().getSelections();
-		if(c.length == 0) {
-			Ext.ux.Toast.msg("提示信息","请选择要删除的记录！");
-			return ;
-		}
-		var f = Array();
-		for(var d = 0; d < c.length; d++) {
-			f.push(c[d].data.id);
-		}
-		HrPaPerformanceindexView.remove(f);
-	},
-	editHrPaPerformanceindex : function(a) {
-		new HrPaPerformanceindexForm({
-			piId : a.data.id
+	editHrPaAssessmentcriteria : function(a) {
+		new HrPaAssessmentcriteriaFormView({
+			acId : a.data.id
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
-			case "btn-del":
-				this.delHrPaPerformanceindex();
-				break ;
 			case "btn-edit":
-				this.editHrPaPerformanceindex(a);
+				this.editHrPaAssessmentcriteria(a);
 				break ;
 			default:
 				break ;
 		}
 	}
 });
-HrPaPerformanceindexView.remove = function(b) {
-	var a = Ext.getCmp("HrPaPerformanceindexGrid");
-	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
-		if(c == "yes") {
-			Ext.Ajax.request({
-				url : __ctxPath + "/kpi/multiDelHrPaPerformanceindex.do",
-				params : {
-					ids : b
-				},
-				method : "post",
-				success : function() {
-					Ext.ux.Toast.msg("提示信息", "成功删除所选记录！");
-					a.getStore().reload({
-						params : {
-							start : 0,
-							limit : 25
-						}
-					});
-				}
-			});
-		}
-	});
-}

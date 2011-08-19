@@ -128,12 +128,21 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在提交数据……",
 				success : function(c, d) {
 					Ext.ux.Toast.msg("提示信息","保存草稿成功！");
-					Ext.getCmp("HrPaAssessmentcriteriaView").gridPanel.store.reload({
-						params : {
-							start : 0,
-							limit : 25
-						}
-					});
+					if(b.from == "draft") {
+						Ext.getCmp("DraftHrPaAssessmentcriteriaView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					} else if(b.from == "publish") {
+						Ext.getCmp("PublishHrPaAssessmentcriteriaView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					}
 					b.close();
 				},
 				failure : function(c, d) {
@@ -155,13 +164,22 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 				method : "post",
 				waitMsg : "正在提交数据……",
 				success : function(c, d) {
-					Ext.ux.Toast.msg("提示信息","发布成功！");
-					Ext.getCmp("HrPaAssessmentcriteriaView").gridPanel.store.reload({
-						params : {
-							start : 0,
-							limit : 25
-						}
-					});
+					Ext.ux.Toast.msg("提示信息","成功提交审核！");
+					if(b.from == "draft") {
+						Ext.getCmp("DraftHrPaAssessmentcriteriaView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					} else if(b.from == "publish") {
+						Ext.getCmp("PublishHrPaAssessmentcriteriaView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					}
 					b.close();
 				},
 				failure : function(c, d) {

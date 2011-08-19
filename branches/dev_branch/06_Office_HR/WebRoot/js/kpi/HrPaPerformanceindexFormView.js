@@ -1,4 +1,4 @@
-HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
+HrPaPerformanceindexFormView = Ext.extend(Ext.Window, {
 	formPanel : null,
 	constructor : function(a) {
 		if(a == null) {
@@ -6,8 +6,8 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		HrPaPerformanceindexForm.superclass.constructor.call(this, {
-			id : "HrPaPerformanceindexFormWin",
+		HrPaPerformanceindexFormView.superclass.constructor.call(this, {
+			id : "HrPaPerformanceindexFormViewWin",
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
@@ -23,7 +23,6 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/kpi/saveHrPaPerformanceindex.do",
 			id : "HrPaPerformanceindexForm",
 			defaults : {
 				anchor : "98%,98%"
@@ -31,15 +30,11 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			defaultType : "textfield",
 			items : [
 				{
-					name : "hrPaPerformanceindex.id",
-					id : "piId",
-					xtype : "hidden",
-					value : this.piId == null ? "" : this.piId
-				}, {
 					fieldLabel : "考核项目名称",
 					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.paName",
 					id : "paName",
+					readOnly : true,
 					allowBlank : false,
 					blankText : "考核项目名称不能为空！"
 				}, {
@@ -159,23 +154,15 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.paDesc",
 					id : "paDesc",
-					xtype : "textarea"
+					xtype : "textarea",
+					readOnly : true
 				}, {
 					fieldLabel : "备注信息",
 					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.remark",
 					id : "remark",
-					xtype : "textarea"
-				}, {
-					fieldLabel : "创建时间",
-					name : "hrPaPerformanceindex.createDate",
-					id : "createDate",
-					xtype : "hidden"
-				}, {
-					fieldLabel : "创建人",
-					name : "hrPaPerformanceindex.createPerson",
-					id : "createPerson",
-					xtype : "hidden"
+					xtype : "textarea",
+					readOnly : true
 				}
 			]
 		});
@@ -198,45 +185,6 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 				},
 				failure : function() {
 					
-				}
-			});
-		}
-		this.buttons = [
-			{
-				text : "取消",
-				handler : this.cancel.createCallback(this)
-			}, {
-				text : "下一步",
-				handler : this.next.createCallback(this.formPanel, this)
-			}
-		];
-	},
-	cancel : function(a) {
-		a.close();
-	},
-	next : function(a, b) {
-		if(a.getForm().isValid()) {
-			a.getForm().submit({
-				method : "post",
-				waitMsg : "正在提交数据…",
-				success : function(c, d) {
-					var paModeValue = Ext.getCmp("modeName").getValue();
-					var e = Ext.util.JSON.decode(d.response.responseText);
-					Ext.getCmp("HrPaPerformanceindexFormWin").close();
-					new HrPaPerformanceindexscoreView({
-						piId : e.data.piId,
-						paMode : paModeValue,
-						from : b.from
-					}).show();
-				},
-				failure : function(c, d) {
-					Ext.MessageBox.show({
-						title : "操作信息",
-						msg : "信息录入有误，请核实！",
-						buttons : Ext.MessageBox.OK,
-						icon : Ext.MessageBox.ERROR
-					});
-					return ;
 				}
 			});
 		}

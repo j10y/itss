@@ -1,21 +1,20 @@
-HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
+PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		if(a == null) {
 			a = {};
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		HrPaAssessmentcriteriaView.superclass.constructor.call(this, {
-			id : "HrPaAssessmentcriteriaView",
-			title : "考核标准管理",
-			region : "center",
-			layout : "border",
+		PublishHrPaPerformanceindexView.superclass.constructor.call(this, {
+			id : "PublishHrPaPerformanceindexView",
+			title : "考核项目管理",
 			items : [
 				this.searchPanel,
 				this.gridPanel
 			]
 		});
 	},
+	typeId : null,
 	searchPanel : null,
 	gridPanel : null,
 	store : null,
@@ -42,16 +41,10 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：考核标准名称"
+					text : "查询条件：考核项目名称"
 				}, {
-					fieldLabel : "考核标准关名称",
-					name : "Q_acName_S_LK",
-					xtype : "textfield"
-				}, {
-					text : "考核标准关键字"
-				}, {
-					fieldLabel : "考核标准关键字",
-					name : "Q_acKey_S_LK",
+					fieldLabel : "考核项目名称：",
+					name : "Q_paName_S_LK",
 					xtype : "textfield"
 				}, {
 					xtype : "button",
@@ -61,7 +54,7 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/kpi/listHrPaAssessmentcriteria.do?Q_publishStatus_N_NEQ=2",
+			url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_EQ=3",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -71,8 +64,10 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 					name : "id",
 					type : "int"
 				},
-				"acName",
-				"acKey",
+				"paName",
+				"type",
+				"frequency",
+				"mode",
 				"publishStatus"
 			]
 		});
@@ -84,14 +79,14 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_AcDel")) {
+		if(isGranted("_PaDel")) {
 			b.push({
 				iconCls : "btn-del",
 				qtip : "删除",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-		if(isGranted("_AcEdit")) {
+		if(isGranted("_PaEdit")) {
 			b.push({
 				iconCls : "btn-edit",
 				qtip : "编辑",
@@ -113,11 +108,27 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "考核标准名称",
-					dataIndex : "acName"
+					header : "考核项目名称",
+					dataIndex : "paName"
 				}, {
-					header : "考核标准关键字",
-					dataIndex : "acKey"
+					header : "考核项目类型",
+					dataIndex : "type",
+					renderer : function(d) {
+						return d.name;
+					}
+				}, {
+					header : "考核频度",
+					dataIndex : "frequency",
+					renderer : function(d) {
+						return d.name;
+					}
+				}, {
+					header : "考核方式",
+					dataIndex : "mode",
+					renderer : function(d) {
+						return d.name;
+					}
+					
 				}, {
 					header : "状态",
 					dataIndex : "publishStatus",
@@ -125,11 +136,17 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 						if(d == 0) {        //草稿
 							return "<font color='red'>草稿</font>";
 						}
-						if(d == 1) {        //已发布
+						if(d == 1) {        //审核中
+							return "<font color='red'>审核中</font>";
+						}
+						if(d == 2) {        //退回
+							return "<font color='red'>退回</font>";
+						}
+						if(d == 3) {        //审核完毕，发布
 							return "<font color='green'>已发布</font>";
 						}
-						if(d == 2) {        //删除
-							return "<font color='red'>删除</font>";
+						if(d == 4) {        //删除标记
+							return "<font color='red'>已删除</font>";
 						}
 					}
 				},
@@ -148,22 +165,22 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 		});
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-add",
-			text : "增加考核标准",
-			handler : this.addHrPaAssessmentcriteria
+			text : "增加考核项目",
+			handler : this.addHrPaPerformanceindex
 		}));
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-del",
-			text : "删除考核标准",
-			handler : this.delHrPaAssessmentcriteria
+			text : "删除考核项目",
+			handler : this.delHrPaPerformanceindex
 		}));
 		this.gridPanel = new Ext.grid.GridPanel({
-			id : "hrPaAssessmentcriteriaGrid",
+			id : "PublishHrPaPerformanceindexGrid",
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
 			stripeRows : true,
 			tbar : this.topbar,
-			closeable : true,
+			closable : true,
 			store : this.store,
 			trackMouseOver : true,
 			disableSelection : false,
@@ -186,9 +203,10 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_AcEdit")) {
-					new HrPaAssessmentcriteriaForm({
-						acId : e.data.id
+				if(isGranted("_PaEdit")) {
+					new HrPaPerformanceindexForm({
+						piId : e.data.id,
+						from : "publish"
 					}).show();
 				}
 			});
@@ -199,7 +217,7 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/kpi/listHrPaAssessmentcriteria.do?Q_publishStatus_N_NEQ=2",
+				url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_EQ=3",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
@@ -207,46 +225,49 @@ HrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			});
 		}
 	},
-	addHrPaAssessmentcriteria : function() {
-		new HrPaAssessmentcriteriaForm().show();
+	addHrPaPerformanceindex : function() {
+		new HrPaPerformanceindexForm({
+			from : "publish"
+		}).show();
 	},
-	delHrPaAssessmentcriteria : function() {
-		var e = Ext.getCmp("hrPaAssessmentcriteriaGrid");
+	delHrPaPerformanceindex : function() {
+		var e = Ext.getCmp("PublishHrPaPerformanceindexGrid");
 		var c = e.getSelectionModel().getSelections();
 		if(c.length == 0) {
-			Ext.ux.Toast.msg("提示信息", "请选择要删除的记录！");
+			Ext.ux.Toast.msg("提示信息","请选择要删除的记录！");
 			return ;
 		}
 		var f = Array();
 		for(var d = 0; d < c.length; d++) {
 			f.push(c[d].data.id);
 		}
-		HrPaAssessmentcriteriaView.remove(f);
+		PublishHrPaPerformanceindexView.remove(f);
 	},
-	editHrPaAssessmentcriteria : function(a) {
-		new HrPaAssessmentcriteriaForm({
-			acId : a.data.id
+	editHrPaPerformanceindex : function(a) {
+		new HrPaPerformanceindexForm({
+			piId : a.data.id,
+			from : publish
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
 			case "btn-del":
-				this.delHrPaAssessmentcriteria();
+				this.delHrPaPerformanceindex();
 				break ;
 			case "btn-edit":
-				this.editHrPaAssessmentcriteria(a);
+				this.editHrPaPerformanceindex(a);
 				break ;
 			default:
 				break ;
 		}
 	}
 });
-HrPaAssessmentcriteriaView.remove = function(b) {
-	var a = Ext.getCmp("hrPaAssessmentcriteriaGrid");
+PublishHrPaPerformanceindexView.remove = function(b) {
+	var a = Ext.getCmp("PublishHrPaPerformanceindexGrid");
 	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
 		if(c == "yes") {
 			Ext.Ajax.request({
-				url : __ctxPath + "/kpi/multiDelHrPaAssessmentcriteria.do",
+				url : __ctxPath + "/kpi/multiDelHrPaPerformanceindex.do",
 				params : {
 					ids : b
 				},

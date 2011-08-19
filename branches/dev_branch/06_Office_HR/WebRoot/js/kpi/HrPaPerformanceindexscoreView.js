@@ -162,12 +162,21 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		this.rowActions.on("action", this.onRowAction, this);
 	},
 	cancel : function(a) {
-		Ext.getCmp("HrPaPerformanceindexView").gridPanel.store.reload({
-			params : {
-				start : 0,
-				limit : 25
-			}
-		});
+		if(a.from == "draft") {
+			Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
+				params : {
+					start : 0,
+					limit : 25
+				}
+			});
+		} else if(a.from == "publish") {
+			Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
+				params : {
+					start : 0,
+					limit : 25
+				}
+			});
+		}
 		a.close();
 	},
 	saveToPublish : function(a, b) {
@@ -180,13 +189,22 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 			success : function(d) {
 				var e = Ext.util.JSON.decode(d.responseText);
 				if(e.flag) {
-					Ext.ux.Toast.msg("提示信息","发布成功！");
-					Ext.getCmp("HrPaPerformanceindexView").gridPanel.store.reload({
-						params : {
-							start : 0,
-							limit : 25
-						}
-					});
+					Ext.ux.Toast.msg("提示信息","成功提交审核！");
+					if(b.from == "draft") {
+						Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					} else if(b.from == "publish") {
+						Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					}
 					b.close();
 				} else {
 					Ext.MessageBox.show({
