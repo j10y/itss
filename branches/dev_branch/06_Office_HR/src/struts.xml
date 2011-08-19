@@ -412,6 +412,12 @@
 		<action name="*HrPaAssessmentcriteria" class="HrPaAssessmentcriteriaAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*HrPaKpipbc" class="HrPaKpipbcAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaKpiitem" class="HrPaKpiitemAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	<package name="scheduler" extends="struts-default" namespace="/scheduler">
 		<action name="*TaskScheduler" class="TaskSchedulerAction" method="{1}">
