@@ -20,7 +20,7 @@ public class HrPaPerformanceindexDaoImpl extends BaseDaoImpl<HrPaPerformanceinde
 	 * 发布考核项目
 	 * */
 	public void saveToPublish(long piId) {
-		final String hql = "update HrPaPerformanceindex set publishStatus=3 where id=?";
+		final String hql = "update HrPaPerformanceindex set publishStatus=1 where id=?";
 		final long item = piId;
 		
 		this.getHibernateTemplate().execute(
