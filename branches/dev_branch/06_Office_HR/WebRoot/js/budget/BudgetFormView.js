@@ -15,8 +15,9 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 	},
 	initUIComponents : function() {
 		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
-		var b = new TreeSelector("budget.belongDept.depName", a, "所属部门", "budget.belongDept.depId",
+		var b = new TreeSelector("budgetAlarm.belongDept.depName", a, "所属部门", "budgetAlarm.belongDept.depId",
 				false);
+		b.readOnly=true;
 		
 		/**
 		 * 预算主panel
@@ -41,66 +42,70 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 			reader : new Ext.data.JsonReader({
 				root : "data"
 			}, [ {
-				name : "budget.budgetId",
+				name : "budgetAlarm.budgetId",
 				mapping : "budgetId"
 			}, {
-				name : "budget.belongDept.depId",
+				name : "budgetAlarm.belongDept.depId",
 				mapping : "belongDept.depId"
 			}, {
-				name : "budget.belongDept.depName",
+				name : "budgetAlarm.belongDept.depName",
 				mapping : "belongDept.depName"
 			}, {
-				name : "budget.depId",
+				name : "budgetAlarm.depId",
 				mapping : "belongDept.depId"
 			}, {
-				name : "budget.name",
+				name : "budgetAlarm.name",
 				mapping : "name"
 			}, {
-				name : "budget.beginDate",
+				name : "budgetAlarm.beginDate",
 				mapping : "beginDate"
 			}, {
-				name : "budget.endDate",
+				name : "budgetAlarm.endDate",
 				mapping : "endDate"
 			}, {
-				name : "budget.remark",
+				name : "budgetAlarm.remark",
 				mapping : "remark"
 			} ]),
 			items : [ {
 				name : "budget.budgetId",
-				id : "budget.budgetId",
+				id : "budgetAlarm.budgetId",
 				xtype : "hidden",
 				value : this.budgetId == null ? "" : this.budgetId
 			}, {
 				xtype : "hidden",
 				name : "budget.belongDept.depId",
-				id : "budget.belongDept.depId"
+				id : "budgetAlarm.belongDept.depId"
 			}, {
 				fieldLabel : "预算名称",
 				allowBlank : false,
 				name : "budget.name",
-				id : "budget.name"
+				readOnly:true,
+				id : "budgetAlarm.name"
 			}, b 
 			, {
 				fieldLabel : "起始时间",
 				allowBlank : false,
 				name : "budget.beginDate",
-				id : "budget.beginDate",
+				id : "budgetAlarm.beginDate",
 				xtype:"datefield",
 				format:"Y-m-d",
+				readOnly:true,
 				length:50
 			},{
 				fieldLabel : "结束时间",
 				allowBlank : false,
 				name : "budget.endDate",
-				id : "budget.endDate",
+				id : "budgetAlarm.endDate",
 				xtype:"datefield",
 				format:"Y-m-d",
+				readOnly:true,
 				length:50
 			}, {
 				xtype:"textarea",
 				fieldLabel : "备注信息",
 				name : "budget.remark",
-				id : "budget.remark",
+				id : "budgetAlarm.remark",
+				readOnly:true,
 				colspan:2
 			}]
 			

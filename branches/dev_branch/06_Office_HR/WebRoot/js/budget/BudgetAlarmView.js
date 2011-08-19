@@ -200,13 +200,13 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 				emptyMsg : "当前没有记录"
 			})
 		});
-		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
-			f.getSelectionModel().each(function(e) {
-				new BudgetForm({
-					budgetId : e.data.budgetId
-				}).show();
-			});
-		});
+//		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
+//			f.getSelectionModel().each(function(e) {
+//				new BudgetForm({
+//					budgetId : e.data.budgetId
+//				}).show();
+//			});
+//		});
 		this.rowActions.on("action", this.onRowAction, this);
 	},
 	search : function(a) {

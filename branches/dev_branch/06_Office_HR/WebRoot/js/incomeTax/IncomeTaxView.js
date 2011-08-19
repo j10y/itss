@@ -41,19 +41,19 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 				name : "itId",
 				mapping : "itId"
 			}, {
-				name : "name",
+				name : "incomeTaxForm.name",
 				mapping : "name"
 			}, {
-				name : "beginDate",
+				name : "incomeTaxForm.beginDate",
 				mapping : "beginDate"
 			}, {
-				name : "endDate",
+				name : "incomeTaxForm.endDate",
 				mapping : "endDate"
 			}, {
-				name : "remark",
+				name : "incomeTaxForm.remark",
 				mapping : "remark"
 			}, {
-				name : "basicAmount",
+				name : "incomeTaxForm.basicAmount",
 				mapping : "basicAmount"
 			} ]),
 			items : [
@@ -61,13 +61,13 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 						xtype : "textfield",
 						fieldLabel : "名称",
 						name : "incomeTax.name",
-						id : "name",
+						id : "incomeTaxForm.name",
 						allowBlank : false
 					},
 					{
 						fieldLabel : "个税起征点",
 						name : "incomeTax.basicAmount",
-						id : "basicAmount",
+						id : "incomeTaxForm.basicAmount",
 						allowBlank : false,
 						xtype:"numberfield"
 					},
@@ -75,7 +75,7 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 						xtype : "datefield",
 						fieldLabel : "开始执行时间",
 						name : "incomeTax.beginDate",
-						id : "beginDate",
+						id : "incomeTaxForm.beginDate",
 						allowBlank : false,
 						format:"Y-m-d",
 						length:50
@@ -84,7 +84,7 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 						xtype : "datefield",
 						fieldLabel : "执行结束时间",
 						name : "incomeTax.endDate",
-						id : "endDate",
+						id : "incomeTaxForm.endDate",
 						allowBlank : false,
 						format:"Y-m-d",
 						length:50
@@ -92,7 +92,7 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 						xtype : "textarea",
 						fieldLabel : "描述信息",
 						name : "incomeTax.remark",
-						id : "remark",
+						id : "incomeTaxForm.remark",
 						colspan:2
 					}, 
 					{
@@ -200,8 +200,11 @@ IncomeTaxView = Ext.extend(Ext.Panel, {
 				header : "下限",
 				dataIndex : "lowerAmount"
 			}, {
-				header : "比例",
-				dataIndex : "taxValue"
+				header : "税率(%)",
+				dataIndex : "taxValue",
+				renderer : function(v){
+					return v*100;
+				}
 			}, this.rowActions ],
 			defaults : {
 				sortable : true,

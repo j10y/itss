@@ -1447,7 +1447,7 @@
 		</Item>
 		<Items id="Budget" text="预算管理" iconCls="menu-budget"
 			isPublic="false">
-			<Item id="BudgetView" text="预算管理" iconCls="menu-budget">
+			<Item id="BudgetView" text="预算草稿" iconCls="menu-budget">
 			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
@@ -1465,11 +1465,17 @@
 			       <url>/budget/multiDelBudget.do</url>
 			    </Function>
 			</Item>
+			<Item id="BudgetStatusView" text="预算状态" iconCls="menu-budget">
+			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
+			       <url>/budget/listBudget.do</url>
+			    </Function>
+			</Item>
 			<Item id="BudgetAlarmView" text="预算预警" iconCls="menu-budget">
 			    <Function id="_BudgetAlarmQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listAlarmBudget.do</url>
 			    </Function>
 			</Item>
+			<!-- 
 			<Item id="RealExecutionView" text="执行跟踪" iconCls="menu-budget">
 			    <Function id="_RealExecutionQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listRealExecution.do</url>
@@ -1488,6 +1494,7 @@
 			       <url>/budget/multiDelRealExecution.do</url>
 			    </Function>
 			</Item>
+			 -->
 		</Items>
 		<Items id="KpiManage" text="绩效管理" isPublic="false">
 			<Item id="HrPaPerformanceindexView" text="考核项目管理" iconCls="">

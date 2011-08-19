@@ -37,25 +37,25 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 				name : "rpId",
 				mapping : "rpId"
 			}, {
-				name : "appUser.userId",
+				name : "rewardsPunishmentsForm.appUser.userId",
 				mapping : "appUser.userId"
 			}, {
-				name : "empProfile.profileId",
+				name : "rewardsPunishmentsForm.empProfile.profileId",
 				mapping : "empProfile.profileId"
 			}, {
-				name : "appUserCombo",
+				name : "rewardsPunishmentsForm.appUserCombo",
 				mapping : "appUser.fullname"
 			}, {
-				name : "rpType.dicId",
+				name : "rewardsPunishmentsForm.rpType.dicId",
 				mapping : "rpType.dicId"
 			}, {
-				name : "rpTypeCombo",
+				name : "rewardsPunishmentsForm.rpTypeCombo",
 				mapping : "rpTypeStr"
 			}, {
-				name : "amount",
+				name : "rewardsPunishmentsForm.amount",
 				mapping : "amount"
 			}, {
-				name : "remark",
+				name : "rewardsPunishmentsForm.remark",
 				mapping : "remark"
 			} ]),
 			items : [ {
@@ -65,11 +65,11 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 				value : this.rpId == null ? "" : this.rpId
 			}, {
 				name : "rewardsPunishments.appUser.userId",
-				id : "appUser.userId",
+				id : "rewardsPunishmentsForm.appUser.userId",
 				xtype : "hidden"
 			}, {
 				name : "rewardsPunishments.empProfile.profileId",
-				id : "empProfile.profileId",
+				id : "rewardsPunishmentsForm.empProfile.profileId",
 				xtype : "hidden"
 			}, {
 				fieldLabel : "受奖惩人",
@@ -77,7 +77,7 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 				mode : "remote",
 				allowBlank : false,
 				editable : false,
-				id : "appUserCombo",
+				id : "rewardsPunishmentsForm.appUserCombo",
 				valueField : "fullname",
 				displayField : "fullname",
 				triggerAction : "all",
@@ -91,8 +91,8 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 				}),
 				listeners : {
 					select : function(l, h, k) {
-						Ext.getCmp("empProfile.profileId").setValue(h.data.profileId);
-						Ext.getCmp("appUser.userId").setValue(h.data.userId);
+						Ext.getCmp("rewardsPunishmentsForm.empProfile.profileId").setValue(h.data.profileId);
+						Ext.getCmp("rewardsPunishmentsForm.appUser.userId").setValue(h.data.userId);
 					}
 				},
 				bbar : new Ext.PagingToolbar({
@@ -104,12 +104,12 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 				})
 			}, {
 				name : "rewardsPunishments.rpType.dicId",
-				id : "rpType.dicId",
+				id : "rewardsPunishmentsForm.rpType.dicId",
 				xtype : "hidden"
 			}, {
 				fieldLabel : "奖惩类型",
 				hiddenName:"rewardsPunishments.rpTypeStr",
-				id : "rpTypeCombo",
+				id : "rewardsPunishmentsForm.rpTypeCombo",
 				maxHeight : 200,
 				xtype : "combo",
 				allowBlank : false,
@@ -144,19 +144,20 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 //						}
 //					},
 					select : function(l, h, k) {
-						Ext.getCmp("rpType.dicId").setValue(h.data.dicId);
+						Ext.getCmp("rewardsPunishmentsForm.rpType.dicId").setValue(h.data.dicId);
 					}
 				}
 			}, {
 				fieldLabel : "金额",
 				name : "rewardsPunishments.amount",
-				id : "amount",
-				allowBlank : false
+				id : "rewardsPunishmentsForm.amount",
+				allowBlank : false,
+				xtype:"numberfield"
 			}, {
 				xtype:"textarea",
 				fieldLabel : "备注",
 				name : "rewardsPunishments.remark",
-				id : "remark"
+				id : "rewardsPunishmentsForm.remark"
 			} ]
 		});
 		if (this.rpId != null && this.rpId != "undefined") {

@@ -17,6 +17,29 @@ BudgetForm = Ext.extend(Ext.Panel, {
 		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
 		var b = new TreeSelector("budget.belongDept.depName", a, "所属部门", "budget.belongDept.depId",
 				false);
+		b.readOnly = this.isEdit==true ? false:true;
+		var buttons = [];
+		
+		
+		if(this.isEdit!=null && this.isEdit!="undefined" && this.isEdit==true){
+			buttons = [{
+				text : "提交",
+				iconCls : "btn-submit",
+				handler : this.submit.createCallback(this)
+			},{
+				text : "保存",
+				iconCls : "btn-save",
+				handler : this.save.createCallback(this)
+			}, /*{
+				text : "重置",
+				iconCls : "btn-reset",
+				handler : this.reset.createCallback(this)
+			},*/ {
+				text : "关闭",
+				iconCls : "btn-close",
+				handler : this.cancel.createCallback(this)
+			}];
+		}
 		
 		/**
 		 * 预算主panel
@@ -78,7 +101,8 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				fieldLabel : "预算名称",
 				allowBlank : false,
 				name : "budget.name",
-				id : "budget.name"
+				id : "budget.name",
+				readOnly:(this.isEdit==true ? false:true)
 			}, b 
 			, {
 				fieldLabel : "起始时间",
@@ -87,7 +111,8 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				id : "budget.beginDate",
 				xtype:"datefield",
 				format:"Y-m-d",
-				length:50
+				length:50,
+				readOnly:(this.isEdit==true ? false:true)
 			},{
 				fieldLabel : "结束时间",
 				allowBlank : false,
@@ -95,16 +120,18 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				id : "budget.endDate",
 				xtype:"datefield",
 				format:"Y-m-d",
-				length:50
+				length:50,
+				readOnly:(this.isEdit==true ? false:true)
 			}, {
 				xtype : "textarea",
 				fieldLabel : "备注信息",
 				name : "budget.remark",
 				id : "budget.remark",
-				colspan:2
+				colspan:2,
+				readOnly:(this.isEdit==true ? false:true)
 			}],
 			buttonAlign : "right",
-			buttons : [{
+			/*buttons : [{
 				text : "提交",
 				iconCls : "btn-submit",
 				handler : this.submit.createCallback(this)
@@ -112,15 +139,12 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				text : "保存",
 				iconCls : "btn-save",
 				handler : this.save.createCallback(this)
-			}, /*{
-				text : "重置",
-				iconCls : "btn-reset",
-				handler : this.reset.createCallback(this)
-			},*/ {
+			}, {
 				text : "取消",
 				iconCls : "btn-cancel",
 				handler : this.cancel.createCallback(this)
-			}]
+			}]*/
+			buttons: buttons
 			
 		});
 		
@@ -264,20 +288,6 @@ BudgetForm = Ext.extend(Ext.Panel, {
 					});
 		}
 		
-		var buttons = [ {
-			text : "保存",
-			iconCls : "btn-save",
-			handler : this.save.createCallback(this.formPanel, this)
-		}/*, {
-			text : "重置",
-			iconCls : "btn-reset",
-			handler : this.reset.createCallback(this.formPanel)
-		}*/, {
-			text : "取消",
-			iconCls : "btn-cancel",
-			handler : this.cancel.createCallback(this)
-		} ];
-		
 		var b = [];
 		if (isGranted("_BudgetItemAdd")) {
 			b.push({
@@ -352,6 +362,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			width : 200,
 			url : __ctxPath + "/budget/treeBudgetItem.do?budgetId=" + (this.budgetId == null ? "0" : this.budgetId),
 			scope : this,
+			showContextMenu : (this.isEdit==true ? true:false),
 			onclick : function(e) {
 
 				var budgetItemId = e.id;
@@ -401,7 +412,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 					if (d != null) {
 						d.getStore().reload();
 					}
-					a.close();
+					//a.close();
 				},
 				failure : function(c, d) {
 					Ext.MessageBox.show({

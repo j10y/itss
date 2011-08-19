@@ -37,22 +37,25 @@ RealExecutionForm = Ext.extend(Ext.Window, {
 				name : "realExecutionId",
 				mapping : "realExecutionId"
 			}, {
-				name : "budget.budgetId",
+				name : "realExecutionForm.budget.budgetId",
 				mapping : "budget.budgetId"
 			}, {
-				name : "budgetCombo",
+				name : "realExecutionForm.budgetCombo",
 				mapping : "budget.name"
 			}, {
-				name : "budgetItem.budgetItemId",
+				name : "realExecutionForm.budgetItem.budgetItemId",
 				mapping : "budgetItem.budgetItemId"
 			}, {
-				name : "budgetItemCombo",
+				name : "realExecutionForm.budgetItemCombo",
 				mapping : "budgetItem.name"
 			}, {
-				name : "realValue",
+				name : "realExecutionForm.realValue",
 				mapping : "realValue"
 			}, {
-				name : "remark",
+				name : "realExecutionForm.month",
+				mapping : "month"
+			}, {
+				name : "realExecutionForm.remark",
 				mapping : "remark"
 			} ]),
 			items : [ {
@@ -62,7 +65,7 @@ RealExecutionForm = Ext.extend(Ext.Window, {
 				value : this.realExecutionId == null ? "" : this.realExecutionId
 			}, {
 				name : "realExecution.budget.budgetId",
-				id : "budget.budgetId",
+				id : "realExecutionForm.budget.budgetId",
 				xtype : "hidden",
 				value : "0"
 			}, {
@@ -71,7 +74,7 @@ RealExecutionForm = Ext.extend(Ext.Window, {
 				mode : "remote",
 				allowBlank : false,
 				editable : false,
-				id : "budgetCombo",
+				id : "realExecutionForm.budgetCombo",
 				valueField : "name",
 				displayField : "name",
 				triggerAction : "all",
@@ -87,12 +90,12 @@ RealExecutionForm = Ext.extend(Ext.Window, {
 				}
 			},  {
 				name : "realExecution.budgetItem.budgetItemId",
-				id : "budgetItem.budgetItemId",
+				id : "realExecutionForm.budgetItem.budgetItemId",
 				xtype : "hidden"
 			}, {
 				fieldLabel : "所属成本要素",
 				xtype:"combo",
-				id : "budgetItemCombo",
+				id : "realExecutionForm.budgetItemCombo",
 				mode : "local",
 				allowBlank : false,
 				editable : false,
@@ -124,13 +127,12 @@ RealExecutionForm = Ext.extend(Ext.Window, {
 			},  {
 				fieldLabel : "执行值",
 				name : "realExecution.realValue",
-				id : "realValue",
+				id : "realExecutionForm.realValue",
 				allowBlank : false,
 				xtype:"numberfield"
 			}, {
 				fieldLabel : "月份",
-				id : "month",
-
+				id : "realExecutionForm.month",
 				xtype : "combo",
 				allowBlank : false,
 				hiddenName : "realExecution.month",
@@ -150,7 +152,7 @@ RealExecutionForm = Ext.extend(Ext.Window, {
 			}, {
 				fieldLabel : "备注",
 				name : "realExecution.remark",
-				id : "remark"
+				id : "realExecutionForm.remark"
 			} ]
 		});
 		if (this.realExecutionId != null && this.realExecutionId != "undefined") {

@@ -1,4 +1,4 @@
-BudgetView = Ext.extend(Ext.Panel, {
+BudgetStatusView = Ext.extend(Ext.Panel, {
 	searchPanel : null,
 	gridPanel : null,
 	store : null,
@@ -6,9 +6,9 @@ BudgetView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		Ext.applyIf(this, a);
 		this.initUIComponents();
-		BudgetView.superclass.constructor.call(this, {
-			id : "BudgetView",
-			title : "预算草稿列表",
+		BudgetStatusView.superclass.constructor.call(this, {
+			id : "BudgetStatusView",
+			title : "预算状态列表",
 			iconCls : "menu-arch-rec-type",
 			region : "center",
 			layout : "border",
@@ -55,7 +55,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			} ]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_EQ=0&alarm=true",
+			url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_GT=0&Q_publishStatus_N_LT=3",
 			root : "result",
 			totalProperty : "totalCounts",
 			remoteSort : true,
@@ -82,24 +82,11 @@ BudgetView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if (isGranted("_BudgetDel")) {
-			b.push({
-				iconCls : "btn-del",
-				qtip : "删除",
-				style : "margin:0 3px 0 3px"
-			});
-		}
+
 		if (isGranted("_BudgetView")) {
 			b.push({
 				iconCls : "btn-preview",
 				qtip : "查看详情",
-				style : "margin:0 3px 0 3px"
-			});
-		}
-		if (isGranted("_BudgetEdit")) {
-			b.push({
-				iconCls : "btn-edit",
-				qtip : "编辑",
 				style : "margin:0 3px 0 3px"
 			});
 		}
@@ -167,23 +154,6 @@ BudgetView = Ext.extend(Ext.Panel, {
 			bodyStyle : "text-align:left",
 			items : []
 		});
-		if (isGranted("_BudgetAdd")) {
-			this.topbar.add({
-				iconCls : "btn-add",
-				text : "添加预算",
-				xtype : "button",
-				handler : this.createRecord
-			});
-		}
-		if (isGranted("_BudgetDel")) {
-			this.topbar.add({
-				iconCls : "btn-del",
-				text : "删除预算",
-				xtype : "button",
-				handler : this.delRecords,
-				scope : this
-			});
-		}
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "BudgetGrid",
 			region : "center",
@@ -231,7 +201,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询",
-				url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_EQ=0&alarm=true",
+				url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_GT=0&Q_publishStatus_N_LT=3",
 				success : function(c, d) {
 					var b = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(b);
@@ -278,7 +248,11 @@ BudgetView = Ext.extend(Ext.Panel, {
 		}
 		var d = Array();
 		for ( var b = 0; b < a.length; b++) {
+			if(a[b].data.publishStatus!=3)//3为已经发布
 			d.push(a[b].data.budgetId);
+		}
+		if(a.length>=1 && d.length==0){
+			Ext.ux.Toast.msg("信息", "不允许删除已经发布预算记录！");
 		}
 		this.delByIds(d);
 	},

@@ -37,19 +37,19 @@ IncomeTaxItemForm = Ext.extend(Ext.Window, {
 				name : "itiId",
 				mapping : "itiId"
 			}, {
-				name : "incomeTax.itId",
+				name : "incomeTaxItemForm.incomeTax.itId",
 				mapping : "incomeTax.itId"
 			}, {
-				name : "limitAmount",
+				name : "incomeTaxItemForm.limitAmount",
 				mapping : "limitAmount"
 			}, {
-				name : "lowerAmount",
+				name : "incomeTaxItemForm.lowerAmount",
 				mapping : "lowerAmount"
 			}, {
-				name : "taxValue",
+				name : "incomeTaxItemForm.taxValue",
 				mapping : "taxValue"
 			}, {
-				name : "taxValueTmp",
+				name : "incomeTaxItemForm.taxValueTmp",
 				mapping : "taxValue",
 				convert : function(v, rec){
 					if(v!=null){
@@ -66,33 +66,33 @@ IncomeTaxItemForm = Ext.extend(Ext.Window, {
 				value : this.itiId == null ? "" : this.itiId
 			}, {
 				name : "incomeTaxItem.incomeTax.itId",
-				id : "incomeTax.itId",
+				id : "incomeTaxItemForm.incomeTax.itId",
 				xtype : "hidden",
 				value : this.itId == null ? "" : this.itId
 			}, {
 				fieldLabel : "上限值",
 				name : "incomeTaxItem.limitAmount",
-				id : "limitAmount",
+				id : "incomeTaxItemForm.limitAmount",
 				allowBlank : false,
 				xtype:"numberfield"
 			}, {
 				fieldLabel : "下限值",
 				name : "incomeTaxItem.lowerAmount",
-				id : "lowerAmount",
+				id : "incomeTaxItemForm.lowerAmount",
 				allowBlank : false,
 				xtype:"numberfield"
 			}, {
 				xtype:"hidden",
 				readOnly:true,
 				name : "incomeTaxItem.taxValue",
-				id : "taxValue"
+				id : "incomeTaxItemForm.taxValue"
 			}, {
-				fieldLabel : "比例(%)",
-				id : "taxValueTmp",
+				fieldLabel : "税率(%)",
+				id : "incomeTaxItemForm.taxValueTmp",
 				allowBlank : false,
 				listeners : {
 					change : function(field, newValue, oldValue){
-						Ext.getCmp("taxValue").setValue(newValue/100);
+						Ext.getCmp("incomeTaxItemForm.taxValue").setValue(newValue/100);
 					}
 				},
 				xtype:"numberfield"
