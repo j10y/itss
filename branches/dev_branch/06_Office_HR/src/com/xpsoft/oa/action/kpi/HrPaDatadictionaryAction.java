@@ -43,14 +43,17 @@ public class HrPaDatadictionaryAction extends BaseAction{
 	}
 	
 	public String list(){
-		QueryFilter filter = new QueryFilter(getRequest());
+		QueryFilter filter = new QueryFilter(this.getRequest());
 		List<HrPaDatadictionary> list = this.hrPaDatadictionaryService.getAll(filter);
+		StringBuffer buff = new StringBuffer("[");
+		for(HrPaDatadictionary hpd : list) {
+			buff.append("{id:'" + hpd.getId() + "',text:'" + hpd.getName() + "',leaf:true},");
+		}
+		if(list.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]");
 		
-		Type type = new TypeToken<List<HrPaDatadictionary>>() {}.getType();
-		StringBuffer buff = new StringBuffer("{success:true,result:");
-		Gson gson = new Gson();
-		buff.append(gson.toJson(list, type));
-		buff.append("}");
 		this.jsonString = buff.toString();
 		
 		return "success";
