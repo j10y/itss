@@ -6,15 +6,9 @@
 <html>
 	<head>
 	<script type="text/javascript">
-	var c = "${pageContext.request.contextPath}";
-	 function a() {
-	 	alert("${webpath}");
-	 	alert("${pageContext.request.contextPath}");
-	 }
 	</script>
-		<title>User</title>
+		<title>欢迎</title>
 	</head>
 	<body>
-	${webpath}
 	</body>
 </html>
