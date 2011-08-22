@@ -39,6 +39,10 @@ public class HrPaKpiitemAction extends BaseAction{
 	public String list(){
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		List<HrPaKpiitem> list = this.hrPaKpiitemService.getAll(filter);
+		//将权重转换成整数值
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).setWeight(list.get(i).getWeight()*100);
+		}
 		
 		StringBuffer buff = new StringBuffer("{success:true,result:");
 		JSONSerializer json = new JSONSerializer();

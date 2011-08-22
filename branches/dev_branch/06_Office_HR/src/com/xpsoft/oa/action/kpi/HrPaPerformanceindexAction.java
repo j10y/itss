@@ -100,15 +100,15 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			hpp.setCreatePerson(this.hrPaPerformanceindex.getCreatePerson());
 		}
 		//2. 新增和修改没有区别的项
-		hpp.setPublishStatus(0);//考核项目只要有改动，就强制改变为草稿状态
+		hpp.setPublishStatus(0);//考核指标只要有改动，就强制改变为草稿状态
 		hpp.setPaName(this.hrPaPerformanceindex.getPaName());
 		hpp.setPaType(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paType")));
 		hpp.setPaFrequency(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paFrequency")));
 		hpp.setPaMode(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paMode")));
 		if(this.hrPaPerformanceindex.getPaIsOnlyNegative() == 1) {
-			hpp.setPaIsOnlyNegative(1);//是唯一否决项目
+			hpp.setPaIsOnlyNegative(1);//是唯一否决指标
 		} else {
-			hpp.setPaIsOnlyNegative(0);//不是唯一否决项目
+			hpp.setPaIsOnlyNegative(0);//不是唯一否决指标
 		}
 		hpp.setPaDesc(this.hrPaPerformanceindex.getPaDesc());
 		hpp.setRemark(this.hrPaPerformanceindex.getRemark());
