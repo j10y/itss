@@ -105,10 +105,14 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		hpp.setPaType(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paType")));
 		hpp.setPaFrequency(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paFrequency")));
 		hpp.setPaMode(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.paMode")));
-		if(this.hrPaPerformanceindex.getPaIsOnlyNegative() == 1) {
-			hpp.setPaIsOnlyNegative(1);//是唯一否决指标
-		} else {
-			hpp.setPaIsOnlyNegative(0);//不是唯一否决指标
+		if(this.hrPaPerformanceindex.getPaIsOnlyNegative() == 1) {//是唯一否决指标
+			hpp.setPaIsOnlyNegative(1);
+			hpp.setBaseScore(this.hrPaPerformanceindex.getBaseScore());
+			hpp.setFinalScore(this.hrPaPerformanceindex.getFinalScore());
+		} else {//不是唯一否决指标，baseScore和finalScore字段默认为零
+			hpp.setPaIsOnlyNegative(0);
+			hpp.setBaseScore(0);
+			hpp.setFinalScore(0);
 		}
 		hpp.setPaDesc(this.hrPaPerformanceindex.getPaDesc());
 		hpp.setRemark(this.hrPaPerformanceindex.getRemark());
