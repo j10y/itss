@@ -114,6 +114,19 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 		return "success";
 	}
 	
+	public String multiAudit() {
+		String[] ids = this.getRequest().getParameterValues("ids");
+		if(ids != null) {
+			for(String id : ids) {
+				HrPaAssessmentcriteria hpa = this.hrPaAssessmentcriteriaService.get(new Long(id));
+				hpa.setPublishStatus(new Integer("3"));
+				this.hrPaAssessmentcriteriaService.save(hpa);
+			}
+		}
+		
+		return "success";
+	}
+	
 	public String load() {
 		Map<String, String> map = this.hrPaAssessmentcriteriaService.getKeyAndName();
 		
