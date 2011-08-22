@@ -283,7 +283,7 @@ public class FlowServiceImpl implements FlowService {
 					Iterator<FormData> foemdates = pf.getFormDatas().iterator();
 					for (; foemdates.hasNext();) {
 						FormData fd = foemdates.next();
-						if (fd.getIsShowed() == 1) {
+						if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
 							json += "{label:\"" + fd.getFieldLabel()
 									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
 						}
@@ -366,7 +366,7 @@ public class FlowServiceImpl implements FlowService {
 					Iterator<FormData> foemdates = pf.getFormDatas().iterator();
 					for (; foemdates.hasNext();) {
 						FormData fd = foemdates.next();
-						if (fd.getIsShowed() == 1) {
+						if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
 							json += "{label:\"" + fd.getFieldLabel()
 									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
 						}
@@ -432,7 +432,7 @@ public class FlowServiceImpl implements FlowService {
 					Iterator<FormData> foemdates = pf.getFormDatas().iterator();
 					for (; foemdates.hasNext();) {
 						FormData fd = foemdates.next();
-						if (fd.getIsShowed() == 1) {
+						if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
 							json += "{label:\"" + fd.getFieldLabel()
 									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
 						}
