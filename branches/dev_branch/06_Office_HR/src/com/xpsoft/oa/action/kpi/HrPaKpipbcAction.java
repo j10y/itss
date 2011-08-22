@@ -7,18 +7,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.BeanUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
-import com.xpsoft.core.util.StringUtil;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.oa.model.hrm.Job;
-import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
+import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
@@ -27,8 +20,7 @@ import com.xpsoft.oa.model.kpi.HrPaKpipbc;
 import com.xpsoft.oa.model.kpi.HrPaKpipbcHist;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
 import com.xpsoft.oa.model.system.AppUser;
-import com.xpsoft.oa.model.system.Department;
-import com.xpsoft.oa.service.hrm.JobService;
+import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitemHistService;
@@ -333,23 +325,21 @@ public class HrPaKpipbcAction extends BaseAction{
 		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		//1. 找到哪些人是这个有这个PBC关联的岗位
+		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
+		Map<String, String> profileMap = new HashMap<String, String>();
+		profileMap.put("Q_jobId_L_EQ", String.valueOf(pbc.getBelongPost().getJobId()));
+		QueryFilter profileFilter = new QueryFilter(profileMap);
+		List<EmpProfile> profileList = empProfileService.getAll(profileFilter);
 		AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
-		long depId = pbc.getBelongDept().getDepId();
-		String postName = pbc.getBelongPost().getJobName();
-		if(pbc.getBelongPost().getJobName() == null || "".equals(pbc.getBelongPost().getJobName())) {
-			JobService jobService = (JobService)AppUtil.getBean("jobService");
-			postName = jobService.get(pbc.getBelongPost().getJobId()).getJobName();
-		}
-		List<AppUser> userList = appUserService.findByDepIdAndPostName(depId, postName);
 		//2. 循环对每个人添加PBC考核模板
-		for(int i = 0; i < userList.size(); i++) {
+		for(int i = 0; i < profileList.size(); i++) {
 			//取出要插入PBC考核模板关联的考核项
 			Map<String, String> map2 = new HashMap<String, String>();
 			map2.put("Q_pbc.id_L_EQ", String.valueOf(pbc.getId()));
 			QueryFilter filter2 = new QueryFilter(map2);
 			List<HrPaKpiitem> hrPaKpiitemList = hrPaKpiitemService.getAll(filter2);
 			
-			AppUser user = userList.get(i);
+			AppUser user = appUserService.get(profileList.get(i).getUserId());
 			//2.1. 判断hr_pa_kpipbc2user表中有没有该User的模板
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("Q_belongUser.userId_L_EQ", String.valueOf(user.getUserId()));
