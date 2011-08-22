@@ -648,4 +648,27 @@ public class AppUserAction extends BaseAction {
 		/* 284 */return "success";
 	}
 
+	/**
+	 * 支持模糊查询
+	 * @return
+	 */
+	public String search() {
+		/* 152 */QueryFilter filter = new QueryFilter(getRequest());
+		/* 153 */filter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED
+		/* 154 */.toString());
+		/* 155 */List list = this.appUserService.getAll(filter);
+		/* 156 */StringBuffer buff = new StringBuffer(
+				"{success:true,'totalCounts':")
+		/* 157 */.append(filter.getPagingBean().getTotalItems()).append(
+		/* 158 */",result:");
+		/* 159 */JSONSerializer serializer = new JSONSerializer();
+		/* 160 */serializer.transform(new DateTransformer("yyyy-MM-dd"),
+				new String[] { "accessionTime" });
+		/* 161 */buff.append(serializer.exclude(new String[] { "password" })
+				.serialize(list));
+		/* 162 */buff.append("}");
+		/* 163 */this.jsonString = buff.toString();
+		/* 164 */return "success";
+	}
+	
 }

@@ -87,7 +87,12 @@ public class ArchRecUserAction extends BaseAction {
 			/* 89 */if (ar != null)
 				/* 90 */sb.append("'archRecId':'" + ar.getArchRecId()
 						+ "','userId':'" + ar.getUserId() + "','fullname':'"
-						+ ar.getFullname() + "'}");
+						+ ar.getFullname() + "'" 
+						+ ",'leaderUserId':'" + ar.getLeaderUserId() + "','leaderFullname':'"
+						+ ar.getLeaderFullname() + "'" 
+						+ ",'deptUserId':'" + ar.getDeptUserId() + "','deptFullname':'"
+						+ ar.getDeptFullname() + "'" +
+						"}");
 			else {
 				/* 92 */sb.append("'archRecId':'','userId':'','fullname':''}");
 			}
