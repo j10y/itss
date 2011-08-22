@@ -9,4 +9,5 @@ public class HrPaKpiitem2userDaoImpl extends BaseDaoImpl<HrPaKpiitem2user>
 	public HrPaKpiitem2userDaoImpl() {
 		super(HrPaKpiitem2user.class);
 	}
+	
 }
