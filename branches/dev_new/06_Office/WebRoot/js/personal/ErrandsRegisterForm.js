@@ -186,9 +186,9 @@ ErrandsRegisterForm.prototype.setup = function() {
 				var k = Ext.util.JSON
 						.decode(h.responseText).data;
 				Ext.getCmp("approvalId").setValue(
-						k.userId);
+						k.deptUserId);
 				Ext.getCmp("approvalName").setValue(
-						k.fullname);
+						k.deptFullname);
 			}
 		});
 		
