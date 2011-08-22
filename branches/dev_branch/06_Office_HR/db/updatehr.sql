@@ -190,4 +190,41 @@ CREATE TABLE `hr_pa_kpipbc2user` (
   `modifyDate` datetime DEFAULT NULL,
   `modifyPerson` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='每个人所属的最终PBC\r\n\r\n该表内容来源于根据每个人所属的不同的岗位的PBC合并后的结果。';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='每个人所属的最终PBC\r\n\r\n该表内容来源于根据每个人所属的不同的岗位的PBC合并后的结果。';      
+      
+/* 20110819*/      
+create table hr_sr_performanceFactor
+(
+   id                   bigint not null,
+   factorName           varchar(150),
+   startDate            datetime,
+   endDate              datetime,
+   descp               varchar(200),
+   belongDept           bigint comment '归属部门',
+   createDate           datetime,
+   createPerson         bigint,
+   modifyDate           datetime,
+   modifyPerson         bigint,
+   publishStatus        int comment '发布状态0：草稿1：审核中2：审核完毕',
+   primary key (id)
+);
+alter table hr_sr_performanceFactor comment '绩效得分与系数对应关系表';  
+drop table if exists hr_sr_factorItem;
+
+/*==============================================================*/
+/* Table: hr_sr_factorItem                                      */
+/*==============================================================*/
+create table hr_sr_factorItem
+(
+   id                   char(10) not null,
+   belongPF             bigint,
+   factorScore          dec(2,2),
+   factorValue          decimal(2,2),
+   primary key (id)
+);
+
+alter table hr_sr_factorItem comment '绩效系数对应';
+
+alter table hr_sr_factorItem add constraint FK_Reference_32 foreign key (belongPF)
+      references hr_sr_performanceFactor (id) on delete restrict on update restrict;
+    
