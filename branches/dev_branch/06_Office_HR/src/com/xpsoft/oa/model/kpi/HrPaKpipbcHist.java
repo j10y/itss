@@ -3,25 +3,22 @@ package com.xpsoft.oa.model.kpi;
 import java.util.Date;
 
 import com.xpsoft.core.model.BaseModel;
-import com.xpsoft.oa.model.hrm.Job;
-import com.xpsoft.oa.model.system.AppUser;
-import com.xpsoft.oa.model.system.Department;
 
-public class HrPaKpipbc extends BaseModel {
+public class HrPaKpipbcHist extends BaseModel {
 	protected long id;
 	protected String pbcName;
-	protected Department belongDept;
-	protected Job belongPost;
-	protected HrPaDatadictionary frequency;
+	protected long belongDept;
+	protected long belongPost;
+	protected long frequency;
 	protected Date createDate;
-	protected AppUser createPerson;
+	protected long createPerson;
 	protected int publishStatus;
 	protected int totalScore;
 	protected Date modifyDate;
-	protected AppUser modifyPerson;
+	protected long modifyPerson;
 	protected long fromPbc;
 	
-	public HrPaKpipbc(){}
+	public HrPaKpipbcHist() {}
 
 	public long getId() {
 		return id;
@@ -39,27 +36,27 @@ public class HrPaKpipbc extends BaseModel {
 		this.pbcName = pbcName;
 	}
 
-	public Department getBelongDept() {
+	public long getBelongDept() {
 		return belongDept;
 	}
 
-	public void setBelongDept(Department belongDept) {
+	public void setBelongDept(long belongDept) {
 		this.belongDept = belongDept;
 	}
 
-	public Job getBelongPost() {
+	public long getBelongPost() {
 		return belongPost;
 	}
 
-	public void setBelongPost(Job belongPost) {
+	public void setBelongPost(long belongPost) {
 		this.belongPost = belongPost;
 	}
 
-	public HrPaDatadictionary getFrequency() {
+	public long getFrequency() {
 		return frequency;
 	}
 
-	public void setFrequency(HrPaDatadictionary frequency) {
+	public void setFrequency(long frequency) {
 		this.frequency = frequency;
 	}
 
@@ -71,11 +68,11 @@ public class HrPaKpipbc extends BaseModel {
 		this.createDate = createDate;
 	}
 
-	public AppUser getCreatePerson() {
+	public long getCreatePerson() {
 		return createPerson;
 	}
 
-	public void setCreatePerson(AppUser createPerson) {
+	public void setCreatePerson(long createPerson) {
 		this.createPerson = createPerson;
 	}
 
@@ -103,11 +100,11 @@ public class HrPaKpipbc extends BaseModel {
 		this.modifyDate = modifyDate;
 	}
 
-	public AppUser getModifyPerson() {
+	public long getModifyPerson() {
 		return modifyPerson;
 	}
 
-	public void setModifyPerson(AppUser modifyPerson) {
+	public void setModifyPerson(long modifyPerson) {
 		this.modifyPerson = modifyPerson;
 	}
 
