@@ -174,7 +174,7 @@ ArchFlowConfView = Ext
 							root : "result",
 							totalProperty : "totalCounts",
 							remoteSort : true,
-							fields : [ "archRecId", "userId", "fullname",
+							fields : [ "archRecId", "userId", "fullname","leaderUserId", "leaderFullname","deptUserId", "deptFullname",
 									"depId", "depLevel", "depName" ]
 						});
 						this.store.load();
@@ -205,6 +205,89 @@ ArchFlowConfView = Ext
 								}
 							}
 						});
+						
+						var leaderUserCombo = new Ext.form.ComboBox({
+							mode : "remote",
+							anchor : "74%",
+							allowBlank : false,
+							//editable : false,
+							valueField : "fullname",
+							displayField : "fullname",
+							triggerAction : "all",
+							resizable : true,
+							store : new Ext.data.JsonStore({
+								url : __ctxPath
+										+ "/system/searchAppUser.do",
+								fields : [ "userId", "fullname" ],
+								root : "result",
+								totalProperty : "totalCounts",
+								remoteSort : true
+							}),
+							listeners : {
+								select : function(l, h, k) {
+									var j = Ext.getCmp("ArchFlowConfGrid")
+											.getStore();
+									var m = j.getAt(f);
+									m.set("leaderUserId", h.data.userId);
+									m.set("leaderFullname", h.data.fullname);
+								},
+								beforequery : function(queryEvent) {
+									var store=queryEvent.combo.store;
+									store.baseParams={
+										"Q_fullname_S_LK":queryEvent.query
+									};
+									store.load({
+										params:{
+											start : 0,
+											limit : 25
+										}
+									});
+									return false;
+								}
+							}
+						});
+						
+						var deptUserCombo = new Ext.form.ComboBox({
+							mode : "remote",
+							anchor : "74%",
+							allowBlank : false,
+							//editable : false,
+							valueField : "fullname",
+							displayField : "fullname",
+							triggerAction : "all",
+							store : new Ext.data.JsonStore({
+								url : __ctxPath
+										+ "/system/searchAppUser.do",
+								fields : [ "userId", "fullname" ],
+								root : "result",
+								totalProperty : "totalCounts",
+								remoteSort : true
+								
+							}),
+							listeners : {
+								select : function(l, h, k) {
+									var j = Ext.getCmp("ArchFlowConfGrid")
+											.getStore();
+									var m = j.getAt(f);
+									m.set("deptUserId", h.data.userId);
+									m.set("deptFullname", h.data.fullname);
+								},
+								beforequery : function(queryEvent) {
+									var store=queryEvent.combo.store;
+									store.baseParams={
+										"Q_fullname_S_LK":queryEvent.query
+									};
+									store.load({
+										params:{
+											start : 0,
+											limit : 25
+										}
+									});
+									return false;
+								}
+							}
+						});
+						
 						var a = new Ext.grid.ColumnModel(
 								{
 									columns : [
@@ -243,7 +326,23 @@ ArchFlowConfView = Ext
 												header : "部门收文负责人",
 												dataIndex : "fullname",
 												editor : b
-											} ],
+											}, {
+												header : "部门负责人ID",
+												dataIndex : "deptUserId",
+												hidden : true
+											}, {
+												header : "部门负责人",
+												dataIndex : "deptFullname",
+												editor : deptUserCombo
+											}, {
+												header : "分管负责人ID",
+												dataIndex : "leaderUserId",
+												hidden : true
+											}, {
+												header : "分管负责人",
+												dataIndex : "leaderFullname",
+												editor : leaderUserCombo
+											}],
 									defaults : {
 										sortable : false,
 										menuDisabled : false,
@@ -290,7 +389,7 @@ ArchFlowConfView = Ext
 															Ext.ux.Toast
 																	.msg(
 																			"操作信息",
-																			"成功设置部门收文负责人");
+																			"成功设置部门相关负责人及分管领导");
 															j.reload();
 															k.getView()
 																	.refresh();
