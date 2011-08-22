@@ -8,13 +8,15 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class ArchRecUser extends BaseModel {
 	protected Long archRecId;
-	protected Long userId;
-	protected String fullname;
+	protected Long userId;//部门收文负责人
+	protected String fullname;//部门收文负责人名字
 	protected Long depId;
 	protected String depName;
 	protected Department department;
-	protected Long leaderUserId;
-	protected String leaderFullname;
+	protected Long leaderUserId;//分管领导ID
+	protected String leaderFullname;//分管领导名字
+	protected Long deptUserId;//部门负责人
+	protected String deptFullname;//部门负责人名字
 
 	public Long getLeaderUserId() {
 		return leaderUserId;
@@ -87,6 +89,28 @@ public class ArchRecUser extends BaseModel {
 		/* 133 */this.depName = aValue;
 	}
 
+	public Long getDeptUserId() {
+		return deptUserId;
+	}
+
+	public void setDeptUserId(Long deptUserId) {
+		this.deptUserId = deptUserId;
+	}
+
+	/**
+	 * @return the deptFullname
+	 */
+	public String getDeptFullname() {
+		return deptFullname;
+	}
+
+	/**
+	 * @param deptFullname the deptFullname to set
+	 */
+	public void setDeptFullname(String deptFullname) {
+		this.deptFullname = deptFullname;
+	}
+
 	public boolean equals(Object object) {
 		/* 140 */if (!(object instanceof ArchRecUser)) {
 			/* 141 */return false;
@@ -97,6 +121,10 @@ public class ArchRecUser extends BaseModel {
 		/* 146 */.append(this.userId, rhs.userId)
 		/* 147 */.append(this.fullname, rhs.fullname)
 		/* 149 */.append(this.depName, rhs.depName)
+		/* 147 */.append(this.leaderUserId, rhs.leaderUserId)
+		/* 149 */.append(this.leaderFullname, rhs.leaderFullname)
+		/* 147 */.append(this.deptUserId, rhs.deptUserId)
+		/* 149 */.append(this.deptFullname, rhs.deptFullname)
 		/* 150 */.isEquals();
 	}
 
@@ -106,6 +134,10 @@ public class ArchRecUser extends BaseModel {
 		/* 159 */.append(this.userId)
 		/* 160 */.append(this.fullname)
 		/* 162 */.append(this.depName)
+		/* 162 */.append(this.leaderUserId)
+		/* 162 */.append(this.leaderFullname)
+		/* 162 */.append(this.deptUserId)
+		/* 162 */.append(this.deptFullname)
 		/* 163 */.toHashCode();
 	}
 
@@ -115,6 +147,10 @@ public class ArchRecUser extends BaseModel {
 		/* 172 */.append("userId", this.userId)
 		/* 173 */.append("fullname", this.fullname)
 		/* 175 */.append("depName", this.depName)
+		/* 175 */.append("leaderUserId", this.leaderUserId)
+		/* 175 */.append("leaderFullname", this.leaderFullname)
+		/* 175 */.append("deptUserId", this.deptUserId)
+		/* 175 */.append("deptFullname", this.deptFullname)
 		/* 176 */.toString();
 	}
 }
