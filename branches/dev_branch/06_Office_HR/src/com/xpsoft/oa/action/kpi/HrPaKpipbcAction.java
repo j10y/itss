@@ -358,7 +358,7 @@ public class HrPaKpipbcAction extends BaseAction{
 			if(hrPaKpiPBC2UserList.size() <= 0) {//在hr_pa_kpipbc2user表中没有该User的模板，则为其创建新的模板
 				//2.1.1. 保存个人考核模板基本信息
 				HrPaKpiPBC2User hrPaKpiPBC2User = new HrPaKpiPBC2User();
-				hrPaKpiPBC2User.setPbcName(user.getUsername() + "的考核模板");
+				hrPaKpiPBC2User.setPbcName(user.getFullname() + "的考核模板");
 				hrPaKpiPBC2User.setFromPBC(String.valueOf(pbc.getId()));
 				hrPaKpiPBC2User.setBelongUser(user);
 				hrPaKpiPBC2User.setFrequency(pbc.getFrequency());
