@@ -21,6 +21,8 @@ public class HrPaPerformanceindex extends BaseModel{
 	protected int publishStatus;
 	protected Date modifyDate;
 	protected long modifyPerson;
+	protected double baseScore;
+	protected double finalScore;
 	
 	public HrPaPerformanceindex(){}
 
@@ -171,5 +173,21 @@ public class HrPaPerformanceindex extends BaseModel{
 
 	public void setModifyPerson(long modifyPerson) {
 		this.modifyPerson = modifyPerson;
+	}
+
+	public double getBaseScore() {
+		return baseScore;
+	}
+
+	public void setBaseScore(double baseScore) {
+		this.baseScore = baseScore;
+	}
+
+	public double getFinalScore() {
+		return finalScore;
+	}
+
+	public void setFinalScore(double finalScore) {
+		this.finalScore = finalScore;
 	}
 }

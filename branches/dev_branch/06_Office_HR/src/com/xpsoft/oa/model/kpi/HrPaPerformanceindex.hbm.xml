@@ -144,5 +144,27 @@
             not-null="false"
             unique="false"
         />
+        <property
+        	name="baseScore"
+        	type="java.lang.Double"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="baseScore"
+        	length="20"
+        	not-null="false"
+        	unique="false"
+        />
+        <property
+        	name="finalScore"
+        	type="java.lang.Double"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="finalScore"
+        	length="20"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>
