@@ -52,6 +52,10 @@
 /*    */   {
 /* 56 */     return this.dao.findByDepId(depId);
 /*    */   }
+
+           public List<AppUser> findByDepIdAndPostName(Long depId, String postName) {
+        	   return this.dao.findByDepIdAndPostName(depId, postName);
+           }
 /*    */ }
 
 /* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
