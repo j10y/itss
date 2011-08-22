@@ -28,6 +28,8 @@ public abstract interface AppUserDao extends BaseDao<AppUser>
   public abstract List<AppUser> findSubAppUserByRole(Long paramLong, Set<Long> paramSet, PagingBean paramPagingBean);
 
   public abstract List<AppUser> findByDepId(Long paramLong);
+  
+  public abstract List<AppUser> findByDepIdAndPostName(Long paramLong, String paramString);
 }
 
 /* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
