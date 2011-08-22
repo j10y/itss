@@ -12,8 +12,8 @@ HrPaPerformanceindexFormView = Ext.extend(Ext.Window, {
 			items : this.formPanel,
 			modal : true,
 			height : 360,
-			width : 400,
-			title : "绩效考核指标录入",
+			width : 470,
+			title : "绩效考核指标查看",
 			buttonAlign : "center",
 			buttons : this.buttons
 		});
@@ -137,16 +137,81 @@ HrPaPerformanceindexFormView = Ext.extend(Ext.Window, {
 						}
 					}
 				}, {
-					fieldLabel : "是否唯一否决",
-					labelStyle : "text-align:right",
-					xtype : "checkboxgroup",
-					columns : 1,
+					layout : "column",
+					xtype : "container",
+					border : false,
 					items : [
 						{
-							boxLabel : "是",
-							name : "hrPaPerformanceindex.paIsOnlyNegative",
-							id : "paIsOnlyNegative",
-							inputValue : 1
+							layout : "form",
+							border : false,
+							items : [
+								{
+									fieldLabel : "是否唯一否决",
+									labelStyle : "text-align:right",
+									xtype : "checkboxgroup",
+									columns : 1,
+									items : [
+										{
+											boxLabel : "是",
+											name : "hrPaPerformanceindex.paIsOnlyNegative",
+											id : "paIsOnlyNegative",
+											inputValue : 1
+										}
+									]
+								}
+							]
+						}, {
+							layout : "form",
+							border : false,
+							items : [
+								{
+									id : "baseScoreLabel",
+									xtype : "label",
+									text : "基准分值:",
+									style : "margin-left:10px",
+									hidden : true
+								}
+							]
+						}, {
+							layout : "form",
+							border : false,
+							items : [
+								{
+									name : "hrPaPerformanceindex.baseScore",
+									id : "baseScore",
+									xtype : "textfield",
+									hideLabel : true,
+									width : 70,
+									style : "margin-left:5px",
+									hidden : true
+								}
+							]
+						}, {
+							layout : "form",
+							border : false,
+							items : [
+								{
+									id : "finalScoreLabel",
+									xtype : "label",
+									text : "KPI最终得分:",
+									style : "margin-left:10px",
+									hidden : true
+								}
+							]
+						}, {
+							layout : "form",
+							border : false,
+							items : [
+								{
+									name : "hrPaPerformanceindex.finalScore",
+									id : "finalScore",
+									xtype : "textfield",
+									hideLabel : true,
+									width : 70,
+									style : "margin-left:5px",
+									hidden : true
+								}
+							]
 						}
 					]
 				}, {
@@ -181,6 +246,10 @@ HrPaPerformanceindexFormView = Ext.extend(Ext.Window, {
 					Ext.getCmp("modeName").setRawValue(e.data.mode.name);
 					if(e.data.paIsOnlyNegative == "1") {
 						Ext.getCmp("paIsOnlyNegative").setValue(true);
+						Ext.getCmp("baseScoreLabel").show();
+						Ext.getCmp("baseScore").show();
+						Ext.getCmp("finalScoreLabel").show();
+						Ext.getCmp("finalScore").show();
 					}
 				},
 				failure : function() {
