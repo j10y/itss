@@ -124,6 +124,19 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 				url:__ctxPath+ '/pages/archive/archiveIssueDetail.jsp?archivesId='+ ${archives_archivesId}
 			}
 		});
+		Ext.Ajax.request({
+			url : __ctxPath
+					+ "/archive/getUserByArchidArchRecUser.do",
+			params : {
+							archid : '${archives_archivesId}'
+						},
+			success : function(h, j) {
+				var k = Ext.util.JSON
+						.decode(h.responseText).data;
+				Ext.getCmp("flowAssignId").setValue(
+						k.leaderUserId+'');
+			}
+		});
 		// 初始化表单
 		this.formPanel = new Ext.FormPanel({
 			columnWidth : 1,
@@ -156,6 +169,11 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 						name : 'archives.archivesId',
 						xtype : 'hidden',
 						value : '${archives_archivesId}'
+					},{
+						fieldLabel : '审批人',
+						id : 'flowAssignId',
+						name : 'flowAssignId',
+						xtype : 'hidden'
 					},{
 						name : 'archivesStatus',
 						xtype : 'hidden',

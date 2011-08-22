@@ -4,4 +4,5 @@
     <field name="archivesAttend.memo" label="核稿意见" type="varchar" length="1024"/>
 	<field name="archivesAttend.attendType" label="参与类型" type="short" isShowed="false"/>
 	<field name="archives.archivesId" label="所属公文ID" type="long" isShowed="false"/>
+	<field name="flowAssignId" label="审批人" type="long" isShowed="false"/>
 </fields>

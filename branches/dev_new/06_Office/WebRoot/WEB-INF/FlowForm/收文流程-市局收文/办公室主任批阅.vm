@@ -146,8 +146,22 @@ OfficeHeaderReadForm = Ext.extend(Ext.Panel, {
 												if(i<d.result.length-1){
 													userIds += ",";
 												}
-											}											
-												
+											}	
+											if(checkValue==2||checkValue==3){
+												Ext.Ajax.request({
+													url : __ctxPath
+															+ "/archive/getUserByArchidArchRecUser.do",
+															params : {
+																archid : '${archives_archivesId}'
+															},
+													success : function(h, j) {
+														var k = Ext.util.JSON
+																.decode(h.responseText).data;
+																
+														userIds=userIds+","+k.leaderUserId;
+													}
+												});
+											}		
 											formPanel.getForm().submit({
 												method : 'POST',
 												waitMsg : '正在提交数据...',
