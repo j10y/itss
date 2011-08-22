@@ -13,4 +13,5 @@ public class HrPaKpiPBC2UserServiceImpl extends BaseServiceImpl<HrPaKpiPBC2User>
 		super(dao);
 		this.dao = dao;
 	}
+	
 }
