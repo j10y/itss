@@ -230,7 +230,9 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 		}
 	},
 	addHrPaKpipbc : function() {
-		new HrPaKpipbcForm().show();
+		new HrPaKpipbcForm({
+			from : "publish"
+		}).show();
 	},
 	delHrPaKpipbc : function() {
 		var e = Ext.getCmp("PublishHrPaKpipbcGrid");
@@ -247,8 +249,9 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 	},
 	editHrPaKpipbc : function(a) {
 		new HrPaKpipbcForm({
-			pbcId : a.data.id
-		});
+			pbcId : a.data.id,
+			from : "publish"
+		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {

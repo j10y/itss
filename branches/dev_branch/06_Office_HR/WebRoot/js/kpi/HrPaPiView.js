@@ -11,7 +11,7 @@ HrPaPiView = Ext.extend(Ext.Window, {
 		HrPaPiView.superclass.constructor.call(this, {
 			id : "HrPaPiView",
 			layout : "border",
-			title : "考核项目列表",
+			title : "考核指标列表",
 			modal : true,
 			width : 650,
 			height : 370,
@@ -45,9 +45,9 @@ HrPaPiView = Ext.extend(Ext.Window, {
 			},
 			items : [
 				{
-					text : "查询条件：考核项目名称"
+					text : "查询条件：考核指标名称"
 				}, {
-					fieldLabel : "考核项目名称",
+					fieldLabel : "考核指标名称",
 					name : "Q_paName_S_LK",
 					xtype : "textfield"
 				}, {
@@ -95,10 +95,10 @@ HrPaPiView = Ext.extend(Ext.Window, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "考核项目名称",
+					header : "考核指标名称",
 					dataIndex : "paName"
 				}, {
-					header : "考核项目类型",
+					header : "考核指标类型",
 					dataIndex : "type.name"
 				}, {
 					header : "考核方式",
@@ -170,7 +170,7 @@ HrPaPiView = Ext.extend(Ext.Window, {
 				if(d.getStore().getAt(k).data.piId == c[j].data.id) {
 					Ext.MessageBox.show({
 						title : "操作信息",
-						msg : "您插入了重复考核项目，请核实！",
+						msg : "您插入了重复考核指标，请核实！",
 						buttons : Ext.MessageBox.OK,
 						icon : Ext.MessageBox.ERROR
 					});

@@ -86,13 +86,11 @@ InAuditHrPaKpipbcView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_PbcEdit")) {
-			b.push({
-				iconCls : "btn-edit",
-				qtip : "查看",
-				style : "margin:0 3px 0 3px"
-			});
-		}
+		b.push({
+			iconCls : "btn-preview",
+			qtip : "查看",
+			style : "margin:0 3px 0 3px"
+		});
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -202,11 +200,11 @@ InAuditHrPaKpipbcView = Ext.extend(Ext.Panel, {
 	editHrPaKpipbc : function(a) {
 		new HrPaKpipbcFormView({
 			pbcId : a.data.id
-		});
+		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
-			case "btn-edit":
+			case "btn-preview":
 				this.editHrPaKpipbc(a);
 				break ;
 			default:

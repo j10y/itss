@@ -7,7 +7,7 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		PublishHrPaPerformanceindexView.superclass.constructor.call(this, {
 			id : "PublishHrPaPerformanceindexView",
-			title : "考核项目管理",
+			title : "考核指标管理",
 			items : [
 				this.searchPanel,
 				this.gridPanel
@@ -41,9 +41,9 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：考核项目名称"
+					text : "查询条件：考核指标名称"
 				}, {
-					fieldLabel : "考核项目名称：",
+					fieldLabel : "考核指标名称：",
 					name : "Q_paName_S_LK",
 					xtype : "textfield"
 				}, {
@@ -108,10 +108,10 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "考核项目名称",
+					header : "考核指标名称",
 					dataIndex : "paName"
 				}, {
-					header : "考核项目类型",
+					header : "考核指标类型",
 					dataIndex : "type",
 					renderer : function(d) {
 						return d.name;
@@ -165,12 +165,12 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		});
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-add",
-			text : "增加考核项目",
+			text : "增加考核指标",
 			handler : this.addHrPaPerformanceindex
 		}));
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-del",
-			text : "删除考核项目",
+			text : "删除考核指标",
 			handler : this.delHrPaPerformanceindex
 		}));
 		this.gridPanel = new Ext.grid.GridPanel({

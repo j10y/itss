@@ -51,6 +51,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 		this.formPanel = new Ext.FormPanel({
 			region : "north",
 			height : 100,
+			id : "HrPaKpipbcForm",
 			bodyStyle : "padding:20px 20px 20px 20px",
 			frame : false,
 			border : false,
@@ -111,7 +112,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 					xtype : "hidden"
 				}, 
 				{
-					fieldLabel : "考核项目列表",
+					fieldLabel : "考核指标列表",
 					name : "hrPaKpiitems",
 					id : "hrPaKpiitems",
 					xtype : "hidden"
@@ -254,7 +255,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 					dataIndex : "piId",
 					hidden : true
 				}, {
-					header : "考核项目名称",
+					header : "考核指标名称",
 					dataIndex : "pi.paName",
 					width : 250
 				}, {
@@ -278,7 +279,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 		if(isGranted("_PbcItemAdd")) {
 			this.topbar.add({
 				iconCls : "btn-add",
-				text : "添加考核项目",
+				text : "添加考核指标",
 				xtype : "button",
 				handler : this.addHrPaKpiitem
 			});
@@ -286,7 +287,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 		if(isGranted("_PbcItemDel")) {
 			this.topbar.add({
 				iconCls : "btn-del",
-				text : "删除考核项目",
+				text : "删除考核指标",
 				xtype : "button",
 				handler : this.delHrPaKpiitem
 			});
@@ -377,11 +378,23 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			Ext.ux.Toast.msg("提示信息", "请选择要删除的记录！");
 			return ;
 		}
+		//只是前台页面删除，数据库并不真正删除
+		for(var d = 0; d < c.length; d++) {
+			var allStore = e.getStore();
+			for(var m = 0; m < allStore.getCount(); m++) {
+				var rec = allStore.getAt(m);
+				if(rec.data.piId == c[d].data.piId) {
+					allStore.remove(rec);
+				}
+			}
+		}
+		/*
 		var f = Array();
 		for(var d = 0; d < c.length; d++) {
 			f.push(c[d].data.id);
 		}
 		HrPaKpipbcForm.remove(f);
+		*/
 	},
 	cancel : function(b) {
 		b.close();
@@ -394,7 +407,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			var gridStore = b.gridPanel.getStore();
 			for(var j = 0; j < gridStore.getCount(); j++) {
 				var item = gridStore.getAt(j).data;
-				items += item.id + "," + item.piId + "," + item.weight + " ";
+				items += item.id + "," + item.piId + "," + parseInt(item.weight)/100 + " ";
 			};
 			items = items.substr(0, items.length - 1);
 			Ext.getCmp("hrPaKpiitems").setValue(items);
@@ -439,7 +452,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			if(gridStore.getCount() <= 0) {
 				Ext.MessageBox.show({
 					title : "操作信息",
-					msg : "请添加考核项目！",
+					msg : "请添加考核指标！",
 					buttons : Ext.MessageBox.OK,
 					icon : Ext.MessageBox.ERROR
 				});
@@ -449,13 +462,13 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			var totalWeight = 0;
 			for(var j = 0; j < gridStore.getCount(); j++) {
 				var item = gridStore.getAt(j).data;
-				items += item.id + "," + item.piId + "," + item.weight + " ";
-				totalWeight += parseFloat(item.weight);
+				items += item.id + "," + item.piId + "," + parseInt(item.weight)/100 + " ";
+				totalWeight += parseInt(item.weight);
 			};
-			if(totalWeight != 1.0) {
+			if(totalWeight != 100) {
 				Ext.MessageBox.show({
 					title : "操作信息",
-					msg : "请确保权重总和等于1！",
+					msg : "请确保权重总和等于100！",
 					buttons : Ext.MessageBox.OK,
 					icon : Ext.MessageBox.ERROR
 				});
@@ -498,6 +511,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 		}
 	}
 });
+/*
 HrPaKpipbcForm.remove = function(b) {
 	var a = Ext.getCmp("HrPaKpiitemGrid");
 	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
@@ -521,3 +535,4 @@ HrPaKpipbcForm.remove = function(b) {
 		}
 	});
 }
+*/

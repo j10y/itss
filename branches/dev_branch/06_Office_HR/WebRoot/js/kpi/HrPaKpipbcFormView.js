@@ -30,6 +30,7 @@ HrPaKpipbcFormView = Ext.extend(Ext.Window, {
 		this.formPanel = new Ext.FormPanel({
 			region : "north",
 			height : 100,
+			id : "HrPaKpipbcFormView",
 			bodyStyle : "padding:20px 20px 20px 20px",
 			frame : false,
 			border : false,
@@ -151,7 +152,7 @@ HrPaKpipbcFormView = Ext.extend(Ext.Window, {
 					dataIndex : "piId",
 					hidden : true
 				}, {
-					header : "考核项目名称",
+					header : "考核指标名称",
 					dataIndex : "pi.paName",
 					width : 250
 				}, {

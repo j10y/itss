@@ -251,7 +251,7 @@ DraftHrPaKpipbcView = Ext.extend(Ext.Panel, {
 		new HrPaKpipbcForm({
 			pbcId : a.data.id,
 			from : "draft"
-		});
+		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {

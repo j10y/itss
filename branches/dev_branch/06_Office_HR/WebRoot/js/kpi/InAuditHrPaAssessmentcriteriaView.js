@@ -19,6 +19,7 @@ InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 	searchPanel : null,
 	gridPanel : null,
 	store : null,
+	topbar : null,
 	initComponents : function() {
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
@@ -83,13 +84,16 @@ InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_AcEdit")) {
-			b.push({
-				iconCls : "btn-edit",
-				qtip : "查看",
-				style : "margin:0 3px 0 3px"
-			});
-		}
+		b.push({
+			iconCls : "btn-preview",
+			qtip : "查看",
+			style : "margin:0 3px 0 3px"
+		});
+		b.push({
+			iconCls : "btn-edit",
+			qtip : "审核",
+			style : "margin:0 3px 0 3px"
+		});
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -139,6 +143,15 @@ InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 				width : 100
 			}
 		});
+		this.topbar = new Ext.Toolbar({
+			height : 30,
+			bodyStyle : "text-align:left",
+			items : []
+		});
+		this.topbar.add(new Ext.Button({
+			text : "批量审核",
+			handler : this.multiAudit
+		}));
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "InAuditHrPaAssessmentcriteriaGrid",
 			region : "center",
@@ -195,13 +208,51 @@ InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			acId : a.data.id
 		}).show();
 	},
+	multiAudit : function() {
+		var e = Ext.getCmp("InAuditHrPaAssessmentcriteriaGrid");
+		var c = e.getSelectionModel().getSelections();
+		if(c.length == 0) {
+			Ext.ux.Toast.msg("提示信息", "请选择要审核的记录！");
+			return ;
+		}
+		var f = Array();
+		for(var d = 0; d < c.length; d++) {
+			f.push(c[d].data.id);
+		}
+		InAuditHrPaAssessmentcriteriaView.audit(f);
+	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
-			case "btn-edit":
+			case "btn-preview":
 				this.editHrPaAssessmentcriteria(a);
 				break ;
+			case "btn-edit":
+				this.multiAudit();
 			default:
 				break ;
 		}
 	}
 });
+InAuditHrPaAssessmentcriteriaView.audit = function(b) {
+	var a = Ext.getCmp("InAuditHrPaAssessmentcriteriaGrid");
+	Ext.Msg.confirm("信息确认", "您确认要审核所选记录吗？", function(c) {
+		if(c == "yes") {
+			Ext.Ajax.request({
+				url : __ctxPath + "/kpi/multiAuditHrPaAssessmentcriteria.do",
+				params : {
+					ids : b
+				},
+				method : "post",
+				success : function() {
+					Ext.ux.Toast.msg("提示信息", "成功审核所选记录！");
+					a.getStore().reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+				}
+			});
+		}
+	});
+}

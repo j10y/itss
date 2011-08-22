@@ -215,7 +215,9 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 		}
 	},
 	addHrPaAssessmentcriteria : function() {
-		new HrPaAssessmentcriteriaForm().show();
+		new HrPaAssessmentcriteriaForm({
+			from : "publish"
+		}).show();
 	},
 	delHrPaAssessmentcriteria : function() {
 		var e = Ext.getCmp("PublishHrPaAssessmentcriteriaGrid");
@@ -232,7 +234,8 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 	},
 	editHrPaAssessmentcriteria : function(a) {
 		new HrPaAssessmentcriteriaForm({
-			acId : a.data.id
+			acId : a.data.id,
+			from : "publish"
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {

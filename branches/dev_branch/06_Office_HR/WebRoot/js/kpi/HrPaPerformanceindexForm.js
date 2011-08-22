@@ -13,7 +13,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			modal : true,
 			height : 360,
 			width : 400,
-			title : "绩效考核项目录入",
+			title : "绩效考核指标录入",
 			buttonAlign : "center",
 			buttons : this.buttons
 		});
@@ -36,14 +36,14 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					xtype : "hidden",
 					value : this.piId == null ? "" : this.piId
 				}, {
-					fieldLabel : "考核项目名称",
+					fieldLabel : "考核指标名称",
 					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.paName",
 					id : "paName",
 					allowBlank : false,
-					blankText : "考核项目名称不能为空！"
+					blankText : "考核指标名称不能为空！"
 				}, {
-					fieldLabel : "考核项目类型",
+					fieldLabel : "考核指标类型",
 					hiddenName : "hrPaPerformanceindex.paType",
 					labelStyle : "text-align:right",
 					maxHeight : 200,
@@ -155,7 +155,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						}
 					]
 				}, {
-					fieldLabel : "考核项目描述",
+					fieldLabel : "考核指标描述",
 					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.paDesc",
 					id : "paDesc",

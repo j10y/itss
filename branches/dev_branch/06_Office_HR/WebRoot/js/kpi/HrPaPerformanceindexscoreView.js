@@ -9,7 +9,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		Ext.apply(this, a);
 		this.initComponents();
 		HrPaPerformanceindexscoreView.superclass.constructor.call(this, {
-			title : "考核项目评分标准维护",
+			title : "考核指标评分标准维护",
 			id : "hrPaPerformanceindexscoreView",
 			width : 440,
 			height : 420,

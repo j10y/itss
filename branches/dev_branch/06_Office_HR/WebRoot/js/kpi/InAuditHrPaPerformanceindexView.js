@@ -7,7 +7,7 @@ InAuditHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		InAuditHrPaPerformanceindexView.superclass.constructor.call(this, {
 			id : "InAuditHrPaPerformanceindexView",
-			title : "考核项目管理",
+			title : "考核指标管理",
 			items : [
 				this.searchPanel,
 				this.gridPanel
@@ -40,9 +40,9 @@ InAuditHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：考核项目名称"
+					text : "查询条件：考核指标名称"
 				}, {
-					fieldLabel : "考核项目名称：",
+					fieldLabel : "考核指标名称：",
 					name : "Q_paName_S_LK",
 					xtype : "textfield"
 				}, {
@@ -78,13 +78,11 @@ InAuditHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_PaEdit")) {
-			b.push({
-				iconCls : "btn-edit",
-				qtip : "查看",
-				style : "margin:0 3px 0 3px"
-			});
-		}
+		b.push({
+			iconCls : "btn-preview",
+			qtip : "查看",
+			style : "margin:0 3px 0 3px"
+		});
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -100,10 +98,10 @@ InAuditHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "考核项目名称",
+					header : "考核指标名称",
 					dataIndex : "paName"
 				}, {
-					header : "考核项目类型",
+					header : "考核指标类型",
 					dataIndex : "type",
 					renderer : function(d) {
 						return d.name;
@@ -208,7 +206,7 @@ InAuditHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
-			case "btn-edit":
+			case "btn-preview":
 				this.editHrPaPerformanceindex(a);
 				break ;
 			default:
