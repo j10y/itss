@@ -3,6 +3,7 @@ package com.xpsoft.webservice.service.flow.Impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -557,6 +558,7 @@ public class FlowServiceImpl implements FlowService {
 		ArchUnderTakesService undertakesService = (ArchUnderTakesService) AppUtil.getBean("undertakesService");
 		ArchivesHandleService archivesHandleService = (ArchivesHandleService) AppUtil.getBean("archivesHandleService");
 		ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil.getBean("archRecFiledTypeService");
+		AppUserService appUserService = (AppUserService) AppUtil.getBean("appUserService");
 		this.setActivityName(activityName);
 		this.setTaskId(taskId);
 		JbpmService jbpmService=(JbpmService) AppUtil.getBean("jbpmService");
@@ -617,6 +619,25 @@ public class FlowServiceImpl implements FlowService {
 		if (nextuser != null && nextuser.length() > 0) {
 			this.parmap.put("signUserIds", nextuser);
 		}
+		Set userset=new HashSet();
+		if((processName.equals("请示报告")&&activityName.equals("部门负责人"))
+				||(processName.equals("发文流程-市局发文")&&activityName.equals("科室负责人核稿"))){
+			Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
+			Long userid=archives1.getIssuerId();
+			AppUser appUser =appUserService.get(userid);
+			Long departid=appUser.getDepartment().getDepId();
+			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
+			this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
+		}else if(processName.equals("收文流程-市局收文")&&activityName.equals("办公室主任批阅")){
+			Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
+			Long userid=archives1.getIssuerId();
+			AppUser appUser =appUserService.get(userid);
+			Long departid=appUser.getDepartment().getDepId();
+			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
+			if(archRecUser.getLeaderUserId()!=null&&archRecUser.getLeaderUserId()>0){
+				userset.add(archRecUser.getLeaderUserId().toString());
+			}
+		}
 		// 1局长2分管局长3全有
 		if (checkboxvalue != null && checkboxvalue.length() > 0) {
 			String sql = "select app_user.* from user_role,app_role,app_user "
@@ -625,19 +646,32 @@ public class FlowServiceImpl implements FlowService {
 				sql += "and app_role.roleId="+AppUtil.getPropertity("role.leaderId");
 			} else if (checkboxvalue.equals("2")) {
 				sql += "and app_role.roleId="+AppUtil.getPropertity("role.proxyLeaderId");
+				
+				
 			} else if (checkboxvalue.equals("3")) {
 				sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId="+AppUtil.getPropertity("role.proxyLeaderId")+")";
 			}
 			List<Map> list = processRunService.findDataList(sql);
 			String flowAssignId = "";
 			for (Map map : list) {
-				flowAssignId += map.get("userId").toString() + ",";
+				userset.add(map.get("userId").toString());
+				//flowAssignId += map.get("userId").toString() + ",";
 			}
-			if (list.size() > 0) {
-				flowAssignId = flowAssignId.substring(0,
-						flowAssignId.length() - 1);
+			if(userset.size()>0){
+				Iterator iterator =userset.iterator();
+				while(iterator.hasNext()){
+					flowAssignId+=iterator.next();
+					if(iterator.hasNext()){
+						flowAssignId+=",";
+					}
+				}
 				this.parmap.put("flowAssignId", flowAssignId);
 			}
+//			if (list.size() > 0) {
+//				flowAssignId = flowAssignId.substring(0,
+//						flowAssignId.length() - 1);
+//				this.parmap.put("flowAssignId", flowAssignId);
+//			}
 		}
 		
 		try {
