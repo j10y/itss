@@ -311,6 +311,8 @@
 	<bean id="hrPaPisruleDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaPisruleDaoImpl" parent="baseDao"/>
 	<bean id="hrPaKpiPBC2UserDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiPBC2UserDaoImpl" parent="baseDao"/>
 	<bean id="hrPaKpiitem2userDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiitem2userDaoImpl" parent="baseDao"/>
+	<bean id="hrPaKpipbcHistDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpipbcHistDaoImpl" parent="baseDao"/>
+	<bean id="hrPaKpiitemHistDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiitemHistDaoImpl" parent="baseDao"/>
 	
 	<bean id="hrPaKpiPBC2UserCmpDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiPBC2UserCmpDaoImpl" parent="baseDao"/>
 	<bean id="hrPaKpiitem2userCmpDao" class="com.xpsoft.oa.dao.kpi.impl.HrPaKpiitem2userCmpDaoImpl" parent="baseDao"/>

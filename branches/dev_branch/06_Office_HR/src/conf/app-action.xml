@@ -299,6 +299,8 @@
   <bean id="HrPaPisruleAction" class="com.xpsoft.oa.action.kpi.HrPaPisruleAction" scope="prototype"/>
   <bean id="HrPaKpiPBC2UserAction" class="com.xpsoft.oa.action.kpi.HrPaKpiPBC2UserAction" scope="prototype"/>
   <bean id="HrPaKpiitem2userAction" class="com.xpsoft.oa.action.kpi.HrPaKpiitem2userAction" scope="prototype"/>
+  <bean id="HrPaKpipbcHistAction" class="com.xpsoft.oa.action.kpi.HrPaKpipbcHistAction" scope="prototype"/>
+  <bean id="HrPaKpiitemHistAction" class="com.xpsoft.oa.action.kpi.HrPaKpiitemHistAction" scope="prototype"/>
 <!-- end:  Generated for Package pei From Template: app-action.xml.beansvm -->
   <bean id="RealExecutionAction" class="com.xpsoft.oa.action.hrm.RealExecutionAction" scope="prototype"/>
   <bean id="TaskSchedulerAction" class="com.xpsoft.oa.action.scheduler.TaskSchedulerAction" scope="prototype"/>
