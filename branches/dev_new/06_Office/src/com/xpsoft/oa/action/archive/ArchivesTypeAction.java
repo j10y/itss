@@ -53,7 +53,7 @@ public class ArchivesTypeAction extends BaseAction {
 		List list=this.archivesTypeService.findDataList(sql);
 		String charge="1";
 		if(list!=null&&list.size()>0){
-			charge=((Map)list.get(0)).get("userId").toString();
+			charge=((Map)list.get(0)).get("deptUserId").toString();
 		}
 		sb.append("[");
 		for (ArchivesType dutySection : dutySectionList) {
