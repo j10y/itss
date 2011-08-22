@@ -234,4 +234,22 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		/* 241 */Object[] objs = { depId };
 		/* 242 */return findByHql(hql, objs);
 	}
+	
+	public List<AppUser> findByDepIdAndPostName(Long depId, String postName) {
+		final String hql = "from AppUser where department.depId=? and position=?";
+		final long item1 = depId;
+		final String item2 = postName;
+		
+		return (List)this.getHibernateTemplate().execute(
+			new HibernateCallback() {
+				public Object doInHibernate(Session session)
+				throws HibernateException, SQLException {
+					Query query = session.createQuery(hql);
+					query.setLong(0, item1);
+					query.setString(1, item2);
+					return query.list();
+				}
+			}
+		);
+	}
 }
