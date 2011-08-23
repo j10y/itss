@@ -115,8 +115,10 @@ public class EmpProfileAction extends BaseAction {
 			pass = true;
 
 		/* 139 */if (pass) {
-			/* 140 */this.empProfile.setApprovalStatus(Short
-					.valueOf(EmpProfile.CHECK_FLAG_NONE));
+			if(empProfile.getApprovalStatus()==null){
+				this.empProfile.setApprovalStatus(Short
+						.valueOf(EmpProfile.CHECK_FLAG_NONE));
+			}
 			/* 141 */this.empProfileService.save(this.empProfile);
 			/* 142 */buff.append("success:true}");
 		} else {

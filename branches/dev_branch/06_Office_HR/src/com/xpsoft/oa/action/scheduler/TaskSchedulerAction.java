@@ -148,6 +148,9 @@ public class TaskSchedulerAction extends BaseAction{
 		}else if(cycle.equals("每天")){
 			runTime=times[2]+" "+times[1]+" "+times[0]+" * * ?";
 			desc="每天/"+datetime;
+		}else if(cycle.equals("失效")){
+			runTime="0 0 0 ? 12 6L 2055";
+			desc="取消执行任务";
 		}
 		if(taskScheduler.getId()!=null){
 			taskScheduler=taskSchedulerService.get(taskScheduler.getId());
