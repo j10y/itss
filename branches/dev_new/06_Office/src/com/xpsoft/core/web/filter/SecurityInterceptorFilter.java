@@ -73,7 +73,10 @@
 /* 84 */         return true;
 /*    */       }
 /*    */     }
-/* 87 */     return false;
+			 if(url.equals("/")&&auth instanceof org.springframework.security.providers.anonymous.AnonymousAuthenticationToken){
+				 return false;
+			 }
+/* 87 */     return true;
 /*    */   }
 /*    */ 
 /*    */   public void loadDataSource() {
