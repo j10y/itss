@@ -45,6 +45,17 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 									handler : function(){
 									}
 								})
+								, new Ext.Button({
+									iconCls : 'btn-edit',
+									scope : this,
+									text : '修改公文',
+									handler : function(){
+										new ArchivesDraftWin({
+											archivesId : '${archives_archivesId}',
+											detailPanel : this.detailPanel
+										}).show();
+									}
+								})
 								],
 					buttonAlign : 'center',
 					items : [this.detailPanel,this.formPanel]
