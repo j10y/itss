@@ -50,6 +50,7 @@ TaskSchedulerForm = Ext.extend(Ext.Window, {
 				fieldLabel : "描述信息",
 				width:300,
 				name : "taskScheduler.desc",
+				readOnly : true,
 				id : "taskScheduler.desc"
 			},{fieldLabel : "周期",
 				id : "taskScheduler.cycle",
@@ -60,7 +61,8 @@ TaskSchedulerForm = Ext.extend(Ext.Window, {
 					"每半年",
 					"每季度",
 					"每月",
-					"每天"
+					"每天",
+					"失效"
 				],
 				listeners : {
 					select : function(d) {
@@ -111,7 +113,7 @@ TaskSchedulerForm = Ext.extend(Ext.Window, {
 							Ext.getCmp("taskScheduler.id").setValue(f.id);
 							Ext.getCmp("taskScheduler.taskName").setValue(f.taskName);
 							Ext.getCmp("taskScheduler.desc").setValue(f.desc);
-							Ext.getCmp("taskScheduler.desc").disable();
+							//Ext.getCmp("taskScheduler.desc").readonly();
 							Ext.getCmp("taskScheduler.cronTrigger").setValue(f.cronTrigger);
 						},
 						failure : function(a, b) {
