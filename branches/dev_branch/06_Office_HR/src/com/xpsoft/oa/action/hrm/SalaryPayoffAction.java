@@ -217,4 +217,35 @@ public class SalaryPayoffAction extends BaseAction {
 		/* 220 */this.jsonString = buff.toString();
 		/* 221 */return "success";
 	}
+	public String export(){
+		QueryFilter filter = new QueryFilter(getRequest());
+		List<SalaryPayoff> list = this.salaryPayoffService
+				.getAll(filter);
+		String [] titles=new String[10];
+		String [] proNames=new String[10];
+		String fileRootPath=getRequest().getRealPath("exportFile");
+		titles[0]="员工姓名";
+		titles[1]="档案编号";
+		titles[2]="身份证";
+		titles[3]="薪标金额";
+		titles[4]="奖惩金额";
+		titles[5]="扣除金额";
+		titles[6]="绩效工资";
+		titles[7]="实发金额";
+		titles[8]="统计时间";
+		titles[9]="具体信息";
+		proNames[0]="fullname";
+		proNames[1]="profileNo";
+		proNames[2]="idNo";
+		proNames[3]="standAmount";
+		proNames[4]="encourageAmount";
+		proNames[5]="deductAmount";
+		proNames[6]="achieveAmount";
+		proNames[7]="acutalAmount";
+		proNames[8]="regTime";
+		proNames[9]="memo";
+		Gson gson = new Gson();
+		this.jsonString ="{success:true,data:"+gson.toJson("exportFile/"+this.salaryPayoffService.exportData(fileRootPath, "薪资", "salarypayoff", titles, proNames, list, "objlist"))+"}";
+		return "success";
+	}
 }
