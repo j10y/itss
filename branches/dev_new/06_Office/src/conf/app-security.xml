@@ -51,7 +51,8 @@
 			</b:set>
 		</b:property>
 		<b:property name="publicUrls">
-			<b:set>				
+			<b:set>						
+				<b:value>/archive/getUserByArchidArchRecUser.do</b:value>
 				<b:value>/flow/checkTask.do</b:value>
 				<b:value>/panelTreeMenu.do</b:value>
 				<b:value>/file-upload</b:value>
