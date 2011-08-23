@@ -388,5 +388,6 @@ App.importJs = {
 			__ctxPath + "/js/kpi/HrPaKpipbcFormView.js"],
 	PublishHrPaKpipbcView : [__ctxPath + "/js/kpi/PublishHrPaKpipbcView.js",
 			__ctxPath + "/js/kpi/HrPaKpipbcForm.js",
-			__ctxPath + "/js/kpi/HrPaPiView.js"]
+			__ctxPath + "/js/kpi/HrPaPiView.js",
+			__ctxPath + "/js/kpi/HrPaKpipbcFormView.js"]
 };
