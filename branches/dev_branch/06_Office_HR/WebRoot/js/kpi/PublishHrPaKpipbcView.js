@@ -101,6 +101,11 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 				style : "margin:0 3px 0 3px"
 			});
 		}
+		b.push({
+			iconCls : "btn-preview",
+			qtip : "查看",
+			style : "margin:0 3px 0 3px"
+		});
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -253,6 +258,11 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 			from : "publish"
 		}).show();
 	},
+	previewHrPaKpipbc : function(a) {
+		new HrPaKpipbcFormView({
+			pbcId : a.data.id
+		}).show();
+	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
 			case "btn-del":
@@ -261,6 +271,8 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 			case "btn-edit":
 				this.editHrPaKpipbc(a);
 				break ;
+			case "btn-preview":
+				this.previewHrPaKpipbc(a);
 			default:
 				break ;
 		}
