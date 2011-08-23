@@ -74,15 +74,22 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		QueryFilter filter=new QueryFilter(map);
 		List<HrPaKpiitem2user> list=hrPaKpiitem2userService.getAll(filter);
 		float totalScore=0;
+		boolean isOnlyNegative=false;
+		Double baseScore=null;
 		for(HrPaKpiitem2user hrPaKpiitem2user:list){
 			HrPaPerformanceindex hrPaPerformanceindex=hrPaPerformanceindexService.get(hrPaKpiitem2user.getPiId());
-			if(hrPaPerformanceindex.getPaIsOnlyNegative()==1){
+			if(hrPaPerformanceindex.getPaIsOnlyNegative()==1&&hrPaKpiitem2user.getResult()<=hrPaPerformanceindex.getBaseScore()){
 				//此处处理是否唯一否决条件为是的时候，直接给出得分，跳出循环
-				
-				break;
+				if(baseScore==null||baseScore>hrPaPerformanceindex.getFinalScore()){
+					baseScore=hrPaPerformanceindex.getFinalScore();
+					isOnlyNegative=true;
+				}
 			}else{
 				totalScore+=hrPaKpiitem2user.getResult()*hrPaKpiitem2user.getWeight();
 			}
+		}
+		if(isOnlyNegative){
+			totalScore=baseScore.floatValue();
 		}
 		hrPaKpiPBC2User.setTotalScore(totalScore);
 		hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
