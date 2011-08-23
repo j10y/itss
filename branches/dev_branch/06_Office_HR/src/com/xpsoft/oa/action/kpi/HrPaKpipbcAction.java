@@ -82,6 +82,19 @@ public class HrPaKpipbcAction extends BaseAction{
 		return "success";
 	}
 	
+	public String preview() {
+		this.hrPaKpipbc = this.hrPaKpipbcService.get(this.id);
+		
+		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_pbc.id_L_EQ", String.valueOf(this.id));
+		QueryFilter filter = new QueryFilter(map);
+		List<HrPaKpiitem> kpiItemList = hrPaKpiitemService.getAll(filter);
+		this.getRequest().setAttribute("kpiItemList", kpiItemList);
+		
+		return "show";
+	}
+	
 	public String multiDel() {
 		String[] ids = this.getRequest().getParameterValues("ids");
 		if(ids != null) {
