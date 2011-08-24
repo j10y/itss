@@ -48,7 +48,7 @@ JobView = Ext.extend(Ext.Panel, {
 			}, {
 				text : "所属部门："
 			}, {
-				name : "Q_depId_S_LK",
+				name : "Q_department.depName_S_LK",
 				xtype : "textfield"
 			}, {
 				text : "备注："
