@@ -308,6 +308,9 @@ public class UserManageAction extends BaseDispatchAction{
 		user.setDepartment(dept);
 		user.setRealName(HttpUtil.ConverUnicode(realName));
 		user.setUserName(userName);
+		//add by awen for add itcode logic on 2011-08-24 begin
+		user.setItcode(userName);
+		//add by awen for add itcode logic on 2011-08-24 end
 		user.setPassword(password);
 		user.setEmail(email);
 		user.setTelephone(telephone);
@@ -406,6 +409,9 @@ public class UserManageAction extends BaseDispatchAction{
 				UserInfo user = sms.findUserById(userId);
 				user.setRealName(realName);
 				user.setUserName(userName);
+				//add by awen for add itcode logic on 2011-08-24 begin
+				user.setItcode(userName);
+				////add by awen for add itcode logic on 2011-08-24 end
 				user.setPassword(password);
 				user.setEmail(email);
 				user.setEnabled(new Integer(enabled));
