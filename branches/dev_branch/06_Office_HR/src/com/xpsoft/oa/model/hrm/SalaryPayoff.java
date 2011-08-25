@@ -34,8 +34,47 @@ public class SalaryPayoff extends BaseModel {
 	protected String checkOpinion;
 	protected Long standardId;
 
+	protected BigDecimal provident;//公积金
+	
+	protected BigDecimal insurance;//保险
+	
+	protected BigDecimal selftax;//个人所得税
+	
+	
+	
 	public SalaryPayoff() {
 	}
+
+	
+	public BigDecimal getProvident() {
+		return provident;
+	}
+
+
+	public void setProvident(BigDecimal provident) {
+		this.provident = provident;
+	}
+
+
+	public BigDecimal getInsurance() {
+		return insurance;
+	}
+
+
+	public void setInsurance(BigDecimal insurance) {
+		this.insurance = insurance;
+	}
+
+
+	public BigDecimal getSelftax() {
+		return selftax;
+	}
+
+
+	public void setSelftax(BigDecimal selftax) {
+		this.selftax = selftax;
+	}
+
 
 	public SalaryPayoff(Long in_recordId) {
 		/* 60 */setRecordId(in_recordId);

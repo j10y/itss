@@ -3,19 +3,19 @@ package com.xpsoft.oa.model.kpi;
 import com.xpsoft.core.model.BaseModel;
 
 public class HrPaKpiitem2userCmp extends BaseModel {
-	protected long id;
+	protected Long id;
 	protected HrPaKpiPBC2UserCmp pbc2User;
-	protected long piId;
+	protected Long piId;
 	protected double weight;
 	protected double result;
 	
 	public HrPaKpiitem2userCmp() {}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -27,11 +27,11 @@ public class HrPaKpiitem2userCmp extends BaseModel {
 		this.pbc2User = pbc2User;
 	}
 
-	public long getPiId() {
+	public Long getPiId() {
 		return piId;
 	}
 
-	public void setPiId(long piId) {
+	public void setPiId(Long piId) {
 		this.piId = piId;
 	}
 
@@ -50,4 +50,5 @@ public class HrPaKpiitem2userCmp extends BaseModel {
 	public void setResult(double result) {
 		this.result = result;
 	}
+
 }

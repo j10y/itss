@@ -257,5 +257,46 @@
             not-null="true"
             unique="false"
         />
+        
+        <property
+            name="provident"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="provident"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+        
+        <property
+            name="insurance"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="insurance"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+        
+        <property
+            name="selftax"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="selftax"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+        
+        
      </class>
 </hibernate-mapping>

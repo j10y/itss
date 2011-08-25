@@ -191,8 +191,37 @@ public class SalaryPayoffAction extends BaseAction {
 				/* 195 */.append(salaryDetail.getAchieveAmount())
 				/* 196 */.append("</td>");
 			}
+			content.append("</tr>");
+			content.append("</tr>");
+			/* 175 */if ((salaryDetail.getProvident() != new BigDecimal(0))
+					&&
+					/* 176 */(salaryDetail.getProvident() != null)) {
+				/* 177 */content.append("<th>")
+				/* 178 */.append("公积金</th><td>")
+				/* 179 */.append(salaryDetail.getProvident())
+				/* 180 */.append("</td>");
+			}
+
+			/* 183 */if ((salaryDetail.getInsurance()!= new BigDecimal(0))
+					&&
+					/* 184 */(salaryDetail.getInsurance() != null)) {
+				/* 185 */content.append("<th>")
+				/* 186 */.append("保险</th><td>")
+				/* 187 */.append(salaryDetail.getInsurance())
+				/* 188 */.append("</td>");
+			}
+
+			/* 191 */if ((salaryDetail.getSelftax() != new BigDecimal(0))
+					&&
+					/* 192 */(salaryDetail.getSelftax() != null)) {
+				/* 193 */content.append("<th>")
+				/* 194 */.append("个人所得税</th><td>")
+				/* 195 */.append(salaryDetail.getSelftax())
+				/* 196 */.append("</td>");
+			}
+			content.append("</tr>");
 			/* 198 */content
-					.append("</tr></table><table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\"><tr>");
+					.append("</table><table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\"><tr>");
 			/* 199 */for (StandSalaryItem item : items) {
 				/* 200 */content.append("<th>")
 				/* 201 */.append(item.getItemName())
@@ -221,19 +250,23 @@ public class SalaryPayoffAction extends BaseAction {
 		QueryFilter filter = new QueryFilter(getRequest());
 		List<SalaryPayoff> list = this.salaryPayoffService
 				.getAll(filter);
-		String [] titles=new String[10];
-		String [] proNames=new String[10];
+		String [] titles=new String[13];
+		String [] proNames=new String[13];
 		String fileRootPath=getRequest().getRealPath("exportFile");
 		titles[0]="员工姓名";
 		titles[1]="档案编号";
 		titles[2]="身份证";
 		titles[3]="薪标金额";
-		titles[4]="奖惩金额";
+		titles[4]="奖励金额";
 		titles[5]="扣除金额";
 		titles[6]="绩效工资";
-		titles[7]="实发金额";
-		titles[8]="统计时间";
-		titles[9]="具体信息";
+		titles[7]="公积金";
+		titles[8]="保险";
+		titles[9]="个人所得税";
+		titles[10]="实发金额";
+		titles[11]="统计时间";
+		titles[12]="具体信息";
+		
 		proNames[0]="fullname";
 		proNames[1]="profileNo";
 		proNames[2]="idNo";
@@ -241,9 +274,13 @@ public class SalaryPayoffAction extends BaseAction {
 		proNames[4]="encourageAmount";
 		proNames[5]="deductAmount";
 		proNames[6]="achieveAmount";
-		proNames[7]="acutalAmount";
-		proNames[8]="regTime";
-		proNames[9]="memo";
+		proNames[7]="provident";
+		proNames[8]="insurance";
+		proNames[9]="selftax";
+		proNames[10]="acutalAmount";
+		proNames[11]="regTime";
+		proNames[12]="memo";
+		
 		Gson gson = new Gson();
 		this.jsonString ="{success:true,data:"+gson.toJson("exportFile/"+this.salaryPayoffService.exportData(fileRootPath, "薪资", "salarypayoff", titles, proNames, list, "objlist"))+"}";
 		return "success";

@@ -6,7 +6,7 @@ import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 
 public class HrPaKpiPBC2UserCmp extends BaseModel {
-	protected long id;
+	protected Long id;
 	protected String pbcName;
 	protected String fromPBC;//此处存放来源PBC的ID数组，以“,”分割。
 	protected AppUser belongUser;
@@ -20,11 +20,11 @@ public class HrPaKpiPBC2UserCmp extends BaseModel {
 	
 	public HrPaKpiPBC2UserCmp() {}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
