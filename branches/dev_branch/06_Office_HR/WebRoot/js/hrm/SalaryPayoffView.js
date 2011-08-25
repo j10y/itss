@@ -81,7 +81,7 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 							fields : [{
 									name : "recordId",
 									type : "int"
-								}, "fullname", "userId", "profileNo", "idNo", "standAmount", "encourageAmount", "deductAmount", "achieveAmount", "encourageDesc", "deductDesc", "memo", "acutalAmount", "regTime", "register", "checkName", "checkTime", "checkStatus", "startTime", "endTime", "standardId"]
+								}, "fullname", "userId", "profileNo", "idNo", "standAmount", "encourageAmount", "deductAmount", "achieveAmount", "encourageDesc", "deductDesc", "memo", "acutalAmount", "provident","insurance","selftax","regTime", "register", "checkName", "checkTime", "checkStatus", "startTime", "endTime", "standardId"]
 						});
 				this.store.setDefaultSort("recordId", "desc");
 				this.store.load({
@@ -114,6 +114,24 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 								}, {
 									header : "实发金额",
 									dataIndex : "acutalAmount",
+									renderer : function (c) {
+										return '<img src="' + __ctxPath + '/images/flag/customer/rmb.png"/>' + c;
+									}
+								}, {
+									header : "公积金",
+									dataIndex : "provident",
+									renderer : function (c) {
+										return '<img src="' + __ctxPath + '/images/flag/customer/rmb.png"/>' + c;
+									}
+								}, {
+									header : "保险",
+									dataIndex : "insurance",
+									renderer : function (c) {
+										return '<img src="' + __ctxPath + '/images/flag/customer/rmb.png"/>' + c;
+									}
+								}, {
+									header : "个人所得税",
+									dataIndex : "selftax",
 									renderer : function (c) {
 										return '<img src="' + __ctxPath + '/images/flag/customer/rmb.png"/>' + c;
 									}
