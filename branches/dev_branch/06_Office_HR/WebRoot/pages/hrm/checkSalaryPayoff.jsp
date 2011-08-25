@@ -85,6 +85,34 @@
 	
 	<tr>
 		<th>
+			公积金
+		</th>
+		<td>
+			${salaryPayoff.provident }
+		</td>
+		<th>
+			保险
+		</th>
+		<td>
+			${salaryPayoff.insurance }
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			个人所得税
+		</th>
+		<td>
+			${salaryPayoff.selftax }
+		</td>
+		<th>
+		</th>
+		<td>
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
 			奖励描述
 		</th>
 		<td colspan="3">
