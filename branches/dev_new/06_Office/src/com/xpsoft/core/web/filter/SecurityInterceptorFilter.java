@@ -73,6 +73,9 @@
 /* 84 */         return true;
 /*    */       }
 /*    */     }
+			 if(url.equals("/index.jsp")&&auth instanceof org.springframework.security.providers.anonymous.AnonymousAuthenticationToken){
+				 url = "/";
+			 }
 			 if(url.equals("/")&&auth instanceof org.springframework.security.providers.anonymous.AnonymousAuthenticationToken){
 				 return false;
 			 }

@@ -279,8 +279,8 @@ ArchivesRecForm = Ext
 																						id : "ArchivesRecForm.issueDep",
 																						xtype : "textfield",
 																						width : "70%",
-																						allowBlank : false,
-																						readOnly : true
+																						allowBlank : false/*,
+																						readOnly : true*/
 																					},
 																					{
 																						name : "archives.depId",

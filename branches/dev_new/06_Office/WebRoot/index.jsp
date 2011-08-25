@@ -18,6 +18,9 @@
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="msthemecompatible" content="no">
+		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+		<META HTTP-EQUIV="Expires" CONTENT="0"> 
 		<title><%=AppUtil.getCompanyName()%>－－办公协同管理系统</title>
 		<script type="text/javascript">
 			var __currentUserId = "${currentUserId}";

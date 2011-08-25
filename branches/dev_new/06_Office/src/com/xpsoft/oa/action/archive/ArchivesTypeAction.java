@@ -20,6 +20,8 @@ import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchivesTypeService;
 
+import flexjson.JSONSerializer;
+
 public class ArchivesTypeAction extends BaseAction {
 
 	@Resource
@@ -99,10 +101,13 @@ public class ArchivesTypeAction extends BaseAction {
 				.append(filter.getPagingBean().getTotalItems()).append(
 						",result:");
 
-		Gson gson = new Gson();
-		buff.append(gson.toJson(list, type));
+//		Gson gson = new Gson();
+//		buff.append(gson.toJson(list, type));
+//		buff.append("}");
+//		this.jsonString = buff.toString();
+		JSONSerializer serializer = new JSONSerializer();
+		buff.append(serializer.exclude(new String[] { "class" }).serialize(list));
 		buff.append("}");
-
 		this.jsonString = buff.toString();
 
 		return "success";

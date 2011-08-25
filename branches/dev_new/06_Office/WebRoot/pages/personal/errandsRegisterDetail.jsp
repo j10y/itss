@@ -35,6 +35,18 @@
 			${errandsRegister.leaveTypeName}
 		</td>
 	</tr>
+	<tr>
+		<th>申请人</th>
+		<td>
+			${errandsRegister.appUser.fullname}
+		</td>
+	</tr>
+	<tr>
+		<th>申请人部门</th>
+		<td>
+			${errandsRegister.appUser.department.depName}
+		</td>
+	</tr>
 	<!-- 
 	<tr>
 		<th>审批人</th>

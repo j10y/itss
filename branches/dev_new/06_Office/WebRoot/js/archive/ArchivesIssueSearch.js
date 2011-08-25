@@ -146,8 +146,7 @@ ArchivesIssueSearch = Ext
 																		} else {
 																			if (c == "6") {
 																				return '<font color="red">待分管领导审核</font>';
-																			} else {
-																				
+																			} else {																				
 																				if (c == "7") {
 																					return '<font color="green">归档</font>';
 																				} else {

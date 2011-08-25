@@ -170,6 +170,9 @@ ErrandsRegisterView.prototype.grid = function() {
 							header : "审批状态",
 							dataIndex : "status",
 							renderer : function(e) {
+								if (e == "0") {
+									return "<font color='red'>草稿</font>";
+								}
 								if (e == "1") {
 									return "<font color='red'>待部门负责人审批</font>";
 								}

@@ -120,93 +120,59 @@ OfficeHeaderReadForm = Ext.extend(Ext.Panel, {
 					var roleIds = "";
 					Ext.Ajax.request({
 								scope : this,
-								url :__ctxPath + "/system/getAssignIdAppRole.do",
+								url : __ctxPath + "/archive/getUserByChcekArchRecUser.do",
 								params : {
-									type : checkValue
+									archid : '${archives_archivesId}',
+									checkValue:checkValue
 								},
 								success : function(b, c) {
-									var d = Ext.util.JSON
-											.decode(b.responseText);
-									if (d.success) {
-										roleIds = d.roleIds
-									}
+									var d = Ext.util.JSON.decode(b.responseText);																	
+									userIds=d.userIds;
+									//alert(userIds);
+									//return;
 									
-									Ext.Ajax.request({
-									scope : this,
-									url :__ctxPath + "/system/findByRoleIdsAppUser.do",
-									params : {
-										roleIds : roleIds
-									},
-									success : function(b, c) {
-										var d = Ext.util.JSON
-												.decode(b.responseText);
-										if (d.success) {
-											for(var i=0; i<d.result.length; i++){
-												userIds += d.result[i].userId;
-												if(i<d.result.length-1){
-													userIds += ",";
-												}
-											}	
-											if(checkValue==2||checkValue==3){
-												Ext.Ajax.request({
-													url : __ctxPath
-															+ "/archive/getUserByArchidArchRecUser.do",
-															params : {
-																archid : '${archives_archivesId}'
-															},
-													success : function(h, j) {
-														var k = Ext.util.JSON
-																.decode(h.responseText).data;
-																
-														userIds=userIds+","+k.leaderUserId;
-													}
-												});
-											}		
+									formPanel.getForm().submit({
+										method : 'POST',
+										waitMsg : '正在提交数据...',
+										success : function(fp, action) {
 											formPanel.getForm().submit({
-												method : 'POST',
-												waitMsg : '正在提交数据...',
-												success : function(fp, action) {
-													formPanel.getForm().submit({
-												            url:__ctxPath+ "/flow/nextProcessActivity.do",
-															method:'post',
-															params:{taskId:panel.taskId,signalName:signalName,activityName:activityName,flowAssignId:userIds},
-															success : function(fp, action) {
-															    Ext.ux.Toast.msg('操作信息','成功保存！');
-															    AppUtil.removeTab('ProcessForm'+panel.taskId);
-																var myTaskView=Ext.getCmp("MyTaskGrid");
-																var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
-																if(appHomeTaskGrid!=null){
-																	appHomeTaskGrid.getStore().reload();
-																}
-																if(myTaskView!=null){
-																	//AppUtil.activateTab(taskView);
-																	myTaskView.getStore().reload();
-																}
-															},
-															failure : function(fp, action) {
-																Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
-															}
-												    });
-													var gridPanel = Ext
-															.getCmp('ArchivesHandleGrid');
-													if (gridPanel != null) {
-														gridPanel.getStore().reload();
+										            url:__ctxPath+ "/flow/nextProcessActivity.do",
+													method:'post',
+													params:{taskId:panel.taskId,signalName:signalName,activityName:activityName,flowAssignId:userIds},
+													success : function(fp, action) {
+													    Ext.ux.Toast.msg('操作信息','成功保存！');
+													    AppUtil.removeTab('ProcessForm'+panel.taskId);
+														var myTaskView=Ext.getCmp("MyTaskGrid");
+														var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+														if(appHomeTaskGrid!=null){
+															appHomeTaskGrid.getStore().reload();
+														}
+														if(myTaskView!=null){
+															//AppUtil.activateTab(taskView);
+															myTaskView.getStore().reload();
+														}
+													},
+													failure : function(fp, action) {
+														Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
 													}
-												},
-												failure : function(fp, action) {
-													Ext.MessageBox.show({
-																title : '操作信息',
-																msg : '信息保存出错，请联系管理员！',
-																buttons : Ext.MessageBox.OK,
-																icon : Ext.MessageBox.ERROR
-															});
-													window.close();
-												}
-											});
-											
+										    });
+											var gridPanel = Ext
+													.getCmp('ArchivesHandleGrid');
+											if (gridPanel != null) {
+												gridPanel.getStore().reload();
+											}
+										},
+										failure : function(fp, action) {
+											Ext.MessageBox.show({
+														title : '操作信息',
+														msg : '信息保存出错，请联系管理员！',
+														buttons : Ext.MessageBox.OK,
+														icon : Ext.MessageBox.ERROR
+													});
+											window.close();
 										}
-									}
-								});
+									});
+									
 								}
 							});
 				}
