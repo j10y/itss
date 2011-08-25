@@ -627,7 +627,9 @@ public class FlowServiceImpl implements FlowService {
 			AppUser appUser =appUserService.get(userid);
 			Long departid=appUser.getDepartment().getDepId();
 			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
-			this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
+			if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
+				this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
+			}
 		}else if(processName.equals("收文流程-市局收文")&&activityName.equals("办公室主任批阅")){
 			Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
 			Long userid=archives1.getIssuerId();
@@ -637,41 +639,51 @@ public class FlowServiceImpl implements FlowService {
 			if(archRecUser.getLeaderUserId()!=null&&archRecUser.getLeaderUserId()>0){
 				userset.add(archRecUser.getLeaderUserId().toString());
 			}
+		}else if(processName.equals("请假-中")&&activityName.equals("部门负责人审批")){
+			ErrandsRegister errandsRegister = ((ErrandsRegister) errandsRegisterService.get(Long.parseLong(id)));
+			Long userid=errandsRegister.getApprovalId();
+			AppUser appUser =appUserService.get(userid);
+			Long departid=appUser.getDepartment().getDepId();
+			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
+			if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
+				this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
+			}
 		}
 		// 1局长2分管局长3全有
-		if (checkboxvalue != null && checkboxvalue.length() > 0) {
-			String sql = "select app_user.* from user_role,app_role,app_user "
+		if (checkboxvalue != null && checkboxvalue.length() > 0) {			
+			if (checkboxvalue.equals("1")||checkboxvalue.equals("3")) {
+				String sql = "select app_user.* from user_role,app_role,app_user "
 					+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
-			if (checkboxvalue.equals("1")) {
 				sql += "and app_role.roleId="+AppUtil.getPropertity("role.leaderId");
-			} else if (checkboxvalue.equals("2")) {
-				sql += "and app_role.roleId="+AppUtil.getPropertity("role.proxyLeaderId");
-				
-				
-			} else if (checkboxvalue.equals("3")) {
-				sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId="+AppUtil.getPropertity("role.proxyLeaderId")+")";
-			}
-			List<Map> list = processRunService.findDataList(sql);
-			String flowAssignId = "";
-			for (Map map : list) {
-				userset.add(map.get("userId").toString());
-				//flowAssignId += map.get("userId").toString() + ",";
-			}
-			if(userset.size()>0){
-				Iterator iterator =userset.iterator();
-				while(iterator.hasNext()){
-					flowAssignId+=iterator.next();
-					if(iterator.hasNext()){
-						flowAssignId+=",";
-					}
+				List<Map> list = processRunService.findDataList(sql);
+				String flowAssignId = "";
+				for (Map map : list) {
+					userset.add(map.get("userId").toString());
+					//flowAssignId += map.get("userId").toString() + ",";
 				}
-				this.parmap.put("flowAssignId", flowAssignId);
-			}
-//			if (list.size() > 0) {
-//				flowAssignId = flowAssignId.substring(0,
-//						flowAssignId.length() - 1);
-//				this.parmap.put("flowAssignId", flowAssignId);
-//			}
+				if(userset.size()>0){
+					Iterator iterator =userset.iterator();
+					while(iterator.hasNext()){
+						flowAssignId+=iterator.next();
+						if(iterator.hasNext()){
+							flowAssignId+=",";
+						}
+					}
+					this.parmap.put("flowAssignId", flowAssignId);
+				}
+			} else if (checkboxvalue.equals("2")) {
+				String flowAssignId = "";
+				if(userset.size()>0){
+					Iterator iterator =userset.iterator();
+					while(iterator.hasNext()){
+						flowAssignId+=iterator.next();
+						if(iterator.hasNext()){
+							flowAssignId+=",";
+						}
+					}
+					this.parmap.put("flowAssignId", flowAssignId);
+				}
+			}		
 		}
 		
 		try {
