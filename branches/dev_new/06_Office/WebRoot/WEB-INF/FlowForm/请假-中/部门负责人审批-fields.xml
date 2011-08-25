@@ -3,4 +3,5 @@
 	<field name="leaderRead.readId" label="primaryKey" type="long" isShowed="false" />
     <field name="leaderRead.leaderOpinion" label="审批意见" type="varchar" length="1024"/>
 	<field name="errandsRegister.dateId" label="所属请假ID" type="long" isShowed="false"/>
+	<field name="flowAssignId" label="审批人" type="varchar" isShowed="false"/>
 </fields>
