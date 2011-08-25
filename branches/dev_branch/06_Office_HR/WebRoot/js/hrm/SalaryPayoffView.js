@@ -56,6 +56,20 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 									mode : "local",
 									triggerAction : "all",
 									store : [["", "　"], ["0", "未审核"], ["1", "审核通过"], ["2", "审核未通过"]]
+								},{
+									text : "日期从"
+								}, {
+									name : "Q_startTime_D_GE",
+									width : 100,
+									xtype : "datefield",
+									format : "Y-m-d"
+								}, {
+									text : "至"
+								}, {
+									name : "Q_endTime_D_LE",
+									width : 100,
+									xtype : "datefield",
+									format : "Y-m-d"
 								}, {
 									xtype : "button",
 									text : "查询",
