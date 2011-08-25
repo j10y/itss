@@ -10,10 +10,12 @@ import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.archive.ArchRecUser;
 import com.xpsoft.oa.model.archive.Archives;
 import com.xpsoft.oa.model.archive.ArchivesDoc;
+import com.xpsoft.oa.model.personal.ErrandsRegister;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchRecUserService;
 import com.xpsoft.oa.service.archive.ArchivesService;
+import com.xpsoft.oa.service.personal.ErrandsRegisterService;
 import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.oa.service.system.DepartmentService;
 import java.lang.reflect.Type;
@@ -192,6 +194,21 @@ public class ArchRecUserAction extends BaseAction {
 		String id = getRequest().getParameter("archid");
 		Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
 		Long userid=archives1.getIssuerId();
+		AppUser appUser =appUserService.get(userid);
+		Long departid=appUser.getDepartment().getDepId();
+		ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
+ 		Gson gson = new Gson();
+ 		StringBuffer sb = new StringBuffer("{success:true,data:");
+ 			sb.append(gson.toJson(archRecUser));
+ 			sb.append("}");
+		setJsonString(sb.toString());
+		return "success";
+	}
+	public String getUserByErrandId() {
+		ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
+		String id = getRequest().getParameter("errid");
+		ErrandsRegister errandsRegister = ((ErrandsRegister) errandsRegisterService.get(Long.parseLong(id)));
+		Long userid=errandsRegister.getApprovalId();
 		AppUser appUser =appUserService.get(userid);
 		Long departid=appUser.getDepartment().getDepId();
 		ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
