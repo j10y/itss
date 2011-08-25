@@ -1,15 +1,21 @@
 package com.xpsoft.oa.action.archive;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.archive.ArchRecUser;
 import com.xpsoft.oa.model.archive.Archives;
-import com.xpsoft.oa.model.archive.ArchivesDoc;
 import com.xpsoft.oa.model.personal.ErrandsRegister;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
@@ -18,11 +24,6 @@ import com.xpsoft.oa.service.archive.ArchivesService;
 import com.xpsoft.oa.service.personal.ErrandsRegisterService;
 import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.oa.service.system.DepartmentService;
-import java.lang.reflect.Type;
-import java.util.List;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.lang.StringUtils;
 
 public class ArchRecUserAction extends BaseAction {
 
@@ -204,6 +205,7 @@ public class ArchRecUserAction extends BaseAction {
 		setJsonString(sb.toString());
 		return "success";
 	}
+	
 	public String getUserByErrandId() {
 		ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
 		String id = getRequest().getParameter("errid");
@@ -216,6 +218,56 @@ public class ArchRecUserAction extends BaseAction {
  		StringBuffer sb = new StringBuffer("{success:true,data:");
  			sb.append(gson.toJson(archRecUser));
  			sb.append("}");
+		setJsonString(sb.toString());
+		return "success";
+	}
+
+	/**
+	 * checkValue {1:局长,2:分管局长,3:局长或分管局长}
+	 * @return
+	 */
+	public String getUserByChcek() {
+		String type = getRequest().getParameter("checkValue");
+		String roleIds = "";
+		List<AppUser> userList = new ArrayList();
+		ArchRecUser archRecUser = null;
+		if(type!=null && (type.equals("1")||type.equals("3"))){//局长
+			roleIds = AppUtil.getPropertity("role.leaderId");
+			String [] roles = roleIds.split(",");
+			Long [] roleIdArray = new Long [roles.length]; 
+			for(int i=0; i<roles.length; i++){
+				roleIdArray  [i] = new Long(roles[i]); 
+			}
+			if (StringUtils.isNotEmpty(roleIds)) {
+				userList = this.appUserService.findByRoleIds(roleIdArray);
+			}
+		}
+		if(type!=null && (type.equals("2")||type.equals("3"))){
+			ArchivesService archivesService = (ArchivesService) AppUtil.getBean("archivesService");
+			String id = getRequest().getParameter("archid");
+			Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
+			Long userid=archives1.getIssuerId();
+			AppUser appUser =appUserService.get(userid);
+			Long departid=appUser.getDepartment().getDepId();
+			archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
+		}
+		StringBuffer sb = new StringBuffer("{success:true,userIds:'");
+		for(int i=0; i<userList.size(); i++){
+			if(i<userList.size()-1){
+				sb.append(userList.get(i).getUserId()).append(",");
+			}else{
+				sb.append(userList.get(i).getUserId());
+			}
+		}
+		if(archRecUser!=null){
+			if(sb.toString().endsWith("'")){//说明前面没人
+				sb.append(archRecUser.getLeaderUserId());
+			}else{
+				sb.append(",").append(archRecUser.getLeaderUserId());
+			}
+			
+		}
+		sb.append("'}");
 		setJsonString(sb.toString());
 		return "success";
 	}
