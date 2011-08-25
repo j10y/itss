@@ -5,44 +5,45 @@ import java.util.Date;
 import com.xpsoft.core.model.BaseModel;
 
 public class HrPaAssessmenttasksassigned extends BaseModel {
-	protected long id;
-	protected long acId;
-	protected long category;
-	protected double target;
+	protected Long id;
+	protected Long acId;
+	protected Long category;
+	protected Double target;
 	protected Date publishDate;
-	protected long publishPerson;
+	protected Long publishPerson;
+	protected Long userId;
 	
 	public HrPaAssessmenttasksassigned(){}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getAcId() {
+	public Long getAcId() {
 		return acId;
 	}
 
-	public void setAcId(long acId) {
+	public void setAcId(Long acId) {
 		this.acId = acId;
 	}
 
-	public long getCategory() {
+	public Long getCategory() {
 		return category;
 	}
 
-	public void setCategory(long category) {
+	public void setCategory(Long category) {
 		this.category = category;
 	}
 
-	public double getTarget() {
+	public Double getTarget() {
 		return target;
 	}
 
-	public void setTarget(double target) {
+	public void setTarget(Double target) {
 		this.target = target;
 	}
 
@@ -54,11 +55,20 @@ public class HrPaAssessmenttasksassigned extends BaseModel {
 		this.publishDate = publishDate;
 	}
 
-	public long getPublishPerson() {
+	public Long getPublishPerson() {
 		return publishPerson;
 	}
 
-	public void setPublishPerson(long publishPerson) {
+	public void setPublishPerson(Long publishPerson) {
 		this.publishPerson = publishPerson;
 	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 }

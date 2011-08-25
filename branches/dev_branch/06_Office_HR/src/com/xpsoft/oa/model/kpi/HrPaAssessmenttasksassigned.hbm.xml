@@ -76,5 +76,16 @@
             not-null="false"
             unique="false"
         />
+        <property
+        	name="userId"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="userId"
+        	length="19"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>
