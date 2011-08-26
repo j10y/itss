@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="GBK"?>
+<process xmlns="http://jbpm.org/4.0/jpdl" name="pd7680978182520578249">
+	<start name="开始" g="285,33,58,58">
+		<transition name="流程启动" to="部门负责人审批" g="-24,-16" />
+	</start>
+	<task name="部门负责人审批" g="261,127,106,37">
+		<transition name="审批" to="分管局长审批" g="-24,-16" />
+	</task>
+	<task name="分管局长审批" g="264,193,99,37">
+		<transition name="审批" to="局长审批" g="-24,-16" />
+	</task>
+	<task name="局长审批" g="277,260,72,36">
+		<transition name="审批" to="人事登记" g="-24,-16" />
+	</task>
+	<task name="人事登记" g="278,328,71,33">
+		<transition name="登记" to="结束2" g="-24,-16" />
+	</task>
+	<end name="结束2" g="284,389,58,58" />
+</process>
+
+
+<?xml version="1.0" encoding="GBK"?>
+<process xmlns="http://jbpm.org/4.0/jpdl" name="pd7680978182520578249">
+	<start name="开始" g="285,33,58,58">
+		<transition name="流程启动" to="部门负责人审批" g="-24,-16" />
+	</start>
+	<task name="部门负责人审批" g="261,127,106,37">
+		<transition name="审批" to="分管局长审批" g="-24,-16" />
+	</task>
+	<task name="分管局长审批" g="264,193,99,37">
+		<transition name="审批" to="人事登记" g="-24,-16" />
+	</task>
+	<task name="人事登记" g="278,260,71,33">
+		<transition name="登记" to="结束2" g="-24,-16" />
+	</task>
+	<end name="结束2" g="284,328,58,58" />
+</process>

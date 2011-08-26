@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="GBK"?>
+<process xmlns="http://jbpm.org/4.0/jpdl"
+	name="pd6899743696526177012">
+	<start name="开始" g="264,14,58,58">
+		<transition name="流程启动" to="办公室传阅" g="-24,-16" />
+	</start>
+	<task name="办公室传阅" g="251,94,87,36">
+		<transition name="传阅" to="办公室主任批阅" g="-24,-16" />
+	</task>
+	<task name="办公室主任批阅" g="242,158,106,34">
+		<transition name="批阅" to="分管或主管领导批示" g="-24,-16" />
+	</task>
+	<task name="分管或主管领导批示" g="232,221,129,40">
+		<transition name="批示" to="指定传阅人" g="-24,-16" />
+	</task>
+	<task name="指定传阅人" g="255,290,87,38">
+		<transition name="意见" to="科室主任传阅" g="-24,-16" />
+	</task>
+	<task name="科室主任传阅" g="250,356,93,37">
+		<transition name="传阅" to="承办归档" g="-24,-16" />
+	</task>
+	<task name="承办归档" g="261,420,71,34">
+		<transition name="归档" to="结束1" g="-24,-16" />
+	</task>
+	<end name="结束1" g="267,480,58,58" />
+</process>
+
+<?xml version="1.0" encoding="GBK"?>
+<process xmlns="http://jbpm.org/4.0/jpdl"
+	name="pd6899743696526177012">
+	<start name="开始" g="264,74,58,58">
+		<transition name="流程启动" to="办公室主任批阅" g="-24,-16" />
+	</start>
+	<task name="办公室主任批阅" g="242,158,106,34">
+		<transition name="批阅" to="分管或主管领导批示" g="-24,-16" />
+	</task>
+	<task name="分管或主管领导批示" g="232,221,129,40">
+		<transition name="批示" to="指定传阅人" g="-24,-16" />
+	</task>
+	<task name="指定传阅人" g="255,290,87,38">
+		<transition name="意见" to="科室主任传阅" g="-24,-16" />
+	</task>
+	<task name="科室主任传阅" g="250,356,93,37">
+		<transition name="传阅" to="承办归档" g="-24,-16" />
+	</task>
+	<task name="承办归档" g="261,420,71,34">
+		<transition name="归档" to="结束1" g="-24,-16" />
+	</task>
+	<end name="结束1" g="267,480,58,58" />
+</process>
