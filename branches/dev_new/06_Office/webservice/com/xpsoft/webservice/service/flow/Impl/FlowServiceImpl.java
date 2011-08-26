@@ -554,7 +554,6 @@ public class FlowServiceImpl implements FlowService {
 		ShortMessageService messageService = (ShortMessageService) AppUtil.getBean("shortMessageService");
 		ArchivesAttendService archivesAttendService = (ArchivesAttendService) AppUtil.getBean("archivesAttendService");
 		ArchDispatchService archDispatchService = (ArchDispatchService) AppUtil.getBean("archDispatchService");
-		ProcessFormService processFormService = (ProcessFormService) AppUtil.getBean("processFormService");
 		ArchUnderTakesService undertakesService = (ArchUnderTakesService) AppUtil.getBean("undertakesService");
 		ArchivesHandleService archivesHandleService = (ArchivesHandleService) AppUtil.getBean("archivesHandleService");
 		ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil.getBean("archRecFiledTypeService");
@@ -704,7 +703,7 @@ public class FlowServiceImpl implements FlowService {
 					}
 				} else if (activityName.equals("分管局长审批")) {// 2
 					if (processName.equals("请假-中")) {
-						errandsRegisterStatus = "3";
+						errandsRegisterStatus = "4";
 					}
 				} else if (activityName.equals("局长审批")) {// 3
 					if (processName.equals("请假-中")) {
