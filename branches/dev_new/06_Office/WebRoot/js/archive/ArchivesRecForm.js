@@ -640,7 +640,7 @@ ArchivesRecForm = Ext
 							Ext.ux.Toast.msg("操作信息", "请指定相应收文流程！");
 							return;
 						}
-						Ext.getCmp("ArchivesRecForm.status").setValue(1);
+						Ext.getCmp("ArchivesRecForm.status").setValue(2);//mod by awen remove node 办公室传阅 , so change status from 1 to 2
 						var b = Ext.getCmp("archivesRecfileIds").getValue();
 						if (b != "" && b != null && b != "undefined") {
 							if (a.getForm().isValid()) {
@@ -676,9 +676,7 @@ ArchivesRecForm = Ext
 																		l,
 																		o) {
 																	Ext.ux.Toast
-																			.msg(
-																					"操作信息",
-																					"成功保存信息！");
+																			.msg("操作信息", "成功保存信息！");
 																	var n = Ext
 																			.getCmp("ArchivesRecGrid");
 																	if (n != null) {
