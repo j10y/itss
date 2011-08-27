@@ -37,7 +37,8 @@ public class Archives extends BaseModel {
 	 * 5:
 	 * 6:
 	 * 7:归档结束
-	 * 9:编号
+	 * 9:待编号
+	 * 10:待分发
 	 * 
  	 *   请示报告
 	 * 0:草稿
@@ -176,6 +177,9 @@ public class Archives extends BaseModel {
 
 	@Expose
 	protected Set archivesDeps = new HashSet();//收文待收
+	
+	@Expose
+	protected Set archivesDists = new HashSet();//发文分发
 
 	@Expose
 	protected Set archivesDocs = new HashSet();
@@ -268,6 +272,14 @@ public class Archives extends BaseModel {
 
 	public void setArchivesDeps(Set in_archivesDeps) {
 		/* 230 */this.archivesDeps = in_archivesDeps;
+	}
+	
+	public Set getArchivesDists() {
+		return archivesDists;
+	}
+	
+	public void setArchivesDists(Set archivesDists) {
+		this.archivesDists = archivesDists;
 	}
 
 	public Long getArchivesId() {

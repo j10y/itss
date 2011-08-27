@@ -11,6 +11,7 @@
   	<property name="depDesc" type="java.lang.String"/>
   	<property name="depLevel"  type="java.lang.Integer"/>
   	<property name="parentId" type="java.lang.Long"/>
-  	<property name="path" type="java.lang.String"/> 
+  	<property name="path" type="java.lang.String"/>
+  	<property name="isDist" type="java.lang.Integer"/>  
   </class>
 </hibernate-mapping>

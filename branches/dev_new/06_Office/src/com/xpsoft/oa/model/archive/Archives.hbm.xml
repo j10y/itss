@@ -102,6 +102,13 @@
 			</key>
 			<one-to-many class="com.xpsoft.oa.model.archive.ArchivesDep" />
 		</set>
+		<set name="archivesDists" table="archives_dist" lazy="true" inverse="true"
+			cascade="save-update,delete-orphan" sort="unsorted">
+			<key>
+				<column name="archivesId" />
+			</key>
+			<one-to-many class="com.xpsoft.oa.model.archive.ArchivesDist" />
+		</set>
 		<set name="archivesHandles" table="archives_handle" lazy="true"
 			inverse="true" cascade="save-update,delete-orphan" sort="unsorted">
 			<key>

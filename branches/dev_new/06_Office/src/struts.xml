@@ -313,6 +313,9 @@
 		<action name="*ArchivesDep" class="ArchivesDepAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*ArchivesDist" class="ArchivesDistAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 		<action name="*ArchivesDoc" class="ArchivesDocAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>

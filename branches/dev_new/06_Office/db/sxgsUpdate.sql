@@ -170,3 +170,26 @@ CREATE TABLE `arch_rec_undertakes` (
   `upSignUserIds` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS `archives_dist`;
+CREATE TABLE `archives_dist` (
+  `archDistId` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `signNo` varchar(128) DEFAULT NULL COMMENT '自编号',
+  `depId` bigint(20) NOT NULL COMMENT '收文部门',
+  `archivesId` bigint(20) NOT NULL COMMENT '所属公文',
+  `subject` varchar(256) NOT NULL COMMENT '公文标题',
+  `status` smallint(6) NOT NULL COMMENT '签收状态\r\n            0=未签收\r\n            1=已签收',
+  `signTime` datetime DEFAULT NULL COMMENT '签收日期',
+  `signFullname` varchar(64) DEFAULT NULL COMMENT '签收人',
+  `signUserID` bigint(20) DEFAULT NULL,
+  `handleFeedback` varchar(1024) DEFAULT NULL COMMENT '办理结果反馈',
+  `isMain` smallint(6) NOT NULL DEFAULT '1' COMMENT '主送、抄送\r\n            1=主送\r\n            0=抄送',
+  PRIMARY KEY (`archDistId`),
+  KEY `FK_AVDI_R_ARV` (`archivesId`),
+  KEY `FK_AVDI_R_DPT` (`depId`),
+  CONSTRAINT `FK_AVDI_R_ARV` FOREIGN KEY (`archivesId`) REFERENCES `archives` (`archivesId`),
+  CONSTRAINT `FK_AVDI_R_DPT` FOREIGN KEY (`depId`) REFERENCES `department` (`depId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

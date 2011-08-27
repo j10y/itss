@@ -3,6 +3,7 @@ package com.xpsoft.oa.action.archive;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.xpsoft.core.Constants;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
@@ -24,6 +26,7 @@ import com.xpsoft.oa.model.archive.ArchHasten;
 import com.xpsoft.oa.model.archive.ArchRecUser;
 import com.xpsoft.oa.model.archive.Archives;
 import com.xpsoft.oa.model.archive.ArchivesDep;
+import com.xpsoft.oa.model.archive.ArchivesDist;
 import com.xpsoft.oa.model.archive.ArchivesDoc;
 import com.xpsoft.oa.model.archive.ArchivesType;
 import com.xpsoft.oa.model.archive.DocHistory;
@@ -35,6 +38,7 @@ import com.xpsoft.oa.service.archive.ArchHastenService;
 import com.xpsoft.oa.service.archive.ArchRecUserService;
 import com.xpsoft.oa.service.archive.ArchUnderTakesService;
 import com.xpsoft.oa.service.archive.ArchivesDepService;
+import com.xpsoft.oa.service.archive.ArchivesDistService;
 import com.xpsoft.oa.service.archive.ArchivesDocService;
 import com.xpsoft.oa.service.archive.ArchivesService;
 import com.xpsoft.oa.service.archive.ArchivesTypeService;
@@ -88,6 +92,9 @@ public class ArchivesAction extends BaseAction {
 	
 	@Resource
 	private ArchUnderTakesService undertakesService;
+	
+	@Resource
+	private ArchivesDistService archivesDistService;
 	
 	private Long archivesId;
 
@@ -446,6 +453,56 @@ public class ArchivesAction extends BaseAction {
 					.parseShort(archivesStatus)));
 		}
 		this.archivesService.save(this.archives);
+		
+		
+		//发文分发，1市局所有人 2分局指定人
+		//市局部门的的isDist=0
+		//distUserIds为分局指定人的ids
+		QueryFilter filter = new QueryFilter(new HashMap());
+		filter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED.toString());
+		filter.addFilter("Q_department.isDist_N_EQ", "0");
+		List<AppUser> mainDeptUsers = appUserService.getAll(filter);//市局
+		
+		StringBuffer distIds = new StringBuffer();
+		
+		//市局
+		for (int i = 0; i < mainDeptUsers.size(); i++) {
+			ArchivesDist archivesDist = new ArchivesDist();
+			archivesDist.setSubject(this.archives.getSubject());
+			archivesDist.setDepartment(mainDeptUsers.get(i).getDepartment());
+			archivesDist.setArchives(this.archives);
+			archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+			archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+			archivesDist.setSignUserID(mainDeptUsers.get(i).getUserId());
+			archivesDist.setSignFullname(mainDeptUsers.get(i).getFullname());
+			distIds.append(mainDeptUsers.get(i).getUserId()).append(",");
+			this.archivesDistService.save(archivesDist);
+		}
+		//分局
+		String distUserIds = getRequest().getParameter("distUserIds");
+		if(StringUtils.isNotEmpty(distUserIds)){
+			String [] distUsers = distUserIds.split("[,]");
+			for(int i=0; i<distUsers.length; i++){
+				AppUser user = appUserService.get(Long.valueOf(distUsers[i]));
+				ArchivesDist archivesDist = new ArchivesDist();
+				archivesDist.setSubject(this.archives.getSubject());
+				archivesDist.setDepartment(user.getDepartment());
+				archivesDist.setArchives(this.archives);
+				archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+				archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+				archivesDist.setSignUserID(user.getUserId());
+				archivesDist.setSignFullname(user.getFullname());
+				distIds.append(user.getUserId()).append(",");
+				this.archivesDistService.save(archivesDist);
+			}
+		}
+		
+		if (StringUtils.isNotEmpty(distIds.toString())) {
+			String content = "您有新的公文,请及时签收.";
+			this.messageService.save(AppUser.SYSTEM_USER, distIds
+					.toString(), content, ShortMessage.MSG_TYPE_TASK);
+		}
+		
 		return "success";
 	}
 	
