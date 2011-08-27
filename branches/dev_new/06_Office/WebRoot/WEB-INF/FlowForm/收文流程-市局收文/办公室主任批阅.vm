@@ -32,7 +32,7 @@ OfficeHeaderReadForm = Ext.extend(Ext.Panel, {
 			    this.displayPanel=new Ext.Panel({
 				      id:'ArchivesHandleDisplayPanel',
 				      autoScroll : true,
-				      height:280,
+				      height:200,
 				      border:false,
 				      autoLoad:{url:__ctxPath+'/pages/archive/archivedetail.jsp?archiveId=${archives_archivesId}'}
 				});
@@ -56,29 +56,52 @@ OfficeHeaderReadForm = Ext.extend(Ext.Panel, {
 									   value:'${cruArchDepId}'
 									},{
 										fieldLabel : '审批人',
-										xtype:'radiogroup',
-										id : 'flowAssignIdRadioGroup',
+										xtype:'container',
 										items:[{
 											fieldLabel : '局长',
 											labelAlign: 'right',
-											name : 'flowAssignIdRadio',
-											checked:true,
-											xtype:'radio',
+											name : 'leadChecked',
+											id : 'leadChecked',
+											xtype:'checkbox',
+											boxLabel : '局长',
 											inputValue :'1'
-										}, {
-											fieldLabel : '分管局长',
-											name : 'flowAssignIdRadio',
-											labelAlign: 'right',
-											xtype:'radio',
-											inputValue:'2'
-										}, {
-											fieldLabel : '局长或分管局长',
-											name : 'flowAssignIdRadio',
-											labelAlign: 'right',
-											xtype:'radio',
-											inputValue:'3'
 										}]
 									},{
+					
+						xtype : 'container',
+						layout : 'column',
+						items : [{
+							xtype : 'label',
+							style : 'padding-left:0px',
+							text : '分管领导:',
+							width : 105
+						}, {
+							xtype : 'textarea',
+							width : 350,
+							id : 'proxyUserNames',
+							blankText:'请选择分管领导',
+							readOnly:true,
+							name : 'proxyUserNames'
+						}, {
+							xtype : 'hidden',
+							id : 'proxyUserIds',
+							name : 'proxyUserIds'
+						}, {
+							xtype : 'button',
+							text : '选择人员',
+							iconCls:'btn-mail_recipient',
+							handler : function() {
+								UserSelector.getView(
+										function(id, name) {
+											Ext.getCmp('proxyUserNames')
+													.setValue(name);
+											Ext.getCmp('proxyUserIds')
+													.setValue(id);
+										}).show();
+
+							}
+						}]
+					},{
 										fieldLabel : '审批意见',
 										name : 'handleOpinion',
 										allowBlank:false,
@@ -111,19 +134,26 @@ OfficeHeaderReadForm = Ext.extend(Ext.Panel, {
 			 * 保存
 			 */
 			save : function(formPanel, panel,signalName,activityName) {
+				var checkValue = Ext.getCmp("leadChecked").getValue();//领导是否被选择
+				if(!checkValue){//未选择局领导
+					Ext.getCmp("proxyUserNames").allowBlank = false;
+				}else{
+					Ext.getCmp("proxyUserNames").allowBlank = true;
+				}
 				if (formPanel.getForm().isValid()) {
 					
-					//获取下个节点的审批人
-					var checkValue = Ext.getCmp("flowAssignIdRadioGroup").getValue().getRawValue();
+					//获取下个节点的审批人	
 					
 					var userIds = "";
 					var roleIds = "";
 					Ext.Ajax.request({
 								scope : this,
-								url : __ctxPath + "/archive/getUserByChcekArchRecUser.do",
+								url : __ctxPath + "/archive/getUserByCheckNewArchRecUser.do",
 								params : {
 									archid : '${archives_archivesId}',
-									checkValue:checkValue
+									checked : checkValue,
+									proxyUserIds : Ext.getCmp("proxyUserIds").getValue()
+									
 								},
 								success : function(b, c) {
 									var d = Ext.util.JSON.decode(b.responseText);																	

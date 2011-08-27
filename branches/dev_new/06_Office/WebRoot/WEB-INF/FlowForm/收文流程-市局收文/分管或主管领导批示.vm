@@ -98,7 +98,45 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 		});
 		
 		// 初始化功能按钮
-		this.buttons = [
+		this.buttons = [new Ext.Button({
+									iconCls:'btn-transition',
+									id : 'toOther',
+									text : '其他局领导阅',
+									handler : function(){
+										var signUserIds="";
+										if (Ext.getCmp("ArchDistributeForm").getForm().isValid()) {
+											UserSelector.getView(
+												function(id, name) {
+													if(id!=""){
+														Ext.getCmp("ArchDistributeForm").getForm().submit({
+												            url:__ctxPath+ "/flow/nextProcessActivity.do",
+															method:'post',
+															params:{taskId:Ext.getCmp("ArchDistributeFormWin").taskId,signalName:'to分管或主管领导批示',activityName:'分管或主管领导批示',destName:'分管或主管领导批示',signUserIds:id,flowAssignId : id},
+															success : function(fp, action) {
+																Ext.ux.Toast.msg('操作信息','成功保存！');
+															    AppUtil.removeTab('ProcessForm'+Ext.getCmp("ArchDistributeFormWin").taskId);
+																var myTaskView=Ext.getCmp("MyTaskGrid");
+																var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+																if(appHomeTaskGrid!=null){
+																	appHomeTaskGrid.getStore().reload();
+																}
+																if(myTaskView!=null){
+																	//AppUtil.activateTab(taskView);
+																	myTaskView.getStore().reload();
+																}
+															},
+															failure : function(fp, action) {
+																Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+															}
+												    	});
+													}else{
+														Ext.ux.Toast.msg('操作信息','请选择分管领导！');
+													}
+											}).show();
+										}
+									}
+								})
+								,
 		                  #set ($count=0)
 							#foreach ($v in $nextTrans)
 								#if($count>0)
