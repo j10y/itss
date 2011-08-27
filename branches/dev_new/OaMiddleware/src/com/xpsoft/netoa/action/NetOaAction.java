@@ -157,6 +157,7 @@ public class NetOaAction extends BaseAction{
 		jo.put("dbsxCount", "0");
 		jo.put("yytzCount", "0");
 		jo.put("yycyCount", "0");
+		jo.put("dyffCount", "0");
 		//访问oa的url
 		String accessUrl = OAURL + "/LoginServiceImpl";
 		try {
@@ -253,6 +254,101 @@ public class NetOaAction extends BaseAction{
 		return null;
 	}
 	
+	/**
+	 * 1.5选择分管领导
+	 * @Methods Name queryFgld
+	 * @Create In Aug 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String queryFgld() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("data", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			if (userid != null && UserCheckMap.get(userid) != null) {
+				String methodName = "findFgld";
+				//public String findFgld(String userId,String passwd)
+				//通过webserice返回json对象
+				Object [] paramArr = new Object[]{userid,UserCheckMap.get(userid)};
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
+	
+	/**
+	 * 1.6 查询分局人
+	 * @Methods Name queryFjry
+	 * @Create In Aug 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String queryFjry() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("data", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			if (userid != null && UserCheckMap.get(userid) != null) {
+				String methodName = "findFfry";
+				//public String findFfry(String userId,String passwd)
+				//通过webserice返回json对象
+				Object [] paramArr = new Object[]{userid,UserCheckMap.get(userid)};
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
+	
+	/**
+	 * 1.7 局长审批
+	 * @Methods Name queryFjry
+	 * @Create In Aug 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String queryJld() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("data", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			if (userid != null && UserCheckMap.get(userid) != null) {
+				String methodName = "findJld";
+				//public String findJld(String userId,String passwd)
+				//通过webserice返回json对象
+				Object [] paramArr = new Object[]{userid,UserCheckMap.get(userid)};
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
 	
 	public String testws() throws Exception  {
 		JSONObject jo = new JSONObject();
@@ -1111,6 +1207,10 @@ public class NetOaAction extends BaseAction{
 			String gdlx = super.getRequest().getParameter("gdlx");
 			//编号
 			String bh = super.getRequest().getParameter("bh");
+			//分管领导
+			String fgld = super.getRequest().getParameter("fgld");
+			//分局人
+			String fjry = super.getRequest().getParameter("fjry");
 			//增加审批驳回
 			String ispass = super.getRequest().getParameter("ispass");
 			if (userid != null && id != null && activityName != null && commentDesc != null && taskId != null && password != null && signalName != null) {
@@ -1118,7 +1218,8 @@ public class NetOaAction extends BaseAction{
 				String methodName = "saveProcessAndToNext";
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx)
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh)
-				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,ispass,gdlx,bh};
+				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh,String fgld);
+				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,ispass,gdlx,bh,fgld,fjry};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功
@@ -1148,6 +1249,122 @@ public class NetOaAction extends BaseAction{
 //		System.out.println(super.getRequest().getHeader("user-agent"));
 	}
 	
+	/**
+	 * 7.1 待阅分发
+	 * @Methods Name getDyffList
+	 * @Create In Aug 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String getDyffList() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("totalCount", "0");
+		jo.put("data", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			String title = super.getRequest().getParameter("title");
+			String pageNum = super.getRequest().getParameter("pageNum");
+			String pageSize = super.getRequest().getParameter("pageSize");
+			String password = UserCheckMap.get(userid); 
+			if (userid != null && password != null && pageNum != null && pageSize != null) {
+				//调用接口方法 
+				String methodName = "getDyffList";
+				//public String getDyffList(String userId, String passwd,String title, String pageNum, String pageSize);
+				Object [] paramArr = new Object[]{userid,password,title,pageNum,pageSize};
+				//通过webserice返回json对象
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				//如果有success字符返回则成功
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
+	
+	/**
+	 * 7.2 待阅分发详细
+	 * @Methods Name getDyffDetail
+	 * @Create In Aug 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String getDyffDetail() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("title", "");
+		jo.put("createDate", "");
+		jo.put("activityName", "");
+		jo.put("taskId","false");
+		jo.put("signalName","false");
+		jo.put("type","");
+		jo.put("boxstatus",false);
+		jo.put("userquery",false);
+		jo.put("data", new JSONArray());
+		jo.put("accessories", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			String id = super.getRequest().getParameter("id");
+			String distid = super.getRequest().getParameter("distid");
+			String password = UserCheckMap.get(userid); 
+			if (userid != null && id != null && password != null && distid != null) {
+				//调用接口方法 
+				String methodName = "getDyffDetail";
+				//public String getDyffDetail(String userId, String passwd, String id,String distid)
+				Object [] paramArr = new Object[]{userid,password,id,distid};
+				//通过webserice返回json对象
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				//如果有success字符返回则成功
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
+	
+	/**
+	 * 7.3 保存待阅分发详细
+	 * @Methods Name saveDyffDetail
+	 * @Create In Aug 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String saveDyffDetail() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			String id = super.getRequest().getParameter("id");
+			String password = UserCheckMap.get(userid); 
+			if (userid != null && id != null && password != null) {
+				//调用接口方法 
+				String methodName = "saveDyffDetail";
+				//public String saveDyffDetail(String userId, String passwd, String id );
+				Object [] paramArr = new Object[]{userid,password,id};
+				//通过webserice返回json对象
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				//如果有success字符返回则成功
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
 	
 	
 	public String downFile1() throws Exception  {
