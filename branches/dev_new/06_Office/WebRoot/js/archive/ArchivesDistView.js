@@ -63,15 +63,7 @@ ArchivesDistView = Ext
 								handler : this.search.createCallback(this)
 							}, {
 								xtype : "hidden",
-								name : "Q_status_SN_GE",
-								value : 5
-							}, {
-								xtype : "hidden",
-								name : "Q_status_SN_LE",
-								value : 6
-							}, {
-								xtype : "hidden",
-								name : "Q_archType_SN_EQ",
+								name : "Q_archives.archType_SN_EQ",
 								value : 0
 							} ]
 						});
@@ -178,9 +170,8 @@ ArchivesDistView = Ext
 													var d = j.status;
 													var f = e.data.archDistId;
 													var g = "";
-													var h = j.archDistId;
 													if (isGranted("_ArchivesDistQuery")) {
-														g += '<button title="查阅详情" value=" " class="btn-archives-detail" onclick="ArchivesDistView.detail(' + c + ',' + h + ')">&nbsp;&nbsp;</button>';
+														g += '<button title="查阅详情" value=" " class="btn-archives-detail" onclick="ArchivesDistView.detail(' + c + ',' + f + ')">&nbsp;&nbsp;</button>';
 													}
 													return g;
 												}
@@ -250,7 +241,6 @@ ArchivesDistView = Ext
 					}
 				});
 ArchivesDistView.detail = function(archivesId,archDistId) {
-
 	new ArchivesDetailWin( {
 		archivesId : archivesId
 	}).show();
