@@ -18,6 +18,7 @@ ArchivesDistView = Ext
 							layout : "border",
 							items : [ this.searchPanel, this.gridPanel ]
 						});
+						
 					},
 					initUIComponents : function() {
 						this.searchPanel = new Ext.FormPanel( {
@@ -78,8 +79,6 @@ ArchivesDistView = Ext
 							url : __ctxPath + "/archive/listArchivesDist.do",
 							root : "result",
 							baseParams : {
-								"Q_archives.archType_SN_EQ" : 0,
-								"Q_archives.status_SN_EQ" : 7,
 								"Q_status_SN_EQ" : 0
 							},
 							totalProperty : "totalCounts",
@@ -182,13 +181,6 @@ ArchivesDistView = Ext
 													if (isGranted("_ArchivesDistQuery")) {
 														g += '<button title="查阅详情" value=" " class="btn-archives-detail" onclick="ArchivesDistView.detail(' + c + ')">&nbsp;&nbsp;</button>';
 													}
-													if (isGranted("_ArchivesDistUp")) {
-														g += '<button title="公文签收" value=" " class="btn-archive-sign" onclick="ArchivesDistView.attach('
-																+ c
-																+ ","
-																+ f
-																+ ')">&nbsp;&nbsp;</button>';
-													}
 													return g;
 												}
 											} ],
@@ -242,8 +234,7 @@ ArchivesDistView = Ext
 									.submit(
 											{
 												waitMsg : "正在提交查询",
-												url : __ctxPath
-														+ "/archive/listArchives.do",
+												url : __ctxPath + "/archive/listArchivesDist.do?Q_status_SN_EQ=0",
 												success : function(c, d) {
 													var b = Ext.util.JSON
 															.decode(d.response.responseText);
@@ -257,10 +248,22 @@ ArchivesDistView = Ext
 						new ArchivesForm().show();
 					}
 				});
-ArchivesDistView.detail = function(a) {
+ArchivesDistView.detail = function(archivesId,archDistId) {
+
 	new ArchivesDetailWin( {
-		archivesId : a
+		archivesId : archivesId
 	}).show();
+	//修改状态，重新load
+	Ext.Ajax.request({
+		url : __ctxPath
+				+ "/archive/viewArchivesDist.do",
+		params : {
+			archDistId : archDistId												
+		},
+		success : function(h, j) {
+			Ext.getCmp("ArchivesDistView").search();
+		}
+	});
 };
 ArchivesDistView.attach = function(d, a) {
 	var b = Ext.getCmp("centerTabPanel");
