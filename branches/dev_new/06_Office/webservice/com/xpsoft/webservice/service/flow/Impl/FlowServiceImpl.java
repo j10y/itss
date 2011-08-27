@@ -352,7 +352,16 @@ public class FlowServiceImpl implements FlowService {
 			}
 			json += "showbh:false,";
 			json += "isdx:false,";
-			if(this.activityName.equals("分管或主管领导批示")){
+			String usersql = "select app_user.* from user_role,app_role,app_user "
+				+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId " +
+				"and app_role.roleId in ("+AppUtil.getPropertity("role.leaderId")+")";
+			AppUserService appUserService = (AppUserService) AppUtil.getBean("appUserService");
+			List<Map> userList=appUserService.findDataList(usersql);
+			Map usermap=new HashMap();
+			for(Map user:userList){
+				usermap.put(user.get("userId").toString(), user.get("userId").toString());
+			}
+			if(this.activityName.equals("分管或主管领导批示")&&usermap.get(userId).equals(userId)){
 				json += "fgld:true,";
 			}else{
 				json += "fgld:false,";
@@ -744,14 +753,6 @@ public class FlowServiceImpl implements FlowService {
 		}
 		else if(processName.equals("收文流程-市局收文")&&activityName.equals("办公室主任批阅")){
 			this.parmap.put("signUserIds", checkboxvalue);
-//			Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
-//			Long userid=archives1.getIssuerId();
-//			AppUser appUser =appUserService.get(userid);
-//			Long departid=appUser.getDepartment().getDepId();
-//			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
-//			if(archRecUser.getLeaderUserId()!=null&&archRecUser.getLeaderUserId()>0){
-//				userset.add(archRecUser.getLeaderUserId().toString());
-//			}
 		}
 		else if(processName.equals("请假-中")&&activityName.equals("部门负责人审批")){
 			ErrandsRegister errandsRegister = ((ErrandsRegister) errandsRegisterService.get(Long.parseLong(id)));
@@ -763,43 +764,6 @@ public class FlowServiceImpl implements FlowService {
 				this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
 			}
 		}
-		// 1局长2分管局长3全有
-//		if (checkboxvalue != null && checkboxvalue.length() > 0) {		
-//			this.parmap.put("signUserIds", checkboxvalue);
-//			if (checkboxvalue.equals("1")||checkboxvalue.equals("3")) {
-//				String sql = "select app_user.* from user_role,app_role,app_user "
-//					+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
-//				sql += "and app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" and app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+")";
-//				List<Map> list = processRunService.findDataList(sql);
-//				String flowAssignId = "";
-//				for (Map map : list) {
-//					userset.add(map.get("userId").toString());
-//					//flowAssignId += map.get("userId").toString() + ",";
-//				}
-//				if(userset.size()>0){
-//					Iterator iterator =userset.iterator();
-//					while(iterator.hasNext()){
-//						flowAssignId+=iterator.next();
-//						if(iterator.hasNext()){
-//							flowAssignId+=",";
-//						}
-//					}
-//					this.parmap.put("signUserIds", flowAssignId);
-//				}
-//			} else if (checkboxvalue.equals("2")) {
-//				String flowAssignId = "";
-//				if(userset.size()>0){
-//					Iterator iterator =userset.iterator();
-//					while(iterator.hasNext()){
-//						flowAssignId+=iterator.next();
-//						if(iterator.hasNext()){
-//							flowAssignId+=",";
-//						}
-//					}
-//					this.parmap.put("signUserIds", flowAssignId);
-//				}
-//			}		
-//		}
 		
 		try {
 			if (processName.equals("请假-短") || processName.equals("请假-中")
@@ -1068,6 +1032,7 @@ public class FlowServiceImpl implements FlowService {
 					archivesService.save(archives);
 					this.parmap.put("archives.archivesId", id);
 					this.parmap.put("distributeOpinion", commentDesc);
+					this.parmap.put("flowAssignId", archives.getIssuerId());
 				} 
 			} else if (processName.equals("收文流程")
 					|| processName.equals("收文流程-市局收文")) {
