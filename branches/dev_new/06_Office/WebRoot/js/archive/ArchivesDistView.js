@@ -245,16 +245,18 @@ ArchivesDistView.detail = function(archivesId,archDistId) {
 		archivesId : archivesId
 	}).show();
 	//修改状态，重新load
+	
 	Ext.Ajax.request({
 		url : __ctxPath
 				+ "/archive/viewArchivesDist.do",
 		params : {
 			archDistId : archDistId												
 		},
-		success : function(h, j) {
-			Ext.getCmp("ArchivesDistView").search();
+		success : function() {
 		}
 	});
+	Ext.getCmp("ArchivesDistView").gridPanel.store.reload();
+	
 };
 ArchivesDistView.attach = function(d, a) {
 	var b = Ext.getCmp("centerTabPanel");
