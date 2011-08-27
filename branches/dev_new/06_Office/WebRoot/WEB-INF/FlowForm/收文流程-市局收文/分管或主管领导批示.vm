@@ -27,6 +27,18 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 	},// end of the constructor
 	// 初始化组件
 	initUIComponents : function() {
+		
+		//当前人是否是局长
+		var display = true;
+		Ext.Ajax.request({
+			url : __ctxPath
+					+ "/system/isLeaderAppUser.do",
+			success : function(h, j) {
+				var data = Ext.decode(h.responseText);
+				display = data.isLeader;
+			}
+		});
+	
 		this.displayPanel=new Ext.Panel({
 				      id:'ArchivesHandleDisplayPanel',
 				      autoScroll : true,
@@ -102,6 +114,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 									iconCls:'btn-transition',
 									id : 'toOther',
 									text : '其他局领导阅',
+									hidden : display,
 									handler : function(){
 										var signUserIds="";
 										if (Ext.getCmp("ArchDistributeForm").getForm().isValid()) {
@@ -111,7 +124,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 														Ext.getCmp("ArchDistributeForm").getForm().submit({
 												            url:__ctxPath+ "/flow/nextProcessActivity.do",
 															method:'post',
-															params:{taskId:Ext.getCmp("ArchDistributeFormWin").taskId,signalName:'to分管或主管领导批示',activityName:'分管或主管领导批示',destName:'分管或主管领导批示',signUserIds:id,flowAssignId : id},
+															params:{taskId:Ext.getCmp("ArchDistributeFormWin").taskId,signalName:'to分管或主管领导批示',activityName:'分管或主管领导批示',destName:'分管或主管领导批示',signUserIds:id},
 															success : function(fp, action) {
 																Ext.ux.Toast.msg('操作信息','成功保存！');
 															    AppUtil.removeTab('ProcessForm'+Ext.getCmp("ArchDistributeFormWin").taskId);
