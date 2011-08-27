@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Menus>
 	<Items id="MyDesktop" text="我的桌面" iconCls="menu-desktop"
-		isPublic="true">
+		isPublic="false">
 		<Item id="UserSubView" text="我的下属" iconCls="menu-subuser" />
 		<Item id="MySubUserDiaryView" text="下属工作日志" iconCls="menu-subDiary" />
 		<Item id="ProfileForm" text="修改个人资料" iconCls="menu-customer" />
@@ -125,6 +125,7 @@
 			        <url>/archive/multiDelArchives.do</url>
 			    </Function>
 			</Item>
+			<!-- 
 			<Item id="ArchivesIssueAudit" text="科室审核" iconCls="menu-archive-department">
 			    <Function id="_ArchivesIssueQuery" text="查看" iconCls="menu-list">
 			        <url>/archive/listArchives.do</url>
@@ -166,6 +167,7 @@
 			        <url>/archive/listArchives.do</url>
 			    </Function>
 			</Item>
+			 -->
 			<Item id="ArchivesIssueMonitor" text="发文监控" iconCls="menu-archive-monitor">
 			     <Function id="_ArchivesIssueMonitorQuery" text="查看" iconCls="menu-list">
 			        <url>/archive/listArchives.do</url>
@@ -174,6 +176,11 @@
 			         <url>/archive/listArchives.do</url>
 			         <url>/archive/hastenArchives.do</url>
 			     </Function>
+			</Item>
+			<Item id="ArchivesDistView" text="待阅发文" iconCls="menu-archive-handout">
+			   <Function id="_ArchivesDistQuery" text="查看" iconCls="menu-list">
+			      <url>/archive/listArchivesDist.do</url>
+			   </Function>
 			</Item>
 			<Item id="ArchivesIssueManage" text="发文管理" iconCls="menu-archive-issue-manage">
 			    <Function id="_ArchivesIssueManageQuery" text="查看" iconCls="menu-list">
@@ -229,6 +236,7 @@
 			      <url>/archive/listArchivesHandle.do</url>
 			   </Function>
 			</Item>
+			<!-- 
 			<Item id="LeaderReadView" text="领导批示" iconCls="menu-arch-leader">
 			   <Function id="_LeaderReadQuery" text="查看" iconCls="menu-list">
 			      <url>/archive/listLeaderRead.do</url>
@@ -244,6 +252,7 @@
 			      <url>/archive/listArchDispatch.do</url>
 			   </Function>
 			</Item>
+			 -->
 			<Item id="ArchivesRecCtrlView" text="收文监控" iconCls="menu-arch-controll">
 			    <Function id="_ArchivesRecCtrlQuery" text="查看" iconCls="menu-list">
 			       <url>/archive/listArchives.do</url>
@@ -253,6 +262,7 @@
 			         <url>/archive/hastenArchives.do</url>
 			     </Function>
 			</Item>
+			<!-- 
 			<Item id="ArchReadView" text="收文阅读" iconCls="menu-arch-reader">
 			   <Function id="_ArchReadQuery" text="查看" iconCls="menu-list">
 			      <url>/archive/listArchDispatch.do</url>
@@ -263,6 +273,7 @@
 			      <url>/archive/listArchives.do</url>
 			   </Function>
 			</Item>
+			 -->
 		</Items>
 	</Items>
 	 
@@ -625,7 +636,7 @@
 		</Item>
 	</Items>
 	<Items id="Communication" text="通讯管理" iconCls="menu-communicate"
-		isPublic="true">
+		isPublic="false">
 		<Items id="PhoneBook" iconCls="menu-phonebook" text="通讯簿">
 			<Item id="PersonalPhoneBookView" iconCls="menu-personal-phoneBook"
 				text="个人通讯簿">
@@ -644,14 +655,14 @@
 		-->
 	</Items>
 	<Items id="Document" text="文档管理" iconCls="menu-document"
-		isPublic="true">
+		isPublic="false">
 		<Item id="PersonalDocumentView" iconCls="menu-personal-doc" text="个人文档" />
 		<Item id="DocumentSharedView" iconCls="menu-folder-shared" text="共享文档" />
 		<Item id="DocFolderMoveForm" iconCls="menu-folder-go" text="文件夹转移" />
 		<Item id="FindPublicDocumentView" iconCls="menu-find-doc" text="查看公共文档" />
 	</Items>
 
-	<Items id="Task" text="任务管理" iconCls="menu-task" isPublic="true">
+	<Items id="Task" text="任务管理" iconCls="menu-task" isPublic="false">
 		<Item id="AppointmentView" text="我的约会" iconCls="menu-appointment" />
 		<Item id="MyPlanTaskView" text="今日常务" iconCls="menu-cal-plan" />
 		<!-- 
