@@ -92,7 +92,7 @@ public class ArchivesDistAction extends BaseAction {
 	}
 	
 	public String view() {		
-		ArchivesDist dist = this.ArchivesDistService.get(this.archDistId);
+		ArchivesDist dist = this.ArchivesDistService.get(Long.valueOf(getRequest().getParameter("archDistId")));
 		dist.setStatus(Short.valueOf("1"));
 		this.ArchivesDistService.save(dist);
 		setJsonString("{success:true}");

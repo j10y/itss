@@ -271,4 +271,47 @@ public class ArchRecUserAction extends BaseAction {
 		setJsonString(sb.toString());
 		return "success";
 	}
+	
+	
+	/**
+	 * checkValue {1:局长,2:分管局长,3:局长或分管局长}
+	 * @return
+	 */
+	public String getUserByCheckNew() {
+		boolean checked = Boolean.valueOf(getRequest().getParameter("checked"));
+		String proxyUserIds = getRequest().getParameter("proxyUserIds");
+		String roleIds = "";
+		List<AppUser> userList = new ArrayList();
+		if(checked){//局长
+			roleIds = AppUtil.getPropertity("role.leaderId");
+			String [] roles = roleIds.split(",");
+			Long [] roleIdArray = new Long [roles.length]; 
+			for(int i=0; i<roles.length; i++){
+				roleIdArray  [i] = new Long(roles[i]); 
+			}
+			if (StringUtils.isNotEmpty(roleIds)) {
+				userList = this.appUserService.findByRoleIds(roleIdArray);
+			}
+		}
+		
+		StringBuffer sb = new StringBuffer("{success:true,userIds:'");
+		for(int i=0; i<userList.size(); i++){
+			if(i<userList.size()-1){
+				sb.append(userList.get(i).getUserId()).append(",");
+			}else{
+				sb.append(userList.get(i).getUserId());
+			}
+		}
+		if(StringUtils.isNotEmpty(proxyUserIds)){
+			if(sb.toString().endsWith("'")){//说明前面没人
+				sb.append(proxyUserIds);
+			}else{
+				sb.append(",").append(proxyUserIds);
+			}
+			
+		}
+		sb.append("'}");
+		setJsonString(sb.toString());
+		return "success";
+	}
 }
