@@ -14,9 +14,11 @@ import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.StringUtil;
 import com.xpsoft.core.web.paging.PagingBean;
+import com.xpsoft.oa.model.archive.ArchivesDist;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchDispatchService;
+import com.xpsoft.oa.service.archive.ArchivesDistService;
 import com.xpsoft.oa.service.flow.TaskService;
 import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.oa.service.system.DepartmentService;
@@ -75,7 +77,16 @@ public class LoginServiceImpl implements LoginServie {
 		List dytzlist=flowTaskService.findDataList(sql);
 		String yytzsql="select newsId from notice_news_comment where notice_news_comment.flag=2 and notice_news_comment.content=1 and notice_news_comment.userId="+userId;
 		List yytzlist=flowTaskService.findDataList(yytzsql);
-		return "{success:true, dytzCount :\""+dytzlist.size()+"\",dycyCount :\""+dycylist.size()+"\", dbsxCount :\""+dbgwlist.size()+"\", yytzCount :\""+yytzlist.size()+"\", yycyCount :\""+list.size()+"\"}";
+		
+		PagingBean dyffpb = new PagingBean(0, 999999);
+		QueryFilter dyfffilter = new QueryFilter(dyffpb);
+		dyfffilter.addFilter("Q_signUserID_L_EQ", ContextUtil
+				.getCurrentUserId().toString());
+		dyfffilter.addFilter("Q_status_SN_EQ", ArchivesDist.STATUS_UNSIGNED+"");
+		ArchivesDistService archivesDistService= (ArchivesDistService) AppUtil.getBean("archivesDistService");
+		List<ArchivesDist> dyfflist = archivesDistService.getAll(dyfffilter);
+		
+		return "{success:true, dytzCount :\""+dytzlist.size()+"\",dycyCount :\""+dycylist.size()+"\", dbsxCount :\""+dbgwlist.size()+"\", yytzCount :\""+yytzlist.size()+"\", yycyCount :\""+list.size()+"\", dyffCount :\""+dyfflist.size()+"\"}";
 	}
 
 	public String findUserByUserName(String userName,String userId,String passwd) {

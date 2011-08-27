@@ -175,17 +175,22 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	public String getNoticeType(String userId,String passwd){
 		NoticeNewsTypeService noticeNewsTypeService=(NoticeNewsTypeService) AppUtil.getBean("noticeNewsTypeService");
+		NoticeNewsService noticeNewsService=(NoticeNewsService) AppUtil.getBean("noticeNewsService");
 		List<NoticeNewsType> list=noticeNewsTypeService.getAll();
 		String json="{success:true,data:[";
 		for(NoticeNewsType n:list){
-			json+="{typeId:\""+n.getTypeId()+"\",typeName:\""+n.getTypeName()+"\"},";
+			Integer start=0;
+			Integer limit=999999;
+			PagingBean pb=new PagingBean(start,limit);
+			Long ntypeid=n.getTypeId();
+			List<NoticeNews> listnews=noticeNewsService.findByForPadSearch(null, null, null,ntypeid, pb, true);
+			json+="{typeId:\""+n.getTypeId()+"\",typeName:\""+n.getTypeName()+"("+listnews.size()+")\"},";
 		}
 		if(list.size()>0){
 			json=json.substring(0,json.length()-1);
 		}
 		json+="]}";
-		return json;
-		
+		return json;		
 	}
 	public String saveNoticeComment(String userId,String passwd,String noticeId,String commentDesc){
 		try {
