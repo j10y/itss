@@ -671,4 +671,25 @@ public class AppUserAction extends BaseAction {
 		/* 164 */return "success";
 	}
 	
+	public String isLeader() {
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		Set<AppRole> roles = currentUser.getRoles();
+		StringBuffer buff = new StringBuffer(
+		"{success:true,'isLeader':");
+		boolean isLeader=false;
+		String leaderRole = AppUtil.getPropertity("role.leaderId");
+		for(AppRole role : roles){
+			if(role.getRoleId().toString().equals(leaderRole)){
+				isLeader = true;
+				break;
+			}
+		}
+		if(isLeader){
+			buff.append("'true'}");
+		}else{
+			buff.append("'false'}");
+		}
+		this.jsonString = buff.toString();
+		/* 164 */return "success";
+	}
 }
