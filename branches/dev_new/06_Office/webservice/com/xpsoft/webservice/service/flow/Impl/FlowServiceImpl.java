@@ -1065,7 +1065,6 @@ public class FlowServiceImpl implements FlowService {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
 					archives.setStatus(Short.valueOf(Short.parseShort("10")));
-					archives.setArchivesNo(bh);
 					archivesService.save(archives);
 					this.parmap.put("archives.archivesId", id);
 					this.parmap.put("distributeOpinion", commentDesc);
@@ -1327,9 +1326,9 @@ public class FlowServiceImpl implements FlowService {
 	
 	public String findJld(String userId,String passwd){
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
-		String sql = "select app_user.* from user_role,app_role,app_user "
-			+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
-		sql += "and app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" and app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+")";
+		String sql = "select app_user.* from app_role,app_user,user_role "
+			+ "where  user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
+		sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+"))";
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
 		for(Map ap:list){
