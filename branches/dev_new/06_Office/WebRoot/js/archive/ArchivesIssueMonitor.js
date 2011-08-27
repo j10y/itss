@@ -165,7 +165,11 @@ ArchivesIssueMonitor = Ext
 																					if (c == "8") {
 																						return '<font color="red">待局长审核</font>';	
 																					} else {
-																						return '<font color="red">待编号</font>';																					
+																						if(c == "9"){
+																							return '<font color="red">待编号</font>';
+																						}else{
+																							return '<font color="red">待拟稿人分发</font>';
+																						}																				
 																					}																				
 																				}
 																			}
@@ -287,7 +291,7 @@ ArchivesIssueMonitor = Ext
 										d = "办公室主任承办";
 									} else {
 										if (a == "4") {
-											d = "盖章分发";
+											d = "盖章";
 										} else {
 											if (a == "5") {
 												d = "部门负责人"; //请示报告
@@ -302,7 +306,11 @@ ArchivesIssueMonitor = Ext
 														if (a == "8") {
 															d = "局长审核";	//请示报告
 														} else {
-															d = "编号录入";																					
+															if (a == "9"){
+																d = "编号录入";
+															}else{
+																d = "拟稿人分发";
+															}																					
 														}																				
 													}
 												}

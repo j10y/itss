@@ -154,7 +154,11 @@ ArchivesIssueManage = Ext
 																					if (c == "8") {
 																						return '<font color="red">待局长审核</font>';	
 																					} else {
-																						return '<font color="red">待编号</font>';																					
+																						if(c == "9"){
+																							return '<font color="red">待编号</font>';
+																						}else{
+																							return '<font color="red">待拟稿人分发</font>';
+																						}																				
 																					}																				
 																				}
 																			}
