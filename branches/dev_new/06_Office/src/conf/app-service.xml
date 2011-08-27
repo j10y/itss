@@ -444,6 +444,9 @@
 	 <bean id="archivesDepService" class="com.xpsoft.oa.service.archive.impl.ArchivesDepServiceImpl">
    	 	<constructor-arg index="0" ref="archivesDepDao"/>
    	 </bean>
+   	 <bean id="archivesDistService" class="com.xpsoft.oa.service.archive.impl.ArchivesDistServiceImpl">
+   	 	<constructor-arg index="0" ref="archivesDistDao"/>
+   	 </bean>
 <!-- end:  Generated for ArchivesDep From Template: app-service.xml.beansvm  -->
 <!-- start:  Generated for ArchivesDoc From Template: app-service.xml.beansvm  -->
 	 <bean id="archivesDocService" class="com.xpsoft.oa.service.archive.impl.ArchivesDocServiceImpl">

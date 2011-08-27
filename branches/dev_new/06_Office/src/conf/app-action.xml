@@ -238,6 +238,7 @@
 <!-- end:  Generated for Job From Template: app-action.xml.beansvm  -->
 <!-- start:  Generated for ArchivesDep From Template: app-action.xml.beansvm  -->
  <bean id="ArchivesDepAction" class="com.xpsoft.oa.action.archive.ArchivesDepAction" scope="prototype"/>
+ <bean id="ArchivesDistAction" class="com.xpsoft.oa.action.archive.ArchivesDistAction" scope="prototype"/>
 <!-- end:  Generated for ArchivesDep From Template: app-action.xml.beansvm  -->
 <!-- start:  Generated for ArchivesDoc From Template: app-action.xml.beansvm  -->
  <bean id="ArchivesDocAction" class="com.xpsoft.oa.action.archive.ArchivesDocAction" scope="prototype"/>

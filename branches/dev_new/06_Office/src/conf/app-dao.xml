@@ -250,6 +250,7 @@
 <!-- end:  Generated for Job From Template: app-dao.xml.beansvm  -->
 <!-- start:  Generated for ArchivesDep From Template: app-dao.xml.beansvm  -->
 	<bean id="archivesDepDao" class="com.xpsoft.oa.dao.archive.impl.ArchivesDepDaoImpl" parent="baseDao"/>
+	<bean id="archivesDistDao" class="com.xpsoft.oa.dao.archive.impl.ArchivesDistDaoImpl" parent="baseDao"/>
 <!-- end:  Generated for ArchivesDep From Template: app-dao.xml.beansvm  -->
 <!-- start:  Generated for ArchivesDoc From Template: app-dao.xml.beansvm  -->
 	<bean id="archivesDocDao" class="com.xpsoft.oa.dao.archive.impl.ArchivesDocDaoImpl" parent="baseDao"/>
