@@ -361,5 +361,6 @@ App.importJs = {
    			__ctxPath + "/js/info/NoticeNewDetail.js" ],
 	LeaveTypeView : [ __ctxPath + "/js/personal/LeaveTypeView.js",
 	     			__ctxPath + "/js/personal/LeaveTypeForm.js" ],
- 	ArchivesDistView : [ __ctxPath + "/js/archive/ArchivesDistView.js"]
+ 	ArchivesDistView : [ __ctxPath + "/js/archive/ArchivesDistView.js",
+ 			__ctxPath + "/js/archive/ArchivesDetailWin.js"]
 };

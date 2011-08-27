@@ -178,8 +178,9 @@ ArchivesDistView = Ext
 													var d = j.status;
 													var f = e.data.archDistId;
 													var g = "";
+													var h = j.archDistId;
 													if (isGranted("_ArchivesDistQuery")) {
-														g += '<button title="查阅详情" value=" " class="btn-archives-detail" onclick="ArchivesDistView.detail(' + c + ')">&nbsp;&nbsp;</button>';
+														g += '<button title="查阅详情" value=" " class="btn-archives-detail" onclick="ArchivesDistView.detail(' + c + ',' + h + ')">&nbsp;&nbsp;</button>';
 													}
 													return g;
 												}
