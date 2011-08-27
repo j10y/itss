@@ -43,7 +43,10 @@ DepartmentForm = Ext.extend(Ext.Window, {
 			}, {
 				name : "parentId",
 				mapping : "parentId"
-			} ]),
+			}, {
+				name : "isDist",
+				mapping : "isDist"
+			}]),
 			defaults : {
 				anchor : "95%,95%",
 				allowBlank : false,
