@@ -389,5 +389,12 @@ App.importJs = {
 	PublishHrPaKpipbcView : [__ctxPath + "/js/kpi/PublishHrPaKpipbcView.js",
 			__ctxPath + "/js/kpi/HrPaKpipbcForm.js",
 			__ctxPath + "/js/kpi/HrPaPiView.js",
-			__ctxPath + "/js/kpi/HrPaKpipbcFormView.js"]
+			__ctxPath + "/js/kpi/HrPaKpipbcFormView.js"],
+	CriteriaTargetView : [__ctxPath + "/js/kpi/CriteriaTargetView.js"],
+	CriteriaReachedView : [__ctxPath + "/js/kpi/CriteriaReachedView.js"],
+	HrPaKpiPBC2UserView : [__ctxPath + "/js/kpi/HrPaKpiPBC2UserView.js",
+			__ctxPath + "/js/kpi/AuthorizePbcView.js",
+			__ctxPath + "/js/kpi/AuthorizePbcForm.js"],
+	GradeAuthorizePbcView : [__ctxPath + "/js/kpi/GradeAuthorizePbcView.js",
+			__ctxPath + "/js/kpi/GradeAuthorizePbcForm.js"]
 };
