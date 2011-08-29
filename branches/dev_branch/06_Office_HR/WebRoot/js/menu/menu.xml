@@ -1306,7 +1306,25 @@
 					<url>/system/listIncomeTax.do</url>
 					<url>/system/addIncomeTax.do</url>
 				</Function>
-			</Item>	
+			</Item>
+			<Item id="RewardsPunishmentsTypeView" text="奖惩类型" iconCls="menu-RewardsPunishmentsType">
+			    <Function id="_RewardsPunishmentsTypeQuery" iconCls="menu-list" text="查看">
+					<url>/rewardsPunishments/listRewardsPunishmentsType.do</url>
+				</Function>
+				<Function id="_RewardsPunishmentsTypeAdd" iconCls="menu-add" text="添加">
+					<url>/rewardsPunishments/listRewardsPunishmentsType.do</url>
+					<url>/rewardsPunishments/saveRewardsPunishmentsType.do</url>
+				</Function>
+				<Function id="_RewardsPunishmentsTypeEdit" iconCls="btn-edit" text="编辑">
+					<url>/rewardsPunishments/listRewardsPunishmentsType.do</url>
+					<url>/rewardsPunishments/saveRewardsPunishmentsType.do</url>
+					<url>/rewardsPunishments/getRewardsPunishment.do</url>
+				</Function>
+				<Function id="_RewardsPunishmentsTypeDel" iconCls="menu-del" text="删除">
+					<url>/rewardsPunishments/listRewardsPunishmentsType.do</url>
+					<url>/rewardsPunishments/multiDelRewardsPunishmentsType.do</url>
+				</Function>
+			</Item>
 			<Item id="RewardsPunishmentsView" text="人员奖惩" iconCls="menu-RewardsPunishments">
 			    <Function id="_RewardsPunishmentsQuery" iconCls="menu-list" text="查看">
 					<url>/rewardsPunishments/listRewardsPunishments.do</url>
