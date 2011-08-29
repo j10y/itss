@@ -419,6 +419,23 @@
 		<action name="*HrPaKpiitem" class="HrPaKpiitemAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*HrPaAssessmenttasksassigned" class="HrPaAssessmenttasksassignedAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaAcreached" class="HrPaAcreachedAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaKpiPBC2User" class="HrPaKpiPBC2UserAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaKpiitem2user" class="HrPaKpiitem2userAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPaAuthorizepbc" class="HrPaAuthorizepbcAction" method="{1}">
+			<result>${successResultValue}</result>
+			<result name="show">/pages/kpi/gradeUserPbc.jsp</result>
+			<result name="gradeResult">/pages/kpi/gradeResult.jsp</result>
+		</action>
 	</package>
 	<package name="scheduler" extends="struts-default" namespace="/scheduler">
 		<action name="*TaskScheduler" class="TaskSchedulerAction" method="{1}">
