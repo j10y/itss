@@ -597,5 +597,8 @@
 	<bean id="incomeTaxItemService" class="com.xpsoft.oa.service.hrm.impl.IncomeTaxItemServiceImpl">
 		<constructor-arg index="0" ref="incomeTaxItemDao"/>
 	</bean>
+	<bean id="rewardsPunishmentsTypeService" class="com.xpsoft.oa.service.hrm.impl.RewardsPunishmentsTypeServiceImpl">
+		<constructor-arg index="0" ref="rewardsPunishmentsTypeDao"/>
+	</bean>
 
 </beans>
