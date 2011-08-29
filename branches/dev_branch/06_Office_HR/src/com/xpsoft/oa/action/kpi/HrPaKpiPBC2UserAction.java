@@ -1,10 +1,15 @@
 package com.xpsoft.oa.action.kpi;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
+
+import flexjson.JSONSerializer;
 
 public class HrPaKpiPBC2UserAction extends BaseAction {
 	@Resource
@@ -33,6 +38,16 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 	}
 	
 	public String list() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<HrPaKpiPBC2User> list = this.hrPaKpiPBC2UserService.getAll(filter);
+		
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(",result:");
+		JSONSerializer json = new JSONSerializer();
+		buff.append(json.exclude(new String[] {}).serialize(list));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
 		return "success";
 	}
 	
