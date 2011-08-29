@@ -1552,6 +1552,10 @@
 						<url>/kpi/editHrPaAssessmentcriteria.do</url>
 					</Function>
 				</Item>
+				<Item id="CriteriaTargetView" text="目标数据导入">
+				</Item>
+				<Item id="CriteriaReachedView" text="达成数据导入">
+				</Item>
 			</Items>
 			<Items id="HrPaKpipbcManage" text="考核模板管理">
 				<Item id="DraftHrPaKpipbcView" text="草稿管理">
@@ -1579,6 +1583,10 @@
 					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
 						<url>/kpi/editHrPaKpipbc.do</url>
 					</Function>
+				</Item>
+				<Item id="HrPaKpiPBC2UserView" text="个人考核模板授权">
+				</Item>
+				<Item id="GradeAuthorizePbcView" text="授权考核模板打分">
 				</Item>
 			</Items>
 		</Items>
