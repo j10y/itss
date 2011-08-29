@@ -43,7 +43,7 @@ RewardsPunishmentsView = Ext.extend(Ext.Panel, {
 			}, {
 				text : "奖惩类型"
 			}, {
-				fieldLabel : "奖惩类型",
+				/*fieldLabel : "奖惩类型",
 				name : "Q_rpType.itemValue_S_LK",
 				id : "rpType",
 				maxHeight : 200,
@@ -71,7 +71,23 @@ RewardsPunishmentsView = Ext.extend(Ext.Panel, {
 							});
 						}
 					}
-				}
+				}*/
+
+				fieldLabel : "奖惩类型",
+				name : "Q_rpType.typeName_S_LK",
+				id : "rpType",
+				maxHeight : 200,
+				xtype : "combo",
+				mode : "remote",
+				editable : true,
+				triggerAction : "all",
+				displayField: "typeName",
+				valueField: "typeName",
+				store : new Ext.data.SimpleStore({
+					url : __ctxPath + "/rewardsPunishments/comboRewardsPunishmentsType.do",
+					fields : ["typeId", "typeName"]
+				})
+			
 			}, {
 				xtype : "button",
 				text : "查询",
@@ -87,7 +103,7 @@ RewardsPunishmentsView = Ext.extend(Ext.Panel, {
 					remoteSort : true,
 					fields : [ "rpId",
 					           {name : "amount", mapping : "amount"}, 
-					           {name : "rpType", mapping : "rpType.itemValue"},
+					           {name : "rpType", mapping : "rpType.typeName"},
 					           {name : "remark", mapping : "remark"}, 
 					           {name : "appUser", mapping : "appUser.fullname"}, 
 					           {name : "profileNo", mapping : "empProfile.profileNo"}, 

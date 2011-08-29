@@ -46,8 +46,8 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 				name : "rewardsPunishmentsForm.appUserCombo",
 				mapping : "appUser.fullname"
 			}, {
-				name : "rewardsPunishmentsForm.rpType.dicId",
-				mapping : "rpType.dicId"
+				name : "rewardsPunishmentsForm.rpType.typeId",
+				mapping : "rpType.typeId"
 			}, {
 				name : "rewardsPunishmentsForm.rpTypeCombo",
 				mapping : "rpTypeStr"
@@ -103,8 +103,8 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 					emptyMsg : "当前没有记录"
 				})
 			}, {
-				name : "rewardsPunishments.rpType.dicId",
-				id : "rewardsPunishmentsForm.rpType.dicId",
+				name : "rewardsPunishments.rpType.typeId",
+				id : "rewardsPunishmentsForm.rpType.typeId",
 				xtype : "hidden"
 			}, {
 				fieldLabel : "奖惩类型",
@@ -116,35 +116,15 @@ RewardsPunishmentsForm = Ext.extend(Ext.Window, {
 				mode : "remote",
 				editable : true,
 				triggerAction : "all",
-				displayField: "itemValue",
-				valueField: "itemValue",
+				displayField: "typeName",
+				valueField: "typeName",
 				store : new Ext.data.SimpleStore({
-					url : __ctxPath + "/system/comboDictionary.do",
-					baseParams : {
-						itemName : "奖惩类型"
-					},
-					fields : ["dicId", "itemValue"]
+					url : __ctxPath + "/rewardsPunishments/comboRewardsPunishmentsType.do",
+					fields : ["typeId", "typeName"]
 				}),
 				listeners : {
-//					focus : function(d) {
-//						var c = Ext.getCmp("rpTypeCombo").getStore();
-//						if (c.getCount() <= 0) {
-//							Ext.Ajax.request({
-//								url : __ctxPath
-//										+ "/system/comboDictionary.do",
-//								method : "post",
-//								params : {
-//									itemName : "奖惩类型"
-//								},
-//								success : function(f) {
-//									var e = Ext.util.JSON.decode(f.responseText);
-//									c.loadData(e);
-//								}
-//							});
-//						}
-//					},
 					select : function(l, h, k) {
-						Ext.getCmp("rewardsPunishmentsForm.rpType.dicId").setValue(h.data.dicId);
+						Ext.getCmp("rewardsPunishmentsForm.rpType.typeId").setValue(h.data.typeId);
 					}
 				}
 			}, {
