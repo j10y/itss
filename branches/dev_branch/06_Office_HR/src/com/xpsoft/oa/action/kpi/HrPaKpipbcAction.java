@@ -388,6 +388,13 @@ public class HrPaKpipbcAction extends BaseAction{
 				HrPaKpiPBC2User hrPaKpiPBC2User = hrPaKpiPBC2UserList.get(0);
 				String[] fromPbcArray = hrPaKpiPBC2User.getFromPBC().split(",");
 				boolean flag = false;
+				//判断要插入的模板和已存在模板考核频度是否一致
+				for(int p = 0; p < fromPbcArray.length; p++) {
+					HrPaKpipbc hrPaKpipbc = hrPaKpipbcService.get(Long.parseLong(fromPbcArray[p]));
+					if(pbc.getFrequency().getId() != hrPaKpipbc.getFrequency().getId()) {
+						return ;    //如果出现频率不一致的则直接返回，不进行合并。
+					}
+				}
 				//清除个人PBC冗余考核项
 				Map<String, String> map3 = new HashMap<String, String>();
 				map3.put("Q_pbc2User.id_L_EQ", String.valueOf(hrPaKpiPBC2User.getId()));
@@ -410,6 +417,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				if(!flag) {//原模板中不包含要插入的PBC模板
 					hrPaKpiPBC2User.setFromPBC(hrPaKpiPBC2User.getFromPBC() + "," + pbc.getId());
 				}
+				hrPaKpiPBC2User.setPublishStatus(0);//设置为未加权值状态
 				hrPaKpiPBC2User.setModifyDate(currentDate);
 				hrPaKpiPBC2User.setModifyPerson(currentUser);
 				hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
