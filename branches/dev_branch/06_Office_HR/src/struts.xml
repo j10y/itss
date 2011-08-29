@@ -354,9 +354,6 @@
 		<action name="*SalaryPayoff" class="SalaryPayoffAction" method="{1}">
 		   <result>${successResultValue}</result>
 		</action>
-		<action name="*Budget" class="BudgetAction" method="{1}">
-		   <result>${successResultValue}</result>
-		</action>
 	</package>
 	<package name="budget" extends="struts-default" namespace="/budget">
 		<action name="*Budget" class="BudgetAction" method="{1}">
@@ -444,6 +441,9 @@
 	</package>
 	<package name="rewardsPunishments" extends="struts-default" namespace="/rewardsPunishments">
 		<action name="*RewardsPunishments" class="RewardsPunishmentsAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*RewardsPunishmentsType" class="RewardsPunishmentsTypeAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
 	</package>
