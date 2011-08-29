@@ -18,25 +18,17 @@
             column="id"
             type="java.lang.Long"
             length="19"
-        />
+        >
+        	<generator class="native"/>
+        </id>
+        <many-to-one name="authorPbc" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaAuthorizepbc" column="apbcId"></many-to-one>
         <property
-            name="apbcId"
+            name="akpiItem2uId"
             type="java.lang.Long"
             update="true"
             insert="true"
             access="property"
-            column="apbcId"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
-        <property
-            name="akpiItemId"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="akpiItemId"
+            column="akpiItem2uId"
             length="19"
             not-null="false"
             unique="false"
@@ -51,6 +43,17 @@
             length="20"
             not-null="false"
             unique="false"
+        />
+        <property
+        	name="weight"
+        	type="java.lang.Double"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="weight"
+        	length="20"
+        	not-null="false"
+        	unique="false"
         />
     </class>
 </hibernate-mapping>

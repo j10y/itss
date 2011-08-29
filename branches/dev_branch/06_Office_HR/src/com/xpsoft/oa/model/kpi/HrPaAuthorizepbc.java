@@ -3,38 +3,39 @@ package com.xpsoft.oa.model.kpi;
 import java.util.Date;
 
 import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.system.AppUser;
 
 public class HrPaAuthorizepbc extends BaseModel {
-	protected long id;
-	protected long pbcId;
-	protected long userId;
+	protected Long id;
+	protected HrPaKpiPBC2User userPbc;
+	protected AppUser authorTo;
 	protected Date authDate;
-	protected long authPerson;
+	protected AppUser authPerson;
 	
 	public HrPaAuthorizepbc(){}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getPbcId() {
-		return pbcId;
+	public HrPaKpiPBC2User getUserPbc() {
+		return userPbc;
 	}
 
-	public void setPbcId(long pbcId) {
-		this.pbcId = pbcId;
+	public void setUserPbc(HrPaKpiPBC2User userPbc) {
+		this.userPbc = userPbc;
 	}
 
-	public long getUserId() {
-		return userId;
+	public AppUser getAuthorTo() {
+		return authorTo;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setAuthorTo(AppUser authorTo) {
+		this.authorTo = authorTo;
 	}
 
 	public Date getAuthDate() {
@@ -45,11 +46,12 @@ public class HrPaAuthorizepbc extends BaseModel {
 		this.authDate = authDate;
 	}
 
-	public long getAuthPerson() {
+	public AppUser getAuthPerson() {
 		return authPerson;
 	}
 
-	public void setAuthPerson(long authPerson) {
+	public void setAuthPerson(AppUser authPerson) {
 		this.authPerson = authPerson;
 	}
+
 }

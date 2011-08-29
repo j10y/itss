@@ -3,42 +3,52 @@ package com.xpsoft.oa.model.kpi;
 import com.xpsoft.core.model.BaseModel;
 
 public class HrPaAuthpbccitem extends BaseModel {
-	protected long id;
-	protected long apbcId;
-	protected long akpiItemId;
-	protected double result;
+	protected Long id;
+	protected HrPaAuthorizepbc authorPbc;
+	protected Long akpiItem2uId;
+	protected Double result;
+	protected Double weight;
 	
 	public HrPaAuthpbccitem(){}
 
-	public long getId(){
+	public Long getId() {
 		return id;
 	}
-	
-	public void setId(long id){
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public long getApbcId() {
-		return apbcId;
+
+	public HrPaAuthorizepbc getAuthorPbc() {
+		return authorPbc;
 	}
 
-	public void setApbcId(long apbcId) {
-		this.apbcId = apbcId;
+	public void setAuthorPbc(HrPaAuthorizepbc authorPbc) {
+		this.authorPbc = authorPbc;
 	}
 
-	public long getAkpiItemId() {
-		return akpiItemId;
+	public Long getAkpiItem2uId() {
+		return akpiItem2uId;
 	}
 
-	public void setAkpiItemId(long akpiItemId) {
-		this.akpiItemId = akpiItemId;
+	public void setAkpiItem2uId(Long akpiItem2uId) {
+		this.akpiItem2uId = akpiItem2uId;
 	}
 
-	public double getResult() {
+	public Double getResult() {
 		return result;
 	}
 
-	public void setResult(double result) {
+	public void setResult(Double result) {
 		this.result = result;
 	}
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+
 }
