@@ -55,7 +55,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			} ]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_EQ=0&alarm=true",
+			url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_GE=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=1&alarm=true",
 			root : "result",
 			totalProperty : "totalCounts",
 			remoteSort : true,
@@ -231,7 +231,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询",
-				url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_EQ=0&alarm=true",
+				url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_GE=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=1&alarm=true",
 				success : function(c, d) {
 					var b = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(b);
