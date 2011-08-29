@@ -49,24 +49,11 @@
             update="true"
             insert="true"
             access="property"
-            column="rowNum"
+            column="rowsNum"
             length="10"
             not-null="true"
             unique="false"
         />
-        <!--
-        <property
-            name="rowNum"
-            type="java.lang.Integer"
-            update="true"
-            insert="true"
-            access="property"
-            column="rowsNUM"
-            length="10"
-            not-null="true"
-            unique="false"
-        />
-     	-->
      	<!-- imported bi-directional many-to-one association to AppUser -->
 		<many-to-one
 			name="appUser"
