@@ -21,17 +21,7 @@
         >
             <generator class="native"/>
         </id>
-         <property
-            name="piId"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="piId"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="pi" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaPerformanceindex" column="piId"></many-to-one>
         <property
             name="pisScore"
             type="java.math.BigDecimal"
@@ -43,17 +33,7 @@
             not-null="false"
             unique="false"
         />
-        <property
-            name="pisType"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="pisType"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="pisType" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaDatadictionary" column="pisType"></many-to-one>
         <property
             name="pisDesc"
             type="java.lang.String"

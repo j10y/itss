@@ -100,17 +100,7 @@
             not-null="false"
             unique="false"
         />
-        <property
-            name="createPerson"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="createPerson"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="createPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
         <property
             name="publishStatus"
             type="java.lang.Integer"
@@ -133,17 +123,7 @@
             not-null="false"
             unique="false"
         />
-        <property
-            name="modifyPerson"
-            type="java.lang.Long"
-            update="true"
-            insert="true"
-            access="property"
-            column="modifyPerson"
-            length="19"
-            not-null="false"
-            unique="false"
-        />
+        <many-to-one name="modifyPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
         <property
         	name="baseScore"
         	type="java.lang.Double"

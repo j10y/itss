@@ -3,34 +3,32 @@ package com.xpsoft.oa.model.kpi;
 import java.util.*;
 
 import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.system.AppUser;
 
 public class HrPaPerformanceindex extends BaseModel{
-	protected long id;
+	protected Long id;
 	protected String paName;
-	protected long paType;
-	protected long paFrequency;
-	protected long paMode;
 	protected HrPaDatadictionary type;
 	protected HrPaDatadictionary frequency;
 	protected HrPaDatadictionary mode;
-	protected int paIsOnlyNegative;
+	protected Integer paIsOnlyNegative;
 	protected String paDesc;
 	protected String remark;
 	protected Date createDate;
-	protected long createPerson;
-	protected int publishStatus;
+	protected AppUser createPerson;
+	protected Integer publishStatus;
 	protected Date modifyDate;
-	protected long modifyPerson;
-	protected double baseScore;
-	protected double finalScore;
+	protected AppUser modifyPerson;
+	protected Double baseScore;
+	protected Double finalScore;
 	
 	public HrPaPerformanceindex(){}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -49,21 +47,6 @@ public class HrPaPerformanceindex extends BaseModel{
 	public void setType(HrPaDatadictionary type) {
 		this.type = type;
 	}
-	
-	public long getPaType() {
-		return this.getType() == null ? null : this.getType().getId();
-	}
-	
-	public void setPaType(Long value) {
-		if(value == null) {
-			this.type = null;
-		} else if (this.type == null) {
-			this.type = new HrPaDatadictionary();
-			this.type.setId(value);
-		} else {
-			this.type.setId(value);
-		}
-	}
 
 	public HrPaDatadictionary getFrequency() {
 		return frequency;
@@ -71,21 +54,6 @@ public class HrPaPerformanceindex extends BaseModel{
 
 	public void setFrequency(HrPaDatadictionary frequency) {
 		this.frequency = frequency;
-	}
-	
-	public long getPaFrequency() {
-		return this.getFrequency() == null ? null : this.getFrequency().getId();
-	}
-	
-	public void setPaFrequency(Long value) {
-		if(value == null) {
-			this.frequency = null;
-		} else if (this.frequency == null) {
-			this.frequency = new HrPaDatadictionary();
-			this.frequency.setId(value);
-		} else {
-			this.frequency.setId(value);
-		}
 	}
 
 	public HrPaDatadictionary getMode() {
@@ -95,27 +63,12 @@ public class HrPaPerformanceindex extends BaseModel{
 	public void setMode(HrPaDatadictionary mode) {
 		this.mode = mode;
 	}
-	
-	public long getPaMode(){
-		return this.getMode() == null ? null : this.getMode().getId();
-	}
-	
-	public void setPaMode(Long value) {
-		if(value == null) {
-			this.mode = null;
-		} else if (this.mode == null) {
-			this.mode = new HrPaDatadictionary();
-			this.mode.setId(value);
-		} else {
-			this.mode.setId(value);
-		}
-	}
 
-	public int getPaIsOnlyNegative() {
+	public Integer getPaIsOnlyNegative() {
 		return paIsOnlyNegative;
 	}
 
-	public void setPaIsOnlyNegative(int paIsOnlyNegative) {
+	public void setPaIsOnlyNegative(Integer paIsOnlyNegative) {
 		this.paIsOnlyNegative = paIsOnlyNegative;
 	}
 
@@ -143,19 +96,19 @@ public class HrPaPerformanceindex extends BaseModel{
 		this.createDate = createDate;
 	}
 
-	public long getCreatePerson() {
+	public AppUser getCreatePerson() {
 		return createPerson;
 	}
 
-	public void setCreatePerson(long createPerson) {
+	public void setCreatePerson(AppUser createPerson) {
 		this.createPerson = createPerson;
 	}
 
-	public int getPublishStatus() {
+	public Integer getPublishStatus() {
 		return publishStatus;
 	}
 
-	public void setPublishStatus(int publishStatus) {
+	public void setPublishStatus(Integer publishStatus) {
 		this.publishStatus = publishStatus;
 	}
 
@@ -167,27 +120,28 @@ public class HrPaPerformanceindex extends BaseModel{
 		this.modifyDate = modifyDate;
 	}
 
-	public long getModifyPerson() {
+	public AppUser getModifyPerson() {
 		return modifyPerson;
 	}
 
-	public void setModifyPerson(long modifyPerson) {
+	public void setModifyPerson(AppUser modifyPerson) {
 		this.modifyPerson = modifyPerson;
 	}
 
-	public double getBaseScore() {
+	public Double getBaseScore() {
 		return baseScore;
 	}
 
-	public void setBaseScore(double baseScore) {
+	public void setBaseScore(Double baseScore) {
 		this.baseScore = baseScore;
 	}
 
-	public double getFinalScore() {
+	public Double getFinalScore() {
 		return finalScore;
 	}
 
-	public void setFinalScore(double finalScore) {
+	public void setFinalScore(Double finalScore) {
 		this.finalScore = finalScore;
 	}
+
 }

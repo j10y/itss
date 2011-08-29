@@ -3,34 +3,34 @@ package com.xpsoft.oa.model.kpi;
 import com.xpsoft.core.model.BaseModel;
 
 public class HrPaPisrule extends BaseModel {
-	protected long id;
-	protected long pisId;
-	protected long pisAC;
+	protected Long id;
+	protected HrPaPerformanceindexscore pis;
+	protected Long pisAC;
 	protected String formula;
 	
 	public HrPaPisrule(){}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getPisId() {
-		return pisId;
+	public HrPaPerformanceindexscore getPis() {
+		return pis;
 	}
 
-	public void setPisId(long pisId) {
-		this.pisId = pisId;
+	public void setPis(HrPaPerformanceindexscore pis) {
+		this.pis = pis;
 	}
 
-	public long getPisAC() {
+	public Long getPisAC() {
 		return pisAC;
 	}
 
-	public void setPisAC(long pisAC) {
+	public void setPisAC(Long pisAC) {
 		this.pisAC = pisAC;
 	}
 
@@ -41,4 +41,5 @@ public class HrPaPisrule extends BaseModel {
 	public void setFormula(String formula) {
 		this.formula = formula;
 	}
+
 }

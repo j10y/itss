@@ -5,28 +5,28 @@ import java.math.BigDecimal;
 import com.xpsoft.core.model.BaseModel;
 
 public class HrPaPerformanceindexscore extends BaseModel {
-	protected long id;
-	protected long piId;
+	protected Long id;
+	protected HrPaPerformanceindex pi;
 	protected BigDecimal pisScore;
-	protected long pisType;
+	protected HrPaDatadictionary pisType;
 	protected String pisDesc;
 	
 	public HrPaPerformanceindexscore(){}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getPiId() {
-		return piId;
+	public HrPaPerformanceindex getPi() {
+		return pi;
 	}
 
-	public void setPiId(long piId) {
-		this.piId = piId;
+	public void setPi(HrPaPerformanceindex pi) {
+		this.pi = pi;
 	}
 
 	public BigDecimal getPisScore() {
@@ -37,11 +37,11 @@ public class HrPaPerformanceindexscore extends BaseModel {
 		this.pisScore = pisScore;
 	}
 
-	public long getPisType() {
+	public HrPaDatadictionary getPisType() {
 		return pisType;
 	}
 
-	public void setPisType(long pisType) {
+	public void setPisType(HrPaDatadictionary pisType) {
 		this.pisType = pisType;
 	}
 
@@ -52,4 +52,5 @@ public class HrPaPerformanceindexscore extends BaseModel {
 	public void setPisDesc(String pisDesc) {
 		this.pisDesc = pisDesc;
 	}
+
 }
