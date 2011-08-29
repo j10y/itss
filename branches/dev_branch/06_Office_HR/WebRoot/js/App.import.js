@@ -397,4 +397,6 @@ App.importJs = {
 			__ctxPath + "/js/kpi/AuthorizePbcForm.js"],
 	GradeAuthorizePbcView : [__ctxPath + "/js/kpi/GradeAuthorizePbcView.js",
 			__ctxPath + "/js/kpi/GradeAuthorizePbcForm.js"]
+	RewardsPunishmentsTypeView : [ __ctxPath + "/js/rewardsPunishments/RewardsPunishmentsTypeView.js",
+			                    __ctxPath + "/js/rewardsPunishments/RewardsPunishmentsTypeForm.js" ]
 };
