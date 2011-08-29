@@ -7,10 +7,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.google.gson.annotations.Expose;
 import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
-import com.xpsoft.oa.model.system.Dictionary;
 
 /**
  * 人员奖惩
@@ -26,7 +24,8 @@ public class RewardsPunishments extends BaseModel {
 	protected EmpProfile empProfile;
 	//奖惩类型
 	protected String rpTypeStr;
-	protected Dictionary rpType;
+	protected RewardsPunishmentsType rpType;
+	
 	protected Date createDate;	
 	protected AppUser createPerson;
 
@@ -66,10 +65,10 @@ public class RewardsPunishments extends BaseModel {
 	public void setRpTypeStr(String rpTypeStr) {
 		this.rpTypeStr = rpTypeStr;
 	}
-	public Dictionary getRpType() {
+	public RewardsPunishmentsType getRpType() {
 		return rpType;
 	}
-	public void setRpType(Dictionary rpType) {
+	public void setRpType(RewardsPunishmentsType rpType) {
 		this.rpType = rpType;
 	}	
 	public Date getCreateDate() {

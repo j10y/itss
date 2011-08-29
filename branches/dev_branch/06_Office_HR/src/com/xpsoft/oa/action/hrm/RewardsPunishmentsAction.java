@@ -1,14 +1,9 @@
 package com.xpsoft.oa.action.hrm;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.ContextUtil;
@@ -16,11 +11,10 @@ import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.RewardsPunishments;
+import com.xpsoft.oa.model.hrm.RewardsPunishmentsType;
 import com.xpsoft.oa.model.system.AppUser;
-import com.xpsoft.oa.model.system.Department;
-import com.xpsoft.oa.model.system.Dictionary;
-import com.xpsoft.oa.service.hrm.RewardsPunishmentsService;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
+import com.xpsoft.oa.service.hrm.RewardsPunishmentsService;
 
 import flexjson.JSONSerializer;
 
@@ -114,8 +108,8 @@ public class RewardsPunishmentsAction extends BaseAction {
 		EmpProfile empProfile = new EmpProfile();
 		empProfile.setProfileId(Long.valueOf(getRequest().getParameter("rewardsPunishments.empProfile.profileId")));
 		this.rewardsPunishments.setEmpProfile(empProfile);
-		Dictionary rpType = new Dictionary();
-		rpType.setDicId(Long.valueOf(getRequest().getParameter("rewardsPunishments.rpType.dicId")));
+		RewardsPunishmentsType rpType = new RewardsPunishmentsType();
+		rpType.setTypeId(Long.valueOf(getRequest().getParameter("rewardsPunishments.rpType.typeId")));
 		this.rewardsPunishments.setRpType(rpType);
 		this.rewardsPunishmentsService.save(this.rewardsPunishments);
 		setJsonString("{success:true,rewardsPunishmentsId:'" + rewardsPunishments.getRpId() + "'}");
