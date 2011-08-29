@@ -227,4 +227,20 @@ alter table hr_sr_factorItem comment '绩效系数对应';
 
 alter table hr_sr_factorItem add constraint FK_Reference_32 foreign key (belongPF)
       references hr_sr_performanceFactor (id) on delete restrict on update restrict;
+      
+
+--2011-08-25 惩罚类型表
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `hr_sr_rewardsPunishmentsType`
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_sr_rewardsPunishmentsType`;
+CREATE TABLE `hr_sr_rewardsPunishmentsType` (
+  `typeId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `typeName` varchar(128) NOT NULL COMMENT '分类名称',
+  `typeDesc` varchar(128) DEFAULT NULL COMMENT '分类描述',
+  `operation` varchar(8) NOT NULL COMMENT '操作符 + -',
+  `deleteFlag` smallint(6) NOT NULL COMMENT '删除标记 0未删除 1删除',
+  PRIMARY KEY (`typeId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
     
