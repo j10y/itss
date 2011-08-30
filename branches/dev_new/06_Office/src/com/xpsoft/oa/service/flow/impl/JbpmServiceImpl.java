@@ -701,7 +701,9 @@ public class JbpmServiceImpl implements JbpmService {
 		/* 716 */TaskImpl taskImpl = (TaskImpl) this.taskService
 				.getTask(taskId);
 
-		/* 718 */String sourceName = taskImpl.getName();
+		
+		//String sourceName = taskImpl.getName();
+		String sourceName = taskImpl.getActivityName();//modefied by awen for change taskname to activity name ,this is the right logic
 
 		/* 721 */TaskImpl superTask = taskImpl.getSuperTask();
 
@@ -720,6 +722,9 @@ public class JbpmServiceImpl implements JbpmService {
 		}
 
 		if (!isTransitionExist&&destName!=null) {
+//			if(superTask!=null){
+//				sourceName = superTask.getActivityName();
+//			}
 			addOutTransition(pd, sourceName, destName);
 		}
 
