@@ -7,6 +7,7 @@
 		<property name="triggers">
 			<list>
 				<ref local="sendMessageTrigger"/>
+				<ref local="reloadUserRoleTrigger"/>
 			</list>
 		</property>
 	</bean>
@@ -17,6 +18,24 @@
         <property name="targetMethod" value="sendWarmMessage"></property>
         <property name="concurrent" value="false"></property>
     </bean>
+    <bean name="appUtilJob"
+		class="com.xpsoft.core.util.AppUtil">		
+	</bean>
+	
+    <bean id="reloadUserRoleS" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="appUtilJob"></property>
+        <property name="targetMethod" value="reloadUserRole"></property>
+        <property name="concurrent" value="false"></property>
+    </bean>
+    <!-- Trigger -->
+	<bean id="reloadUserRoleTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 早上二点钟开始调用SENDWARMMESSAGE方法-->
+		<property name="cronExpression">
+		    <value>0 0/5 * * * ?</value>
+		</property> 
+	   <property name="jobDetail" ref="reloadUserRoleS"/>
+	</bean>
+	
 	<!-- Trigger -->
 	<bean id="sendMessageTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<!-- 早上二点钟开始调用SENDWARMMESSAGE方法-->
@@ -25,4 +44,5 @@
 		</property> 
 	   <property name="jobDetail" ref="sendMessageDetial"/>
 	</bean>
+	
 </beans>
