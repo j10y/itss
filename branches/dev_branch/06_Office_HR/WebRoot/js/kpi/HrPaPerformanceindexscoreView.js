@@ -182,24 +182,9 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		});
 		this.rowActions.on("action", this.onRowAction, this);
 	},
-	cancel : function(a) {
-		if(a.from == "draft") {
-			Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
-				params : {
-					start : 0,
-					limit : 25
-				}
-			});
-		} else if(a.from == "publish") {
-			Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
-				params : {
-					start : 0,
-					limit : 25
-				}
-			});
-		}
+	cancel : function(b) {
 		Ext.getCmp("HrPaPerformanceindexFormWin").close();
-		a.close();
+		b.close();
 	},
 	saveAsDraft : function(a, b) {
 		var pisList = "";
@@ -259,6 +244,21 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 			success : function(c, d) {
 				Ext.getCmp("HrPaPerformanceindexFormWin").close();
 				Ext.getCmp("HrPaPerformanceindexscoreView").close();
+				if(b.from == "draft") {
+					Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+				} else if(a.from == "publish") {
+					Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+				}
 			},
 			failure : function(c, d) {
 				Ext.MessageBox.show({
