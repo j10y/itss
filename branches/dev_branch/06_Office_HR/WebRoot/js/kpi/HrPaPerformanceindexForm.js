@@ -23,7 +23,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/kpi/saveHrPaPerformanceindex.do",
+			url : __ctxPath + "/kpi/saveAsDraftHrPaPerformanceindex.do",
 			id : "HrPaPerformanceindexForm",
 			defaults : {
 				anchor : "98%,98%"
@@ -44,7 +44,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					blankText : "考核指标名称不能为空！"
 				}, {
 					fieldLabel : "考核指标类型",
-					hiddenName : "hrPaPerformanceindex.paType",
+					hiddenName : "hrPaPerformanceindex.type.id",
 					labelStyle : "text-align:right",
 					maxHeight : 200,
 					id : "typeName",
@@ -77,7 +77,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					}
 				}, {
 					fieldLabel : "考核频度",
-					hiddenName : "hrPaPerformanceindex.paFrequency",
+					hiddenName : "hrPaPerformanceindex.frequency.id",
 					labelStyle : "text-align:right",
 					maxHeight : 200,
 					id : "frequencyName",
@@ -110,7 +110,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					}
 				}, {
 					fieldLabel : "考核方式",
-					hiddenName : "hrPaPerformanceindex.paMode",
+					hiddenName : "hrPaPerformanceindex.mode.id",
 					labelStyle : "text-align:right",
 					maxHeight : 200,
 					id : "modeName",
@@ -256,6 +256,16 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					name : "hrPaPerformanceindex.createPerson",
 					id : "createPerson",
 					xtype : "hidden"
+				}, {
+					fieldLabel : "状态",
+					name : "hrPaPerformanceindex.publishStatus",
+					id : "publishStatus",
+					xtype : "hidden"
+				}, {
+					fieldLabel : "关联的考核分数",
+					name : "indexScores",
+					id : "indexScores",
+					xtype : "hidden"
 				}
 			]
 		});
@@ -322,29 +332,14 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			}
 		}
 		if(a.getForm().isValid()) {
-			a.getForm().submit({
-				method : "post",
-				waitMsg : "正在提交数据…",
-				success : function(c, d) {
-					var paModeValue = Ext.getCmp("modeName").getValue();
-					var e = Ext.util.JSON.decode(d.response.responseText);
-					Ext.getCmp("HrPaPerformanceindexFormWin").close();
-					new HrPaPerformanceindexscoreView({
-						piId : e.data.piId,
-						paMode : paModeValue,
-						from : b.from
-					}).show();
-				},
-				failure : function(c, d) {
-					Ext.MessageBox.show({
-						title : "操作信息",
-						msg : "信息录入有误，请核实！",
-						buttons : Ext.MessageBox.OK,
-						icon : Ext.MessageBox.ERROR
-					});
-					return ;
-				}
-			});
+			b.hide();
+			var paModeValue = Ext.getCmp("modeName").getValue();
+			var piId = Ext.getCmp("piId").getValue();
+			new HrPaPerformanceindexscoreView({
+				piId : piId == null ? 0 : piId,
+				paMode : paModeValue,
+				from : b.from
+			}).show();
 		}
 	}
 });
