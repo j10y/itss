@@ -685,9 +685,9 @@ public class AppUserAction extends BaseAction {
 			}
 		}
 		if(isLeader){
-			buff.append("'true'}");
+			buff.append("true}");
 		}else{
-			buff.append("'false'}");
+			buff.append("false}");
 		}
 		this.jsonString = buff.toString();
 		/* 164 */return "success";
