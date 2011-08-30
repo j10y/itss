@@ -36,6 +36,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 			success : function(h, j) {
 				var data = Ext.decode(h.responseText);
 				display = data.isLeader;
+				Ext.getCmp("toOther").setVisible(display);
 			}
 		});
 	
@@ -114,7 +115,6 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 									iconCls:'btn-transition',
 									id : 'toOther',
 									text : '其他局领导阅',
-									hidden : display,
 									handler : function(){
 										var signUserIds="";
 										if (Ext.getCmp("ArchDistributeForm").getForm().isValid()) {
