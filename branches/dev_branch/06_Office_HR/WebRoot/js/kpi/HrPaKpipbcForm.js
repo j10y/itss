@@ -379,22 +379,10 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			return ;
 		}
 		//只是前台页面删除，数据库并不真正删除
-		for(var d = 0; d < c.length; d++) {
-			var allStore = e.getStore();
-			for(var m = 0; m < allStore.getCount(); m++) {
-				var rec = allStore.getAt(m);
-				if(rec.data.piId == c[d].data.piId) {
-					allStore.remove(rec);
-				}
-			}
-		}
-		/*
-		var f = Array();
-		for(var d = 0; d < c.length; d++) {
-			f.push(c[d].data.id);
-		}
-		HrPaKpipbcForm.remove(f);
-		*/
+		var allStore = e.getStore();
+		Ext.each(c, function(item) {
+			allStore.remove(item);
+		});
 	},
 	cancel : function(b) {
 		b.close();
