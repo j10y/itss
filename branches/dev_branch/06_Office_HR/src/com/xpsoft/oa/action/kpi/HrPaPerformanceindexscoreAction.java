@@ -10,7 +10,6 @@ import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindexscore;
-import com.xpsoft.oa.model.kpi.HrPaPisrule;
 import com.xpsoft.oa.service.kpi.HrPaPerformanceindexscoreService;
 import com.xpsoft.oa.service.kpi.HrPaPisruleService;
 
@@ -74,7 +73,6 @@ public class HrPaPerformanceindexscoreAction extends BaseAction{
 		
 		return "success";
 	}
-	
 	public String get(){
 		this.hrPaPerformanceindexscore = (HrPaPerformanceindexscore)this.hrPaPerformanceindexscoreService.get(this.id);
 		
@@ -82,10 +80,10 @@ public class HrPaPerformanceindexscoreAction extends BaseAction{
 		StringBuffer buff = new StringBuffer("{success:true,data:");
 		buff.append(json.exclude(new String[] {}).serialize(this.hrPaPerformanceindexscore));
 		//为定量考核添加公式
-		if(this.hrPaPerformanceindexscore.getPisType() == this.QUANTITATIVE_ASSESSMENT) {
+		if(this.hrPaPerformanceindexscore.getPisType().getId() == this.QUANTITATIVE_ASSESSMENT) {
 			HrPaPisruleService hrPaPisruleService = (HrPaPisruleService)AppUtil.getBean("hrPaPisruleService");
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("Q_pisId_L_EQ", String.valueOf(this.hrPaPerformanceindexscore.getId()));
+			map.put("Q_pis.id_L_EQ", String.valueOf(this.hrPaPerformanceindexscore.getId()));
 			QueryFilter filter = new QueryFilter(map);
 			long prId = hrPaPisruleService.getAll(filter).get(0).getId();
 			String formula = hrPaPisruleService.getAll(filter).get(0).getFormula();
@@ -99,26 +97,6 @@ public class HrPaPerformanceindexscoreAction extends BaseAction{
 	}
 	
 	public String save(){
-		long pisId = this.hrPaPerformanceindexscoreService.save(this.hrPaPerformanceindexscore).getId();
-		
-		if(this.hrPaPerformanceindexscore.getPisType() == this.QUANTITATIVE_ASSESSMENT) {
-			HrPaPisruleService hrPaPisruleService = (HrPaPisruleService)AppUtil.getBean("hrPaPisruleService");
-			
-			String formula = this.getRequest().getParameter("formula");
-			if(formula != null && !"".equals(formula)) {
-				HrPaPisrule hrPaPisrule = new HrPaPisrule();
-				if(this.getRequest().getParameter("prId") != null && !"".equals(this.getRequest().getParameter("prId"))) {
-					long prId = Long.parseLong(this.getRequest().getParameter("prId"));
-					hrPaPisrule.setId(prId);
-				}
-				hrPaPisrule.setPisId(pisId);
-				hrPaPisrule.setPisAC(0);//默认不关联外键
-				hrPaPisrule.setFormula(formula);
-				hrPaPisruleService.save(hrPaPisrule);
-			}
-		}
-		
-		this.jsonString = new String("{success:true}");
 		
 		return "success";
 	}
