@@ -251,7 +251,11 @@ public class FlowServiceImpl implements FlowService {
 			json += "taskId: \"" + this.taskId + "\",";
 			json += "signalName: \"" + tf.getName() + "\",";
 			json += "type:\"0\",";
-			json += "boxstatus:false,";
+			if (this.activityName.equals("科室负责人核稿")) {
+				json += "boxstatus:true,";
+			} else {
+				json += "boxstatus:false,";
+			}
 			json += "userquery:false,";
 			json += "showgdlx:false,";
 			json += "showBack:true,";
@@ -1114,13 +1118,13 @@ public class FlowServiceImpl implements FlowService {
 					//三个按钮 审批0（nextuser）  直接归档1（gdlx）  分管领导审批2（nextuser）  然后  类型的话放
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
-					if(btType.equals("0")){//审批
+					if(btType.equals("1")){//审批
 						archives.setStatus(Short.valueOf(Short
 								.parseShort("4")));
 						archivesService.save(archives);
 						this.parmap.put("handleOpinion", commentDesc);
 						undertakesService.saveArchUnderTakesByArchIdAndSign(id,  this.parmap.get("signUserIds").toString());
-					}else if(btType.equals("1")){//
+					}else if(btType.equals("2")){//
 						ArchRecFiledType art = archRecFiledTypeService.get(Long
 								.parseLong(gdlx));
 						ArchivesHandle arh = new ArchivesHandle();
@@ -1163,7 +1167,7 @@ public class FlowServiceImpl implements FlowService {
 //						this.parmap.put("handleOpinion", commentDesc);
 //						this.parmap.put("destName", "承办归档");
 //						this.parmap.put("signalName", "to承办归档");
-					}else if(btType.equals("2")){
+					}else if(btType.equals("3")){
 						this.parmap.put("destName", "分管或主管领导批示");
 						this.parmap.put("signalName", "to分管或主管领导批示");
 						archives.setStatus(Short.valueOf(Short
