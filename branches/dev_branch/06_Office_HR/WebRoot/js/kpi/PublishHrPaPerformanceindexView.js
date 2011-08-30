@@ -65,9 +65,16 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					type : "int"
 				},
 				"paName",
-				"type",
-				"frequency",
-				"mode",
+				{
+					name : "type.name",
+					mapping : "type.name"
+				}, {
+					name : "frequency.name",
+					mapping : "frequency.name"
+				}, {
+					name : "mode.name",
+					mapping : "mode.name"
+				},
 				"publishStatus"
 			]
 		});
@@ -112,23 +119,13 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					dataIndex : "paName"
 				}, {
 					header : "考核指标类型",
-					dataIndex : "type",
-					renderer : function(d) {
-						return d.name;
-					}
+					dataIndex : "type.name"
 				}, {
 					header : "考核频度",
-					dataIndex : "frequency",
-					renderer : function(d) {
-						return d.name;
-					}
+					dataIndex : "frequency.name"
 				}, {
 					header : "考核方式",
-					dataIndex : "mode",
-					renderer : function(d) {
-						return d.name;
-					}
-					
+					dataIndex : "mode.name"
 				}, {
 					header : "状态",
 					dataIndex : "publishStatus",

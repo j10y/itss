@@ -23,7 +23,6 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/kpi/saveHrPaPerformanceindexscore.do",
 			id : "HrPaPerformanceindexscoreForm2",
 			defaultType : "textfield",
 			items : [
@@ -31,10 +30,10 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 					name : "hrPaPerformanceindexscore.id",
 					id : "pisId",
 					xtype : "hidden",
-					value : this.pisId == null ? "" : this.pisId
+					value : this.pisId == null ? "0" : this.pisId
 				}, {
 					name : "hrPaPerformanceindexscore.piId",
-					id : "piId",
+					id : "piIdForm2",
 					xtype : "hidden",
 					value : this.piId
 				}, {
@@ -236,7 +235,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 				}
 			]
 		});
-		if(this.pisId != null && this.pisId != "undefined") {
+		if(this.pisId != null && this.pisId != "undefined" && this.pisId != 0) {
 			this.formPanel.getForm().load({
 				deferredRender : false,
 				url : __ctxPath + "/kpi/getHrPaPerformanceindexscore.do",
@@ -252,6 +251,11 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 				
 				}
 			});
+		} else if(this.pisId == 0) {
+			var rowStore = Ext.getCmp("HrPaPerformanceindexscoreGrid").getStore().getAt(this.rowNumber);
+			Ext.getCmp("pisScore").setValue(rowStore.data.pisScore);
+			Ext.getCmp("formula").setValue(rowStore.data.formula);
+			Ext.getCmp("pisDesc").setValue(rowStore.data.pisDesc);
 		}
 		this.buttons = [
 			{
@@ -264,10 +268,6 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 		];
 	},
 	cancel : function(a) {
-		new HrPaPerformanceindexscoreView({
-			piId : Ext.getCmp("piId").getValue(),
-			paMode : Ext.getCmp("pisType").getValue()
-		}).show();
 		a.close();
 	},
 	save : function(a, b) {
@@ -281,26 +281,38 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 			return ;
 		}
 		if(a.getForm().isValid()) {
-			a.getForm().submit({
-				method : "post",
-				waitMsg : "正在提交数据…",
-				success : function(c, e) {
-					Ext.ux.Toast.msg("操作信息","成功保存信息！");
-					new HrPaPerformanceindexscoreView({
-						piId : Ext.getCmp("piId").getValue(),
-						paMode : Ext.getCmp("pisType").getValue()
-					}).show();
-					b.close();
-				},
-				failure : function(c, d) {
-					Ext.MessageBox.show({
-						title : "操作信息",
-						msg : "信息保存出错，请联系管理员！",
-						buttons : Ext.MessageBox.OK,
-						icon : Ext.MessageBox.ERROR
-					});
+			var d = Ext.getCmp("HrPaPerformanceindexscoreGrid");
+			//删除gridPanel里边修改以前的记录
+			if(b.rowNumber != null && b.rowNumber != "undefined") {
+				d.getStore().removeAt(b.rowNumber);
+			}
+			var pisRecord = Ext.data.Record.create([
+				{
+					name : "id",
+					type : "int"
+				}, {
+					name : "pi.id",
+					type : "int"
+				}, {
+					name : "pisScore",
+					type : "float"
+				}, {
+					name : "pisDesc",
+					type : "string"
+				}, {
+					name : "formula",
+					type : "string"
 				}
+			]);
+			var pis = new pisRecord({
+				"id" : Ext.getCmp("pisId").getValue(),
+				"pi.id" : Ext.getCmp("piIdForm2").getValue() == null ? 0 : Ext.getCmp("piIdForm2").getValue(),
+				"pisScore" : Ext.getCmp("pisScore").getValue(),
+				"pisDesc" : Ext.getCmp("pisDesc").getValue(),
+				"formula" : Ext.getCmp("formula").getValue()
 			});
+			d.getStore().add(pis);
+			b.close();
 		}
 	}
 });

@@ -10,7 +10,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		this.initComponents();
 		HrPaPerformanceindexscoreView.superclass.constructor.call(this, {
 			title : "考核指标评分标准维护",
-			id : "hrPaPerformanceindexscoreView",
+			id : "HrPaPerformanceindexscoreView",
 			width : 440,
 			height : 420,
 			layout : "fit",
@@ -23,11 +23,22 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 					scope : "true",
 					handler : this.cancel.createCallback(this)
 				}, {
+					text : "保存草稿",
+					scope : "true",
+					handler : this.saveAsDraft.createCallback(this.getForm, this)
+				}, {
 					text : "确认发布",
 					scope : "true",
 					handler : this.saveToPublish.createCallback(this.getForm, this)
 				}
-			]
+			],
+			listeners : {
+				close : function() {
+					if(Ext.getCmp("HrPaPerformanceindexFormWin") != null) {
+						Ext.getCmp("HrPaPerformanceindexFormWin").close();
+					}
+				}
+			}
 		});
 	},
 	topbar : null,
@@ -56,9 +67,13 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				{
 					name : "id",
 					type : "int"
+				}, {
+					name : "pi.id",
+					mapping : "pi.id"
+				}, {
+					name : "pisType.name",
+					mapping : "pisType.name"
 				},
-				"piId",
-				"pisType",
 				"pisScore",
 				"pisDesc"
 			]
@@ -68,7 +83,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 			params : {
 				start : 0,
 				limit : 25,
-				Q_piId_L_EQ : this.piId,
+				"Q_pi.id_L_EQ" : this.piId,
 				paMode : this.paMode
 			}
 		});
@@ -99,11 +114,11 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 					hidden : true
 				}, {
 					header : "piId",
-					dataIndex : "id",
+					dataIndex : "pi.id",
 					hidden : true
 				}, {
 					header : "pisType",
-					dataIndex : "pisType",
+					dataIndex : "pisType.name",
 					hidden : true
 				}, {
 					header : "得分",
@@ -112,6 +127,10 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				}, {
 					header : "评分说明",
 					dataIndex : "pisDesc"
+				}, {
+					header : "计算公式",
+					dataIndex : "formula",
+					hidden : true
 				},
 				this.rowActions
 			],
@@ -141,22 +160,24 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				showPreview : false
 			}
 		});
+		var pisType = this.paMode;
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(e.data.pisType == QUALITATIVE_ASSESSMENT) {
+				if(pisType == QUALITATIVE_ASSESSMENT) {
 					new HrPaPerformanceindexscoreForm1({
 						pisId : e.data.id,
 						piId : e.data.piId,
-						pisType : e.data.pisType
+						pisType : pisType,
+						rowNumber : Ext.getCmp("HrPaPerformanceindexscoreGrid").getStore().indexOf(e)
 					}).show();
 				} else {
 					new HrPaPerformanceindexscoreForm2({
 						pisId : e.data.id,
 						piId : e.data.piId,
-						pisType : e.data.pisType
+						pisType : pisType,
+						rowNumber : Ext.getCmp("HrPaPerformanceindexscoreGrid").getStore().indexOf(e)
 					}).show();
 				}
-				Ext.getCmp("hrPaPerformanceindexscoreView").close();
 			});
 		});
 		this.rowActions.on("action", this.onRowAction, this);
@@ -177,56 +198,80 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				}
 			});
 		}
+		Ext.getCmp("HrPaPerformanceindexFormWin").close();
 		a.close();
 	},
-	saveToPublish : function(a, b) {
-		Ext.Ajax.request({
-			url : __ctxPath + "/kpi/publishHrPaPerformanceindex.do",
-			params : {
-				piId : b.piId
-			},
+	saveAsDraft : function(a, b) {
+		var pisList = "";
+		var pisStore = b.gridPanel.getStore();
+		if(b.paMode == QUALITATIVE_ASSESSMENT) {//定性考核指标
+			for(var i = 0; i < pisStore.getCount(); i++) {
+				var pisItem = pisStore.getAt(i).data;
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + " ";
+			}
+		} else {//定量考核指标
+			for(var i = 0; i < pisStore.getCount(); i++) {
+				var pisItem = pisStore.getAt(i).data;
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.formula + " ";
+			}
+		}
+		Ext.getCmp("indexScores").setValue(pisList);
+		var submitForm = Ext.getCmp("HrPaPerformanceindexFormWin").formPanel.getForm();
+		submitForm.submit({
+			url : __ctxPath + "/kpi/saveAsDraftHrPaPerformanceindex.do",
 			method : "post",
-			success : function(d) {
-				var e = Ext.util.JSON.decode(d.responseText);
-				if(e.flag) {
-					Ext.ux.Toast.msg("提示信息","成功提交审核！");
-					if(b.from == "draft") {
-						Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
-							params : {
-								start : 0,
-								limit : 25
-							}
-						});
-					} else if(b.from == "publish") {
-						Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
-							params : {
-								start : 0,
-								limit : 25
-							}
-						});
-					}
-					b.close();
-				} else {
-					Ext.MessageBox.show({
-						title : "操作信息",
-						msg : "发布失败，请联系管理员！",
-						buttons : Ext.MessageBox.OK,
-						icon : Ext.MessageBox.ERROR
-					});
-				}
+			waitMsg : "正在提交数据…",
+			success : function(c, d) {
+				Ext.getCmp("HrPaPerformanceindexFormWin").close();
+				Ext.getCmp("HrPaPerformanceindexscoreView").close();
 			},
-			failure : function() {
+			failure : function(c, d) {
 				Ext.MessageBox.show({
 					title : "操作信息",
-					msg : "发布失败，请联系管理员！",
+					msg : "信息录入有误，请核实！",
 					buttons : Ext.MessageBox.OK,
 					icon : Ext.MessageBox.ERROR
 				});
+				return ;
+			}
+		});
+	},
+	saveToPublish : function(a, b) {
+		var pisList = "";
+		var pisStore = b.gridPanel.getStore();
+		if(b.paMode == QUALITATIVE_ASSESSMENT) {//定性考核指标
+			for(var i = 0; i < pisStore.getCount(); i++) {
+				var pisItem = pisStore.getAt(i).data;
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + " ";
+			}
+		} else {//定量考核指标
+			for(var i = 0; i < pisStore.getCount(); i++) {
+				var pisItem = pisStore.getAt(i).data;
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.formula + " ";
+			}
+		}
+		Ext.getCmp("indexScores").setValue(pisList);
+		var submitForm = Ext.getCmp("HrPaPerformanceindexFormWin").formPanel.getForm();
+		submitForm.submit({
+			url : __ctxPath + "/kpi/saveToPublishHrPaPerformanceindex.do",
+			method : "post",
+			waitMsg : "正在提交数据…",
+			success : function(c, d) {
+				Ext.getCmp("HrPaPerformanceindexFormWin").close();
+				Ext.getCmp("HrPaPerformanceindexscoreView").close();
+			},
+			failure : function(c, d) {
+				Ext.MessageBox.show({
+					title : "操作信息",
+					msg : "信息录入有误，请核实！",
+					buttons : Ext.MessageBox.OK,
+					icon : Ext.MessageBox.ERROR
+				});
+				return ;
 			}
 		});
 	},
 	addHrPaPerformanceindexscore : function() {
-		this.close();
 		if(this.paMode == QUALITATIVE_ASSESSMENT) {
 			new HrPaPerformanceindexscoreForm1({
 				piId : this.piId,
@@ -240,18 +285,19 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		}
 	},
 	editHrPaPerformanceindexscore : function(a) {
-		this.close();
-		if(a.data.pisType == QUALITATIVE_ASSESSMENT) {
+		if(a.paMode == QUALITATIVE_ASSESSMENT) {
 			new HrPaPerformanceindexscoreForm1({
 				pisId : a.data.id,
 				piId : this.piId,
-				pisType : this.paMode
+				pisType : this.paMode,
+				rowNumber : Ext.getCmp("HrPaPerformanceindexscoreGrid").getStore().indexOf(a)
 			}).show();
 		} else {
 			new HrPaPerformanceindexscoreForm2({
 				pisId : a.data.id,
 				piId : this.piId,
-				pisType : this.paMode
+				pisType : this.paMode,
+				rowNumber : Ext.getCmp("HrPaPerformanceindexscoreGrid").getStore().indexOf(e)
 			}).show();
 		}
 	},
@@ -262,11 +308,11 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 			Ext.ux.Toast.msg("提示信息","请选择要删除的记录！");
 			return ;
 		}
-		var f = Array();
-		for(var d = 0; d < c.length; d++) {
-			f.push(c[d].data.id);
-		}
-		HrPaPerformanceindexscoreView.remove(f, this);
+		//只是前台删除，数据库并不真正删除
+		var allStore = e.getStore();
+		Ext.each(c, function(item) {
+			allStore.remove(item);
+		});
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
@@ -281,28 +327,3 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		}
 	}
 });
-HrPaPerformanceindexscoreView.remove = function(b, t) {
-	var a = Ext.getCmp("HrPaPerformanceindexscoreGrid");
-	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
-		if(c == "yes") {
-			Ext.Ajax.request({
-				url : __ctxPath + "/kpi/multiDelHrPaPerformanceindexscore.do",
-				params : {
-					ids : b
-				},
-				method : "post",
-				success : function() {
-					Ext.ux.Toast.msg("提示信息", "成功删除所选记录！");
-					a.getStore().reload({
-						params : {
-							start : 0,
-							limit : 25,
-							Q_piId_L_EQ : t.piId,
-							paMode : t.paMode
-						}
-					});
-				}
-			});
-		}
-	});
-}
