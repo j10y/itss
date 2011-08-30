@@ -37,4 +37,22 @@ public class HrPaPerformanceindexscoreServiceImpl extends BaseServiceImpl<HrPaPe
 		}
 		this.dao.removeByPiId(piId);
 	}
+	/*
+	 * 批量添加考核项目关联的分数
+	 * */
+	public void multiSave(List<HrPaPerformanceindexscore> scoreList, List<HrPaPisrule> ruleList, long paMode) {
+		if(paMode == 12) {
+			for(int i = 0; i < scoreList.size(); i++) {
+				this.save(scoreList.get(i));
+			}
+		} else {
+			HrPaPisruleService hrPaPisruleService = (HrPaPisruleService)AppUtil.getBean("hrPaPisruleService");
+			for(int i = 0; i < scoreList.size(); i++) {
+				HrPaPerformanceindexscore scoreNew = this.save(scoreList.get(i));
+				ruleList.get(i).setPis(scoreNew);
+				ruleList.get(i).setPisAC(new Long(0));
+				hrPaPisruleService.save(ruleList.get(i));
+			}
+		}
+	}
 }
