@@ -481,20 +481,39 @@ public class ArchivesAction extends BaseAction {
 		//分局
 		String distUserIds = getRequest().getParameter("distUserIds");
 		if(StringUtils.isNotEmpty(distUserIds)){
-			String [] distUsers = distUserIds.split("[,]");
-			for(int i=0; i<distUsers.length; i++){
-				AppUser user = appUserService.get(Long.valueOf(distUsers[i]));
-				ArchivesDist archivesDist = new ArchivesDist();
-				archivesDist.setSubject(this.archives.getSubject());
-				archivesDist.setDepartment(user.getDepartment());
-				archivesDist.setArchives(this.archives);
-				archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
-				archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
-				archivesDist.setSignUserID(user.getUserId());
-				archivesDist.setSignFullname(user.getFullname());
-				distIds.append(user.getUserId()).append(",");
-				this.archivesDistService.save(archivesDist);
-			}
+			if(distUserIds.equalsIgnoreCase("isALL__")){
+				QueryFilter distFilter = new QueryFilter(new HashMap());
+				distFilter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED.toString());
+				distFilter.addFilter("Q_department.isDist_N_EQ", "1");
+				List<AppUser> distDeptUsers = appUserService.getAll(distFilter);//分局
+				for (int i = 0; i < distDeptUsers.size(); i++) {
+					ArchivesDist archivesDist = new ArchivesDist();
+					archivesDist.setSubject(this.archives.getSubject());
+					archivesDist.setDepartment(distDeptUsers.get(i).getDepartment());
+					archivesDist.setArchives(this.archives);
+					archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+					archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+					archivesDist.setSignUserID(distDeptUsers.get(i).getUserId());
+					archivesDist.setSignFullname(distDeptUsers.get(i).getFullname());
+					distIds.append(distDeptUsers.get(i).getUserId()).append(",");
+					this.archivesDistService.save(archivesDist);
+				}
+			}else{
+				String [] distUsers = distUserIds.split("[,]");
+				for(int i=0; i<distUsers.length; i++){
+					AppUser user = appUserService.get(Long.valueOf(distUsers[i]));
+					ArchivesDist archivesDist = new ArchivesDist();
+					archivesDist.setSubject(this.archives.getSubject());
+					archivesDist.setDepartment(user.getDepartment());
+					archivesDist.setArchives(this.archives);
+					archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+					archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+					archivesDist.setSignUserID(user.getUserId());
+					archivesDist.setSignFullname(user.getFullname());
+					distIds.append(user.getUserId()).append(",");
+					this.archivesDistService.save(archivesDist);
+				}
+			}			
 		}
 		
 		if (StringUtils.isNotEmpty(distIds.toString())) {

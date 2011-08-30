@@ -177,7 +177,7 @@
 			         <url>/archive/hastenArchives.do</url>
 			     </Function>
 			</Item>
-			<Item id="ArchivesDistView" text="待阅发文" iconCls="menu-archive-handout">
+			<Item id="ArchivesDistView" text="待阅公文" iconCls="menu-archive-handout">
 			   <Function id="_ArchivesDistQuery" text="查看" iconCls="menu-list">
 			      <url>/archive/listArchivesDist.do</url>
 			   </Function>

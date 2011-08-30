@@ -115,26 +115,32 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 						xtype : 'hidden',
 						value : '${archives_archivesId}'
 					},{
-					
+						style : 'padding-left:0px',
+						html : "<center><font color='red'>市局人员默认已全部选择</font></center>"
+					},{
+				
+					xtype : 'container',
+					layout : 'column',
+					items : [{
+						xtype : 'label',
+						style : 'padding-left:0px',
+						text : '分局分发人员:',
+						width : 105
+					}, {
+						xtype : 'textarea',
+						width : 550,
+						id : 'distUserNames',
+						blankText:'请选择分局分发人员',
+						readOnly:true,
+						name : 'distUserNames'
+					}, {
+						xtype : 'hidden',
+						id : 'distUserIds',
+						name : 'distUserIds'
+					}, {
 						xtype : 'container',
-						layout : 'column',
+						layout : 'form',
 						items : [{
-							xtype : 'label',
-							style : 'padding-left:0px',
-							text : '分局分发人员:',
-							width : 105
-						}, {
-							xtype : 'textarea',
-							width : 550,
-							id : 'distUserNames',
-							blankText:'请选择分局分发人员',
-							readOnly:true,
-							name : 'distUserNames'
-						}, {
-							xtype : 'hidden',
-							id : 'distUserIds',
-							name : 'distUserIds'
-						}, {
 							xtype : 'button',
 							text : '选择人员',
 							iconCls:'btn-mail_recipient',
@@ -146,12 +152,24 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 											Ext.getCmp('distUserIds')
 													.setValue(id);
 										}).show();
-
+	
 							}
-						}]
+						},{
+							xtype : 'button',
+							text : '全选',
+							iconCls:'btn-mail_recipient',
+							handler : function() {
+								Ext.getCmp('distUserNames').setValue("全部分局人员");
+											Ext.getCmp('distUserIds')
+													.setValue("isALL__");
+	
+							}
+						}]											
+					}]
 					},{
 						fieldLabel : '分发意见',
 						name : 'distributeOpinion',
+						allowBlank:false,
 						xtype:'textarea'
 					},{
 						name : 'archivesStatus',

@@ -13,7 +13,7 @@ ArchivesDistView = Ext
 						ArchivesDistView.superclass.constructor.call(this, {
 							id : "ArchivesDistView",
 							iconCls : "menu-archive-sign",
-							title : "待阅发文",
+							title : "待阅公文",
 							region : "center",
 							layout : "border",
 							items : [ this.searchPanel, this.gridPanel ]

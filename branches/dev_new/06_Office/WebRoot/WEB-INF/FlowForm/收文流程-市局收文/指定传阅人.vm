@@ -118,6 +118,59 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 		
 		// 初始化功能按钮
 		this.buttons = [
+						new Ext.Button({
+								iconCls:'btn-transition',
+								id : 'toOther',
+								text : '其他局领导阅',
+								handler : function(){
+									var signUserIds="";
+									Ext.getCmp("ArchDistributeForm").getForm().clearInvalid();
+									if (Ext.getCmp("handleOpinion").isValid()) {
+										UserSelector.getView(
+											function(id, name) {
+												if(id!=""){
+													//修改状态
+													Ext.Ajax.request({
+														scope : this,
+														url : __ctxPath + "/archive/modStatusArchives.do",
+														params : {
+															archivesId : '${archives_archivesId}',
+															status:3															
+														},
+														success : function(b, c) {
+															//Ext.getCmp("ArchDistributeForm").getForm().submit({
+															Ext.Ajax.request({
+													            url:__ctxPath+ "/flow/nextProcessActivity.do",
+																method:'post',
+																params:{taskId:Ext.getCmp("ArchDistributeFormWin").taskId,signalName:'to分管或主管领导批示',activityName:'指定传阅人',destName:'分管或主管领导批示',signUserIds:id},
+																success : function(resp,opts) {
+																	Ext.ux.Toast.msg('操作信息','成功保存！');
+																    AppUtil.removeTab('ProcessForm'+Ext.getCmp("ArchDistributeFormWin").taskId);
+																	var myTaskView=Ext.getCmp("MyTaskGrid");
+																	var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+																	if(appHomeTaskGrid!=null){
+																		appHomeTaskGrid.getStore().reload();
+																	}
+																	if(myTaskView!=null){
+																		//AppUtil.activateTab(taskView);
+																		myTaskView.getStore().reload();
+																	}
+																},
+																failure : function(resp,opts) {
+																	Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+																}
+													    	});
+														}
+													});
+													
+												}else{
+													Ext.ux.Toast.msg('操作信息','请选择分管领导！');
+												}
+										}).show();
+									}
+								}
+							})
+							,
 		                  #set ($count=0)
 							#foreach ($v in $nextTrans)
 								#if($count>0)
@@ -129,7 +182,223 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 								   handler:this.save.createCallback(this.formPanel,this,'${v.name}','${v.source}')
 								})
 								#set ($count=$count+1)
-							#end
+							#end,
+							new Ext.Button({
+								iconCls:'btn-save',
+								id : 'fileWin',
+								text : '归档',
+								handler : function(){
+									var formPanel= new Ext.FormPanel({
+											id : 'filedForm',
+											layout : 'form',											
+											bodyStyle : 'padding:10px 10px 10px 10px',
+											border : false,
+											url : __ctxPath + '/archive/saveArchivesHandle.do',
+											items : [{
+											   xtype:'hidden',
+											   name:'archiveId',
+											   value:'${archives_archivesId}'
+											},{
+											fieldLabel : '0=初始化状态',
+											name : 'isPass',
+											xtype:'hidden',
+											value:1
+										    },{
+												xtype : "container",
+												layout : "column",
+												style : "padding-left:0px;margin-left:0px;",
+												height : 30,
+												defaults : {
+													style : "padding:5px 0px 2px 0px;",
+													border : false
+												},
+												items : [
+													{
+														xtype : "label",
+														text : "归档部门:",
+														width : 100
+													},
+													{
+														name : "filedDeptName",
+														id : "filedDeptName",
+														xtype : "textfield",
+														width : "50%",
+														value : curUserInfo.depName,
+														allowBlank : false,
+														readOnly : true
+													},
+													{
+														name : "filedDeptId",
+														id : "filedDeptId",
+														value : curUserInfo.depId,
+														xtype : "hidden"
+													},
+													{
+														xtype : "button",
+														iconCls : "menu-department",
+														text : "选择部门",
+														allowBlank:false,
+														handler : function() {
+															DepSelector
+																	.getView(
+																			function(
+																					b,
+																					c) {
+																				Ext
+																						.getCmp(
+																								"filedDeptName")
+																						.setValue(
+																								c);
+																				Ext
+																						.getCmp(
+																								"filedDeptId")
+																						.setValue(
+																								b);
+																			},
+																			true)
+																	.show();
+														}
+													} ]
+												},{
+													xtype : "container",
+													layout : "column",
+													style : "padding-left:0px;margin-left:0px;",
+													height : 30,
+													defaults : {
+														style : "padding:5px 0px 2px 0px;",
+														border : false
+													},
+													items : [
+														{
+															xtype : "label",
+															text : "归档类型:",
+															width : 100
+														},
+														{
+															name : "recFiledTypeId",
+															id : "recFiledTypeId",
+															xtype : "textfield",
+															width : "65%",
+															xtype : "hidden"
+			
+														},
+														{
+			
+															fieldLabel : "归档类型",
+															hiddenName : "recFiledTypeName",
+															xtype : "combo",
+															mode : "local",
+															anchor : "74%",
+															allowBlank : false,
+															editable : false,
+															valueField : "recFiledTypeName",
+															displayField : "recFiledTypeName",
+															triggerAction : "all",
+															store : new Ext.data.SimpleStore(
+																	{
+																		autoLoad : true,
+																		url : __ctxPath
+																				+ "/archive/comboArchRecFiledType.do",
+																		fields : [ "id",
+																				"recFiledTypeName"]
+																	}),
+															listeners : {
+																select : function(
+																		d, b, c) {
+																		Ext.getCmp("recFiledTypeId").setValue(b.data.id);
+																}
+															}
+														} ]
+											}]									
+										});
+										
+									var win = new Ext.Window({
+										title : '请选择归档类型',
+										layout : 'fit',
+										id : 'filedWin',
+										modal : true,
+										width : 400,
+										height : 200,
+										items : formPanel,
+										buttonAlign : 'center',
+										buttons : [{
+											text : '确定',
+											iconCls : 'btn-save',
+											handler : function(){
+												Ext.Ajax.request({
+													scope : this,
+													url : __ctxPath + "/archive/modStatusArchives.do",
+													params : {
+														archivesId : '${archives_archivesId}',
+														status:7															
+													},
+													success : function(b, c) {
+														Ext.getCmp("filedForm").getForm().submit({
+															method : 'POST',
+															waitMsg : '正在提交数据...',
+															success : function(fp, action) {
+																Ext.getCmp("filedForm").getForm().submit({
+														            url:__ctxPath+ "/flow/nextProcessActivity.do",
+																	method:'post',
+																	params:{taskId:Ext.getCmp("ArchDistributeFormWin").taskId,signalName:"to结束1",activityName:"指定传阅人",destName:'结束1'},
+																	success : function(fp, action) {
+																	    Ext.ux.Toast.msg('操作信息','成功保存！');
+																	    
+																	    AppUtil.removeTab('ProcessForm'+Ext.getCmp("ArchDistributeFormWin").taskId);
+																	    Ext.getCmp("filedWin").close();
+																	    
+																		var myTaskView=Ext.getCmp("MyTaskGrid");
+																		var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+																		if(appHomeTaskGrid!=null){
+																			appHomeTaskGrid.getStore().reload();
+																		}
+																		if(myTaskView!=null){
+																			//AppUtil.activateTab(taskView);
+																			myTaskView.getStore().reload();
+																		}
+																	},
+																	failure : function(fp, action) {
+																		Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+																	}
+															    });
+																var gridPanel = Ext.getCmp('ArchivesHandleGrid');
+																if (gridPanel != null) {
+																	gridPanel.getStore().reload();
+																}
+															},
+															failure : function(fp, action) {
+																Ext.MessageBox.show({
+																			title : '操作信息',
+																			msg : '信息保存出错，请联系管理员！',
+																			buttons : Ext.MessageBox.OK,
+																			icon : Ext.MessageBox.ERROR
+																		});
+																            AppUtil.removeTab('ProcessForm'+panel.taskId);
+																			var myTaskView=Ext.getCmp("MyTaskGrid");
+																			var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+																			if(appHomeTaskGrid!=null){
+																				appHomeTaskGrid.getStore().reload();
+																			}
+																			if(myTaskView!=null){
+																				//AppUtil.activateTab(taskView);
+																				myTaskView.getStore().reload();
+																			}
+															}
+														});
+													}
+												});
+											}												
+										},{
+											text : '取消',
+											iconCls : 'btn-cancel',
+											handler : function(){
+												Ext.getCmp("filedWin").close();
+											}
+										}]
+									});
+									win.show();
+								}
+							})
 				];
 	},// end of the initcomponents
 

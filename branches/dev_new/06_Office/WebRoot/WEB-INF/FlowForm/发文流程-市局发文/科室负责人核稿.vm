@@ -124,19 +124,6 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 				url:__ctxPath+ '/pages/archive/archiveIssueDetail.jsp?archivesId='+ ${archives_archivesId}
 			}
 		});
-		Ext.Ajax.request({
-			url : __ctxPath
-					+ "/archive/getUserByArchidArchRecUser.do",
-			params : {
-							archid : '${archives_archivesId}'
-						},
-			success : function(h, j) {
-				var k = Ext.util.JSON
-						.decode(h.responseText).data;
-				Ext.getCmp("flowAssignId").setValue(
-						k.leaderUserId+'');
-			}
-		});
 		// 初始化表单
 		this.formPanel = new Ext.FormPanel({
 			columnWidth : 1,
@@ -153,13 +140,6 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 						id : 'attendId',
 						xtype : 'hidden'
 					},{
-						fieldLabel : '核稿意见',
-						name : 'archivesAttend.memo',
-						xtype : 'textarea',
-						//id : 'memo',
-						allowBlank : false,
-						blankText : '请填写核意见.'
-					},{
 						fieldLabel : '参与类型',
 						name : 'archivesAttend.attendType',
 						xtype : 'hidden',
@@ -170,14 +150,52 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 						xtype : 'hidden',
 						value : '${archives_archivesId}'
 					},{
-						fieldLabel : '审批人',
-						id : 'flowAssignId',
-						name : 'flowAssignId',
-						xtype : 'hidden'
-					},{
+						xtype : 'container',
+						layout : 'column',
+						items : [{
+									xtype : 'label',
+									style : 'padding-left:0px',
+									text : '分管或局领导审批人：',
+									width : 105
+								}, {
+									xtype : 'textarea',
+									width : 550,
+									id : 'signUserNames',
+									allowBlank:false,
+									blankText:'请选择分管 或局领导',
+									readOnly:true,
+									name : 'signUserNames'
+								}, {
+									xtype : 'hidden',
+									id : 'signUserIds',
+									name : 'signUserIds'
+								}, {
+									xtype : 'button',
+									text : '选择人员',
+									iconCls:'btn-mail_recipient',
+									handler : function() {
+										UserSelector.getView(
+												function(id, name) {
+													Ext.getCmp('signUserNames')
+															.setValue(name);
+													Ext.getCmp('signUserIds')
+															.setValue(id);
+												}).show();
+
+									}
+								}]
+	
+						},{
 						name : 'archivesStatus',
 						xtype : 'hidden',
 						value : 2 //2代表公文状态为已核稿，待部门审核中
+					},{
+						fieldLabel : '核稿意见',
+						name : 'archivesAttend.memo',
+						xtype : 'textarea',
+						//id : 'memo',
+						allowBlank : false,
+						blankText : '请填写核意见.'
 					}]
 		});
 	}// end of init
