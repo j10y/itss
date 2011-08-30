@@ -36,7 +36,9 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 			success : function(h, j) {
 				var data = Ext.decode(h.responseText);
 				display = data.isLeader;
-				Ext.getCmp("toOther").setVisible(display);
+				if(!display){
+					Ext.getCmp("toOther").hide();
+				}
 			}
 		});
 	
