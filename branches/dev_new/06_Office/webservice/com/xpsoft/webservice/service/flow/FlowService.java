@@ -27,7 +27,7 @@ public interface FlowService {
 	 * @param fgld 分管领导得审批人
 	 * @return
 	 */
-	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh,String fgld,String fjry);
+	public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh,String fgld,String fjry,String btType);
 	/**
 	 * 归档类型
 	 * @return

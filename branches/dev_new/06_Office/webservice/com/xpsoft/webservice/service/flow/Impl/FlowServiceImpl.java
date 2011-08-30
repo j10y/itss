@@ -662,7 +662,7 @@ public class FlowServiceImpl implements FlowService {
 	public String saveProcessAndToNext(String userId, String passwd, String id,
 			String taskId, String activityName, String signalName,
 			String commentDesc, String nextuser, String checkboxvalue,
-			String ispass, String gdlx,String bh,String fgld,String fjry) {
+			String ispass, String gdlx,String bh,String fgld,String fjry,String btType) {
 		filter(userId, passwd);
 		ErrandsRegisterService errandsRegisterService = (ErrandsRegisterService) AppUtil.getBean("errandsRegisterService");
 		LeaveLeaderReadService leaveLeaderReadService = (LeaveLeaderReadService) AppUtil.getBean("leaveLeaderReadService");
@@ -742,13 +742,17 @@ public class FlowServiceImpl implements FlowService {
 		Set userset=new HashSet();
 		if((processName.equals("请示报告")&&activityName.equals("部门负责人"))
 				||(processName.equals("发文流程-市局发文")&&activityName.equals("科室负责人核稿"))){
-			Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
-			Long userid=archives1.getIssuerId();
-			AppUser appUser =appUserService.get(userid);
-			Long departid=appUser.getDepartment().getDepId();
-			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
-			if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
-				this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
+			if(checkboxvalue!=null&&checkboxvalue.length()>0){
+				this.parmap.put("signUserIds", checkboxvalue);
+			}else{
+				Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
+				Long userid=archives1.getIssuerId();
+				AppUser appUser =appUserService.get(userid);
+				Long departid=appUser.getDepartment().getDepId();
+				ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
+				if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
+					this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
+				}
 			}
 		}
 		else if(processName.equals("收文流程-市局收文")&&activityName.equals("办公室主任批阅")){
@@ -1107,13 +1111,66 @@ public class FlowServiceImpl implements FlowService {
 					leaderReadService.save(leaderRead);
 					this.parmap.put("leaderOpinion", commentDesc);
 				}else if (activityName.equals("指定传阅人")){
+					//三个按钮 审批0（nextuser）  直接归档1（gdlx）  分管领导审批2（nextuser）  然后  类型的话放
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
-					archives.setStatus(Short.valueOf(Short
+					if(btType.equals("0")){//审批
+						archives.setStatus(Short.valueOf(Short
 								.parseShort("4")));
-					archivesService.save(archives);
-					this.parmap.put("handleOpinion", commentDesc);
-					undertakesService.saveArchUnderTakesByArchIdAndSign(id,  this.parmap.get("signUserIds").toString());
+						archivesService.save(archives);
+						this.parmap.put("handleOpinion", commentDesc);
+						undertakesService.saveArchUnderTakesByArchIdAndSign(id,  this.parmap.get("signUserIds").toString());
+					}else if(btType.equals("1")){//
+						ArchRecFiledType art = archRecFiledTypeService.get(Long
+								.parseLong(gdlx));
+						ArchivesHandle arh = new ArchivesHandle();
+						AppUser user = ContextUtil.getCurrentUser();
+						arh.setArchives(archives);
+						arh.setCreatetime(new Date());
+						arh.setFillTime(new Date());
+						arh.setHandleOpinion(commentDesc);
+						arh.setIsPass((short) 1);
+						arh.setUserId(user.getUserId());
+						arh.setUserFullname(user.getFullname());
+						arh.setFiledDeptId(user.getDepartment().getDepId());
+						arh.setFiledDeptName(user.getDepartment().getDepName());
+						arh.setRecFiledTypeId(art.getRecFiledTypeId());
+						arh.setRecFiledTypeName(art.getTypeName());
+						archivesHandleService.save(arh);
+						String archivesStatus = "7";
+						if (StringUtils.isNotEmpty(archivesStatus)) {
+							archives.setStatus(Short.valueOf(Short
+									.parseShort(archivesStatus)));
+						}
+						archivesService.save(archives);
+						ArchDispatch archDispatch = new ArchDispatch();
+						archDispatch.setArchives(archives);
+						archDispatch.setArchUserType((short) 1);
+						archDispatch.setUserId(user.getUserId());
+						archDispatch.setFullname(user.getFullname());
+						archDispatch.setDispatchTime(new Date());
+						archDispatch.setSubject(archives.getSubject());
+						archDispatch.setIsRead(ArchDispatch.HAVE_READ);
+						archDispatch.setReadFeedback(commentDesc);
+						archDispatchService.save(archDispatch);
+						ProcessInstance pi=jbpmService.getProcessInstanceByTaskId(taskId);
+						ProcessRun processRun = processRunService.getByTaskId(this.taskId.toString());
+						processRun.setRunStatus(ProcessRun.RUN_STATUS_FINISHED);
+				        processRun.setPiId(null);
+				        processRunService.save(processRun);
+						jbpmService.endProcessInstance(pi.getId());
+						return "{success:true}";
+//						this.parmap.put("handleOpinion", commentDesc);
+//						this.parmap.put("destName", "承办归档");
+//						this.parmap.put("signalName", "to承办归档");
+					}else if(btType.equals("2")){
+						this.parmap.put("destName", "分管或主管领导批示");
+						this.parmap.put("signalName", "to分管或主管领导批示");
+						archives.setStatus(Short.valueOf(Short
+								.parseShort("3")));
+						archivesService.save(archives);
+					}
+					
 				} else if (activityName.equals("科室主任传阅")) {
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
