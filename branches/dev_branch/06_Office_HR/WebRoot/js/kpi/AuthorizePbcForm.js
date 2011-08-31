@@ -196,7 +196,7 @@ AuthorizePbcForm = Ext.extend(Ext.Window, {
 				});
 				return ;
 			}
-			authorItems += c[i].data.id + "," + c[i].data.authorWeight + " ";
+			authorItems += c[i].data.id + "," + parseInt(c[i].data.authorWeight)/100 + " ";
 		}
 		Ext.Ajax.request({
 			url : __ctxPath + "/kpi/saveHrPaAuthorizepbc.do",
