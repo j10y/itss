@@ -209,6 +209,21 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 			success : function(c, d) {
 				Ext.getCmp("HrPaPerformanceindexFormWin").close();
 				Ext.getCmp("HrPaPerformanceindexscoreView").close();
+				if(b.from == "draft") {
+					Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+				} else if(a.from == "publish") {
+					Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
+						params : {
+							start : 0,
+							limit : 25
+						}
+					});
+				}
 			},
 			failure : function(c, d) {
 				Ext.MessageBox.show({
