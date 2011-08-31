@@ -607,5 +607,16 @@
             not-null="false"
             unique="false"
         />
+         <property
+            name="isDepart"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="isDepart"
+            length="2"
+            not-null="false"
+            unique="false"
+        />
     </class>
 </hibernate-mapping>

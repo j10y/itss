@@ -72,7 +72,18 @@ public class EmpProfile extends BaseModel {
 	protected Date accessionTime;//入职时间
 	
 	protected Date departureTime;//离职时间
+	//是否离职
+	private Integer isDepart;//
 	
+	
+	public Integer getIsDepart() {
+		return isDepart;
+	}
+
+	public void setIsDepart(Integer isDepart) {
+		this.isDepart = isDepart;
+	}
+
 	public Long getJobId() {
 		/* 77 */return this.jobId;
 	}
@@ -518,6 +529,11 @@ public class EmpProfile extends BaseModel {
 
 	public void setDepartureTime(Date departureTime) {
 		this.departureTime = departureTime;
+		if(departureTime!=null){
+			this.setIsDepart(1);
+		}else{
+			this.setIsDepart(0);
+		}
 	}
 
 	public boolean equals(Object object) {
