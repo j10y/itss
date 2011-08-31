@@ -237,6 +237,15 @@ public class FlowServiceImpl implements FlowService {
 			model.putAll(processRunVars);
 			model.put("nextTrans", allTrans);
 		}
+		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
+		String sql = "select app_user.* from user_role,app_role,app_user "
+			+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
+		sql += "and app_role.roleId in ("+AppUtil.getPropertity("role.leaderId")+")";
+		List<Map> list = userService.findDataList(sql);
+		Map userMap=new HashMap();
+		for(Map map:list){
+			userMap.put(map.get("userId").toString(), map.get("userId").toString());
+		}
 		String json = "{success:true,";
 		// ”0”,(0发文流程，1收文流程，2请假流程)
 		Gson gson = new Gson();
@@ -288,22 +297,40 @@ public class FlowServiceImpl implements FlowService {
 			json += "{label:\"签收部门\",value:\"" + archives.getRecDepNames()
 					+ "\"},";
 			json += "{label:\"内容\",value:" +( archives.getShortContent()!=null?gson.toJson( archives.getShortContent()):"\"\"") + "},";
+			String leadjson="";
+			String otherpjson="";
 			for (ProcessForm pf : pformlist) {
 				if (!pf.getActivityName().equals("开始")) {
-					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
-							+ "\"},";
-					json += "{label:\"审批人\",value:\"" + pf.getCreatorName()
-							+ "\"},";
-					Iterator<FormData> foemdates = pf.getFormDatas().iterator();
-					for (; foemdates.hasNext();) {
-						FormData fd = foemdates.next();
-						if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
-							json += "{label:\"" + fd.getFieldLabel()
-									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+					if(userMap.get(pf.getCreatorId().toString())!=null){
+						leadjson += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
+						+ "\"},";
+						leadjson += "{label:\"审批人\",value:\"" + pf.getCreatorName()
+								+ "\"},";
+						Iterator<FormData> foemdates = pf.getFormDatas().iterator();
+						for (; foemdates.hasNext();) {
+							FormData fd = foemdates.next();
+							if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
+								leadjson += "{label:\"" + fd.getFieldLabel()
+										+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+							}
+						}
+					}else{
+						otherpjson += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
+						+ "\"},";
+						otherpjson += "{label:\"审批人\",value:\"" + pf.getCreatorName()
+								+ "\"},";
+						Iterator<FormData> foemdates = pf.getFormDatas().iterator();
+						for (; foemdates.hasNext();) {
+							FormData fd = foemdates.next();
+							if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
+								otherpjson += "{label:\"" + fd.getFieldLabel()
+										+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+							}
 						}
 					}
 				}
 			}
+			json=json+leadjson+otherpjson;
 			if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
 				json = json.substring(0, json.length() - 1);
 			}
@@ -356,16 +383,16 @@ public class FlowServiceImpl implements FlowService {
 			}
 			json += "showbh:false,";
 			json += "isdx:false,";
-			String usersql = "select app_user.* from user_role,app_role,app_user "
-				+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId " +
-				"and app_role.roleId in ("+AppUtil.getPropertity("role.leaderId")+")";
-			AppUserService appUserService = (AppUserService) AppUtil.getBean("appUserService");
-			List<Map> userList=appUserService.findDataList(usersql);
-			Map usermap=new HashMap();
-			for(Map user:userList){
-				usermap.put(user.get("userId").toString(), user.get("userId").toString());
-			}
-			if(this.activityName.equals("分管或主管领导批示")&&usermap.get(userId).equals(userId)){
+//			String usersql = "select app_user.* from user_role,app_role,app_user "
+//				+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId " +
+//				"and app_role.roleId in ("+AppUtil.getPropertity("role.leaderId")+")";
+//			AppUserService appUserService = (AppUserService) AppUtil.getBean("appUserService");
+//			List<Map> userList=appUserService.findDataList(usersql);
+//			Map usermap=new HashMap();
+//			for(Map user:userList){
+//				usermap.put(user.get("userId").toString(), user.get("userId").toString());
+//			}
+			if(this.activityName.equals("分管或主管领导批示")&&userMap.get(userId)!=null){
 				json += "fgld:true,";
 			}else{
 				json += "fgld:false,";
@@ -386,22 +413,40 @@ public class FlowServiceImpl implements FlowService {
 			json += "{label:\"秘密等级\",value:\"" + archives.getPrivacyLevel()
 					+ "\"},";
 			json += "{label:\"内容\",value:" +( archives.getShortContent()!=null?gson.toJson( archives.getShortContent()):"\"\"") + "},";
+			String leadjson="";
+			String otherpjson="";
 			for (ProcessForm pf : pformlist) {
 				if (!pf.getActivityName().equals("开始")) {
-					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
-							+ "\"},";
-					json += "{label:\"审批人\",value:\"" + pf.getCreatorName()
-							+ "\"},";
-					Iterator<FormData> foemdates = pf.getFormDatas().iterator();
-					for (; foemdates.hasNext();) {
-						FormData fd = foemdates.next();
-						if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
-							json += "{label:\"" + fd.getFieldLabel()
-									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+					if(userMap.get(pf.getCreatorId().toString())!=null){
+						leadjson += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
+						+ "\"},";
+						leadjson += "{label:\"审批人\",value:\"" + pf.getCreatorName()
+								+ "\"},";
+						Iterator<FormData> foemdates = pf.getFormDatas().iterator();
+						for (; foemdates.hasNext();) {
+							FormData fd = foemdates.next();
+							if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
+								leadjson += "{label:\"" + fd.getFieldLabel()
+										+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+							}
+						}
+					}else{
+						otherpjson += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
+						+ "\"},";
+						otherpjson += "{label:\"审批人\",value:\"" + pf.getCreatorName()
+								+ "\"},";
+						Iterator<FormData> foemdates = pf.getFormDatas().iterator();
+						for (; foemdates.hasNext();) {
+							FormData fd = foemdates.next();
+							if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
+								otherpjson += "{label:\"" + fd.getFieldLabel()
+										+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+							}
 						}
 					}
 				}
 			}
+			json=json+leadjson+otherpjson;
 			if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
 				json = json.substring(0, json.length() - 1);
 			}
@@ -454,22 +499,40 @@ public class FlowServiceImpl implements FlowService {
 			json += "{label:\"描述\",value:" +( errandsRegister.getDescp()!=null?gson.toJson( errandsRegister.getDescp()):"\"\"") + "},";
 			json += "{label:\"请假类型\",value:\""
 					+ errandsRegister.getLeaveTypeName() + "\"},";
+			String leadjson="";
+			String otherpjson="";
 			for (ProcessForm pf : pformlist) {
 				if (!pf.getActivityName().equals("开始")) {
-					json += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
-							+ "\"},";
-					json += "{label:\"审批人\",value:\"" + pf.getCreatorName()
-							+ "\"},";
-					Iterator<FormData> foemdates = pf.getFormDatas().iterator();
-					for (; foemdates.hasNext();) {
-						FormData fd = foemdates.next();
-						if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
-							json += "{label:\"" + fd.getFieldLabel()
-									+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+					if(userMap.get(pf.getCreatorId().toString())!=null){
+						leadjson += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
+						+ "\"},";
+						leadjson += "{label:\"审批人\",value:\"" + pf.getCreatorName()
+								+ "\"},";
+						Iterator<FormData> foemdates = pf.getFormDatas().iterator();
+						for (; foemdates.hasNext();) {
+							FormData fd = foemdates.next();
+							if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
+								leadjson += "{label:\"" + fd.getFieldLabel()
+										+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+							}
+						}
+					}else{
+						otherpjson += "{label:\"审批流程名称\",value:\"" + pf.getActivityName()
+						+ "\"},";
+						otherpjson += "{label:\"审批人\",value:\"" + pf.getCreatorName()
+								+ "\"},";
+						Iterator<FormData> foemdates = pf.getFormDatas().iterator();
+						for (; foemdates.hasNext();) {
+							FormData fd = foemdates.next();
+							if (fd.getIsShowed() == 1&&fd.getVal()!=null) {
+								otherpjson += "{label:\"" + fd.getFieldLabel()
+										+ "\",value:" + (fd.getVal()!=null?gson.toJson(fd.getVal()):"\"\"") + "},";
+							}
 						}
 					}
 				}
 			}
+			json=json+leadjson+otherpjson;
 			if (json.length() > 0 && json.lastIndexOf(",") == json.length() - 1) {
 				json = json.substring(0, json.length() - 1);
 			}
