@@ -51,6 +51,21 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		return "success";
 	}
 	
+	public String multiCal() {
+		String[] ids = this.getRequest().getParameterValues("ids");
+		String idString = "";
+		for(int i = 0; i < ids.length - 1; i++) {
+			idString += ids[i] + ",";
+		}
+		idString += ids[ids.length - 1];
+		//批量计算总分
+		this.hrPaKpiPBC2UserService.multiCal(idString);
+		
+		this.jsonString = "{success:true}";
+		
+		return "success";
+	}
+	
 	public String get() {
 		return "success";
 	}
