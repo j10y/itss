@@ -379,7 +379,7 @@ public class HrPaKpipbcAction extends BaseAction{
 					HrPaKpiitem2user hrPaKpiitem2user = new HrPaKpiitem2user();
 					hrPaKpiitem2user.setPbc2User(hrPaKpiPBC2User);
 					hrPaKpiitem2user.setPiId(hrPaKpiitemList.get(j).getPi().getId());
-					hrPaKpiitem2user.setWeight(0);//等待部门经理审核时设置权重
+					hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
 					hrPaKpiitem2user.setResult(0);//等待定时计算时设置结果
 					//插入数据库
 					hrPaKpiitem2userService.save(hrPaKpiitem2user);
@@ -424,20 +424,19 @@ public class HrPaKpipbcAction extends BaseAction{
 				//2.2.3. 合并个人考核模板关联的考核项
 				for(int n = 0; n < hrPaKpiitemList.size(); n++) {
 					boolean flag2 = false;
+					HrPaKpiitem2user itemNew = new HrPaKpiitem2user();
 					for(int o = 0; o < hrPaKpiitem2userList.size(); o++) {
 						if(hrPaKpiitemList.get(n).getPi().getId() == hrPaKpiitem2userList.get(o).getPiId()) {
 							flag2 = true;
+							itemNew = hrPaKpiitem2userList.get(o);
 							break;
 						}
 					}
-					if(!flag2) {
-						HrPaKpiitem2user itemNew = new HrPaKpiitem2user();
-						itemNew.setPbc2User(hrPaKpiPBC2User);
-						itemNew.setPiId(hrPaKpiitemList.get(n).getPi().getId());
-						itemNew.setWeight(0);//等待部门经理审核时设置权重
-						itemNew.setResult(0);//等待定时计算时设置结果
-						hrPaKpiitem2userService.save(itemNew);
-					}
+					itemNew.setPbc2User(hrPaKpiPBC2User);
+					itemNew.setPiId(hrPaKpiitemList.get(n).getPi().getId());
+					itemNew.setWeight(hrPaKpiitemList.get(n).getWeight());//直接将岗位PBC模板权值复制给个人
+					itemNew.setResult(0);//等待定时计算时设置结果
+					hrPaKpiitem2userService.save(itemNew);
 				}
 			}
 		}
