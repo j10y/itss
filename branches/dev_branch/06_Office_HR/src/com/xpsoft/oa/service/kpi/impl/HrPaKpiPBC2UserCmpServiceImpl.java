@@ -27,6 +27,21 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		super(dao);
 		this.dao = dao;
 	}
+	public boolean saveHrPaKpiPBC2UserCmp(String kpipbcids){
+		String[] kpipbcidss=kpipbcids.split(",");
+		for(String kpipbcid:kpipbcidss){
+			this.saveHrPaKpiPBC2UserCmp(Long.parseLong(kpipbcid));
+		}
+		return true;
+	}
+	
+	public boolean countScoreForKpiPbcUser(String kpipbcids){
+		String[] kpipbcidss=kpipbcids.split(",");
+		for(String kpipbcid:kpipbcidss){
+			this.countScoreForKpiPbcUser(Long.parseLong(kpipbcid));
+		}
+		return true;
+	}
 	//当用户的kpi模板审核通过之后，转入完成的kpi模板之中，并删除原来的模板
 	public boolean saveHrPaKpiPBC2UserCmp(Long kpipbcid){
 		HrPaKpiPBC2UserService hrPaKpiPBC2UserService=(HrPaKpiPBC2UserService) AppUtil.getBean("hrPaKpiPBC2UserService");
