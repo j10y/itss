@@ -96,8 +96,7 @@ AuthorizePbcForm = Ext.extend(Ext.Window, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/kpi/authorListHrPaKpiitem2user.do?Q_pbc2User.id_L_EQ=" + this.pbcId,
-			totalProperty : "totalCounts",
+			url : __ctxPath + "/kpi/authorListHrPaKpiitem2user.do?pbcId=" + this.pbcId,
 			id : "id",
 			root : "result",
 			remoteSort : true,
@@ -106,7 +105,7 @@ AuthorizePbcForm = Ext.extend(Ext.Window, {
 					name : "id",
 					type : "int"
 				},
-				"piId",
+				"paName",
 				"weight"
 			]
 		});
@@ -128,7 +127,7 @@ AuthorizePbcForm = Ext.extend(Ext.Window, {
 					hidden : true
 				}, {
 					header : "考核指标名称",
-					dataIndex : "piId",
+					dataIndex : "paName",
 					width : 300
 				}, {
 					header : "权重",
