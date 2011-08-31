@@ -114,5 +114,19 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 			});
 		});
 		this.rowActions.on("action", this.onRowAction, this);
+	},
+	gradeAuthorizePbc : function(a) {
+		new GradeAuthorizePbcForm({
+			pbcId : a.data.id
+		}).show();
+	},
+	onRowAction : function(c, a, d, e, b) {
+		switch(d) {
+			case "btn-edit":
+				this.gradeAuthorizePbc(a);
+				break ;
+			default:
+				break ;
+		}
 	}
 });
