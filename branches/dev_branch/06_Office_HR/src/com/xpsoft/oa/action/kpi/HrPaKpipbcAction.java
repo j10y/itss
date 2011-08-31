@@ -12,6 +12,7 @@ import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
+import com.xpsoft.oa.model.kpi.HrPaAuthpbccitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
@@ -21,6 +22,7 @@ import com.xpsoft.oa.model.kpi.HrPaKpipbcHist;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
+import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitemHistService;
@@ -337,6 +339,7 @@ public class HrPaKpipbcAction extends BaseAction{
 		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
 		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
+		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
 		//1. 找到哪些人是这个有这个PBC关联的岗位
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		Map<String, String> profileMap = new HashMap<String, String>();
@@ -403,6 +406,15 @@ public class HrPaKpipbcAction extends BaseAction{
 				for(int q = 0; q < hrPaKpiitem2userList.size(); q++) {
 					boolean flag2 = hrPaKpiitemService.findByPiIdAndPbcId(hrPaKpiitem2userList.get(q).getPiId(), fromPbcArray);
 					if(!flag2) {
+						//首先清除已授权的该考核项的信息
+						Map<String, String> map4 = new HashMap<String, String>();
+						map4.put("Q_akpiItem2uId_L_EQ", String.valueOf(hrPaKpiitem2userList.get(q).getId()));
+						QueryFilter filter4 = new QueryFilter(map4);
+						List<HrPaAuthpbccitem> authpbcItemList = hrPaAuthpbccitemService.getAll(filter4);
+						for(int r = 0; r < authpbcItemList.size(); r++) {
+							hrPaAuthpbccitemService.remove(authpbcItemList.get(r));
+						}
+						//清除该考核项
 						hrPaKpiitem2userService.remove(hrPaKpiitem2userList.get(q));
 					}
 				}
