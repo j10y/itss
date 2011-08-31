@@ -5,12 +5,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
-
-import flexjson.JSONSerializer;
 
 public class HrPaKpiitem2userAction extends BaseAction {
 	@Resource
@@ -38,24 +35,19 @@ public class HrPaKpiitem2userAction extends BaseAction {
 		this.id = id;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String authorList() {
-		QueryFilter filter = new QueryFilter(this.getRequest());
-		List<HrPaKpiitem2user> list = this.hrPaKpiitem2userService.getAll(filter);
-		//移除定量考核指标
+		//取得该PBC关联的考核项对应的考核指标为定性考核的列表
+		String sql = "select a.id, b.paName from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+				"a.pbcId = " + this.getRequest().getParameter("pbcId") + " and a.piId = b.id and b.paMode = 12";
+		List<Map<String, Object>> list = this.hrPaKpiitem2userService.findDataList(sql);
+		StringBuffer buff = new StringBuffer("{success:true,result:[");
 		for(int i = 0; i < list.size(); i++) {
-			String sql = "select paMode from hr_pa_performanceindex where id = " + list.get(i).getPiId();
-			List<Map<String, Object>> list2 = this.hrPaKpiitem2userService.findDataList(sql);
-			if("13".equals(list2.get(0).get("paMode").toString())) {
-				list.remove(i);
-			}
+			buff.append("{'id':'" + list.get(i).get("id")).append("','paName':'" + list.get(i).get("paName")).append("'},");
 		}
-		
-		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
-				.append(filter.getPagingBean().getTotalItems()).append(",result:");
-		JSONSerializer json = new JSONSerializer();
-		buff.append(json.exclude(new String[] {}).serialize(list));
-		buff.append("}");
 		this.jsonString = buff.toString();
+		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		this.jsonString += "]}";
 		
 		return "success";
 	}

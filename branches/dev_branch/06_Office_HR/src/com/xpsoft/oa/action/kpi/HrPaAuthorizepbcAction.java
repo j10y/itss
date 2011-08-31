@@ -131,38 +131,82 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		return "gradeResult";
 	}
 	
-	public String save(){
+	public String save() {
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
+		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
 		//获取表单信息
 		long userId = Long.parseLong(this.getRequest().getParameter("userId"));
 		long pbcId = Long.parseLong(this.getRequest().getParameter("pbcId"));
 		String[] authorPbcItems = this.getRequest().getParameter("authorItems").trim().split(" ");
-		//保存授权PBC基本信息
-		HrPaAuthorizepbc authorPbc = new HrPaAuthorizepbc();
-		AppUser authorTo = new AppUser(userId);
-		HrPaKpiPBC2User userPbc = new HrPaKpiPBC2User();
-		userPbc.setId(pbcId);
-		authorPbc.setAuthorTo(authorTo);
-		authorPbc.setUserPbc(userPbc);
-		authorPbc.setAuthDate(currentDate);
-		authorPbc.setAuthPerson(currentUser);
-		//插入数据库
-		HrPaAuthorizepbc authorPbcNew = this.hrPaAuthorizepbcService.save(authorPbc);
-		//保存授权PBC关联的考核指标信息
-		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
-		List<HrPaAuthpbccitem> itemList = new ArrayList<HrPaAuthpbccitem>();
-		for(int i = 0; i < authorPbcItems.length; i++) {
-			String[] properties = authorPbcItems[i].trim().split(",");
-			HrPaAuthpbccitem item = new HrPaAuthpbccitem();
-			item.setAuthorPbc(authorPbcNew);
-			item.setAkpiItem2uId(Long.parseLong(properties[0]));
-			item.setWeight(Double.parseDouble(properties[1]));
-			item.setResult(new Double(0));//得分默认为0
-			itemList.add(item);
+		//判断该userId的授权打分模板是否已存在
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_userPbc.id_L_EQ", String.valueOf(pbcId));
+		map.put("Q_authorTo.id_L_EQ", String.valueOf(userId));
+		QueryFilter filter = new QueryFilter(map);
+		List<HrPaAuthorizepbc> list = this.hrPaAuthorizepbcService.getAll(filter);
+		if(list.size() <= 0) {//不存在该userId的授权打分模板
+			//保存授权PBC基本信息
+			HrPaAuthorizepbc authorPbc = new HrPaAuthorizepbc();
+			AppUser authorTo = new AppUser(userId);
+			HrPaKpiPBC2User userPbc = new HrPaKpiPBC2User();
+			userPbc.setId(pbcId);
+			authorPbc.setAuthorTo(authorTo);
+			authorPbc.setUserPbc(userPbc);
+			authorPbc.setAuthDate(currentDate);
+			authorPbc.setAuthPerson(currentUser);
+			//插入数据库
+			HrPaAuthorizepbc authorPbcNew = this.hrPaAuthorizepbcService.save(authorPbc);
+			//保存授权PBC关联的考核指标信息
+			List<HrPaAuthpbccitem> itemList = new ArrayList<HrPaAuthpbccitem>();
+			for(int i = 0; i < authorPbcItems.length; i++) {
+				String[] properties = authorPbcItems[i].trim().split(",");
+				HrPaAuthpbccitem item = new HrPaAuthpbccitem();
+				item.setAuthorPbc(authorPbcNew);
+				item.setAkpiItem2uId(Long.parseLong(properties[0]));
+				item.setWeight(Double.parseDouble(properties[1]));
+				item.setResult(new Double(0));//得分默认为0
+				itemList.add(item);
+			}
+			//批量插入数据库
+			hrPaAuthpbccitemService.multiSave(itemList);
+		} else {//存在该userId的授权打分模板
+			//保存授权PBC基本信息
+			HrPaAuthorizepbc authorPbc = list.get(0);
+			authorPbc.setAuthDate(currentDate);
+			authorPbc.setAuthPerson(currentUser);
+			//插入数据库
+			HrPaAuthorizepbc authorPbcNew = this.hrPaAuthorizepbcService.save(authorPbc);
+			//保存授权PBC关联的考核指标信息
+			//取得原授权PBC关联的考核指标信息
+			Map<String, String> map2 = new HashMap<String, String>();
+			map2.put("Q_authorPbc.id_L_EQ", String.valueOf(authorPbc.getId()));
+			QueryFilter filter2 = new QueryFilter(map2);
+			List<HrPaAuthpbccitem> authpbcItemList = hrPaAuthpbccitemService.getAll(filter2);
+			//判断原考核指标信息有没有被更改，如果呗更改则覆盖
+			for(int i = 0; i < authorPbcItems.length; i++) {
+				boolean flag = false;
+				String[] properties = authorPbcItems[i].trim().split(",");
+				for(int j = 0; j < authpbcItemList.size(); j++) {
+					HrPaAuthpbccitem item = authpbcItemList.get(j);
+					if(Long.parseLong(properties[0]) == item.getAkpiItem2uId()) {//原考核指标信息列表中存在要插入的数据，则为更改
+						authpbcItemList.get(j).setWeight(Double.parseDouble(properties[1]));//重新设置权重
+						flag = true;
+						break;
+					}
+				}
+				//如果不存在要插入的信息，则插入
+				if(!flag) {
+					HrPaAuthpbccitem item = new HrPaAuthpbccitem();
+					item.setAuthorPbc(authorPbcNew);
+					item.setAkpiItem2uId(Long.parseLong(properties[0]));
+					item.setWeight(Double.parseDouble(properties[1]));
+					item.setResult(new Double(0));
+					authpbcItemList.add(item);
+				}
+			}
+			hrPaAuthpbccitemService.multiSave(authpbcItemList);
 		}
-		//批量插入数据库
-		hrPaAuthpbccitemService.multiSave(itemList);
 		
 		this.jsonString = new String("{success:true}");
 		
