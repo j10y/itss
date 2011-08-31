@@ -62,10 +62,10 @@
 					<td colspan="6">
 						${status.index + 1}.&nbsp;&nbsp;${kpiItem.pi.paName}
 						<c:choose>
-							<c:when test="${kpiItem.pi.paMode == 12}">
+							<c:when test="${kpiItem.pi.mode.id == 12}">
 								<font style="font-size:12px;color:#888;margin-left:20px">（定性考核指标）</font>
 							</c:when>
-							<c:when test="${kpiItem.pi.paMode == 13}">
+							<c:when test="${kpiItem.pi.mode.id == 13}">
 								<font style="font-size:12px;color:#888;margin-left:20px">（定量考核指标）</font>
 							</c:when>
 						</c:choose>
