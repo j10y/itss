@@ -701,7 +701,8 @@ public class JbpmServiceImpl implements JbpmService {
 		/* 716 */TaskImpl taskImpl = (TaskImpl) this.taskService
 				.getTask(taskId);
 
-		/* 718 */String sourceName = taskImpl.getName();
+		//String sourceName = taskImpl.getName();
+		String sourceName = taskImpl.getActivityName();
 
 		/* 721 */TaskImpl superTask = taskImpl.getSuperTask();
 
