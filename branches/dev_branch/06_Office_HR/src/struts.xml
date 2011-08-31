@@ -348,6 +348,9 @@
 		<action name="*Job" class="JobAction" method="{1}">
 		  <result>${successResultValue}</result>
 		</action>
+		<action name="*JobSalaryRelation" class="JobSalaryRelationAction" method="{1}">
+		  <result>${successResultValue}</result>
+		</action>
 		<action name="*EmpProfile" class="EmpProfileAction" method="{1}">
 		  <result>${successResultValue}</result>
 		</action>

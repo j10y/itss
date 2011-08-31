@@ -96,36 +96,36 @@ public class EmpProfileAction extends BaseAction {
 	}
 
 	public String save() {
-		/* 125 */boolean pass = false;
-		/* 126 */StringBuffer buff = new StringBuffer("{");
-		/* 127 */if (this.empProfile.getProfileId() == null) {
-			/* 128 */if (this.empProfileService.checkProfileNo(this.empProfile
+		boolean pass = false;
+		StringBuffer buff = new StringBuffer("{");
+		if (this.empProfile.getProfileId() == null) {
+		if (this.empProfileService.checkProfileNo(this.empProfile
 					.getProfileNo())) {
-				/* 129 */this.empProfile.setCreator(ContextUtil
+				this.empProfile.setCreator(ContextUtil
 						.getCurrentUser().getFullname());
-				/* 130 */this.empProfile.setCreatetime(new Date());
-				/* 131 */this.empProfile.setDelFlag(Short
-						.valueOf(EmpProfile.DELETE_FLAG_NOT));
-				/* 132 */pass = true;
+				this.empProfile.setCreatetime(new Date());
+				this.empProfile.setDelFlag(Short
+					.valueOf(EmpProfile.DELETE_FLAG_NOT));
+				pass = true;
 			} else {
-				/* 134 */buff.append("msg:'档案编号已存在,请重新输入.',");
+				buff.append("msg:'档案编号已存在,请重新输入.',");
 			}
 		}
-		/* 137 */else
+		else
 			pass = true;
 
-		/* 139 */if (pass) {
+		if (pass) {
 			if(empProfile.getApprovalStatus()==null){
 				this.empProfile.setApprovalStatus(Short
 						.valueOf(EmpProfile.CHECK_FLAG_NONE));
 			}
-			/* 141 */this.empProfileService.save(this.empProfile);
-			/* 142 */buff.append("success:true}");
+			this.empProfileService.save(this.empProfile);
+			buff.append("success:true}");
 		} else {
-			/* 144 */buff.append("failure:true}");
+			buff.append("failure:true}");
 		}
-		/* 146 */setJsonString(buff.toString());
-		/* 147 */return "success";
+		setJsonString(buff.toString());
+		return "success";
 	}
 
 	public String number() {

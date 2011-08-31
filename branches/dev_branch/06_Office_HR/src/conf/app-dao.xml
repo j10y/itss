@@ -247,6 +247,7 @@
 <!-- end:  Generated for EmpProfile From Template: app-dao.xml.beansvm  -->
 <!-- start:  Generated for Job From Template: app-dao.xml.beansvm  -->
 	<bean id="jobDao" class="com.xpsoft.oa.dao.hrm.impl.JobDaoImpl" parent="baseDao"/>
+	<bean id="jobSalaryRelationDao" class="com.xpsoft.oa.dao.hrm.impl.JobSalaryRelationDaoImpl" parent="baseDao"/>
 <!-- end:  Generated for Job From Template: app-dao.xml.beansvm  -->
 <!-- start:  Generated for ArchivesDep From Template: app-dao.xml.beansvm  -->
 	<bean id="archivesDepDao" class="com.xpsoft.oa.dao.archive.impl.ArchivesDepDaoImpl" parent="baseDao"/>

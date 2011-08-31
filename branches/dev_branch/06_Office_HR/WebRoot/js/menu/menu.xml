@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Menus>
 	<Items id="MyDesktop" text="我的桌面" iconCls="menu-desktop"
-		isPublic="true">
+		isPublic="false">
 		<Item id="UserSubView" text="我的下属" iconCls="menu-subuser" />
 		<Item id="MySubUserDiaryView" text="下属工作日志" iconCls="menu-subDiary" />
 		<Item id="ProfileForm" text="修改个人资料" iconCls="menu-customer" />
@@ -553,7 +553,7 @@
 		</Item>
 	</Items>
 	<Items id="Communication" text="通讯管理" iconCls="menu-communicate"
-		isPublic="true">
+		isPublic="false">
 		<Items id="PhoneBook" iconCls="menu-phonebook" text="通讯簿">
 			<Item id="PersonalPhoneBookView" iconCls="menu-personal-phoneBook"
 				text="个人通讯簿">
@@ -572,14 +572,14 @@
 		-->
 	</Items>
 	<Items id="Document" text="文档管理" iconCls="menu-document"
-		isPublic="true">
+		isPublic="false">
 		<Item id="PersonalDocumentView" iconCls="menu-personal-doc" text="个人文档" />
 		<Item id="DocumentSharedView" iconCls="menu-folder-shared" text="共享文档" />
 		<Item id="DocFolderMoveForm" iconCls="menu-folder-go" text="文件夹转移" />
 		<Item id="FindPublicDocumentView" iconCls="menu-find-doc" text="查看公共文档" />
 	</Items>
 
-	<Items id="Task" text="任务管理" iconCls="menu-task" isPublic="true">
+	<Items id="Task" text="任务管理" iconCls="menu-task" isPublic="false">
 		<Item id="AppointmentView" text="我的约会" iconCls="menu-appointment" />
 		<Item id="MyPlanTaskView" text="今日常务" iconCls="menu-cal-plan" />
 		<!-- 
@@ -1163,7 +1163,7 @@
 			</Item>
 		</Items>
 	</Items>
-	<Items id="Flow" text="流程管理" iconCls="menu-flow" isPublic="true">
+	<Items id="Flow" text="流程管理" iconCls="menu-flow" isPublic="false">
 		<!--
 		<Item id="FlowPoolView" text="任务分配池"/>
 		-->
@@ -1174,7 +1174,7 @@
 		<Item id="ProcessRunFinishView" text="已办结流程" iconCls="menu-flowEnd"/>
 	</Items>
 	<Items id="Hrm" text="人力资源管理" iconCls="menu-hrm-briefcase" isPublic="false">
-		<Items id="HrmManage" text="人力资源档案管理" iconCls="menu-hrm">
+		<Items id="HrmManage" text="人员管理" iconCls="menu-hrm">
 			<Item id="JobView" text="岗位管理" iconCls="menu-job">
 				<Function id="_JobQuery" text="查看" iconCls="menu-list">
 					<url>/hrm/listJob.do</url>
@@ -1299,6 +1299,24 @@
 					<url>/hrm/getStandSalary.do</url>
 					<url>/hrm/listStandSalary.do</url>
 					<url>/hrm/checkStandSalary.do</url>
+				</Function>
+			</Item>
+			<Item id="JobSalaryRelationView" text="岗位薪标关系" iconCls="menu-goods-apply">
+				<Function id="_JobSalaryRelationQuery" iconCls="menu-list" text="查看">
+					<url>/hrm/listJobSalaryRelation.do</url>
+				</Function>
+				<Function id="_JobSalaryRelationAdd" iconCls="menu-add" text="添加">
+					<url>/hrm/listJobSalaryRelation.do</url>
+					<url>/hrm/saveJobSalaryRelation.do</url>
+				</Function>
+				<Function id="_JobSalaryRelationEdit" iconCls="btn-edit" text="编辑">
+					<url>/hrm/listJobSalaryRelation.do</url>
+					<url>/hrm/saveJobSalaryRelation.do</url>
+					<url>/hrm/getJobSalaryRelation.do</url>
+				</Function>
+				<Function id="_JobSalaryRelationDel" iconCls="menu-del" text="删除">
+					<url>/hrm/listJobSalaryRelation.do</url>
+					<url>/hrm/multiDelJobSalaryRelation.do</url>
 				</Function>
 			</Item>		
 			<Item id="IncomeTaxView" iconCls="menu-incomeTax" text="个税信息">

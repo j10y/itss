@@ -434,6 +434,9 @@
 	 <bean id="jobService" class="com.xpsoft.oa.service.hrm.impl.JobServiceImpl">
    	 	<constructor-arg index="0" ref="jobDao"/>
    	 </bean>
+	 <bean id="jobSalaryRelationService" class="com.xpsoft.oa.service.hrm.impl.JobSalaryRelationServiceImpl">
+   	 	<constructor-arg index="0" ref="jobSalaryRelationDao"/>
+   	 </bean>
 <!-- end:  Generated for Job From Template: app-service.xml.beansvm  -->
 <!-- start:  Generated for EmpProfile From Template: app-service.xml.beansvm  -->
 	 <bean id="empProfileService" class="com.xpsoft.oa.service.hrm.impl.EmpProfileServiceImpl">

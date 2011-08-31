@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.xpsoft.oa.model.hrm.JobSalaryRelation" table="job_salary_relation"
+		select-before-update="false" dynamic-update="false" dynamic-insert="false"
+		optimistic-lock="version">
+		<id name="relationId" column="relationId" type="java.lang.Long"
+			length="19">
+			<generator class="native" />
+		</id>
+
+		<!-- imported bi-directional many-to-one association to Department -->
+		<many-to-one name="department" class="com.xpsoft.oa.model.system.Department"
+			not-null="false" fetch="select">
+			<column name="depId" />
+		</many-to-one>
+		<!-- imported bi-directional many-to-one association to Job -->
+		<many-to-one name="job" class="com.xpsoft.oa.model.hrm.Job"
+			not-null="false" fetch="select">
+			<column name="jobId" />
+		</many-to-one>
+		<!-- imported bi-directional many-to-one association to Job -->
+		<many-to-one name="standSalary" class="com.xpsoft.oa.model.hrm.StandSalary"
+			not-null="false" fetch="select">
+			<column name="standardId" />
+		</many-to-one>
+		<property
+            name="empCount"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="empCount"
+            not-null="true"
+            unique="false"
+        />
+		 <property
+            name="totalMoney"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="totalMoney"
+            precision="18"
+            scale="2"
+            not-null="true"
+            unique="false"
+        />
+		<property
+            name="deleteFlag"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="deleteFlag"
+            length="5"
+            not-null="false"
+            unique="false"
+        />
+	</class>
+</hibernate-mapping>

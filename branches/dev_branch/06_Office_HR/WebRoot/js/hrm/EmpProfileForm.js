@@ -510,7 +510,20 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.accessionTime",
 																		xtype : "datefield",
 																		format : "Y-m-d"
-																	},
+																	},/*{
+																		fieldLabel : "是否离职",
+																		name : "empProfile.isDepart",
+																		id : "empProfileForm.isDepart",
+																		xtype : "combo",
+																		allowBlank : false,
+																		emptyText : "请选择",
+																		mode : "local",
+																		editable : false,
+																		triggerAction : "all",
+																		store : [ [ "0", "否" ], [ "1", "是" ]
+																		],
+																		value:0
+																	},*/
 																	{
 																		fieldLabel : "离职日期",
 																		name : "empProfile.departureTime",
