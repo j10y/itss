@@ -1608,9 +1608,15 @@
 				</Item>
 			</Items>
 		</Items>
+		<Items id="HrAnlyReport" text="人力资源分析" isPublic="false">
+			<Item id="HrAnlyReportView" text="人力资源分析" iconCls="" isPublic="false">
+			</Item>
+		</Items>
+		
 		<Items id="TaskScheduler" text="计算任务设定" isPublic="false">
 			<Item id="TaskSchedulerView" text="计算任务设定" iconCls="" isPublic="false">
 			</Item>
 		</Items>
+		
 	</Items>
 </Menus>
