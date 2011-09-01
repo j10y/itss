@@ -86,6 +86,11 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 		//1. 新增和修改有区别的项
 		HrPaAssessmentcriteria hpa = new HrPaAssessmentcriteria();
 		if(this.hrPaAssessmentcriteria.getId() == 0) {//新增
+			//首先判断关键字是否重复
+			if(this.hrPaAssessmentcriteriaService.checkKey(this.hrPaAssessmentcriteria.getAcKey())) {
+				this.jsonString = "{msg:'关键字已存在，请重新输入！',failure:true}";
+				return "success";
+			}
 			hpa.setCreateDate(currentDate);
 			hpa.setCreatePerson(ContextUtil.getCurrentUserId());
 		} else {//修改

@@ -63,7 +63,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		HrPaKpiitem2userCmpService hrPaKpiitem2userCmpService=(HrPaKpiitem2userCmpService) AppUtil.getBean("hrPaKpiitem2userCmpService");
 		HrPaKpiPBC2User hrPaKpiPBC2User=hrPaKpiPBC2UserService.get(kpipbcid);
 		Map map=new HashMap();
-		map.put("pbc2User.id", hrPaKpiPBC2User.getId());
+		map.put("Q_pbc2User.id_L_EQ", hrPaKpiPBC2User.getId()+"");
 		QueryFilter filter=new QueryFilter(map);
 		List<HrPaKpiitem2user> list=hrPaKpiitem2userService.getAll(filter);
 		HrPaKpiPBC2UserCmp hrPaKpiPBC2UserCmp=new HrPaKpiPBC2UserCmp();
@@ -99,7 +99,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		HrPaKpiitem2userService hrPaKpiitem2userService=(HrPaKpiitem2userService) AppUtil.getBean("hrPaKpiitem2userService");
 		HrPaPerformanceindexService hrPaPerformanceindexService= (HrPaPerformanceindexService) AppUtil.getBean("hrPaPerformanceindexService");
 		Map map=new HashMap();
-		map.put("pbc2User.id", hrPaKpiPBC2User.getId());
+		map.put("Q_pbc2User.id_L_EQ", hrPaKpiPBC2User.getId()+"");
 		QueryFilter filter=new QueryFilter(map);
 		List<HrPaKpiitem2user> list=hrPaKpiitem2userService.getAll(filter);
 		float totalScore=0;

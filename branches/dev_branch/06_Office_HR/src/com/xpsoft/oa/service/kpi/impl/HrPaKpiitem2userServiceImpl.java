@@ -35,11 +35,11 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 		for(int i = 0; i < list.size(); i++) {
 			Map<String, Object> map = list.get(i);
 			//判断是否已经打分，result为0则表示没有打分
-			if(Double.parseDouble((String)map.get("result")) != 0) {//已经打分，则进入计算
-				avgResult += (Double.parseDouble((String)map.get("result")) * Double.parseDouble((String)map.get("weight")));
+			if(Double.parseDouble(map.get("result").toString()) != 0) {//已经打分，则进入计算
+				avgResult += (Double.parseDouble(map.get("result").toString()) * Double.parseDouble(map.get("weight").toString()));
 			}
 			//计算完毕，删除打分记录
-			hrPaAuthpbccitemService.remove(Long.parseLong((String)map.get("id")));
+			hrPaAuthpbccitemService.remove(Long.parseLong(map.get("id").toString()));
 		}
 		//取得个人考核模板关联的该考核项，并保存结果
 		HrPaKpiitem2user item = this.get(itemId);
