@@ -243,4 +243,32 @@ CREATE TABLE `hr_sr_rewardsPunishmentsType` (
   `deleteFlag` smallint(6) NOT NULL COMMENT '删除标记 0未删除 1删除',
   PRIMARY KEY (`typeId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--2011-08-31 职位薪标关系表
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS `job_salary_relation`;
+CREATE TABLE `job_salary_relation` (
+  `relationId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `depId` bigint(20) NOT NULL COMMENT '所属部门',
+  `jobId` bigint(20) NOT NULL COMMENT '所属岗位',
+  `standardId` bigint(20) NOT NULL COMMENT '所属薪资标准',
+  `empCount` int(6) DEFAULT 0 COMMENT '人数',
+  `totalMoney` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '人数',
+  `deleteFlag` smallint(6) NOT NULL DEFAULT '0' COMMENT '0=未删除\r\n            1=删除',
+  PRIMARY KEY (`relationId`),
+  KEY `FK_JSR_R_DPT` (`depId`) USING BTREE,
+  CONSTRAINT `jsr_ibfk_1` FOREIGN KEY (`depId`) REFERENCES `department` (`depId`),
+  CONSTRAINT `jsr_ibfk_2` FOREIGN KEY (`jobId`) REFERENCES `job` (`jobId`),
+  CONSTRAINT `jsr_ibfk_3` FOREIGN KEY (`standardId`) REFERENCES `stand_salary` (`standardId`)
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+
+
+
+--2011-09-01
+
+--in shanxi
+ALTER TABLE arch_rec_user add COLUMN leaderUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN leaderFullname varchar(128);
+ALTER TABLE arch_rec_user add COLUMN deptUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN deptFullname varchar(128);
     

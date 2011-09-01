@@ -42,7 +42,53 @@
             length="128"
             not-null="true"
             unique="false"
-        /><!--
+        />
+        
+        <property
+            name="leaderUserId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="leaderUserId"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="leaderFullname"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="leaderFullname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="deptUserId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="deptUserId"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="deptFullname"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="deptFullname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        <!--
         <property
             name="depId"
             type="java.lang.Long"

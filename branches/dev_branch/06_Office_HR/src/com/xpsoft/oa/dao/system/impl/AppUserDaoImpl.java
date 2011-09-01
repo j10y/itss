@@ -252,4 +252,18 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 			}
 		);
 	}
+	
+	public List findByRoleIds(Long[] roleIds) {
+		String ids = "";
+		for(int i=0; i< roleIds.length; i++){
+			ids += roleIds[i];
+			if(i<roleIds.length-1){
+				ids += ",";				
+			}
+		}
+		String hql = "select vo from AppUser vo join vo.roles as roles where roles.roleId in ("+ids+") and vo.delFlag =?";
+		return findByHql(hql, new Object[] {
+				Constants.FLAG_UNDELETED });
+	}
+
 }

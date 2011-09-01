@@ -622,5 +622,53 @@ public class AppUserAction extends BaseAction {
 		/* 632 */this.jsonString = "{success:true}";
 		/* 633 */return "success";
 	}
+	
+	public String findByRoleIds() {
+		String strRoleId = getRequest().getParameter("roleIds");
+		String [] roles = strRoleId.split(",");
+		Long [] roleIds = new Long [roles.length]; 
+		for(int i=0; i<roles.length; i++){
+			roleIds [i] = new Long(roles[i]); 
+		}
+		if (StringUtils.isNotEmpty(strRoleId)) {
+			List<AppUser> userList = this.appUserService.findByRoleIds(roleIds);
+			Type type = new TypeToken<List<AppUser>>() {}.getType();
+
+			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+			/* 274 */.append(userList.size()).append(",result:");
+			/* 275 */Gson gson = new GsonBuilder()
+			/* 276 */.excludeFieldsWithoutExposeAnnotation().create();
+			/* 277 */buff.append(gson.toJson(userList, type));
+			/* 278 */buff.append("}");
+
+			/* 280 */this.jsonString = buff.toString();
+		} else {
+			/* 282 */this.jsonString = "{success:false}";
+		}
+		/* 284 */return "success";
+	}
+
+	/**
+	 * 支持模糊查询
+	 * @return
+	 */
+	public String search() {
+		/* 152 */QueryFilter filter = new QueryFilter(getRequest());
+		/* 153 */filter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED
+		/* 154 */.toString());
+		/* 155 */List list = this.appUserService.getAll(filter);
+		/* 156 */StringBuffer buff = new StringBuffer(
+				"{success:true,'totalCounts':")
+		/* 157 */.append(filter.getPagingBean().getTotalItems()).append(
+		/* 158 */",result:");
+		/* 159 */JSONSerializer serializer = new JSONSerializer();
+		/* 160 */serializer.transform(new DateTransformer("yyyy-MM-dd"),
+				new String[] { "accessionTime" });
+		/* 161 */buff.append(serializer.exclude(new String[] { "password" })
+				.serialize(list));
+		/* 162 */buff.append("}");
+		/* 163 */this.jsonString = buff.toString();
+		/* 164 */return "success";
+	}
 
 }

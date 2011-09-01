@@ -43,6 +43,28 @@
             not-null="false"
             unique="false"
         />
+        <property
+            name="processDefId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="processDefId"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="processDefName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="processDefName"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
   <!-- exported bi-directional one-to-many association to ArchTemplate -->
 	<set name="archTemplates"
 	     table="arch_template"

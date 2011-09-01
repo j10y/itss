@@ -70,7 +70,8 @@ import org.apache.commons.lang.StringUtils;
  
    public String depList() {
 /*  79 */     List list = this.archRecUserService.findDepAll();
-/*  80 */     StringBuffer sb = new StringBuffer("{success:true,'totalCounts':");
+		/* 80 */StringBuffer sb = new StringBuffer(
+				"{success:true,'totalCounts':");
 /*  81 */     sb.append(list.size()).append(",result:[");
 /*  82 */     for (int i = 0; i < list.size(); i++) {
 /*  83 */       if (i > 0) {
@@ -78,9 +79,18 @@ import org.apache.commons.lang.StringUtils;
        }
 /*  86 */       ArchRecUser ar = (ArchRecUser)((Object[])list.get(i))[0];
 /*  87 */       Department dep = (Department)((Object[])list.get(i))[1];
-/*  88 */       sb.append("{'depId':'" + dep.getDepId() + "','depName':'" + dep.getDepName() + "','depLevel':" + dep.getDepLevel() + ",");
+			/* 88 */sb.append("{'depId':'" + dep.getDepId() + "','depName':'"
+					+ dep.getDepName() + "','depLevel':" + dep.getDepLevel()
+					+ ",");
 /*  89 */       if (ar != null)
-/*  90 */         sb.append("'archRecId':'" + ar.getArchRecId() + "','userId':'" + ar.getUserId() + "','fullname':'" + ar.getFullname() + "'}");
+				/* 90 */sb.append("'archRecId':'" + ar.getArchRecId()
+						+ "','userId':'" + ar.getUserId() + "','fullname':'"
+						+ ar.getFullname() + "'" 
+						+ ",'leaderUserId':'" + ar.getLeaderUserId() + "','leaderFullname':'"
+						+ ar.getLeaderFullname() + "'" 
+						+ ",'deptUserId':'" + ar.getDeptUserId() + "','deptFullname':'"
+						+ ar.getDeptFullname() + "'" +
+						"}");
        else {
 /*  92 */         sb.append("'archRecId':'','userId':'','fullname':''}");
        }
