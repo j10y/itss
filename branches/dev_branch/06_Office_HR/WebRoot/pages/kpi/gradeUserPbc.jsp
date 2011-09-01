@@ -39,7 +39,7 @@
 		</div>
 		<br/>
 		
-		<form onsubmit="return mySubmit()" id="myForm" action="${pageContext.request.contextPath}/kpi/gridScoreHrPaAuthorizepbc.do" method="post">
+		<form action="${pageContext.request.contextPath}/kpi/gridScoreHrPaAuthorizepbc.do" method="post">
 			<input type="hidden" name="pbcId" value="${hrPaAuthorizepbc.id}"/>
 			<table id="contentTable" cellpadding="0" cellspacing="0">
 				<tr style="height:40px">

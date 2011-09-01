@@ -1624,6 +1624,8 @@
 				</Item>
 				<Item id="GradeAuthorizePbcView" text="授权考核模板打分">
 				</Item>
+				<Item id="CalKpiTotalScoreView" text="计算总分">
+				</Item>
 			</Items>
 		</Items>
 		<Items id="HrAnlyReport" text="人力资源分析" isPublic="false">

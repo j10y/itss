@@ -399,7 +399,9 @@ App.importJs = {
 			__ctxPath + "/js/kpi/GradeAuthorizePbcForm.js"],
 	RewardsPunishmentsTypeView : [ __ctxPath + "/js/rewardsPunishments/RewardsPunishmentsTypeView.js",
 			                    __ctxPath + "/js/rewardsPunishments/RewardsPunishmentsTypeForm.js" ],
-    JobSalaryRelationView : [ __ctxPath + "/js/hrm/JobSalaryRelationView.js",
-                          __ctxPath + "/js/hrm/JobSalaryRelationForm.js" ],
-	HrAnlyReportView:[__ctxPath + "/js/hrm/HrAnlyReportView.js"]		                    
+	JobSalaryRelationView : [ __ctxPath + "/js/hrm/JobSalaryRelationView.js",
+                          __ctxPath + "/js/hrm/JobSalaryRelationForm.js" ],		                    
+	HrAnlyReportView:[__ctxPath + "/js/hrm/HrAnlyReportView.js"],
+	CalKpiTotalScoreView : [__ctxPath + "/js/kpi/CalKpiTotalScoreView.js",
+			__ctxPath + "/js/kpi/ResultTotalScoreView.js"]		                    
 };

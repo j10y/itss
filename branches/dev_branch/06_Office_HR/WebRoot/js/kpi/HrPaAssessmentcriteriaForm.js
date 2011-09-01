@@ -148,7 +148,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 				failure : function(c, d) {
 					Ext.MessageBox.show({
 						title : "操作信息",
-						msg : "信息录入有误，请核实！",
+						msg : d.result.msg,
 						buttons : Ext.MessageBox.OK,
 						icon : Ext.MessageBox.ERROR
 					});
@@ -159,12 +159,12 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 	},
 	saveToPublish : function(a, b) {
 		if(a.getForm().isValid()) {
-			Ext.getCmp("publishStatus").setValue(1);
+			Ext.getCmp("publishStatus").setValue(3);
 			a.getForm().submit({
 				method : "post",
 				waitMsg : "正在提交数据……",
 				success : function(c, d) {
-					Ext.ux.Toast.msg("提示信息","成功提交审核！");
+					Ext.ux.Toast.msg("提示信息","成功发布！");
 					if(b.from == "draft") {
 						Ext.getCmp("DraftHrPaAssessmentcriteriaView").gridPanel.store.reload({
 							params : {
@@ -185,7 +185,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 				failure : function(c, d) {
 					Ext.MessageBox.show({
 						title : "操作信息",
-						msg : "信息录入有误，请核实！",
+						msg : d.result.msg,
 						buttons : Ext.MessageBox.OK,
 						icon : Ext.MessageBox.ERROR
 					});
