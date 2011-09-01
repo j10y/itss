@@ -1,12 +1,25 @@
 package com.xpsoft.oa.service.kpi.impl;
 
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.rpc.ServiceException;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.axis.client.Call;
+import org.apache.axis.client.Service;
+
+import com.google.gson.Gson;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.oa.dao.kpi.HrPaKpiPBC2UserCmpDao;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
@@ -18,6 +31,7 @@ import com.xpsoft.oa.model.kpi.HrPaKpiPBC2UserCmp;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2userCmp;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
+import com.xpsoft.oa.model.system.AppUser;
 
 public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2UserCmp>
 		implements HrPaKpiPBC2UserCmpService {
@@ -109,5 +123,77 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		hrPaKpiPBC2User.setTotalScore(totalScore);
 		hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
 		return true;
+	}
+	
+	public List isKpiItemScoreForUser(String userid,String depid){
+		String translateText="";
+		try {
+			Service service = new Service();
+			Call call = (Call) service.createCall();
+			call.setTargetEndpointAddress(new java.net.URL(
+					 AppUtil.getPropertity("job.server.url")));
+			call.setOperationName("isKpiItemScoreForUser");
+			AppUser appuser=ContextUtil.getCurrentUser();
+			 translateText = (String) call
+					.invoke(new Object[] {userid,depid});
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		List list=new ArrayList();
+		JSONObject json = JSONObject.fromObject(translateText);   
+		JSONArray ja=(JSONArray) json.get("data");
+		for(Object ob:ja){
+			JSONObject jb=(JSONObject) ob;
+			Map map=new HashMap();
+			map.put("pbcName", jb.get("pbcName"));
+			map.put("paName", jb.get("paName"));
+			map.put("desc", jb.get("desc"));
+			list.add(map);
+		}
+		return list;
+	}
+	public String saveKpiItemScoreForUser(String userid,String depid){
+		String translateText="";
+		try {
+			Service service = new Service();
+			Call call = (Call) service.createCall();
+			call.setTargetEndpointAddress(new java.net.URL(
+					 AppUtil.getPropertity("job.server.url")));
+			call.setOperationName("saveKpiItemScoreForUser");
+			AppUser appuser=ContextUtil.getCurrentUser();
+			 translateText = (String) call
+			 .invoke(new Object[] {userid,depid});
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return translateText;
+	}
+	public String saveSalarDetail(String userid,String depid){
+		String translateText="";
+		try {
+			Service service = new Service();
+			Call call = (Call) service.createCall();
+			call.setTargetEndpointAddress(new java.net.URL(
+					 AppUtil.getPropertity("job.server.url")));
+			call.setOperationName("saveSalarDetail");
+			AppUser appuser=ContextUtil.getCurrentUser();
+			 translateText = (String) call
+			 	.invoke(new Object[] {userid,depid});
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return translateText;
 	}
 }
