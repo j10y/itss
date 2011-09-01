@@ -21,6 +21,7 @@ public class BudgetItem extends BaseModel{
 	protected Double value;//预算金额 value为mysql的关键字
 	protected Double threshold;//控制阀值
 	protected BudgetItem parent;//父
+	protected Integer isDefault;//是否默认
 	protected Integer deleteFlag;//删除标记 0未删除 1删除
 	
 	public Long getBudgetItemId() {
@@ -78,6 +79,12 @@ public class BudgetItem extends BaseModel{
 	public void setDeleteFlag(Integer deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
+	public Integer getIsDefault() {
+		return isDefault;
+	}
+	public void setIsDefault(Integer isDefault) {
+		this.isDefault = isDefault;
+	}
 	public int hashCode() {
 		return new HashCodeBuilder(-82280557, -700257973)
 	       .append(this.budgetItemId)
@@ -89,6 +96,7 @@ public class BudgetItem extends BaseModel{
 	       .append(this.threshold)
 	       .append(this.parent)
 	       .append(this.deleteFlag)
+	       .append(this.isDefault)
 	       .toHashCode();
 	}
 	@Override
@@ -106,6 +114,7 @@ public class BudgetItem extends BaseModel{
 			.append(this.value, rhs.value)
 			.append(this.threshold, rhs.threshold)
 			.append(this.parent, rhs.parent)
+			.append(this.isDefault, rhs.isDefault)
 			.append(this.deleteFlag, rhs.deleteFlag)
 			.isEquals();
 	}
@@ -120,6 +129,7 @@ public class BudgetItem extends BaseModel{
 			.append("value", this.value)
 			.append("threshold", this.threshold)
 			.append("parent", this.parent)
+			.append("isDefault", this.isDefault)
 			.append("deleteFlag", this.deleteFlag)
 			.toString();
 	}

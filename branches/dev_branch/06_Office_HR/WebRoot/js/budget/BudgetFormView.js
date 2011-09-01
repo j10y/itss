@@ -143,7 +143,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 			stripeRows : true,
 			tbar : this.topbar,
 			//store : this.store,
-			dataUrl: __ctxPath + "/budget/treeRealExecution.do",
+			dataUrl: __ctxPath + "/budget/treeRealExecution.do?budgetId=" + this.budgetId,
 			trackMouseOver : true,
 			disableSelection : false,
 			loadMask : true,
@@ -192,7 +192,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 	            dataIndex: 'threshold',
 	            tpl: new Ext.XTemplate('{threshold:this.formatDouble}', {
 	            	formatDouble: function(v) {
-	            		if(v=null||v==undefined){
+	            		if(v==null||v==undefined){
 	            			return "";
 	            		}
 	                    return v*100 + "%";

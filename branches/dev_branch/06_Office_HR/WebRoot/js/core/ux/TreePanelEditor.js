@@ -65,7 +65,8 @@ xpsoft.ux.TreePanelEditor = Ext.extend(Ext.tree.TreePanel, {
 	contextHandler : function contextmenu(a, b) {
 		this.selectedNode = new Ext.tree.TreeNode({
 			id : a.id,
-			text : a.text
+			text : a.text,
+			attributes : a.attributes
 		});
 		this.contextMenu.showAt(b.getXY());
 	}

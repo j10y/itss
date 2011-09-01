@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.hrm;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +14,14 @@ import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
+import com.xpsoft.oa.model.hrm.JobSalaryRelation;
 import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
+import com.xpsoft.oa.service.hrm.BudgetItemService;
+import com.xpsoft.oa.service.hrm.JobSalaryRelationService;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
+import com.xpsoft.oa.util.RealExecutionUtil;
 
 import flexjson.JSONSerializer;
 
@@ -24,6 +31,12 @@ public class RealExecutionAction extends BaseAction {
 	private RealExecutionService realExecutionService;
 	private RealExecution realExecution;
 	private Long realExecutionId;
+	
+	@Resource
+	private BudgetItemService budgetItemService;
+
+	@Resource
+	private JobSalaryRelationService jobSalaryRelationService;
 
 	public Long getRealExecutionId() {
 		/* 35 */return this.realExecutionId;
@@ -134,8 +147,12 @@ public class RealExecutionAction extends BaseAction {
 
 		//List list = this.realExecutionService.getAll(filter);
 
-		List<Map> list = this.realExecutionService.treeStatics(Long.valueOf(1));
+		List<Map> list = this.realExecutionService.treeStatics(Long.valueOf(getRequest().getParameter("budgetId")));
 		
+		//add default budgetItem alarm logic on 2011-09-01 begin
+		for(Map map : list)
+			this.buildDefaultBudgetItem(map);
+		//add default budgetItem alarm logic on 2011-09-01 end
 
 		StringBuffer buff = new StringBuffer();
 
@@ -147,6 +164,35 @@ public class RealExecutionAction extends BaseAction {
 		
 		return "success";
 	}
+	
+	private void buildDefaultBudgetItem(Map defaultNode){
+		if(!defaultNode.get("isDefault").toString().equals("1")) return;
+		String id = defaultNode.get("id").toString();
+		BudgetItem budgetItem = (BudgetItem) this.budgetItemService.get(Long.valueOf(id));
+		if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
+			Department department = budgetItem.getBudget().getBelongDept();
+			Map filterMap = new HashMap();
+			filterMap.put("Q_deleteFlag_N_EQ", "0");
+			filterMap.put("Q_department.depId_L_EQ", department.getDepId().toString());
+			QueryFilter filter = new QueryFilter(filterMap);
+			List<JobSalaryRelation> list = this.jobSalaryRelationService.getAll(filter);
+			BigDecimal totalMoney = new BigDecimal(0);
+			for(JobSalaryRelation relation : list){
+				totalMoney = totalMoney.add(relation.getTotalMoney());
+			}
+			defaultNode.put("value", totalMoney.doubleValue());
+			try {
+				defaultNode.put("alarm", 
+						RealExecutionUtil.alarm(totalMoney.doubleValue(), 
+								Double.valueOf(defaultNode.get("threshold").toString()), 
+								Double.valueOf(defaultNode.get("realValue").toString())));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+	}
+	
 
 	public RealExecution getRealExecution() {
 		return realExecution;

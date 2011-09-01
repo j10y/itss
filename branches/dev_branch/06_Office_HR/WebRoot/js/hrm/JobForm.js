@@ -12,8 +12,8 @@ JobForm = Ext.extend(Ext.Window, {
 			iconCls : "menu-job",
 			items : this.formPanel,
 			modal : true,
-			height : 200,
-			width : 400,
+			height : 300,
+			width : 700,
 			maximizable : true,
 			title : "岗位详细信息",
 			buttonAlign : "center",
@@ -54,7 +54,8 @@ JobForm = Ext.extend(Ext.Window, {
 				fieldLabel : "备注",
 				name : "job.memo",
 				id : "memo",
-				xtype : "textarea"
+				height: 150,
+				xtype : "fckeditor"
 			} ]
 		});
 		if (this.jobId != null && this.jobId != "undefined") {

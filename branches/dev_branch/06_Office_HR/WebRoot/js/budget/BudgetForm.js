@@ -313,8 +313,8 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				iconCls : "btn-edit",
 				handler : function() {
 					//首先校验是否已经保存预算主数据
-					var selectedNode = Ext.getCmp("budgetItemTree").selectedNode.id;		
-					if(selectedNode==0){
+					var selectedNode = Ext.getCmp("budgetItemTree").selectedNode;		
+					if(selectedNode.id==0){
 						Ext.ux.Toast.msg("操作信息", "根节点【" + Ext.getCmp("budgetItemTree").selectedNode.text + "】不可以修改！");
 					}else{
 						//load
@@ -323,7 +323,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 							Ext.ux.Toast.msg("操作信息", "请首先保存预算基本信息！");
 						}else{
 							
-							new BudgetItemWin({budgetItemId : selectedNode}).show();
+							new BudgetItemWin({budgetItemId : selectedNode.id}).show();
 						}
 					}
 				}
@@ -335,15 +335,19 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				scope : this,
 				iconCls : "btn-delete",
 				handler : function() {
-					var selectedNode = Ext.getCmp("budgetItemTree").selectedNode.id;
+					var selectedNode = Ext.getCmp("budgetItemTree").selectedNode;
+					if(selectedNode.attributes.attributes.isDefault==1){
+						Ext.ux.Toast.msg("操作信息", "默认成本要素不能删除！");
+						return;
+					}
 					Ext.Ajax.request({
 						url : __ctxPath + "/budget/multiDelBudgetItem.do",
 						params : {
-							ids : selectedNode
+							ids : selectedNode.id
 						},
 						method : "POST",
 						success : function(e, f) {
-							Ext.ux.Toast.msg("操作信息", "成功删除该成本 要素！");
+							Ext.ux.Toast.msg("操作信息", "成功删除该成本要素！");
 							Ext.getCmp("budgetItemTree").root.reload();
 						},
 						failure : function(e, f) {
@@ -363,11 +367,22 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			url : __ctxPath + "/budget/treeBudgetItem.do?budgetId=" + (this.budgetId == null ? "0" : this.budgetId),
 			scope : this,
 			showContextMenu : (this.isEdit==true ? true:false),
+			contextHandler : function contextmenu(a, b) {
+				if(a.attributes.isDefault=="1"){
+					return;
+				}
+				this.selectedNode = new Ext.tree.TreeNode({
+					id : a.id,
+					text : a.text,
+					attributes : a.attributes
+				});
+				this.contextMenu.showAt(b.getXY());
+			},
 			onclick : function(e) {
 				
 				var budgetItemId = e.id;
 				if(budgetItemId!="0"){
-					if(e.leaf==undefined || e.leaf==null || e.leaf==false){
+					if(e.attributes.isDefault!=1 && (e.leaf==undefined || e.leaf==null || e.leaf==false)){
 
 						//初始化
 						
@@ -420,12 +435,15 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				success : function(c, e) {
 					var data = Ext.decode(e.response.responseText);
 					Ext.getCmp("budget.budgetId").setValue(data.budgetId);
+					this.budgetId = data.budgetId;
 					Ext.ux.Toast.msg("操作信息", "成功保存信息！");
 					var d = Ext.getCmp("BudgetGrid");
 					if (d != null) {
 						d.getStore().reload();
 					}
 					//a.close();
+					//增加其他左侧成本要素树加载的逻辑
+					Ext.getCmp("budgetItemTree").root.reload({"budgetId" : data.budgetId});
 				},
 				failure : function(c, d) {
 					Ext.MessageBox.show({

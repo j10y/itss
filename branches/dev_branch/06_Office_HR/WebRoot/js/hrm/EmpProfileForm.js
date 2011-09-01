@@ -315,7 +315,7 @@ EmpProfileForm = Ext
 												id : "empProfileForm.delFlag"
 											},
 											{
-												fieldLabel : "所属职位",
+												fieldLabel : "所属岗位",
 												name : "empProfile.jobId",
 												xtype : "hidden",
 												id : "empProfileForm.jobId"
@@ -877,7 +877,7 @@ EmpProfileForm = Ext
 															},
 															items : [
 																	{
-																		fieldLabel : "职位",
+																		fieldLabel : "岗位",
 																		name : "empProfile.position",
 																		id : "empProfileForm.position",
 																		xtype : "combo",
@@ -948,7 +948,7 @@ EmpProfileForm = Ext
 																		store : new Ext.data.JsonStore(
 																				{
 																					url : __ctxPath
-																							+ "/hrm/comboStandSalary.do",
+																							+ "/hrm/comboSalaryJobSalaryRelation.do",
 																					fields : [
 																							{
 																								name : "standardId",
@@ -958,35 +958,37 @@ EmpProfileForm = Ext
 																							"standardName",
 																							"totalMoney",
 																							"setdownTime",
+																							"perCoefficient",
 																							"status" ]
 																				}),
 																		listeners : {
 																			focus : function() {
-																				Ext
-																						.getCmp(
-																								"empProfileForm.standardName")
+																				var jobId = Ext.getCmp("empProfileForm.jobId").getValue();
+																				if(jobId==null || jobId==undefined || jobId==0){
+																					Ext.ux.Toast.msg("操作信息",
+																					"请选择岗位！");
+																				}else{
+																					Ext.getCmp("empProfileForm.standardName")
 																						.getStore()
-																						.reload();
+																						.reload({
+																							'Q_job.jobId_L_EQ' : jobId,
+																							'Q_deleteFlag_N_EQ' : 0
+																						});
+																				}
+																				
 																			},
 																			select : function(
 																					e,
 																					c,
 																					d) {
-																				Ext
-																						.getCmp(
-																								"empProfileForm.standardId")
-																						.setValue(
-																								c.data.standardId);
-																				Ext
-																						.getCmp(
-																								"empProfileForm.standardMiNo")
-																						.setValue(
-																								c.data.standardNo);
-																				Ext
-																						.getCmp(
-																								"empProfileForm.standardMoney")
-																						.setValue(
-																								c.data.totalMoney);
+																				Ext.getCmp("empProfileForm.standardId")
+																						.setValue(c.data.standardId);
+																				Ext.getCmp("empProfileForm.standardMiNo")
+																						.setValue(c.data.standardNo);
+																				Ext.getCmp("empProfileForm.standardMoney")
+																						.setValue(c.data.totalMoney);
+																				Ext.getCmp("empProfileForm.perCoefficient")
+																					.setValue(c.data.perCoefficient);
 																			}
 																		}
 																	},

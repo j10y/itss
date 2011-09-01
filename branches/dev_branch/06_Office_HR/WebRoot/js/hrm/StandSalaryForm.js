@@ -49,6 +49,9 @@ StandSalaryForm.prototype.setup = function (c) {
 							name : "standSalaryForm.totalMoney",
 							mapping : "totalMoney"
 						}, {
+							name : "standSalaryForm.perCoefficient",
+							mapping : "perCoefficient"
+						}, {
 							name : "standSalaryForm.memo",
 							mapping : "memo"
 						}
@@ -113,6 +116,13 @@ StandSalaryForm.prototype.setup = function (c) {
 												allowBlank : false,
 												blankText : "标准名称不能为空!",
 												id : "standSalaryForm.standardName"
+											}, {
+												fieldLabel : "薪资总额",
+												name : "standSalary.totalMoney",
+												id : "standSalaryForm.totalMoney",
+												xtype : "textfield",
+												readOnly : true,
+												anchor : "100%"
 											}
 										]
 									}, {
@@ -139,11 +149,10 @@ StandSalaryForm.prototype.setup = function (c) {
 														});
 												}
 											}, {
-												fieldLabel : "薪资总额",
-												name : "standSalary.totalMoney",
-												id : "standSalaryForm.totalMoney",
-												xtype : "textfield",
-												readOnly : true,
+												fieldLabel : "绩效基数",
+												name : "standSalary.perCoefficient",
+												id : "standSalaryForm.perCoefficient",
+												xtype:"numberfield",
 												anchor : "100%"
 											}
 										]

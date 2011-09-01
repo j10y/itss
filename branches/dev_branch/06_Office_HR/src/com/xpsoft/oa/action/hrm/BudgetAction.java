@@ -11,13 +11,16 @@ import javax.annotation.Resource;
 import org.apache.commons.beanutils.BeanUtils;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.form.BudgetForm;
 import com.xpsoft.oa.model.hrm.Budget;
+import com.xpsoft.oa.model.hrm.BudgetItem;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
+import com.xpsoft.oa.service.hrm.BudgetItemService;
 import com.xpsoft.oa.service.hrm.BudgetService;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
 
@@ -27,6 +30,9 @@ public class BudgetAction extends BaseAction {
 
 	@Resource
 	private BudgetService budgetService;
+	
+	@Resource
+	private BudgetItemService budgetItemService;
 	
 	@Resource
 	private RealExecutionService realExecutionService;
@@ -172,6 +178,7 @@ public class BudgetAction extends BaseAction {
 	}
 
 	public String save() {
+		boolean isNew=false;
 		AppUser user = ContextUtil.getCurrentUser();
 		if(this.budget.getBudgetId()!=null){
 			this.budget.setModifyDate(new Date());
@@ -181,6 +188,7 @@ public class BudgetAction extends BaseAction {
 //			this.budget.setCreateDate(budget.getCreateDate());
 //			this.budget.setCreatePerson(budget.getCreatePerson());
 		}else{
+			isNew = true;
 			this.budget.setCreateDate(new Date());
 			this.budget.setCreatePerson(user);
 		}
@@ -188,6 +196,19 @@ public class BudgetAction extends BaseAction {
 		
 		this.budget.setBelongDept(new Department(Long.valueOf(getRequest().getParameter("budget.belongDept.depId"))));
 		this.budgetService.save(this.budget);
+		//add by awen add default budgetItem hr on 2011-09-01 begin
+		if(isNew){
+			BudgetItem budgetItem = new BudgetItem();
+			budgetItem.setBudget(this.budget);
+			budgetItem.setName(AppUtil.getPropertity("budget.default.budgetItemName"));
+			budgetItem.setCode(AppUtil.getPropertity("budget.default.budgetItemCode"));
+			budgetItem.setKey(AppUtil.getPropertity("budget.default.budgetItemKey"));
+			budgetItem.setThreshold(Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemThreshold")));
+			budgetItem.setIsDefault(1);
+			budgetItem.setDeleteFlag(0);
+			this.budgetItemService.save(budgetItem);
+		}
+		//add by awen add default budgetItem hr on 2011-09-01 end
 		setJsonString("{success:true,budgetId:'" + budget.getBudgetId() + "'}");
 		return "success";
 	}

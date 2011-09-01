@@ -68,6 +68,17 @@
         <many-to-one name="parent" not-null="false" class="com.xpsoft.oa.model.hrm.BudgetItem" column="parentId"></many-to-one>
         
         <property
+            name="isDefault"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="isDefault"
+            length="32"
+            not-null="false"
+            unique="false"
+        />   
+        <property
             name="deleteFlag"
             type="java.lang.Integer"
             update="true"

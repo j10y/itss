@@ -115,7 +115,11 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
             				if(v=="1"){
             					return "<img src='" + __ctxPath + "/images/budget/alarm_yellow.png'></img>黄色警报";
             				}else{
-            					return "<img src='" + __ctxPath + "/images/budget/alarm_red.png'></img>红色危险";
+            					if(v=="2"){
+            						return "<img src='" + __ctxPath + "/images/budget/alarm_red.png'></img>红色危险";
+            					}else{
+            						
+            					}            					
             				}
             			}
             		}

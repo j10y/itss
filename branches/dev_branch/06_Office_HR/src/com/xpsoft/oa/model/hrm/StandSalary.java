@@ -47,10 +47,13 @@ public class StandSalary extends BaseModel {
 
 	@Expose
 	protected Short status;
-
+	
 	@Expose
 	protected String memo;
 	/* 45 */protected Set standSalaryItems = new HashSet();
+	
+	@Expose
+	protected BigDecimal perCoefficient;//绩效基数
 
 	public StandSalary() {
 	}
@@ -170,6 +173,14 @@ public class StandSalary extends BaseModel {
 	public void setMemo(String aValue) {
 		/* 272 */this.memo = aValue;
 	}
+	
+	public BigDecimal getPerCoefficient() {
+		return perCoefficient;
+	}
+
+	public void setPerCoefficient(BigDecimal perCoefficient) {
+		this.perCoefficient = perCoefficient;
+	}
 
 	public boolean equals(Object object) {
 		/* 279 */if (!(object instanceof StandSalary)) {
@@ -190,6 +201,7 @@ public class StandSalary extends BaseModel {
 		/* 294 */.append(this.checkOpinion, rhs.checkOpinion)
 		/* 295 */.append(this.status, rhs.status)
 		/* 296 */.append(this.memo, rhs.memo)
+		/* 296 */.append(this.perCoefficient, rhs.perCoefficient)
 		/* 297 */.isEquals();
 	}
 
@@ -208,6 +220,7 @@ public class StandSalary extends BaseModel {
 		/* 315 */.append(this.checkOpinion)
 		/* 316 */.append(this.status)
 		/* 317 */.append(this.memo)
+		/* 317 */.append(this.perCoefficient)
 		/* 318 */.toHashCode();
 	}
 
@@ -226,6 +239,7 @@ public class StandSalary extends BaseModel {
 		/* 336 */.append("checkOpinion", this.checkOpinion)
 		/* 337 */.append("status", this.status)
 		/* 338 */.append("memo", this.memo)
+		/* 338 */.append("perCoefficient", this.perCoefficient)
 		/* 339 */.toString();
 	}
 }

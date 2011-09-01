@@ -8,10 +8,10 @@ import java.util.Map;
 
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.oa.dao.hrm.RealExecutionDao;
-import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
 import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
+import com.xpsoft.oa.util.RealExecutionUtil;
 
 public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> implements
 		RealExecutionService {
@@ -48,7 +48,13 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 				rootNode.put("iconCls", "task-folder");
 				rootNode.put("expanded", "false");
 				rootNode.put("leaf", "true");				
-				rootNode.put("alarm", alarm(item.getValue(), item.getThreshold(), Double.valueOf(objs[1].toString())));
+				rootNode.put("isDefault", item.getIsDefault());				
+				try {
+					rootNode.put("alarm", RealExecutionUtil.alarm(item.getValue(), item.getThreshold(), Double.valueOf(objs[1].toString())));
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				result.add(rootNode);//可能有多个根节点的情况
 				iterator.remove();//删除
 			}
@@ -61,26 +67,6 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 		//递归
 		
 		return result;
-	}
-	
-	/**
-	 * <阀值 红灯
-	 * >=阀值+阀值*50% 绿
-	 * <阀值+阀值*50% &&>=阀值 黄
-	 * @param value 预算金额
-	 * @param threshold 阀值
-	 * @param realValue 执行值
-	 * @return 
-	 */
-	private String alarm(Double value, Double threshold, Double realValue){
-		
-		if((value-realValue) < value*threshold){
-			return Budget.ALARM_RED;
-		}else if((value-realValue) < ((value-realValue)*(threshold*1.5))){
-			return Budget.ALARM_YELLOW;
-		}else{
-			return Budget.ALARM_GREEN;
-		}
 	}
 	
 	/**
@@ -119,7 +105,7 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 					parentNode.put("children", list);
 				}
 				iterator.remove();//删除
-				node.put("alarm", alarm(item.getValue(), item.getThreshold(), Double.valueOf(objs[1].toString())));
+				node.put("alarm", RealExecutionUtil.alarm(item.getValue(), item.getThreshold(), Double.valueOf(objs[1].toString())));
 				cascade(node, resource);
 			}
 		}
