@@ -1198,6 +1198,24 @@
 					<url>/hrm/recoveryJob.do</url>
 				</Function>
 			</Item>
+			<Item id="JobSalaryRelationView" text="岗位薪标关系" iconCls="menu-goods-apply">
+				<Function id="_JobSalaryRelationQuery" iconCls="menu-list" text="查看">
+					<url>/hrm/listJobSalaryRelation.do</url>
+				</Function>
+				<Function id="_JobSalaryRelationAdd" iconCls="menu-add" text="添加">
+					<url>/hrm/listJobSalaryRelation.do</url>
+					<url>/hrm/saveJobSalaryRelation.do</url>
+				</Function>
+				<Function id="_JobSalaryRelationEdit" iconCls="btn-edit" text="编辑">
+					<url>/hrm/listJobSalaryRelation.do</url>
+					<url>/hrm/saveJobSalaryRelation.do</url>
+					<url>/hrm/getJobSalaryRelation.do</url>
+				</Function>
+				<Function id="_JobSalaryRelationDel" iconCls="menu-del" text="删除">
+					<url>/hrm/listJobSalaryRelation.do</url>
+					<url>/hrm/multiDelJobSalaryRelation.do</url>
+				</Function>
+			</Item>
 			<Item id="EmpProfileForm" text="档案登记" iconCls="menu-profile-create"
 				isPublic="false">
 				<Function id="_EmpProfileReg" text="登记" iconCls="menu-add">
@@ -1243,6 +1261,46 @@
 					<url>/hrm/recoveryEmpProfile.do</url>
 				</Function>
 			</Item>
+			<Items id="JobChange" text="调动管理" iconCls="menu-jobchange"
+			isPublic="false">
+				<Item id="JobChangeForm" text="登记" iconCls="menu-job-reg">
+				   <Function id="_JobChangeReg" text="登记" iconCls="menu-add">
+						<url>/hrm/saveJobChange.do</url>
+						<url>/hrm/listEmpProfile.do</url>
+						<url>/hrm/comboJob.do</url>
+						<url>/hrm/comboStandSalary.do</url>
+					</Function>
+				</Item>
+				<Item id="JobChangeView" text="变更与审核" iconCls="menu-job-check">
+					<Function id="_JobChangeQuery" text="查看" iconCls="menu-list">
+						<url>/hrm/listJobChange.do</url>
+					</Function>
+					<Function id="_JobChangeAdd" text="登记" iconCls="menu-add">
+						<url>/hrm/saveJobChange.do</url>
+						<url>/hrm/listJobChange.do</url>
+						<url>/hrm/listEmpProfile.do</url>
+						<url>/hrm/comboJob.do</url>
+						<url>/hrm/comboStandSalary.do</url>
+					</Function>
+					<Function id="_JobChangeEdit" text="编辑" iconCls="btn-edit">
+						<url>/hrm/saveJobChange.do</url>
+						<url>/hrm/listJobChange.do</url>
+						<url>/hrm/listEmpProfile.do</url>
+						<url>/hrm/getJobChange.do</url>
+						<url>/hrm/comboJob.do</url>
+						<url>/hrm/comboStandSalary.do</url>
+					</Function>
+					<Function id="_JobChangeDel" text="删除" iconCls="menu-del">
+						<url>/hrm/listJobChange.do</url>
+						<url>/hrm/multiDelJobChange.do</url>
+					</Function>
+					<Function id="_JobChangeCheck" text="审核" iconCls="btn-check">
+						<url>/hrm/loadJobChange.do</url>
+						<url>/hrm/checkJobChange.do</url>
+						<url>/hrm/listJobChange.do</url>
+					</Function>
+				</Item>
+			</Items>			
 		</Items>
 		<Items id="SalaryManage" text="薪酬管理" iconCls="menu-salary"
 			isPublic="false">
@@ -1299,24 +1357,6 @@
 					<url>/hrm/getStandSalary.do</url>
 					<url>/hrm/listStandSalary.do</url>
 					<url>/hrm/checkStandSalary.do</url>
-				</Function>
-			</Item>
-			<Item id="JobSalaryRelationView" text="岗位薪标关系" iconCls="menu-goods-apply">
-				<Function id="_JobSalaryRelationQuery" iconCls="menu-list" text="查看">
-					<url>/hrm/listJobSalaryRelation.do</url>
-				</Function>
-				<Function id="_JobSalaryRelationAdd" iconCls="menu-add" text="添加">
-					<url>/hrm/listJobSalaryRelation.do</url>
-					<url>/hrm/saveJobSalaryRelation.do</url>
-				</Function>
-				<Function id="_JobSalaryRelationEdit" iconCls="btn-edit" text="编辑">
-					<url>/hrm/listJobSalaryRelation.do</url>
-					<url>/hrm/saveJobSalaryRelation.do</url>
-					<url>/hrm/getJobSalaryRelation.do</url>
-				</Function>
-				<Function id="_JobSalaryRelationDel" iconCls="menu-del" text="删除">
-					<url>/hrm/listJobSalaryRelation.do</url>
-					<url>/hrm/multiDelJobSalaryRelation.do</url>
 				</Function>
 			</Item>		
 			<Item id="IncomeTaxView" iconCls="menu-incomeTax" text="个税信息">
@@ -1392,46 +1432,8 @@
 				</Function>
 			</Item>
 		</Items>
-		<Items id="JobChange" text="调动管理" iconCls="menu-jobchange"
+		<Items id="HireIssueView" text="招聘管理" iconCls="menu-hireIssue"
 			isPublic="false">
-			<Item id="JobChangeForm" text="登记" iconCls="menu-job-reg">
-			   <Function id="_JobChangeReg" text="登记" iconCls="menu-add">
-					<url>/hrm/saveJobChange.do</url>
-					<url>/hrm/listEmpProfile.do</url>
-					<url>/hrm/comboJob.do</url>
-					<url>/hrm/comboStandSalary.do</url>
-				</Function>
-			</Item>
-			<Item id="JobChangeView" text="变更与审核" iconCls="menu-job-check">
-				<Function id="_JobChangeQuery" text="查看" iconCls="menu-list">
-					<url>/hrm/listJobChange.do</url>
-				</Function>
-				<Function id="_JobChangeAdd" text="登记" iconCls="menu-add">
-					<url>/hrm/saveJobChange.do</url>
-					<url>/hrm/listJobChange.do</url>
-					<url>/hrm/listEmpProfile.do</url>
-					<url>/hrm/comboJob.do</url>
-					<url>/hrm/comboStandSalary.do</url>
-				</Function>
-				<Function id="_JobChangeEdit" text="编辑" iconCls="btn-edit">
-					<url>/hrm/saveJobChange.do</url>
-					<url>/hrm/listJobChange.do</url>
-					<url>/hrm/listEmpProfile.do</url>
-					<url>/hrm/getJobChange.do</url>
-					<url>/hrm/comboJob.do</url>
-					<url>/hrm/comboStandSalary.do</url>
-				</Function>
-				<Function id="_JobChangeDel" text="删除" iconCls="menu-del">
-					<url>/hrm/listJobChange.do</url>
-					<url>/hrm/multiDelJobChange.do</url>
-				</Function>
-				<Function id="_JobChangeCheck" text="审核" iconCls="btn-check">
-					<url>/hrm/loadJobChange.do</url>
-					<url>/hrm/checkJobChange.do</url>
-					<url>/hrm/listJobChange.do</url>
-				</Function>
-			</Item>
-		</Items>
 		<Item id="HireIssueView" text="招聘管理" iconCls="menu-hireIssue"
 			isPublic="false">
 			<Function id="_HireIssueQuery" text="查看" iconCls="menu-list">
@@ -1481,6 +1483,7 @@
 				<url>/hrm/listResume.do</url>
 			</Function>
 		</Item>
+		</Items>
 		<Items id="Budget" text="预算管理" iconCls="menu-budget"
 			isPublic="false">
 			<Item id="BudgetView" text="预算草稿" iconCls="menu-budget">
