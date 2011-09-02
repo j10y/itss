@@ -15,7 +15,8 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 			items : [
 				this.gridPanel
 			],
-			buttonAlign : "center"
+			buttonAlign : "center",
+			buttons : this.buttons
 		});
 	},
 	gridPanel : null,
@@ -83,6 +84,21 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 				forceFit : true,
 				enableRowBody : false,
 				showPreview : false
+			}
+		});
+		this.buttons = [
+			{
+				text : "确定",
+				handler : this.saveToHist.createCallback(this)
+			}
+		]
+	},
+	saveToHist : function(a) {
+		Ext.Ajax.request({
+			url : __ctxPath + "/kpi/saveToHistHrPaKpiPBC2User.do",
+			success : function(d) {
+				Ext.ux.Toast.msg("提示信息", "成功移动到历史记录里！");
+				return ;
 			}
 		});
 	}

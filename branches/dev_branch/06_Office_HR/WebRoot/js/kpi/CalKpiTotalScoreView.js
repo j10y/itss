@@ -17,13 +17,7 @@ CalKpiTotalScoreView = Ext.extend(Ext.Panel, {
 			listeners : {
 				afterrender : function() {
 					//判断是否所有授权打分都已完成
-					if(this.store.getCount() > 0) {
-						Ext.getCmp("calButton").hide();
-						Ext.getCmp("reminder").show();
-					} else {
-						Ext.getCmp("reminder").hide();
-						Ext.getCmp("calButton").show();
-					}
+					
 				}
 			}
 		});
@@ -61,11 +55,13 @@ CalKpiTotalScoreView = Ext.extend(Ext.Panel, {
 					handler : this.calculateTotal.createCallback(this)
 				}, {
 					id : "reminder",
+					hidden : true,
 					text : "有下表列出的授权打分未完成，请完成后再计算总分！"
 				}, {
 					xtype : "button",
 					id : "resultButton",
 					text : "查看结果",
+					hidden : true,
 					handler : this.previewResult.createCallback(this)
 				}
 			]
@@ -90,6 +86,13 @@ CalKpiTotalScoreView = Ext.extend(Ext.Panel, {
 			params : {
 				start : 0,
 				limit : 100
+			}
+		});
+		this.store.on("load", function() {
+			if(this.getCount() > 0) {
+				Ext.getCmp("reminder").show();
+			} else {
+				Ext.getCmp("calButton").show();
 			}
 		});
 		var a = new Ext.grid.ColumnModel({
@@ -141,6 +144,7 @@ CalKpiTotalScoreView = Ext.extend(Ext.Panel, {
 			success : function(d) {
 				Ext.ux.Toast.msg("提示信息","计算完成！");
 				new ResultTotalScoreView().show();
+				Ext.getCmp("resultButton").show();
 			}
 		});
 	},
