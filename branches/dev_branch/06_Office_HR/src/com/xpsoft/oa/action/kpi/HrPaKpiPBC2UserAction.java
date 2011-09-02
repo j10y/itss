@@ -7,11 +7,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 
 import flexjson.JSONSerializer;
@@ -57,12 +59,18 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 	}
 	
 	public String listUnFinished() {
+		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService=(HrPaKpiPBC2UserCmpService) AppUtil.getBean("hrPaKpiPBC2UserCmpService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
-		//判断是不是部门经理
 		//当前user所属部门
 		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
 		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
 		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
+		//判断是不是部门经理
+		String chiefSql = "select deptUserId from arch_rec_user where depId = " + depId;
+		List<Map<String, Object>> chiefList = this.hrPaKpiPBC2UserService.findDataList(chiefSql);
+		if(currentUser.getUserId() != Long.parseLong(chiefList.get(0).get("deptUserId").toString())) {
+			return "success";
+		}
 		//取得所有未完成考核项ID
 		List<String> authItemIdList = this.hrPaKpiPBC2UserService.getAllUnfinished(depId);
 		//取得详细信息，并拼装成json格式
@@ -75,6 +83,12 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 			buff.append("{'pbcName':'" + (String)resultList.get(0).get("pbcName") + "','paName':'" + 
 					(String)resultList.get(0).get("paName") + "','desc':'有被授权人未打分，请核实'},");
 		}
+		List<Map<String, String>> list = hrPaKpiPBC2UserCmpService.isKpiItemScoreForUser(currentUser.getUserId().toString(), depId.toString());
+		//取得定量考核未导入数据记录
+		for(Map<String, String> map : list) {
+			buff.append("{'pbcName':'" + map.get("pbcName") + "','paName':'")
+					.append(map.get("paName") + ",'desc':'" + map.get("desc") + "'},");
+		}
 		this.jsonString = buff.toString();
 		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
 		this.jsonString += "]}";
@@ -84,11 +98,16 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 	
 	public String multiCal() {
 		AppUser currentUser = ContextUtil.getCurrentUser();
-		//判断是不是部门经理
 		//当前user所属部门
 		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
 		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
 		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
+		//判断是不是部门经理
+		String chiefSql = "select deptUserId from arch_rec_user where depId = " + depId;
+		List<Map<String, Object>> chiefList = this.hrPaKpiPBC2UserService.findDataList(chiefSql);
+		if(currentUser.getUserId() != Long.parseLong(chiefList.get(0).get("deptUserId").toString())) {
+			return "success";
+		}
 		//获取部门下所有员工的个人考核模板ID
 		String sql2 = "select a.id from hr_pa_kpipbc2user a, emp_profile b where b.depId = " + depId + " and a.belongUser = b.userId";
 		List<Map<String, Object>> pbc2UserIdList = this.hrPaKpiPBC2UserService.findDataList(sql2);
@@ -99,7 +118,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		}
 		pbc2UserIds += pbc2UserIdList.get(pbc2UserIdList.size() - 1).get("id").toString();
 		//批量计算总分
-		this.hrPaKpiPBC2UserService.multiCal(pbc2UserIds);
+		this.hrPaKpiPBC2UserService.multiCal(pbc2UserIds, depId);
 		
 		this.jsonString = "{success:true}";
 		
@@ -126,6 +145,30 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		this.jsonString = buff.toString();
 		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
 		this.jsonString += "]}";
+		
+		return "success";
+	}
+	
+	public String saveToHist() {
+		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		//当前user所属部门
+		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
+		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
+		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
+		//获取部门下所有员工的个人考核模板ID
+		String sql2 = "select a.id from hr_pa_kpipbc2user a, emp_profile b where b.depId = " + depId + " and a.belongUser = b.userId";
+		List<Map<String, Object>> pbc2UserIdList = this.hrPaKpiPBC2UserService.findDataList(sql2);
+		//将list拼装成字符串
+		String pbc2UserIds = "";
+		for(int i = 0; i < pbc2UserIdList.size() - 1; i++) {
+			pbc2UserIds += pbc2UserIdList.get(i).get("id").toString() + ",";
+		}
+		pbc2UserIds += pbc2UserIdList.get(pbc2UserIdList.size() - 1).get("id").toString();
+		//移到历史表
+		hrPaKpiPBC2UserCmpService.saveHrPaKpiPBC2UserCmp(pbc2UserIds);
+		
+		this.jsonString = "{success:true}";
 		
 		return "success";
 	}
