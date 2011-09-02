@@ -272,3 +272,6 @@ ALTER TABLE arch_rec_user add COLUMN leaderFullname varchar(128);
 ALTER TABLE arch_rec_user add COLUMN deptUserId bigint(20) ;
 ALTER TABLE arch_rec_user add COLUMN deptFullname varchar(128);
     
+ALTER TABLE stand_salary ADD COLUMN perCoefficient decimal(18,2) DEFAULT NULL COMMENT '绩效系数';
+
+ALTER TABLE hr_bg_budgetitem ADD COLUMN isDefault smallint(6) NOT NULL DEFAULT '0' COMMENT '0为否 1为是';
