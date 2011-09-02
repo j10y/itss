@@ -75,8 +75,7 @@ public class HrPaKpiPBC2UserServiceImpl extends BaseServiceImpl<HrPaKpiPBC2User>
 				hrPaAuthorizepbcService.remove(list.get(j));
 			}
 		}
-		//计算关联定量考核平均分
-		hrPaKpiPBC2UserCmpService.saveKpiItemScoreForUser(ContextUtil.getCurrentUserId().toString(), depId.toString());
+		
 		//计算总分
 		hrPaKpiPBC2UserCmpService.countScoreForKpiPbcUser(pbcIds);
 	}

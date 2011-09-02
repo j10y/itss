@@ -15,6 +15,7 @@ import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
+import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
 
 import flexjson.JSONSerializer;
 
@@ -87,7 +88,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		//取得定量考核未导入数据记录
 		for(Map<String, String> map : list) {
 			buff.append("{'pbcName':'" + map.get("pbcName") + "','paName':'")
-					.append(map.get("paName") + ",'desc':'" + map.get("desc") + "'},");
+					.append(map.get("paName") + "','desc':'" + map.get("desc") + "'},");
 		}
 		this.jsonString = buff.toString();
 		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
@@ -97,6 +98,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 	}
 	
 	public String multiCal() {
+		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		//当前user所属部门
 		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
@@ -111,14 +113,18 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		//获取部门下所有员工的个人考核模板ID
 		String sql2 = "select a.id from hr_pa_kpipbc2user a, emp_profile b where b.depId = " + depId + " and a.belongUser = b.userId";
 		List<Map<String, Object>> pbc2UserIdList = this.hrPaKpiPBC2UserService.findDataList(sql2);
-		//将list拼装成字符串
-		String pbc2UserIds = "";
-		for(int i = 0; i < pbc2UserIdList.size() - 1; i++) {
-			pbc2UserIds += pbc2UserIdList.get(i).get("id").toString() + ",";
+		if(pbc2UserIdList.size() > 0) {
+			//将list拼装成字符串
+			String pbc2UserIds = "";
+			for(int i = 0; i < pbc2UserIdList.size() - 1; i++) {
+				pbc2UserIds += pbc2UserIdList.get(i).get("id").toString() + ",";
+			}
+			pbc2UserIds += pbc2UserIdList.get(pbc2UserIdList.size() - 1).get("id").toString();
+			//计算关联定量考核平均分
+			hrPaKpiPBC2UserCmpService.saveKpiItemScoreForUser(ContextUtil.getCurrentUserId().toString(), depId.toString());
+			//批量计算总分
+			this.hrPaKpiPBC2UserService.multiCal(pbc2UserIds, depId);
 		}
-		pbc2UserIds += pbc2UserIdList.get(pbc2UserIdList.size() - 1).get("id").toString();
-		//批量计算总分
-		this.hrPaKpiPBC2UserService.multiCal(pbc2UserIds, depId);
 		
 		this.jsonString = "{success:true}";
 		
@@ -126,6 +132,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 	}
 	
 	public String listResult() {
+		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		//当前user所属部门
 		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
@@ -139,8 +146,19 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		for(int i = 0; i < list.size(); i++) {
 			buff.append("{'fullname':'" + (String)list.get(i).get("fullname"))
 					.append("','pbcName':'" + (String)list.get(i).get("pbcName"))
-					.append("','totalScore':'" + list.get(i).get("totalScore").toString())
-					.append("'},");
+					.append("','totalScore':'" + list.get(i).get("totalScore").toString());
+			String sql3 = "select b.paName, a.result, a.weight from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+					"a.pbcId = " + list.get(i).get("id").toString() + " and a.piId = b.id";
+			List<Map<String, Object>> list3 = hrPaKpiitem2userService.findDataList(sql3);
+			String content = "<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">";
+			content += "<tr><td>考核指标名称</td><td>得分</td><td>权重</td></tr>";
+			for(int j = 0; j < list3.size(); j++) {
+				content += "<tr><td>" + list3.get(j).get("paName") + "</td><td>" + list3.get(j).get("result") + "</td><td>" + 
+						list3.get(j).get("weight") + "</td></tr>";
+			}
+			content +="</table>";
+			buff.append("','content':'" + content);
+			buff.append("'},");
 		}
 		this.jsonString = buff.toString();
 		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);

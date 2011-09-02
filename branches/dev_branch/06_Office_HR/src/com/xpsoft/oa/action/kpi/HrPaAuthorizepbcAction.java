@@ -19,6 +19,7 @@ import com.xpsoft.oa.model.kpi.HrPaPerformanceindexscore;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.kpi.HrPaAuthorizepbcService;
 import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
+import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 
 import flexjson.JSONSerializer;
 
@@ -135,6 +136,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
+		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
 		//获取表单信息
 		long userId = Long.parseLong(this.getRequest().getParameter("userId"));
 		long pbcId = Long.parseLong(this.getRequest().getParameter("pbcId"));
@@ -169,7 +171,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 				itemList.add(item);
 			}
 			//批量插入数据库
-			hrPaAuthpbccitemService.multiSave(itemList);
+			hrPaAuthpbccitemService.multiSave(itemList, pbcId);
 		} else {//存在该userId的授权打分模板
 			//保存授权PBC基本信息
 			HrPaAuthorizepbc authorPbc = list.get(0);
@@ -205,7 +207,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 					authpbcItemList.add(item);
 				}
 			}
-			hrPaAuthpbccitemService.multiSave(authpbcItemList);
+			hrPaAuthpbccitemService.multiSave(authpbcItemList, pbcId);
 		}
 		
 		this.jsonString = new String("{success:true}");

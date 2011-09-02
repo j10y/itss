@@ -10,4 +10,5 @@ public interface HrPaAuthpbccitemService extends BaseService<HrPaAuthpbccitem>{
 	 * 批量保存数据
 	 * */
 	public void multiSave(List<HrPaAuthpbccitem> list);
+	public void multiSave(List<HrPaAuthpbccitem> list, Long pbcId);
 }

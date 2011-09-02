@@ -414,7 +414,7 @@ public class HrPaKpipbcAction extends BaseAction{
 						hrPaAuthpbccitem.setAuthorPbc(authPbcNew);
 						hrPaAuthpbccitem.setAkpiItem2uId(kpiItem2userNew.getId());
 						hrPaAuthpbccitem.setResult(new Double(0));
-						hrPaAuthpbccitem.setWeight(new Double(0));
+						hrPaAuthpbccitem.setWeight(new Double(1));
 						//插入数据库
 						hrPaAuthpbccitemService.save(hrPaAuthpbccitem);
 					}
@@ -497,7 +497,7 @@ public class HrPaKpipbcAction extends BaseAction{
 							hrPaAuthpbccitem.setAuthorPbc(authorPbc);
 							hrPaAuthpbccitem.setAkpiItem2uId(itemNewSave.getId());
 							hrPaAuthpbccitem.setResult(new Double(0));
-							hrPaAuthpbccitem.setWeight(new Double(0));
+							hrPaAuthpbccitem.setWeight(new Double(1));
 							//插入数据库
 							hrPaAuthpbccitemService.save(hrPaAuthpbccitem);
 						}

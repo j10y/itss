@@ -53,12 +53,11 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 	 * 考核模板ID
 	 * */
 	public void multiCal(Long pbcId) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("Q_pbc2User.id_L_EQ", String.valueOf(pbcId));
-		QueryFilter filter = new QueryFilter(map);
-		List<HrPaKpiitem2user> itemList = this.getAll(filter);
-		for(int i = 0; i < itemList.size(); i++) {
-			this.calculateAvg(itemList.get(i).getId());
+		String sql = "select a.id from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+				"a.pbcId = " + pbcId + " and a.piId = b.id and b.paMode = 12";
+		List<Map<String, Object>> mapList = this.findDataList(sql);
+		for(int i = 0; i < mapList.size(); i++) {
+			this.calculateAvg(Long.parseLong(mapList.get(i).get("id").toString()));
 		}
 	}
 }

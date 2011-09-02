@@ -101,6 +101,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		Map map=new HashMap();
 		map.put("Q_pbc2User.id_L_EQ", hrPaKpiPBC2User.getId()+"");
 		QueryFilter filter=new QueryFilter(map);
+		hrPaKpiitem2userService.flush();
 		List<HrPaKpiitem2user> list=hrPaKpiitem2userService.getAll(filter);
 		float totalScore=0;
 		boolean isOnlyNegative=false;
