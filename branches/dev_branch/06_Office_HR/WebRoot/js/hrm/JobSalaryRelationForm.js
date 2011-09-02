@@ -62,7 +62,7 @@ JobSalaryRelationForm = Ext.extend(
 												id : "jobSalaryRelationForm.job.jobId"
 											},
 											{
-												fieldLabel : "职位",
+												fieldLabel : "岗位",
 												id : "jobSalaryRelationForm.job.jobName",
 												xtype : "combo",
 												mode : "local",
@@ -134,11 +134,15 @@ JobSalaryRelationForm = Ext.extend(
 														}),
 												listeners : {
 													focus : function() {
-														Ext
-																.getCmp(
-																		"jobSalaryRelationForm.standSalary.standardName")
-																.getStore()
-																.reload();
+														var g = Ext.getCmp("jobSalaryRelationForm.job.jobId").getValue();
+														if (g != null && g != ""
+																&& g != "undefined") {
+															Ext.getCmp("jobSalaryRelationForm.standSalary.standardName")
+																	.getStore()
+																	.reload();
+														} else {
+															Ext.ux.Toast.msg("操作信息", "请先选择岗位！");
+														}
 													},
 													select : function(
 															e,
@@ -152,6 +156,26 @@ JobSalaryRelationForm = Ext.extend(
 															.setValue(c.data.totalMoney);
 														Ext.getCmp("jobSalaryRelationForm.totalMoney")
 															.setValue(c.data.totalMoney*Ext.getCmp("jobSalaryRelationForm.empCount").getValue());
+													},
+													change : function(field,  newValue, oldValue){
+														var jobId = Ext.getCmp("jobSalaryRelationForm.job.jobId").getValue();
+														var standardId = Ext.getCmp("jobSalaryRelationForm.standSalary.standardId").getValue();
+														//查询是否存在指定的jobId和standId deleteFlag=0;
+														
+														Ext.Ajax.request({
+															url : __ctxPath + "/hrm/listJobSalaryRelation.do?Q_deleteFlag_N_EQ=0&Q_job.jobId_L_EQ=" 
+															+ jobId + "&Q_standSalary.standardId_L_EQ=" + standardId,
+															success : function(h, j) {
+																var data = Ext.decode(h.responseText);
+																var totalCounts = data.totalCounts;
+																if(totalCounts>0){
+																	Ext.getCmp("jobSalaryRelationForm.standSalary.standardId").setValue("");
+																	field.setValue("");
+																	Ext.ux.Toast.msg("操作信息", "薪标[" + newValue + "]和岗位[" + 
+																			Ext.getCmp("jobSalaryRelationForm.job.jobName").getValue() + "]已经绑定关系！");
+																}
+															}
+														});
 													}
 												}
 											}, {

@@ -1,8 +1,10 @@
 package com.xpsoft.oa.action.hrm;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +20,14 @@ import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.form.BudgetForm;
 import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
+import com.xpsoft.oa.model.hrm.JobSalaryRelation;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.BudgetItemService;
 import com.xpsoft.oa.service.hrm.BudgetService;
+import com.xpsoft.oa.service.hrm.JobSalaryRelationService;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
+import com.xpsoft.oa.util.RealExecutionUtil;
 
 import flexjson.JSONSerializer;
 
@@ -36,6 +41,9 @@ public class BudgetAction extends BaseAction {
 	
 	@Resource
 	private RealExecutionService realExecutionService;
+	
+	@Resource
+	private JobSalaryRelationService jobSalaryRelationService;
 	
 	private Budget budget;
 	private Long budgetId;
@@ -98,6 +106,7 @@ public class BudgetAction extends BaseAction {
 			try {
 				for(Map map : tree){
 					if(map.get("leaf")!=null &&map.get("leaf").equals("true")){//叶子结点
+						buildDefaultBudgetItem(map);
 						String alarm = map.get("alarm").toString();
 						if(Integer.valueOf(alarm).intValue()>alarmStatus){
 							alarmStatus = Integer.valueOf(alarm);
@@ -127,6 +136,34 @@ public class BudgetAction extends BaseAction {
 		this.jsonString = buff.toString();	
 
 		return "success";
+	}
+	
+	private void buildDefaultBudgetItem(Map defaultNode){
+		if(!defaultNode.get("isDefault").toString().equals("1")) return;
+		String id = defaultNode.get("id").toString();
+		BudgetItem budgetItem = (BudgetItem) this.budgetItemService.get(Long.valueOf(id));
+		if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
+			Department department = budgetItem.getBudget().getBelongDept();
+			Map filterMap = new HashMap();
+			filterMap.put("Q_deleteFlag_N_EQ", "0");
+			filterMap.put("Q_department.depId_L_EQ", department.getDepId().toString());
+			QueryFilter filter = new QueryFilter(filterMap);
+			List<JobSalaryRelation> list = this.jobSalaryRelationService.getAll(filter);
+			BigDecimal totalMoney = new BigDecimal(0);
+			for(JobSalaryRelation relation : list){
+				totalMoney = totalMoney.add(relation.getTotalMoney());
+			}
+			defaultNode.put("value", totalMoney.doubleValue());
+			try {
+				defaultNode.put("alarm", 
+						RealExecutionUtil.alarm(totalMoney.doubleValue(), 
+								Double.valueOf(defaultNode.get("threshold").toString()), 
+								Double.valueOf(defaultNode.get("realValue").toString())));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
 	}
 
 	public String combo() {

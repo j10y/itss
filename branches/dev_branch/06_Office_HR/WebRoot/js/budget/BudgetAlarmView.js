@@ -67,6 +67,7 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 				mapping : "belongDept.depName"
 			}, "beginDate" 
 			, "endDate" 
+			, "alarmStatus"
 			, "publishStatus"
 			, "createDate"
 			, "createPerson", {
