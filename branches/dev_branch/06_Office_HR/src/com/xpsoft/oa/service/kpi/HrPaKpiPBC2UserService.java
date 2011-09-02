@@ -18,7 +18,7 @@ public interface HrPaKpiPBC2UserService extends BaseService<HrPaKpiPBC2User> {
 	 * @param pbcIds
 	 * 个人考核模板ID数组
 	 * */
-	public void multiCal(String pbcIds);
+	public void multiCal(String pbcIds, Long depId);
 	/*
 	 * 获取所有定性考核指标未完成打分的记录
 	 * @param depId
