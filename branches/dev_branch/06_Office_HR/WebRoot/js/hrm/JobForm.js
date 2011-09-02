@@ -12,7 +12,7 @@ JobForm = Ext.extend(Ext.Window, {
 			iconCls : "menu-job",
 			items : this.formPanel,
 			modal : true,
-			height : 300,
+			height : 400,
 			width : 700,
 			maximizable : true,
 			title : "岗位详细信息",

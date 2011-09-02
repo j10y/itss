@@ -197,7 +197,7 @@ public class BudgetItemAction extends BaseAction {
 			.serialize(result));
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("[{id:'0',text:'所有成本要素',expanded:true,children:");
+		sb.append("[{id:'0',text:'所有成本要素',expanded:true,leaf : false, children:");
 		sb.append(buff.toString());
 		sb.append("}]");
 		setJsonString(sb.toString());

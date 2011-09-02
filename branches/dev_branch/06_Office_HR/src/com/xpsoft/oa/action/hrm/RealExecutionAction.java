@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -180,7 +181,7 @@ public class RealExecutionAction extends BaseAction {
 			for(JobSalaryRelation relation : list){
 				totalMoney = totalMoney.add(relation.getTotalMoney());
 			}
-			defaultNode.put("value", totalMoney.doubleValue());
+			defaultNode.put("value", totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
 			try {
 				defaultNode.put("alarm", 
 						RealExecutionUtil.alarm(totalMoney.doubleValue(), 
