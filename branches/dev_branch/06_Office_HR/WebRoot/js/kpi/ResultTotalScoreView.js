@@ -44,6 +44,13 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 			params : {
 				start : 0,
 				limit : 100
+			},
+			callback : function(r, o, s) {
+				if(this.getCount() > 0) {
+					if(parseFloat(this.getAt(0).data.totalScore) > 0) {
+						Ext.getCmp("moveToHist").show();
+					}
+				}
 			}
 		});
 		var d = new Ext.ux.grid.RowExpander({
@@ -95,7 +102,9 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 		});
 		this.buttons = [
 			{
-				text : "确定",
+				text : "将结果移动到历史记录",
+				id : "moveToHist",
+				hidden : true,
 				handler : this.saveToHist.createCallback(this)
 			}
 		]
