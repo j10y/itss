@@ -50,6 +50,12 @@
 /*    */     }
 /* 69 */     return date;
 /*    */   }
+			public static String formatStringToDate(Date date)
+/*    */   {
+/* 56 */     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+/*    */ 
+/* 58 */     return sdf.format(date);
+/*    */   }
 /*    */ }
 
 /* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
