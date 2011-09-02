@@ -12,6 +12,7 @@ import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
+import com.xpsoft.oa.model.kpi.HrPaAuthorizepbc;
 import com.xpsoft.oa.model.kpi.HrPaAuthpbccitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem;
@@ -22,6 +23,7 @@ import com.xpsoft.oa.model.kpi.HrPaKpipbcHist;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
+import com.xpsoft.oa.service.kpi.HrPaAuthorizepbcService;
 import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
@@ -29,6 +31,7 @@ import com.xpsoft.oa.service.kpi.HrPaKpiitemHistService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitemService;
 import com.xpsoft.oa.service.kpi.HrPaKpipbcHistService;
 import com.xpsoft.oa.service.kpi.HrPaKpipbcService;
+import com.xpsoft.oa.service.kpi.HrPaPerformanceindexService;
 import com.xpsoft.oa.service.system.AppUserService;
 
 import flexjson.JSONSerializer;
@@ -340,6 +343,8 @@ public class HrPaKpipbcAction extends BaseAction{
 		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
+		HrPaAuthorizepbcService hrPaAuthorizepbcService = (HrPaAuthorizepbcService)AppUtil.getBean("hrPaAuthorizepbcService");
+		HrPaPerformanceindexService hrPaPerformanceindexService = (HrPaPerformanceindexService)AppUtil.getBean("hrPaPerformanceindexService");
 		//1. 找到哪些人是这个有这个PBC关联的岗位
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		Map<String, String> profileMap = new HashMap<String, String>();
@@ -347,6 +352,13 @@ public class HrPaKpipbcAction extends BaseAction{
 		QueryFilter profileFilter = new QueryFilter(profileMap);
 		List<EmpProfile> profileList = empProfileService.getAll(profileFilter);
 		AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
+		//找到个人所属部门负责人userId
+		Long chiefId = new Long(0);
+		String chiefSql = "select deptUserId from arch_rec_user where depId = " + pbc.getBelongDept().getDepId();
+		List<Map<String, Object>> chiefList = this.hrPaKpipbcService.findDataList(chiefSql);
+		if(chiefList.size() > 0) {
+			chiefId = Long.parseLong(chiefList.get(0).get("deptUserId").toString());
+		}
 		//2. 循环对每个人添加PBC考核模板
 		for(int i = 0; i < profileList.size(); i++) {
 			//取出要插入PBC考核模板关联的考核项
@@ -376,6 +388,14 @@ public class HrPaKpipbcAction extends BaseAction{
 				hrPaKpiPBC2User.setModifyPerson(currentUser);
 				//插入数据库
 				hrPaKpiPBC2User = hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
+				//给负责人添加默认授权考核模板
+				HrPaAuthorizepbc hrPaAuthorizepbc = new HrPaAuthorizepbc();
+				hrPaAuthorizepbc.setUserPbc(hrPaKpiPBC2User);
+				hrPaAuthorizepbc.setAuthorTo(new AppUser(chiefId));
+				hrPaAuthorizepbc.setAuthDate(currentDate);
+				hrPaAuthorizepbc.setAuthPerson(currentUser);
+				//插入数据库
+				HrPaAuthorizepbc authPbcNew = hrPaAuthorizepbcService.save(hrPaAuthorizepbc);
 				
 				//2.1.2. 保存个人考核模板关联的考核项
 				for(int j = 0; j < hrPaKpiitemList.size(); j++) {
@@ -383,9 +403,21 @@ public class HrPaKpipbcAction extends BaseAction{
 					hrPaKpiitem2user.setPbc2User(hrPaKpiPBC2User);
 					hrPaKpiitem2user.setPiId(hrPaKpiitemList.get(j).getPi().getId());
 					hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
-					hrPaKpiitem2user.setResult(0);//等待定时计算时设置结果
+					hrPaKpiitem2user.setResult(new Double(0));//等待定时计算时设置结果
 					//插入数据库
-					hrPaKpiitem2userService.save(hrPaKpiitem2user);
+					HrPaKpiitem2user kpiItem2userNew = hrPaKpiitem2userService.save(hrPaKpiitem2user);
+					//判断该考核项关联的考核指标是定量还是定性
+					Long mode = hrPaPerformanceindexService.get(hrPaKpiitemList.get(j).getPi().getId()).getMode().getId();
+					if(mode == 12) {
+						//给负责人添加默认考核模板关联的考核项
+						HrPaAuthpbccitem hrPaAuthpbccitem = new HrPaAuthpbccitem();
+						hrPaAuthpbccitem.setAuthorPbc(authPbcNew);
+						hrPaAuthpbccitem.setAkpiItem2uId(kpiItem2userNew.getId());
+						hrPaAuthpbccitem.setResult(new Double(0));
+						hrPaAuthpbccitem.setWeight(new Double(0));
+						//插入数据库
+						hrPaAuthpbccitemService.save(hrPaAuthpbccitem);
+					}
 				}
 			} else {//在hr_pa_kpipbc2user表中有该User的模板，则合并模板
 				HrPaKpiPBC2User hrPaKpiPBC2User = hrPaKpiPBC2UserList.get(0);
@@ -433,12 +465,19 @@ public class HrPaKpipbcAction extends BaseAction{
 				hrPaKpiPBC2User.setModifyDate(currentDate);
 				hrPaKpiPBC2User.setModifyPerson(currentUser);
 				hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
+				//找到个人所属部门负责人默认授权考核模板
+				HrPaAuthorizepbc authorPbc = new HrPaAuthorizepbc();
+				String sql = "select id from hr_pa_authorizepbc where pbcId = " + hrPaKpiPBC2User.getId() + " and userId = " + chiefId;
+				List<Map<String, Object>> defaultAuthList = this.hrPaKpipbcService.findDataList(sql);
+				if(defaultAuthList.size() > 0) {
+					authorPbc.setId(Long.parseLong(defaultAuthList.get(0).get("id").toString()));
+				}
 				//2.2.3. 合并个人考核模板关联的考核项
 				for(int n = 0; n < hrPaKpiitemList.size(); n++) {
 					boolean flag2 = false;
 					HrPaKpiitem2user itemNew = new HrPaKpiitem2user();
 					for(int o = 0; o < hrPaKpiitem2userList.size(); o++) {
-						if(hrPaKpiitemList.get(n).getPi().getId() == hrPaKpiitem2userList.get(o).getPiId()) {
+						if(hrPaKpiitemList.get(n).getPi().getId().longValue() == hrPaKpiitem2userList.get(o).getPiId().longValue()) {
 							flag2 = true;
 							itemNew = hrPaKpiitem2userList.get(o);
 							break;
@@ -447,8 +486,22 @@ public class HrPaKpipbcAction extends BaseAction{
 					itemNew.setPbc2User(hrPaKpiPBC2User);
 					itemNew.setPiId(hrPaKpiitemList.get(n).getPi().getId());
 					itemNew.setWeight(hrPaKpiitemList.get(n).getWeight());//直接将岗位PBC模板权值复制给个人
-					itemNew.setResult(0);//等待定时计算时设置结果
-					hrPaKpiitem2userService.save(itemNew);
+					itemNew.setResult(new Double(0));//等待定时计算时设置结果
+					HrPaKpiitem2user itemNewSave = hrPaKpiitem2userService.save(itemNew);
+					if(!flag2) {
+						//判断该考核项关联的考核指标是定量还是定性
+						Long mode = hrPaPerformanceindexService.get(itemNewSave.getPiId()).getMode().getId();
+						if(mode == 12) {
+							//给负责人添加默认考核模板关联的考核项
+							HrPaAuthpbccitem hrPaAuthpbccitem = new HrPaAuthpbccitem();
+							hrPaAuthpbccitem.setAuthorPbc(authorPbc);
+							hrPaAuthpbccitem.setAkpiItem2uId(itemNewSave.getId());
+							hrPaAuthpbccitem.setResult(new Double(0));
+							hrPaAuthpbccitem.setWeight(new Double(0));
+							//插入数据库
+							hrPaAuthpbccitemService.save(hrPaAuthpbccitem);
+						}
+					}
 				}
 			}
 		}
