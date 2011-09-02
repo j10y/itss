@@ -10,5 +10,7 @@ public abstract interface SalaryPayoffService extends BaseService<SalaryPayoff>
 	public String exportData(String fileRootPath, String sheetName,
 			String filePrefix, String[] titles, String[] proNames,
 			List dataList, String exportType);
+	
+	public boolean saveRealexecution(Long userId,Double amount,Integer month);
 }
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.core.web.paging.PagingBean;
@@ -12,6 +13,8 @@ import com.xpsoft.oa.model.hrm.StandSalaryItem;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.SalaryPayoffService;
 import com.xpsoft.oa.service.hrm.StandSalaryItemService;
+import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
+
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -129,9 +132,21 @@ public class SalaryPayoffAction extends BaseAction {
 				.getCheckStatus());
 		/* 137 */checkSalaryPayoff.setCheckOpinion(this.salaryPayoff
 				.getCheckOpinion());
+		Long userId=checkSalaryPayoff.getUserId();
+		Double standardMoney=checkSalaryPayoff.getStandAmount()!=null?Double.parseDouble(checkSalaryPayoff.getStandAmount().toString()):0d;
+		Double achieveAmount=checkSalaryPayoff.getAchieveAmount()!=null?Double.parseDouble(checkSalaryPayoff.getAchieveAmount().toString()):0d;
+		Double deductAmount=checkSalaryPayoff.getDeductAmount()!=null?Double.parseDouble(checkSalaryPayoff.getDeductAmount().toString()):0d;
+		Double encourageAmount=checkSalaryPayoff.getEncourageAmount()!=null?Double.parseDouble(checkSalaryPayoff.getEncourageAmount().toString()):0d;
+		Double allamount=standardMoney+achieveAmount+encourageAmount-deductAmount;
+		Integer month=checkSalaryPayoff.getStartTime().getMonth()+1;
 		/* 138 */this.salaryPayoffService.save(checkSalaryPayoff);
-		setJsonString("{success:true,msg:'审核通过'}");
-		/* 139 */return "success";
+		Boolean flag=this.salaryPayoffService.saveRealexecution(userId, allamount, month);
+		if(flag!=true){
+			setJsonString("{success:true,msg:'审核通过'}");
+		}else{
+			setJsonString("{success:true,msg:'审核通过'}");
+		}
+		return "success";
 	}
 
 	public String personal() {
@@ -261,6 +276,22 @@ public class SalaryPayoffAction extends BaseAction {
 				"salary_payoff.selftax,salary_payoff.acutalAmount,salary_payoff.regTime,salary_payoff.memo " +
 				"from salary_payoff,department,app_user,emp_profile " +
 				"where salary_payoff.userId=app_user.userId and emp_profile.userId=app_user.userId and department.depId=app_user.depId";
+		String fullname=getRequest().getParameter("Q_fullname_S_LK");
+		String checkStatus=getRequest().getParameter("Q_checkStatus_SN_EQ");
+		String startTime=getRequest().getParameter("Q_startTime_D_GE");
+		String endTime=getRequest().getParameter("Q_endTime_D_LE");
+		if(fullname!=null&&fullname.length()>0){
+			sql+=" and salary_payoff.fullname like '%"+fullname+"%'";
+		}
+		if(checkStatus!=null&&checkStatus.length()>0){
+			sql+=" and salary_payoff.checkStatus="+checkStatus;		
+		}
+		if(startTime!=null&&startTime.length()>0){
+			sql+=" and date_format(salary_payoff.startTime,'%Y-%m-%d')>=date_format('"+startTime+"','%Y-%m-%d')";	
+		}
+		if(endTime!=null&&endTime.length()>0){
+			sql+=" and date_format(salary_payoff.endTime,'%Y-%m-%d')<=date_format('"+endTime+"','%Y-%m-%d')";	
+		}
 		List<Map> list=this.salaryPayoffService.findDataList(sql);
 		String fileRootPath=getRequest().getRealPath("exportFile");
 		titles[0]="部门";
@@ -299,24 +330,18 @@ public class SalaryPayoffAction extends BaseAction {
 		proNames[14]="selftax";
 		proNames[15]="acutalAmount";
 		proNames[16]="regTime";
-		proNames[17]="memo";
-		
-//		proNames[0]="fullname";
-//		proNames[1]="profileNo";
-//		proNames[2]="idNo";
-//		proNames[3]="standAmount";
-//		proNames[4]="encourageAmount";
-//		proNames[5]="deductAmount";
-//		proNames[6]="achieveAmount";
-//		proNames[7]="provident";
-//		proNames[8]="insurance";
-//		proNames[9]="selftax";
-//		proNames[10]="acutalAmount";
-//		proNames[11]="regTime";
-//		proNames[12]="memo";
-		
+		proNames[17]="memo";	
 		Gson gson = new Gson();
 		this.jsonString ="{success:true,data:"+gson.toJson("exportFile/"+this.salaryPayoffService.exportData(fileRootPath, "薪资", "salarypayoff", titles, proNames, list, "maplist"))+"}";
+		return "success";
+	}
+	
+	public String count(){
+		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService=(HrPaKpiPBC2UserCmpService) AppUtil.getBean("hrPaKpiPBC2UserCmpService");
+		String deptid=getRequest().getParameter("depid");
+		String userid= ContextUtil.getCurrentUserId().toString();
+		hrPaKpiPBC2UserCmpService.saveSalarDetail(userid, deptid);
+		setJsonString("{success:true}");
 		return "success";
 	}
 }

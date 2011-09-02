@@ -3,6 +3,7 @@ package com.xpsoft.oa.service.hrm.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +14,22 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+
+import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.service.impl.BaseServiceImpl;
+import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.oa.dao.hrm.SalaryPayoffDao;
+import com.xpsoft.oa.model.hrm.Budget;
+import com.xpsoft.oa.model.hrm.BudgetItem;
+import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.model.hrm.SalaryPayoff;
+import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.hrm.BudgetItemService;
+import com.xpsoft.oa.service.hrm.BudgetService;
+import com.xpsoft.oa.service.hrm.RealExecutionService;
 import com.xpsoft.oa.service.hrm.SalaryPayoffService;
+import com.xpsoft.oa.service.system.AppUserService;
 
 public class SalaryPayoffServiceImpl extends BaseServiceImpl<SalaryPayoff>
 		implements SalaryPayoffService {
@@ -127,5 +140,59 @@ public class SalaryPayoffServiceImpl extends BaseServiceImpl<SalaryPayoff>
 			}
 		}
 		return null;
+	}
+	public boolean saveRealexecution(Long userId,Double amount,Integer month){
+		AppUserService appUserService=(AppUserService) AppUtil.getBean("appUserService");
+		AppUser appuser=appUserService.get(userId);
+		Long depid=appuser.getDepartment().getDepId();
+		BudgetService budgetService=(BudgetService) AppUtil.getBean("budgetService");
+		Map map=new HashMap();
+		map.put("Q_belongDept.depId_L_EQ", depid+"");
+		map.put("Q_beginDate_D_LE", DateUtil.formatStringToDate(new Date())+"");
+		map.put("Q_endDate_D_GE", DateUtil.formatStringToDate(new Date())+"");
+		map.put("Q_publishStatus_N_EQ", "3");
+		QueryFilter filter=new QueryFilter(map);
+		List list=budgetService.getAll(filter);
+		if(list.size()>0){
+			Budget budget=(Budget) list.get(0);
+			Long buid=budget.getBudgetId();
+			BudgetItemService budgetItemService=(BudgetItemService) AppUtil.getBean("budgetItemService");
+			Map bimap=new HashMap();
+			bimap.put("Q_budget.budgetId_L_EQ", buid+"");
+			bimap.put("Q_isDefault_N_EQ", "1");
+			QueryFilter bifilter=new QueryFilter(bimap);
+			List bilist=budgetItemService.getAll(bifilter);
+			if(bilist!=null&&bilist.size()>0){
+				BudgetItem budgetItem=(BudgetItem) bilist.get(0);
+				Long biid=budgetItem.getBudgetItemId();
+				RealExecutionService realExecutionService=(RealExecutionService) AppUtil.getBean("realExecutionService");
+				Map remap=new HashMap();
+				remap.put("Q_budgetItem.budgetItemId_L_EQ", biid+"");
+				remap.put("Q_budget.budgetId_L_EQ", buid+"");
+				remap.put("Q_month_N_EQ", month+"");
+				QueryFilter refilter=new QueryFilter(remap);
+				List<RealExecution> relist =realExecutionService.getAll(refilter);
+				RealExecution re=null;
+				if(relist!=null&&relist.size()>0){
+					 re=relist.get(0);
+					re.setRealValue(re.getRealValue()+amount);
+				}else{
+					re=new RealExecution();
+					Budget bg=new Budget();
+					bg.setBudgetId(buid);
+					re.setBudget(bg);
+					BudgetItem  bi=new BudgetItem();
+					bi.setBudgetItemId(biid);
+					re.setBudgetItem(bi);
+					re.setRealValue(amount);
+					re.setInputDate(new Date());
+					re.setMonth(month);
+					re.setRemark("薪资");
+					re.setDeleteFlag(0);
+				}
+				realExecutionService.save(re);
+			}
+		}
+		return true;
 	}
 }
