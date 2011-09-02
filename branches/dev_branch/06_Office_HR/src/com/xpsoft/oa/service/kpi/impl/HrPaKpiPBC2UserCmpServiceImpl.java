@@ -87,9 +87,9 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			hrPaKpiitem2userCmp.setWeight(hpu.getWeight());
 			hrPaKpiitem2userCmp.setResult(hpu.getResult());
 			hrPaKpiitem2userCmpService.save(hrPaKpiitem2userCmp);
-			hrPaKpiitem2userService.remove(hpu);
+//			hrPaKpiitem2userService.remove(hpu);
 		}
-		hrPaKpiPBC2UserService.remove(hrPaKpiPBC2User);
+//		hrPaKpiPBC2UserService.remove(hrPaKpiPBC2User);
 		return true;
 	}
 	//计算个人的kpi模板得分
