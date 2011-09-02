@@ -13,13 +13,7 @@ CalKpiTotalScoreView = Ext.extend(Ext.Panel, {
 			items : [
 				this.calPanel,
 				this.gridPanel
-			],
-			listeners : {
-				afterrender : function() {
-					//判断是否所有授权打分都已完成
-					
-				}
-			}
+			]
 		});
 	},
 	calPanel : null,
@@ -33,36 +27,46 @@ CalKpiTotalScoreView = Ext.extend(Ext.Panel, {
 			height : 40,
 			frame : false,
 			border : false,
-			layout : "hbox",
-			layoutConfig : {
-				padding : "5",
-				align : "middle"
-			},
-			defaults : {
-				xtype : "label",
-				margins : {
-					top : 0,
-					right : 4,
-					bottom : 4,
-					left : 4
-				}
-			},
+			layout : "form",
+			bodyStyle : "padding:10px 20px 20px 20px",
 			items : [
 				{
-					xtype : "button",
-					id : "calButton",
-					text : "计算总分",
-					handler : this.calculateTotal.createCallback(this)
-				}, {
-					id : "reminder",
-					hidden : true,
-					text : "有下表列出的授权打分未完成，请完成后再计算总分！"
-				}, {
-					xtype : "button",
-					id : "resultButton",
-					text : "查看结果",
-					hidden : true,
-					handler : this.previewResult.createCallback(this)
+					xtype : "container",
+					border : false,
+					layout : "column",
+					items : [
+						{
+							layout : "form",
+							border : false,
+							columnWidth : 0.5,
+							items : [
+								{
+									xtype : "label",
+									id : "reminder",
+									hidden : true,
+									text : "有下表列出的授权打分未完成，请完成后再计算总分！"
+								}, {
+									xtype : "button",
+									id : "calButton",
+									text : "计算总分",
+									hidden : true,
+									handler : this.calculateTotal.createCallback(this)
+								}
+							]
+						}, {
+							layout : "form",
+							border : false,
+							columnWidth : 0.5,
+							items : [
+								{
+									xtype : "button",
+									id : "resultButton",
+									text : "查看结果",
+									handler : this.previewResult.createCallback(this)
+								}
+							]
+						}
+					]
 				}
 			]
 		});
@@ -86,13 +90,14 @@ CalKpiTotalScoreView = Ext.extend(Ext.Panel, {
 			params : {
 				start : 0,
 				limit : 100
-			}
-		});
-		this.store.on("load", function() {
-			if(this.getCount() > 0) {
-				Ext.getCmp("reminder").show();
-			} else {
-				Ext.getCmp("calButton").show();
+			},
+			callback : function(r, o, s) {
+				if(this.getCount() > 0) {
+					Ext.getCmp("reminder").show();
+				} else {
+					
+					Ext.getCmp("calButton").show();
+				}
 			}
 		});
 		var a = new Ext.grid.ColumnModel({

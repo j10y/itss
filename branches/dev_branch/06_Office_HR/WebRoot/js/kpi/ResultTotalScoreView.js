@@ -11,6 +11,7 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 			width : 800,
 			height : 500,
 			modal : true,
+			autoScroll : true,
 			layout : "border",
 			items : [
 				this.gridPanel
@@ -34,7 +35,8 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 				},
 				"fullname",
 				"pbcName",
-				"totalScore"
+				"totalScore",
+				"content"
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -44,9 +46,13 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 				limit : 100
 			}
 		});
+		var d = new Ext.ux.grid.RowExpander({
+			tpl : new Ext.Template('<div style="padding:5px 5px 5px 62px;">{content}</div>')
+		});
 		var a = new Ext.grid.ColumnModel({
 			columns : [
 				new Ext.grid.RowNumberer(),
+				d,
 				{
 					header : "id",
 					dataIndex : "id",
@@ -80,6 +86,7 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 			disableSelection : false,
 			loadMask : true,
 			cm : a,
+			plugins : d,
 			viewConfig : {
 				forceFit : true,
 				enableRowBody : false,

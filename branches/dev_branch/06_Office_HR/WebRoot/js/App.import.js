@@ -403,5 +403,6 @@ App.importJs = {
                           __ctxPath + "/js/hrm/JobSalaryRelationForm.js" ],		                    
 	HrAnlyReportView:[__ctxPath + "/js/hrm/HrAnlyReportView.js"],
 	CalKpiTotalScoreView : [__ctxPath + "/js/kpi/CalKpiTotalScoreView.js",
-			__ctxPath + "/js/kpi/ResultTotalScoreView.js"]		                    
+			__ctxPath + "/js/kpi/ResultTotalScoreView.js",
+			__ctxPath + "/ext3/ux/RowExpander.js"]		                    
 };
