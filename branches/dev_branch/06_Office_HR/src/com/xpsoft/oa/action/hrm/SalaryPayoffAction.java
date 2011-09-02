@@ -16,6 +16,8 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -247,42 +249,74 @@ public class SalaryPayoffAction extends BaseAction {
 		/* 221 */return "success";
 	}
 	public String export(){
-		QueryFilter filter = new QueryFilter(getRequest());
-		List<SalaryPayoff> list = this.salaryPayoffService
-				.getAll(filter);
-		String [] titles=new String[13];
-		String [] proNames=new String[13];
+//		QueryFilter filter = new QueryFilter(getRequest());
+//		List<SalaryPayoff> list = this.salaryPayoffService
+//				.getAll(filter);
+		String [] titles=new String[18];
+		String [] proNames=new String[18];
+		String sql="select department.depName,app_user.fullname,emp_profile.position,emp_profile.accessionTime," +
+				"emp_profile.bankNo,emp_profile.standardMoney,emp_profile.perCoefficient,salary_payoff.achieveAmount," +
+				"salary_payoff.encourageAmount,salary_payoff.encourageDesc,salary_payoff.provident,salary_payoff.insurance," +
+				"salary_payoff.deductAmount,salary_payoff.deductDesc," +
+				"salary_payoff.selftax,salary_payoff.acutalAmount,salary_payoff.regTime,salary_payoff.memo " +
+				"from salary_payoff,department,app_user,emp_profile " +
+				"where salary_payoff.userId=app_user.userId and emp_profile.userId=app_user.userId and department.depId=app_user.depId";
+		List<Map> list=this.salaryPayoffService.findDataList(sql);
 		String fileRootPath=getRequest().getRealPath("exportFile");
-		titles[0]="员工姓名";
-		titles[1]="档案编号";
-		titles[2]="身份证";
-		titles[3]="薪标金额";
-		titles[4]="奖励金额";
-		titles[5]="扣除金额";
-		titles[6]="绩效工资";
-		titles[7]="公积金";
-		titles[8]="保险";
-		titles[9]="个人所得税";
-		titles[10]="实发金额";
-		titles[11]="统计时间";
-		titles[12]="具体信息";
+		titles[0]="部门";
+		titles[1]="姓名";
+		titles[2]="岗位";
+		titles[3]="入职时间";
+		titles[4]="银行卡号";
+		titles[5]="固定工资";
+		titles[6]="浮动工资";
+		titles[7]="绩效奖金";
+		titles[8]="补贴";
+		titles[9]="补贴详细";
+		titles[10]="公积金";
+		titles[11]="保险";
+		titles[12]="扣除";
+		titles[13]="扣除详细";
+		titles[14]="个人所得税";
+		titles[15]="实发金额";
+		titles[16]="统计时间";
+		titles[17]="备注";
 		
-		proNames[0]="fullname";
-		proNames[1]="profileNo";
-		proNames[2]="idNo";
-		proNames[3]="standAmount";
-		proNames[4]="encourageAmount";
-		proNames[5]="deductAmount";
-		proNames[6]="achieveAmount";
-		proNames[7]="provident";
-		proNames[8]="insurance";
-		proNames[9]="selftax";
-		proNames[10]="acutalAmount";
-		proNames[11]="regTime";
-		proNames[12]="memo";
+		proNames[0]="depName";
+		proNames[1]="fullname";
+		proNames[2]="position";
+		proNames[3]="accessionTime";
+		proNames[4]="bankNo";
+		proNames[5]="standardMoney";
+		proNames[6]="perCoefficient";
+		proNames[7]="achieveAmount";
+		proNames[8]="encourageAmount";
+		proNames[9]="encourageDesc";
+		proNames[10]="provident";
+		proNames[11]="insurance";
+		proNames[12]="deductAmount";
+		proNames[13]="deductDesc";
+		proNames[14]="selftax";
+		proNames[15]="acutalAmount";
+		proNames[16]="regTime";
+		proNames[17]="memo";
+		
+//		proNames[0]="fullname";
+//		proNames[1]="profileNo";
+//		proNames[2]="idNo";
+//		proNames[3]="standAmount";
+//		proNames[4]="encourageAmount";
+//		proNames[5]="deductAmount";
+//		proNames[6]="achieveAmount";
+//		proNames[7]="provident";
+//		proNames[8]="insurance";
+//		proNames[9]="selftax";
+//		proNames[10]="acutalAmount";
+//		proNames[11]="regTime";
+//		proNames[12]="memo";
 		
 		Gson gson = new Gson();
-		this.jsonString ="{success:true,data:"+gson.toJson("exportFile/"+this.salaryPayoffService.exportData(fileRootPath, "薪资", "salarypayoff", titles, proNames, list, "objlist"))+"}";
+		this.jsonString ="{success:true,data:"+gson.toJson("exportFile/"+this.salaryPayoffService.exportData(fileRootPath, "薪资", "salarypayoff", titles, proNames, list, "maplist"))+"}";
 		return "success";
 	}
 }

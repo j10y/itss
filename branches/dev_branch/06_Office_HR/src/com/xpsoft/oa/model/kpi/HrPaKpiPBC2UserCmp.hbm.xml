@@ -19,7 +19,6 @@
             type="java.lang.Long"
             length="19"
         >
-            <generator class="native"/>
         </id>
          <property
             name="pbcName"

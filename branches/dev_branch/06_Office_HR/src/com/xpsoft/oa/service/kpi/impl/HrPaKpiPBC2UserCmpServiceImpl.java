@@ -157,7 +157,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		return list;
 	}
 	public String saveKpiItemScoreForUser(String userid,String depid){
-		String translateText="";
+		boolean translateText=false;
 		try {
 			Service service = new Service();
 			Call call = (Call) service.createCall();
@@ -165,8 +165,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 					 AppUtil.getPropertity("job.server.url")));
 			call.setOperationName("saveKpiItemScoreForUser");
 			AppUser appuser=ContextUtil.getCurrentUser();
-			 translateText = (String) call
-			 .invoke(new Object[] {userid,depid});
+			 translateText = (Boolean) call.invoke(new Object[] {userid,depid});
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -174,7 +173,11 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		return translateText;
+		if(translateText){
+			return "true";
+		}else {
+			return "false";
+		}
 	}
 	public String saveSalarDetail(String userid,String depid){
 		String translateText="";
