@@ -102,7 +102,7 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 		});
 		this.buttons = [
 			{
-				text : "将结果移动到历史记录",
+				text : "批准",
 				id : "moveToHist",
 				hidden : true,
 				handler : this.saveToHist.createCallback(this)
@@ -114,6 +114,7 @@ ResultTotalScoreView = Ext.extend(Ext.Window, {
 			url : __ctxPath + "/kpi/saveToHistHrPaKpiPBC2User.do",
 			success : function(d) {
 				Ext.ux.Toast.msg("提示信息", "成功移动到历史记录里！");
+				a.close();
 				return ;
 			}
 		});
