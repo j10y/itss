@@ -21,6 +21,7 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 			store : null,
 			topbar : null,
 			initComponents : function () {
+				
 				this.searchPanel = new Ext.FormPanel({
 							region : "north",
 							height : 40,
@@ -80,6 +81,11 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 									text : "导出",
 									iconCls : "export",
 									handler : this.exports.createCallback(this)
+								}, {
+									xtype : "button",
+									text : "计算薪资",
+									iconCls : "export",
+									handler : this.caculate.createCallback(this)
 								}, {
 									id:"exporturl",
 									name:"exporturl",
@@ -297,6 +303,61 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 							}
 						});
 				}
+			},
+			caculate : function (a) {
+				var a = __ctxPath
+				+ "/system/listDepartment.do?opt=appUser";
+				var dept = new TreeSelector(
+						"Q_department.depId_EQ", a, "所属部门",
+						"searchPanel.department.depId", false);
+				var formPanel = new Ext.FormPanel({
+					layout : "form",
+					bodyStyle : "padding:10px 10px 10px 10px",
+					border : false,
+					url : __ctxPath
+							+ "/hrm/saveJobSalaryRelation.do",
+					id : "JobSalaryRelationForm",
+					defaults : {
+						anchor : "98%,98%"
+					},
+					defaultType : "textfield",
+					items : [{
+						fieldLabel : "所属部门",
+						name : "Q_department.depId_EQ",
+						id : "searchPanel.department.depId",
+						xtype : "hidden"
+					},
+					dept]
+				});
+				var win = new Ext.Window({
+					id : 'caculateWin',
+					title : '计算薪资',
+					width : 300,
+					height : 150,
+					layout : "fit",
+					iconCls : "menu-JobSalaryRelation",
+					modal : true,
+					maximizable : true,
+					items : formPanel,
+					buttonAlign : "center",
+					buttons : [
+						{
+							text : "计算",
+							iconCls : "btn-save",
+							handler : function(){
+								alert("计算");
+							}
+						}, {
+							text : "取消",
+							iconCls : "btn-cancel",
+							handler : function(a){
+								Ext.getCmp("caculateWin").close();
+							}
+							
+						}]
+				});
+				win.show();
+				
 			},
 			createRecord : function () {
 				var b = Ext.getCmp("centerTabPanel");
