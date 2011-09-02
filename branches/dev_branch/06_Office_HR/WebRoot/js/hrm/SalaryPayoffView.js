@@ -315,8 +315,8 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 					bodyStyle : "padding:10px 10px 10px 10px",
 					border : false,
 					url : __ctxPath
-							+ "/hrm/saveJobSalaryRelation.do",
-					id : "JobSalaryRelationForm",
+							+ "/hrm/countSalaryPayoff.do",
+					id : "deptSalaryPayoffForm",
 					defaults : {
 						anchor : "98%,98%"
 					},
@@ -345,7 +345,30 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 							text : "计算",
 							iconCls : "btn-save",
 							handler : function(){
-								alert("计算");
+							var depid=Ext.getCmp("searchPanel.department.depId").getValue();
+							Ext.Ajax.request({
+									url : __ctxPath+ "/hrm/countSalaryPayoff.do?depid="+depid,
+									success : function(h, j) {
+										var data = Ext.decode(h.responseText);
+										Ext.getCmp("caculateWin").close();
+										Ext.MessageBox
+													.show({
+														title : "操作信息",
+														msg : "计算成功！",
+														buttons : Ext.MessageBox.OK,
+														icon : Ext.MessageBox.INFO
+													});
+									},
+									failure : function(c, d) {
+											Ext.MessageBox
+													.show({
+														title : "操作信息",
+														msg : "信息保存出错，请联系管理员！",
+														buttons : Ext.MessageBox.OK,
+														icon : Ext.MessageBox.ERROR
+													});
+										}
+								});
 							}
 						}, {
 							text : "取消",
