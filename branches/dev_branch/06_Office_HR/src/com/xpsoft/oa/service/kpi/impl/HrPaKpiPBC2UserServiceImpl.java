@@ -8,6 +8,7 @@ import java.util.Map;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.oa.dao.kpi.HrPaKpiPBC2UserDao;
 import com.xpsoft.oa.model.kpi.HrPaAuthorizepbc;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
@@ -56,7 +57,7 @@ public class HrPaKpiPBC2UserServiceImpl extends BaseServiceImpl<HrPaKpiPBC2User>
 	 * @param pbcIds
 	 * 个人考核模板ID数组
 	 * */
-	public void multiCal(String pbcIds) {
+	public void multiCal(String pbcIds, Long depId) {
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		HrPaAuthorizepbcService hrPaAuthorizepbcService = (HrPaAuthorizepbcService)AppUtil.getBean("hrPaAuthorizepbcService");
 		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
@@ -74,6 +75,8 @@ public class HrPaKpiPBC2UserServiceImpl extends BaseServiceImpl<HrPaKpiPBC2User>
 				hrPaAuthorizepbcService.remove(list.get(j));
 			}
 		}
+		//计算关联定量考核平均分
+		hrPaKpiPBC2UserCmpService.saveKpiItemScoreForUser(ContextUtil.getCurrentUserId().toString(), depId.toString());
 		//计算总分
 		hrPaKpiPBC2UserCmpService.countScoreForKpiPbcUser(pbcIds);
 	}
