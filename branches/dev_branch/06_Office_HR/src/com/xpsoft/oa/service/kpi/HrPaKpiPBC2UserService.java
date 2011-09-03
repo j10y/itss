@@ -8,17 +8,11 @@ import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 
 public interface HrPaKpiPBC2UserService extends BaseService<HrPaKpiPBC2User> {
 	/*
-	 * 计算个人考核模板最终得分
-	 * @param pbcId
-	 * 个人考核模板ID
-	 * */
-	//public void calculateTotal(Long pbcId);
-	/*
-	 * 批量计算个人考核模板最终得分
+	 * 计算个人PBC最终得分
 	 * @param pbcIds
-	 * 个人考核模板ID数组
+	 * PBC ID
 	 * */
-	public void multiCal(String pbcIds, Long depId);
+	public void calTotalScore(Long pbcId);
 	/*
 	 * 获取所有定性考核指标未完成打分的记录
 	 * @param depId

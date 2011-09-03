@@ -1,5 +1,7 @@
 package com.xpsoft.oa.service.kpi;
 
+import java.util.List;
+
 import com.xpsoft.core.service.BaseService;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
 
@@ -16,4 +18,10 @@ public interface HrPaKpiitem2userService extends BaseService<HrPaKpiitem2user> {
 	 * 考核模板ID
 	 * */
 	public void multiCal(Long pbcId);
+	/*
+	 * 批量保存
+	 * @param list
+	 * 要保存的数据集
+	 * */
+	public void multiSave(List<HrPaKpiitem2user> list);
 }

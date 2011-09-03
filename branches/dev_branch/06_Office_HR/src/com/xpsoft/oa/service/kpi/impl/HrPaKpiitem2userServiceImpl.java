@@ -32,18 +32,18 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 		String sql = "select id, weight, result from hr_pa_authpbcitem where akpiItem2uId = " + itemId;
 		List<Map<String, Object>> list = this.findDataList(sql);
 		Double avgResult = new Double(0);
+		Double totalWeight = new Double(1);
 		for(int i = 0; i < list.size(); i++) {
 			Map<String, Object> map = list.get(i);
 			//判断是否已经打分，result为0则表示没有打分
 			if(Double.parseDouble(map.get("result").toString()) != 0) {//已经打分，则进入计算
 				avgResult += (Double.parseDouble(map.get("result").toString()) * Double.parseDouble(map.get("weight").toString()));
+				totalWeight = totalWeight - Double.parseDouble(map.get("weight").toString());
 			}
-			//计算完毕，删除打分记录
-			hrPaAuthpbccitemService.remove(Long.parseLong(map.get("id").toString()));
 		}
-		//取得个人考核模板关联的该考核项，并保存结果
+		//取得个人考核模板关联的该考核项，并与部门负责人打分合并，保存结果
 		HrPaKpiitem2user item = this.get(itemId);
-		item.setResult(avgResult);
+		item.setResult(avgResult + item.getResult() * totalWeight);
 		//插入数据库
 		this.save(item);
 	}
@@ -58,6 +58,16 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 		List<Map<String, Object>> mapList = this.findDataList(sql);
 		for(int i = 0; i < mapList.size(); i++) {
 			this.calculateAvg(Long.parseLong(mapList.get(i).get("id").toString()));
+		}
+	}
+	/*
+	 * 批量保存
+	 * @param list
+	 * 要保存的数据集
+	 * */
+	public void multiSave(List<HrPaKpiitem2user> list) {
+		for(int i = 0; i < list.size(); i++) {
+			this.save(list.get(i));
 		}
 	}
 }

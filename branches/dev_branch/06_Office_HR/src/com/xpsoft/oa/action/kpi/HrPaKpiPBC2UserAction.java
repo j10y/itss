@@ -1,5 +1,6 @@
 package com.xpsoft.oa.action.kpi;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +98,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		return "success";
 	}
 	
+	/*
 	public String multiCal() {
 		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
@@ -130,6 +132,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		
 		return "success";
 	}
+	*/
 	
 	public String listResult() {
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
@@ -149,6 +152,66 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 					.append("','totalScore':'" + list.get(i).get("totalScore").toString());
 			String sql3 = "select b.paName, a.result, a.weight from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
 					"a.pbcId = " + list.get(i).get("id").toString() + " and a.piId = b.id";
+			List<Map<String, Object>> list3 = hrPaKpiitem2userService.findDataList(sql3);
+			String content = "<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">";
+			content += "<tr><td>考核指标名称</td><td>得分</td><td>权重</td></tr>";
+			for(int j = 0; j < list3.size(); j++) {
+				content += "<tr><td>" + list3.get(j).get("paName") + "</td><td>" + list3.get(j).get("result") + "</td><td>" + 
+						list3.get(j).get("weight") + "</td></tr>";
+			}
+			content +="</table>";
+			buff.append("','content':'" + content);
+			buff.append("'},");
+		}
+		this.jsonString = buff.toString();
+		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		this.jsonString += "]}";
+		
+		return "success";
+	}
+	
+	public String listHistory() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		String start = filter.getPagingBean().getStart().toString();
+		String limit = filter.getPagingBean().getPageSize().toString();
+		String fullname = this.getRequest().getParameter("fullname");
+		//当前user所属部门
+		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
+		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
+		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
+		//获取部门下所有员工的个人PBC总数
+		String sql4 = "";
+		if(fullname != null && !"".equals(fullname)) {
+			sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
+			"a.belongUser = b.userId and b.depId = " + depId;
+		} else {
+			sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
+			"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%'";
+		}
+		
+		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
+		String totalCounts = mapList4.get(0).get("total").toString();
+		//获取部门下所有员工的个人考核模板信息
+		String sql2 = "";
+		if(fullname != null && !"".equals(fullname)) {
+			sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname, a.createDate from hr_pa_kpipbc2usercmp a, emp_profile b where " +
+			"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%' order by a.createDate desc limit " + start + ", " + limit;
+		} else {
+			sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname, a.createDate from hr_pa_kpipbc2usercmp a, emp_profile b where " +
+			"a.belongUser = b.userId and b.depId = " + depId + " order by a.createDate desc limit " + start + ", " + limit;
+		}
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + totalCounts + "',result:[");
+		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
+		for(int i = 0; i < list.size(); i++) {
+			buff.append("{'fullname':'" + (String)list.get(i).get("fullname"))
+					.append("','pbcName':'" + (String)list.get(i).get("pbcName"))
+					.append("','totalScore':'" + list.get(i).get("totalScore").toString())
+					.append("','createDate':'" + sdf.format(list.get(i).get("createDate")));
+			String sql3 = "select b.paName, a.result, a.weight from hr_pa_kpiitem2usercmp a, hr_pa_performanceindex b where " +
+					"a.pbcId = " + list.get(i).get("id").toString() + " and a.piId = b.id order by a.id";
 			List<Map<String, Object>> list3 = hrPaKpiitem2userService.findDataList(sql3);
 			String content = "<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">";
 			content += "<tr><td>考核指标名称</td><td>得分</td><td>权重</td></tr>";
