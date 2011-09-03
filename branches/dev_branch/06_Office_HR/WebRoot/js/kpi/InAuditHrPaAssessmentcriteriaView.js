@@ -7,7 +7,7 @@ InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		InAuditHrPaAssessmentcriteriaView.superclass.constructor.call(this, {
 			id : "InAuditHrPaAssessmentcriteriaView",
-			title : "考核标准管理",
+			title : "考核标准审核",
 			region : "center",
 			layout : "border",
 			items : [

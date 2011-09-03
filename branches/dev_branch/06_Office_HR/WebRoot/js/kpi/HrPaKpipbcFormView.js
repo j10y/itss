@@ -18,7 +18,7 @@ HrPaKpipbcFormView = Ext.extend(Ext.Window, {
 			height : 600,
 			width : 850,
 			autoScroll : true,
-			title : "考核模板预览"
+			title : "PBC预览"
 		});
 	},
 	initComponents : function() {

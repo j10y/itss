@@ -7,7 +7,7 @@ HrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		HrPaKpiPBC2UserView.superclass.constructor.call(this, {
 			id : "HrPaKpiPBC2UserView",
-			title : "个人考核模板授权",
+			title : "个人PBC授权",
 			region : "center",
 			layout : "border",
 			items : [
@@ -42,7 +42,7 @@ HrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：考核模板名称"
+					text : "查询条件：个人PBC名称"
 				}, {
 					fieldLabel : "姓名",
 					name : "Q_belongUser.fullname_S_LK",
@@ -114,7 +114,7 @@ HrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 					header : "岗位",
 					dataIndex : "belongUser.position"
 				}, {
-					header : "待考核模板",
+					header : "待考核PBC",
 					dataIndex : "pbcName"
 				},
 				this.rowActions

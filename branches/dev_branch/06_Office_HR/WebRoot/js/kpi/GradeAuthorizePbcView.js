@@ -7,7 +7,7 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		GradeAuthorizePbcView.superclass.constructor.call(this, {
 			id : "GradeAuthorizePbcView",
-			title : "授权考核模板打分",
+			title : "授权PBC打分",
 			region : "center",
 			layout : "border",
 			items : [
@@ -28,13 +28,9 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 				{
 					name : "id",
 					type : "int"
-				}, {
-					name : "userPbc.belongUser.fullname",
-					mapping : "userPbc.belongUser.fullname"
-				}, {
-					name : "userPbc.pbcName",
-					mapping : "userPbc.pbcName"
-				}
+				},
+				"fullname",
+				"pbcName"
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -66,10 +62,10 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 					hidden : true
 				}, {
 					header : "姓名",
-					dataIndex : "userPbc.belongUser.fullname"
+					dataIndex : "fullname"
 				}, {
-					header : "考核模板名称",
-					dataIndex : "userPbc.pbcName"
+					header : "授权PBC名称",
+					dataIndex : "pbcName"
 				},
 				this.rowActions
 			],

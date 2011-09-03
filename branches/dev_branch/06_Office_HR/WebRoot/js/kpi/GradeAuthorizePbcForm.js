@@ -19,7 +19,7 @@ GradeAuthorizePbcForm = Ext.extend(Ext.Window, {
 			height : 600,
 			width : 850,
 			autoScroll : true,
-			title : "授权考核模板打分"
+			title : "授权PBC打分"
 		});
 	},
 	initComponents : function() {

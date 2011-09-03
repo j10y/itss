@@ -7,7 +7,7 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		PublishHrPaPerformanceindexView.superclass.constructor.call(this, {
 			id : "PublishHrPaPerformanceindexView",
-			title : "考核指标管理",
+			title : "考核指标发布",
 			items : [
 				this.searchPanel,
 				this.gridPanel

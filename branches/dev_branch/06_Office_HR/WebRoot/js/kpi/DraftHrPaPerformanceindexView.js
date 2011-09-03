@@ -7,7 +7,7 @@ DraftHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		DraftHrPaPerformanceindexView.superclass.constructor.call(this, {
 			id : "DraftHrPaPerformanceindexView",
-			title : "考核指标管理",
+			title : "考核指标草稿",
 			items : [
 				this.searchPanel,
 				this.gridPanel

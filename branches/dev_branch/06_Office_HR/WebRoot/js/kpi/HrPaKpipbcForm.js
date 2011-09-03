@@ -21,7 +21,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			height : 600,
 			width : 850,
 			autoScroll : true,
-			title : "考核模板录入/修改",
+			title : "PBC录入/修改",
 			buttonAlign : "center",
 			buttons : this.buttons
 		});
@@ -127,13 +127,13 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 							columnWidth : 0.5,
 							items : [
 								{
-									fieldLabel : "考核模板名称",
+									fieldLabel : "PBC名称",
 									name : "hrPaKpipbc.pbcName",
 									id : "pbcName",
 									xtype : "textfield",
 									width : 165,
 									allowBlank : false,
-									blankText : "考核模板名称不能为空！"
+									blankText : "PBC名称不能为空！"
 								},
 								departments
 							]

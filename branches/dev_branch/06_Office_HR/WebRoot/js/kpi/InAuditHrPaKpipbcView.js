@@ -7,7 +7,7 @@ InAuditHrPaKpipbcView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		InAuditHrPaKpipbcView.superclass.constructor.call(this, {
 			id : "InAuditHrPaKpipbcView",
-			title : "考核模板管理",
+			title : "PBC审核",
 			region : "center",
 			layout : "border",
 			items : [
@@ -41,9 +41,9 @@ InAuditHrPaKpipbcView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：考核模板名称"
+					text : "查询条件：PBC名称"
 				}, {
-					fieldLabel : "考核模板名称",
+					fieldLabel : "PBC名称",
 					name : "Q_pbcName_S_LK",
 					xtype : "textfield"
 				}, {
@@ -106,7 +106,7 @@ InAuditHrPaKpipbcView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "考核模板名称",
+					header : "PBC名称",
 					dataIndex : "pbcName"
 				}, {
 					header : "考核频度",
