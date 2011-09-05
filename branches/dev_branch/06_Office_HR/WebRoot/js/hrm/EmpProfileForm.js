@@ -262,6 +262,10 @@ EmpProfileForm = Ext
 													{
 														name : "empProfileForm.departureTime",
 														mapping : "departureTime"
+													},
+													{
+														name : "empProfileForm.positiveTime",
+														mapping : "positiveTime"
 													} ]),
 									defaultType : "textfield",
 									items : [
@@ -701,7 +705,14 @@ EmpProfileForm = Ext
 																		fieldLabel : "出生地",
 																		name : "empProfile.birthPlace",
 																		id : "empProfileForm.birthPlace"
-																	} ]
+																	} ,
+																	{
+																		fieldLabel : "转正日期",
+																		name : "empProfile.positiveTime",
+																		xtype : "datefield",
+																		format : "Y-m-d",
+																		id : "empProfileForm.positiveTime"
+																	}]
 														},
 														{
 															xtype : "container",
@@ -861,9 +872,9 @@ EmpProfileForm = Ext
 																		xtype:"numberfield"
 																	},
 																	{
-																		fieldLabel : "绩效基数",
-																		name : "empProfile.perCoefficient",
-																		id : "empProfileForm.perCoefficient",
+																		fieldLabel : "公积金",
+																		name : "empProfile.provident",
+																		id : "empProfileForm.provident",
 																		xtype:"numberfield"
 																	} ]
 														},
@@ -1005,11 +1016,11 @@ EmpProfileForm = Ext
 																		readOnly : true
 																	},
 																	{
-																		fieldLabel : "公积金",
-																		name : "empProfile.provident",
-																		id : "empProfileForm.provident",
+																		fieldLabel : "绩效基数",
+																		name : "empProfile.perCoefficient",
+																		id : "empProfileForm.perCoefficient",
 																		xtype:"numberfield"
-																	} ]
+																	}]
 														},
 														{
 															xtype : "container",
@@ -1353,6 +1364,20 @@ EmpProfileForm = Ext
 														Ext
 														.getCmp(
 																"empProfileForm.departureTime")
+																.setValue(
+																		new Date(
+																				f));
+													}
+													
+													if (e.positiveTime != ""
+														&& e.positiveTime != null
+														&& e.positiveTime != "undefined") {
+														var f = getDateFromFormat(
+																e.positiveTime,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+																"empProfileForm.positiveTime")
 																.setValue(
 																		new Date(
 																				f));

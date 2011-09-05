@@ -1,42 +1,28 @@
 package com.xpsoft.oa.action.hrm;
 
-import com.google.gson.Gson;
-
-import com.google.gson.GsonBuilder;
-
-import com.google.gson.reflect.TypeToken;
-
-import com.xpsoft.core.command.QueryFilter;
-
-import com.xpsoft.core.util.ContextUtil;
-
-import com.xpsoft.core.web.action.BaseAction;
-
-import com.xpsoft.core.web.paging.PagingBean;
-
-import com.xpsoft.oa.model.hrm.StandSalary;
-
-import com.xpsoft.oa.model.hrm.StandSalaryItem;
-
-import com.xpsoft.oa.model.system.AppUser;
-
-import com.xpsoft.oa.service.hrm.StandSalaryItemService;
-
-import com.xpsoft.oa.service.hrm.StandSalaryService;
-
 import java.lang.reflect.Type;
-
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.hrm.EmpProfile;
+import com.xpsoft.oa.model.hrm.StandSalary;
+import com.xpsoft.oa.model.hrm.StandSalaryItem;
+import com.xpsoft.oa.service.hrm.EmpProfileService;
+import com.xpsoft.oa.service.hrm.StandSalaryItemService;
+import com.xpsoft.oa.service.hrm.StandSalaryService;
 
 public class StandSalaryAction extends BaseAction {
 	/* 35 */private static short STATUS_DRAFT = 0;
@@ -52,176 +38,187 @@ public class StandSalaryAction extends BaseAction {
 	private String data;
 	private Long standardId;
 	private String deleteItemIds;
+	
+	@Resource
+	private EmpProfileService empProfileService;
 
-	/* 52 */public String getDeleteItemIds() {
+	public String getDeleteItemIds() {
 		return this.deleteItemIds;
 	}
 
 	public void setDeleteItemIds(String deleteItemIds) {
-		/* 56 */this.deleteItemIds = deleteItemIds;
+		this.deleteItemIds = deleteItemIds;
 	}
 
 	public String getData() {
-		/* 60 */return this.data;
+		return this.data;
 	}
 
 	public void setData(String data) {
-		/* 64 */this.data = data;
+		this.data = data;
 	}
 
 	public Long getStandardId() {
-		/* 68 */return this.standardId;
+		return this.standardId;
 	}
 
 	public void setStandardId(Long standardId) {
-		/* 72 */this.standardId = standardId;
+		this.standardId = standardId;
 	}
 
 	public StandSalary getStandSalary() {
-		/* 76 */return this.standSalary;
+		return this.standSalary;
 	}
 
 	public void setStandSalary(StandSalary standSalary) {
-		/* 80 */this.standSalary = standSalary;
+		this.standSalary = standSalary;
 	}
 
 	public String list() {
-		/* 88 */QueryFilter filter = new QueryFilter(getRequest());
-		/* 89 */List<StandSalary> list = this.standSalaryService.getAll(filter);
+		QueryFilter filter = new QueryFilter(getRequest());
+		List<StandSalary> list = this.standSalaryService.getAll(filter);
 
-		/* 91 */Type type = new TypeToken<List<StandSalary>>() {
-		}.getType();
-		/* 92 */StringBuffer buff = new StringBuffer(
-				"{success:true,'totalCounts':")
-		/* 93 */.append(filter.getPagingBean().getTotalItems()).append(
+		Type type = new TypeToken<List<StandSalary>>() {}.getType();
+		StringBuffer buff = new StringBuffer(
+			"{success:true,'totalCounts':")
+			.append(filter.getPagingBean().getTotalItems()).append(
 				",result:");
 
-		/* 95 */Gson gson = new GsonBuilder()
+		Gson gson = new GsonBuilder()
 				.excludeFieldsWithoutExposeAnnotation().create();
-		/* 96 */buff.append(gson.toJson(list, type));
-		/* 97 */buff.append("}");
+		buff.append(gson.toJson(list, type));
+		buff.append("}");
 
-		/* 99 */this.jsonString = buff.toString();
+		this.jsonString = buff.toString();
 
-		/* 101 */return "success";
+		return "success";
 	}
 
 	public String multiDel() {
-		/* 109 */String[] ids = getRequest().getParameterValues("ids");
-		/* 110 */if (ids != null) {
-			/* 111 */for (String id : ids) {
-				/* 112 */this.standSalaryService.remove(new Long(id));
+		String[] ids = getRequest().getParameterValues("ids");
+		if (ids != null) {
+			for (String id : ids) {
+				this.standSalaryService.remove(new Long(id));
 			}
 		}
 
-		/* 116 */this.jsonString = "{success:true}";
+		this.jsonString = "{success:true}";
 
-		/* 118 */return "success";
+		return "success";
 	}
 
 	public String get() {
-		/* 126 */StandSalary standSalary = (StandSalary) this.standSalaryService
-				.get(this.standardId);
+		StandSalary standSalary = (StandSalary) this.standSalaryService
+			.get(this.standardId);
 
-		/* 128 */Gson gson = new GsonBuilder()
+		Gson gson = new GsonBuilder()
 				.excludeFieldsWithoutExposeAnnotation().create();
 
-		/* 130 */StringBuffer sb = new StringBuffer("{success:true,data:[");
-		/* 131 */sb.append(gson.toJson(standSalary));
-		/* 132 */sb.append("]}");
-		/* 133 */setJsonString(sb.toString());
+		StringBuffer sb = new StringBuffer("{success:true,data:[");
+			sb.append(gson.toJson(standSalary));
+		sb.append("]}");
+		setJsonString(sb.toString());
 
-		/* 135 */return "success";
+		return "success";
 	}
 
 	public String getform() {
-		/* 143 */StandSalary standSalary = (StandSalary) this.standSalaryService
-				.get(this.standardId);
+		StandSalary standSalary = (StandSalary) this.standSalaryService
+			.get(this.standardId);
 
-		/* 145 */Gson gson = new GsonBuilder()
-				.excludeFieldsWithoutExposeAnnotation().create();
+		Gson gson = new GsonBuilder()
+			.excludeFieldsWithoutExposeAnnotation().create();
 
-		/* 147 */StringBuffer sb = new StringBuffer("{success:true,data:");
-		/* 148 */sb.append(gson.toJson(standSalary));
-		/* 149 */sb.append("}");
-		/* 150 */setJsonString(sb.toString());
+		StringBuffer sb = new StringBuffer("{success:true,data:");
+		sb.append(gson.toJson(standSalary));
+		sb.append("}");
+		setJsonString(sb.toString());
 
-		/* 152 */return "success";
+		return "success";
 	}
 
 	public String save() {
-		/* 161 */boolean pass = false;
-		/* 162 */StringBuffer buff = new StringBuffer("{");
-		/* 163 */if (this.standSalary.getStandardId() == null) {
-			/* 164 */if (this.standSalaryService.checkStandNo(this.standSalary
-					.getStandardNo()))
-				/* 165 */pass = true;
+		boolean pass = false;
+		StringBuffer buff = new StringBuffer("{");
+		if (this.standSalary.getStandardId() == null) {
+			if (this.standSalaryService.checkStandNo(this.standSalary
+				.getStandardNo()))
+				pass = true;
 			else
-				/* 167 */buff.append("msg:'标准编号已存在,请重新输入.',");
+				buff.append("msg:'标准编号已存在,请重新输入.',");
 		} else {
-			/* 170 */pass = true;
+			pass = true;
 		}
 
-		/* 173 */if (pass) {
-			/* 174 */if (this.standSalary.getStandardId() != null) {
-				/* 176 */this.standSalary.setModifyName(ContextUtil
-						.getCurrentUser().getFullname());
-				/* 177 */this.standSalary.setModifyTime(new Date());
+		if (pass) {
+			if (this.standSalary.getStandardId() != null) {
+				this.standSalary.setModifyName(ContextUtil
+					.getCurrentUser().getFullname());
+				this.standSalary.setModifyTime(new Date());
 			} else {
-				/* 179 */this.standSalary.setSetdownTime(new Date());
-				/* 180 */this.standSalary.setFramer(ContextUtil
+				this.standSalary.setSetdownTime(new Date());
+				this.standSalary.setFramer(ContextUtil
 						.getCurrentUser().getFullname());
 			}
-			/* 182 */this.standSalary.setStatus(Short.valueOf(STATUS_DRAFT));
-			/* 183 */if (StringUtils.isNotEmpty(this.deleteItemIds)) {
-				/* 184 */String[] ids = this.deleteItemIds.split(",");
-				/* 185 */for (String id : ids) {
-					/* 186 */if (StringUtils.isNotEmpty(id)) {
-						/* 187 */this.standSalaryItemService
-								.remove(new Long(id));
+			this.standSalary.setStatus(Short.valueOf(STATUS_DRAFT));
+			if (StringUtils.isNotEmpty(this.deleteItemIds)) {
+				String[] ids = this.deleteItemIds.split(",");
+				for (String id : ids) {
+					if (StringUtils.isNotEmpty(id)) {
+						this.standSalaryItemService
+							.remove(new Long(id));
 					}
 				}
 			}
-			/* 191 */this.standSalaryService.save(this.standSalary);
-			/* 192 */if (StringUtils.isNotEmpty(this.data)) {
-				/* 193 */Gson gson = new Gson();
-				/* 194 */StandSalaryItem[] standSalaryItems = gson.fromJson(
+			this.standSalaryService.save(this.standSalary);
+				if (StringUtils.isNotEmpty(this.data)) {
+					Gson gson = new Gson();
+					StandSalaryItem[] standSalaryItems = gson.fromJson(
 						this.data, StandSalaryItem[].class);
-				/* 195 */for (StandSalaryItem standSalaryItem : standSalaryItems) {
-					/* 196 */if (standSalaryItem.getItemId().longValue() == -1L) {
-						/* 197 */standSalaryItem.setItemId(null);
+					for (StandSalaryItem standSalaryItem : standSalaryItems) {
+						if (standSalaryItem.getItemId().longValue() == -1L) {
+						standSalaryItem.setItemId(null);
 					}
-					/* 199 */standSalaryItem.setStandardId(this.standSalary
-							.getStandardId());
-					/* 200 */this.standSalaryItemService.save(standSalaryItem);
+					standSalaryItem.setStandardId(this.standSalary
+						.getStandardId());
+					this.standSalaryItemService.save(standSalaryItem);
 				}
 			}
-			/* 203 */buff.append("success:true}");
+			buff.append("success:true}");
 		} else {
-			/* 205 */buff.append("failure:true}");
+			buff.append("failure:true}");
 		}
-		/* 207 */setJsonString(buff.toString());
-		/* 208 */return "success";
+		setJsonString(buff.toString());
+		return "success";
 	}
 
 	public String check() {
-		/* 212 */String status = getRequest().getParameter("status");
-		/* 213 */StandSalary checkStandard = (StandSalary) this.standSalaryService
-				.get(this.standSalary.getStandardId());
-		/* 214 */checkStandard.setCheckName(ContextUtil.getCurrentUser()
+		String status = getRequest().getParameter("status");
+		StandSalary checkStandard = (StandSalary) this.standSalaryService
+			.get(this.standSalary.getStandardId());
+		checkStandard.setCheckName(ContextUtil.getCurrentUser()
 				.getFullname());
-		/* 215 */checkStandard.setCheckTime(new Date());
-		/* 216 */checkStandard.setCheckOpinion(this.standSalary
-				.getCheckOpinion());
-		/* 217 */if ((StringUtils.isNotEmpty(status))
-				&& (Short.valueOf(status).shortValue() == STATUS_PASS))
-			/* 218 */checkStandard.setStatus(Short.valueOf(STATUS_PASS));
-		else {
-			/* 220 */checkStandard.setStatus(Short.valueOf(STATUS_NOT_PASS));
+		checkStandard.setCheckTime(new Date());
+		checkStandard.setCheckOpinion(this.standSalary
+			.getCheckOpinion());
+		if ((StringUtils.isNotEmpty(status))
+			&& (Short.valueOf(status).shortValue() == STATUS_PASS)){
+			checkStandard.setStatus(Short.valueOf(STATUS_PASS));
+			//修改关联的档案
+			Map filterMap = new HashMap();
+			filterMap.put("Q_standSalary.standardId_L_EQ", checkStandard.getStandardId().toString());
+			QueryFilter filter = new QueryFilter(filterMap);
+			List<EmpProfile> list = this.empProfileService.getAll(filter);
+			for(EmpProfile profile : list){
+				profile.setStandardMoney(checkStandard.getTotalMoney());
+				this.empProfileService.save(profile);
+			}
+		}else {
+			checkStandard.setStatus(Short.valueOf(STATUS_NOT_PASS));
 		}
-		/* 222 */this.standSalaryService.save(checkStandard);
+		this.standSalaryService.save(checkStandard);
 		setJsonString("{success:true,msg:'审核通过'}");
-		/* 224 */return "success";
+		return "success";
 	}
 
 	public String number() {

@@ -618,5 +618,16 @@
             not-null="false"
             unique="false"
         />
+        <property
+            name="positiveTime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="positiveTime"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
     </class>
 </hibernate-mapping>

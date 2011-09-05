@@ -84,7 +84,7 @@ public class EmpProfileAction extends BaseAction {
 				.get(this.profileId);
 
 		/* 110 */JSONSerializer json = JsonUtil.getJSONSerializer(new String[] {
-				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime" });
+				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime", "positiveTime" });
 
 		/* 113 */StringBuffer sb = new StringBuffer("{success:true,data:[");
 
