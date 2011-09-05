@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.hrm;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -168,6 +169,7 @@ public class RealExecutionAction extends BaseAction {
 	
 	private void buildDefaultBudgetItem(Map defaultNode){
 		if(!defaultNode.get("isDefault").toString().equals("1")) return;
+		defaultNode.put("leaf", false);
 		String id = defaultNode.get("id").toString();
 		BudgetItem budgetItem = (BudgetItem) this.budgetItemService.get(Long.valueOf(id));
 		if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
@@ -176,11 +178,37 @@ public class RealExecutionAction extends BaseAction {
 			filterMap.put("Q_deleteFlag_N_EQ", "0");
 			filterMap.put("Q_department.depId_L_EQ", department.getDepId().toString());
 			QueryFilter filter = new QueryFilter(filterMap);
-			List<JobSalaryRelation> list = this.jobSalaryRelationService.getAll(filter);
+			List<JobSalaryRelation> list = this.jobSalaryRelationService.getAll(filter);//所有的子
 			BigDecimal totalMoney = new BigDecimal(0);
+			if(list.size()<=0){
+				defaultNode.put("leaf", true);
+			}
 			for(JobSalaryRelation relation : list){
 				totalMoney = totalMoney.add(relation.getTotalMoney());
+				Map node = new HashMap();
+				node.put("id", "rel" + relation.getRelationId());
+				node.put("name", "岗位：" + relation.getJob().getJobName() + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪标：" + relation.getStandSalary().getStandardName() 
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;人数：" + relation.getEmpCount()
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;标准金额：" + relation.getStandSalary().getTotalMoney()
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;总金额（月）：" + relation.getTotalMoney()
+						+ "");
+				node.put("text", "岗位：" + relation.getJob().getJobName() + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪标：" + relation.getStandSalary().getStandardName() 
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;人数：" + relation.getEmpCount()
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;标准金额：" + relation.getStandSalary().getTotalMoney()
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;总金额（月）：" + relation.getTotalMoney()
+						+ "");
+				node.put("leaf", true);
+				node.put("alarm", "");
+				if(defaultNode.get("children")!=null){
+					((List)(defaultNode.get("children"))).add(node);
+				}else{
+					List child = new ArrayList();
+					child.add(node);
+					defaultNode.put("children", child);
+				}
+				
 			}
+			
 			defaultNode.put("value", totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
 			try {
 				defaultNode.put("alarm", 
