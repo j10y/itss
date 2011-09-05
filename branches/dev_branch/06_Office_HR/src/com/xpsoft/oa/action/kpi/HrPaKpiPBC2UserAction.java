@@ -186,10 +186,10 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		String sql4 = "";
 		if(fullname != null && !"".equals(fullname)) {
 			sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-			"a.belongUser = b.userId and b.depId = " + depId;
+			"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%'";
 		} else {
 			sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-			"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%'";
+			"a.belongUser = b.userId and b.depId = " + depId;
 		}
 		
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
