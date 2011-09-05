@@ -140,7 +140,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 		this.treeGrid = new Ext.ux.tree.TreeGrid({
 			id : "BudgetGrid",
 			region : "center",
-			//stripeRows : true,
+			stripeRows : true,
 			tbar : this.topbar,
 			//store : this.store,
 			dataUrl: __ctxPath + "/budget/treeRealExecution.do?budgetId=" + this.budgetId,
@@ -148,12 +148,9 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 			disableSelection : false,
 			loadMask : true,
 			autoHeight : true,
-			columns:[{
-	            dataIndex: 'code',
-	            hidden : true
-	        }, {
+			columns:[ {
 	            header: '告警',
-	            dataIndex: 'alarm',
+	            dataIndex: 'code',
 	            width: 230,
 	            tpl: new Ext.XTemplate('{alarm:this.alarm}', {
 	            	alarm: function(v) {
@@ -217,7 +214,7 @@ BudgetFormView = Ext.extend(Ext.Panel, {
 				forceFit : true
 			}
 		});
-		
+				
 		
 	},
 	reset : function(a) {
