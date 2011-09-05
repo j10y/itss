@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.kpi;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.annotation.Resource;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.system.AppUser;
@@ -147,6 +149,8 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		String start = filter.getPagingBean().getStart().toString();
 		String limit = filter.getPagingBean().getPageSize().toString();
 		String fullname = this.getRequest().getParameter("fullname");
+		String startDate = this.getRequest().getParameter("startDate");
+		String endDate = this.getRequest().getParameter("endDate");
 		//判断当前用户是不是部门负责人
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaKpiPBC2UserService.findDataList(sql1);
@@ -155,26 +159,20 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		}
 		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
 		//获取部门下所有员工的个人PBC总数
-		String sql4 = "";
-		if(fullname != null && !"".equals(fullname)) {
-			sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-			"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%'";
-		} else {
-			sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-			"a.belongUser = b.userId and b.depId = " + depId;
-		}
-		
+		String sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
+				"a.belongUser = b.userId and b.depId = " + depId;
+		sql4 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
+		sql4 += (startDate == null || "".equals(startDate)) ? "" : " and a.createDate >= '" + startDate + "'";
+		sql4 += (endDate == null || "".equals(endDate)) ? "" : " and a.createDate <= '" + endDate + " 23:59'";
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
 		String totalCounts = mapList4.get(0).get("total").toString();
 		//获取部门下所有员工的个人考核模板信息
-		String sql2 = "";
-		if(fullname != null && !"".equals(fullname)) {
-			sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname, a.createDate from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-			"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%' order by a.createDate desc limit " + start + ", " + limit;
-		} else {
-			sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname, a.createDate from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-			"a.belongUser = b.userId and b.depId = " + depId + " order by a.createDate desc limit " + start + ", " + limit;
-		}
+		String sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname, a.createDate from hr_pa_kpipbc2usercmp a, emp_profile b where " +
+		"a.belongUser = b.userId and b.depId = " + depId;
+		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
+		sql2 += (startDate == null || "".equals(startDate)) ? "" : " and a.createDate >= '" + startDate + "'";
+		sql2 += (endDate == null || "".equals(endDate)) ? "" : " and a.createDate <= '" + endDate + " 23:59'";
+		sql2 += " order by a.createDate desc limit " + start + ", " + limit;
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + totalCounts + "',result:[");
 		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
 		for(int i = 0; i < list.size(); i++) {

@@ -58,36 +58,53 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 	@SuppressWarnings("unchecked")
 	public String currentList() {
 		AppUser currentUser = ContextUtil.getCurrentUser();
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		String fullname = this.getRequest().getParameter("fullname");
 		//判断当前用户是不是部门负责人
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaAuthorizepbcService.findDataList(sql1);
 		if(mapList1.size() > 0) {//当前用户是部门负责人
-			StringBuffer buff = new StringBuffer("{success:true,result:[");
-			for(int i = 0; i < mapList1.size(); i++) {
-				String sql2 = "select a.id, a.pbcName, b.fullname from hr_pa_kpipbc2user a, emp_profile b where " +
-						"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId = " + mapList1.get(i).get("depId").toString();
-				List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
-				for(int j = 0; j < mapList2.size(); j++) {
-					buff.append("{'id':'").append(mapList2.get(j).get("id").toString())
-							.append("','fullname':'").append(mapList2.get(j).get("fullname").toString())
-							.append("','pbcName':'").append(mapList2.get(j).get("pbcName")).append("'},");
-				}
+			Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+			String sql4 = "select count(*) as total from hr_pa_kpipbc2user a, emp_profile b where " + 
+					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId = " + depId;
+			sql4 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
+			List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
+			String sql2 = "select a.id, a.pbcName, b.fullname from hr_pa_kpipbc2user a, emp_profile b where " +
+					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId = " + depId;
+			sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
+			sql2 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
+			List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
+			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
+			for(int j = 0; j < mapList2.size(); j++) {
+				buff.append("{'id':'").append(mapList2.get(j).get("id").toString())
+						.append("','fullname':'").append(mapList2.get(j).get("fullname").toString())
+						.append("','pbcName':'").append(mapList2.get(j).get("pbcName")).append("'},");
 			}
 			this.jsonString = buff.toString();
-			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+			if(mapList2.size() > 0) {
+				this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+			}
 			this.jsonString += "]}";
 		} else {//当前用户不是部门负责人
+			String sql5 = "select count(*) as total from hr_pa_authorizepbc a, hr_pa_kpipbc2user b, emp_profile c where " + 
+					"a.userId = " + currentUser.getUserId() + " and a.pbcId = b.id and b.belongUser = c.userId";
+			sql5 += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+			List<Map<String, Object>> mapList5 = this.hrPaAuthorizepbcService.findDataList(sql5);
 			String sql3 = "select a.id, b.pbcName, c.fullname from hr_pa_authorizepbc a, hr_pa_kpipbc2user b, emp_profile c where " +
 					"a.userId = " + currentUser.getUserId() + " and a.pbcId = b.id and b.belongUser = c.userId";
+			sql3 += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+			sql3 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 			List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
-			StringBuffer buff = new StringBuffer("{success:true,result:[");
+			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList5.get(0).get("total") + "',result:[");
 			for(int i = 0; i < mapList3.size(); i++) {
 				buff.append("{'id':'").append(mapList3.get(i).get("id").toString())
 						.append("','fullname':'").append(mapList3.get(i).get("fullname").toString())
 							.append("','pbcName':'").append(mapList3.get(i).get("pbcName")).append("'},");
 			}
 			this.jsonString = buff.toString();
-			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+			if(mapList3.size() > 0) {
+				this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+			}
 			this.jsonString += "]}";
 		}
 		
