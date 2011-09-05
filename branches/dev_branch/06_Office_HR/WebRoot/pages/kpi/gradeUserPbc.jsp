@@ -32,6 +32,16 @@
 			}
 		</style>
 		<script type="text/javascript">
+			window.onload = function() {
+				if(${forAudit == 'true'}) {
+					if(confirm("计算结果总分为：" + ${totalScore} + "\r\n确定要提交审核吗？")) {
+						var auditForm = document.getElementById("auditForm");
+						auditForm.submit();
+					} else {
+						return ;
+					}
+				}
+			}
 			function check() {
 				var pbcForm = document.getElementById("pbcForm");
 				if(pbcForm.unfinished.value != "") {
@@ -49,7 +59,9 @@
 			PBC定性考核指标打分
 		</div>
 		<br/>
-		
+		<form id="auditForm" action="${pageContext.request.contextPath}/kpi/submitToAuditHrPaKpiPBC2User.do" method="post">
+			<input type="hidden" name="pbcId" value="${pbcId}"/>
+		</form>
 		<form id="pbcForm" action="${pageContext.request.contextPath}/kpi/gridScoreHrPaAuthorizepbc.do" method="post">
 			<input type="hidden" name="pbcId" value="${pbcId}"/>
 			<input type="hidden" name="unfinished" value="${unfinished}"/>
