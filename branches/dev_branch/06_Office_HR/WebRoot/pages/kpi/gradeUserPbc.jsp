@@ -42,7 +42,7 @@
 					}
 				}
 			}
-			function check() {
+			function check(a) {
 				var pbcForm = document.getElementById("pbcForm");
 				if(pbcForm.unfinished.value != "") {
 					alert(pbcForm.unfinished.value);
@@ -50,6 +50,7 @@
 				}
 				pbcForm.calTotal.value = "true";
 				pbcForm.submit();
+				a.disabled="disabled";
 			}
 		</script>
 	</head>
@@ -62,7 +63,7 @@
 		<form id="auditForm" action="${pageContext.request.contextPath}/kpi/submitToAuditHrPaKpiPBC2User.do" method="post">
 			<input type="hidden" name="pbcId" value="${pbcId}"/>
 		</form>
-		<form id="pbcForm" action="${pageContext.request.contextPath}/kpi/gridScoreHrPaAuthorizepbc.do" method="post">
+		<form id="pbcForm" onsubmit="javascript:document.getElementById('saveSubmit').disabled='disabled';" action="${pageContext.request.contextPath}/kpi/gridScoreHrPaAuthorizepbc.do" method="post">
 			<input type="hidden" name="pbcId" value="${pbcId}"/>
 			<input type="hidden" name="unfinished" value="${unfinished}"/>
 			<input type="hidden" name="calTotal" value="false"/>
@@ -114,9 +115,9 @@
 				<tr style="text-align:center">
 					<td colspan="7">
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
-						<input type="submit" value="提交"/>&nbsp;&nbsp;
+						<input id="saveSubmit" type="submit" value="提交"/>&nbsp;&nbsp;
 						<c:if test="${isDeptUser == 'true'}">
-							<input type="button" onclick="check()" value="考核结果确认"/>
+							<input type="button" onclick="check(this)" value="考核结果确认"/>
 						</c:if>
 					</td>
 				</tr>
