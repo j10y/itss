@@ -7,7 +7,7 @@ AuthorizePbcView = Ext.extend(Ext.Window, {
 		this.initComponents();
 		AuthorizePbcView.superclass.constructor.call(this, {
 			id : "AuthorizePbcView",
-			title : "个人考核模板列表",
+			title : "个人PBC列表",
 			width : 700,
 			modal : true,
 			height : 500,
@@ -28,13 +28,9 @@ AuthorizePbcView = Ext.extend(Ext.Window, {
 				{
 					name : "id",
 					type : "int"
-				}, {
-					name : "belongUser.fullname",
-					mapping : "belongUser.fullname"
-				}, {
-					name : "belongUser.position",
-					mapping : "belongUser.position"
 				},
+				"fullname",
+				"pbcName",
 				"pbcName"
 			]
 		});
@@ -43,7 +39,7 @@ AuthorizePbcView = Ext.extend(Ext.Window, {
 		}
 		var b = new Array();
 		b.push({
-			iconCls : "btn-preview",
+			iconCls : "btn-edit",
 			qtip : "查看",
 			style : "margin:0 3px 0 20px"
 		});
@@ -61,12 +57,12 @@ AuthorizePbcView = Ext.extend(Ext.Window, {
 					hidden : true
 				}, {
 					header : "姓名",
-					dataIndex : "belongUser.fullname"
+					dataIndex : "fullname"
 				}, {
 					header : "岗位",
-					dataIndex : "belongUser.position"
+					dataIndex : "position"
 				}, {
-					header : "待考核模板",
+					header : "待考核PBC",
 					dataIndex : "pbcName"
 				}
 			],
@@ -112,7 +108,7 @@ AuthorizePbcView = Ext.extend(Ext.Window, {
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
-			case "btn-preview":
+			case "btn-edit":
 				this.authorize(a);
 				break ;
 			default:
@@ -123,7 +119,7 @@ AuthorizePbcView = Ext.extend(Ext.Window, {
 		if(a.gridPanel.getStore().getCount() > 0) {
 			Ext.MessageBox.show({
 				title : "操作信息",
-				msg : "您还有未授权的模板，请核实！",
+				msg : "您还有未授权的PBC，请核实！",
 				buttons : Ext.MessageBox.OK,
 				icon : Ext.MessageBox.ERROR
 			});
