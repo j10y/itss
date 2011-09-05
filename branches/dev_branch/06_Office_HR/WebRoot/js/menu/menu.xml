@@ -1631,7 +1631,7 @@
 				</Item>
 				<Item id="ResultTotalScoreView" text="审核中个人PBC">
 				</Item>
-				<Item id="showHistoryView" text="查看历史记录">
+				<Item id="ShowHistoryView" text="查看历史记录">
 				</Item>
 			</Items>
 		</Items>
