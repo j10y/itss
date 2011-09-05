@@ -2,6 +2,7 @@ package com.xpsoft.oa.service.kpi.impl;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,11 +22,15 @@ import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.oa.dao.kpi.HrPaKpiPBC2UserCmpDao;
+import com.xpsoft.oa.service.kpi.HrPaAuthorizepbcService;
+import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
 import com.xpsoft.oa.service.kpi.HrPaPerformanceindexService;
+import com.xpsoft.oa.model.kpi.HrPaAuthorizepbc;
+import com.xpsoft.oa.model.kpi.HrPaAuthpbccitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2UserCmp;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
@@ -61,6 +66,8 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		HrPaKpiPBC2UserService hrPaKpiPBC2UserService=(HrPaKpiPBC2UserService) AppUtil.getBean("hrPaKpiPBC2UserService");
 		HrPaKpiitem2userService hrPaKpiitem2userService=(HrPaKpiitem2userService) AppUtil.getBean("hrPaKpiitem2userService");
 		HrPaKpiitem2userCmpService hrPaKpiitem2userCmpService=(HrPaKpiitem2userCmpService) AppUtil.getBean("hrPaKpiitem2userCmpService");
+		HrPaAuthorizepbcService hrPaAuthorizepbcService=(HrPaAuthorizepbcService) AppUtil.getBean("hrPaAuthorizepbcService");
+		HrPaAuthpbccitemService hrPaAuthpbccitemService= (HrPaAuthpbccitemService) AppUtil.getBean("hrPaAuthpbccitemService");
 		HrPaKpiPBC2User hrPaKpiPBC2User=hrPaKpiPBC2UserService.get(kpipbcid);
 		Map map=new HashMap();
 		map.put("Q_pbc2User.id_L_EQ", hrPaKpiPBC2User.getId()+"");
@@ -87,9 +94,23 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			hrPaKpiitem2userCmp.setWeight(hpu.getWeight());
 			hrPaKpiitem2userCmp.setResult(hpu.getResult());
 			hrPaKpiitem2userCmpService.save(hrPaKpiitem2userCmp);
+			Map aimap=new HashMap();
+			aimap.put("Q_akpiItem2uId_L_EQ", hpu.getId()+"");
+			QueryFilter aifilter=new QueryFilter(aimap);
+			List<HrPaAuthpbccitem> ailist=hrPaAuthpbccitemService.getAll(aifilter);
+			for(HrPaAuthpbccitem ai:ailist){
+				hrPaAuthpbccitemService.remove(ai);
+			}
 			hrPaKpiitem2userService.remove(hpu);
 		}
-		hrPaKpiPBC2UserService.remove(hrPaKpiPBC2User);
+		Map apbcmap=new HashMap();
+		apbcmap.put("Q_userPbc.id_L_EQ", hrPaKpiPBC2User.getId()+"");
+		QueryFilter apbcfilter=new QueryFilter(apbcmap);
+		List<HrPaAuthorizepbc> apbclist=hrPaAuthorizepbcService.getAll(apbcfilter);
+		for(HrPaAuthorizepbc apbc:apbclist){
+			hrPaAuthorizepbcService.remove(apbc);
+		}
+		hrPaKpiPBC2UserService.remove(hrPaKpiPBC2User);		
 		return true;
 	}
 	//计算个人的kpi模板得分
@@ -121,6 +142,9 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		if(isOnlyNegative){
 			totalScore=baseScore.floatValue();
 		}
+		DecimalFormat myformat = new DecimalFormat();
+		myformat.applyPattern("###.00");
+		totalScore=Float.parseFloat(myformat.format(totalScore));
 		hrPaKpiPBC2User.setTotalScore(totalScore);
 		try {
 			hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
