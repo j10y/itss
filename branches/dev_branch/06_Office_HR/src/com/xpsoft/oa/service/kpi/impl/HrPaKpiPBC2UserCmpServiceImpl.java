@@ -150,15 +150,17 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			e.printStackTrace();
 		}
 		List list=new ArrayList();
-		JSONObject json = JSONObject.fromObject(translateText);   
-		JSONArray ja=(JSONArray) json.get("data");
-		for(Object ob:ja){
-			JSONObject jb=(JSONObject) ob;
-			Map map=new HashMap();
-			map.put("pbcName", jb.get("pbcName"));
-			map.put("paName", jb.get("paName"));
-			map.put("desc", jb.get("desc"));
-			list.add(map);
+		if(translateText!=null&&translateText.length()>0){
+			JSONObject json = JSONObject.fromObject(translateText);   
+			JSONArray ja=(JSONArray) json.get("data");
+			for(Object ob:ja){
+				JSONObject jb=(JSONObject) ob;
+				Map map=new HashMap();
+				map.put("pbcName", jb.get("pbcName"));
+				map.put("paName", jb.get("paName"));
+				map.put("desc", jb.get("desc"));
+				list.add(map);
+			}
 		}
 		return list;
 	}
