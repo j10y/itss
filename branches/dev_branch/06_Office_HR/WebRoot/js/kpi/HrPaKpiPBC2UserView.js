@@ -42,16 +42,10 @@ HrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：个人PBC名称"
+					text : "查询条件：姓名"
 				}, {
 					fieldLabel : "姓名",
-					name : "Q_belongUser.fullname_S_LK",
-					xtype : "textfield"
-				}, {
-					text : "用户名"
-				}, {
-					fieldLabel : "用户名",
-					name : "Q_belongUser.username_S_LK",
+					name : "fullname",
 					xtype : "textfield"
 				}, {
 					xtype : "button",
@@ -70,13 +64,9 @@ HrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 				{
 					name : "id",
 					type : "int"
-				}, {
-					name : "belongUser.fullname",
-					mapping : "belongUser.fullname"
-				}, {
-					name : "belongUser.position",
-					mapping : "belongUser.position"
 				},
+				"fullname",
+				"position",
 				"pbcName"
 			]
 		});
@@ -109,10 +99,10 @@ HrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 					hidden : true
 				}, {
 					header : "姓名",
-					dataIndex : "belongUser.fullname"
+					dataIndex : "fullname"
 				}, {
 					header : "岗位",
-					dataIndex : "belongUser.position"
+					dataIndex : "position"
 				}, {
 					header : "待考核PBC",
 					dataIndex : "pbcName"
