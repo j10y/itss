@@ -16,7 +16,7 @@
 			}
 			#headTable tr td{
 				padding : 0;
-				font-size : 22px;
+				font-size : 18px;
 			}
 			#contentTable{
 				width : 700px;
