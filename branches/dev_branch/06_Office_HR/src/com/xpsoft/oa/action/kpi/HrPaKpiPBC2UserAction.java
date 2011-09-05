@@ -59,16 +59,21 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 	
 	@SuppressWarnings("unchecked")
 	public String listResult() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		//当前user所属部门
 		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
 		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
 		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
+		String sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
+		"a.belongUser = b.userId and b.depId = " + depId + " and publishStatus = 1";
+		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
 		//获取部门下所有员工处于审核状态的个人PBC信息
 		String sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname from hr_pa_kpipbc2user a, emp_profile b where " +
-				"a.belongUser = b.userId and b.depId = " + depId + " and publishStatus = 1";
-		StringBuffer buff = new StringBuffer("{success:true,result:[");
+				"a.belongUser = b.userId and b.depId = " + depId + " and publishStatus = 1 limit " + 
+				filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
 		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
 		for(int i = 0; i < list.size(); i++) {
 			buff.append("{'fullname':'" + (String)list.get(i).get("fullname"))
