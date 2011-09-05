@@ -50,10 +50,10 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		//判断当前用户是不是部门负责人
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaKpiPBC2UserService.findDataList(sql1);
-		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
 		if(mapList1.size() == 0) {
 			return "success";
 		}
+		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
 		String fullname = this.getRequest().getParameter("fullname");
 		String sql4 = "";
 		if(fullname != null && !"".equals(fullname)) {
@@ -99,10 +99,10 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		//判断当前用户是不是部门负责人
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaKpiPBC2UserService.findDataList(sql1);
-		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
 		if(mapList1.size() == 0) {
 			return "success";
 		}
+		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
 		String sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
 		"a.belongUser = b.userId and b.depId = " + depId + " and publishStatus = 1";
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
@@ -150,10 +150,10 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		//判断当前用户是不是部门负责人
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaKpiPBC2UserService.findDataList(sql1);
-		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
 		if(mapList1.size() == 0) {
 			return "success";
 		}
+		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
 		//获取部门下所有员工的个人PBC总数
 		String sql4 = "";
 		if(fullname != null && !"".equals(fullname)) {
