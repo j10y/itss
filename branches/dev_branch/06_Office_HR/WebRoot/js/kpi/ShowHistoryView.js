@@ -1,12 +1,12 @@
-showHistoryView = Ext.extend(Ext.Panel, {
+ShowHistoryView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		if(a == null) {
 			a = {};
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		showHistoryView.superclass.constructor.call(this, {
-			id : "showHistoryView",
+		ShowHistoryView.superclass.constructor.call(this, {
+			id : "ShowHistoryView",
 			title : "个人PBC得分",
 			region : "center",
 			autoScroll : true,
@@ -111,7 +111,7 @@ showHistoryView = Ext.extend(Ext.Panel, {
 			}
 		});
 		this.gridPanel = new Ext.grid.GridPanel({
-			id : "showHistoryGrid",
+			id : "ShowHistoryGrid",
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
