@@ -65,7 +65,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			StringBuffer buff = new StringBuffer("{success:true,result:[");
 			for(int i = 0; i < mapList1.size(); i++) {
 				String sql2 = "select a.id, a.pbcName, b.fullname from hr_pa_kpipbc2user a, emp_profile b where " +
-						"a.belongUser = b.userId and b.depId = " + mapList1.get(i).get("depId").toString();
+						"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId = " + mapList1.get(i).get("depId").toString();
 				List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
 				for(int j = 0; j < mapList2.size(); j++) {
 					buff.append("{'id':'").append(mapList2.get(j).get("id").toString())
