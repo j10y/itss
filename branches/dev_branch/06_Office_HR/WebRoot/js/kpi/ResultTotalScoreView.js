@@ -21,6 +21,7 @@ ResultTotalScoreView = Ext.extend(Ext.Panel, {
 	initComponents : function() {
 		this.store = new Ext.data.JsonStore({
 			url : __ctxPath + "/kpi/listResultHrPaKpiPBC2User.do",
+			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
 			remoteSort : true,
@@ -39,7 +40,7 @@ ResultTotalScoreView = Ext.extend(Ext.Panel, {
 		this.store.load({
 			params : {
 				start : 0,
-				limit : 100
+				limit : 25
 			}
 		});
 		var d = new Ext.ux.grid.RowExpander({
@@ -87,7 +88,14 @@ ResultTotalScoreView = Ext.extend(Ext.Panel, {
 				forceFit : true,
 				enableRowBody : false,
 				showPreview : false
-			}
+			},
+			bbar : new Ext.PagingToolbar({
+				pageSize : 25,
+				store : this.store,
+				displayInfo : true,
+				displayMsg : "当前显示{0}至{1}，共{2}条记录",
+				emptyMsg : "当前没有记录"
+			})
 		});
 	}
 });
