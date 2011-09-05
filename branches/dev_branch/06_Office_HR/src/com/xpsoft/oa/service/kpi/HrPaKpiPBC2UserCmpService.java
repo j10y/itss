@@ -9,11 +9,11 @@ public interface HrPaKpiPBC2UserCmpService extends BaseService<HrPaKpiPBC2UserCm
 	
 	public boolean saveHrPaKpiPBC2UserCmp(Long kpipbcid);
 	public boolean saveHrPaKpiPBC2UserCmp(String kpipbcids);
-	public boolean countScoreForKpiPbcUser(Long kpipbcid);
+	public String countScoreForKpiPbcUser(Long kpipbcid);
 	public boolean countScoreForKpiPbcUser(String kpipbcids);
 	
-	public List isKpiItemScoreForUser(String userid,String depid);
-	public String saveKpiItemScoreForUser(String userid,String depid);
+	public List isKpiItemScoreForUser(String userid,String depid,String pbc2userid);
+	public String saveKpiItemScoreForUser(String userid,String depid,String pbc2userid);
 	public String saveSalarDetail(String userid,String depid);
 	
 }

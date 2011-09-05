@@ -87,13 +87,13 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			hrPaKpiitem2userCmp.setWeight(hpu.getWeight());
 			hrPaKpiitem2userCmp.setResult(hpu.getResult());
 			hrPaKpiitem2userCmpService.save(hrPaKpiitem2userCmp);
-//			hrPaKpiitem2userService.remove(hpu);
+			hrPaKpiitem2userService.remove(hpu);
 		}
-//		hrPaKpiPBC2UserService.remove(hrPaKpiPBC2User);
+		hrPaKpiPBC2UserService.remove(hrPaKpiPBC2User);
 		return true;
 	}
 	//计算个人的kpi模板得分
-	public boolean countScoreForKpiPbcUser(Long kpipbcid){
+	public String countScoreForKpiPbcUser(Long kpipbcid){
 		HrPaKpiPBC2UserService hrPaKpiPBC2UserService=(HrPaKpiPBC2UserService) AppUtil.getBean("hrPaKpiPBC2UserService");
 		HrPaKpiPBC2User hrPaKpiPBC2User=hrPaKpiPBC2UserService.get(kpipbcid);
 		HrPaKpiitem2userService hrPaKpiitem2userService=(HrPaKpiitem2userService) AppUtil.getBean("hrPaKpiitem2userService");
@@ -122,11 +122,16 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			totalScore=baseScore.floatValue();
 		}
 		hrPaKpiPBC2User.setTotalScore(totalScore);
-		hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
-		return true;
+		try {
+			hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
+		} catch (RuntimeException e) {
+			// TODO Auto-generated catch block
+			return "false,"+totalScore;
+		}
+		return "true,"+totalScore;
 	}
 	
-	public List isKpiItemScoreForUser(String userid,String depid){
+	public List isKpiItemScoreForUser(String userid,String depid,String pbc2userid){
 		String translateText="";
 		try {
 			Service service = new Service();
@@ -136,7 +141,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			call.setOperationName("isKpiItemScoreForUser");
 			AppUser appuser=ContextUtil.getCurrentUser();
 			 translateText = (String) call
-					.invoke(new Object[] {userid,depid});
+					.invoke(new Object[] {userid,depid,pbc2userid});
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -157,7 +162,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		}
 		return list;
 	}
-	public String saveKpiItemScoreForUser(String userid,String depid){
+	public String saveKpiItemScoreForUser(String userid,String depid,String pbc2userid){
 		String translateText="";
 		try {
 			Service service = new Service();
@@ -165,7 +170,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			call.setTargetEndpointAddress(new java.net.URL(
 					 AppUtil.getPropertity("job.server.url")));
 			call.setOperationName("saveKpiItemScoreForUser");
-			 translateText =call.invoke(new Object[] {userid,depid}).toString();
+			 translateText =call.invoke(new Object[] {userid,depid,pbc2userid}).toString();
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
