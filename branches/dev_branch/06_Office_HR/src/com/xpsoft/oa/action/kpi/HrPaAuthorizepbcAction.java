@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.map.LinkedMap;
+
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
@@ -16,14 +18,12 @@ import com.xpsoft.oa.model.kpi.HrPaAuthorizepbc;
 import com.xpsoft.oa.model.kpi.HrPaAuthpbccitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
-import com.xpsoft.oa.model.kpi.HrPaPerformanceindexscore;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.kpi.HrPaAuthorizepbcService;
 import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
+import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
-
-import flexjson.JSONSerializer;
 
 public class HrPaAuthorizepbcAction extends BaseAction{
 	@Resource
@@ -55,6 +55,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		return "success";
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String currentList() {
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		//判断当前用户是不是部门负责人
@@ -98,27 +99,9 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String preview2() {
-		this.hrPaAuthorizepbc = this.hrPaAuthorizepbcService.get(this.id);
-		//拼装SQL语句取出id, weight和关联的paName
-		String sql = "select a.id, a.weight, c.id as piId, c.paName from hr_pa_authpbcitem a, hr_pa_kpiitem2user b, " +
-				"hr_pa_performanceindex c where a.apbcId = " + this.id + " and a.akpiItem2uId = b.id and b.piId = c.id";
-		Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new HashMap<Map<String,Object>, List<Map<String,Object>>>();
-		List<Map<String, Object>> authorItemList = this.hrPaAuthorizepbcService.findDataList(sql);
-		for(int i = 0; i < authorItemList.size(); i++) {
-			String sql2 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
-					authorItemList.get(i).get("piId").toString();
-			List<Map<String, Object>> pisList = this.hrPaAuthorizepbcService.findDataList(sql2);
-			itemMap.put(authorItemList.get(i), pisList);
-		}
-		
-		this.getRequest().setAttribute("itemMap", itemMap);
-		
-		return "show";
-	}
-	
 	public String preview() {
 		AppUser currentUser = ContextUtil.getCurrentUser();
+		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
 		//判断当前用户是不是部门负责人
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaAuthorizepbcService.findDataList(sql1);
@@ -126,15 +109,23 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			String sql2 = "select a.id, a.weight, a.result, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
 					"a.pbcId = " + this.id + " and a.piId = b.id order by a.id";
 			List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
-			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new HashMap<Map<String, Object>, List<Map<String, Object>>>();
+			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			for(int i = 0; i < mapList2.size(); i++) {
 				String sql3 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
-						mapList2.get(i).get("piId").toString();
+						mapList2.get(i).get("piId").toString() + " order by pisScore";
 				List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
 				itemMap.put(mapList2.get(i), mapList3);
 			}
 			//判断定量考核指标目标和达成数据是否已经导入
 			String unfinished = "";
+			List<Map> unfinishList = hrPaKpiPBC2UserCmpService.isKpiItemScoreForUser(currentUser.getUserId().toString(), null, this.id + "");
+			if(unfinishList.size() > 0) {
+				unfinished += "下列定量考核指标任务额度和达成数据未导入：\r\n";
+				for(int j = 0; j < unfinishList.size() - 1; j++) {
+					unfinished += unfinishList.get(j).get("desc") + "\r\n";
+				}
+				unfinished += unfinishList.get(unfinishList.size() - 1).get("desc");
+			}
 			//调用接口填充未导入数据
 			this.getRequest().setAttribute("unfinished", unfinished);
 			this.getRequest().setAttribute("pbcId", this.id);
@@ -144,11 +135,11 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			//拼装SQL语句取出id, weight和关联的paName
 			String sql = "select a.id, a.weight, a.result, c.id as piId, c.paName, c.paMode from hr_pa_authpbcitem a, hr_pa_kpiitem2user b, " +
 					"hr_pa_performanceindex c where a.apbcId = " + this.id + " and a.akpiItem2uId = b.id and b.piId = c.id";
-			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new HashMap<Map<String,Object>, List<Map<String,Object>>>();
+			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			List<Map<String, Object>> authorItemList = this.hrPaAuthorizepbcService.findDataList(sql);
 			for(int i = 0; i < authorItemList.size(); i++) {
 				String sql2 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
-						authorItemList.get(i).get("piId").toString();
+						authorItemList.get(i).get("piId").toString() + " order by pisScore";
 				List<Map<String, Object>> pisList = this.hrPaAuthorizepbcService.findDataList(sql2);
 				itemMap.put(authorItemList.get(i), pisList);
 			}
@@ -172,7 +163,6 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			try {
 				//取得PBC
 				String pbcId = this.getRequest().getParameter("pbcId");
-				HrPaKpiPBC2User hrPaKpiPBC2User = hrPaKpiPBC2UserService.get(Long.parseLong(pbcId));
 				//取得PBC关联的定性定性考核项
 				String sql2 = "select a.id from hr_pa_kpiitem2user a, hr_pa_kpipbc2user b, hr_pa_performanceindex c where " +
 						"a.pbcId = b.id and a.piId = c.id and b.id = " + pbcId + " and c.paMode = 12";
@@ -187,7 +177,25 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 				hrPaKpiitem2userService.multiSave(itemList);
 				//判断是否计算最终结果
 				if("true".equals(this.getRequest().getParameter("calTotal"))) {//计算最终结果，则进入计算该PBC总分步骤
-					hrPaKpiPBC2UserService.calTotalScore(Long.parseLong(pbcId));
+					String[] calResult = hrPaKpiPBC2UserService.calTotalScore(Long.parseLong(pbcId)).trim().split(",");
+					String sql3 = "select a.id, a.weight, a.result, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+							"a.pbcId = " + pbcId + " and a.piId = b.id order by a.id";
+					List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
+					Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
+					for(int i = 0; i < mapList3.size(); i++) {
+						String sql4 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
+								mapList3.get(i).get("piId").toString();
+						List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
+						itemMap.put(mapList3.get(i), mapList4);
+					}
+					if("true".equals(calResult[0])) {
+						this.getRequest().setAttribute("totalScore", calResult[1]);
+					}
+					this.getRequest().setAttribute("pbcId", pbcId);
+					this.getRequest().setAttribute("itemMap", itemMap);
+					this.getRequest().setAttribute("isDeptUser", "true");
+					this.getRequest().setAttribute("forAudit", "true");
+					return "show";
 				}
 				//返回成功标记
 				this.getRequest().setAttribute("flag", "1");
@@ -237,7 +245,6 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
-		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
 		//获取表单信息
 		long userId = Long.parseLong(this.getRequest().getParameter("userId"));
 		long pbcId = Long.parseLong(this.getRequest().getParameter("pbcId"));

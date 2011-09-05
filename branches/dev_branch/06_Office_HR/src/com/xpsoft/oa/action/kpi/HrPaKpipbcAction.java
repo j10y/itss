@@ -12,7 +12,6 @@ import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
-import com.xpsoft.oa.model.kpi.HrPaAuthorizepbc;
 import com.xpsoft.oa.model.kpi.HrPaAuthpbccitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem;
@@ -23,7 +22,6 @@ import com.xpsoft.oa.model.kpi.HrPaKpipbcHist;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
-import com.xpsoft.oa.service.kpi.HrPaAuthorizepbcService;
 import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
@@ -31,7 +29,6 @@ import com.xpsoft.oa.service.kpi.HrPaKpiitemHistService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitemService;
 import com.xpsoft.oa.service.kpi.HrPaKpipbcHistService;
 import com.xpsoft.oa.service.kpi.HrPaKpipbcService;
-import com.xpsoft.oa.service.kpi.HrPaPerformanceindexService;
 import com.xpsoft.oa.service.system.AppUserService;
 
 import flexjson.JSONSerializer;
@@ -343,8 +340,6 @@ public class HrPaKpipbcAction extends BaseAction{
 		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
-		HrPaAuthorizepbcService hrPaAuthorizepbcService = (HrPaAuthorizepbcService)AppUtil.getBean("hrPaAuthorizepbcService");
-		HrPaPerformanceindexService hrPaPerformanceindexService = (HrPaPerformanceindexService)AppUtil.getBean("hrPaPerformanceindexService");
 		//1. 找到哪些人是这个有这个PBC关联的岗位
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		Map<String, String> profileMap = new HashMap<String, String>();
@@ -375,7 +370,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				hrPaKpiPBC2User.setFrequency(pbc.getFrequency());
 				hrPaKpiPBC2User.setCreatePerson(pbc.getCreatePerson());
 				hrPaKpiPBC2User.setCreateDate(pbc.getCreateDate());
-				hrPaKpiPBC2User.setPublishStatus(pbc.getPublishStatus());
+				hrPaKpiPBC2User.setPublishStatus(0);//默认为草稿状态
 				hrPaKpiPBC2User.setTotalScore(pbc.getTotalScore());
 				hrPaKpiPBC2User.setModifyDate(currentDate);
 				hrPaKpiPBC2User.setModifyPerson(currentUser);
@@ -390,7 +385,7 @@ public class HrPaKpipbcAction extends BaseAction{
 					hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
 					hrPaKpiitem2user.setResult(new Double(0));//等待定时计算时设置结果
 					//插入数据库
-					HrPaKpiitem2user kpiItem2userNew = hrPaKpiitem2userService.save(hrPaKpiitem2user);
+					hrPaKpiitem2userService.save(hrPaKpiitem2user);
 				}
 			} else {//在hr_pa_kpipbc2user表中有该User的模板，则合并模板
 				HrPaKpiPBC2User hrPaKpiPBC2User = hrPaKpiPBC2UserList.get(0);
