@@ -48,6 +48,20 @@ ShowHistoryView = Ext.extend(Ext.Panel, {
 					name : "fullname",
 					xtype : "textfield"
 				}, {
+					text : "开始日期"
+				}, {
+					xtype : "datefield",
+					name : "startDate",
+					format : "Y-m-d",
+					editable : false
+				}, {
+					text : "结束日期"
+				}, {
+					xtype : "datefield",
+					name : "endDate",
+					format : "Y-m-d",
+					editable : false
+				}, {
 					xtype : "button",
 					text : "查询",
 					handler : this.search.createCallback(this)

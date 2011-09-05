@@ -11,13 +11,48 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 			region : "center",
 			layout : "border",
 			items : [
+				this.searchPanel,
 				this.gridPanel
 			]
 		});
 	},
+	searchPanel : null,
 	gridPanel : null,
 	store : null,
 	initComponents : function() {
+		this.searchPanel = new Ext.FormPanel({
+			region : "north",
+			height : 40,
+			frame : false,
+			border : false,
+			layout : "hbox",
+			layoutConfig : {
+				padding : "5",
+				align : "middle"
+			},
+			defaults : {
+				xtype : "label",
+				margins : {
+					top : 0,
+					right : 4,
+					bottom : 4,
+					left : 4
+				}
+			},
+			items : [
+				{
+					text : "查询条件：姓名"
+				}, {
+					fieldLabel : "姓名",
+					name : "fullname",
+					xtype : "textfield"
+				}, {
+					xtype : "button",
+					text : "查询",
+					handler : this.search.createCallback(this)
+				}
+			]
+		});
 		this.store = new Ext.data.JsonStore({
 			url : __ctxPath + "/kpi/currentListHrPaAuthorizepbc.do",
 			totalProperty : "totalCounts",
@@ -123,6 +158,18 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 				break ;
 			default:
 				break ;
+		}
+	},
+	search : function(a) {
+		if(a.searchPanel.getForm().isValid()) {
+			a.searchPanel.getForm().submit({
+				waitMsg : "正在提交查询……",
+				url : __ctxPath + "/kpi/currentListHrPaAuthorizepbc.do",
+				success : function(c, d) {
+					var e = Ext.util.JSON.decode(d.response.responseText);
+					a.gridPanel.getStore().loadData(e);
+				}
+			});
 		}
 	}
 });
