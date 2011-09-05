@@ -16,7 +16,7 @@ public class RealExecutionUtil {
 		
 		if((value-realValue) < value*threshold){
 			return Budget.ALARM_RED;
-		}else if((value-realValue) < ((value-realValue)*(threshold*1.5))){
+		}else if((value-realValue) < ((value)*(threshold*1.5)) && (value-realValue) >= value*threshold){
 			return Budget.ALARM_YELLOW;
 		}else{
 			return Budget.ALARM_GREEN;

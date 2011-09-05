@@ -368,7 +368,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			scope : this,
 			showContextMenu : (this.isEdit==true ? true:false),
 			contextHandler : function contextmenu(a, b) {
-				if(a.attributes.isDefault=="1"){
+				if(a.attributes.isDefault=="1"&&a.id!="0"){
 					return;
 				}
 				this.selectedNode = new Ext.tree.TreeNode({
