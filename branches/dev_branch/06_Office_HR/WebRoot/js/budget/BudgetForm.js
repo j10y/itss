@@ -443,7 +443,8 @@ BudgetForm = Ext.extend(Ext.Panel, {
 					}
 					//a.close();
 					//增加其他左侧成本要素树加载的逻辑
-					Ext.getCmp("budgetItemTree").root.reload({"budgetId" : data.budgetId});
+					Ext.getCmp("budgetItemTree").getLoader().url = __ctxPath + "/budget/treeBudgetItem.do?budgetId=" + data.budgetId;
+					Ext.getCmp("budgetItemTree").root.reload();
 				},
 				failure : function(c, d) {
 					Ext.MessageBox.show({
