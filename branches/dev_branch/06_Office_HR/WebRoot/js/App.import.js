@@ -404,6 +404,6 @@ App.importJs = {
 	HrAnlyReportView:[__ctxPath + "/js/hrm/HrAnlyReportView.js"],
 	ResultTotalScoreView : [__ctxPath + "/js/kpi/ResultTotalScoreView.js",
 			__ctxPath + "/ext3/ux/RowExpander.js"],
-	showHistoryView : [__ctxPath + "/js/kpi/showHistoryView.js",
+	ShowHistoryView : [__ctxPath + "/js/kpi/ShowHistoryView.js",
 			__ctxPath + "/ext3/ux/RowExpander.js"]		                    
 };
