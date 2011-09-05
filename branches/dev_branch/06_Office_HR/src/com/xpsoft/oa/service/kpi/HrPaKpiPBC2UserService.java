@@ -12,7 +12,7 @@ public interface HrPaKpiPBC2UserService extends BaseService<HrPaKpiPBC2User> {
 	 * @param pbcIds
 	 * PBC ID
 	 * */
-	public void calTotalScore(Long pbcId);
+	public String calTotalScore(Long pbcId);
 	/*
 	 * 获取所有定性考核指标未完成打分的记录
 	 * @param depId
