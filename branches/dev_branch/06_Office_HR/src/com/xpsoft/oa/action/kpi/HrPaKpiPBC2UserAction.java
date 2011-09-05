@@ -98,42 +98,6 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		return "success";
 	}
 	
-	/*
-	public String multiCal() {
-		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
-		AppUser currentUser = ContextUtil.getCurrentUser();
-		//当前user所属部门
-		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
-		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
-		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
-		//判断是不是部门经理
-		String chiefSql = "select deptUserId from arch_rec_user where depId = " + depId;
-		List<Map<String, Object>> chiefList = this.hrPaKpiPBC2UserService.findDataList(chiefSql);
-		if(currentUser.getUserId() != Long.parseLong(chiefList.get(0).get("deptUserId").toString())) {
-			return "success";
-		}
-		//获取部门下所有员工的个人考核模板ID
-		String sql2 = "select a.id from hr_pa_kpipbc2user a, emp_profile b where b.depId = " + depId + " and a.belongUser = b.userId";
-		List<Map<String, Object>> pbc2UserIdList = this.hrPaKpiPBC2UserService.findDataList(sql2);
-		if(pbc2UserIdList.size() > 0) {
-			//将list拼装成字符串
-			String pbc2UserIds = "";
-			for(int i = 0; i < pbc2UserIdList.size() - 1; i++) {
-				pbc2UserIds += pbc2UserIdList.get(i).get("id").toString() + ",";
-			}
-			pbc2UserIds += pbc2UserIdList.get(pbc2UserIdList.size() - 1).get("id").toString();
-			//计算关联定量考核平均分
-			hrPaKpiPBC2UserCmpService.saveKpiItemScoreForUser(ContextUtil.getCurrentUserId().toString(), depId.toString());
-			//批量计算总分
-			this.hrPaKpiPBC2UserService.multiCal(pbc2UserIds, depId);
-		}
-		
-		this.jsonString = "{success:true}";
-		
-		return "success";
-	}
-	*/
-	
 	public String listResult() {
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
