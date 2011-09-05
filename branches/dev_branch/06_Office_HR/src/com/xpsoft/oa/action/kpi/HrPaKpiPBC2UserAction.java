@@ -43,16 +43,50 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		this.id = id;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String list() {
+		AppUser currentUser = ContextUtil.getCurrentUser();
 		QueryFilter filter = new QueryFilter(this.getRequest());
-		List<HrPaKpiPBC2User> list = this.hrPaKpiPBC2UserService.getAll(filter);
-		
-		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
-				.append(filter.getPagingBean().getTotalItems()).append(",result:");
-		JSONSerializer json = new JSONSerializer();
-		buff.append(json.exclude(new String[] {}).serialize(list));
-		buff.append("}");
+		//判断当前用户是不是部门负责人
+		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
+		List<Map<String, Object>> mapList1 = this.hrPaKpiPBC2UserService.findDataList(sql1);
+		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+		if(mapList1.size() == 0) {
+			return "success";
+		}
+		String fullname = this.getRequest().getParameter("fullname");
+		String sql4 = "";
+		if(fullname != null && !"".equals(fullname)) {
+			sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
+					"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%'";
+		} else {
+			sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
+					"a.belongUser = b.userId and b.depId = " + depId;
+		}
+		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
+		String sql2 = "";
+		if(fullname != null && !"".equals(fullname)) {
+			sql2 = "select a.id, b.fullname, b.position, a.pbcName from hr_pa_kpipbc2user a, emp_profile b where " +
+					"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%' limit " + 
+					filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
+		} else {
+			sql2 = "select a.id, b.fullname, b.position, a.pbcName from hr_pa_kpipbc2user a, emp_profile b where " +
+					"a.belongUser = b.userId and b.depId = " + depId + " limit " +
+					filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
+		}
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
+		List<Map<String, Object>> mapList2 = this.hrPaKpiPBC2UserService.findDataList(sql2);
+		for(int j = 0; j < mapList2.size(); j++) {
+			buff.append("{'id':'").append(mapList2.get(j).get("id").toString())
+					.append("','fullname':'").append(mapList2.get(j).get("fullname").toString())
+					.append("','position':'").append(mapList2.get(j).get("position"))
+					.append("','pbcName':'").append(mapList2.get(j).get("pbcName")).append("'},");
+		}
 		this.jsonString = buff.toString();
+		if(mapList2.size() > 0) {
+			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		}
+		this.jsonString += "]}";
 		
 		return "success";
 	}
@@ -62,10 +96,13 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
-		//当前user所属部门
-		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
-		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
-		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
+		//判断当前用户是不是部门负责人
+		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
+		List<Map<String, Object>> mapList1 = this.hrPaKpiPBC2UserService.findDataList(sql1);
+		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+		if(mapList1.size() == 0) {
+			return "success";
+		}
 		String sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
 		"a.belongUser = b.userId and b.depId = " + depId + " and publishStatus = 1";
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
@@ -93,7 +130,9 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 			buff.append("'},");
 		}
 		this.jsonString = buff.toString();
-		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		if(list.size() > 0) {
+			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		}
 		this.jsonString += "]}";
 		
 		return "success";
@@ -108,10 +147,13 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		String start = filter.getPagingBean().getStart().toString();
 		String limit = filter.getPagingBean().getPageSize().toString();
 		String fullname = this.getRequest().getParameter("fullname");
-		//当前user所属部门
-		String sql = "select depId from emp_profile where userId = " + currentUser.getUserId();
-		List<Map<String, Object>> depIdList = this.hrPaKpiPBC2UserService.findDataList(sql);
-		Long depId = Long.parseLong(depIdList.get(0).get("depId").toString());
+		//判断当前用户是不是部门负责人
+		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
+		List<Map<String, Object>> mapList1 = this.hrPaKpiPBC2UserService.findDataList(sql1);
+		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+		if(mapList1.size() == 0) {
+			return "success";
+		}
 		//获取部门下所有员工的个人PBC总数
 		String sql4 = "";
 		if(fullname != null && !"".equals(fullname)) {
@@ -154,7 +196,9 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 			buff.append("'},");
 		}
 		this.jsonString = buff.toString();
-		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		if(list.size() > 0) {
+			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		}
 		this.jsonString += "]}";
 		
 		return "success";
