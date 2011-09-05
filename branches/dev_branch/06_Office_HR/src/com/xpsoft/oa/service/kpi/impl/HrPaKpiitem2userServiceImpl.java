@@ -1,5 +1,6 @@
 package com.xpsoft.oa.service.kpi.impl;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,8 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 	 * */
 	@SuppressWarnings("unchecked")
 	public void calculateAvg(Long itemId) {
-		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
+		DecimalFormat doubleFormat = new DecimalFormat();
+		doubleFormat.applyPattern("###.00");
 		//从授权考核模板关联的考核项中取到所有该考核项的打分记录
 		String sql = "select id, weight, result from hr_pa_authpbcitem where akpiItem2uId = " + itemId;
 		List<Map<String, Object>> list = this.findDataList(sql);
@@ -43,7 +45,7 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 		}
 		//取得个人考核模板关联的该考核项，并与部门负责人打分合并，保存结果
 		HrPaKpiitem2user item = this.get(itemId);
-		item.setResult(avgResult + item.getResult() * totalWeight);
+		item.setResult(Double.valueOf(doubleFormat.format(avgResult + item.getResult() * totalWeight)));
 		//插入数据库
 		this.save(item);
 	}

@@ -10,11 +10,8 @@ import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.oa.dao.kpi.HrPaKpiPBC2UserDao;
-import com.xpsoft.oa.model.kpi.HrPaAuthorizepbc;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
-import com.xpsoft.oa.service.kpi.HrPaAuthorizepbcService;
-import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
@@ -33,13 +30,15 @@ public class HrPaKpiPBC2UserServiceImpl extends BaseServiceImpl<HrPaKpiPBC2User>
 	 * @param pbcIds
 	 * PBC ID
 	 * */
-	public void calTotalScore(Long pbcId) {
+	public String calTotalScore(Long pbcId) {
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
+		//计算关联定量考核项分数
+		hrPaKpiPBC2UserCmpService.saveKpiItemScoreForUser(ContextUtil.getCurrentUserId().toString(), null, pbcId.toString());
 		//计算关联定性考核项考核项平均分
 		hrPaKpiitem2userService.multiCal(pbcId);
 		//计算总分
-		hrPaKpiPBC2UserCmpService.countScoreForKpiPbcUser(pbcId);
+		return hrPaKpiPBC2UserCmpService.countScoreForKpiPbcUser(pbcId);
 	}
 	/*
 	 * 获取所有定性考核指标未完成打分的记录
