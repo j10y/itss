@@ -75,7 +75,7 @@
         	update="true"
         	insert="true"
         	access="property"
-        	column="intRecor"
+        	column="intRecord"
         	not-null="false"
         />
         <property
