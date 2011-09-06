@@ -309,5 +309,8 @@
   <bean id="IncomeTaxAction" class="com.xpsoft.oa.action.hrm.IncomeTaxAction" scope="prototype"/>
   <bean id="IncomeTaxItemAction" class="com.xpsoft.oa.action.hrm.IncomeTaxItemAction" scope="prototype"/>
   <bean id="RewardsPunishmentsTypeAction" class="com.xpsoft.oa.action.hrm.RewardsPunishmentsTypeAction" scope="prototype"/>
-
+  
+  <bean id="HrPromApplyAction" class="com.xpsoft.oa.action.hrm.HrPromApplyAction" scope="property"/>
+  <bean id="HrPromAssessmentAction" class="com.xpsoft.oa.action.hrm.HrPromAssessmentAction" scope="property"/>
+  
 </beans>
