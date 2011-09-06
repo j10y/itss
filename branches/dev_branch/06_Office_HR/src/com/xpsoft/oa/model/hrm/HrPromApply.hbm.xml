@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.hrm.HrPromApply"
+        table="hr_prom_apply"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        
+        <many-to-one name="applyUser" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="applyUser"></many-to-one>
+        <many-to-one name="applyPosition" not-null="false" class="com.xpsoft.oa.model.hrm.Job" column="applyPosition"></many-to-one>
+        <property
+        	name="applyDate"
+        	type="java.util.Date"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="applyDate"
+        	not-null="false"
+        />
+        <property
+        	name="applyReason"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="applyReason"
+        	not-null="false"
+        />
+        <property
+        	name="target1"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="target1"
+        	not-null="false"
+        />
+        <property
+        	name="target2"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="target2"
+        	not-null="false"
+        />
+        <property
+        	name="target3"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="target3"
+        	not-null="false"
+        />
+        <property
+        	name="intRecord"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="intRecor"
+        	not-null="false"
+        />
+        <property
+        	name="postManagerId"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="postManagerId"
+        	not-null="false"
+        />
+        <property
+        	name="postManagerName"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="postManagerName"
+        	not-null="false"
+        />
+        <property
+        	name="publishStatus"
+        	type="java.lang.Integer"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="publishStatus"
+        	not-null="false"
+        />
+        <many-to-one name="createPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
+        <property
+        	name="createDate"
+        	type="java.util.Date"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="createDate"
+        	not-null="false"
+        />
+        <many-to-one name="modifyPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
+        <property
+        	name="modifyDate"
+        	type="java.util.Date"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="modifyDate"
+        	not-null="false"
+        />
+    </class>
+</hibernate-mapping>
