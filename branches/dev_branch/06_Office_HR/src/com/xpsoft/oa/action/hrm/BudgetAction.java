@@ -229,7 +229,7 @@ public class BudgetAction extends BaseAction {
 			this.budget.setCreateDate(new Date());
 			this.budget.setCreatePerson(user);
 		}
-		this.budget.setPublishStatus(new Integer("0"));
+		//this.budget.setPublishStatus(new Integer("0"));
 		
 		this.budget.setBelongDept(new Department(Long.valueOf(getRequest().getParameter("budget.belongDept.depId"))));
 		this.budgetService.save(this.budget);

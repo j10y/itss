@@ -23,7 +23,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 		
 		if(this.isEdit!=null && this.isEdit!="undefined" && this.isEdit==true){
 			buttons = [{
-				text : "提交",
+				text : "发布",
 				iconCls : "btn-submit",
 				handler : this.submit.createCallback(this)
 			},{
@@ -87,6 +87,9 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			}, {
 				name : "budget.remark",
 				mapping : "remark"
+			}, {
+				name : "budget.publishStatus",
+				mapping : "publishStatus"
 			} ]),
 			items : [ {
 				name : "budget.budgetId",
@@ -129,6 +132,13 @@ BudgetForm = Ext.extend(Ext.Panel, {
 				id : "budget.remark",
 				colspan:2,
 				readOnly:(this.isEdit==true ? false:true)
+			}, {
+				fieldLabel : "预算状态",
+				allowBlank : false,
+				name : "budget.publishStatus",
+				id : "budget.publishStatus",
+				hidden : true,
+				value : 0
 			}],
 			buttonAlign : "right",
 			/*buttons : [{
@@ -427,7 +437,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 		var tabs = Ext.getCmp("centerTabPanel");
 		tabs.remove(a);
 	},
-	save : function(a) {
+	save : function(a, b) {
 		if (a.mainFormPanel.getForm().isValid()) {
 			a.mainFormPanel.getForm().submit({
 				method : "POST",
@@ -445,6 +455,10 @@ BudgetForm = Ext.extend(Ext.Panel, {
 					//增加其他左侧成本要素树加载的逻辑
 					Ext.getCmp("budgetItemTree").getLoader().url = __ctxPath + "/budget/treeBudgetItem.do?budgetId=" + data.budgetId;
 					Ext.getCmp("budgetItemTree").root.reload();
+					if(b){
+						var tabs = Ext.getCmp("centerTabPanel");
+						tabs.remove(a);
+					}
 				},
 				failure : function(c, d) {
 					Ext.MessageBox.show({
@@ -453,12 +467,15 @@ BudgetForm = Ext.extend(Ext.Panel, {
 						buttons : Ext.MessageBox.OK,
 						icon : Ext.MessageBox.ERROR
 					});
-					a.close();
+					var tabs = Ext.getCmp("centerTabPanel");
+					tabs.remove(a);
 				}
 			});
 		}
 	},
 	submit : function(a, b) {
-		Ext.Msg.alert("提示信息", "流程信息待实现！");		
+		Ext.getCmp("budget.publishStatus").setValue(3);
+		a.save(a,true);
+		//Ext.Msg.alert("提示信息", "流程信息待实现！");		
 	}
 });
