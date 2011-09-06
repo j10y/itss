@@ -603,5 +603,12 @@
 	<bean id="rewardsPunishmentsTypeService" class="com.xpsoft.oa.service.hrm.impl.RewardsPunishmentsTypeServiceImpl">
 		<constructor-arg index="0" ref="rewardsPunishmentsTypeDao"/>
 	</bean>
+	
+	<bean id="hrPromApplyService" class="com.xpsoft.oa.service.hrm.impl.HrPromApplyServiceImpl">
+		<constructor-arg index="0" ref="hrPromApplyDao"/>
+	</bean>
+	<bean id="hrPromAssessmentService" class="com.xpsoft.oa.service.hrm.impl.HrPromAssessmentServiceImpl">
+		<constructor-arg index="0" ref="hrPromAssessmentDao"/>
+	</bean>
 
 </beans>
