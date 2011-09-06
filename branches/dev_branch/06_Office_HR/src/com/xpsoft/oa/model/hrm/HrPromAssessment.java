@@ -2,9 +2,10 @@ package com.xpsoft.oa.model.hrm;
 
 import java.util.Date;
 
+import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 
-public class HrPromAssessment {
+public class HrPromAssessment extends BaseModel{
 	protected Long id;
 	protected HrPromApply promApply;
 	protected String reached1;
