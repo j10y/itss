@@ -326,4 +326,7 @@
     <bean id="incomeTaxItemDao" class="com.xpsoft.oa.dao.hrm.impl.IncomeTaxItemDaoImpl" parent="baseDao"/>
     <bean id="rewardsPunishmentsTypeDao" class="com.xpsoft.oa.dao.hrm.impl.RewardsPunishmentsTypeDaoImpl" parent="baseDao"/>
     
+    <bean id="hrPromApplyDao" class="com.xpsoft.oa.dao.hrm.impl.HrPromApplyDaoImpl" parent="baseDao"/>
+    <bean id="hrPromAssessmentDao" class="com.xpsoft.oa.dao.hrm.impl.HrPromAssessmentDaoImpl" parent="baseDao"/>
+    
 </beans>
