@@ -1467,6 +1467,9 @@
 					<url>/hrm/listSalaryPayoff.do</url>
 				</Function>
 			</Item>
+		<Item id="ExportSalaryView" text="导出模板设置" iconCls="menu-check-salay">	
+			
+		</Item>	
 		</Items>
 		<Items id="HireIssueView" text="招聘管理" iconCls="menu-hireIssue"
 			isPublic="false">
@@ -1600,6 +1603,11 @@
 					</Function>
 				</Item>
 			</Items>
+			<Items id="HrTZAnlyReport" text="PBC签订台账" isPublic="false">
+				<Item id="HrTZAnlyReportView" text="PBC签订台账" iconCls="" isPublic="false">
+				</Item>
+			</Items>
+		
 			<Items id="HrPaAssessmentcriteriaManage" text="考核标准管理">
 				<Item id="DraftHrPaAssessmentcriteriaView" text="草稿管理">
 					<Function id="_AcAdd" text="添加" iconCls="menu-add">
