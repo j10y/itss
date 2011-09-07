@@ -55,9 +55,9 @@
             column="rpTypeStr"
         />
         
-        <many-to-one name="rpType" not-null="true" update="false" class="com.xpsoft.oa.model.hrm.RewardsPunishmentsType" column="rpType"></many-to-one>
+        <many-to-one name="rpType" not-null="true" class="com.xpsoft.oa.model.hrm.RewardsPunishmentsType" column="rpType"></many-to-one>
         
-        <many-to-one name="empProfile" not-null="true" update="false" class="com.xpsoft.oa.model.hrm.EmpProfile" column="profileId"></many-to-one>
+        <many-to-one name="empProfile" not-null="true" class="com.xpsoft.oa.model.hrm.EmpProfile" column="profileId"></many-to-one>
         
         <property
             name="createDate"
