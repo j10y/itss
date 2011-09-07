@@ -7,28 +7,28 @@ import com.xpsoft.oa.model.system.AppUser;
 
 public class HrPromAssessment extends BaseModel{
 	protected Long id;
-	protected HrPromApply promApply;
-	protected String reached1;
-	protected String reached2;
-	protected String reached3;
-	protected String performResult;
-	protected String proKnowledge;
-	protected String commEffect;
-	protected String solveAbility;
-	protected String difficultyManage;
-	protected String businessFieldEffect;
-	protected String ratingResult;
-	protected Long postManagerId;
-	protected String postManagerName;
-	protected Long deptManagerId;
-	protected String deptManagerName;
-	protected Date appointDate;
-	protected String postRank;
-	protected StandSalary salaryLevel;
-	protected String promIntRecord;
-	protected Long auditHrId;
-	protected String auditHrName;
-	protected Integer publishStatus;
+	protected HrPromApply promApply;//关联的晋升申请表
+	protected String reached1;//工作目标一完成情况
+	protected String reached2;//工作目标二完成情况
+	protected String reached3;//工作目标三完成情况
+	protected String performResult;//绩效结果
+	protected String proKnowledge;//专业知识
+	protected String commEffect;//沟通影响
+	protected String solveAbility;//问题解决能力
+	protected String difficultyManage;//工作难度管理幅度
+	protected String businessFieldEffect;//业务领域影响
+	protected String ratingResult;//评级结果
+	protected Long postManagerId;//直线经理ID
+	protected String postManagerName;//直线经理姓名
+	protected Long deptManagerId;//部门主管ID
+	protected String deptManagerName;//部门主管姓名
+	protected Date appointDate;//正式任命时间
+	protected String postRank;//岗位职级
+	protected StandSalary salaryLevel;//薪资等级
+	protected String promIntRecord;//晋升面谈记录
+	protected Long auditHrId;//人力资源审核人员ID
+	protected String auditHrName;//人力资源审核人员姓名
+	protected Integer publishStatus;//状态 0：草稿 1：审核中 2：退回 3：审核通过 4：删除标记
 	protected AppUser createPerson;
 	protected Date createDate;
 	protected AppUser modifyPerson;
