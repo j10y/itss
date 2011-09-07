@@ -405,5 +405,7 @@ App.importJs = {
 	ResultTotalScoreView : [__ctxPath + "/js/kpi/ResultTotalScoreView.js",
 			__ctxPath + "/ext3/ux/RowExpander.js"],
 	ShowHistoryView : [__ctxPath + "/js/kpi/ShowHistoryView.js",
-			__ctxPath + "/ext3/ux/RowExpander.js"]		                    
+			__ctxPath + "/ext3/ux/RowExpander.js"],
+	HrPromApplyView	: [__ctxPath + "/js/hrm/HrPromApplyView.js",
+			__ctxPath + "/js/hrm/HrPromApplyForm.js"]	                    
 };
