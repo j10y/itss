@@ -16,10 +16,12 @@ import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
 import com.xpsoft.oa.model.hrm.JobSalaryRelation;
+import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.BudgetItemService;
 import com.xpsoft.oa.service.hrm.JobSalaryRelationService;
+import com.xpsoft.oa.service.hrm.RealExecutionService;
 
 import flexjson.JSONSerializer;
 
@@ -32,6 +34,9 @@ public class BudgetItemAction extends BaseAction {
 
 	@Resource
 	private JobSalaryRelationService jobSalaryRelationService;
+	
+	@Resource
+	private RealExecutionService realExecutionService;
 	
 	public Long getBudgetItemId() {
 		/* 35 */return this.budgetItemId;
@@ -107,7 +112,7 @@ public class BudgetItemAction extends BaseAction {
 		BudgetItem budgetItem = (BudgetItem) this.budgetItemService.get(this.budgetItemId);
 		//add by awen for add get default budgetItem value logic on 2011-09-01 begin
 		
-		if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
+		/*if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
 			Department department = budgetItem.getBudget().getBelongDept();
 			Map filterMap = new HashMap();
 			filterMap.put("Q_deleteFlag_N_EQ", "0");
@@ -119,7 +124,7 @@ public class BudgetItemAction extends BaseAction {
 				totalMoney = totalMoney.add(relation.getTotalMoney());
 			}
 			budgetItem.setValue(totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
-		}
+		}*/
 		//add by awen for add get default budgetItem value logic on 2011-09-01 end
 		StringBuffer sb = new StringBuffer("{success:true,totalCounts:1,data:[");
 
@@ -135,6 +140,11 @@ public class BudgetItemAction extends BaseAction {
 
 	public String save() {
 		AppUser user = ContextUtil.getCurrentUser();
+		boolean isNew=false;
+		if(this.getBudgetItem().getBudgetItemId()==null){
+			isNew = true;
+		}
+		
 		
 		BudgetItem parent = getRequest().getParameter("budgetItem.parent.budgetItemId")!=null && 
 			!getRequest().getParameter("budgetItem.parent.budgetItemId").equals("0") ? 
@@ -150,6 +160,19 @@ public class BudgetItemAction extends BaseAction {
 		this.budgetItem.setBudget(budget);
 		this.budgetItem.setDeleteFlag(Integer.valueOf(0));//未删除
 		this.budgetItemService.save(this.budgetItem);
+		
+		//add by awen for add default realExecution on 2011-09-07 begin
+		if(isNew){
+			RealExecution re = new RealExecution();
+			re.setBudget(this.budgetItem.getBudget());
+			re.setBudgetItem(this.budgetItem);
+			re.setMonth(0);
+			re.setRealValue(0d);
+			re.setDeleteFlag(0);
+			this.realExecutionService.save(re);
+		}
+		//add by awen for add default realExecution on 2011-09-07 end
+		
 		setJsonString("{success:true, budgetItemId:'" + this.budgetItem.getBudgetItemId() + "'}");
 		return "success";
 	}

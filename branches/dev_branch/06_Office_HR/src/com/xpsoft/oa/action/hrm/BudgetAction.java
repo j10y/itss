@@ -21,6 +21,7 @@ import com.xpsoft.oa.form.BudgetForm;
 import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
 import com.xpsoft.oa.model.hrm.JobSalaryRelation;
+import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.BudgetItemService;
@@ -243,7 +244,30 @@ public class BudgetAction extends BaseAction {
 			budgetItem.setThreshold(Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemThreshold")));
 			budgetItem.setIsDefault(1);
 			budgetItem.setDeleteFlag(0);
+			//add by awen for add get default budgetItem value logic on 2011-09-01 begin			
+				Department department = budgetItem.getBudget().getBelongDept();
+				Map filterMap = new HashMap();
+				filterMap.put("Q_deleteFlag_N_EQ", "0");
+				filterMap.put("Q_department.depId_L_EQ", department.getDepId().toString());
+				QueryFilter filter = new QueryFilter(filterMap);
+				List<JobSalaryRelation> list = this.jobSalaryRelationService.getAll(filter);
+				BigDecimal totalMoney = new BigDecimal(0);
+				for(JobSalaryRelation relation : list){
+					totalMoney = totalMoney.add(relation.getTotalMoney());
+				}
+				budgetItem.setValue(totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
+			//add by awen for add get default budgetItem value logic on 2011-09-01 end
 			this.budgetItemService.save(budgetItem);
+			
+			//add by awen for add default realExecution on 2011-09-07 begin
+				RealExecution re = new RealExecution();
+				re.setBudget(budgetItem.getBudget());
+				re.setBudgetItem(budgetItem);
+				re.setMonth(0);//默认
+				re.setRealValue(0d);
+				re.setDeleteFlag(0);
+				this.realExecutionService.save(re);
+			//add by awen for add default realExecution on 2011-09-07 end
 		}
 		//add by awen add default budgetItem hr on 2011-09-01 end
 		setJsonString("{success:true,budgetId:'" + budget.getBudgetId() + "'}");

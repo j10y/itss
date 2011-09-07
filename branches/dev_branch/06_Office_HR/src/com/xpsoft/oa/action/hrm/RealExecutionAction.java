@@ -209,7 +209,7 @@ public class RealExecutionAction extends BaseAction {
 				
 			}
 			
-			defaultNode.put("value", totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
+			//defaultNode.put("value", totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
 			try {
 				defaultNode.put("alarm", 
 						RealExecutionUtil.alarm(totalMoney.doubleValue(), 
