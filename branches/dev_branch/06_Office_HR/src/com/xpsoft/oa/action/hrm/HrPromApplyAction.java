@@ -1,5 +1,6 @@
 package com.xpsoft.oa.action.hrm;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,13 +61,16 @@ public class HrPromApplyAction extends BaseAction{
 		
 		return "success";
 	}
-	
+	/*
+	 * 查找当前用户所在部门员工信息
+	 * */
 	public String sameDeptUser() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		Date currentDate = new Date();
 		String fullname = this.getRequest().getParameter("fullname");
-		String sql = "select userId, fullname, position, depName, accessionTime, startWorkDate from emp_profile where " +
+		String sql = "select userId, fullname, jobId, position, depId, depName, accessionTime, startWorkDate from emp_profile where " +
 				"depId = " + currentUser.getDepartment().getDepId();
 		sql += (fullname == null || "".equals(fullname)) ? "" : " and fullname like '%" + fullname + "%'";
 		sql += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
@@ -79,9 +83,11 @@ public class HrPromApplyAction extends BaseAction{
 			Long workHereYear = (currentDate.getTime() - accessionTime.getTime()) / 1000 / 60 / 60 / 24 / 365;
 			buff.append("{'userId':'" + mapList.get(i).get("userId"))
 					.append("','fullname':'" + mapList.get(i).get("fullname"))
-					.append("','position':'" + mapList.get(i).get("position"))
+					.append("','nowPositionId':'" + mapList.get(i).get("jobId"))
+					.append("','nowPositionName':'" + mapList.get(i).get("position"))
+					.append("','depId':'" + mapList.get(i).get("depId"))
 					.append("','depName':'" + mapList.get(i).get("depName"))
-					.append("','accessionTime':'" + DateUtil.formatStringToDate((Date)mapList.get(i).get("accessionTime")))
+					.append("','accessionTime':'" + sdf.format((Date)mapList.get(i).get("accessionTime")))
 					.append("','workYear':'" + workYear)
 					.append("','workHereYear':'" + workHereYear)
 					.append("'},");
@@ -95,7 +101,9 @@ public class HrPromApplyAction extends BaseAction{
 		
 		return "success";
 	}
-	
+	/*
+	 * 查找当前用户所在部门岗位信息
+	 * */
 	public String applyPosition() {
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		JobService jobService = (JobService)AppUtil.getBean("jobService");
@@ -112,9 +120,11 @@ public class HrPromApplyAction extends BaseAction{
 		
 		return "success";
 	}
-	
+	/*
+	 * 获取指定ID晋升申请记录
+	 * */
 	public String preview() {
-		Date currentDate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		if(this.id != 0) {
 			this.hrPromApply = this.hrPromApplyService.get(this.id);
@@ -123,15 +133,7 @@ public class HrPromApplyAction extends BaseAction{
 			QueryFilter filter = new QueryFilter(map);
 			List<EmpProfile> list = empProfileService.getAll(filter);
 			if(list.size() > 0) {
-				Date startWorkDate = list.get(0).getStartWorkDate();
-				Date accessionTime = list.get(0).getAccessionTime();
-				Long workYear = (currentDate.getTime() - startWorkDate.getTime()) / 1000 / 60 / 60 / 24 / 365;
-				Long workHereYear = (currentDate.getTime() - accessionTime.getTime()) / 1000 / 60 / 60 / 24 / 365;
-				this.getRequest().setAttribute("position", list.get(0).getPosition());
-				this.getRequest().setAttribute("depName", list.get(0).getDepName());
-				this.getRequest().setAttribute("accessionTime", list.get(0).getAccessionTime());
-				this.getRequest().setAttribute("workYear", workYear);
-				this.getRequest().setAttribute("workHereYear", workHereYear);
+				this.getRequest().setAttribute("accessionTime", sdf.format(list.get(0).getAccessionTime()));
 			}
 		}
 		return "show";
@@ -157,6 +159,12 @@ public class HrPromApplyAction extends BaseAction{
 				promApply.setModifyDate(currentDate);
 				promApply.setModifyPerson(currentUser);
 			}
+			promApply.setDepId(this.hrPromApply.getDepId());
+			promApply.setDepName(this.hrPromApply.getDepName());
+			promApply.setNowPositionId(this.hrPromApply.getNowPositionId());
+			promApply.setNowPositionName(this.hrPromApply.getNowPositionName());
+			promApply.setWorkYear(this.hrPromApply.getWorkYear());
+			promApply.setWorkHereYear(this.hrPromApply.getWorkHereYear());
 			promApply.setApplyUser(this.hrPromApply.getApplyUser());
 			promApply.setApplyPosition(this.hrPromApply.getApplyPosition());
 			promApply.setApplyReason(this.hrPromApply.getApplyReason());
