@@ -5,7 +5,7 @@
 /*    */ import java.util.Date;
 /*    */ import org.apache.commons.lang.time.DateUtils;
 /*    */ import org.apache.commons.logging.Log;
-/*    */ import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.LogFactory;
 /*    */ 
 /*    */ public class DateUtil
 /*    */ {
@@ -56,6 +56,44 @@
 /*    */ 
 /* 58 */     return sdf.format(date);
 /*    */   }
+			public static final String convertDateToString(Date aDate) {
+		        return getDateTime("yyyy-MM-dd", aDate);
+		    }
+		    
+		    public static final String convertDateToString(String smark,Date aDate) {
+		        return getDateTime(smark, aDate);
+		    }
+			    
+			public static final String getDateTime(String aMask, Date aDate) {
+		        SimpleDateFormat df = null;
+		        String returnValue = "";
+
+		        if (aDate == null) {
+		        } else {
+		            df = new SimpleDateFormat(aMask);
+		            returnValue = df.format(aDate);
+		        }
+
+		        return (returnValue);
+		    }
+			
+			public static Date addDays(Date date, int days) {
+		        return add(date, days, Calendar.DATE);
+		    }
+
+
+		    public static Date addMonths(Date date, int months) {
+		        return add(date, months, Calendar.MONTH);
+		    }
+
+		    private static Date add(Date date, int amount, int field) {
+		        Calendar calendar = Calendar.getInstance();
+
+		        calendar.setTime(date);
+		        calendar.add(field, amount);
+
+		        return calendar.getTime();
+		    }
 /*    */ }
 
 /* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
