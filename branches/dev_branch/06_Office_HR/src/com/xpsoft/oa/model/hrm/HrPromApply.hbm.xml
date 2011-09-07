@@ -89,7 +89,7 @@
         />
         <property
         	name="postManagerName"
-        	type="java.lang.Long"
+        	type="java.lang.String"
         	update="true"
         	insert="true"
         	access="property"
