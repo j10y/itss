@@ -365,6 +365,10 @@
 		<action name="*HrPromAssessment" class="HrPromAssessmentAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*ExportSalary" class="ExportSalaryAction" method="{1}">
+		   <result>${successResultValue}</result>
+		</action>
+		
 	</package>
 	<package name="budget" extends="struts-default" namespace="/budget">
 		<action name="*Budget" class="BudgetAction" method="{1}">
@@ -469,6 +473,7 @@
 			<result>${successResultValue}</result>
 		</action>
 	</package>
+	
 </struts>
 
 		
