@@ -19,29 +19,32 @@
 					allowBlank : false,
 					hiddenName : "hrPromApply.applyUser.userId",
 					valueField : "userId",
+					width : 249,
 					displayField : "fullname",
 					renderTo : "applyUser",
 					triggerAction : "all",
 					store : new Ext.data.JsonStore({
 						url : "${pageContext.request.contextPath}/hrm/sameDeptUserHrPromApply.do",
-						fields : ["userId", "fullname", "depName", "accessionTime", "position", "workYear", "workHereYear"],
+						fields : ["userId", "fullname", "depId", "depName", "accessionTime", "nowPositionId", "nowPositionName", "workYear", "workHereYear"],
 						root : "result",
 						remoteSort : true
 					}),
 					listeners : {
 						select : function(l, h, k) {
-							document.getElementById("department").innerHTML = h.data.depName;
+							document.getElementById("depId").value = h.data.depId;
+							document.getElementById("depName").value = h.data.depName;
 							document.getElementById("accessionTime").innerHTML = h.data.accessionTime;
-							document.getElementById("nowPosition").innerHTML = h.data.position;
+							document.getElementById("nowPositionId").value = h.data.nowPositionId;
+							document.getElementById("nowPositionName").value = h.data.nowPositionName;
 							if(h.data.workYear == 0) {
-								document.getElementById("workYear").innerHTML = "不满1年";
+								document.getElementById("workYear").value = "不满1年";
 							} else {
-								document.getElementById("workYear").innerHTML = h.data.workYear + "年";
+								document.getElementById("workYear").value = h.data.workYear + "年";
 							}
 							if(h.data.workHereYear == 0) {
-								document.getElementById("workHereYear").innerHTML = "不满1年";
+								document.getElementById("workHereYear").value = "不满1年";
 							} else {
-								document.getElementById("workHereYear").innerHTML = h.data.workHereYear + "年";
+								document.getElementById("workHereYear").value = h.data.workHereYear + "年";
 							}
 						},
 						beforequery : function(queryEvent) {
@@ -63,6 +66,7 @@
 					mode : "remote",
 					hiddenName : "hrPromApply.applyPosition.jobId",
 					allowBlank : false,
+					width : 249,
 					valueField : "jobId",
 					displayField : "jobName",
 					renderTo : "applyPosition",
@@ -78,6 +82,7 @@
 					name : "hrPromApply.applyDate",
 					format : "Y-m-d",
 					editable : false,
+					width : 240,
 					renderTo : "applyDate"
 				});
 				if("${hrPromApply.id}" != 0) {
@@ -86,22 +91,12 @@
 					applyPositionCombo.setValue("${hrPromApply.applyPosition.jobId}");
 					applyPositionCombo.setRawValue("${hrPromApply.applyPosition.jobName}");
 					applyDate.setRawValue("${hrPromApply.applyDate}");
-					
-					document.getElementById("department").innerHTML = "${depName}";
 					document.getElementById("accessionTime").innerHTML = "${accessionTime}";
-					document.getElementById("nowPosition").innerHTML = "${position}";
-					if("${workYear}" == 0) {
-						document.getElementById("workYear").innerHTML = "不满1年";
-					} else {
-						document.getElementById("workYear").innerHTML = "${workYear}年";
-					}
-					if("${workHereYear}" == 0) {
-						document.getElementById("workHereYear").innerHTML = "不满1年";
-					} else {
-						document.getElementById("workHereYear").innerHTML = "${workHereYear}年";
-					}
 				}
 			});
+			function check() {
+				
+			}
 		</script>
 	</head>
 
@@ -111,18 +106,25 @@
 		</div>
 		<form action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
 			<input type="hidden" name="hrPromApply.id" value="${hrPromApply.id}"/>
+			<input type="hidden" name="flag" value="0"/>
 			<table width="700" align="center" border="1" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="90" align="right">姓名</td>
 					<td width="250"><div id="applyUser"></div></td>
 					<td width="120" align="right">部门/门店</td>
-					<td><div id="department"></div></td>
+					<td style="padding:1px">
+						<input type="hidden" id="depId" name="hrPromApply.depId" value="${hrPromApply.depId}"/>
+						<input type="text" id="depName" name="hrPromApply.depName" value="${hrPromApply.depName}" readonly="readonly" style="border:none;width:100%;height:100%"/>
+					</td>
 				</tr>
 				<tr>
 					<td align="right">入职日期</td>
 					<td><div id="accessionTime"></div></td>
 					<td align="right">现职位</td>
-					<td><div id="nowPosition"></div></td>
+					<td style="padding:1px">
+						<input type="hidden" id="nowPositionId" name="hrPromApply.nowPositionId" value="${hrPromApply.nowPositionId}"/>
+						<input type="text" id="nowPositionName" name="hrPromApply.nowPositionName" value="${hrPromApply.nowPositionName}" readonly="readonly" style="border:none;width:100%;height:100%"/>
+					</td>
 				</tr>
 				<tr>
 					<td align="right">拟担任职位</td>
@@ -132,9 +134,13 @@
 				</tr>
 				<tr>
 					<td align="right">工作年限</td>
-					<td><div id="workYear"></div></td>
+					<td style="padding:1px">
+						<input type="text" id="workYear" name="hrPromApply.workYear" value="${hrPromApply.workYear}" style="border:none;width:100%;height:100%"/>
+					</td>
 					<td align="right">本单位工作年限</td>
-					<td><div id="workHereYear"></div></td>
+					<td style="padding:1px">
+						<input type="text" id="workHereYear" name="hrPromApply.workHereYear" value="${hrPromApply.workHereYear}" style="border:none;width:100%;height:100%"/>
+					</td>
 				</tr>
 				<tr>
 					<td align="right">拟晋升原因</td>
