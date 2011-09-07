@@ -347,10 +347,12 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 							handler : function(){
 							var depid=Ext.getCmp("searchPanel.department.depId").getValue();
 							Ext.Ajax.request({
+									waitMsg : "正在计算数据...",
 									url : __ctxPath+ "/hrm/countSalaryPayoff.do?depid="+depid,
 									success : function(h, j) {
 										var data = Ext.decode(h.responseText);
 										Ext.getCmp("caculateWin").close();
+										Ext.getCmp("SalaryPayoffGrid").getStore().reload();
 										Ext.MessageBox
 													.show({
 														title : "操作信息",
