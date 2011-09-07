@@ -1300,6 +1300,42 @@
 						<url>/hrm/listJobChange.do</url>
 					</Function>
 				</Item>
+			</Items>
+			<Items id="promotionManage" text="晋升管理" isPublic="false">
+				<Item id="HrPromApplyView" text="晋升申请">
+					<Function id="_ApplyQuery" text="查看">
+						<url>/hrm/listHrPromApply.do</url>
+					</Function>
+					<Function id="_ApplyAdd" text="添加">
+						<url>/hrm/addHrPromApply.do</url>
+						<url>/hrm/listHrPromApply.do</url>
+					</Function>
+					<Function id="_ApplyEdit" text="编辑">
+						<url>/hrm/saveHrPromApply.do</url>
+						<url>/hrm/listHrPromApply.do</url>
+					</Function>
+					<Function id="_ApplyDel" text="删除">
+						<url>/hrm/multiDelHrPromApply.do</url>
+						<url>/hrm/listHrPromApply.do</url>
+					</Function>
+				</Item>
+				<Item id="HrPromAssessmentView" text="晋升评估">
+					<Function id="_AssessmentQuery" text="查看">
+						<url>/hrm/listHrPromAssessment.do</url>
+					</Function>
+					<Function id="_AssessmentAdd" text="添加">
+						<url>/hrm/addHrPromAssessment.do</url>
+						<url>/hrm/listHrPromAssessment.do</url>
+					</Function>
+					<Function id="_AssessmentEdit" text="编辑">
+						<url>/hrm/saveHrPromAssessment.do</url>
+						<url>/hrm/listHrPromAssessment.do</url>
+					</Function>
+					<Function id="_AssessmentDel" text="删除">
+						<url>/hrm/multiDelHrPromAssessment.do</url>
+						<url>/hrm/listHrPromAssessment.do</url>
+					</Function>
+				</Item>
 			</Items>			
 		</Items>
 		<Items id="SalaryManage" text="薪酬管理" iconCls="menu-salary"
