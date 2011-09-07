@@ -22,6 +22,60 @@
             <generator class="native"/>
         </id>
         
+        <property
+        	name="depId"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="depId"
+        	not-null="false"
+        />
+        <property
+        	name="depName"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="depName"
+        	not-null="false"
+        />
+        <property
+        	name="nowPositionId"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="nowPositionId"
+        	not-null="false"
+        />
+        <property
+        	name="nowPositionName"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="nowPositionName"
+        	not-null="false"
+        />
+        <property
+        	name="workYear"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="workYear"
+        	not-null="false"
+        />
+        <property
+        	name="workHereYear"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="workHereYear"
+        	not-null="false"
+        />
         <many-to-one name="applyUser" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="applyUser"></many-to-one>
         <many-to-one name="applyPosition" not-null="false" class="com.xpsoft.oa.model.hrm.Job" column="applyPosition"></many-to-one>
         <property
