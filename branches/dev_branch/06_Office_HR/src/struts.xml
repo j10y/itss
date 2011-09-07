@@ -357,6 +357,14 @@
 		<action name="*SalaryPayoff" class="SalaryPayoffAction" method="{1}">
 		   <result>${successResultValue}</result>
 		</action>
+		<action name="*HrPromApply" class="HrPromApplyAction" method="{1}">
+			<result>${successResultValue}</result>
+			<result name="show">/pages/hrm/promotionApply.jsp</result>
+			<result name="result">/pages/hrm/applyResult.jsp</result>
+		</action>
+		<action name="*HrPromAssessment" class="HrPromAssessmentAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	<package name="budget" extends="struts-default" namespace="/budget">
 		<action name="*Budget" class="BudgetAction" method="{1}">
