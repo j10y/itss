@@ -147,7 +147,10 @@ public class HrPromApplyAction extends BaseAction{
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		Date currentDate = new Date();
 		HrPromApply promApply = new HrPromApply();
-		
+		boolean isSubmit = false;//是否提交工作流
+		if(getRequest().getParameter("isSubmit")!=null && Boolean.valueOf(getRequest().getParameter("isSubmit")).booleanValue()){
+			isSubmit=true;
+		}
 		try {
 			if(this.hrPromApply.getId() == null) {
 				promApply.setCreateDate(currentDate);
@@ -175,14 +178,17 @@ public class HrPromApplyAction extends BaseAction{
 			promApply.setIntRecord(this.hrPromApply.getIntRecord());
 			promApply.setPostManagerId(currentUser.getUserId());
 			promApply.setPostManagerName(currentUser.getFullname());
-			promApply.setPublishStatus(0);
+			promApply.setPublishStatus(this.hrPromApply.getPublishStatus()!=null ? this.hrPromApply.getPublishStatus() : 0);
 			this.hrPromApplyService.save(promApply);
 			this.getRequest().setAttribute("flag", "1");
 		} catch(Exception e) {
 			this.getRequest().setAttribute("flag", "0");
 			e.printStackTrace();
 		}
-		
+		if(isSubmit){
+			this.jsonString = "{success:true,'applyId':'" + this.hrPromApply.getId() + "'}";
+			return "success";
+		}
 		return "result";
 	}
 	

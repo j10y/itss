@@ -80,6 +80,7 @@
 				});
 				var applyDate = new Ext.form.DateField({
 					name : "hrPromApply.applyDate",
+					id : "hrPromApply.applyDate",
 					format : "Y-m-d",
 					editable : false,
 					width : 240,
@@ -97,6 +98,80 @@
 			function check() {
 				
 			}
+			function onSend(){
+				Ext.Ajax.request({
+					url : "${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
+					params : {
+							"hrPromApply.id" : "${hrPromApply.id}",
+							"hrPromApply.depId" : document.getElementById("depId").value,
+							"hrPromApply.depName" : document.getElementById("depName").value,
+							"hrPromApply.accessionTime" : document.getElementById("accessionTime").innerHTML,
+							"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
+							"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
+							"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
+							"hrPromApply.workYear" : document.getElementById("workYear").value,
+							"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
+							"hrPromApply.applyReason" : document.getElementById("applyReason").value,
+							"hrPromApply.target1" : document.getElementById("target1").value,
+							"hrPromApply.target2" : document.getElementById("target2").value,
+							"hrPromApply.target3" : document.getElementById("target3").value,
+							"hrPromApply.intRecord" : document.getElementById("intRecord").value,
+							"hrPromApply.applyPosition.jobId" : document.getElementById("hrPromApply.applyPosition.jobId").value,
+							"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
+							"hrPromApply.publishStatus" : 5, //上报审批
+							"isSubmit" : "true" //上报审批
+					},
+					method : "post",
+					success : function(h, j) {
+						var data = Ext.decode(h.responseText);
+						document.getElementById("hrPromApply.id").value= data.applyId;	
+						Ext.Ajax.request({							
+							url : "${pageContext.request.contextPath}/flow/saveProcessActivity.do",
+							waitMsg : "正在提交流程表单信息...",
+							scope : this,
+							params : {
+								defId : 16,
+								startFlow : true
+							},
+							success : function(
+									i,
+									j) {
+								Ext.ux.Toast
+										.msg(
+												"操作信息",
+												"成功保存信息！");
+								Ext.getCmp("HrPromApplyForm").close();
+								var k = Ext.getCmp("ProcessRunGrid");
+								if (k != null) {
+									k.getStore().reload();
+								}
+							}
+																		
+						});
+					}
+				});
+				/*$.post("${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
+						{
+							"hrPromApply.id" : "${hrPromApply.id}",
+							"hrPromApply.depId" : document.getElementById("depId").value,
+							"hrPromApply.depName" : document.getElementById("depName").value,
+							"hrPromApply.accessionTime" : document.getElementById("accessionTime").innerHTML,
+							"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
+							"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
+							"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
+							"hrPromApply.workYear" : document.getElementById("workYear").value,
+							"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
+							"hrPromApply.applyReason" : document.getElementById("applyReason").value,
+							"hrPromApply.target1" : document.getElementById("target1").value,
+							"hrPromApply.target2" : document.getElementById("target2").value,
+							"hrPromApply.target3" : document.getElementById("target3").value,
+							"hrPromApply.intRecord" : document.getElementById("intRecord").value
+						},
+						function(data){
+    						alert("Data Loaded: " + data);
+   						},
+   						"json");*/
+			}
 		</script>
 	</head>
 
@@ -104,8 +179,8 @@
 		<div style="text-align:center;height:50px;line-height:50px;">
 			<font style="font-size:18px;">晋升申请表</font>
 		</div>
-		<form action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
-			<input type="hidden" name="hrPromApply.id" value="${hrPromApply.id}"/>
+		<form id="applyForm" action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
+			<input type="hidden" id="hrPromApply.id" name="hrPromApply.id" value="${hrPromApply.id}"/>
 			<input type="hidden" name="flag" value="0"/>
 			<table width="700" align="center" border="1" cellpadding="0" cellspacing="0">
 				<tr>
@@ -145,7 +220,7 @@
 				<tr>
 					<td align="right">拟晋升原因</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;">${hrPromApply.applyReason}</textarea>
+						<textarea id="applyReason" name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;">${hrPromApply.applyReason}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -154,19 +229,19 @@
 				<tr>
 					<td align="right">目标一</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea name="hrPromApply.target1" style="width:100%;height:100%;border:none;">${hrPromApply.target1}</textarea>
+						<textarea id="target1" name="hrPromApply.target1" style="width:100%;height:100%;border:none;">${hrPromApply.target1}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">目标二</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea name="hrPromApply.target2" style="width:100%;height:100%;border:none;">${hrPromApply.target2}</textarea>
+						<textarea id="target2" name="hrPromApply.target2" style="width:100%;height:100%;border:none;">${hrPromApply.target2}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">目标三</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea name="hrPromApply.target3" style="width:100%;height:100%;border:none;">${hrPromApply.target3}</textarea>
+						<textarea id="target3" name="hrPromApply.target3" style="width:100%;height:100%;border:none;">${hrPromApply.target3}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -174,14 +249,14 @@
 				</tr>
 				<tr>
 					<td colspan="4" style="height:150px;padding:1px;">
-						<textarea name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;">${hrPromApply.intRecord}</textarea>
+						<textarea id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;">${hrPromApply.intRecord}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" colspan="4">
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
 						<input type="submit" value="保存"/>&nbsp;&nbsp;
-						<input type="button" value="提交审核"/>
+						<input type="button" value="提交审核" onclick="onSend();"/>
 					</td>
 				</tr>
 			</table>
