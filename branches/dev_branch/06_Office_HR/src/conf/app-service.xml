@@ -611,4 +611,13 @@
 		<constructor-arg index="0" ref="hrPromAssessmentDao"/>
 	</bean>
 
+
+	<bean id="exportSalaryService" class="com.xpsoft.oa.service.hrm.impl.ExportSalaryServiceImpl">
+		<constructor-arg index="0" ref="exportSalaryDao"/>
+	</bean>
+	
+	<bean id="exportSalaryItemService" class="com.xpsoft.oa.service.hrm.impl.ExportSalaryItemServiceImpl">
+		<constructor-arg index="0" ref="exportSalaryItemDao"/>
+	</bean>
+	
 </beans>

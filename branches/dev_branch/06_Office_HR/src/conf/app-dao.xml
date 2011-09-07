@@ -328,5 +328,6 @@
     
     <bean id="hrPromApplyDao" class="com.xpsoft.oa.dao.hrm.impl.HrPromApplyDaoImpl" parent="baseDao"/>
     <bean id="hrPromAssessmentDao" class="com.xpsoft.oa.dao.hrm.impl.HrPromAssessmentDaoImpl" parent="baseDao"/>
-    
+    <bean id="exportSalaryDao" class="com.xpsoft.oa.dao.hrm.impl.ExportSalaryDaoImpl" parent="baseDao"/>
+    <bean id="exportSalaryItemDao" class="com.xpsoft.oa.dao.hrm.impl.ExportSalaryItemDaoImpl" parent="baseDao"/>
 </beans>
