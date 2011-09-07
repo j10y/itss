@@ -11,6 +11,7 @@ import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.hrm.SalaryPayoff;
 import com.xpsoft.oa.model.hrm.StandSalaryItem;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.hrm.ExportSalaryService;
 import com.xpsoft.oa.service.hrm.SalaryPayoffService;
 import com.xpsoft.oa.service.hrm.StandSalaryItemService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
@@ -150,132 +151,213 @@ public class SalaryPayoffAction extends BaseAction {
 	}
 
 	public String personal() {
-		/* 146 */QueryFilter filter = new QueryFilter(getRequest());
-		/* 147 */List<SalaryPayoff> list = this.salaryPayoffService
+		QueryFilter filter = new QueryFilter(getRequest());
+		List<SalaryPayoff> list = this.salaryPayoffService
 				.getAll(filter);
-
-		/* 151 */StringBuffer buff = new StringBuffer(
+		StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':")
-		/* 152 */.append(filter.getPagingBean().getTotalItems()).append(
+		.append(filter.getPagingBean().getTotalItems()).append(
 				",result:[");
-		/* 153 */for (SalaryPayoff salaryDetail : list) {
-			/* 154 */buff.append("{recordId:'")
-			/* 155 */.append(salaryDetail.getRecordId())
-			/* 156 */.append("',fullname:'")
-			/* 157 */.append(salaryDetail.getFullname())
-			/* 158 */.append("',profileNo:'")
-			/* 159 */.append(salaryDetail.getProfileNo())
-			/* 160 */.append("',idNo:'")
-			/* 161 */.append(salaryDetail.getIdNo())
-			/* 162 */.append("',standAmount:'")
-			/* 163 */.append(salaryDetail.getStandAmount())
-			/* 164 */.append("',acutalAmount:'")
-			/* 165 */.append(salaryDetail.getAcutalAmount())
-			/* 166 */.append("',startTime:'")
-			/* 167 */.append(salaryDetail.getStartTime())
-			/* 168 */.append("',endTime:'")
-			/* 169 */.append(salaryDetail.getEndTime())
-			/* 170 */.append("',checkStatus:'")
-			/* 171 */.append(salaryDetail.getCheckStatus());
-			/* 172 */List<StandSalaryItem> items = this.standSalaryItemService
+		for (SalaryPayoff salaryDetail : list) {
+			buff.append("{recordId:'")
+			.append(salaryDetail.getRecordId())
+			.append("',fullname:'")
+			.append(salaryDetail.getFullname())
+			.append("',profileNo:'")
+			.append(salaryDetail.getProfileNo())
+			.append("',idNo:'")
+			.append(salaryDetail.getIdNo())
+			.append("',standAmount:'")
+			.append(salaryDetail.getStandAmount())
+			.append("',acutalAmount:'")
+			.append(salaryDetail.getAcutalAmount())
+			.append("',startTime:'")
+			.append(salaryDetail.getStartTime())
+			.append("',endTime:'")
+			.append(salaryDetail.getEndTime())
+			.append("',checkStatus:'")
+			.append(salaryDetail.getCheckStatus());
+			List<StandSalaryItem> items = this.standSalaryItemService
 					.getAllByStandardId(salaryDetail.getStandardId());
-			/* 173 */StringBuffer content = new StringBuffer(
-					"<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\"><tr>");
-
-			/* 175 */if ((salaryDetail.getEncourageAmount() != new BigDecimal(0))
+			String sql="select emp_profile.* from salary_payoff,emp_profile where salary_payoff.userId =emp_profile.userId and salary_payoff.recordId="+salaryDetail.getRecordId();
+			List elist=this.standSalaryItemService.findDataList(sql);
+			StringBuffer content = new StringBuffer(
+					"<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">");
+			content.append("<tr>");
+			if ((salaryDetail.getEncourageAmount() != new BigDecimal(0))
 					&&
-					/* 176 */(salaryDetail.getEncourageAmount() != null)) {
-				/* 177 */content.append("<th>")
-				/* 178 */.append("奖励金额</th><td>")
-				/* 179 */.append(salaryDetail.getEncourageAmount())
-				/* 180 */.append("</td>");
+					(salaryDetail.getEncourageAmount() != null)) {
+				content.append("<th>")
+				.append("奖励金额</th><td>")
+				.append(salaryDetail.getEncourageAmount())
+				.append("</td>");
 			}
-
-			/* 183 */if ((salaryDetail.getEncourageAmount() != new BigDecimal(0))
+			if ((salaryDetail.getDeductAmount() != new BigDecimal(0))
 					&&
-					/* 184 */(salaryDetail.getEncourageAmount() != null)) {
-				/* 185 */content.append("<th>")
-				/* 186 */.append("扣除金额</th><td>")
-				/* 187 */.append(salaryDetail.getDeductAmount())
-				/* 188 */.append("</td>");
+					(salaryDetail.getDeductAmount() != null)) {
+				content.append("<th>")
+				.append("扣除金额</th><td>")
+				.append(salaryDetail.getDeductAmount())
+				.append("</td>");
 			}
-
-			/* 191 */if ((salaryDetail.getEncourageAmount() != new BigDecimal(0))
+			if ((salaryDetail.getStandAmount()!= new BigDecimal(0))
 					&&
-					/* 192 */(salaryDetail.getEncourageAmount() != null)) {
-				/* 193 */content.append("<th>")
-				/* 194 */.append("效绩金额</th><td>")
-				/* 195 */.append(salaryDetail.getAchieveAmount())
-				/* 196 */.append("</td>");
+					(salaryDetail.getStandAmount() != null)) {
+				content.append("<th>")
+				.append("固定工资</th><td>")
+				.append(salaryDetail.getStandAmount())
+				.append("</td>");
 			}
 			content.append("</tr>");
-			content.append("</tr>");
-			/* 175 */if ((salaryDetail.getProvident() != new BigDecimal(0))
-					&&
-					/* 176 */(salaryDetail.getProvident() != null)) {
-				/* 177 */content.append("<th>")
-				/* 178 */.append("公积金</th><td>")
-				/* 179 */.append(salaryDetail.getProvident())
-				/* 180 */.append("</td>");
+			
+			content.append("<tr>");
+			if (elist!= null&&elist.size()>0) {
+				content.append("<th>")
+				.append("浮动工资</th><td>")
+				.append(((Map)elist.get(0)).get("perCoefficient").toString())
+				.append("</td>");
 			}
-
-			/* 183 */if ((salaryDetail.getInsurance()!= new BigDecimal(0))
+			
+			if ((salaryDetail.getPerCoefficient() != new BigDecimal(0))
 					&&
-					/* 184 */(salaryDetail.getInsurance() != null)) {
-				/* 185 */content.append("<th>")
-				/* 186 */.append("保险</th><td>")
-				/* 187 */.append(salaryDetail.getInsurance())
-				/* 188 */.append("</td>");
+					(salaryDetail.getPerCoefficient() != null)) {
+				content.append("<th>")
+				.append("绩效系数</th><td>")
+				.append(salaryDetail.getPerCoefficient())
+				.append("</td>");
 			}
-
-			/* 191 */if ((salaryDetail.getSelftax() != new BigDecimal(0))
+			if ((salaryDetail.getAchieveAmount() != new BigDecimal(0))
 					&&
-					/* 192 */(salaryDetail.getSelftax() != null)) {
-				/* 193 */content.append("<th>")
-				/* 194 */.append("个人所得税</th><td>")
-				/* 195 */.append(salaryDetail.getSelftax())
-				/* 196 */.append("</td>");
+					(salaryDetail.getAchieveAmount() != null)) {
+				content.append("<th>")
+				.append("效绩金额</th><td>")
+				.append(salaryDetail.getAchieveAmount())
+				.append("</td>");
 			}
 			content.append("</tr>");
-			/* 198 */content
-					.append("</table><table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\"><tr>");
-			/* 199 */for (StandSalaryItem item : items) {
-				/* 200 */content.append("<th>")
-				/* 201 */.append(item.getItemName())
-				/* 202 */.append("</th>");
+			
+			content.append("<tr>");
+			
+			if ((salaryDetail.getIssuedAmount()!= new BigDecimal(0))
+					&&
+					(salaryDetail.getIssuedAmount() != null)) {
+				content.append("<th>")
+				.append("应发金额</th><td>")
+				.append(salaryDetail.getIssuedAmount())
+				.append("</td>");
 			}
-			/* 204 */content.append("</tr><tr>");
-			/* 205 */for (StandSalaryItem item2 : items) {
-				/* 206 */content.append("<td>")
-				/* 207 */.append(item2.getAmount())
-				/* 208 */.append("</td>");
+			if ((salaryDetail.getTaxableAmount() != new BigDecimal(0))
+					&&
+					(salaryDetail.getTaxableAmount() != null)) {
+				content.append("<th>")
+				.append("应税金额</th><td>")
+				.append(salaryDetail.getTaxableAmount())
+				.append("</td>");
 			}
-			/* 210 */content.append("</tr></table>");
-			/* 211 */buff.append("',content:'")
-			/* 212 */.append(content.toString())
-			/* 213 */.append("'},");
+			if ((salaryDetail.getAcutalAmount() != new BigDecimal(0))
+					&&
+					(salaryDetail.getAcutalAmount() != null)) {
+				content.append("<th>")
+				.append("实发金额</th><td>")
+				.append(salaryDetail.getAcutalAmount())
+				.append("</td>");
+			}
+			content.append("</tr>");
+			
+			content.append("<tr>");
+			if ((salaryDetail.getProvident() != new BigDecimal(0))
+					&&
+					(salaryDetail.getProvident() != null)) {
+				content.append("<th>")
+				.append("公积金</th><td>")
+				.append(salaryDetail.getProvident())
+				.append("</td>");
+			}
+			if ((salaryDetail.getInsurance()!= new BigDecimal(0))
+					&&
+					(salaryDetail.getInsurance() != null)) {
+				content.append("<th>")
+				.append("保险</th><td>")
+				.append(salaryDetail.getInsurance())
+				.append("</td>");
+			}
+			if ((salaryDetail.getSelftax() != new BigDecimal(0))
+					&&
+					(salaryDetail.getSelftax() != null)) {
+				content.append("<th>")
+				.append("个人所得税</th><td>")
+				.append(salaryDetail.getSelftax())
+				.append("</td>");
+			}
+			content.append("</tr>");
+			
+			content.append("<tr>");
+			if ((salaryDetail.getProvident() != new BigDecimal(0))
+					&&
+					(salaryDetail.getProvident() != null)) {
+				content.append("<th>")
+				.append("描述</th><td colspan=5>")
+				.append(salaryDetail.getMemo())
+				.append("</td>");
+			}
+			content.append("</tr>");
+			content.append("</table>");
+			content.append("<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\"><tr>");
+			content.append("<th>")
+			.append("补助明细")
+			.append("</th>");
+			content.append("<th>")
+			.append("扣款明细")
+			.append("</th>");
+			content.append("</tr>");
+			content.append("<tr>");
+			content.append("<td>")
+			.append(salaryDetail.getEncourageDesc())
+			.append("</td>");
+			content.append("<td>")
+			.append(salaryDetail.getDeductDesc())
+			.append("</td>");
+			content.append("</tr></table>");
+			content.append("<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\"><tr>");
+			for (StandSalaryItem item : items) {
+				content.append("<th>")
+				.append(item.getItemName())
+				.append("</th>");
+			}
+			content.append("</tr><tr>");
+			for (StandSalaryItem item2 : items) {
+				content.append("<td>")
+				.append(item2.getAmount())
+				.append("</td>");
+			}
+			content.append("</tr></table>");
+			buff.append("',content:'")
+			.append(content.toString())
+			.append("'},");
 		}
-		/* 215 */if (list.size() > 0) {
-			/* 216 */buff.deleteCharAt(buff.length() - 1);
+		if (list.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
 		}
-		/* 218 */buff.append("]}");
-
-		/* 220 */this.jsonString = buff.toString();
-		/* 221 */return "success";
+		buff.append("]}");
+		this.jsonString = buff.toString();
+		return "success";
 	}
 	public String export(){
-//		QueryFilter filter = new QueryFilter(getRequest());
-//		List<SalaryPayoff> list = this.salaryPayoffService
-//				.getAll(filter);
-		String [] titles=new String[18];
-		String [] proNames=new String[18];
-		String sql="select department.depName,app_user.fullname,emp_profile.position,emp_profile.accessionTime," +
-				"emp_profile.bankNo,emp_profile.standardMoney,emp_profile.perCoefficient,salary_payoff.achieveAmount," +
-				"salary_payoff.encourageAmount,salary_payoff.encourageDesc,salary_payoff.provident,salary_payoff.insurance," +
-				"salary_payoff.deductAmount,salary_payoff.deductDesc," +
-				"salary_payoff.selftax,salary_payoff.acutalAmount,salary_payoff.regTime,salary_payoff.memo " +
+		String sql="select department.depName,app_user.fullname,app_user.userId," +//部门名称 用户名 用户id
+				"emp_profile.position,emp_profile.accessionTime," +//岗位 入职时间
+				"emp_profile.bankNo,emp_profile.standardMoney," +//银行卡号 基本工资
+				"emp_profile.perCoefficient,emp_profile.positiveTime," +//绩效基数 转正日期
+				"salary_payoff.perCoefficient as jxxs,salary_payoff.issuedAmount," +//绩效系数 应发金额
+				"salary_payoff.taxableAmount,salary_payoff.achieveAmount," +//应税金额 绩效奖金
+				"salary_payoff.encourageAmount,salary_payoff.encourageDesc," +//奖励金额 奖励描述
+				"salary_payoff.provident,salary_payoff.insurance," +//公积金 保险
+				"salary_payoff.deductAmount,salary_payoff.deductDesc," +//扣款  扣款描述
+				"salary_payoff.startTime,salary_payoff.selftax," +//工资计算开始时间  个人所得税
+				"salary_payoff.acutalAmount,salary_payoff.regTime,salary_payoff.memo " +//实发金额 备注
 				"from salary_payoff,department,app_user,emp_profile " +
-				"where salary_payoff.userId=app_user.userId and emp_profile.userId=app_user.userId and department.depId=app_user.depId";
+				"where salary_payoff.userId=app_user.userId " +
+				"and emp_profile.userId=app_user.userId " +
+				"and department.depId=app_user.depId";
 		String fullname=getRequest().getParameter("Q_fullname_S_LK");
 		String checkStatus=getRequest().getParameter("Q_checkStatus_SN_EQ");
 		String startTime=getRequest().getParameter("Q_startTime_D_GE");
@@ -292,47 +374,11 @@ public class SalaryPayoffAction extends BaseAction {
 		if(endTime!=null&&endTime.length()>0){
 			sql+=" and date_format(salary_payoff.endTime,'%Y-%m-%d')<=date_format('"+endTime+"','%Y-%m-%d')";	
 		}
-		List<Map> list=this.salaryPayoffService.findDataList(sql);
+		ExportSalaryService exportSalaryService=(ExportSalaryService) AppUtil.getBean("exportSalaryService");
 		String fileRootPath=getRequest().getRealPath("exportFile");
-		titles[0]="部门";
-		titles[1]="姓名";
-		titles[2]="岗位";
-		titles[3]="入职时间";
-		titles[4]="银行卡号";
-		titles[5]="固定工资";
-		titles[6]="浮动工资";
-		titles[7]="绩效奖金";
-		titles[8]="补贴";
-		titles[9]="补贴详细";
-		titles[10]="公积金";
-		titles[11]="保险";
-		titles[12]="扣除";
-		titles[13]="扣除详细";
-		titles[14]="个人所得税";
-		titles[15]="实发金额";
-		titles[16]="统计时间";
-		titles[17]="备注";
-		
-		proNames[0]="depName";
-		proNames[1]="fullname";
-		proNames[2]="position";
-		proNames[3]="accessionTime";
-		proNames[4]="bankNo";
-		proNames[5]="standardMoney";
-		proNames[6]="perCoefficient";
-		proNames[7]="achieveAmount";
-		proNames[8]="encourageAmount";
-		proNames[9]="encourageDesc";
-		proNames[10]="provident";
-		proNames[11]="insurance";
-		proNames[12]="deductAmount";
-		proNames[13]="deductDesc";
-		proNames[14]="selftax";
-		proNames[15]="acutalAmount";
-		proNames[16]="regTime";
-		proNames[17]="memo";	
+		String filepath=exportSalaryService.exportSalary(fileRootPath, "薪资", "salarypayoff", sql, "3");
 		Gson gson = new Gson();
-		this.jsonString ="{success:true,data:"+gson.toJson("exportFile/"+this.salaryPayoffService.exportData(fileRootPath, "薪资", "salarypayoff", titles, proNames, list, "maplist"))+"}";
+		this.jsonString ="{success:true,data:"+gson.toJson("exportFile/"+filepath)+"}";
 		return "success";
 	}
 	

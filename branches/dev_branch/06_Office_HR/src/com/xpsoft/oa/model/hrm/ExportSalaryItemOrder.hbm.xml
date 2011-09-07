@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.hrm.ExportSalaryItemOrder"
+        table="hr_exportsalaryitemorder"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        
+        <property
+            name="exportName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="exportName"
+            not-null="true"
+        />
+     
+        <property
+            name="fromTable"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="fromTable"
+        />
+        <property
+            name="fromTableName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="fromTableName"
+        />
+        <property
+            name="fromTableTypeName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="fromTableTypeName"
+        />
+         <property
+            name="fromTableType"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="fromTableType"
+        />  
+        
+         <property
+            name="orderCol"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="orderCol"
+        /> 
+        
+        <many-to-one name="exportSalId" not-null="true" class="com.xpsoft.oa.model.hrm.ExportSalary" column="exportSalId"></many-to-one>
+        
+        <property
+            name="isDefaut"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="isDefaut"
+        /> 
+        
+    </class>
+</hibernate-mapping>

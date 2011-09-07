@@ -41,7 +41,44 @@ public class SalaryPayoff extends BaseModel {
 	protected BigDecimal selftax;//个人所得税
 	
 	
+	protected BigDecimal perCoefficient;// 绩效系数
 	
+	protected BigDecimal issuedAmount;// 应发金额
+	
+	protected BigDecimal taxableAmount;// 应税金额
+	
+	
+	
+	public BigDecimal getPerCoefficient() {
+		return perCoefficient;
+	}
+
+
+	public void setPerCoefficient(BigDecimal perCoefficient) {
+		this.perCoefficient = perCoefficient;
+	}
+
+
+	public BigDecimal getIssuedAmount() {
+		return issuedAmount;
+	}
+
+
+	public void setIssuedAmount(BigDecimal issuedAmount) {
+		this.issuedAmount = issuedAmount;
+	}
+
+
+	public BigDecimal getTaxableAmount() {
+		return taxableAmount;
+	}
+
+
+	public void setTaxableAmount(BigDecimal taxableAmount) {
+		this.taxableAmount = taxableAmount;
+	}
+
+
 	public SalaryPayoff() {
 	}
 
