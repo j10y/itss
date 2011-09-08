@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fields>
+    <field name="leaderRead.leaderOpinion" label="审批意见" type="varchar" length="1024"/>
+	<field name="hrPromApply.id" label="primaryKey" type="long" isShowed="false" />
+</fields>

@@ -78,21 +78,26 @@
 						}
 					}
 				});
-				var applyPositionCombo = new Ext.form.ComboBox({
+				var applyPositionNameCombo = new Ext.form.ComboBox({
 					mode : "remote",
-					hiddenName : "hrPromApply.applyPosition.jobId",
+					name : "hrPromApply.applyPositionName",
 					allowBlank : false,
 					width : 249,
 					valueField : "jobId",
 					displayField : "jobName",
-					renderTo : "applyPosition",
+					renderTo : "applyPositionName",
 					triggerAction : "all",
 					store : new Ext.data.JsonStore({
 						url : "${pageContext.request.contextPath}/hrm/applyPositionHrPromApply.do",
 						fields : ["jobId", "jobName"],
 						root : "result",
 						remoteSort : true
-					})
+					}),
+					listeners : {
+						select : function(l, h, k) {
+							document.getElementById("applyPositionId").value = h.data.jobId;
+						}
+					}
 				});
 				var applyDate = new Ext.form.DateField({
 					name : "hrPromApply.applyDate",
@@ -105,10 +110,10 @@
 				if("${hrPromApply.id}" != 0) {
 					applyUserCombo.setValue("${hrPromApply.applyUser.userId}");
 					applyUserCombo.setRawValue("${hrPromApply.applyUser.fullname}");
-					applyPositionCombo.setValue("${hrPromApply.applyPosition.jobId}");
-					applyPositionCombo.setRawValue("${hrPromApply.applyPosition.jobName}");
+					applyPositionNameCombo.setValue("${hrPromApply.applyPositionId}");
+					applyPositionNameCombo.setRawValue("${hrPromApply.applyPositionName}");
 					applyDate.setRawValue("${hrPromApply.applyDate}");
-					document.getElementById("accessionTime").innerHTML = "${accessionTime}";
+					document.getElementById("accessionTime").innerHTML = "${hrPromApply.accessionTime}";
 				}
 			});
 
@@ -188,7 +193,7 @@
 
 	<body>
 		<div style="text-align:center;height:50px;line-height:50px;">
-			<font style="font-size:18px;">晋升申请表1</font>
+			<font style="font-size:18px;">晋升申请表</font>
 		</div>
 		<form id="applyForm" action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
 			<input type="hidden" id="hrPromApply.id" name="hrPromApply.id" value="${hrPromApply.id}"/>
@@ -208,7 +213,7 @@
 				<tr>
 					<td align="right">入职日期</td>
 					<td>
-						<input type="text" id="accessionTime" value="${accessionTime}" readonly="readonly" style="border:none;width:100%;height:100%"/>
+						<input type="text" id="accessionTime" value="${hrPromApply.accessionTime}" readonly="readonly" style="border:none;width:100%;height:100%"/>
 					</td>
 					<td align="right">现职位</td>
 					<td style="padding:1px">
@@ -218,8 +223,7 @@
 				</tr>
 				<tr>
 					<td align="right">拟担任职位</td>
-					<td><div id="applyPosition"></div>
-						
+					<td><div id="applyPosition"></div>						
 						<input type="text" id="applyPosition" value="${hrPromApply.applyPositionName}" readonly="readonly" style="border:none;width:100%;height:100%"/>
 					</td>
 					<td align="right">拟晋升时间</td>

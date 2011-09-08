@@ -1,5 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page pageEncoding="UTF-8"%>
+<%
+	String basePath=request.getContextPath();
+%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -11,11 +14,13 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css" />
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/adapter/ext/ext-base.gzjs"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-all.gzjs"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-lang-zh_CN.js"></script>		
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/Toast.js"></script>
 		<script type="text/javascript">
 			Ext.onReady(function() {
 				var proKnowledgeCombo = new Ext.form.ComboBox({
-					mode : "remote",
+					mode : "local",
+					width:100,
 					allowBlank : false,
 					name : "hrPromAssessment.proKnowledge",
 					renderTo : "proKnowledge",
@@ -35,7 +40,7 @@
 						["4+", "4+"],
 						["5-", "5-"],
 						["5", "5"],
-						["5+", "5+"],
+						["5+", "5+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -44,7 +49,8 @@
 					}
 				});
 				var commEffectCombo = new Ext.form.ComboBox({
-					mode : "remote",
+					mode : "local",
+					width:100,
 					allowBlank : false,
 					name : "hrPromAssessment.commEffect",
 					renderTo : "commEffect",
@@ -64,7 +70,7 @@
 						["4+", "4+"],
 						["5-", "5-"],
 						["5", "5"],
-						["5+", "5+"],
+						["5+", "5+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -73,7 +79,8 @@
 					}
 				});
 				var solveAbilityCombo = new Ext.form.ComboBox({
-					mode : "remote",
+					mode : "local",
+					width:100,
 					allowBlank : false,
 					name : "hrPromAssessment.solveAbility",
 					renderTo : "solveAbility",
@@ -93,7 +100,7 @@
 						["4+", "4+"],
 						["5-", "5-"],
 						["5", "5"],
-						["5+", "5+"],
+						["5+", "5+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -102,7 +109,7 @@
 					}
 				});
 				var difficultyManageCombo = new Ext.form.ComboBox({
-					mode : "remote",
+					mode : "local",
 					allowBlank : false,
 					name : "hrPromAssessment.difficultyManage",
 					renderTo : "difficultyManage",
@@ -122,7 +129,7 @@
 						["4+", "4+"],
 						["5-", "5-"],
 						["5", "5"],
-						["5+", "5+"],
+						["5+", "5+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -131,7 +138,8 @@
 					}
 				});
 				var businessFieldEffectCombo = new Ext.form.ComboBox({
-					mode : "remote",
+					mode : "local",
+					width:100,
 					allowBlank : false,
 					name : "hrPromAssessment.businessFieldEffect",
 					renderTo : "businessFieldEffect",
@@ -151,7 +159,7 @@
 						["4+", "4+"],
 						["5-", "5-"],
 						["5", "5"],
-						["5+", "5+"],
+						["5+", "5+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -160,7 +168,7 @@
 					}
 				});
 				var ratingResultCombo = new Ext.form.ComboBox({
-					mode : "remote",
+					mode : "local",
 					allowBlank : false,
 					name : "hrPromAssessment.ratingResult",
 					renderTo : "ratingResult",
@@ -180,7 +188,7 @@
 						["4+", "4+"],
 						["5-", "5-"],
 						["5", "5"],
-						["5+", "5+"],
+						["5+", "5+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -189,7 +197,7 @@
 					}
 				});
 				var postRankCombo = new Ext.form.ComboBox({
-					mode : "remote",
+					mode : "local",
 					allowBlank : false,
 					name : "hrPromAssessment.postRank",
 					renderTo : "postRank",
@@ -206,7 +214,7 @@
 						["9级","9级"],
 						["10级","10级"],
 						["11级","11级"],
-						["12级","12级"],
+						["12级","12级"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -218,7 +226,7 @@
 					fieldLabel : "薪酬标准单名称",
 					id : "salaryLevelNameCombo",
 					name : "hrPromAssessment.salaryLevelName",
-					mode : "local",
+					mode : "remote",
 					renderTo : "salaryLevelName",
 					allowBlank : false,
 					editable : false,
@@ -267,6 +275,9 @@
 					ratingResultCombo.setValue("${hrPromAssessment.ratingResult}");
 					postRankCombo.setValue("${hrPromAssessment.postRank}");
 					appointDate.setRawValue("${hrPromAssessment.appointDate}");
+					salaryLevelNameCombo.setValue("${hrPromAssessment.salaryLevelName}");
+					salaryLevelNameCombo.setRawValue("${hrPromAssessment.salaryLevelName}");
+					document.getElementById("salaryLevelId").value="${hrPromAssessment.salaryLevelId}";
 				}
 			});
 		</script>
@@ -378,9 +389,13 @@
 				</tr>
 				<tr>
 					<td align="center" colspan="6">
+						<!-- 
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
+						 -->
 						<input type="submit" value="保存"/>&nbsp;&nbsp;
+						<!-- 
 						<input type="button" value="提交审核"/>
+						 -->
 					</td>
 				</tr>
 			</table>

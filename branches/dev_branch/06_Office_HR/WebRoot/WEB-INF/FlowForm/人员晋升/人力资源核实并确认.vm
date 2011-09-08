@@ -2,10 +2,10 @@
  * @createtime:2011-08-02
  * @author csx
  * @description 请假审批
- * @class HrPromApplySuperAuditFlowView
+ * @class HrPromApplyHRConfirmAuditFlowView
  * @extends Ext.Panel
  */
-HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
+HrPromApplyHRConfirmAuditFlowView = Ext.extend(Ext.Panel, {
 	setTaskId : function(tId){
 		this.taskId = tId;
 	},
@@ -16,9 +16,9 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 	constructor : function(_cfg) {
 		Ext.applyIf(this, _cfg);
 		this.init();
-		HrPromApplySuperAuditFlowView.superclass.constructor.call(this, {
-					title : '上报审批',
-					id : 'HrPromApplySuperAuditFlowView',
+		HrPromApplyHRConfirmAuditFlowView.superclass.constructor.call(this, {
+					title : '人力资源核实并确认',
+					id : 'HrPromApplyHRConfirmAuditFlowView',
 					layout : 'column',
 					defaults : {
 						border : false,
@@ -42,7 +42,8 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 								,new Ext.Button({
 								iconCls:'btn-save',
 								text : '拒绝',
-								handler : function(){
+								handler : function(){									
+									
 									Ext.getCmp("publishStatus").setValue(2);//退回状态
 									//流程结束，修改状态
 									Ext.getCmp("auditForm").getForm().submit({
@@ -52,11 +53,11 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 											Ext.getCmp("auditForm").getForm().submit({
 									            url:__ctxPath+ "/flow/nextProcessActivity.do",
 												method:'post',
-												params:{taskId:Ext.getCmp("HrPromApplySuperAuditFlowView").taskId,signalName:"to结束1",activityName:"上报审批",destName:'结束1'},
+												params:{taskId:Ext.getCmp("HrPromApplyHRConfirmAuditFlowView").taskId,signalName:"to结束1",activityName:"人力资源核实并确认",destName:'结束1'},
 												success : function(fp, action) {
 												    Ext.ux.Toast.msg('操作信息','成功保存！');
 												    
-												    AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPromApplySuperAuditFlowView").taskId);
+												    AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPromApplyHRConfirmAuditFlowView").taskId);
 
 												    
 													var myTaskView=Ext.getCmp("MyTaskGrid");
@@ -168,7 +169,7 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 			id : 'auditForm',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/hrm/modStatusHrPromApply.do?auditStep=superAudit',
+			url : __ctxPath + '/hrm/modStatusHrPromApply.do',
 			defaults : {
 				anchor : '94%,96%'
 			},
@@ -201,7 +202,7 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',
-						value :  6 //待人力资源核实并确认
+						value :  7 //目标设定和面谈
 					}]
 		});
 	}

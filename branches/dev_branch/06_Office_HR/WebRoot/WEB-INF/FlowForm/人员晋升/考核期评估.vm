@@ -2,10 +2,10 @@
  * @createtime:2011-08-02
  * @author csx
  * @description 请假审批
- * @class HrPromApplySuperAuditFlowView
+ * @class HrPromApplyAssessFlowView
  * @extends Ext.Panel
  */
-HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
+HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 	setTaskId : function(tId){
 		this.taskId = tId;
 	},
@@ -16,9 +16,14 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 	constructor : function(_cfg) {
 		Ext.applyIf(this, _cfg);
 		this.init();
-		HrPromApplySuperAuditFlowView.superclass.constructor.call(this, {
-					title : '上报审批',
-					id : 'HrPromApplySuperAuditFlowView',
+		
+		//引入js		
+		var jsArr=[__ctxPath + "/js/hrm/HrPromAssessmentForm.js"];
+		$ImportSimpleJs(jsArr,null);
+		
+		HrPromApplyAssessFlowView.superclass.constructor.call(this, {
+					title : '考核期评估    <font color="red">*转至[领导批准]前，请填写晋升评估表</font>',
+					id : 'HrPromApplyAssessFlowView',
 					layout : 'column',
 					defaults : {
 						border : false,
@@ -26,7 +31,17 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 					},
 					width : '95%',
 					height : 720,
-					buttons :  [
+					buttons :  [new Ext.Button({
+									iconCls:'btn-save',
+									text : '<font color="red">填写【晋升评估表】</font>',
+									handler : function(){
+										var applyId = ${hrPromApply_id};
+										new HrPromAssessmentForm({
+											applyId : applyId,
+											assess : true
+										}).show();
+									}
+								}),
 								#set ($count=0)
 								#foreach ($v in $nextTrans)
 									#if($count>0)
@@ -41,6 +56,7 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 								#end
 								,new Ext.Button({
 								iconCls:'btn-save',
+								hidden : true,
 								text : '拒绝',
 								handler : function(){
 									Ext.getCmp("publishStatus").setValue(2);//退回状态
@@ -52,11 +68,11 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 											Ext.getCmp("auditForm").getForm().submit({
 									            url:__ctxPath+ "/flow/nextProcessActivity.do",
 												method:'post',
-												params:{taskId:Ext.getCmp("HrPromApplySuperAuditFlowView").taskId,signalName:"to结束1",activityName:"上报审批",destName:'结束1'},
+												params:{taskId:Ext.getCmp("HrPromApplyAssessFlowView").taskId,signalName:"to结束1",activityName:"目标设定与面谈",destName:'结束1'},
 												success : function(fp, action) {
 												    Ext.ux.Toast.msg('操作信息','成功保存！');
 												    
-												    AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPromApplySuperAuditFlowView").taskId);
+												    AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPromApplyAssessFlowView").taskId);
 
 												    
 													var myTaskView=Ext.getCmp("MyTaskGrid");
@@ -151,6 +167,8 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 	 */
 	init : function() {
 	
+		//查询是否存在评估表，不存在则建立
+	
 		//显示请假详细信息
 		this.detailPanel = new Ext.Panel({
 			//title:'流程审批信息',
@@ -168,18 +186,19 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 			id : 'auditForm',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/hrm/modStatusHrPromApply.do?auditStep=superAudit',
+			url : __ctxPath + '/hrm/modStatusHrPromApply.do?auditStep=setTarget',//目标设定与面谈
 			defaults : {
 				anchor : '94%,96%'
 			},
-			items : [{
+			items : [ {
 						name : 'leaderRead.readId',
 						id : 'readId',
 						xtype : 'hidden'
 					},{
 						fieldLabel : '审批意见',
 						name : 'leaderRead.leaderOpinion',
-						xtype:'textarea'
+						xtype:'textarea',
+						allowBlank : false
 					},{
 						name : 'leaderRead.checkName',
 						xtype : 'hidden',

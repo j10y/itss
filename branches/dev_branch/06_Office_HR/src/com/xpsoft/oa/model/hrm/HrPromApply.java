@@ -6,6 +6,17 @@ import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 
 public class HrPromApply extends BaseModel{
+	
+	public static final Integer STATUS_DRAFT = 0;
+	public static final Integer STATUS_AUDITING = 1;
+	public static final Integer STATUS_BACK = 2;
+	public static final Integer STATUS_APPROVED = 3;
+	public static final Integer STATUS_DEL = 4;
+	public static final Integer STATUS_SUPER = 5;
+	public static final Integer STATUS_HRCONFIRM = 6;
+	public static final Integer STATUS_TARGET = 7;
+	public static final Integer STATUS_ASSESS = 8;
+	
 	protected Long id;
 	protected AppUser applyUser;//晋升员工
 	protected Date accessionTime;//入职时间
@@ -25,11 +36,20 @@ public class HrPromApply extends BaseModel{
 	protected String intRecord;//员工面谈记录
 	protected Long postManagerId;//部门领导ID
 	protected String postManagerName;//部门领导姓名
+	/**
+	 * 5：待上报审批
+	 * 6：待人力资源核实并确认
+	 * 7：目标设定和面谈
+	 * 8：考核期评估
+	 */
 	protected Integer publishStatus;//状态 0：草稿 1：审核中 2：退回 3：审核通过 4：删除标记
 	protected AppUser createPerson;
 	protected Date createDate;
 	protected AppUser modifyPerson;
 	protected Date modifyDate;
+	
+	protected Date postManagerAuditDate;//直线领导签字时间，[上报审批]环节
+	protected Date userManagerAuditDate;//本人签字时间，[目标设定与面谈]环节
 	
 	public HrPromApply() {}
 

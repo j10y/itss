@@ -2,6 +2,7 @@
 <fields>
 	<field name="hrPromApply.id" label="primaryKey" type="long" isShowed="false" />
 	<field name="hrPromApply.depName" label="部门名称" type="varchar" length="256"/>
+	<field name="hrPromApply.depName" label="部门名称" type="varchar" length="256"/>
 	<field name="hrPromApply.accessionTime" label="入职时间" type="varchar" length="256"/>
 	<field name="hrPromApply.nowPositionName" label="现工作岗位" type="varchar" length="256"/>
 	<field name="hrPromApply.applyPosition.jobId" label="拟晋升岗位id" type="varchar" length="256"/>

@@ -201,4 +201,29 @@ public class HrPromApplyAction extends BaseAction{
 		return "success";
 	}
 	
+	/**
+	 * 仅修改状态
+	 * @return
+	 */
+	public String modStatus() {		
+		HrPromApply promApply = this.hrPromApplyService.get(this.id);
+		Integer publishStatus = Integer.valueOf(getRequest().getParameter("publishStatus"));
+		promApply.setPublishStatus(publishStatus);
+		
+		if(getRequest().getParameter("auditStep")!=null){
+			String auditStep = getRequest().getParameter("auditStep");
+			if(auditStep.equalsIgnoreCase("setTarget")){
+				//目标
+				promApply.setTarget1(getRequest().getParameter("target1"));
+				promApply.setTarget2(getRequest().getParameter("target2"));
+				promApply.setTarget3(getRequest().getParameter("target3"));
+				//面谈记录
+				promApply.setIntRecord(getRequest().getParameter("intRecord"));				
+			}
+		}		
+		this.hrPromApplyService.save(promApply);
+		this.jsonString = "{success:true}";		
+		return "success";
+	}
+	
 }

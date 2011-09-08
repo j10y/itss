@@ -407,7 +407,8 @@ App.importJs = {
 	ShowHistoryView : [__ctxPath + "/js/kpi/ShowHistoryView.js",
 			__ctxPath + "/ext3/ux/RowExpander.js"],
 	HrPromApplyView	: [__ctxPath + "/js/hrm/HrPromApplyView.js",
-			__ctxPath + "/js/hrm/HrPromApplyForm.js"],
+			__ctxPath + "/js/hrm/HrPromApplyForm.js",
+			__ctxPath + "/js/hrm/HrPromAssessmentForm.js"],
 	HrTZAnlyReportView:[__ctxPath + "/js/hrm/HrTZAnlyReportView.js"],
 	ExportSalaryView : [__ctxPath + "/js/hrm/ExportSalaryView.js",__ctxPath + "/js/hrm/ExportSalaryItemForm.js"]		
 				                    

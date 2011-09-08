@@ -29,6 +29,9 @@ public class HrPromAssessment extends BaseModel{
 	protected String promIntRecord;//晋升面谈记录
 	protected Long auditHrId;//人力资源审核人员ID
 	protected String auditHrName;//人力资源审核人员姓名
+	/**
+	 * 
+	 */
 	protected Integer publishStatus;//状态 0：草稿 1：审核中 2：退回 3：审核通过 4：删除标记
 	protected AppUser createPerson;
 	protected Date createDate;

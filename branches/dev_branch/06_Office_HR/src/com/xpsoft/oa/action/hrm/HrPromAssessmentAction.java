@@ -49,6 +49,16 @@ public class HrPromAssessmentAction extends BaseAction{
 		return "show";
 	}
 	
+	/**
+	 * 通过申请表ID查询评估表，如果不存在则建立
+	 * @return
+	 */
+	public String getViewByApplyId() {
+		Long applyId = Long.valueOf(getRequest().getParameter("applyId"));
+		this.hrPromAssessment = this.hrPromAssessmentService.getByApplyId(applyId);
+		return "show";
+	}
+	
 	public String get() {
 		return "success";
 	}
