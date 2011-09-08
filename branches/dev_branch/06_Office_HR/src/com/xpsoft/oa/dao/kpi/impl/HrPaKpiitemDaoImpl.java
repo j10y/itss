@@ -21,7 +21,7 @@ public class HrPaKpiitemDaoImpl extends BaseDaoImpl<HrPaKpiitem>
 		for(int i = 1; i < pbcIds.length; i++) {
 			hql += "," + pbcIds[i];
 		}
-		hql += ")";
+		hql += ") and pbc.publishStatus = 3";
 		
 		final String hql2 = hql;
 		
