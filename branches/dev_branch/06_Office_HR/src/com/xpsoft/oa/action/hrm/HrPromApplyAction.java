@@ -128,13 +128,6 @@ public class HrPromApplyAction extends BaseAction{
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		if(this.id != 0) {
 			this.hrPromApply = this.hrPromApplyService.get(this.id);
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("Q_userId_L_EQ", this.hrPromApply.getApplyUser().getUserId().toString());
-			QueryFilter filter = new QueryFilter(map);
-			List<EmpProfile> list = empProfileService.getAll(filter);
-			if(list.size() > 0) {
-				this.getRequest().setAttribute("accessionTime", sdf.format(list.get(0).getAccessionTime()));
-			}
 		}
 		return "show";
 	}
@@ -169,7 +162,9 @@ public class HrPromApplyAction extends BaseAction{
 			promApply.setWorkYear(this.hrPromApply.getWorkYear());
 			promApply.setWorkHereYear(this.hrPromApply.getWorkHereYear());
 			promApply.setApplyUser(this.hrPromApply.getApplyUser());
-			promApply.setApplyPosition(this.hrPromApply.getApplyPosition());
+			promApply.setAccessionTime(this.hrPromApply.getAccessionTime());
+			promApply.setApplyPositionId(this.hrPromApply.getApplyPositionId());
+			promApply.setApplyPositionName(this.hrPromApply.getApplyPositionName());
 			promApply.setApplyReason(this.hrPromApply.getApplyReason());
 			promApply.setApplyDate(this.hrPromApply.getApplyDate());
 			promApply.setTarget1(this.hrPromApply.getTarget1());
