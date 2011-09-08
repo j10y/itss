@@ -147,8 +147,8 @@ public class SalaryPayoffServiceImpl extends BaseServiceImpl<SalaryPayoff>
 		BudgetService budgetService=(BudgetService) AppUtil.getBean("budgetService");
 		Map map=new HashMap();
 		map.put("Q_belongDept.depId_L_EQ", depid+"");
-		map.put("Q_beginDate_D_LE", DateUtil.formatStringToDate(new Date())+"");
-		map.put("Q_endDate_D_GE", DateUtil.formatStringToDate(new Date())+"");
+		map.put("Q_beginDate_D_LE", DateUtil.formatDateTimeToString(new Date())+"");
+		map.put("Q_endDate_D_GE", DateUtil.formatDateTimeToString(new Date())+"");
 		map.put("Q_publishStatus_N_EQ", "3");
 		QueryFilter filter=new QueryFilter(map);
 		List list=budgetService.getAll(filter);

@@ -50,7 +50,7 @@ import org.apache.commons.logging.LogFactory;
 /*    */     }
 /* 69 */     return date;
 /*    */   }
-			public static String formatStringToDate(Date date)
+			public static String formatDateTimeToString(Date date)
 /*    */   {
 /* 56 */     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 /*    */ 
@@ -94,9 +94,22 @@ import org.apache.commons.logging.LogFactory;
 
 		        return calendar.getTime();
 		    }
-/*    */ }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.core.util.DateUtil
- * JD-Core Version:    0.6.0
- */
+		    
+		    public   static   Date   getLastDayOfMonth(Date   sDate1)   {   
+		        Calendar   cDay1   =   Calendar.getInstance();   
+		        cDay1.setTime(sDate1);   
+		        final   int   lastDay   =   cDay1.getActualMaximum(Calendar.DAY_OF_MONTH);   
+		        Date   lastDate   =   cDay1.getTime();   
+		        lastDate.setDate(lastDay);   
+		        return   lastDate;   
+			}   
+		    
+		    public   static   Date   getFirstDayOfMonth(Date   sDate1)   {   
+		        Calendar   cDay1   =   Calendar.getInstance();   
+		        cDay1.setTime(sDate1);   
+		        final   int   lastDay   =   cDay1.getActualMinimum(Calendar.DAY_OF_MONTH);   
+		        Date   lastDate   =   cDay1.getTime();   
+		        lastDate.setDate(lastDay);   
+		        return   lastDate;   
+			}   
+ }
