@@ -108,13 +108,17 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		if(mapList1.size() == 0) {
 			return "success";
 		}
-		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+		String depIds = "";
+		for(int m = 0; m < mapList1.size() - 1; m++) {
+			depIds += mapList1.get(m).get("depId").toString() + ",";
+		}
+		depIds += mapList1.get(mapList1.size() - 1).get("depId").toString();
 		String sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
-		"a.belongUser = b.userId and b.depId = " + depId + " and publishStatus = 1";
+		"a.belongUser = b.userId and b.depId in (" + depIds + ") and publishStatus = 1";
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
 		//获取部门下所有员工处于审核状态的个人PBC信息
 		String sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname from hr_pa_kpipbc2user a, emp_profile b where " +
-				"a.belongUser = b.userId and b.depId = " + depId + " and publishStatus = 1 limit " + 
+				"a.belongUser = b.userId and b.depId in (" + depIds + ") and publishStatus = 1 limit " + 
 				filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
 		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
@@ -161,10 +165,14 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		if(mapList1.size() == 0) {
 			return "success";
 		}
-		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+		String depIds = "";
+		for(int m = 0; m < mapList1.size() - 1; m++) {
+			depIds += mapList1.get(m).get("depId").toString() + ",";
+		}
+		depIds += mapList1.get(mapList1.size() - 1).get("depId").toString();
 		//获取部门下所有员工的个人PBC总数
 		String sql4 = "select count(a.id) as total from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-				"a.belongUser = b.userId and b.depId = " + depId;
+				"a.belongUser = b.userId and b.depId in (" + depIds + ") ";
 		sql4 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
 		sql4 += (startDate == null || "".equals(startDate)) ? "" : " and a.createDate >= '" + startDate + "'";
 		sql4 += (endDate == null || "".equals(endDate)) ? "" : " and a.createDate <= '" + endDate + " 23:59'";
@@ -172,7 +180,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		String totalCounts = mapList4.get(0).get("total").toString();
 		//获取部门下所有员工的个人考核模板信息
 		String sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname, a.createDate from hr_pa_kpipbc2usercmp a, emp_profile b where " +
-		"a.belongUser = b.userId and b.depId = " + depId;
+		"a.belongUser = b.userId and b.depId in (" + depIds + ") ";
 		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
 		sql2 += (startDate == null || "".equals(startDate)) ? "" : " and a.createDate >= '" + startDate + "'";
 		sql2 += (endDate == null || "".equals(endDate)) ? "" : " and a.createDate <= '" + endDate + " 23:59'";
