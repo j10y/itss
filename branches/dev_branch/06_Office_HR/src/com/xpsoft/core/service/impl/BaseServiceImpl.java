@@ -16,6 +16,6 @@ public class BaseServiceImpl<T> extends GenericServiceImpl<T, Long> implements
 		return dao.findDataList(sql);
 	}
 	public boolean removeDatabySql(String sql){
-		return dao.removeDatabySql(sql);
+		return dao.removeDatabySql(sql); 
 	}
 }
