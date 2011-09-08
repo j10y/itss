@@ -64,13 +64,17 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaAuthorizepbcService.findDataList(sql1);
 		if(mapList1.size() > 0) {//当前用户是部门负责人
-			Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+			String depIds = "";
+			for(int m = 0; m < mapList1.size() - 1; m++) {
+				depIds += mapList1.get(m).get("depId").toString() + ",";
+			}
+			depIds += mapList1.get(mapList1.size() - 1).get("depId").toString();
 			String sql4 = "select count(*) as total from hr_pa_kpipbc2user a, emp_profile b where " + 
-					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId = " + depId;
+					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId in (" + depIds + ") ";
 			sql4 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
 			List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
 			String sql2 = "select a.id, a.pbcName, b.fullname from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId = " + depId;
+					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId in (" + depIds + ") ";
 			sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
 			sql2 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 			List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
