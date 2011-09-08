@@ -468,7 +468,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 				method : "post",
 				waitMsg : "正在提交数据……",
 				success : function(c, d) {
-					Ext.ux.Toast.msg("提示信息", "成功提交审核！");
+					Ext.ux.Toast.msg("提示信息", "成功发布！");
 					if(b.from == "draft") {
 						Ext.getCmp("DraftHrPaKpipbcView").gridPanel.store.reload({
 							params : {
