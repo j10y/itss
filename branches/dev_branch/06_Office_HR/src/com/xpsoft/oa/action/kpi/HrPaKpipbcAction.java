@@ -1,5 +1,8 @@
 package com.xpsoft.oa.action.kpi;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -340,6 +343,10 @@ public class HrPaKpipbcAction extends BaseAction{
 		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
 		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
+		//取得PBC的考核频度
+		String sql = "select name from hr_pa_datadictionary where id = " + pbc.getFrequency().getId();
+		List<Map<String, Object>> mapList = this.hrPaKpipbcService.findDataList(sql);
+		String frequencyName = mapList.get(0).get("name").toString();
 		//1. 找到哪些人是这个有这个PBC关联的岗位
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		Map<String, String> profileMap = new HashMap<String, String>();
@@ -359,12 +366,13 @@ public class HrPaKpipbcAction extends BaseAction{
 			//2.1. 判断hr_pa_kpipbc2user表中有没有该User的模板
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("Q_belongUser.userId_L_EQ", String.valueOf(user.getUserId()));
+			map.put("Q_frequency.id_L_EQ", pbc.getFrequency().getId() + "");
 			QueryFilter filter = new QueryFilter(map);
 			List<HrPaKpiPBC2User> hrPaKpiPBC2UserList = hrPaKpiPBC2UserService.getAll(filter);
 			if(hrPaKpiPBC2UserList.size() <= 0) {//在hr_pa_kpipbc2user表中没有该User的模板，则为其创建新的模板
 				//2.1.1. 保存个人考核模板基本信息
 				HrPaKpiPBC2User hrPaKpiPBC2User = new HrPaKpiPBC2User();
-				hrPaKpiPBC2User.setPbcName(user.getFullname() + "的PBC");
+				hrPaKpiPBC2User.setPbcName(user.getFullname() + "的" + frequencyName + "PBC");
 				hrPaKpiPBC2User.setFromPBC(String.valueOf(pbc.getId()));
 				hrPaKpiPBC2User.setBelongUser(user);
 				hrPaKpiPBC2User.setFrequency(pbc.getFrequency());
