@@ -36,4 +36,6 @@ public abstract interface GenericDao<T, PK extends Serializable>
   public abstract void flush();
   
   public abstract List findDataList(String sql);
+  
+  public abstract boolean removeDatabySql(String sql);
 }

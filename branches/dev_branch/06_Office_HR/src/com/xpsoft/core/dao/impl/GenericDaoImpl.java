@@ -20,6 +20,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.hql.ast.QueryTranslatorImpl;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -438,4 +439,15 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> extends
 		List list=this.jdbcTemplate.queryForList(sql);
 		return list;
 	}
+	
+	 public boolean removeDatabySql(String sql){
+		 try {
+			this.jdbcTemplate.execute(sql);
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			 return false;
+		}
+		 return true;
+	 }
 }
