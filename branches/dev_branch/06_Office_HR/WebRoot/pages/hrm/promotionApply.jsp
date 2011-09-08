@@ -1,5 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page pageEncoding="UTF-8"%>
+<%
+	String basePath=request.getContextPath();
+%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -11,7 +14,8 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css" />
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/adapter/ext/ext-base.gzjs"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-all.gzjs"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-lang-zh_CN.js"></script>		
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/Toast.js"></script>
 		<script type="text/javascript">
 			Ext.onReady(function() {
 				var applyUserCombo = new Ext.form.ComboBox({
@@ -65,10 +69,10 @@
 				});
 				var applyPositionNameCombo = new Ext.form.ComboBox({
 					mode : "remote",
-					name : "hrPromApply.applyPositionName",
+					hiddenName : "hrPromApply.applyPositionName",
 					allowBlank : false,
 					width : 249,
-					valueField : "jobId",
+					valueField : "jobName",
 					displayField : "jobName",
 					renderTo : "applyPositionName",
 					triggerAction : "all",
@@ -95,7 +99,7 @@
 				if("${hrPromApply.id}" != 0) {
 					applyUserCombo.setValue("${hrPromApply.applyUser.userId}");
 					applyUserCombo.setRawValue("${hrPromApply.applyUser.fullname}");
-					applyPositionNameCombo.setValue("${hrPromApply.applyPositionId}");
+					applyPositionNameCombo.setValue("${hrPromApply.applyPositionName}");
 					applyPositionNameCombo.setRawValue("${hrPromApply.applyPositionName}");
 					applyDate.setRawValue("${hrPromApply.applyDate}");
 					document.getElementById("accessionTime").value = "${hrPromApply.accessionTime}";
@@ -162,10 +166,7 @@
 							success : function(
 									i,
 									j) {
-								Ext.ux.Toast
-										.msg(
-												"操作信息",
-												"成功保存信息！");
+								Ext.ux.Toast.msg("操作信息", "成功保存信息！");
 								Ext.getCmp("HrPromApplyForm").close();
 								var k = Ext.getCmp("ProcessRunGrid");
 								if (k != null) {
