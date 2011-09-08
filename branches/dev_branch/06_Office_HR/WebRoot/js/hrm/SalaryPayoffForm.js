@@ -105,6 +105,15 @@ SalaryPayoffForm = Ext.extend(Ext.Panel, {
 									}, {
 										name : "SalaryPayoffForm.selftax",
 										mapping : "selftax"
+									}, {
+										name : "SalaryPayoffForm.perCoefficient",
+										mapping : "perCoefficient"
+									}, {
+										name : "SalaryPayoffForm.issuedAmount",
+										mapping : "issuedAmount"
+									}, {
+										name : "SalaryPayoffForm.taxableAmount",
+										mapping : "taxableAmount"
 									}
 								]),
 							items : [{
@@ -136,11 +145,13 @@ SalaryPayoffForm = Ext.extend(Ext.Panel, {
 									xtype : "hidden",
 									name : "salaryPayoff.checkStatus",
 									id : "SalaryPayoffForm.checkStatus"
-								}, {
+								}, 
+								/*{
 									xtype : "hidden",
 									name : "salaryPayoff.acutalAmount",
 									id : "SalaryPayoffForm.acutalAmount"
-								}, {
+								},*/
+								 {
 									xtype : "hidden",
 									name : "salaryPayoff.standardId",
 									id : "SalaryPayoffForm.standardId"
@@ -296,10 +307,10 @@ SalaryPayoffForm = Ext.extend(Ext.Panel, {
 													name : "salaryPayoff.encourageAmount",
 													id : "SalaryPayoffForm.encourageAmount"
 												}, {
-													fieldLabel : "绩效工资",
+													fieldLabel : "应发金额",
 													xtype : "numberfield",
-													name : "salaryPayoff.achieveAmount",
-													id : "SalaryPayoffForm.achieveAmount"
+													name : "salaryPayoff.issuedAmount",
+													id : "SalaryPayoffForm.issuedAmount"
 												}
 											]
 										}, {
@@ -324,11 +335,45 @@ SalaryPayoffForm = Ext.extend(Ext.Panel, {
 											columnWidth : 0.5,
 											xtype : "container",
 											items : [{
+													fieldLabel : "绩效系数",
+													xtype : "numberfield",
+													allowBlank : false,
+													name : "salaryPayoff.perCoefficient",
+													id : "SalaryPayoffForm.perCoefficient"
+												}, {
+													fieldLabel : "绩效工资",
+													xtype : "numberfield",
+													name : "salaryPayoff.achieveAmount",
+													id : "SalaryPayoffForm.achieveAmount"
+												}
+											]
+										},{
+											layout : "form",
+											columnWidth : 0.5,
+											xtype : "container",
+											items : [{
 													fieldLabel : "个人所得税",
 													xtype : "numberfield",
 													allowBlank : false,
 													name : "salaryPayoff.selftax",
 													id : "SalaryPayoffForm.selftax"
+												}, {
+													fieldLabel : "应税金额",
+													xtype : "numberfield",
+													name : "salaryPayoff.taxableAmount",
+													id : "SalaryPayoffForm.taxableAmount"
+												}
+											]
+										},{
+											layout : "form",
+											columnWidth : 0.5,
+											xtype : "container",
+											items : [{
+													fieldLabel : "实发金额",
+													xtype : "numberfield",
+													allowBlank : false,
+													name : "salaryPayoff.acutalAmount",
+													id : "SalaryPayoffForm.acutalAmount"
 												}
 											]
 										}
