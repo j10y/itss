@@ -33,7 +33,7 @@
 						select : function(l, h, k) {
 							document.getElementById("depId").value = h.data.depId;
 							document.getElementById("depName").value = h.data.depName;
-							document.getElementById("accessionTime").innerHTML = h.data.accessionTime;
+							document.getElementById("accessionTime").value = h.data.accessionTime;
 							document.getElementById("nowPositionId").value = h.data.nowPositionId;
 							document.getElementById("nowPositionName").value = h.data.nowPositionName;
 							document.getElementById("accessionTime").value = h.data.accessionTime;
@@ -122,7 +122,8 @@
 							"hrPromApply.target2" : document.getElementById("target2").value,
 							"hrPromApply.target3" : document.getElementById("target3").value,
 							"hrPromApply.intRecord" : document.getElementById("intRecord").value,
-							"hrPromApply.applyPosition.jobId" : document.getElementById("hrPromApply.applyPosition.jobId").value,
+							"hrPromApply.applyPositionId" : document.getElementById("applyPositionId").value,
+							"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
 							"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
 							"hrPromApply.publishStatus" : 5, //上报审批
 							"isSubmit" : "true" //上报审批
@@ -152,7 +153,8 @@
 								"hrPromApply.target2" : document.getElementById("target2").value,
 								"hrPromApply.target3" : document.getElementById("target3").value,
 								"hrPromApply.intRecord" : document.getElementById("intRecord").value,
-								"hrPromApply.applyPosition.jobId" : document.getElementById("hrPromApply.applyPosition.jobId").value,
+								"hrPromApply.applyPositionId" : document.getElementById("applyPositionId").value,
+								"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
 								"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
 								"hrPromApply.publishStatus" : 5, //上报审批
 								"isSubmit" : "true" //上报审批
