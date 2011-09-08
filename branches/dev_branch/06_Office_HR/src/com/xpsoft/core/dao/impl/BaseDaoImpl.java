@@ -35,5 +35,5 @@ public abstract class BaseDaoImpl<T> extends GenericDaoImpl<T, Long> implements 
 			 return false;
 		}
 		 return true;
-	 }
+	 } 
 }
