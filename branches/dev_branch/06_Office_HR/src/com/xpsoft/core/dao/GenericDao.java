@@ -12,6 +12,8 @@ public abstract interface GenericDao<T, PK extends Serializable>
   public abstract T merge(T paramT);
 
   public abstract T get(PK paramPK);
+  
+  public abstract T load(PK paramPK);
 
   public abstract void remove(PK paramPK);
 

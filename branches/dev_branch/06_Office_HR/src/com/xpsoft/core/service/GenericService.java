@@ -14,6 +14,8 @@ public abstract interface GenericService<T, PK extends Serializable>
   public abstract void evict(T paramT);
 
   public abstract T get(PK paramPK);
+  
+  public abstract T load(PK paramPK);
 
   public abstract List<T> getAll();
 
