@@ -66,13 +66,9 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 				}, {
 					name : "applyUser.fullname",
 					mapping : "applyUser.fullname"
-				}, {
-					name : "applyUser.position",
-					mapping : "applyUser.position"
-				}, {
-					name : "applyPosition.jobName",
-					name : "applyPosition.jobName"
 				},
+				"nowPositionName",
+				"applyPositionName",
 				"publishStatus"
 			]
 		});
@@ -117,10 +113,10 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 					dataIndex : "applyUser.fullname"
 				}, {
 					header : "原岗位",
-					dataIndex : "applyUser.position"
+					dataIndex : "nowPositionName"
 				}, {
 					header : "拟晋升岗位",
-					dataIndex : "applyPosition.jobName"
+					dataIndex : "applyPositionName"
 				}, {
 					header : "状态",
 					dataIndex : "publishStatus",
