@@ -98,7 +98,7 @@
 					applyPositionNameCombo.setValue("${hrPromApply.applyPositionId}");
 					applyPositionNameCombo.setRawValue("${hrPromApply.applyPositionName}");
 					applyDate.setRawValue("${hrPromApply.applyDate}");
-					document.getElementById("accessionTime").innerHTML = "${hrPromApply.accessionTime}";
+					document.getElementById("accessionTime").value = "${hrPromApply.accessionTime}";
 				}
 			});
 			function check() {
@@ -111,7 +111,7 @@
 							"hrPromApply.id" : "${hrPromApply.id}",
 							"hrPromApply.depId" : document.getElementById("depId").value,
 							"hrPromApply.depName" : document.getElementById("depName").value,
-							"hrPromApply.accessionTime" : document.getElementById("accessionTime").innerHTML,
+							"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
 							"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
 							"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
 							"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
@@ -142,7 +142,7 @@
 								"hrPromApply.id" : document.getElementById("hrPromApply.id").value,
 								"hrPromApply.depId" : document.getElementById("depId").value,
 								"hrPromApply.depName" : document.getElementById("depName").value,
-								"hrPromApply.accessionTime" : document.getElementById("accessionTime").innerHTML,
+								"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
 								"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
 								"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
 								"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
