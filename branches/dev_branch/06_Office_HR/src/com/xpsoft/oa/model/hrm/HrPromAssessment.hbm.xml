@@ -158,7 +158,24 @@
 			column="postRank"
 			not-null="false"
 		/>
-		<many-to-one name="salaryLevel" not-null="false" class="com.xpsoft.oa.model.hrm.StandSalary" column="salaryLevel"></many-to-one>
+		<property
+			name="salaryLevelId"
+			type="java.lang.Long"
+			update="true"
+			insert="true"
+			access="property"
+			column="salaryLevelId"
+			not-null="false"
+		/>
+		<property
+			name="salaryLevelName"
+			type="java.lang.String"
+			update="true"
+			insert="true"
+			access="property"
+			column="salaryLevelName"
+			not-null="false"
+		/>
 		<property
 			name="promIntRecord"
 			type="java.lang.String"

@@ -77,7 +77,33 @@
         	not-null="false"
         />
         <many-to-one name="applyUser" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="applyUser"></many-to-one>
-        <many-to-one name="applyPosition" not-null="false" class="com.xpsoft.oa.model.hrm.Job" column="applyPosition"></many-to-one>
+        <property
+        	name="accessionTime"
+        	type="java.util.Date"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="accessionTime"
+        	not-null="false"
+        />
+        <property
+        	name="applyPositionId"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="applyPositionId"
+        	not-null="false"
+        />
+        <property
+        	name="applyPositionName"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="applyPositionName"
+        	not-null="false"
+        />
         <property
         	name="applyDate"
         	type="java.util.Date"

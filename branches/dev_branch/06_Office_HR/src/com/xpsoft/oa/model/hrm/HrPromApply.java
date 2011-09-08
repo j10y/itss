@@ -8,13 +8,15 @@ import com.xpsoft.oa.model.system.AppUser;
 public class HrPromApply extends BaseModel{
 	protected Long id;
 	protected AppUser applyUser;//晋升员工
+	protected Date accessionTime;//入职时间
 	protected Long depId;//所属部门ID
 	protected String depName;//所属部门名称
 	protected Long nowPositionId;//现职位ID
 	protected String nowPositionName;//现职位名称
 	protected String workYear;//工作年限
 	protected String workHereYear;//本单位工作年限
-	protected Job applyPosition;//拟担任职位
+	protected Long applyPositionId;//拟担任职位ID
+	protected String applyPositionName;//拟担任职位名称
 	protected Date applyDate;//拟晋升时间
 	protected String applyReason;//拟晋升原因
 	protected String target1;//工作目标一
@@ -45,6 +47,14 @@ public class HrPromApply extends BaseModel{
 
 	public void setApplyUser(AppUser applyUser) {
 		this.applyUser = applyUser;
+	}
+
+	public Date getAccessionTime() {
+		return accessionTime;
+	}
+
+	public void setAccessionTime(Date accessionTime) {
+		this.accessionTime = accessionTime;
 	}
 
 	public Long getDepId() {
@@ -95,12 +105,20 @@ public class HrPromApply extends BaseModel{
 		this.workHereYear = workHereYear;
 	}
 
-	public Job getApplyPosition() {
-		return applyPosition;
+	public Long getApplyPositionId() {
+		return applyPositionId;
 	}
 
-	public void setApplyPosition(Job applyPosition) {
-		this.applyPosition = applyPosition;
+	public void setApplyPositionId(Long applyPositionId) {
+		this.applyPositionId = applyPositionId;
+	}
+
+	public String getApplyPositionName() {
+		return applyPositionName;
+	}
+
+	public void setApplyPositionName(String applyPositionName) {
+		this.applyPositionName = applyPositionName;
 	}
 
 	public Date getApplyDate() {
@@ -206,5 +224,5 @@ public class HrPromApply extends BaseModel{
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	
+
 }

@@ -24,7 +24,8 @@ public class HrPromAssessment extends BaseModel{
 	protected String deptManagerName;//部门主管姓名
 	protected Date appointDate;//正式任命时间
 	protected String postRank;//岗位职级
-	protected StandSalary salaryLevel;//薪资等级
+	protected Long salaryLevelId;//薪资等级ID
+	protected String salaryLevelName;//薪资等级名称
 	protected String promIntRecord;//晋升面谈记录
 	protected Long auditHrId;//人力资源审核人员ID
 	protected String auditHrName;//人力资源审核人员姓名
@@ -172,6 +173,30 @@ public class HrPromAssessment extends BaseModel{
 		this.appointDate = appointDate;
 	}
 
+	public String getPostRank() {
+		return postRank;
+	}
+
+	public void setPostRank(String postRank) {
+		this.postRank = postRank;
+	}
+
+	public Long getSalaryLevelId() {
+		return salaryLevelId;
+	}
+
+	public void setSalaryLevelId(Long salaryLevelId) {
+		this.salaryLevelId = salaryLevelId;
+	}
+
+	public String getSalaryLevelName() {
+		return salaryLevelName;
+	}
+
+	public void setSalaryLevelName(String salaryLevelName) {
+		this.salaryLevelName = salaryLevelName;
+	}
+
 	public String getPromIntRecord() {
 		return promIntRecord;
 	}
@@ -234,22 +259,6 @@ public class HrPromAssessment extends BaseModel{
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
-	}
-
-	public String getPostRank() {
-		return postRank;
-	}
-
-	public void setPostRank(String postRank) {
-		this.postRank = postRank;
-	}
-
-	public StandSalary getSalaryLevel() {
-		return salaryLevel;
-	}
-
-	public void setSalaryLevel(StandSalary salaryLevel) {
-		this.salaryLevel = salaryLevel;
 	}
 	
 }
