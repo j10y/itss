@@ -36,6 +36,7 @@
 							document.getElementById("accessionTime").innerHTML = h.data.accessionTime;
 							document.getElementById("nowPositionId").value = h.data.nowPositionId;
 							document.getElementById("nowPositionName").value = h.data.nowPositionName;
+							document.getElementById("accessionTime").value = h.data.accessionTime;
 							if(h.data.workYear == 0) {
 								document.getElementById("workYear").value = "不满1年";
 							} else {
@@ -62,21 +63,26 @@
 						}
 					}
 				});
-				var applyPositionCombo = new Ext.form.ComboBox({
+				var applyPositionNameCombo = new Ext.form.ComboBox({
 					mode : "remote",
-					hiddenName : "hrPromApply.applyPosition.jobId",
+					name : "hrPromApply.applyPositionName",
 					allowBlank : false,
 					width : 249,
 					valueField : "jobId",
 					displayField : "jobName",
-					renderTo : "applyPosition",
+					renderTo : "applyPositionName",
 					triggerAction : "all",
 					store : new Ext.data.JsonStore({
 						url : "${pageContext.request.contextPath}/hrm/applyPositionHrPromApply.do",
 						fields : ["jobId", "jobName"],
 						root : "result",
 						remoteSort : true
-					})
+					}),
+					listeners : {
+						select : function(l, h, k) {
+							document.getElementById("applyPositionId").value = h.data.jobId;
+						}
+					}
 				});
 				var applyDate = new Ext.form.DateField({
 					name : "hrPromApply.applyDate",
@@ -89,10 +95,10 @@
 				if("${hrPromApply.id}" != 0) {
 					applyUserCombo.setValue("${hrPromApply.applyUser.userId}");
 					applyUserCombo.setRawValue("${hrPromApply.applyUser.fullname}");
-					applyPositionCombo.setValue("${hrPromApply.applyPosition.jobId}");
-					applyPositionCombo.setRawValue("${hrPromApply.applyPosition.jobName}");
+					applyPositionNameCombo.setValue("${hrPromApply.applyPositionId}");
+					applyPositionNameCombo.setRawValue("${hrPromApply.applyPositionName}");
 					applyDate.setRawValue("${hrPromApply.applyDate}");
-					document.getElementById("accessionTime").innerHTML = "${accessionTime}";
+					document.getElementById("accessionTime").innerHTML = "${hrPromApply.accessionTime}";
 				}
 			});
 			function check() {
@@ -194,7 +200,9 @@
 				</tr>
 				<tr>
 					<td align="right">入职日期</td>
-					<td><div id="accessionTime"></div></td>
+					<td>
+						<input type="text" id="accessionTime" name="hrPromApply.accessionTime" value="${hrPromApply.accessionTime}" readonly="readonly" style="border:none;width:100%;height:100%"/>
+					</td>
 					<td align="right">现职位</td>
 					<td style="padding:1px">
 						<input type="hidden" id="nowPositionId" name="hrPromApply.nowPositionId" value="${hrPromApply.nowPositionId}"/>
@@ -203,7 +211,10 @@
 				</tr>
 				<tr>
 					<td align="right">拟担任职位</td>
-					<td><div id="applyPosition"></div></td>
+					<td>
+						<input type="hidden" id="applyPositionId" name="hrPromApply.applyPositionId" value="${hrPromApply.applyPositionId}"/>
+						<div id="applyPositionName"></div>
+					</td>
 					<td align="right">拟晋升时间</td>
 					<td><div id="applyDate"></div></td>
 				</tr>
