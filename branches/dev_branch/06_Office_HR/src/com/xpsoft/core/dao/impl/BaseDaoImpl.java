@@ -2,6 +2,8 @@ package com.xpsoft.core.dao.impl;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+
 import com.xpsoft.core.dao.BaseDao;
 import com.xpsoft.core.web.paging.PagingBean;
 
@@ -23,4 +25,15 @@ public abstract class BaseDaoImpl<T> extends GenericDaoImpl<T, Long> implements 
 		List list=this.jdbcTemplate.queryForList(sql);
 		return list;
 	}
+	
+	 public boolean removeDatabySql(String sql){
+		 try {
+			this.jdbcTemplate.execute(sql);
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			 return false;
+		}
+		 return true;
+	 }
 }
