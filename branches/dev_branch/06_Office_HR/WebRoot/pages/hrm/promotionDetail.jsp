@@ -1,7 +1,14 @@
+<%@ page pageEncoding="UTF-8"%>
+<%
+	String basePath=request.getContextPath();
+%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.xpsoft.core.util.AppUtil"%>
+<%@page import="com.xpsoft.oa.model.hrm.HrPromApply"%>
+<%@page import="com.xpsoft.oa.service.hrm.HrPromApplyService"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@page pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,6 +19,15 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/adapter/ext/ext-base.gzjs"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-all.gzjs"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-lang-zh_CN.js"></script>
+		<%
+			String hrPromApplyId = request.getParameter("hrPromApplyId");
+			HrPromApplyService hrPromApplyService = (HrPromApplyService)AppUtil.getBean("hrPromApplyService");
+			HrPromApply hrPromApply=new HrPromApply();
+			if(StringUtils.isNotEmpty(hrPromApplyId)&&hrPromApplyId.indexOf("$")==-1){
+				hrPromApply = hrPromApplyService.load(new Long(hrPromApplyId));
+			}
+			request.setAttribute("hrPromApply",hrPromApply);
+		%>
 		<script type="text/javascript">
 			Ext.onReady(function() {
 				var applyUserCombo = new Ext.form.ComboBox({
@@ -36,7 +52,6 @@
 							document.getElementById("accessionTime").innerHTML = h.data.accessionTime;
 							document.getElementById("nowPositionId").value = h.data.nowPositionId;
 							document.getElementById("nowPositionName").value = h.data.nowPositionName;
-							document.getElementById("accessionTime").value = h.data.accessionTime;
 							if(h.data.workYear == 0) {
 								document.getElementById("workYear").value = "不满1年";
 							} else {
@@ -63,26 +78,21 @@
 						}
 					}
 				});
-				var applyPositionNameCombo = new Ext.form.ComboBox({
+				var applyPositionCombo = new Ext.form.ComboBox({
 					mode : "remote",
-					name : "hrPromApply.applyPositionName",
+					hiddenName : "hrPromApply.applyPosition.jobId",
 					allowBlank : false,
 					width : 249,
 					valueField : "jobId",
 					displayField : "jobName",
-					renderTo : "applyPositionName",
+					renderTo : "applyPosition",
 					triggerAction : "all",
 					store : new Ext.data.JsonStore({
 						url : "${pageContext.request.contextPath}/hrm/applyPositionHrPromApply.do",
 						fields : ["jobId", "jobName"],
 						root : "result",
 						remoteSort : true
-					}),
-					listeners : {
-						select : function(l, h, k) {
-							document.getElementById("applyPositionId").value = h.data.jobId;
-						}
-					}
+					})
 				});
 				var applyDate = new Ext.form.DateField({
 					name : "hrPromApply.applyDate",
@@ -95,15 +105,13 @@
 				if("${hrPromApply.id}" != 0) {
 					applyUserCombo.setValue("${hrPromApply.applyUser.userId}");
 					applyUserCombo.setRawValue("${hrPromApply.applyUser.fullname}");
-					applyPositionNameCombo.setValue("${hrPromApply.applyPositionId}");
-					applyPositionNameCombo.setRawValue("${hrPromApply.applyPositionName}");
+					applyPositionCombo.setValue("${hrPromApply.applyPosition.jobId}");
+					applyPositionCombo.setRawValue("${hrPromApply.applyPosition.jobName}");
 					applyDate.setRawValue("${hrPromApply.applyDate}");
-					document.getElementById("accessionTime").innerHTML = "${hrPromApply.accessionTime}";
+					document.getElementById("accessionTime").innerHTML = "${accessionTime}";
 				}
 			});
-			function check() {
-				
-			}
+
 			function onSend(){
 				Ext.Ajax.request({
 					url : "${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
@@ -174,34 +182,13 @@
 						});
 					}
 				});
-				/*$.post("${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
-						{
-							"hrPromApply.id" : "${hrPromApply.id}",
-							"hrPromApply.depId" : document.getElementById("depId").value,
-							"hrPromApply.depName" : document.getElementById("depName").value,
-							"hrPromApply.accessionTime" : document.getElementById("accessionTime").innerHTML,
-							"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
-							"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
-							"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
-							"hrPromApply.workYear" : document.getElementById("workYear").value,
-							"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
-							"hrPromApply.applyReason" : document.getElementById("applyReason").value,
-							"hrPromApply.target1" : document.getElementById("target1").value,
-							"hrPromApply.target2" : document.getElementById("target2").value,
-							"hrPromApply.target3" : document.getElementById("target3").value,
-							"hrPromApply.intRecord" : document.getElementById("intRecord").value
-						},
-						function(data){
-    						alert("Data Loaded: " + data);
-   						},
-   						"json");*/
 			}
 		</script>
 	</head>
 
 	<body>
 		<div style="text-align:center;height:50px;line-height:50px;">
-			<font style="font-size:18px;">晋升申请表</font>
+			<font style="font-size:18px;">晋升申请表1</font>
 		</div>
 		<form id="applyForm" action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
 			<input type="hidden" id="hrPromApply.id" name="hrPromApply.id" value="${hrPromApply.id}"/>
@@ -209,7 +196,9 @@
 			<table width="700" align="center" border="1" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="90" align="right">姓名</td>
-					<td width="250"><div id="applyUser"></div></td>
+					<td width="250">
+						<input type="text" id="applyUser" value="${hrPromApply.applyUser.fullname}" readonly="readonly" style="border:none;width:100%;height:100%"/>
+					</td>
 					<td width="120" align="right">部门/门店</td>
 					<td style="padding:1px">
 						<input type="hidden" id="depId" name="hrPromApply.depId" value="${hrPromApply.depId}"/>
@@ -219,7 +208,7 @@
 				<tr>
 					<td align="right">入职日期</td>
 					<td>
-						<input type="text" id="accessionTime" name="hrPromApply.accessionTime" value="${hrPromApply.accessionTime}" readonly="readonly" style="border:none;width:100%;height:100%"/>
+						<input type="text" id="accessionTime" value="${accessionTime}" readonly="readonly" style="border:none;width:100%;height:100%"/>
 					</td>
 					<td align="right">现职位</td>
 					<td style="padding:1px">
@@ -229,27 +218,29 @@
 				</tr>
 				<tr>
 					<td align="right">拟担任职位</td>
-					<td>
-						<input type="hidden" id="applyPositionId" name="hrPromApply.applyPositionId" value="${hrPromApply.applyPositionId}"/>
-						<div id="applyPositionName"></div>
+					<td><div id="applyPosition"></div>
+						
+						<input type="text" id="applyPosition" value="${hrPromApply.applyPositionName}" readonly="readonly" style="border:none;width:100%;height:100%"/>
 					</td>
 					<td align="right">拟晋升时间</td>
-					<td><div id="applyDate"></div></td>
+					<td>
+						<input type="text" id="applyDate" value="${hrPromApply.applyDate}" readonly="readonly" style="border:none;width:100%;height:100%"/>
+					</td>
 				</tr>
 				<tr>
 					<td align="right">工作年限</td>
 					<td style="padding:1px">
-						<input type="text" id="workYear" name="hrPromApply.workYear" value="${hrPromApply.workYear}" style="border:none;width:100%;height:100%"/>
+						<input type="text" id="workYear" readonly="readonly" name="hrPromApply.workYear" value="${hrPromApply.workYear}" style="border:none;width:100%;height:100%"/>
 					</td>
 					<td align="right">本单位工作年限</td>
 					<td style="padding:1px">
-						<input type="text" id="workHereYear" name="hrPromApply.workHereYear" value="${hrPromApply.workHereYear}" style="border:none;width:100%;height:100%"/>
+						<input type="text" id="workHereYear" readonly="readonly" name="hrPromApply.workHereYear" value="${hrPromApply.workHereYear}" style="border:none;width:100%;height:100%"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">拟晋升原因</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea id="applyReason" name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;">${hrPromApply.applyReason}</textarea>
+						<textarea id="applyReason" readonly="readonly" name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;">${hrPromApply.applyReason}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -281,6 +272,7 @@
 						<textarea id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;">${hrPromApply.intRecord}</textarea>
 					</td>
 				</tr>
+				<!--
 				<tr>
 					<td align="center" colspan="4">
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
@@ -288,6 +280,7 @@
 						<input type="button" value="提交审核" onclick="onSend();"/>
 					</td>
 				</tr>
+				-->
 			</table>
 		</form>
 	</body>

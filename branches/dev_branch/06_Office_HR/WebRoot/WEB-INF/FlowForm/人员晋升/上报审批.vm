@@ -1,0 +1,148 @@
+/**
+ * @createtime:2011-08-02
+ * @author csx
+ * @description 请假审批
+ * @class HrPromApplySuperAuditFlowView
+ * @extends Ext.Panel
+ */
+HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
+	setTaskId : function(tId){
+		this.taskId = tId;
+	},
+	getTaskId : function(){
+		return this.taskId;
+	},
+	formPanel : null,
+	constructor : function(_cfg) {
+		Ext.applyIf(this, _cfg);
+		this.init();
+		HrPromApplySuperAuditFlowView.superclass.constructor.call(this, {
+					title : '上报审批',
+					id : 'HrPromApplySuperAuditFlowView',
+					layout : 'column',
+					defaults : {
+						border : false,
+						autoScroll : true
+					},
+					width : '95%',
+					height : 720,
+					buttons :  [
+								#set ($count=0)
+								#foreach ($v in $nextTrans)
+									#if($count>0)
+								,
+									#end
+									new Ext.Button({
+									   iconCls:'btn-transition',
+									   text:'转至[${v.destination}]',
+									   handler:this.onSave.createCallback(this.formPanel,this,'${v.name}','${v.source}')
+									})
+									#set ($count=$count+1)
+								#end
+								],
+					buttonAlign : 'center',
+					items : [this.detailPanel, this.formPanel]
+				});
+
+	},
+	/**
+	 * 保存公文的方法,传入公文状态作为参数
+	 * @param {} _status
+	 */
+	onSave : function(formPanel,panel,signalName,activityName) {
+		
+		if (formPanel.getForm().isValid()) {
+			formPanel.getForm().submit({
+						method : 'POST',
+						waitMsg : '正在提交数据...',
+						success : function(fp, action) {
+							Ext.ux.Toast.msg('操作信息', '成功保存信息！');
+							Ext.getCmp('readId').setValue(action.result.readId);	
+									formPanel.getForm().submit({
+										url:__ctxPath+ "/flow/nextProcessActivity.do",
+										method:'post',
+										waitMsg:'正在提交处理，请稍等',
+										params:{taskId:taskId,signalName:signalName,activityName:activityName},
+										success : function(fp, action) {
+											Ext.ux.Toast.msg('操作信息','成功保存！');
+											AppUtil.removeTab('ProcessForm'+taskId);
+											var myTaskView=Ext.getCmp("MyTaskGrid");
+											var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+											if(appHomeTaskGrid!=null){
+												appHomeTaskGrid.getStore().reload();
+											}
+											if(myTaskView!=null){
+												//AppUtil.activateTab(myTaskView);
+												myTaskView.getStore().reload();
+											}
+										},
+										failure : function(fp, action) {
+											Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+										}
+							});
+							// TODO
+						},
+						failure : function(fp, action) {
+							Ext.MessageBox.show({
+										title : '操作信息',
+										msg : '信息保存出错，请联系管理员！',
+										buttons : Ext.MessageBox.OK,
+										icon : Ext.MessageBox.ERROR
+									});
+						}
+					});
+		}
+	},
+	/**
+	 * init the components
+	 */
+	init : function() {
+	
+		//显示请假详细信息
+		this.detailPanel = new Ext.Panel({
+			//title:'流程审批信息',
+			autoHeight : true,
+			columnWidth : 1,
+			autoScroll:true,
+			autoLoad:{
+				url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id}
+			}
+		});
+		// 初始化表单
+		this.formPanel = new Ext.FormPanel({
+			columnWidth : 1,
+			layout : 'form',
+			autoHeight : true,
+			style : 'padding:6px 6px 16px 5%',
+			url : __ctxPath + '/personal/modStatusHrPromApply.do',
+			defaults : {
+				anchor : '94%,96%'
+			},
+			items : [{
+						name : 'leaderRead.readId',
+						id : 'readId',
+						xtype : 'hidden'
+					},{
+						fieldLabel : '审批意见',
+						name : 'leaderRead.leaderOpinion',
+						xtype:'textarea'
+					},{
+						name : 'leaderRead.checkName',
+						xtype : 'hidden',
+						value : 
+							#foreach ($v in $nextTrans)
+								'${v.source}'
+							#end
+					},{
+						fieldLabel : '所属申请ID',
+						name : 'hrPromApply.id',
+						xtype : 'hidden',
+						value : '${hrPromApply_id}'
+					},{
+						name : 'publishStatus',
+						xtype : 'hidden',
+						value :  4 //4代表请假状态为已经局长审批，待人事登记
+					}]
+		});
+	}
+})

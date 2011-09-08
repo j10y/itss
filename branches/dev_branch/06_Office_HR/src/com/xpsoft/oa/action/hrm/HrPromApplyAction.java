@@ -181,7 +181,7 @@ public class HrPromApplyAction extends BaseAction{
 			e.printStackTrace();
 		}
 		if(isSubmit){
-			this.jsonString = "{success:true,'applyId':'" + this.hrPromApply.getId() + "'}";
+			this.jsonString = "{success:true,'applyId':'" + promApply.getId() + "'}";
 			return "success";
 		}
 		return "result";
