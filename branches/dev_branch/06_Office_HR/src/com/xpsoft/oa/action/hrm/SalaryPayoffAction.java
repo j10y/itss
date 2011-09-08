@@ -109,15 +109,15 @@ public class SalaryPayoffAction extends BaseAction {
 			/* 116 */this.salaryPayoff.setRegister(ContextUtil.getCurrentUser()
 					.getFullname());
 		}
-		/* 118 */BigDecimal acutalAmount = this.salaryPayoff.getStandAmount()
-				.add(this.salaryPayoff.getEncourageAmount())
-				.subtract(this.salaryPayoff.getDeductAmount());
-		/* 119 */if (this.salaryPayoff.getAchieveAmount().compareTo(
-				new BigDecimal(0)) == 1) {
-			/* 120 */acutalAmount = acutalAmount.add(this.salaryPayoff
-					.getAchieveAmount());
-		}
-		/* 122 */this.salaryPayoff.setAcutalAmount(acutalAmount);
+//		BigDecimal acutalAmount = this.salaryPayoff.getStandAmount()
+//				.add(this.salaryPayoff.getEncourageAmount())
+//				.subtract(this.salaryPayoff.getDeductAmount());
+//		if (this.salaryPayoff.getAchieveAmount().compareTo(
+//				new BigDecimal(0)) == 1) {
+//			acutalAmount = acutalAmount.add(this.salaryPayoff
+//					.getAchieveAmount());
+//		}
+//		this.salaryPayoff.setAcutalAmount(acutalAmount);
 		/* 123 */this.salaryPayoffService.save(this.salaryPayoff);
 		/* 124 */setJsonString("{success:true}");
 		/* 125 */return "success";
