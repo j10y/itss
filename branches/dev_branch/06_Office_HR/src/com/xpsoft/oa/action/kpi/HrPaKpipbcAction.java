@@ -416,6 +416,7 @@ public class HrPaKpipbcAction extends BaseAction{
 						}
 						//清除该考核项
 						hrPaKpiitem2userService.remove(hrPaKpiitem2userList.get(q));
+						hrPaKpiitem2userList.remove(q);
 					}
 				}
 				//2.2.1. 判断该User原PBC模板是否包含要插入的PBC模板
