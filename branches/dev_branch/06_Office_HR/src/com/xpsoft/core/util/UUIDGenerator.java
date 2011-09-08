@@ -27,6 +27,7 @@
 /*    */   public static void main(String[] args)
 /*    */   {
 /* 43 */     String[] vars = UUID.randomUUID().toString().split("-");
+System.out.println("ok:" + UUID.randomUUID().toString());
 /* 44 */     for (int i = 0; i < vars.length; i++) {
 /* 45 */       System.out.println("ok:" + vars[i]);
 /* 46 */       long var = Long.valueOf(vars[i], 16).longValue();
@@ -34,8 +35,3 @@
 /*    */     }
 /*    */   }
 /*    */ }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.core.util.UUIDGenerator
- * JD-Core Version:    0.6.0
- */

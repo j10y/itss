@@ -15,5 +15,7 @@ public class BaseServiceImpl<T> extends GenericServiceImpl<T, Long> implements
 		// TODO Auto-generated method stub
 		return dao.findDataList(sql);
 	}
-
+	public boolean removeDatabySql(String sql){
+		return dao.removeDatabySql(sql);
+	}
 }
