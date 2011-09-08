@@ -55,25 +55,29 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		if(mapList1.size() == 0) {
 			return "success";
 		}
-		Long depId = Long.parseLong(mapList1.get(0).get("depId").toString());
+		String depIds = "";
+		for(int m = 0; m < mapList1.size() - 1; m++) {
+			depIds += mapList1.get(m).get("depId").toString() + ",";
+		}
+		depIds += mapList1.get(mapList1.size() - 1).get("depId").toString();
 		String fullname = this.getRequest().getParameter("fullname");
 		String sql4 = "";
 		if(fullname != null && !"".equals(fullname)) {
 			sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%'";
+					"a.belongUser = b.userId and b.depId in (" + depIds + ") and b.fullname like '%" + fullname + "%'";
 		} else {
 			sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId = " + depId;
+					"a.belongUser = b.userId and b.depId in (" + depIds + ") ";
 		}
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
 		String sql2 = "";
 		if(fullname != null && !"".equals(fullname)) {
 			sql2 = "select a.id, b.fullname, b.position, a.pbcName from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId = " + depId + " and b.fullname like '%" + fullname + "%' limit " + 
+					"a.belongUser = b.userId and b.depId in (" + depIds + ") and b.fullname like '%" + fullname + "%' limit " + 
 					filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		} else {
 			sql2 = "select a.id, b.fullname, b.position, a.pbcName from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId = " + depId + " limit " +
+					"a.belongUser = b.userId and b.depId in (" + depIds + ") limit " +
 					filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		}
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
