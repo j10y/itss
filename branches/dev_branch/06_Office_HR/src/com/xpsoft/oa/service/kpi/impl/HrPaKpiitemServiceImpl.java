@@ -14,7 +14,7 @@ public class HrPaKpiitemServiceImpl extends BaseServiceImpl<HrPaKpiitem>
 		this.dao = dao;
 	}
 	
-	public boolean findByPiIdAndPbcId(long piId, String[] pbcIds) {
+	public boolean findByPiIdAndPbcId(long piId, String pbcIds) {
 		return this.dao.findByPiIdAndPbcId(piId, pbcIds);
 	}
 }

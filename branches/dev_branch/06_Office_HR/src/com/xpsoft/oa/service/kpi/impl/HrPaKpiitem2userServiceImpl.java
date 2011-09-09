@@ -45,7 +45,19 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 		}
 		//取得个人考核模板关联的该考核项，并与部门负责人打分合并，保存结果
 		HrPaKpiitem2user item = this.get(itemId);
-		item.setResult(Double.valueOf(doubleFormat.format(avgResult + item.getResult() * totalWeight)));
+		Double result = Double.valueOf(doubleFormat.format(avgResult + item.getResult() * totalWeight));
+		item.setResult(result);
+		//保存相关联的绩效系数
+		int resultIndex = 0;
+		String sql2 = "select a.id, a.pisScore, a.coefficient from hr_pa_performanceindexscore a, hr_pa_kpiitem2user b where " +
+				"b.id = " + itemId + " and a.piId = b.piId";
+		List<Map<String, Object>> mapList2 = this.findDataList(sql2);
+		for(int i = 0; i < mapList2.size() - 1; i++) {
+			if(result >= Double.parseDouble(mapList2.get(i).get("pisScore").toString())) {
+				resultIndex = i;
+			}
+		}
+		item.setCoefficient(Double.parseDouble(mapList2.get(resultIndex).get("coefficient").toString()));
 		//插入数据库
 		this.save(item);
 	}
