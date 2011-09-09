@@ -1,5 +1,6 @@
 package com.xpsoft.oa.action.hrm;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,11 @@ import javax.annotation.Resource;
 import antlr.StringUtils;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.HrPromAssessment;
+import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.HrPromAssessmentService;
 
 public class HrPromAssessmentAction extends BaseAction{
@@ -102,6 +105,11 @@ public class HrPromAssessmentAction extends BaseAction{
 	}
 	
 	public String save() {
+		Date currentDate = new Date();
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		this.hrPromAssessment.setModifyDate(currentDate);
+		this.hrPromAssessment.setModifyPerson(currentUser);
+		this.hrPromAssessmentService.save(this.hrPromAssessment);
 		return "success";
 	}
 }
