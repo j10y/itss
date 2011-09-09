@@ -185,7 +185,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
 		sql2 += (startDate == null || "".equals(startDate)) ? "" : " and a.createDate >= '" + startDate + "'";
 		sql2 += (endDate == null || "".equals(endDate)) ? "" : " and a.createDate <= '" + endDate + " 23:59'";
-		sql2 += " order by a.createDate desc limit " + start + ", " + limit;
+		sql2 += " order by a.createDate desc, a.id desc limit " + start + ", " + limit;
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + totalCounts + "',result:[");
 		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
 		for(int i = 0; i < list.size(); i++) {

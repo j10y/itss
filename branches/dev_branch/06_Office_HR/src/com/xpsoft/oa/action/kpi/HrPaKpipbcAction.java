@@ -101,12 +101,65 @@ public class HrPaKpipbcAction extends BaseAction{
 	}
 	
 	public String multiDel() {
+		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
+		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
+		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
+		HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
 		String[] ids = this.getRequest().getParameterValues("ids");
 		if(ids != null) {
 			for(String id : ids) {
 				HrPaKpipbc hpk = this.hrPaKpipbcService.get(new Long(id));
 				hpk.setPublishStatus(new Integer("4"));//状态置为已删除
 				this.hrPaKpipbcService.save(hpk);
+				//同步与该PBC关联的个人PBC
+				String sql = "select a.id, a.fromPBC from hr_pa_kpipbc2user a, emp_profile b where " +
+						"a.belongUser = b.userId and b.jobId = " + hpk.getBelongPost().getJobId();
+				List<Map<String, Object>> mapList = this.hrPaKpipbcService.findDataList(sql);
+				for(int i = 0; i < mapList.size(); i++) {
+					String[] fromPBCArray = mapList.get(i).get("fromPBC").toString().trim().split(",");
+					List<String> fromPBCList = Arrays.asList(fromPBCArray);
+					if(fromPBCList.contains(hpk.getId() + "")) {//个人PBC中包含该PBC
+						String pbcIds = "";
+						for(int j = 0; j < fromPBCList.size(); j++) {
+							if(Long.parseLong(fromPBCList.get(j)) != hpk.getId()) {
+								pbcIds += fromPBCList.get(j) + ",";
+							}
+						}
+						if(pbcIds.length() > 0) {
+							pbcIds = pbcIds.substring(0, pbcIds.length() - 1);
+						}
+						HrPaKpiPBC2User pbc2User = hrPaKpiPBC2UserService.get(Long.parseLong(mapList.get(i).get("id").toString()));
+						pbc2User.setFromPBC(pbcIds);
+						hrPaKpiPBC2UserService.save(pbc2User);
+						//清除个人PBC冗余考核项
+						Map<String, String> map3 = new HashMap<String, String>();
+						map3.put("Q_pbc2User.id_L_EQ", mapList.get(i).get("id").toString());
+						QueryFilter filter3 = new QueryFilter(map3);
+						List<HrPaKpiitem2user> hrPaKpiitem2userList = hrPaKpiitem2userService.getAll(filter3);
+						if(pbcIds.length() > 0) {
+							for(int q = 0; q < hrPaKpiitem2userList.size(); q++) {
+								boolean flag2 = hrPaKpiitemService.findByPiIdAndPbcId(hrPaKpiitem2userList.get(q).getPiId(), pbcIds);
+								if(!flag2) {
+									//首先清除已授权的该考核项的信息
+									Map<String, String> map4 = new HashMap<String, String>();
+									map4.put("Q_akpiItem2uId_L_EQ", String.valueOf(hrPaKpiitem2userList.get(q).getId()));
+									QueryFilter filter4 = new QueryFilter(map4);
+									List<HrPaAuthpbccitem> authpbcItemList = hrPaAuthpbccitemService.getAll(filter4);
+									for(int r = 0; r < authpbcItemList.size(); r++) {
+										hrPaAuthpbccitemService.remove(authpbcItemList.get(r));
+									}
+									//清除该考核项
+									hrPaKpiitem2userService.remove(hrPaKpiitem2userList.get(q));
+								}
+							}
+						} else {
+							for(int q = 0; q < hrPaKpiitem2userList.size(); q++) {
+								hrPaKpiitem2userService.remove(hrPaKpiitem2userList.get(q));
+							}
+							hrPaKpiPBC2UserService.remove(pbc2User);
+						}
+					}
+				}
 			}
 		}
 		
@@ -125,6 +178,7 @@ public class HrPaKpipbcAction extends BaseAction{
 			this.hrPaKpipbc.setCreatePerson(currentUser);
 			this.hrPaKpipbc.setModifyDate(currentDate);
 			this.hrPaKpipbc.setModifyPerson(currentUser);
+			this.hrPaKpipbc.setCoefficient(new Double(0));
 			HrPaKpipbc pbcNew = this.hrPaKpipbcService.save(this.hrPaKpipbc);
 			//保存PBC模板关联的考核项
 			if(!this.getRequest().getParameter("hrPaKpiitems").trim().equals("")) {
@@ -139,6 +193,7 @@ public class HrPaKpipbcAction extends BaseAction{
 					hrPaKpiitem.setPi(pi);
 					hrPaKpiitem.setWeight(Double.parseDouble(itemArray[2]));
 					hrPaKpiitem.setResult(0);//得分默认为零
+					hrPaKpiitem.setCoefficient(new Double(0));//权重默认为零
 					//插入数据库
 					hrPaKpiitemService.save(hrPaKpiitem);
 				}
@@ -161,6 +216,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				pbcOldCopy.setModifyDate(currentDate);
 				pbcOldCopy.setModifyPerson(currentUser);
 				pbcOldCopy.setFromPbc(pbcOld.getId());
+				pbcOldCopy.setCoefficient(new Double(0));
 				//插入数据库
 				HrPaKpipbc pbcNew = this.hrPaKpipbcService.save(pbcOldCopy);
 				//保存PBC模板关联考核项
@@ -176,6 +232,7 @@ public class HrPaKpipbcAction extends BaseAction{
 						hrPaKpiitem.setPi(pi);
 						hrPaKpiitem.setWeight(Double.parseDouble(itemArray[2]));
 						hrPaKpiitem.setResult(0);//得分默认为零
+						hrPaKpiitem.setCoefficient(new Double(0));//权重默认为零
 						//插入数据库
 						hrPaKpiitemService.save(hrPaKpiitem);
 					}
@@ -191,6 +248,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				pbcOld.setModifyDate(currentDate);
 				pbcOld.setModifyPerson(currentUser);
 				pbcOld.setTotalScore(this.hrPaKpipbc.getTotalScore());
+				pbcOld.setCoefficient(new Double(0));
 				//插入数据库
 				HrPaKpipbc pbcNew = this.hrPaKpipbcService.save(pbcOld);
 				//删除PBC模板关联的考核项
@@ -214,6 +272,7 @@ public class HrPaKpipbcAction extends BaseAction{
 						hrPaKpiitem.setPi(pi);
 						hrPaKpiitem.setWeight(Double.parseDouble(itemArray[2]));
 						hrPaKpiitem.setResult(0);//得分默认为零
+						hrPaKpiitem.setCoefficient(new Double(0));//权重默认为零
 						//插入数据库
 						hrPaKpiitemService.save(hrPaKpiitem);
 					}
@@ -263,6 +322,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				hrPaKpipbcHist.setTotalScore(fromPbc.getTotalScore());
 				hrPaKpipbcHist.setModifyDate(currentDate);
 				hrPaKpipbcHist.setModifyPerson(currentUser.getUserId());
+				hrPaKpipbcHist.setCoefficient(fromPbc.getCoefficient());
 				//插入数据库
 				HrPaKpipbcHist pbcHist = hrPaKpipbcHistService.save(hrPaKpipbcHist);
 				//将原PBC模板关联的考核项复制到历史表里边
@@ -277,6 +337,7 @@ public class HrPaKpipbcAction extends BaseAction{
 					hrPaKpiitemHist.setPiId(fromPbcItemList.get(i).getPi().getId());
 					hrPaKpiitemHist.setWeight(fromPbcItemList.get(i).getWeight());
 					hrPaKpiitemHist.setResult(fromPbcItemList.get(i).getResult());
+					hrPaKpiitemHist.setCoefficient(fromPbcItemList.get(i).getCoefficient());
 					//插入数据库
 					hrPaKpiitemHistService.save(hrPaKpiitemHist);
 				}
@@ -290,6 +351,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				fromPbc.setTotalScore(pbcToPublish.getTotalScore());
 				fromPbc.setModifyDate(currentDate);
 				fromPbc.setModifyPerson(currentUser);
+				fromPbc.setCoefficient(pbcToPublish.getCoefficient());
 				//插入数据库
 				HrPaKpipbc pbcAfterPublish = this.hrPaKpipbcService.save(fromPbc);
 				//同步PBC模板关联的考核项
@@ -308,6 +370,7 @@ public class HrPaKpipbcAction extends BaseAction{
 					hrPaKpiitem.setPi(pbcTopublishItemList.get(o).getPi());
 					hrPaKpiitem.setWeight(pbcTopublishItemList.get(o).getWeight());
 					hrPaKpiitem.setResult(pbcTopublishItemList.get(o).getResult());
+					hrPaKpiitem.setCoefficient(pbcTopublishItemList.get(o).getCoefficient());
 					//插入数据库
 					hrPaKpiitemService.save(hrPaKpiitem);
 					//删除pbcToPublish关联的考核项
@@ -377,11 +440,12 @@ public class HrPaKpipbcAction extends BaseAction{
 				hrPaKpiPBC2User.setBelongUser(user);
 				hrPaKpiPBC2User.setFrequency(pbc.getFrequency());
 				hrPaKpiPBC2User.setCreatePerson(pbc.getCreatePerson());
-				hrPaKpiPBC2User.setCreateDate(pbc.getCreateDate());
+				hrPaKpiPBC2User.setCreateDate(currentDate);
 				hrPaKpiPBC2User.setPublishStatus(0);//默认为草稿状态
 				hrPaKpiPBC2User.setTotalScore(pbc.getTotalScore());
 				hrPaKpiPBC2User.setModifyDate(currentDate);
 				hrPaKpiPBC2User.setModifyPerson(currentUser);
+				hrPaKpiPBC2User.setCoefficient(new Double(0));
 				//插入数据库
 				hrPaKpiPBC2User = hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
 				
@@ -391,7 +455,8 @@ public class HrPaKpipbcAction extends BaseAction{
 					hrPaKpiitem2user.setPbc2User(hrPaKpiPBC2User);
 					hrPaKpiitem2user.setPiId(hrPaKpiitemList.get(j).getPi().getId());
 					hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
-					hrPaKpiitem2user.setResult(new Double(0));//等待定时计算时设置结果
+					hrPaKpiitem2user.setResult(new Double(0));//等待计算时设置结果
+					hrPaKpiitem2user.setCoefficient(new Double(0));//等待计算时设置结果
 					//插入数据库
 					hrPaKpiitem2userService.save(hrPaKpiitem2user);
 				}
@@ -412,7 +477,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				QueryFilter filter3 = new QueryFilter(map3);
 				List<HrPaKpiitem2user> hrPaKpiitem2userList = hrPaKpiitem2userService.getAll(filter3);
 				for(int q = 0; q < hrPaKpiitem2userList.size(); q++) {
-					boolean flag2 = hrPaKpiitemService.findByPiIdAndPbcId(hrPaKpiitem2userList.get(q).getPiId(), fromPbcArray);
+					boolean flag2 = hrPaKpiitemService.findByPiIdAndPbcId(hrPaKpiitem2userList.get(q).getPiId(), hrPaKpiPBC2User.getFromPBC());
 					if(!flag2) {
 						//首先清除已授权的该考核项的信息
 						Map<String, String> map4 = new HashMap<String, String>();
@@ -454,7 +519,8 @@ public class HrPaKpipbcAction extends BaseAction{
 					itemNew.setPbc2User(hrPaKpiPBC2User);
 					itemNew.setPiId(hrPaKpiitemList.get(n).getPi().getId());
 					itemNew.setWeight(hrPaKpiitemList.get(n).getWeight());//直接将岗位PBC模板权值复制给个人
-					itemNew.setResult(new Double(0));//等待定时计算时设置结果
+					itemNew.setResult(new Double(0));//等待计算时设置结果
+					itemNew.setCoefficient(new Double(0));//等待计算时设置结果
 					//插入数据库
 					hrPaKpiitem2userService.save(itemNew);
 				}

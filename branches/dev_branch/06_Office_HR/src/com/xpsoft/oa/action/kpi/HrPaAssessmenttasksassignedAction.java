@@ -4,7 +4,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -20,8 +22,10 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.biff.WritableFormattingRecords;
 
+import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.UUIDGenerator;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.kpi.HrPaAssessmentcriteria;
@@ -122,14 +126,18 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 					sheet.addCell(label3);
 					sheet.addCell(label4);
 				}
+				//设置模板编号
+				Label numberLabel = new Label(0, 0, UUIDGenerator.getUUID());
+				sheet.addCell(numberLabel);
+				sheet.mergeCells(0, 0, 1, 0);
 				//设置excel标签页标题
 				WritableFont font1 = new WritableFont(WritableFont.createFont("黑体_GB2312"), 13, WritableFont.NO_BOLD);
 				WritableCellFormat format1 = new WritableCellFormat(font1);
 				format1.setAlignment(Alignment.CENTRE);
 				format1.setVerticalAlignment(VerticalAlignment.CENTRE);
-				Label titleLabel = new Label(0, 0, "目标excel模板", format1);
+				Label titleLabel = new Label(0, 1, "目标excel模板", format1);
 				sheet.addCell(titleLabel);
-				sheet.mergeCells(0, 0, 1, 1);
+				sheet.mergeCells(0, 1, 1, 1);
 				book.write();
 				book.close();
 				this.jsonString = "{success:true,'filePath':'" + "/attachFiles/kpiTasksassigned/" + 
@@ -141,7 +149,10 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 		} else if("2".equals(downloadFileType)) {
 			//从档案表中取得所有UserId
 			EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
-			List<EmpProfile> empProfileList = empProfileService.getAll();
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("Q_delFlag_SN_EQ", "0");
+			QueryFilter filter = new QueryFilter(map);
+			List<EmpProfile> empProfileList = empProfileService.getAll(filter);
 			//从用户表里边取得所有有档案的User
 			AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
 			List<AppUser> userList = new ArrayList<AppUser>();
@@ -176,14 +187,18 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 					sheet.addCell(label4);
 					sheet.addCell(label5);
 				}
+				//设置模板编号
+				Label numberLabel = new Label(0, 0, UUIDGenerator.getUUID());
+				sheet.addCell(numberLabel);
+				sheet.mergeCells(0, 0, 2, 0);
 				//设置excel标签页标题
 				WritableFont font1 = new WritableFont(WritableFont.createFont("黑体_GB2312"), 13, WritableFont.NO_BOLD);
 				WritableCellFormat format1 = new WritableCellFormat(font1);
 				format1.setAlignment(Alignment.CENTRE);
 				format1.setVerticalAlignment(VerticalAlignment.CENTRE);
-				Label titleLabel = new Label(0, 0, "目标excel模板", format1);
+				Label titleLabel = new Label(0, 1, "目标excel模板", format1);
 				sheet.addCell(titleLabel);
-				sheet.mergeCells(0, 0, 2, 1);
+				sheet.mergeCells(0, 1, 2, 1);
 				book.write();
 				book.close();
 				this.jsonString = "{success:true,'filePath':'" + "/attachFiles/kpiTasksassigned/" + 
@@ -209,6 +224,8 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 			//取得要导入的excel文件
 			Workbook book = Workbook.getWorkbook(file);
 			Sheet sheet = book.getSheet(0);
+			//取得模板ID
+			String templateId = sheet.getCell(0, 0).getContents();
 			int col = sheet.getColumns();
 			int row = sheet.getRows();
 			if("1".equals(uploadFileType)) {//按品类导入数据
@@ -221,11 +238,12 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 							assign.setTarget(Double.parseDouble(sheet.getCell(i, j).getContents()));
 							assign.setPublishDate(currentDate);
 							assign.setPublishPerson(currentUser.getUserId());
+							assign.setTemplateId(templateId);
 							assignList.add(assign);
 						}
 					}
 				}
-				this.hrPaAssessmenttasksassignedService.multiSave(assignList, "category");
+				this.hrPaAssessmenttasksassignedService.multiSave(assignList, templateId);
 			} else if("2".equals(uploadFileType)) {//按人员导入数据
 				for(int i = 3; i < col; i++) {
 					for(int j = 2; j < row; j++) {
@@ -236,11 +254,12 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 							assign.setTarget(Double.parseDouble(sheet.getCell(i, j).getContents()));
 							assign.setPublishDate(currentDate);
 							assign.setPublishPerson(currentUser.getUserId());
+							assign.setTemplateId(templateId);
 							assignList.add(assign);
 						}
 					}
 				}
-				this.hrPaAssessmenttasksassignedService.multiSave(assignList, "user");
+				this.hrPaAssessmenttasksassignedService.multiSave(assignList, templateId);
 			}
 			this.jsonString = "{success:true,'flag':'1','count':'" + assignList.size() + "'}";
 		} catch(Exception e) {

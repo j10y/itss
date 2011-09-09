@@ -155,14 +155,16 @@ public class HrPaPerformanceindexAction extends BaseAction {
 					}
 					indexScore.setPi(piNew);
 					indexScore.setPisType(piNew.getMode());
-					indexScore.setPisScore(BigDecimal.valueOf(Long.parseLong(itemArray[1])));
+					indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
 					indexScore.setPisDesc(itemArray[2]);
+					//添加绩效系数
+					indexScore.setCoefficient(Double.parseDouble(itemArray[3]));
 					indexScoreList.add(indexScore);
 					//定量考核添加计算公式
 					if(piNew.getMode().getId() == 13) {
 						HrPaPisrule rule = new HrPaPisrule();
-						if(!"undefined".equals(itemArray[3])) {
-							rule.setFormula(itemArray[3]);
+						if(!"undefined".equals(itemArray[4])) {
+							rule.setFormula(itemArray[4]);
 						}
 						ruleList.add(rule);
 					}
@@ -181,14 +183,16 @@ public class HrPaPerformanceindexAction extends BaseAction {
 						HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
-						indexScore.setPisScore(BigDecimal.valueOf(Long.parseLong(itemArray[1])));
+						indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
 						indexScore.setPisDesc(itemArray[2]);
+						//添加绩效系数
+						indexScore.setCoefficient(Double.parseDouble(itemArray[3]));
 						indexScoreList.add(indexScore);
 						//定量考核添加计算公式
 						if(piNew.getMode().getId() == 13) {
 							HrPaPisrule rule = new HrPaPisrule();
-							if(!"undefined".equals(itemArray[3])) {//用户新增或修改了分数
-								rule.setFormula(itemArray[3]);
+							if(!"undefined".equals(itemArray[4])) {//用户新增或修改了分数
+								rule.setFormula(itemArray[4]);
 							} else {
 								//通过得分和piId找到原考核指标关联的该分数的计算公式
 								String sql = "select a.formula from hr_pa_pisrule a, hr_pa_performanceindexscore b where " +
@@ -238,8 +242,10 @@ public class HrPaPerformanceindexAction extends BaseAction {
 						System.out.println(indexScores[i]);
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
-						indexScore.setPisScore(BigDecimal.valueOf(Long.parseLong(itemArray[1])));
+						indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
 						indexScore.setPisDesc(itemArray[2]);
+						//添加绩效系数
+						indexScore.setCoefficient(Double.parseDouble(itemArray[3]));
 						indexScoreList.add(indexScore);
 						//定量考核添加计算公式
 						if(piNew.getMode().getId() == 13) {
@@ -250,8 +256,8 @@ public class HrPaPerformanceindexAction extends BaseAction {
 							if(hrPaPisruleService.getAll(filter2).size() > 0) {
 								rule = hrPaPisruleService.getAll(filter2).get(0);
 							}
-							if(!"undefined".equals(itemArray[3])) {
-								rule.setFormula(itemArray[3]);
+							if(!"undefined".equals(itemArray[4])) {
+								rule.setFormula(itemArray[4]);
 							}
 							ruleList.add(rule);
 						}
@@ -333,12 +339,14 @@ public class HrPaPerformanceindexAction extends BaseAction {
 					indexScore.setPisType(piNew.getMode());
 					indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
 					indexScore.setPisDesc(itemArray[2]);
+					//添加绩效系数
+					indexScore.setCoefficient(Double.parseDouble(itemArray[3]));
 					indexScoreList.add(indexScore);
 					//定量考核添加计算公式
 					if(piNew.getMode().getId() == 13) {
 						HrPaPisrule rule = new HrPaPisrule();
-						if(!"undefined".equals(itemArray[3])) {
-							rule.setFormula(itemArray[3]);
+						if(!"undefined".equals(itemArray[4])) {
+							rule.setFormula(itemArray[4]);
 						}
 						ruleList.add(rule);
 					}
@@ -357,14 +365,16 @@ public class HrPaPerformanceindexAction extends BaseAction {
 						HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
-						indexScore.setPisScore(BigDecimal.valueOf(Long.parseLong(itemArray[1])));
+						indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
 						indexScore.setPisDesc(itemArray[2]);
+						//添加绩效系数
+						indexScore.setCoefficient(Double.parseDouble(itemArray[3]));
 						indexScoreList.add(indexScore);
 						//定量考核添加计算公式
 						if(piNew.getMode().getId() == 13) {
 							HrPaPisrule rule = new HrPaPisrule();
-							if(!"undefined".equals(itemArray[3])) {//用户新增或修改了分数
-								rule.setFormula(itemArray[3]);
+							if(!"undefined".equals(itemArray[4])) {//用户新增或修改了分数
+								rule.setFormula(itemArray[4]);
 							} else {
 								//通过得分和piId找到原考核指标关联的该分数的计算公式
 								String sql = "select a.formula from hr_pa_pisrule a, hr_pa_performanceindexscore b where " +
@@ -414,8 +424,10 @@ public class HrPaPerformanceindexAction extends BaseAction {
 						}
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
-						indexScore.setPisScore(BigDecimal.valueOf(Long.parseLong(itemArray[1])));
+						indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
 						indexScore.setPisDesc(itemArray[2]);
+						//添加绩效系数
+						indexScore.setCoefficient(Double.parseDouble(itemArray[3]));
 						indexScoreList.add(indexScore);
 						//定量考核添加计算公式
 						if(piNew.getMode().getId() == 13) {
@@ -426,8 +438,8 @@ public class HrPaPerformanceindexAction extends BaseAction {
 							if(hrPaPisruleService.getAll(filter2).size() > 0) {
 								rule = hrPaPisruleService.getAll(filter2).get(0);
 							}
-							if(!"undefined".equals(itemArray[3])) {
-								rule.setFormula(itemArray[3]);
+							if(!"undefined".equals(itemArray[4])) {
+								rule.setFormula(itemArray[4]);
 							}
 							ruleList.add(rule);
 						}
