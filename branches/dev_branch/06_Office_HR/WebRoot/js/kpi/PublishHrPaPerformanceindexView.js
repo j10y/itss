@@ -224,6 +224,7 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 	},
 	addHrPaPerformanceindex : function() {
 		new HrPaPerformanceindexForm({
+			piId : 0,
 			from : "publish"
 		}).show();
 	},
