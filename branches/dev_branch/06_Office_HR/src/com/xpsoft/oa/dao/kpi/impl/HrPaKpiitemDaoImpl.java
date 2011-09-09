@@ -14,14 +14,9 @@ public class HrPaKpiitemDaoImpl extends BaseDaoImpl<HrPaKpiitem>
 		super(HrPaKpiitem.class);
 	}
 	
-	public boolean findByPiIdAndPbcId(long piId, String[] pbcIds) {
+	public boolean findByPiIdAndPbcId(long piId, String pbcIds) {
 		String hql = "select count(*) from HrPaKpiitem where pi.id= "
-				+piId + " and pbc.id in (";
-		hql += pbcIds[0];
-		for(int i = 1; i < pbcIds.length; i++) {
-			hql += "," + pbcIds[i];
-		}
-		hql += ") and pbc.publishStatus = 3";
+				+piId + " and pbc.id in (" + pbcIds + ") and pbc.publishStatus = 3";
 		
 		final String hql2 = hql;
 		
