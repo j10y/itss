@@ -1,7 +1,9 @@
 package com.xpsoft.framework.util;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -695,6 +697,75 @@ public final class HttpUtil {
 	        System.out.println("接收到：" + backJsonString);
 			backJsonObejct = JSONObject.fromObject(backJsonString);
 	    return backJsonObejct;
+	}
+	
+	
+	/**
+	 * 上传文件
+	 * @Methods Name uploadFileByUrl
+	 * @Create In Sep 7, 2011 By likang
+	 * @param accessUrl
+	 * @param fileBytes
+	 * @param fileName
+	 * @return
+	 * @throws Exception String
+	 */
+	public static String uploadFileByUrl(String accessUrl,byte [] fileBytes,String fileName,String inputName) throws Exception {
+		long begin = System.currentTimeMillis();
+		String backJsonString = "";  
+		String end = "\r\n";
+		 String twoHyphens = "--";
+	        String boundary = "*****";
+	        try {
+	            URL httpUrl = new URL(accessUrl);
+	            HttpURLConnection connection = (HttpURLConnection) httpUrl
+	                    .openConnection();
+	         // 发送POST请求必须设置如下两行
+	            connection.setDoInput(true);
+	            connection.setDoOutput(true);
+	            connection.setUseCaches(false);
+	            connection.setRequestMethod("POST");
+	            connection.setRequestProperty("Connection", "Keep-Alive");
+				connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)");
+	            connection.setRequestProperty("Charset", "UTF-8");
+	            connection.setRequestProperty("Content-Type",
+	                    "multipart/form-data;boundary=" + boundary);
+	            connection.connect();
+	            DataOutputStream dos = new DataOutputStream(connection
+	                    .getOutputStream());
+	            dos.writeBytes(twoHyphens + boundary + end);
+	            dos.writeBytes("Content-Disposition: form-data;name=\""+inputName+"\";filename=\""+ URLEncoder.encode(fileName,"utf-8") + "\""
+	                    + end);
+	            dos.writeBytes(end);
+				//缓冲1024
+//				int length = fileBytes.length;
+//				for (int j = 0; j < fileBytes.length; j=j+1024,length-=1024) {
+//					//如果剩余byte长度大于1024 则写入1024
+//					if ((length - 1024) >= 0) {
+//						dos.write(fileBytes, j, 1024);
+//					} else {
+//						dos.write(fileBytes, j, length);
+//					}
+//				}
+	            dos.write(fileBytes, 0, fileBytes.length);
+	            dos.writeBytes(end);
+	            dos.writeBytes(twoHyphens + boundary + twoHyphens + end);
+	            dos.flush();
+	            dos.close();
+	            //System.out.println(System.currentTimeMillis() - begin);
+			// 定义BufferedReader输入流来读取URL的响应
+			 InputStream inputStream = connection.getInputStream();  
+			 //读回注意编码
+			 java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(inputStream,"UTF-8"));  
+			 String currentLine = "";  
+			 while ((currentLine = reader.readLine()) != null) {
+				backJsonString+=currentLine;  
+			 }	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	    return backJsonString;
+
 	}
 	
 	/**

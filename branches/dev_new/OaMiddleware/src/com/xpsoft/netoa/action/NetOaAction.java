@@ -1211,6 +1211,8 @@ public class NetOaAction extends BaseAction{
 			String fgld = super.getRequest().getParameter("fgld");
 			//分局人
 			String fjry = super.getRequest().getParameter("fjry");
+			//审批0（nextuser）  直接归档1（gdlx）  分管领导审批2（nextuser）  
+			String btType = super.getRequest().getParameter("btType");
 			//增加审批驳回
 			String ispass = super.getRequest().getParameter("ispass");
 			if (userid != null && id != null && activityName != null && commentDesc != null && taskId != null && password != null && signalName != null) {
@@ -1219,7 +1221,8 @@ public class NetOaAction extends BaseAction{
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx)
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh)
 				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh,String fgld);
-				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,ispass,gdlx,bh,fgld,fjry};
+				//public String saveProcessAndToNext(String userId, String passwd, String id,String taskId,String activityName,String signalName,String commentDesc,String nextuser,String checkboxvalue,String ispass,String gdlx,String bh,String fgld,String fjry,String btType)
+				Object [] paramArr = new Object[]{userid,password,id,taskId,activityName,signalName,commentDesc,nextuser,checkboxvalue,ispass,gdlx,bh,fgld,fjry,btType};
 				//通过webserice返回json对象
 				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
 				//如果有success字符返回则成功

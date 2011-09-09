@@ -11,7 +11,9 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -25,12 +27,15 @@ import oracle.net.ano.SupervisorService;
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.encoding.XMLType;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.xpsoft.netoa.util.InitSys;
 import com.xpsoft.netoa.util.UserCheckMap;
 import com.xpsoft.padoa.test.entity.Children;
@@ -110,6 +115,101 @@ public class FoodSafetyAction extends BaseAction{
 		return null;
 	}
 	
+	/**
+	 * 1.2.5	上传取证照片
+	 * @Methods Name uploadPic
+	 * @Create In Sep 7, 2011 By Administrator
+	 * @return
+	 * @throws Exception String
+	 */
+	public String uploadPic() throws Exception  {
+		String url = "http://127.0.0.1:8080/oamw/oa/uploadPicTwoSpaqAction.action";
+		String jsonString = "";
+		JSONObject backJsonObejct = new JSONObject();
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		String result;
+		String fileName = "";
+		try {
+			List items = upload.parseRequest(super.getRequest());
+			Iterator iter = items.iterator();
+			while (iter.hasNext()) {
+				// 把实体换成map，然后保存
+				FileItem item = (FileItem) iter.next();
+				if (!item.isFormField()) {
+					fileName = item.getName();
+					String appendix = "";
+					int indexOfDot = fileName.lastIndexOf(".");
+					if(indexOfDot>=0) {
+						appendix = fileName.substring(indexOfDot);
+					}
+					byte [] fileBytes = item.get();
+					jsonString = HttpUtil.uploadFileByUrl(url, fileBytes,fileName,"ImgFile");
+					backJsonObejct = JSONObject.fromObject(jsonString);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//输出json
+		PrintWriter pw = super.getPrintWriter();
+		pw.append(jsonString);
+		pw.flush();
+		pw.close();
+		return null;
+	}
+	
+	
+	public String uploadPicTwo() throws Exception  {
+		String FSP = System.getProperty("file.separator");
+		String LSP = System.getProperty("line.separator");
+		String url = "";
+		JSONObject backJsonObejct = new JSONObject();
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		String result;
+		String fileName = "";
+		try {
+			List items = upload.parseRequest(super.getRequest());
+			Iterator iter = items.iterator();
+			while (iter.hasNext()) {
+				// 把实体换成map，然后保存
+				FileItem item = (FileItem) iter.next();
+				if (!item.isFormField()) {
+					fileName = item.getName();
+					String appendix = "";
+					int indexOfDot = fileName.lastIndexOf(".");
+					if(indexOfDot>=0) {
+						appendix = fileName.substring(indexOfDot);
+					}
+					byte [] fileBytes = item.get();
+					String systemFileName = "upload-"+ System.currentTimeMillis() + appendix;
+					String filePath = "upload" + FSP + "projectInfo" + FSP+ systemFileName;
+					String realPath = super.getRequest().getRealPath(FSP) + filePath;
+					String dirPath = super.getRequest().getRealPath(FSP) + "upload" ;
+					File uploadedFile = new File(dirPath);
+					if(!uploadedFile.isDirectory()) {
+						uploadedFile.mkdirs();
+					}
+					uploadedFile = new File(realPath);
+					item.write(uploadedFile);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//输出json
+		PrintWriter pw = super.getPrintWriter();
+		pw.append("{success:true}");
+		pw.flush();
+		pw.close();
+		return null;
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * 转发pad端请求到超市监管系统
@@ -160,16 +260,17 @@ public class FoodSafetyAction extends BaseAction{
 		return null;
 	}
 	
-	public static void main(String args[]) {
-		String aString = "registerCode=140300200010288";
-		try {
+	public static void main(String args[]) throws UnsupportedEncodingException {
+//		String aString = "loginName=admin&registerCode=14030200025513&xcRecord=食品过期&xcResult=责令下架&remark=处理完毕&img=sabcdef.jgp";
+		String aString = "registerCode=14030200025513";
+//		try {
 			System.out.println(URLEncoder.encode(aString,"utf-8"));
 //			System.out.println(URLDecoder.decode("billCode=%E6%99%8BC0000100009&startDate=20090101&endDate=20110808&pageNum=1&pageSize=15", "utf-8"));
 		
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		System.out.println(HttpUtil.encodeParamString(aString));
 //		System.out.println(HttpUtil.encodeParamString("taskid=分发"));
 	}

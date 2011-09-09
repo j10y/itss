@@ -23,6 +23,22 @@
     <servlet-name>downFile</servlet-name>
     <url-pattern>/downFile</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>uploadPic</servlet-name>
+    <servlet-class>com.xpsoft.framework.util.UploadPicServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>uploadPic</servlet-name>
+    <url-pattern>/uploadPic</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>uploadPic1</servlet-name>
+    <servlet-class>com.xpsoft.framework.util.UploadPicServlet1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>uploadPic1</servlet-name>
+    <url-pattern>/uploadPic1</url-pattern>
+  </servlet-mapping>
    
      <filter>
     <filter-name>encodingFilter</filter-name>
