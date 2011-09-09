@@ -274,7 +274,7 @@
 					businessFieldEffectCombo.setValue("${hrPromAssessment.businessFieldEffect}");
 					ratingResultCombo.setValue("${hrPromAssessment.ratingResult}");
 					postRankCombo.setValue("${hrPromAssessment.postRank}");
-					appointDate.setRawValue("${hrPromAssessment.appointDate}");
+					appointDate.setRawValue("${hrPromAssessment.appointDate}".split(" ")[0]);
 					salaryLevelNameCombo.setValue("${hrPromAssessment.salaryLevelName}");
 					salaryLevelNameCombo.setRawValue("${hrPromAssessment.salaryLevelName}");
 					document.getElementById("salaryLevelId").value="${hrPromAssessment.salaryLevelId}";
@@ -294,11 +294,13 @@
 					<td align="right">姓名</td>
 					<td colspan="2">${hrPromAssessment.promApply.applyUser.fullname}</td>
 					<td align="right">部门/门店</td>
-					<td colspan="2">${hrPromAssessment.promApply.depName}</div></td>
+					<td colspan="2">${hrPromAssessment.promApply.depName}</td>
 				</tr>
 				<tr>
 					<td align="right">入职日期</td>
-					<td colspan="2">${hrPromAssessment.promApply.applyUser.accessionTime}</div></td>
+					<td colspan="2">
+						<fmt:formatDate value="${hrPromAssessment.promApply.applyUser.accessionTime}" type="date"/>
+					</td>
 					<td align="right">现职位</td>
 					<td colspan="2">
 						<input type="hidden" id="nowPositionId" value="${hrPromAssessment.promApply.nowPositionId}"/>
@@ -309,7 +311,9 @@
 					<td align="right">拟担任职位</td>
 					<td colspan="2">${hrPromAssessment.promApply.applyPositionName}</td>
 					<td align="right">拟晋升时间</td>
-					<td colspan="2">${hrPromAssessment.promApply.applyDate}</td>
+					<td colspan="2">
+						<fmt:formatDate value="${hrPromAssessment.promApply.applyDate}" type="date"/>
+					</td>
 				</tr>
 				<tr>
 					<td align="right">工作年限</td>
