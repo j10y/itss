@@ -147,6 +147,8 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 					});
 				}
 			});
+		}else{
+			Ext.ux.Toast.msg('操作信息','请填写薪酬岗位定级及审批意见！');
 		}
 	},
 	/**
@@ -185,7 +187,7 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 			id : 'auditForm',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/hrm/modStatusHrPromApply.do?isAssess=true&auditStep=headerApprove',//领导批准
+			url : __ctxPath + '/hrm/modStatusHrPromApply.do?isAssess=true&auditStep=hrConfirmAssess',//人力资源确认
 			defaults : {
 				anchor : '94%,96%'
 			},
