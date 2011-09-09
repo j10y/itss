@@ -17,6 +17,7 @@ public class HrPaKpiPBC2User extends BaseModel {
 	protected float totalScore;
 	protected AppUser modifyPerson;
 	protected Date modifyDate;
+	protected Double coefficient;
 	
 	public HrPaKpiPBC2User() {}
 
@@ -106,5 +107,13 @@ public class HrPaKpiPBC2User extends BaseModel {
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public Double getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(Double coefficient) {
+		this.coefficient = coefficient;
 	}
 }

@@ -12,6 +12,7 @@ public class HrPaAcreached extends BaseModel {
 	protected Date inputDate;
 	protected Long inputPerson;
 	protected Long userId;
+	protected String templateId;
 	
 	public HrPaAcreached(){}
 
@@ -69,6 +70,14 @@ public class HrPaAcreached extends BaseModel {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
 	}
 
 	

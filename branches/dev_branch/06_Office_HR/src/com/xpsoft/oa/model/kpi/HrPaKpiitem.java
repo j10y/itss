@@ -8,6 +8,7 @@ public class HrPaKpiitem extends BaseModel {
 	protected HrPaPerformanceindex pi;
 	protected double weight;
 	protected double result;
+	protected Double coefficient;
 	
 	public HrPaKpiitem(){}
 
@@ -49,5 +50,13 @@ public class HrPaKpiitem extends BaseModel {
 
 	public void setResult(double result) {
 		this.result = result;
+	}
+
+	public Double getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(Double coefficient) {
+		this.coefficient = coefficient;
 	}
 }

@@ -8,6 +8,7 @@ public class HrPaKpiitemHist extends BaseModel {
 	protected long piId;
 	protected Double weight;
 	protected Double result;
+	protected Double coefficient;
 	
 	public HrPaKpiitemHist() {}
 
@@ -49,6 +50,14 @@ public class HrPaKpiitemHist extends BaseModel {
 
 	public void setResult(Double result) {
 		this.result = result;
+	}
+
+	public Double getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(Double coefficient) {
+		this.coefficient = coefficient;
 	}
 	
 }

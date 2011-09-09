@@ -45,5 +45,16 @@
             not-null="false"
             unique="false"
         />
+        <property
+            name="coefficient"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="coefficient"
+            length="20"
+            not-null="false"
+            unique="false"
+        />
     </class>
 </hibernate-mapping>

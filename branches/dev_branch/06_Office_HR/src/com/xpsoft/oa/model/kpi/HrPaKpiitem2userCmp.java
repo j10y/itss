@@ -8,6 +8,7 @@ public class HrPaKpiitem2userCmp extends BaseModel {
 	protected Long piId;
 	protected double weight;
 	protected double result;
+	protected Double coefficient;
 	
 	public HrPaKpiitem2userCmp() {}
 
@@ -49,6 +50,14 @@ public class HrPaKpiitem2userCmp extends BaseModel {
 
 	public void setResult(double result) {
 		this.result = result;
+	}
+
+	public Double getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(Double coefficient) {
+		this.coefficient = coefficient;
 	}
 
 }

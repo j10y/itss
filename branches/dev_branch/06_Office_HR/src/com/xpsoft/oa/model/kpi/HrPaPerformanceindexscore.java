@@ -10,6 +10,7 @@ public class HrPaPerformanceindexscore extends BaseModel {
 	protected BigDecimal pisScore;
 	protected HrPaDatadictionary pisType;
 	protected String pisDesc;
+	protected Double coefficient;
 	
 	public HrPaPerformanceindexscore(){}
 
@@ -51,6 +52,14 @@ public class HrPaPerformanceindexscore extends BaseModel {
 
 	public void setPisDesc(String pisDesc) {
 		this.pisDesc = pisDesc;
+	}
+
+	public Double getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(Double coefficient) {
+		this.coefficient = coefficient;
 	}
 
 }

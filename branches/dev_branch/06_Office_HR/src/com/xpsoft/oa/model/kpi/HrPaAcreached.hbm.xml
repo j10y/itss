@@ -87,5 +87,16 @@
         	not-null="false"
         	unique="false"
         />
+        <property
+        	name="templateId"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="templateId"
+        	length="100"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>

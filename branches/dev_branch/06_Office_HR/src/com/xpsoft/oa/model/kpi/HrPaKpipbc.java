@@ -20,6 +20,7 @@ public class HrPaKpipbc extends BaseModel {
 	protected Date modifyDate;
 	protected AppUser modifyPerson;
 	protected long fromPbc;
+	protected Double coefficient;
 	
 	public HrPaKpipbc(){}
 
@@ -117,5 +118,13 @@ public class HrPaKpipbc extends BaseModel {
 
 	public void setFromPbc(long fromPbc) {
 		this.fromPbc = fromPbc;
+	}
+
+	public Double getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(Double coefficient) {
+		this.coefficient = coefficient;
 	}
 }
