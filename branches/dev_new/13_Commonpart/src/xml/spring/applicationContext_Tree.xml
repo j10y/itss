@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 事务的上传下载 -->
+	<bean id="treeDao" class="com.xp.commonpart.dao.impl.TreeDaoImpl">
+		<property name="selectDataDao" ref="selectDataDao"></property>
+	</bean>
+	
+	<bean id="treeService" class="com.xp.commonpart.service.impl.TreeServiceImpl">
+		<property name="treeDao" ref="treeDao"></property>
+	</bean>
+	<bean id="treeAction"  class="com.xp.commonpart.action.TreeAction" scope="prototype">
+	  
+	</bean>
+</beans>

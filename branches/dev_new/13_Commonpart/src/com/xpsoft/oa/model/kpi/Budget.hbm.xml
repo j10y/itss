@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.kpi.Budget"
+        table="hr_bg_budget"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="budgetId"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        
+        <property
+            name="name"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="name"
+            not-null="true"
+        />
+        <property
+            name="belongDept"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="belongDept"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+       
+        <property
+            name="beginDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="beginDate"
+        />
+        <property
+            name="endDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="endDate"
+        />
+        <property
+            name="remark"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="remark"
+        />
+        <property
+            name="createDate"
+            type="java.util.Date"
+            update="false"
+            insert="true"
+            access="property"
+            column="createDate"
+        />
+        <property
+            name="createPerson"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="createPerson"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+       <property
+            name="modifyDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="modifyDate"
+        />
+        <property
+            name="modifyPerson"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="modifyPerson"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        
+        <property
+            name="publishStatus"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="publishStatus"
+            length="32"
+            not-null="true"
+            unique="false"
+        />   
+    </class>
+</hibernate-mapping>

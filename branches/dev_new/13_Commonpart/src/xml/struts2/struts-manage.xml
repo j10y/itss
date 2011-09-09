@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="manageadmin" extends="struts-default">
+		<!-- 事务的上传下载 -->
+		<action name="manage_*"  class="manageAction" method="{1}">
+			<result name="success">/WEB-INF/comquery/adminnew.jsp</result>
+			<result name="list"> /WEB-INF/comquery/maintablelist.jsp</result>
+			<result name="detail">/WEB-INF/comquery/maintabledetial.jsp</result>	
+			<result name="maintablecolumnlist">/WEB-INF/comquery/maintablecolumnlist.jsp</result>
+			<result name="maintablecolumnlistset">/WEB-INF/comquery/maintablecolumnlistset.jsp</result>
+			<result name="maintablecolumndetail"> /WEB-INF/comquery/maintablecolumndetial.jsp</result>
+			<result name="usermanage"> /WEB-INF/comquery/usermanage.jsp</result>
+			<result name="tjlist">/WEB-INF/comquery/maintabletjlist.jsp</result>
+			<result name="tjdetail">/WEB-INF/comquery/maintablechartdetial.jsp</result>
+		</action>
+	</package>
+</struts>

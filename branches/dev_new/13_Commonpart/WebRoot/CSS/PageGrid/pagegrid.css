@@ -1,0 +1,31 @@
+body {font:normal 12px 宋体; background-color:White; margin:0px 0px 0px 0px;}
+a.MzTreeview /* TreeView 链接的基本样式 */ { cursor: hand; color: #000080; margin-top: 5px; padding: 2 1 0 2; text-decoration: none; }
+.MzTreeview a.select /* TreeView 链接被选中时的样式 */ { color: highlighttext; background-color: highlight; }
+#kkk input {
+vertical-align:middle;
+}
+.MzTreeViewRow {border:none;padding:0px;margin:0px;border-collapse:collapse;}
+.trRow{height:22px;}
+.MzTreeViewCell0 {width:25px;border-bottom:1px solid #CCCCCC;border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;padding:0px;margin:0px; text-align:center;}
+.MzTreeViewCell1 {border-bottom:1px solid #CCCCCC;border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;padding:0px;margin:0px; text-align:center;}
+.MzTreeViewCell2 {border-bottom:1px solid #CCCCCC;border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;padding:0px;margin:0px; text-align:left;}
+
+A:link {
+    color: #4189C4;
+	text-decoration: none;
+	font-size:12px
+}
+A:visited {
+    color: #4189C4;
+	text-decoration: none;
+	font-size:12px
+}
+A:hover { 
+	color: #FF6600;
+	text-decoration: none;
+	font-size:12px
+}
+a.a_blackjh_line{ color:#000000; text-decoration:none;text-decoration:underline; font-size:12px}
+a.a_blackjh_line:visited	{color:#000000; font-size:12px}
+a.a_blackjh_line:hover { color:#FF5500; text-decoration:none; font-size:12px}
+

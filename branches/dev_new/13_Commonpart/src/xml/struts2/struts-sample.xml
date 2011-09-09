@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sample" extends="struts-default">
+		<action name="sample_*"  class="sampleAction" method="{1}">
+		    <result name="page1">/WEB-INF/sample/page1.jsp</result>
+		    <result name="page2">/WEB-INF/sample/page2.jsp</result>
+		    <result name="page3">/WEB-INF/sample/page3.jsp</result>
+		    <result name="page4">/WEB-INF/sample/page4.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.kpi.HrPaKpiitem2userCmp"
+        table="hr_pa_kpiitem2usercmp"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        <many-to-one name="pbc2User" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaKpiPBC2UserCmp" column="pbcId"></many-to-one>
+        <property
+        	name="piId"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="piId"
+        	length="20"
+        	not-null="false"
+        	unique="false"
+        />
+        <property
+            name="weight"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="weight"
+            length="20"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="result"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="result"
+            length="20"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="coefficient"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="coefficient"
+            length="20"
+            not-null="false"
+            unique="false"
+        />
+    </class>
+</hibernate-mapping>

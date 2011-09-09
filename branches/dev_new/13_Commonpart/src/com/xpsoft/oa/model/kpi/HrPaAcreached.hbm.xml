@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.kpi.HrPaAcreached"
+        table="hr_pa_acreached"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+         <property
+            name="acId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="acId"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="category"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="category"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="result"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="result"
+            length="20"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="inputDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="inputDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="inputPerson"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="inputPerson"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+    </class>
+</hibernate-mapping>

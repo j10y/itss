@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.kpi.RealExecution"
+        table="hr_bg_realExecution"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="realExecutionId"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        <many-to-one name="budget" not-null="true" class="com.xpsoft.oa.model.kpi.Budget" column="bgId"></many-to-one>
+        <many-to-one name="budgetItem" not-null="true" class="com.xpsoft.oa.model.kpi.BudgetItem" column="bgiId"></many-to-one>
+         <property
+            name="realValue"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="realValue"
+        />
+        <property
+            name="month"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="month"
+            length="10"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="inputDate"
+            type="java.util.Date"
+            update="false"
+            insert="true"
+            access="property"
+            column="inputDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="remark"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="remark"
+            length="200"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="deleteFlag"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="deleteFlag"
+            length="32"
+            not-null="false"
+            unique="false"
+        />   
+    </class>
+</hibernate-mapping>

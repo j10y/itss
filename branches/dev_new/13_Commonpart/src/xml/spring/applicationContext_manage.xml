@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 事务的上传下载 -->
+	<bean id="mainTableDao" class="com.xp.commonpart.dao.impl.MainTableDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" /> 
+	</bean>
+	<bean id="mainTableService" class="com.xp.commonpart.service.impl.MainTableServiceImpl">
+		<property name="mainTableDao" ref="mainTableDao"></property>  
+  		<property name="baseDao" ref="baseDao"></property>
+  		<property name="selectDataService" ref="selectDataService"></property>
+	</bean>
+	<bean id="manageAction"  class="com.xp.commonpart.action.ManageAction" scope="prototype">
+	</bean>
+</beans>
