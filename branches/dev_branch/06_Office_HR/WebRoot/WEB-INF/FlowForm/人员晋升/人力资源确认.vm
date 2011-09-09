@@ -237,6 +237,10 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 						store : new Ext.data.JsonStore(
 								{
 									url : __ctxPath + "/hrm/comboSalaryJobSalaryRelation.do",
+									params : {
+										'Q_job.jobId_L_EQ' : '${hrPromApply_nowPositionId}',
+										'Q_deleteFlag_N_EQ' : 0
+									},
 									fields : [
 											{
 												name : "standardId",
