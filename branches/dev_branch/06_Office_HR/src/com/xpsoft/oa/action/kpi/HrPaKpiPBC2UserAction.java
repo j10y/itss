@@ -14,6 +14,7 @@ import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
 
@@ -64,20 +65,20 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		String sql4 = "";
 		if(fullname != null && !"".equals(fullname)) {
 			sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId in (" + depIds + ") and b.fullname like '%" + fullname + "%'";
+					"a.publishStatus in (0, 2) and a.belongUser = b.userId and b.depId in (" + depIds + ") and b.fullname like '%" + fullname + "%'";
 		} else {
 			sql4 = "select count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId in (" + depIds + ") ";
+					"a.publishStatus in (0, 2) and a.belongUser = b.userId and b.depId in (" + depIds + ") ";
 		}
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
 		String sql2 = "";
 		if(fullname != null && !"".equals(fullname)) {
 			sql2 = "select a.id, b.fullname, b.position, a.pbcName from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId in (" + depIds + ") and b.fullname like '%" + fullname + "%' limit " + 
+					"a.publishStatus in (0, 2) and a.belongUser = b.userId and b.depId in (" + depIds + ") and b.fullname like '%" + fullname + "%' limit " + 
 					filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		} else {
 			sql2 = "select a.id, b.fullname, b.position, a.pbcName from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and b.depId in (" + depIds + ") limit " +
+					"a.publishStatus in (0, 2) and a.belongUser = b.userId and b.depId in (" + depIds + ") limit " +
 					filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		}
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
@@ -215,6 +216,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 	}
 	
 	public String submitToAudit() {
+		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
 		//取得PBC
 		String pbcId = this.getRequest().getParameter("pbcId");
 		this.hrPaKpiPBC2User = this.hrPaKpiPBC2UserService.get(Long.parseLong(pbcId));
@@ -222,6 +224,9 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		this.hrPaKpiPBC2User.setPublishStatus(1);
 		//插入数据库
 		this.hrPaKpiPBC2UserService.save(this.hrPaKpiPBC2User);
+		
+		//移动到完成表
+		hrPaKpiPBC2UserCmpService.saveHrPaKpiPBC2UserCmp(pbcId);
 		
 		this.getRequest().setAttribute("flag", "2");
 		
