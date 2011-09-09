@@ -331,7 +331,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 					}
 					indexScore.setPi(piNew);
 					indexScore.setPisType(piNew.getMode());
-					indexScore.setPisScore(BigDecimal.valueOf(Long.parseLong(itemArray[1])));
+					indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
 					indexScore.setPisDesc(itemArray[2]);
 					indexScoreList.add(indexScore);
 					//定量考核添加计算公式
