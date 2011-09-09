@@ -40,6 +40,7 @@ public class CountJobServiceImpl implements CountJobService{
 		return this.saveSalarDetail(null,null);
 	}
 	public boolean saveKpiItemScoreForUser(String userid,String depid,String pbc2userid){
+		logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++操作用户ID："+userid+"用户PBC模板ID："+pbc2userid+"++++计算该用户的模板开始+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");	
 		BaseService baseService =(BaseService) ContextHolder.getBean("baseService");		
 		LinkedHashMap pmap=new LinkedHashMap();
@@ -257,6 +258,7 @@ public class CountJobServiceImpl implements CountJobService{
 	}
 	//是否可以计算
 	public String isKpiItemScoreForUser(String userid,String depid,String pbc2userid){
+		logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++操作用户ID："+userid+"用户PBC模板ID："+pbc2userid+"++++判断是否可以计算该用户的模板开始+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");	
 		BaseService baseService =(BaseService) ContextHolder.getBean("baseService");		
 		LinkedHashMap pmap=new LinkedHashMap();
@@ -418,7 +420,7 @@ public class CountJobServiceImpl implements CountJobService{
 		}
 		
 		Long endtime=new Date().getTime();
-		logger.info("共有考核项目:"+allcount+"个,成功："+succount+"个,失败："+(allcount-succount)+"个,共计时间"+((endtime-starttime)/1000)+"秒,零"+((endtime-starttime)%1000)+"毫秒");
+		//logger.info("共有考核项目:"+allcount+"个,成功："+succount+"个,失败："+(allcount-succount)+"个,共计时间"+((endtime-starttime)/1000)+"秒,零"+((endtime-starttime)%1000)+"毫秒");
 		String json=datajson.toString();
 		if(json.lastIndexOf(",")==json.length()-1){
 			json=json.substring(0,json.length()-1);
@@ -432,6 +434,7 @@ public class CountJobServiceImpl implements CountJobService{
 	}
 	
 	public boolean saveSalarDetail(String userid,String depid){
+		logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++部门ID："+depid+"++++++薪资计算开始+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		Long starttime=new Date().getTime();
 		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");
 		//1.查询调用此方法的人的具体信息
