@@ -90,7 +90,7 @@ InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			style : "margin:0 3px 0 3px"
 		});
 		b.push({
-			iconCls : "btn-edit",
+			iconCls : "btn-check",
 			qtip : "审核",
 			style : "margin:0 3px 0 3px"
 		});
@@ -226,7 +226,7 @@ InAuditHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			case "btn-preview":
 				this.editHrPaAssessmentcriteria(a);
 				break ;
-			case "btn-edit":
+			case "btn-check":
 				this.multiAudit();
 			default:
 				break ;

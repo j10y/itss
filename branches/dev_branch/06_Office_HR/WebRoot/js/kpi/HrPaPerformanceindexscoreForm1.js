@@ -11,7 +11,7 @@ HrPaPerformanceindexscoreForm1 = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 180,
+			height : 205,
 			width : 400,
 			title : "增加/修改评分标准对话框--非计算类",
 			buttonAlign : "center",
@@ -47,6 +47,14 @@ HrPaPerformanceindexscoreForm1 = Ext.extend(Ext.Window, {
 					maskRe : /[\d.]/,
 					allowBlank : false,
 					blankText : "分数不能为空！"
+				}, {
+					fieldLabel : "绩效系数",
+					labelStyle : "text-align:right",
+					name : "hrPaPerformanceindexscore.coefficient",
+					id : "coefficient",
+					maskRe : /[\d.]/,
+					allowBlank : false,
+					blankText : "绩效系数不能为空！"
 				}, {
 					fieldLabel : "评分说明",
 					labelStyle : "text-align:right",
@@ -100,6 +108,15 @@ HrPaPerformanceindexscoreForm1 = Ext.extend(Ext.Window, {
 			});
 			return ;
 		}
+		if(isNaN(Ext.getCmp("coefficient").getValue())) {
+			Ext.MessageBox.show({
+				title : "操作信息",
+				msg : "请正确填写绩效系数。",
+				buttons : Ext.MessageBox.OK,
+				icon : Ext.MessageBox.ERROR
+			});
+			return ;
+		}
 		if(a.getForm().isValid()) {
 			var d = Ext.getCmp("HrPaPerformanceindexscoreGrid");
 			//删除gridPanel里边修改以前的记录
@@ -125,7 +142,8 @@ HrPaPerformanceindexscoreForm1 = Ext.extend(Ext.Window, {
 				"id" : Ext.getCmp("id").getValue(),
 				"pi.id" : Ext.getCmp("piIdForm1").getValue() == null ? 0 : Ext.getCmp("piIdForm1").getValue(),
 				"pisScore" : Ext.getCmp("pisScore").getValue(),
-				"pisDesc" : Ext.getCmp("pisDesc").getValue()
+				"pisDesc" : Ext.getCmp("pisDesc").getValue(),
+				"coefficient" : Ext.getCmp("coefficient").getValue()
 			});
 			d.getStore().add(pis);
 			b.close();

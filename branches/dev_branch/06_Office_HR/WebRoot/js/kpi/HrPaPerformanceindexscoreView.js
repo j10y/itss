@@ -75,7 +75,8 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 					mapping : "pisType.name"
 				},
 				"pisScore",
-				"pisDesc"
+				"pisDesc",
+				"coefficient"
 			]
 		});
 		this.store.setDefaultSort("pisScore", "asc");
@@ -130,6 +131,10 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				}, {
 					header : "计算公式",
 					dataIndex : "formula",
+					hidden : true
+				}, {
+					header : "绩效系数",
+					dataIndex : "coefficient",
 					hidden : true
 				},
 				this.rowActions
@@ -192,12 +197,12 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		if(b.paMode == QUALITATIVE_ASSESSMENT) {//定性考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + " ";
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + " ";
 			}
 		} else {//定量考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.formula + " ";
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + "," + pisItem.formula + " ";
 			}
 		}
 		Ext.getCmp("indexScores").setValue(pisList);
@@ -242,12 +247,12 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		if(b.paMode == QUALITATIVE_ASSESSMENT) {//定性考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + " ";
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + " ";
 			}
 		} else {//定量考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.formula + " ";
+				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + "," + pisItem.formula + " ";
 			}
 		}
 		Ext.getCmp("indexScores").setValue(pisList);

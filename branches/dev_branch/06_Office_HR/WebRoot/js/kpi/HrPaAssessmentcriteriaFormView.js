@@ -23,13 +23,13 @@ HrPaAssessmentcriteriaFormView = Ext.extend(Ext.Window, {
 			border : false,
 			id : "HrPaAssessmentcriteriaFormView",
 			defaults : {
-				anchor : "98%,98%"
+				anchor : "95%,95%"
 			},
 			defaultType : "textfield",
 			items : [
 				{
 					fieldLabel : "考核标准名称",
-					labelStyle : "text-align:right",
+					labelStyle : "text-align:right;width:120px;",
 					name : "hrPaAssessmentcriteria.acName",
 					id : "acName",
 					readOnly : true,
@@ -37,15 +37,15 @@ HrPaAssessmentcriteriaFormView = Ext.extend(Ext.Window, {
 					blankText : "考核标准名称不能为空！"
 				}, {
 					fieldLabel : "考核标准关键字",
-					labelStyle : "text-align:right",
+					labelStyle : "text-align:right;width:120px;",
 					name : "hrPaAssessmentcriteria.acKey",
 					id : "acKey",
 					readOnly : true,
 					allowBlank : false,
 					blankText : "考核标准关键字不能为空！"
 				}, {
-					fieldLabel : "是否定量考核",
-					labelStyle : "text-align:right",
+					fieldLabel : "是否销售类定量考核",
+					labelStyle : "text-align:right;width:120px;",
 					xtype : "checkboxgroup",
 					columns : 1,
 					items : [
@@ -58,7 +58,7 @@ HrPaAssessmentcriteriaFormView = Ext.extend(Ext.Window, {
 					]
 				}, {
 					fieldLabel : "考核标准描述",
-					labelStyle : "text-align:right",
+					labelStyle : "text-align:right;width:120px;",
 					name : "hrPaAssessmentcriteria.acDesc",
 					height : 100,
 					id : "acDesc",
