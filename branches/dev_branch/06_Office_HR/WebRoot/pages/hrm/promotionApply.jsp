@@ -101,8 +101,8 @@
 					applyUserCombo.setRawValue("${hrPromApply.applyUser.fullname}");
 					applyPositionNameCombo.setValue("${hrPromApply.applyPositionName}");
 					applyPositionNameCombo.setRawValue("${hrPromApply.applyPositionName}");
-					applyDate.setRawValue("${hrPromApply.applyDate}");
-					document.getElementById("accessionTime").value = "${hrPromApply.accessionTime}";
+					applyDate.setRawValue("${hrPromApply.applyDate}".split(" ")[0]);
+					document.getElementById("accessionTime").value = "${hrPromApply.accessionTime}".split(" ")[0];
 				}
 			});
 			function check() {
