@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,8 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		hrPaKpiPBC2UserCmp.setCreateDate(hrPaKpiPBC2User.getCreateDate());
 		hrPaKpiPBC2UserCmp.setTotalScore(hrPaKpiPBC2User.getTotalScore());
 		hrPaKpiPBC2UserCmp.setModifyPerson(hrPaKpiPBC2User.getModifyPerson());
-		hrPaKpiPBC2UserCmp.setModifyDate(hrPaKpiPBC2User.getModifyDate());
+		hrPaKpiPBC2UserCmp.setModifyDate(new Date());
+		hrPaKpiPBC2UserCmp.setCoefficient(hrPaKpiPBC2User.getCoefficient());
 		hrPaKpiPBC2UserCmp=this.save(hrPaKpiPBC2UserCmp);
 		for(HrPaKpiitem2user hpu:list){
 			HrPaKpiitem2userCmp hrPaKpiitem2userCmp=new HrPaKpiitem2userCmp();
@@ -93,6 +95,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			hrPaKpiitem2userCmp.setPiId(hpu.getPiId());
 			hrPaKpiitem2userCmp.setWeight(hpu.getWeight());
 			hrPaKpiitem2userCmp.setResult(hpu.getResult());
+			hrPaKpiitem2userCmp.setCoefficient(hpu.getCoefficient());
 			hrPaKpiitem2userCmpService.save(hrPaKpiitem2userCmp);
 			Map aimap=new HashMap();
 			aimap.put("Q_akpiItem2uId_L_EQ", hpu.getId()+"");
@@ -125,27 +128,33 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		hrPaKpiitem2userService.flush();
 		List<HrPaKpiitem2user> list=hrPaKpiitem2userService.getAll(filter);
 		float totalScore=0;
+		Double totalCoefficient=0d;
 		boolean isOnlyNegative=false;
 		Double baseScore=null;
+		Double baseCoefficient=0d;
 		for(HrPaKpiitem2user hrPaKpiitem2user:list){
 			HrPaPerformanceindex hrPaPerformanceindex=hrPaPerformanceindexService.get(hrPaKpiitem2user.getPiId());
 			if(hrPaPerformanceindex.getPaIsOnlyNegative()==1&&hrPaKpiitem2user.getResult()<=hrPaPerformanceindex.getBaseScore()){
 				//此处处理是否唯一否决条件为是的时候，直接给出得分，跳出循环
 				if(baseScore==null||baseScore>hrPaPerformanceindex.getFinalScore()){
 					baseScore=hrPaPerformanceindex.getFinalScore();
+					baseCoefficient=hrPaPerformanceindex.getFinalScore();
 					isOnlyNegative=true;
 				}
 			}else{
 				totalScore+=hrPaKpiitem2user.getResult()*hrPaKpiitem2user.getWeight();
+				totalCoefficient+=hrPaKpiitem2user.getCoefficient()*hrPaKpiitem2user.getWeight();
 			}
 		}
 		if(isOnlyNegative){
 			totalScore=baseScore.floatValue();
+			totalCoefficient=baseCoefficient;
 		}
 		DecimalFormat myformat = new DecimalFormat();
 		myformat.applyPattern("###.00");
 		totalScore=Float.parseFloat(myformat.format(totalScore));
 		hrPaKpiPBC2User.setTotalScore(totalScore);
+		hrPaKpiPBC2User.setCoefficient(Double.parseDouble(myformat.format(totalCoefficient)));
 		try {
 			hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
 		} catch (RuntimeException e) {
