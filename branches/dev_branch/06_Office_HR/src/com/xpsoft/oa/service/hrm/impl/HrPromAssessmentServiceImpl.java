@@ -20,7 +20,6 @@ public class HrPromAssessmentServiceImpl extends BaseServiceImpl<HrPromAssessmen
 	 *查询applyId对应的未删除的评估表，只有一个或没有 
 	 *没有则创建
 	 */
-	@Override
 	public HrPromAssessment getByApplyId(Long applyId) {
 		// TODO Auto-generated method stub
 		String HQL = "FROM HrPromAssessment v WHERE v.promApply.id=? AND v.publishStatus=?";
