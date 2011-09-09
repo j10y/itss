@@ -68,6 +68,25 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		return "success";
 	}
 	
+	public String combo() {
+		String frequencyId = this.getRequest().getParameter("frequencyId");
+		String sql = "select id, paName from hr_pa_performanceindex where paFrequency > " + frequencyId;
+		List<Map<String, Object>> mapList = this.hrPaperformanceindexService.findDataList(sql);
+		StringBuffer buff = new StringBuffer("{success:true,result:[");
+		for(int i = 0; i < mapList.size(); i++) {
+			buff.append("{'id':'" + mapList.get(i).get("id").toString())
+					.append("','paName':'" + mapList.get(i).get("paName").toString() + "'},");
+		}
+		
+		this.jsonString = buff.toString();
+		if(mapList.size() > 0) {
+			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		}
+		this.jsonString += "]}";
+		
+		return "success";
+	}
+	
 	public String multiDel(){
 		String[] ids = this.getRequest().getParameterValues("ids");
 		if(ids != null) {
@@ -113,6 +132,11 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		pi.setModifyDate(currentDate);
 		pi.setModifyPerson(currentUser);
 		pi.setPublishStatus(0);//置为草稿状态
+		if(this.hrPaPerformanceindex.getParentPa() != null) {
+			if(this.hrPaPerformanceindex.getParentPa().getId() != null) {
+				pi.setParentPa(this.hrPaPerformanceindex.getParentPa());
+			}
+		}
 		//判断是否唯一否决项
 		if(this.hrPaPerformanceindex.getPaIsOnlyNegative() == null) {
 			pi.setPaIsOnlyNegative(0);
@@ -239,7 +263,6 @@ public class HrPaPerformanceindexAction extends BaseAction {
 						if(!"0".equals(itemArray[0])) {
 							indexScore=hrPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
 						}
-						System.out.println(indexScores[i]);
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
 						indexScore.setPisScore(BigDecimal.valueOf(Float.parseFloat(itemArray[1])));
@@ -288,6 +311,11 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		pi.setPaDesc(this.hrPaPerformanceindex.getPaDesc());
 		pi.setModifyDate(currentDate);
 		pi.setModifyPerson(currentUser);
+		if(this.hrPaPerformanceindex.getParentPa() != null) {
+			if(this.hrPaPerformanceindex.getParentPa().getId() != null) {
+				pi.setParentPa(this.hrPaPerformanceindex.getParentPa());
+			}
+		}
 		//判断是否唯一否决项
 		if(this.hrPaPerformanceindex.getPaIsOnlyNegative() == null) {
 			pi.setPaIsOnlyNegative(0);
@@ -478,6 +506,12 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		piOld.setPublishStatus(3);
 		piOld.setBaseScore(piCopy.getBaseScore());
 		piOld.setFinalScore(piCopy.getFinalScore());
+		piOld.setParentPa(piCopy.getParentPa());
+		if(piCopy.getParentPa() != null) {
+			if(piCopy.getParentPa().getId() != null) {
+				piOld.setParentPa(piCopy.getParentPa());
+			}
+		}
 		//插入数据库
 		HrPaPerformanceindex piNew = this.hrPaperformanceindexService.save(piOld);
 		//保存考核指标关联的分数
