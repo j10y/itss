@@ -19,6 +19,7 @@
 		<script type="text/javascript">
 			Ext.onReady(function() {
 				var applyUserCombo = new Ext.form.ComboBox({
+					id : "applyUserCombo",
 					mode : "remote",
 					allowBlank : false,
 					hiddenName : "hrPromApply.applyUser.userId",
@@ -27,6 +28,8 @@
 					displayField : "fullname",
 					renderTo : "applyUser",
 					triggerAction : "all",
+					allowBlank : false,
+					blankText : "姓名不能为空！",
 					store : new Ext.data.JsonStore({
 						url : "${pageContext.request.contextPath}/hrm/sameDeptUserHrPromApply.do",
 						fields : ["userId", "fullname", "depId", "depName", "accessionTime", "nowPositionId", "nowPositionName", "workYear", "workHereYear"],
@@ -68,6 +71,7 @@
 					}
 				});
 				var applyPositionNameCombo = new Ext.form.ComboBox({
+					id : "applyPositionNameCombo",
 					mode : "remote",
 					hiddenName : "hrPromApply.applyPositionName",
 					allowBlank : false,
@@ -76,6 +80,8 @@
 					displayField : "jobName",
 					renderTo : "applyPositionName",
 					triggerAction : "all",
+					allowBlank : false,
+					blankText : "拟申请职位不能为空！",
 					store : new Ext.data.JsonStore({
 						url : "${pageContext.request.contextPath}/hrm/applyPositionHrPromApply.do",
 						fields : ["jobId", "jobName"],
@@ -94,6 +100,8 @@
 					format : "Y-m-d",
 					editable : false,
 					width : 240,
+					allowBlank : false,
+					blankText : "拟申请时间不能为空！",
 					renderTo : "applyDate"
 				});
 				if("${hrPromApply.id}" != 0) {
@@ -106,7 +114,16 @@
 				}
 			});
 			function check() {
-				
+				if(!Ext.getCmp("applyUserCombo").isValid()) {
+					return false;
+				}
+				if(!Ext.getCmp("applyPositionNameCombo").isValid()) {
+					return false;
+				}
+				if(!Ext.getCmp("hrPromApply.applyDate").isValid()) {
+					return false;
+				}
+				return true;
 			}
 			function onSend(){
 				Ext.Ajax.request({
@@ -206,7 +223,7 @@
 		<div style="text-align:center;height:50px;line-height:50px;">
 			<font style="font-size:18px;">晋升申请表</font>
 		</div>
-		<form id="applyForm" action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
+		<form id="applyForm" onsubmit="return check();" action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
 			<input type="hidden" id="hrPromApply.id" name="hrPromApply.id" value="${hrPromApply.id}"/>
 			<input type="hidden" name="flag" value="0"/>
 			<table width="700" align="center" border="1" cellpadding="0" cellspacing="0">
@@ -261,19 +278,19 @@
 				<tr>
 					<td align="right">目标一</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea id="target1" name="hrPromApply.target1" style="width:100%;height:100%;border:none;">${hrPromApply.target1}</textarea>
+						<textarea readonly="readonly" id="target1" name="hrPromApply.target1" style="width:100%;height:100%;border:none;">${hrPromApply.target1}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">目标二</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea id="target2" name="hrPromApply.target2" style="width:100%;height:100%;border:none;">${hrPromApply.target2}</textarea>
+						<textarea readonly="readonly" id="target2" name="hrPromApply.target2" style="width:100%;height:100%;border:none;">${hrPromApply.target2}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">目标三</td>
 					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea id="target3" name="hrPromApply.target3" style="width:100%;height:100%;border:none;">${hrPromApply.target3}</textarea>
+						<textarea readonly="readonly" id="target3" name="hrPromApply.target3" style="width:100%;height:100%;border:none;">${hrPromApply.target3}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -281,7 +298,7 @@
 				</tr>
 				<tr>
 					<td colspan="4" style="height:150px;padding:1px;">
-						<textarea id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;">${hrPromApply.intRecord}</textarea>
+						<textarea readonly="readonly" id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;">${hrPromApply.intRecord}</textarea>
 					</td>
 				</tr>
 				<tr>

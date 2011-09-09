@@ -19,6 +19,7 @@
 		<script type="text/javascript">
 			Ext.onReady(function() {
 				var proKnowledgeCombo = new Ext.form.ComboBox({
+					id : "proKnowledgeCombo",
 					mode : "local",
 					width:100,
 					allowBlank : false,
@@ -49,6 +50,7 @@
 					}
 				});
 				var commEffectCombo = new Ext.form.ComboBox({
+					id : "commEffectCombo",
 					mode : "local",
 					width:100,
 					allowBlank : false,
@@ -79,6 +81,7 @@
 					}
 				});
 				var solveAbilityCombo = new Ext.form.ComboBox({
+					id : "solveAbilityCombo",
 					mode : "local",
 					width:100,
 					allowBlank : false,
@@ -109,6 +112,7 @@
 					}
 				});
 				var difficultyManageCombo = new Ext.form.ComboBox({
+					id : "difficultyManageCombo",
 					mode : "local",
 					allowBlank : false,
 					name : "hrPromAssessment.difficultyManage",
@@ -138,6 +142,7 @@
 					}
 				});
 				var businessFieldEffectCombo = new Ext.form.ComboBox({
+					id : "businessFieldEffectCombo",
 					mode : "local",
 					width:100,
 					allowBlank : false,
@@ -168,6 +173,7 @@
 					}
 				});
 				var ratingResultCombo = new Ext.form.ComboBox({
+					id : "ratingResultCombo",
 					mode : "local",
 					allowBlank : false,
 					name : "hrPromAssessment.ratingResult",
@@ -226,33 +232,41 @@
 					fieldLabel : "薪酬标准单名称",
 					id : "salaryLevelNameCombo",
 					name : "hrPromAssessment.salaryLevelName",
-					mode : "remote",
+					mode : "local",
 					renderTo : "salaryLevelName",
 					allowBlank : false,
 					editable : false,
 					valueField : "standardName",
 					displayField : "standardName",
 					triggerAction : "all",
-					store : new Ext.data.JsonStore(
+					store : new Ext.data.JsonStore({
+						remoteSort : true,
+						fields : [
 							{
-								url : "${pageContext.request.contextPath}/hrm/comboSalaryJobSalaryRelation.do",
-								fields : [
-										{
-											name : "standardId",
-											type : "int"
-										},
-										"standardNo",
-										"standardName",
-										"totalMoney",
-										"setdownTime",
-										"perCoefficient",
-										"status" ]
-							}),
+								name : "standardId",
+								type : "int"
+							},
+							"standardNo",
+							"standardName",
+							"totalMoney",
+							"setdownTime",
+							"perCoefficient",
+							"status"
+						]
+					}),
 					listeners : {
 						focus : function() {
-							Ext.getCmp("salaryLevelNameCombo").getStore().reload({
-								'Q_job.jobId_L_EQ' : document.getElementById("nowPositionId"),
-								'Q_deleteFlag_N_EQ' : 0
+							Ext.Ajax.request({
+								url : "${pageContext.request.contextPath}/hrm/comboSalaryJobSalaryRelation.do",
+								method : "post",
+								params : {
+									'Q_job.jobId_L_EQ' : document.getElementById("nowPositionId").value,
+									'Q_deleteFlag_N_EQ' : 0
+								},
+								success : function(f) {
+									var e = Ext.util.JSON.decode(f.responseText);
+									Ext.getCmp("salaryLevelNameCombo").getStore().loadData(e);
+								}
 							});
 						},
 						select : function(e, c, d) {
@@ -280,6 +294,43 @@
 					document.getElementById("salaryLevelId").value="${hrPromAssessment.salaryLevelId}";
 				}
 			});
+			function check() {
+				if(document.getElementById("reached1").value == "") {
+					alert("请填写目标一的完成情况！");
+					return false;
+				}
+				if(document.getElementById("reached2").value == "") {
+					alert("请填写目标一的完成情况！");
+					return false;
+				}
+				if(document.getElementById("reached3").value == "") {
+					alert("请填写目标一的完成情况！");
+					return false;
+				}
+				if(document.getElementById("performResult").value == "") {
+					alert("请填写目标一的完成情况！");
+					return false;
+				}
+				if(!Ext.getCmp("proKnowledgeCombo").isValid()) {
+					return false;
+				}
+				if(!Ext.getCmp("commEffectCombo").isValid()) {
+					return false;
+				}
+				if(!Ext.getCmp("solveAbilityCombo").isValid()) {
+					return false;
+				}
+				if(!Ext.getCmp("difficultyManageCombo").isValid()) {
+					return false;
+				}
+				if(!Ext.getCmp("businessFieldEffectCombo").isValid()) {
+					return false;
+				}
+				if(!Ext.getCmp("ratingResultCombo").isValid()) {
+					return false;
+				}
+				return true;
+			}
 		</script>
 	</head>
 
@@ -287,8 +338,12 @@
 		<div style="text-align:center;height:50px;line-height:50px;">
 			<font style="font-size:18px;">晋升评估表</font>
 		</div>
-		<form action="${pageContext.request.contextPath}/hrm/saveHrPromAssessment.do" method="post">
-			<input type="hidden" name="hrPromAssessment.id" value="${hrPromApply.id}"/>
+		<form onsubmit="return check();" action="${pageContext.request.contextPath}/hrm/saveHrPromAssessment.do" method="post">
+			<input type="hidden" name="hrPromAssessment.id" value="${hrPromAssessment.id}"/>
+			<input type="hidden" name="hrPromAssessment.promApply.id" value="${hrPromAssessment.promApply.id}"/>
+			<input type="hidden" name="hrPromAssessment.createPerson.userId" value="${hrPromAssessment.createPerson.userId}"/>
+			<input type="hidden" name="hrPromAssessment.createDate" value="${hrPromAssessment.createDate}"/>
+			<input type="hidden" name="hrPromAssessment.publishStatus" value="${hrPromAssessment.publishStatus}"/>
 			<table width="700" align="center" border="1" cellpadding="0" cellspacing="0">
 				<tr>
 					<td align="right">姓名</td>
@@ -327,19 +382,19 @@
 				<tr>
 					<td align="right">目标一</td>
 					<td colspan="5" style="height:60px;padding:1px;">
-						<textarea name="hrPromAssessment.reached1" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
+						<textarea id="reached1" name="hrPromAssessment.reached1" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">目标二</td>
 					<td colspan="5" style="height:60px;padding:1px;">
-						<textarea name="hrPromAssessment.reached2" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
+						<textarea id="reached2" name="hrPromAssessment.reached2" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">目标三</td>
 					<td colspan="5" style="height:60px;padding:1px;">
-						<textarea name="hrPromAssessment.reached3" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
+						<textarea id="reached3" name="hrPromAssessment.reached3" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -348,7 +403,7 @@
 				<tr>
 					<td align="right">绩效结果</td>
 					<td colspan="5" style="height:60px;padding:1px;">
-						<textarea name="hrPromAssessment.performResult" style="width:100%;height:100%;border:none;">${hrPromAssessment.performResult}</textarea>
+						<textarea id="performResult" name="hrPromAssessment.performResult" style="width:100%;height:100%;border:none;">${hrPromAssessment.performResult}</textarea>
 					</td>
 				</tr>
 				<tr>
