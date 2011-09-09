@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <context-param>
+	  	<param-name>webAppRootKey</param-name>
+	  	<param-value>commonpart.root</param-value>
+	</context-param> 
+    <!-- Hibernate延迟加载问题 -->
+	<filter>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>sessionFactoryBeanName</param-name>
+			<param-value>sessionFactory</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- ########################################## -->
+	<!-- ##############  Spring 配置  ############## -->
+	<!-- ########################################## -->	
+		
+	
+     <!-- 定义spring配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:xml/spring/*.xml
+		</param-value>
+	</context-param>
+    <!-- 初始化spring bean代理 -->
+	<servlet>
+		<servlet-name>SpringBeanProxyInitServlet</servlet-name>
+		<servlet-class>com.xp.commonpart.util.SpringBeanProxyInitServlet</servlet-class>
+		<load-on-startup>7</load-on-startup>
+	</servlet>
+	<!-- Spring listener -->
+	<listener>
+		<listener-class>
+			com.xp.commonpart.util.DefaultContextLoaderListener
+		</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- ########################################## -->
+	<!-- ############## Struts2 配置  ############## -->
+	<!-- ########################################## -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.FilterDispatcher
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	
+	<!-- ########################################## -->
+	<!-- ##############  Log4j 配置  ############## -->
+	<!-- ########################################## -->	
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>WEB-INF/log4j.xml</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>60000</param-value>
+	</context-param>
+	<!-- ########################################## -->
+	<!-- ##############  FCKEditor 配置  ############## -->
+	<!-- ########################################## -->	
+	<servlet>
+   		<servlet-name>Connector</servlet-name>
+   		<servlet-class>net.fckeditor.connector.ConnectorServlet</servlet-class>
+   		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+   		<servlet-name>Connector</servlet-name>
+   		<url-pattern>
+    	/fckeditor/editor/filemanager/connectors/*
+   		</url-pattern>
+	</servlet-mapping>
+	<servlet> 
+        <servlet-name> DisplayChart </servlet-name> 
+        <servlet-class> org.jfree.chart.servlet.DisplayChart </servlet-class> 
+    </servlet> 
+	<servlet-mapping> 
+        <servlet-name> DisplayChart </servlet-name> 
+        <url-pattern> /servlet/DisplayChart </url-pattern> 
+	</servlet-mapping>
+	<!-- Define the Servlet Mappings. -->
+	<!-- ########################################## -->
+	<!-- ############ axis webService 配置########## -->
+	<!-- ########################################## -->	
+	  <display-name>Apache-Axis</display-name>
+	  <servlet>
+	    <servlet-name>AxisServlet</servlet-name>
+	    <servlet-class>
+	        org.apache.axis.transport.http.AxisServlet
+	    </servlet-class>
+	  </servlet>
+	  <servlet>
+	    <servlet-name>AdminServlet</servlet-name>
+	    <servlet-class>
+	        org.apache.axis.transport.http.AdminServlet
+	    </servlet-class>
+	    <load-on-startup>100</load-on-startup>
+	  </servlet>
+	  <servlet>
+	    <servlet-name>SOAPMonitorService</servlet-name>
+	    <servlet-class>
+	        org.apache.axis.monitor.SOAPMonitorService
+	    </servlet-class>
+	    <init-param>
+	      <param-name>SOAPMonitorPort</param-name>
+	      <param-value>5001</param-value>
+	    </init-param>
+	    <load-on-startup>100</load-on-startup>
+	  </servlet>
+	  <servlet-mapping>
+	    <servlet-name>AxisServlet</servlet-name>
+	    <url-pattern>/servlet/AxisServlet</url-pattern>
+	  </servlet-mapping>
+	  <servlet-mapping>
+	    <servlet-name>AxisServlet</servlet-name>
+	    <url-pattern>*.jws</url-pattern>
+	  </servlet-mapping>
+	  <servlet-mapping>
+	    <servlet-name>AxisServlet</servlet-name>
+	    <url-pattern>/services/*</url-pattern>
+	  </servlet-mapping>
+	  <servlet-mapping>
+	    <servlet-name>SOAPMonitorService</servlet-name>
+	    <url-pattern>/SOAPMonitor</url-pattern>
+	  </servlet-mapping>
+	  <mime-mapping>
+	    <extension>wsdl</extension>
+	     <mime-type>text/xml</mime-type>
+	  </mime-mapping>
+	  <mime-mapping>
+	    <extension>xsd</extension>
+	    <mime-type>text/xml</mime-type>
+	  </mime-mapping>  
+	   <!-- axis --> 
+    
+	<error-page>
+		<error-code>404</error-code>
+		<location>/noRight.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/noRight.jsp</location>
+	</error-page>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
