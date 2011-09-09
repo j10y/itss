@@ -365,6 +365,7 @@
 		<action name="*HrPromAssessment" class="HrPromAssessmentAction" method="{1}">
 			<result>${successResultValue}</result>
 			<result name="show">/pages/hrm/promotionAssessment.jsp</result>
+			<result name="view">/pages/hrm/promotionAssessmentDetail.jsp</result>
 		</action>
 		<action name="*ExportSalary" class="ExportSalaryAction" method="{1}">
 		   <result>${successResultValue}</result>

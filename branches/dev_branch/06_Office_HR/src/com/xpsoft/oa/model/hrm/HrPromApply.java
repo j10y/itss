@@ -16,6 +16,10 @@ public class HrPromApply extends BaseModel{
 	public static final Integer STATUS_HRCONFIRM = 6;
 	public static final Integer STATUS_TARGET = 7;
 	public static final Integer STATUS_ASSESS = 8;
+	public static final Integer STATUS_HEADERAPPROVE = 9;
+	public static final Integer STATUS_HRCONFIRMASSESS = 10;
+	public static final Integer STATUS_PROMOTIONINTERVIEWS = 11;
+	public static final Integer STATUS_PROMOTIONPUBLISH = 12;
 	
 	protected Long id;
 	protected AppUser applyUser;//晋升员工
@@ -41,6 +45,10 @@ public class HrPromApply extends BaseModel{
 	 * 6：待人力资源核实并确认
 	 * 7：目标设定和面谈
 	 * 8：考核期评估
+	 * 9：领导批准
+	 * 10：人力资源确认
+	 * 11：晋升面谈
+	 * 12：任命发文
 	 */
 	protected Integer publishStatus;//状态 0：草稿 1：审核中 2：退回 3：审核通过 4：删除标记
 	protected AppUser createPerson;

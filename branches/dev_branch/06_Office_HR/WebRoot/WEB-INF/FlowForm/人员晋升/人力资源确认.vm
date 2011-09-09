@@ -1,0 +1,302 @@
+/**
+ * @createtime:2011-08-02
+ * @author csx
+ * @description 领导批准
+ * @class HrPromApplyHRConfirmAssessFlowView
+ * @extends Ext.Panel
+ */
+HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
+	title : '人力资源确认 ',
+	setTaskId : function(tId){
+		this.taskId = tId;
+	},
+	getTaskId : function(){
+		return this.taskId;
+	},
+	formPanel : null,
+	constructor : function(_cfg) {
+		Ext.applyIf(this, _cfg);
+		this.init();
+		//引入js		
+		var jsArr=[__ctxPath + "/js/hrm/HrPromAssessmentForm.js"];
+		$ImportSimpleJs(jsArr,null);
+		
+		HrPromApplyHRConfirmAssessFlowView.superclass.constructor.call(this, {
+					title : '人力资源确认 ',
+					id : 'HrPromApplyHRConfirmAssessFlowView',
+					defaults : {
+						border : false,
+						autoScroll : true
+					},
+					activeTab : 1,
+					width : '95%',
+					height : 720,
+					buttons :  [
+								#set ($count=0)
+								#foreach ($v in $nextTrans)
+									#if($count>0)
+								,
+									#end
+									new Ext.Button({
+									   iconCls:'btn-transition',
+									   text:'转至[${v.destination}]',
+									   handler:this.onSave.createCallback(this.formPanel,this,'${v.name}','${v.source}')
+									})
+									#set ($count=$count+1)
+								#end
+								,new Ext.Button({
+								iconCls:'btn-save',
+								//hidden : true,
+								text : '拒绝',
+								handler : function(){
+									Ext.getCmp("publishStatus").setValue(8);//考核期评估状态
+									//流程结束，修改状态
+									Ext.getCmp("auditForm").getForm().submit({
+										method : 'POST',
+										waitMsg : '正在提交数据...',
+										success : function(fp, action) {
+											Ext.getCmp("auditForm").getForm().submit({
+									            url:__ctxPath+ "/flow/nextProcessActivity.do",
+												method:'post',
+												params:{taskId:Ext.getCmp("HrPromApplyHRConfirmAssessFlowView").taskId,signalName:"to考核期评估",activityName:"领导批准",destName:'考核期评估'},
+												success : function(fp, action) {
+												    Ext.ux.Toast.msg('操作信息','成功保存！');
+												    
+												    AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPromApplyHRConfirmAssessFlowView").taskId);
+
+												    
+													var myTaskView=Ext.getCmp("MyTaskGrid");
+													if(myTaskView!=null){
+														//AppUtil.activateTab(taskView);
+														myTaskView.getStore().reload();
+													}
+												},
+												failure : function(fp, action) {
+													Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+												}
+										    });
+										},
+										failure : function(fp, action) {
+											Ext.MessageBox.show({
+														title : '操作信息',
+														msg : '信息保存出错，请联系管理员！',
+														buttons : Ext.MessageBox.OK,
+														icon : Ext.MessageBox.ERROR
+													});
+											            AppUtil.removeTab('ProcessForm'+panel.taskId);
+														var myTaskView=Ext.getCmp("MyTaskGrid");
+														var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+														if(appHomeTaskGrid!=null){
+															appHomeTaskGrid.getStore().reload();
+														}
+														if(myTaskView!=null){
+															//AppUtil.activateTab(taskView);
+															myTaskView.getStore().reload();
+														}
+										}
+									});
+									
+								}
+							})
+								],
+					buttonAlign : 'center',
+					items : [this.detailPanel, this.detailPanel2,this.formPanel]
+				});
+	},
+	/**
+	 * 保存公文的方法,传入公文状态作为参数
+	 * @param {} _status
+	 */
+	onSave : function(formPanel,panel,signalName,activityName) {
+		if (formPanel.getForm().isValid()) {						
+			formPanel.getForm().submit({
+				url : __ctxPath + '/hrm/modStatusHrPromApply.do',//不加参数
+				method : 'POST',
+				waitMsg : '正在提交数据...',
+				success : function(fp, action) {
+					Ext.ux.Toast.msg('操作信息', '成功保存信息！');	
+					formPanel.getForm().submit({
+						url:__ctxPath+ "/flow/nextProcessActivity.do",
+						method:'post',
+						waitMsg:'正在提交处理，请稍等',
+						params:{taskId:taskId,signalName:signalName,activityName:activityName},
+						success : function(fp, action) {
+							Ext.ux.Toast.msg('操作信息','成功保存！');
+							AppUtil.removeTab('ProcessForm'+taskId);
+							var myTaskView=Ext.getCmp("MyTaskGrid");
+							var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+							if(appHomeTaskGrid!=null){
+								appHomeTaskGrid.getStore().reload();
+							}
+							if(myTaskView!=null){
+								//AppUtil.activateTab(myTaskView);
+								myTaskView.getStore().reload();
+							}
+						},
+						failure : function(fp, action) {
+							Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+						}
+					});
+				},
+				failure : function(fp, action) {
+					Ext.MessageBox.show({
+						title : '操作信息',
+						msg : '信息保存出错，请联系管理员！',
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+				}
+			});
+		}
+	},
+	/**
+	 * init the components
+	 */
+	init : function() {
+	
+		//查询是否存在评估表，不存在则建立
+	
+		//显示请假详细信息
+		this.detailPanel = new Ext.Panel({
+			title:'<font color="green">晋升申请表</font>',
+			autoHeight : true,
+			columnWidth : 1,
+			autoScroll:true,
+			autoLoad:{
+				url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id}
+			}
+		});
+		//显示请假详细信息
+		this.detailPanel2 = new Ext.Panel({
+			title:'<font color="red">晋升评估表</font>',
+			autoHeight : true,
+			columnWidth : 1,
+			autoScroll:true,
+			autoLoad:{
+				//url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id}
+				url: __ctxPath + '/hrm/getViewByApplyIdHrPromAssessment.do?isView=true&applyId=' + ${hrPromApply_id}
+			}
+		});
+		// 初始化表单
+		this.formPanel = new Ext.FormPanel({
+			title : '<font color="red">薪酬岗位定级及审批意见</font>',
+			columnWidth : 1,
+			layout : 'form',
+			id : 'auditForm',
+			autoHeight : true,
+			style : 'padding:6px 6px 16px 5%',
+			url : __ctxPath + '/hrm/modStatusHrPromApply.do?isAssess=true&auditStep=headerApprove',//领导批准
+			defaults : {
+				anchor : '94%,96%'
+			},
+			items : [ {
+						fieldLabel: "岗位职级",
+						anchor : '50%,96%',
+						width : 200,
+						xtype: "combo",
+						mode : "local",
+						allowBlank : false,
+						name : "hrPromAssessment.postRank",
+						triggerAction : "all",
+						store : [
+							["1级","1级"],
+							["2级","2级"],
+							["3级","3级"],
+							["4级","4级"],
+							["5级","5级"],
+							["6级","6级"],
+							["7级","7级"],
+							["8级","8级"],
+							["9级","9级"],
+							["10级","10级"],
+							["11级","11级"],
+							["12级","12级"]
+						],
+						listeners : {
+							select : function(l, h, k) {
+								
+							}
+						}
+					}, {
+						xtype : 'hidden',
+						id : 'salaryLevelId',
+						name : 'hrPromAssessment.salaryLevelId',
+						id : 'hrPromAssessment.salaryLevelId',
+					},{
+						fieldLabel : "薪酬标准单名称",
+						anchor : '50%,96%',
+						id : "salaryLevelNameCombo",
+						name : "hrPromAssessment.salaryLevelName",
+						mode : "remote",
+						allowBlank : false,
+						xtype: "combo",
+						editable : false,
+						valueField : "standardName",
+						displayField : "standardName",
+						triggerAction : "all",
+						store : new Ext.data.JsonStore(
+								{
+									url : __ctxPath + "/hrm/comboSalaryJobSalaryRelation.do",
+									fields : [
+											{
+												name : "standardId",
+												type : "int"
+											},
+											"standardNo",
+											"standardName",
+											"totalMoney",
+											"setdownTime",
+											"perCoefficient",
+											"status" ]
+								}),
+						listeners : {
+							focus : function() {
+								Ext.getCmp("salaryLevelNameCombo").getStore().reload({
+									'Q_job.jobId_L_EQ' : '${hrPromApply_nowPositionId}',
+									'Q_deleteFlag_N_EQ' : 0
+								});
+							},
+							select : function(e, c, d) {
+								document.getElementById("hrPromAssessment.salaryLevelId").value = c.data.standardId;
+							}
+						}
+					}, {
+						name : 'leaderRead.readId',
+						id : 'readId',
+						xtype : 'hidden'
+					},{
+						fieldLabel : '审批意见',
+						name : 'leaderRead.leaderOpinion',
+						xtype:'textarea',
+						allowBlank : false
+					},{
+						name : 'leaderRead.checkName',
+						xtype : 'hidden',
+						value : 
+							#foreach ($v in $nextTrans)
+								'${v.source}'
+							#end
+					},{
+						fieldLabel : '所属申请ID',
+						name : 'id',
+						xtype : 'hidden',
+						value : '${hrPromApply_id}'
+					},{
+						fieldLabel : '所属申请ID',
+						name : 'hrPromApply.id',
+						xtype : 'hidden',
+						value : '${hrPromApply_id}'
+					},{
+						fieldLabel : '原岗位ID',
+						name : 'hrPromApply.nowPositionId',
+						xtype : 'hidden',
+						value : '${hrPromApply_nowPositionId}'
+					},{
+					    id : "publishStatus",
+						name : 'publishStatus',
+						xtype : 'hidden',
+						value :  11 //晋升面谈
+					}]
+		});
+	}
+})

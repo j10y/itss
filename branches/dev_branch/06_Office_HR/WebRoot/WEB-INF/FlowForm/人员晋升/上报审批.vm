@@ -150,7 +150,7 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 	 * init the components
 	 */
 	init : function() {
-	
+		
 		//显示请假详细信息
 		this.detailPanel = new Ext.Panel({
 			//title:'流程审批信息',
@@ -197,6 +197,11 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 						name : 'hrPromApply.id',
 						xtype : 'hidden',
 						value : '${hrPromApply_id}'
+					},{
+						fieldLabel : '原岗位ID',
+						name : 'hrPromApply.nowPositionId',
+						xtype : 'hidden',
+						value : '${hrPromApply_nowPositionId}'
 					},{
 					    id : "publishStatus",
 						name : 'publishStatus',

@@ -1,7 +1,7 @@
 /**
  * @createtime:2011-08-02
  * @author csx
- * @description 请假审批
+ * @description 考核期评估
  * @class HrPromApplyAssessFlowView
  * @extends Ext.Panel
  */
@@ -119,48 +119,61 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 	 * @param {} _status
 	 */
 	onSave : function(formPanel,panel,signalName,activityName) {
-		
-		if (formPanel.getForm().isValid()) {
-			formPanel.getForm().submit({
-						method : 'POST',
-						waitMsg : '正在提交数据...',
-						success : function(fp, action) {
-							Ext.ux.Toast.msg('操作信息', '成功保存信息！');
-							Ext.getCmp('readId').setValue(action.result.readId);	
-									formPanel.getForm().submit({
-										url:__ctxPath+ "/flow/nextProcessActivity.do",
-										method:'post',
-										waitMsg:'正在提交处理，请稍等',
-										params:{taskId:taskId,signalName:signalName,activityName:activityName},
-										success : function(fp, action) {
-											Ext.ux.Toast.msg('操作信息','成功保存！');
-											AppUtil.removeTab('ProcessForm'+taskId);
-											var myTaskView=Ext.getCmp("MyTaskGrid");
-											var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
-											if(appHomeTaskGrid!=null){
-												appHomeTaskGrid.getStore().reload();
-											}
-											if(myTaskView!=null){
-												//AppUtil.activateTab(myTaskView);
-												myTaskView.getStore().reload();
-											}
-										},
-										failure : function(fp, action) {
-											Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+		//查询是否存在晋升评估表，如果没有则不能往下走
+		var applyId = ${hrPromApply_id};
+		Ext.Ajax.request({
+			scope : this,
+			url : __ctxPath + "/hrm/validateAssessByApplyIdHrPromAssessment.do",
+			params : {
+				applyId : applyId,														
+			},
+			success : function(resp,opts) {
+				var result = Ext.decode(resp.responseText);
+				if(!result.success){
+					Ext.ux.Toast.msg('操作信息',result.msg);
+				}else{
+					if (formPanel.getForm().isValid()) {						
+						formPanel.getForm().submit({
+							method : 'POST',
+							waitMsg : '正在提交数据...',
+							success : function(fp, action) {
+								Ext.ux.Toast.msg('操作信息', '成功保存信息！');	
+								formPanel.getForm().submit({
+									url:__ctxPath+ "/flow/nextProcessActivity.do",
+									method:'post',
+									waitMsg:'正在提交处理，请稍等',
+									params:{taskId:taskId,signalName:signalName,activityName:activityName},
+									success : function(fp, action) {
+										Ext.ux.Toast.msg('操作信息','成功保存！');
+										AppUtil.removeTab('ProcessForm'+taskId);
+										var myTaskView=Ext.getCmp("MyTaskGrid");
+										var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+										if(appHomeTaskGrid!=null){
+											appHomeTaskGrid.getStore().reload();
 										}
-							});
-							// TODO
-						},
-						failure : function(fp, action) {
-							Ext.MessageBox.show({
-										title : '操作信息',
-										msg : '信息保存出错，请联系管理员！',
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-						}
-					});
-		}
+										if(myTaskView!=null){
+											//AppUtil.activateTab(myTaskView);
+											myTaskView.getStore().reload();
+										}
+									},
+									failure : function(fp, action) {
+										Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+									}
+								});
+							},
+							failure : function(fp, action) {
+								Ext.MessageBox.show({
+									title : '操作信息',
+									msg : '信息保存出错，请联系管理员！',
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+							}
+						});
+					}
+				}
+			}
+		});
 	},
 	/**
 	 * init the components
@@ -186,7 +199,7 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 			id : 'auditForm',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/hrm/modStatusHrPromApply.do?auditStep=setTarget',//目标设定与面谈
+			url : __ctxPath + '/hrm/modStatusHrPromApply.do?auditStep=assess',//目标设定与面谈
 			defaults : {
 				anchor : '94%,96%'
 			},
@@ -212,6 +225,11 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 						xtype : 'hidden',
 						value : '${hrPromApply_id}'
 					},{
+						fieldLabel : '原岗位ID',
+						name : 'hrPromApply.nowPositionId',
+						xtype : 'hidden',
+						value : '${hrPromApply_nowPositionId}'
+					},{
 						fieldLabel : '所属申请ID',
 						name : 'hrPromApply.id',
 						xtype : 'hidden',
@@ -220,7 +238,7 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',
-						value :  6 //待人力资源核实并确认
+						value :  9 //待领导批准
 					}]
 		});
 	}

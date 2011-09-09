@@ -5,4 +5,6 @@ import com.xpsoft.oa.model.hrm.HrPromAssessment;
 
 public interface HrPromAssessmentService extends BaseService<HrPromAssessment>{
 	public HrPromAssessment getByApplyId(Long applyId);
+	
+	public HrPromAssessment saveViewByApplyId(Long applyId);
 }

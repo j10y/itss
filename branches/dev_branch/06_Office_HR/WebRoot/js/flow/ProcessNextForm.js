@@ -139,7 +139,8 @@ ProcessNextForm = Ext
 														+ "});");
 											} else {
 												if (response.responseText
-														.indexOf("Ext.extend(Ext.Panel") != -1) {
+														.indexOf("Ext.extend(Ext.Panel") != -1 || response.responseText
+														.indexOf("Ext.extend(Ext.TabPanel") != -1) {
 													isFormPanel = false;
 													eval("formPanel= new ("
 															+ response.responseText

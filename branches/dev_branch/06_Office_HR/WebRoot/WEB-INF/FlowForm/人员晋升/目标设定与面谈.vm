@@ -46,6 +46,7 @@ HrPromApplyTargetConfirmFlowView = Ext.extend(Ext.Panel, {
 									Ext.getCmp("publishStatus").setValue(2);//退回状态
 									//流程结束，修改状态
 									Ext.getCmp("auditForm").getForm().submit({
+										url : __ctxPath + '/hrm/modStatusHrPromApply.do',//不加参数
 										method : 'POST',
 										waitMsg : '正在提交数据...',
 										success : function(fp, action) {
@@ -96,7 +97,6 @@ HrPromApplyTargetConfirmFlowView = Ext.extend(Ext.Panel, {
 					buttonAlign : 'center',
 					items : [this.detailPanel, this.formPanel]
 				});
-
 	},
 	/**
 	 * 保存公文的方法,传入公文状态作为参数
@@ -211,6 +211,11 @@ HrPromApplyTargetConfirmFlowView = Ext.extend(Ext.Panel, {
 						name : 'id',
 						xtype : 'hidden',
 						value : '${hrPromApply_id}'
+					},{
+						fieldLabel : '原岗位ID',
+						name : 'hrPromApply.nowPositionId',
+						xtype : 'hidden',
+						value : '${hrPromApply_nowPositionId}'
 					},{
 						fieldLabel : '所属申请ID',
 						name : 'hrPromApply.id',

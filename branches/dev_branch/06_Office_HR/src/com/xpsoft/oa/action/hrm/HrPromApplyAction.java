@@ -11,14 +11,14 @@ import javax.annotation.Resource;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
-import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.HrPromApply;
+import com.xpsoft.oa.model.hrm.HrPromAssessment;
 import com.xpsoft.oa.model.hrm.Job;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.hrm.HrPromApplyService;
+import com.xpsoft.oa.service.hrm.HrPromAssessmentService;
 import com.xpsoft.oa.service.hrm.JobService;
 
 import flexjson.JSONSerializer;
@@ -27,6 +27,10 @@ public class HrPromApplyAction extends BaseAction{
 	private HrPromApply hrPromApply;
 	@Resource
 	private HrPromApplyService hrPromApplyService;
+	
+	@Resource
+	private HrPromAssessmentService hrPromAssessmentService;
+	
 	private Long id;
 	
 	public HrPromApply getHrPromApply() {
@@ -208,19 +212,33 @@ public class HrPromApplyAction extends BaseAction{
 	public String modStatus() {		
 		HrPromApply promApply = this.hrPromApplyService.get(this.id);
 		Integer publishStatus = Integer.valueOf(getRequest().getParameter("publishStatus"));
-		promApply.setPublishStatus(publishStatus);
-		
+		boolean isAssess = Boolean.valueOf(getRequest().getParameter("isAssess"));//评估阶段
+		if(!isAssess){
+			promApply.setPublishStatus(publishStatus);//申请阶段可以修改状态，或者指定节点可以修改
+		}
+		HrPromAssessment assessment = null;
 		if(getRequest().getParameter("auditStep")!=null){
 			String auditStep = getRequest().getParameter("auditStep");
-			if(auditStep.equalsIgnoreCase("setTarget")){
+			if(auditStep.equalsIgnoreCase("setTarget")){//目标设定关于面谈
 				//目标
 				promApply.setTarget1(getRequest().getParameter("target1"));
 				promApply.setTarget2(getRequest().getParameter("target2"));
 				promApply.setTarget3(getRequest().getParameter("target3"));
 				//面谈记录
 				promApply.setIntRecord(getRequest().getParameter("intRecord"));				
+			}else if(auditStep.equalsIgnoreCase("assess")){//考核期评估
+				assessment = this.hrPromAssessmentService.getByApplyId(promApply.getId());
+				//申请表通过审批，评估表继续进行
+				promApply.setPublishStatus(HrPromApply.STATUS_APPROVED);
+				assessment.setPublishStatus(publishStatus);
+				this.hrPromAssessmentService.save(assessment);
+			}else if(auditStep.equalsIgnoreCase("headerApprove")){//领导批准
+				assessment = this.hrPromAssessmentService.getByApplyId(promApply.getId());
+				//申请表通过审批，评估表继续进行
+				assessment.setPublishStatus(publishStatus);
+				this.hrPromAssessmentService.save(assessment);
 			}
-		}		
+		}	
 		this.hrPromApplyService.save(promApply);
 		this.jsonString = "{success:true}";		
 		return "success";
