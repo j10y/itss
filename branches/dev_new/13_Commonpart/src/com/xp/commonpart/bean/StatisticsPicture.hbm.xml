@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.xp.commonpart.bean.StatisticsPicture" table="sys_StatisticsPicture" >
+        <id name="id" type="long">
+            <column name="id" />
+        </id>
+        <property name="tjPictureName" type="string" column="tjPictureName"/>
+        <property name="tjPictureURL" type="string" column="tjPictureURL"/>
+        <property name="tjPictureType" type="string" column="tjPictureType"/>
+        <property name="sqlString" type="string" column="sqlString"/>
+        <property name="XName" type="string" column="XName"/>
+        <property name="YName" type="string" column="YName"/>
+        <many-to-one name="sysMainTable" class="com.xp.commonpart.bean.MainTable" lazy="false">
+            <column name="sysMainTable" />
+        </many-to-one>
+        <many-to-one name="itemName" class="com.xp.commonpart.bean.MainTableColumn" lazy="false">
+            <column name="itemName" />
+        </many-to-one>
+        <many-to-one name="lableTickName" class="com.xp.commonpart.bean.MainTableColumn" lazy="false">
+            <column name="lableTickName" />
+        </many-to-one>
+         <many-to-one name="numberName" class="com.xp.commonpart.bean.MainTableColumn" lazy="false">
+            <column name="numberName" />
+        </many-to-one>
+        
+	</class>
+</hibernate-mapping>

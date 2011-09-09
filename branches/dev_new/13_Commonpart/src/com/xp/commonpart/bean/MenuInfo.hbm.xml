@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xp.commonpart.bean" default-access="field">
+
+    <class name="MenuInfo" table="MENUINFO" 
+    	   dynamic-insert="true" dynamic-update="true">
+       
+        <id name="id" type="long"  column="ID" >
+        </id>	
+        <property name="name" type="string" column="NAME"/>  
+        <property name="url" type="string" column="URL"/> 
+        <property name="pid" type="long" column="PID"/>
+        <property name="ischecked" type="string" column="ISCHECKED"/>
+    </class>
+</hibernate-mapping>

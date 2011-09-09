@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xp.commonpart.bean" default-access="field">
+
+    <class name="MainTable" table="MAINTABLE" 
+    	   dynamic-insert="true" dynamic-update="true">
+       
+        <id name="tableid" type="long"  column="TABLE_ID" >
+        </id>	
+        <property name="className" type="string" column="CLASS_NAME"/>  
+        <property name="classPath" type="string" column="CLASS_PATH"/> 
+        <property name="tableName" type="string" column="TABLE_NAME"/>
+        <property name="tableRealName" type="string" column="TABLE_REAL_NAME"/> 
+        <property name="tableCName" type="string" column="TABLE_CNAME"/>      
+     	 <property name="sql" type="string" column="TABLESQL" length="2000"/> 
+     	 <property name="formatType" type="string" column="FORMAT_TYPE"/>
+     	 <property name="isMulti" type="string" column="ISMULTI"/>
+     	 <property name="multiSql" type="string" column="MULTISQL" length="2000"/>
+     	 <property name="keyColumnName" type="string" column="KEY_COLUMN_NAME"/>
+     	 <property name="isPutTemp" type="string" column="ISPUTTEMP"/>
+    </class>
+</hibernate-mapping>
