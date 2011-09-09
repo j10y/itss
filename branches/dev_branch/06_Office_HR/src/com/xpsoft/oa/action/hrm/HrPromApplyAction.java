@@ -237,6 +237,18 @@ public class HrPromApplyAction extends BaseAction{
 				//申请表通过审批，评估表继续进行
 				assessment.setPublishStatus(publishStatus);
 				this.hrPromAssessmentService.save(assessment);
+			}else if(auditStep.equalsIgnoreCase("hrConfirmAssess")){
+				assessment = this.hrPromAssessmentService.getByApplyId(promApply.getId());
+				//申请表通过审批，评估表继续进行
+//				protected String postRank;//岗位职级
+//				protected Long salaryLevelId;//薪资等级ID
+//				protected String salaryLevelName;//薪资等级名称
+				assessment.setPostRank(getRequest().getParameter("hrPromAssessment.postRank"));
+				assessment.setSalaryLevelId(Long.valueOf(getRequest().getParameter("hrPromAssessment.salaryLevelId")));
+				assessment.setSalaryLevelName(getRequest().getParameter("hrPromAssessment.salaryLevelName"));
+				
+				assessment.setPublishStatus(publishStatus);
+				this.hrPromAssessmentService.save(assessment);
 			}
 		}	
 		this.hrPromApplyService.save(promApply);
