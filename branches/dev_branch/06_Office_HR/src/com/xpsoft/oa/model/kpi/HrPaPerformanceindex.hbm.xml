@@ -146,5 +146,6 @@
         	not-null="false"
         	unique="false"
         />
+        <many-to-one name="parentPa" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaPerformanceindex" column="parentId"></many-to-one>
     </class>
 </hibernate-mapping>
