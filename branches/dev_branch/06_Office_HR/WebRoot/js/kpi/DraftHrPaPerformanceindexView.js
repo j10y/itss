@@ -261,7 +261,7 @@ DraftHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 	}
 });
 DraftHrPaPerformanceindexView.remove = function(b) {
-	var a = Ext.getCmp("HrPaPerformanceindexGrid");
+	var a = Ext.getCmp("DraftHrPaPerformanceindexGrid");
 	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
 		if(c == "yes") {
 			Ext.Ajax.request({

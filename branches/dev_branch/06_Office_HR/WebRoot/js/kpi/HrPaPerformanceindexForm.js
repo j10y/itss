@@ -11,7 +11,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 360,
+			height : 385,
 			width : 470,
 			title : "绩效考核指标录入",
 			buttonAlign : "center",
@@ -132,6 +132,42 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 									method : "post",
 									params : {
 										parentId : 4          //考核方式的根节点ID
+									},
+									success : function(f) {
+										var e = Ext.util.JSON.decode(f.responseText);
+										c.loadData(e);
+									}
+								});
+							}
+						}
+					}
+				}, {
+					fieldLabel : "父考核指标",
+					hiddenName : "hrPaPerformanceindex.parentPa.id",
+					labelStyle : "text-align:right",
+					maxHeight : 200,
+					id : "parentPa",
+					xtype : "combo",
+					mode : "local",
+					editable : false,
+					valueField : "id",
+					displayField : "paName",
+					triggerAction : "all",
+					store : new Ext.data.JsonStore({
+						root : "result",
+						remoteSort : true,
+						fields : ["id", "paName"]
+					}),
+					listeners : {
+						focus : function() {
+							var c = Ext.getCmp("parentPa").getStore();
+							var fId = Ext.getCmp("frequencyName").getValue();
+							if(fId != "") {
+								Ext.Ajax.request({
+									url : __ctxPath + "/kpi/comboHrPaPerformanceindex.do",
+									method : "post",
+									params : {
+										frequencyId : fId
 									},
 									success : function(f) {
 										var e = Ext.util.JSON.decode(f.responseText);
@@ -282,6 +318,10 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					Ext.getCmp("frequencyName").setRawValue(e.data.frequency.name);
 					Ext.getCmp("modeName").setValue(e.data.mode.id);
 					Ext.getCmp("modeName").setRawValue(e.data.mode.name);
+					if(e.data.parentPa != null) {
+						Ext.getCmp("parentPa").setValue(e.data.parentPa.id);
+						Ext.getCmp("parentPa").setRawValue(e.data.parentPa.paName);
+					}
 					if(e.data.paIsOnlyNegative == "1") {
 						Ext.getCmp("paIsOnlyNegative").setValue(true);
 						Ext.getCmp("baseScoreLabel").show();
