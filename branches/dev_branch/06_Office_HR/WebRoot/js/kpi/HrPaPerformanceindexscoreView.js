@@ -216,7 +216,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 							limit : 25
 						}
 					});
-				} else if(a.from == "publish") {
+				} else if(b.from == "publish") {
 					Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
 						params : {
 							start : 0,
@@ -266,7 +266,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 							limit : 25
 						}
 					});
-				} else if(a.from == "publish") {
+				} else if(b.from == "publish") {
 					Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
 						params : {
 							start : 0,

@@ -51,7 +51,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 					name : "hrPaPerformanceindexscore.pisScore",
 					id : "pisScore",
 					anchor : "98%,98%",
-					maskRe : /^\d*$/,
+					maskRe : /[\d.]/,
 					allowBlank : false,
 					blankText : "分数不能为空！"
 				}, {
