@@ -29,6 +29,13 @@
 		<property name="concurrent" value="false" />
 	</bean>
 	
+	<bean id="removeTargetAndRequireJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="countPfJob" />
+		<property name="targetMethod" value="removeTargetAndRequire" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
 	<bean id="cronTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="countPfJobDetail" />
@@ -52,6 +59,14 @@
 			<value>0 * * * * ?</value>
 		</property>
 	</bean>
+	<bean id="removeTargetAndRequireTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="removeTargetAndRequireJobDetail" />
+		<property name="cronExpression">
+			<value>0 0 0 ? 12 6L 2055</value>
+		</property>
+	</bean>
+	
 	<bean id="schedulerFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
@@ -59,6 +74,7 @@
 				<ref local="cronTrigger" />
 				<ref local="defJobTrigger" />
 				<ref local="countSalTrigger" />
+				<ref local="removeTargetAndRequireTrigger" />
 			</list>
 		</property>
 	</bean>
