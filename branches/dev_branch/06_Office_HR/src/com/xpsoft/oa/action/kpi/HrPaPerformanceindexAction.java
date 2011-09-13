@@ -143,10 +143,12 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			pi.setPaIsOnlyNegative(0);
 			pi.setBaseScore(new Double(0));
 			pi.setFinalScore(new Double(0));
+			pi.setFinalCoefficient(new Double(0));
 		} else {
 			pi.setPaIsOnlyNegative(1);
 			pi.setBaseScore(this.hrPaPerformanceindex.getBaseScore());
 			pi.setFinalScore(this.hrPaPerformanceindex.getFinalScore());
+			pi.setFinalCoefficient(this.hrPaPerformanceindex.getFinalCoefficient());
 		}
 		//判断是新增还是修改
 		if(this.hrPaPerformanceindex.getId() == 0) {//新增
@@ -324,10 +326,12 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			pi.setPaIsOnlyNegative(0);
 			pi.setBaseScore(new Double(0));
 			pi.setFinalScore(new Double(0));
+			pi.setFinalCoefficient(new Double(0));
 		} else {
 			pi.setPaIsOnlyNegative(1);
 			pi.setBaseScore(this.hrPaPerformanceindex.getBaseScore());
 			pi.setFinalScore(this.hrPaPerformanceindex.getFinalScore());
+			pi.setFinalCoefficient(this.hrPaPerformanceindex.getFinalCoefficient());
 		}
 		//判断是新增还是修改
 		if(this.hrPaPerformanceindex.getId() == 0) {//新增
@@ -511,6 +515,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		piOld.setPublishStatus(3);
 		piOld.setBaseScore(piCopy.getBaseScore());
 		piOld.setFinalScore(piCopy.getFinalScore());
+		piOld.setFinalCoefficient(piCopy.getFinalCoefficient());
 		piOld.setParentPa(piCopy.getParentPa());
 		if(piCopy.getParentPa() != null) {
 			if(piCopy.getParentPa().getId() != null) {
