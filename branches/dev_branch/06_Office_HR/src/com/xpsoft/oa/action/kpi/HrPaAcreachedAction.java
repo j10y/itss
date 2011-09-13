@@ -23,6 +23,7 @@ import jxl.write.WritableWorkbook;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.UUIDGenerator;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.kpi.HrPaAcreached;
@@ -122,14 +123,18 @@ public class HrPaAcreachedAction extends BaseAction{
 					sheet.addCell(label3);
 					sheet.addCell(label4);
 				}
+				//设置模板编号
+				Label numberLabel = new Label(0, 0, UUIDGenerator.getUUID());
+				sheet.addCell(numberLabel);
+				sheet.mergeCells(0, 0, 1, 0);
 				//设置excel标签页标题
 				WritableFont font1 = new WritableFont(WritableFont.createFont("黑体_GB2312"), 13, WritableFont.NO_BOLD);
 				WritableCellFormat format1 = new WritableCellFormat(font1);
 				format1.setAlignment(Alignment.CENTRE);
 				format1.setVerticalAlignment(VerticalAlignment.CENTRE);
-				Label titleLabel = new Label(0, 0, "达成excel模板", format1);
+				Label titleLabel = new Label(0, 1, "达成excel模板", format1);
 				sheet.addCell(titleLabel);
-				sheet.mergeCells(0, 0, 1, 1);
+				sheet.mergeCells(0, 1, 1, 1);
 				book.write();
 				book.close();
 				this.jsonString = "{success:true,'filePath':'" + "/attachFiles/kpiReached/" + 
@@ -180,14 +185,18 @@ public class HrPaAcreachedAction extends BaseAction{
 					sheet.addCell(label4);
 					sheet.addCell(label5);
 				}
+				//设置模板编号
+				Label numberLabel = new Label(0, 0, UUIDGenerator.getUUID());
+				sheet.addCell(numberLabel);
+				sheet.mergeCells(0, 0, 2, 0);
 				//设置excel标签页标题
 				WritableFont font1 = new WritableFont(WritableFont.createFont("黑体_GB2312"), 13, WritableFont.NO_BOLD);
 				WritableCellFormat format1 = new WritableCellFormat(font1);
 				format1.setAlignment(Alignment.CENTRE);
 				format1.setVerticalAlignment(VerticalAlignment.CENTRE);
-				Label titleLabel = new Label(0, 0, "达成excel模板", format1);
+				Label titleLabel = new Label(0, 1, "达成excel模板", format1);
 				sheet.addCell(titleLabel);
-				sheet.mergeCells(0, 0, 2, 1);
+				sheet.mergeCells(0, 1, 2, 1);
 				book.write();
 				book.close();
 				this.jsonString = "{success:true,'filePath':'" + "/attachFiles/kpiReached/" + 
