@@ -8,8 +8,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.httpclient.util.DateParseException;
-
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
@@ -222,7 +220,11 @@ public class HrPromApplyAction extends BaseAction{
 		HrPromAssessment assessment = null;
 		if(getRequest().getParameter("auditStep")!=null){
 			String auditStep = getRequest().getParameter("auditStep");
-			if(auditStep.equalsIgnoreCase("setTarget")){//目标设定关于面谈
+			if(auditStep.equalsIgnoreCase("superAudit")){//上报审批
+				promApply.setPostManagerId(ContextUtil.getCurrentUserId());
+				promApply.setPostManagerName(ContextUtil.getCurrentUser().getFullname());
+				promApply.setPostManagerAuditDate(new Date());
+			}else if(auditStep.equalsIgnoreCase("setTarget")){//目标设定关于面谈
 				//目标
 				promApply.setTarget1(getRequest().getParameter("target1"));
 				promApply.setTarget2(getRequest().getParameter("target2"));

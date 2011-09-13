@@ -57,7 +57,24 @@ public class HrPromApply extends BaseModel{
 	protected Date modifyDate;
 	
 	protected Date postManagerAuditDate;//直线领导签字时间，[上报审批]环节
+	
 	protected Date userManagerAuditDate;//本人签字时间，[目标设定与面谈]环节
+	
+	public Date getPostManagerAuditDate() {
+		return postManagerAuditDate;
+	}
+
+	public void setPostManagerAuditDate(Date postManagerAuditDate) {
+		this.postManagerAuditDate = postManagerAuditDate;
+	}
+
+	public Date getUserManagerAuditDate() {
+		return userManagerAuditDate;
+	}
+
+	public void setUserManagerAuditDate(Date userManagerAuditDate) {
+		this.userManagerAuditDate = userManagerAuditDate;
+	}	
 	
 	public HrPromApply() {}
 

@@ -11,4 +11,5 @@
 	<field name="hrPromApply.workHereYear" label="本单位工作年限" type="varchar" length="256"/>
 	<field name="hrPromApply.applyDate" label="拟晋升时间" type="varchar" length="256"/>
 	<field name="hrPromApply.applyReason" label="拟晋升原因" type="varchar" length="256"/>
+	<field name="flowAssignId" label="负责人" type="varchar" length="256" isShowed="false" />
 </fields>

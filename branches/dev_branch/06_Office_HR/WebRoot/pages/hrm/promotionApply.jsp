@@ -126,6 +126,10 @@
 				return true;
 			}
 			function onSend(){
+				var result = check();
+				if(!result){
+					return;
+				}
 				Ext.Ajax.request({
 					url : "${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
 					params : {
@@ -153,44 +157,53 @@
 					success : function(h, j) {
 						var data = Ext.decode(h.responseText);
 						document.getElementById("hrPromApply.id").value= data.applyId;	
-						Ext.Ajax.request({							
-							url : "${pageContext.request.contextPath}/flow/saveProcessActivity.do",
-							waitMsg : "正在提交流程表单信息...",
-							scope : this,
-							params : {
-								defId : 16,
-								startFlow : true,
-								"hrPromApply.id" : document.getElementById("hrPromApply.id").value,
-								"hrPromApply.depId" : document.getElementById("depId").value,
-								"hrPromApply.depName" : document.getElementById("depName").value,
-								"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
-								"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
-								"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
-								"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
-								"hrPromApply.workYear" : document.getElementById("workYear").value,
-								"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
-								"hrPromApply.applyReason" : document.getElementById("applyReason").value,
-								"hrPromApply.target1" : document.getElementById("target1").value,
-								"hrPromApply.target2" : document.getElementById("target2").value,
-								"hrPromApply.target3" : document.getElementById("target3").value,
-								"hrPromApply.intRecord" : document.getElementById("intRecord").value,
-								"hrPromApply.applyPositionId" : document.getElementById("applyPositionId").value,
-								"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
-								"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
-								"hrPromApply.publishStatus" : 5, //上报审批
-								"isSubmit" : "true" //上报审批
-							},
-							success : function(
-									i,
-									j) {
-								Ext.ux.Toast.msg("操作信息", "成功保存信息！");
-								Ext.getCmp("HrPromApplyForm").close();
-								var k = Ext.getCmp("ProcessRunGrid");
-								if (k != null) {
-									k.getStore().reload();
-								}
+						Ext.Ajax.request({
+							url : "${pageContext.request.contextPath}/archive/getByCurrentUserArchRecUser.do",
+							success : function(h, j) {
+								var k = Ext.util.JSON.decode(h.responseText).data;
+								Ext.Ajax.request({							
+									url : "${pageContext.request.contextPath}/flow/saveProcessActivity.do",
+									waitMsg : "正在提交流程表单信息...",
+									scope : this,
+									params : {
+										defId : 16,
+										startFlow : true,
+										"hrPromApply.id" : document.getElementById("hrPromApply.id").value,
+										"hrPromApply.depId" : document.getElementById("depId").value,
+										"hrPromApply.depName" : document.getElementById("depName").value,
+										"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
+										"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
+										"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
+										"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
+										"hrPromApply.workYear" : document.getElementById("workYear").value,
+										"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
+										"hrPromApply.applyReason" : document.getElementById("applyReason").value,
+										"hrPromApply.target1" : document.getElementById("target1").value,
+										"hrPromApply.target2" : document.getElementById("target2").value,
+										"hrPromApply.target3" : document.getElementById("target3").value,
+										"hrPromApply.intRecord" : document.getElementById("intRecord").value,
+										"hrPromApply.applyPositionId" : document.getElementById("applyPositionId").value,
+										"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
+										"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
+										"hrPromApply.publishStatus" : 5, //上报审批
+										"isSubmit" : "true", //上报审批
+										flowAssignId : k.deptUserId
+									},
+									success : function(
+											i,
+											j) {
+										Ext.ux.Toast.msg("操作信息", "成功保存信息！");
+										window.location = "${pageContext.request.contextPath}/pages/hrm/applyResult.jsp?flag=2";
+										return;
+										Ext.getCmp("HrPromApplyForm").close();
+										var k = Ext.getCmp("ProcessRunGrid");
+										if (k != null) {
+											k.getStore().reload();
+										}
+									}
+																				
+								});
 							}
-																		
 						});
 					}
 				});

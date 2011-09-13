@@ -8,6 +8,9 @@
 	</head>
 
 	<body>
+		<c:if test="${param.flag == 2}">
+			<div style="height:200px;line-height:200px;text-align:center;font-size:18px">提交审核成功，请关闭窗口！</div>
+		</c:if>
 		<c:if test="${flag == 2}">
 			<div style="height:200px;line-height:200px;text-align:center;font-size:18px">提交审核成功，请关闭窗口！</div>
 		</c:if>

@@ -205,5 +205,23 @@
         	column="modifyDate"
         	not-null="false"
         />
+        <property
+        	name="postManagerAuditDate"
+        	type="java.util.Date"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="postManagerAuditDate"
+        	not-null="false"
+        />
+        <property
+        	name="userManagerAuditDate"
+        	type="java.util.Date"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="userManagerAuditDate"
+        	not-null="false"
+        />
     </class>
 </hibernate-mapping>
