@@ -486,6 +486,10 @@
 			    <url>/system/multiDelDictionary.do</url>
 			</Function>
 		</Item>
+		<Items id="TaskScheduler" text="计算任务设定" isPublic="false">
+			<Item id="TaskSchedulerView" text="计算任务设定" iconCls="" isPublic="false">
+			</Item>
+		</Items>
 		<!--
 		<Item id="SystemLogView" text="系统日志"/>
 		-->
@@ -1684,10 +1688,6 @@
 			</Item>
 		</Items>
 		
-		<Items id="TaskScheduler" text="计算任务设定" isPublic="false">
-			<Item id="TaskSchedulerView" text="计算任务设定" iconCls="" isPublic="false">
-			</Item>
-		</Items>
 		
 	</Items>
 </Menus>
