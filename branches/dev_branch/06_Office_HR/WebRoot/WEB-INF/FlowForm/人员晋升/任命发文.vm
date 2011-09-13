@@ -148,7 +148,7 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 				}
 			});
 		}else{
-			Ext.ux.Toast.msg('操作信息','请填写晋升面谈记录及审批意见！');
+			Ext.ux.Toast.msg('操作信息','请填写正式任命时间及审批意见！');
 		}
 	},
 	/**
@@ -181,20 +181,23 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 		});
 		// 初始化表单
 		this.formPanel = new Ext.FormPanel({
-			title : '<font color="red">面谈记录及审批意见</font>',
+			title : '<font color="red">正式任命及审批意见</font>',
 			columnWidth : 1,
 			layout : 'form',
 			id : 'auditForm',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/hrm/modStatusHrPromApply.do?isAssess=true&auditStep=promotionInterviews',//晋升面谈
+			url : __ctxPath + '/hrm/modStatusHrPromApply.do?isAssess=true&auditStep=promotionPublish',//晋升面谈
 			defaults : {
 				anchor : '94%,96%'
 			},
-			items : [ {
-						fieldLabel : '面谈记录',
-						name : 'hrPromAssessment.promIntRecord',
-						xtype:'textarea',
+			items : [{
+						fieldLabel : '正式任命时间',
+						name : 'hrPromAssessment.appointDate',
+						xtype: 'datefield',
+						anchor : '47%,96%',
+						value : formatDate(new Date(), 'yyyy-MM-dd'),
+						format : "Y-m-d",
 						allowBlank : false
 					}, {
 						name : 'leaderRead.readId',
@@ -231,7 +234,7 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',
-						value :  12 //任命发文
+						value :  3 //通过
 					}]
 		});
 	}

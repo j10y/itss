@@ -298,7 +298,7 @@
 				</tr>
 				<tr>
 					<td align="right">入职日期</td>
-					<td colspan="2">${hrPromAssessment.promApply.applyUser.accessionTime}</div></td>
+					<td colspan="2"><fmt:formatDate value="${hrPromAssessment.promApply.applyUser.accessionTime}" pattern="yyyy-MM-dd"/></div></td>
 					<td align="right">现职位</td>
 					<td colspan="2">
 						<input type="hidden" id="nowPositionId" readonly="readonly" value="${hrPromAssessment.promApply.nowPositionId}"/>
@@ -309,7 +309,7 @@
 					<td align="right">拟担任职位</td>
 					<td colspan="2">${hrPromAssessment.promApply.applyPositionName}</td>
 					<td align="right">拟晋升时间</td>
-					<td colspan="2">${hrPromAssessment.promApply.applyDate}</td>
+					<td colspan="2"><fmt:formatDate value="${hrPromAssessment.promApply.applyDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 				<tr>
 					<td align="right">工作年限</td>
@@ -381,14 +381,25 @@
 				<tr>
 					<td align="right">正式任命时间</td>
 					<td>
+						<!--
 						<div id="appointDate"></div>
+						-->
+						<input  readonly="readonly" value='<fmt:formatDate value="${hrPromAssessment.appointDate}" pattern="yyyy-MM-dd"/>' style="width:100px;border:none;"/>
 					</td>
 					<td align="right">岗位职级</td>
-					<td><div id="postRank"></div></td>
+					<td>
+						<!--
+						<div id="postRank"></div>
+						-->
+						<input  readonly="readonly" value="${hrPromAssessment.postRank}" style="width:100px;border:none;"/>
+					</td>
 					<td align="right">薪资等级</td>
 					<td>
 						<input type="hidden" id="salaryLevelId" readonly="readonly" name="hrPromAssessment.salaryLevelId" value="${hrPromAssessment.salaryLevelId}"/>
+						<!--
 						<div id="salaryLevelName"></div>
+						-->
+						<input  readonly="readonly" value="${hrPromAssessment.salaryLevelName}" style="width:100px;border:none;"/>
 					</td>
 				</tr>
 				<tr>

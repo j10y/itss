@@ -8,9 +8,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.httpclient.util.DateParseException;
+
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.HrPromApply;
 import com.xpsoft.oa.model.hrm.HrPromAssessment;
@@ -247,6 +250,18 @@ public class HrPromApplyAction extends BaseAction{
 				assessment.setSalaryLevelId(Long.valueOf(getRequest().getParameter("hrPromAssessment.salaryLevelId")));
 				assessment.setSalaryLevelName(getRequest().getParameter("hrPromAssessment.salaryLevelName"));
 				
+				assessment.setPublishStatus(publishStatus);
+				this.hrPromAssessmentService.save(assessment);
+			}else if(auditStep.equalsIgnoreCase("promotionInterviews")){
+				assessment = this.hrPromAssessmentService.getByApplyId(promApply.getId());
+				assessment.setPromIntRecord(getRequest().getParameter("hrPromAssessment.promIntRecord"));				
+				assessment.setPublishStatus(publishStatus);
+				this.hrPromAssessmentService.save(assessment);
+			}else if(auditStep.equalsIgnoreCase("promotionPublish")){
+				assessment = this.hrPromAssessmentService.getByApplyId(promApply.getId());
+				Date date = null;
+				date = DateUtil.parseDate(getRequest().getParameter("hrPromAssessment.appointDate"));
+				assessment.setAppointDate(date);				
 				assessment.setPublishStatus(publishStatus);
 				this.hrPromAssessmentService.save(assessment);
 			}
