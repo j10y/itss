@@ -138,7 +138,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 				//此处处理是否唯一否决条件为是的时候，直接给出得分，跳出循环
 				if(baseScore==null||baseScore>hrPaPerformanceindex.getFinalScore()){
 					baseScore=hrPaPerformanceindex.getFinalScore();
-					baseCoefficient=hrPaPerformanceindex.getFinalScore();
+					baseCoefficient=hrPaPerformanceindex.getFinalCoefficient();
 					isOnlyNegative=true;
 				}
 			}else{
