@@ -23,8 +23,17 @@ public class HrPaPerformanceindex extends BaseModel{
 	protected Double finalScore;
 	protected HrPaPerformanceindex parentPa;//父级考核指标
 	protected Long fromPi;
+	protected Double finalCoefficient;//最终否决值的系数
 	
 	public HrPaPerformanceindex(){}
+
+	public Double getFinalCoefficient() {
+		return finalCoefficient;
+	}
+
+	public void setFinalCoefficient(Double finalCoefficient) {
+		this.finalCoefficient = finalCoefficient;
+	}
 
 	public Long getId() {
 		return id;
