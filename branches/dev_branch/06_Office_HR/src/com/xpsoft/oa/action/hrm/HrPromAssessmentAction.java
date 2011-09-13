@@ -17,6 +17,8 @@ import com.xpsoft.oa.model.hrm.HrPromAssessment;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.HrPromAssessmentService;
 
+import flexjson.JSONSerializer;
+
 public class HrPromAssessmentAction extends BaseAction{
 	private HrPromAssessment hrPromAssessment;
 	@Resource
@@ -43,7 +45,20 @@ public class HrPromAssessmentAction extends BaseAction{
 		this.id = id;
 	}
 	
-	public String list() {
+	public String listStatus() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		filter.addFilter("Q_publishStatus_N_NEQ", "0");
+		filter.addFilter("Q_publishStatus_N_NEQ", "2");
+		filter.addFilter("Q_publishStatus_N_NEQ", "4");
+		List<HrPromAssessment> list = this.hrPromAssessmentService.getAll(filter);
+		
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(",result:");
+		JSONSerializer json = new JSONSerializer();
+		buff.append(json.exclude(new String[] {}).serialize(list));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
 		return "success";
 	}
 	
@@ -66,6 +81,14 @@ public class HrPromAssessmentAction extends BaseAction{
 			return "view";
 		}
 		return "show";
+	}
+	
+	public String previewStatus() {
+		if(this.id != 0) {
+			this.hrPromAssessment = this.hrPromAssessmentService.get(this.id);
+		}
+		
+		return "showStatus";
 	}
 	
 	/**

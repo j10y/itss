@@ -55,6 +55,29 @@ public class HrPromApplyAction extends BaseAction{
 	
 	public String list() {
 		QueryFilter filter = new QueryFilter(this.getRequest());
+		filter.addFilter("Q_publishStatus_N_NEQ", "1");
+		filter.addFilter("Q_publishStatus_N_NEQ", "3");
+		filter.addFilter("Q_publishStatus_N_NEQ", "4");
+		filter.addFilter("Q_publishStatus_N_NEQ", "5");
+		filter.addFilter("Q_publishStatus_N_NEQ", "6");
+		filter.addFilter("Q_publishStatus_N_NEQ", "7");
+		List<HrPromApply> list = this.hrPromApplyService.getAll(filter);
+		
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(",result:");
+		JSONSerializer json = new JSONSerializer();
+		buff.append(json.exclude(new String[] {}).serialize(list));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
+	public String listStatus() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		filter.addFilter("Q_publishStatus_N_NEQ", "0");
+		filter.addFilter("Q_publishStatus_N_NEQ", "2");
+		filter.addFilter("Q_publishStatus_N_NEQ", "4");
 		List<HrPromApply> list = this.hrPromApplyService.getAll(filter);
 		
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
@@ -129,12 +152,17 @@ public class HrPromApplyAction extends BaseAction{
 	 * 获取指定ID晋升申请记录
 	 * */
 	public String preview() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		if(this.id != 0) {
 			this.hrPromApply = this.hrPromApplyService.get(this.id);
 		}
 		return "show";
+	}
+	
+	public String previewStatus() {
+		if(this.id != 0) {
+			this.hrPromApply = this.hrPromApplyService.get(this.id);
+		}
+		return "showStatus";
 	}
 	
 	public String get() {
