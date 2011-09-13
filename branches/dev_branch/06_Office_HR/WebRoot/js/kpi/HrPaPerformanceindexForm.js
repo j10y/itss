@@ -302,6 +302,11 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					name : "indexScores",
 					id : "indexScores",
 					xtype : "hidden"
+				}, {
+					fieldLabel : "fromPi",
+					name : "hrPaPerformanceindex.fromPi",
+					id : "fromPi",
+					xtype : "hidden"
 				}
 			]
 		});

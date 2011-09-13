@@ -84,6 +84,11 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 					name : "hrPaAssessmentcriteria.publishStatus",
 					id : "publishStatus",
 					xtype : "hidden"
+				}, {
+					fieldLabel : "fromAc",
+					name : "hrPaAssessmentcriteria.fromAc",
+					id : "fromAc",
+					xtype : "hidden"
 				}
 			]
 		});
