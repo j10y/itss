@@ -11,4 +11,6 @@ public interface CountJobService {
 	
 	public String isKpiItemScoreForUser(String userid,String depid,String pbc2userid);
 	
+	public String removeTargetAndRequire();
+	
 }

@@ -671,4 +671,108 @@ public class CountJobServiceImpl implements CountJobService{
 		}
 		return set;
 	}
+	
+	public String removeTargetAndRequire(){
+		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");
+		
+		try {
+			String uncmppbcsql="select hr_pa_pisrule.formula from hr_pa_kpipbc2user,hr_pa_kpiitem2user,hr_pa_pisrule,hr_pa_performanceindex,hr_pa_performanceindexscore " +
+					"where hr_pa_kpiitem2user.pbcId=hr_pa_kpipbc2user.id " +
+					"and hr_pa_kpiitem2user.piId=hr_pa_performanceindex.id " +
+					"and hr_pa_performanceindex.id=hr_pa_performanceindexscore.piId " +
+					"and hr_pa_performanceindexscore.id=hr_pa_pisrule.pisId";
+			List<Map> uncmppbclist=selectDataService.getData(uncmppbcsql);
+			String uncmpformula="";
+			for(Map uncmpmap:uncmppbclist){
+				uncmpformula+=uncmpmap.get("formula").toString()+",";
+			}
+			int offset=0;
+			int curday=new Date().getDate();
+			String curd=DateUtil.convertDateToString(new Date());
+			//绩效系数
+			double factorValue=0;
+			if(PropertiesUtil.getProperties("hr.isautoj").equals("true")){
+				if(curday>=25){
+					offset=0;
+				}else if(curday<5){
+					offset=1;
+				}
+			}
+			Set uncmpformulaset=this.getPram(uncmpformula);
+			Iterator it=uncmpformulaset.iterator();
+			String targetStr="";
+			String requireStr="";
+			String sd=DateUtil.convertDateToString(DateUtil.addMonths(new Date(), -(1+offset)));
+			String ed=DateUtil.convertDateToString(DateUtil.addMonths(new Date(), -offset));
+			while(it.hasNext()){
+				String keyp=it.next().toString();
+				int lastk=keyp.lastIndexOf("_");
+				String key=keyp.substring(1, lastk);
+				String flag=keyp.substring(lastk+1, keyp.length()-1);
+				String sql="";
+				if(flag.equals("t")){
+					 sql="select distinct hr_pa_assessmentTasksAssigned.id " +
+					 		"from hr_pa_assessmentCriteria,hr_pa_assessmentTasksAssigned " +
+					 		"where hr_pa_assessmentCriteria.acKey='"+key+"' and hr_pa_assessmentTasksAssigned.acId=hr_pa_assessmentCriteria.id " +
+					 		"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
+							"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
+					 List<Map> targetlist=selectDataService.getData(sql);
+					 for(Map tarmap:targetlist){
+						 targetStr+= tarmap.get("id")+",";
+					 }
+					 
+				}else if(flag.equals("r")){
+					 sql="select distinct hr_pa_acReached.id " +
+					 "from hr_pa_assessmentCriteria,hr_pa_acReached " +
+					"where hr_pa_assessmentCriteria.acKey='"+key+"' and hr_pa_acReached.acId=hr_pa_assessmentCriteria.id "+
+					"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
+					"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
+					 List<Map> requirelist=selectDataService.getData(sql);
+					 for(Map reqmap:requirelist){
+						 requireStr+= reqmap.get("id")+",";
+					 }
+				}
+			}
+			if(targetStr.length()>0&&targetStr.lastIndexOf(",")==targetStr.length()-1){
+				 targetStr=targetStr.substring(0,targetStr.length()-1);
+			 }
+			if(requireStr.length()>0&&requireStr.lastIndexOf(",")==requireStr.length()-1){
+				 requireStr=requireStr.substring(0,requireStr.length()-1);
+			 }
+			//当目标与达成计算完成后，删除表中的数据，放入历史表中
+			String deletetasksql="delete from hr_pa_assessmenttasksassigned "+
+				"where DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
+				"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m')";
+			
+			String savetasksql="insert into hr_pa_assessmenttasksassigned_hist select * from hr_pa_assessmenttasksassigned " +
+				"where DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
+				"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m')";
+			if(targetStr.length()>0){
+				savetasksql+=" and hr_pa_assessmenttasksassigned.id not in("+targetStr+")";
+				deletetasksql+=" and hr_pa_assessmenttasksassigned.id not in("+targetStr+")";
+			}
+			String deleteacrsql="delete from hr_pa_acreached " +
+				"where DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
+				"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
+			
+			String saveacrsql="insert into hr_pa_acreached_hist select * from hr_pa_acreached " +
+				"where DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
+				"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
+			if(requireStr.length()>0){
+				saveacrsql+=" and hr_pa_acreached.id not in("+requireStr+")";
+				deleteacrsql+=" and hr_pa_acreached.id not in("+requireStr+")";
+			}
+			selectDataService.saveRealTable(savetasksql);
+			selectDataService.saveRealTable(saveacrsql);
+			selectDataService.remove(deletetasksql);
+			selectDataService.remove(deleteacrsql);
+			logger.info("移除历史数据成功！");
+		} catch (RuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.info("移除历史数据出错！");
+			return "false";
+		}
+		return "true";
+	}
 }

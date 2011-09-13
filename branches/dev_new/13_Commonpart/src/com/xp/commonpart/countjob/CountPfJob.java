@@ -33,6 +33,12 @@ public class CountPfJob {
 		countJobService.saveSalarDetail();
 		return null;
 	}
+	
+	public String removeTargetAndRequire(){
+		logger.info("---------------------------------------------执行定时任务 删除目标与达成的历史数据 ,执行时间："+(new Date())+"---------------------------------");
+		CountJobService countJobService= (CountJobService) ContextHolder.getBean("countJobService");
+		return countJobService.removeTargetAndRequire();
+	}
 	public boolean saveKpiItemScoreForUser(String userid,String depid,String pbc2userid){
 		CountJobService countJobService= (CountJobService) ContextHolder.getBean("countJobService");
 		countJobService.saveKpiItemScoreForUser(userid, depid, pbc2userid);
