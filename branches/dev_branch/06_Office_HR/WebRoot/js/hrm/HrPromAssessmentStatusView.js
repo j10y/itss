@@ -1,13 +1,13 @@
-HrPromApplyView = Ext.extend(Ext.Panel, {
+HrPromAssessmentStatusView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		if(a == null) {
 			a = {};
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		HrPromApplyView.superclass.constructor.call(this, {
-			id : "HrPromApplyView",
-			title : "晋升申请草稿",
+		HrPromAssessmentStatusView.superclass.constructor.call(this, {
+			id : "HrPromAssessmentStatusView",
+			title : "晋升评估状态",
 			region : "center",
 			layout : "border",
 			items : [
@@ -44,7 +44,7 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 					text : "查询条件：姓名"
 				}, {
 					fieldLabel : "姓名",
-					name : "Q_applyUser.fullname_S_LK",
+					name : "Q_promApply.applyUser.fullname_S_LK",
 					xtype : "textfield"
 				}, {
 					xtype : "button",
@@ -54,7 +54,7 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/hrm/listHrPromApply.do",
+			url : __ctxPath + "/hrm/listStatusHrPromAssessment.do",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -64,11 +64,11 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 					name : "id",
 					type : "int"
 				}, {
-					name : "applyUser.fullname",
-					mapping : "applyUser.fullname"
+					name : "promApply.applyUser.fullname",
+					mapping : "promApply.applyUser.fullname"
 				},
-				"nowPositionName",
-				"applyPositionName",
+				"promApply.nowPositionName",
+				"promApply.applyPositionName",
 				"publishStatus"
 			]
 		});
@@ -80,17 +80,10 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_ApplyDel")) {
+		if(isGranted("_ApplyQuery")) {
 			b.push({
-				iconCls : "btn-del",
-				qtip : "删除",
-				style : "margin:0 3px 0 3px"
-			});
-		}
-		if(isGranted("_ApplyEdit")) {
-			b.push({
-				iconCls : "btn-edit",
-				qtip : "编辑",
+				iconCls : "btn-preview",
+				qtip : "查看",
 				style : "margin:0 3px 0 3px"
 			});
 		}
@@ -110,13 +103,13 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 					hidden : true
 				}, {
 					header : "姓名",
-					dataIndex : "applyUser.fullname"
+					dataIndex : "promApply.applyUser.fullname"
 				}, {
 					header : "原岗位",
-					dataIndex : "nowPositionName"
+					dataIndex : "promApply.nowPositionName"
 				}, {
 					header : "拟晋升岗位",
-					dataIndex : "applyPositionName"
+					dataIndex : "promApply.applyPositionName"
 				}, {
 					header : "状态",
 					dataIndex : "publishStatus",
@@ -136,6 +129,21 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 						if(d == 4) {        //删除标记
 							return "<font color='red'>已删除</font>";
 						}
+						if(d == 8) {        //待考核期评估
+							return "<font color='red'>待考核期评估</font>";
+						}
+						if(d == 9) {        //待领导批准
+							return "<font color='red'>待领导批准</font>";
+						}
+						if(d == 10) {        //待人力资源确认
+							return "<font color='red'>待人力资源确认</font>";
+						}
+						if(d == 11) {        //待晋升面谈
+							return "<font color='red'>待晋升面谈</font>";
+						}
+						if(d == 12) {        //待任命发文
+							return "<font color='red'>待任命发文</font>";
+						}
 					}
 				},
 				this.rowActions
@@ -146,32 +154,12 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 				width : 100
 			}
 		});
-		this.topbar = new Ext.Toolbar({
-			height : 30,
-			bodyStyle : "text-align:left",
-			item : []
-		});
-		if(isGranted("_ApplyAdd")) {
-			this.topbar.add(new Ext.Button({
-				iconCls : "btn-add",
-				text : "新建申请",
-				handler : this.addHrPromApply
-			}));
-		}
-		if(isGranted("_ApplyDel")) {
-			this.topbar.add(new Ext.Button({
-				iconCls : "btn-del",
-				text : "删除申请",
-				handler : this.delHrPromApply
-			}));
-		}
 		this.gridPanel = new Ext.grid.GridPanel({
-			id : "HrPromApplyGrid",
+			id : "HrPromAssessmentGrid",
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
 			stripeRows : true,
-			tbar : this.topbar,
 			closeable : true,
 			store : this.store,
 			trackMouseOver : true,
@@ -195,9 +183,9 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_ApplyEdit")) {
-					new HrPromApplyForm({
-						applyId : e.data.id
+				if(isGranted("HrPromAssessment")) {
+					new HrPromAssessmentPreview({
+						assessmentId : e.data.id
 					}).show();
 				}
 			});
@@ -208,7 +196,7 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/hrm/listHrPromApply.do",
+				url : __ctxPath + "/hrm/listStatusHrPromAssessment.do",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
@@ -216,62 +204,18 @@ HrPromApplyView = Ext.extend(Ext.Panel, {
 			});
 		}
 	},
-	addHrPromApply : function(a) {
-		new HrPromApplyForm({
-			applyId : 0
-		}).show();
-	},
-	delHrPromApply : function() {
-		var e = Ext.getCmp("HrPromApplyGrid");
-		var c = e.getSelectionModel().getSelections();
-		if(c.length == 0) {
-			Ext.ux.Toast.msg("提示信息","请选择要删除的记录！");
-			return ;
-		}
-		var f = Array();
-		for(var d = 0; d < c.length; d++) {
-			f.push(c[d].data.id);
-		}
-		HrPromApplyView.remove(f);
-	},
-	editHrPromApply : function(a) {
-		new HrPromApplyForm({
-			applyId : a.data.id
+	previewHrPromAssessment : function(a) {
+		new HrPromAssessmentPreview({
+			assessmentId : a.data.id
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
-			case "btn-del":
-				this.delHrPromApply();
-				break ;
-			case "btn-edit":
-				this.editHrPromApply(a);
+			case "btn-preview":
+				this.previewHrPromAssessment(a);
 				break ;
 			default:
 				break ;
 		}
 	}
 });
-HrPromApplyView.remove = function(b) {
-	var a = Ext.getCmp("HrPromApplyGrid");
-	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
-		if(c == "yes") {
-			Ext.Ajax.request({
-				url : __ctxPath + "/hrm/multiDelHrPromApply.do",
-				params : {
-					ids : b
-				},
-				method : "post",
-				success : function() {
-					Ext.ux.Toast.msg("提示信息", "成功删除所选记录！");
-					a.getStore().reload({
-						params : {
-							start : 0,
-							limit : 25
-						}
-					});
-				}
-			});
-		}
-	});
-}
