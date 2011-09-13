@@ -128,11 +128,17 @@ public class HrPromAssessmentAction extends BaseAction{
 	}
 	
 	public String save() {
-		Date currentDate = new Date();
-		AppUser currentUser = ContextUtil.getCurrentUser();
-		this.hrPromAssessment.setModifyDate(currentDate);
-		this.hrPromAssessment.setModifyPerson(currentUser);
-		this.hrPromAssessmentService.save(this.hrPromAssessment);
-		return "success";
+		try {
+			Date currentDate = new Date();
+			AppUser currentUser = ContextUtil.getCurrentUser();
+			this.hrPromAssessment.setModifyDate(currentDate);
+			this.hrPromAssessment.setModifyPerson(currentUser);
+			this.hrPromAssessmentService.save(this.hrPromAssessment);
+			this.getRequest().setAttribute("flag", "1");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			this.getRequest().setAttribute("flag", "0");
+		}
+		return "result";
 	}
 }
