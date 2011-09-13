@@ -30,7 +30,7 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 						autoScroll : true
 					},
 					width : '95%',
-					height : 720,
+					height : 880,
 					buttons :  [new Ext.Button({
 									iconCls:'btn-save',
 									text : '<font color="red">填写【晋升评估表】</font>',

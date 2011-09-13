@@ -25,7 +25,7 @@ HrPromApplyHRConfirmAuditFlowView = Ext.extend(Ext.Panel, {
 						autoScroll : true
 					},
 					width : '95%',
-					height : 720,
+					height : 880,
 					buttons :  [
 								#set ($count=0)
 								#foreach ($v in $nextTrans)

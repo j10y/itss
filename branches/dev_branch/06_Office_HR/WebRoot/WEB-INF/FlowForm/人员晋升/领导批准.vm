@@ -31,7 +31,7 @@ HrPromApplyHeaderApproveFlowView = Ext.extend(Ext.TabPanel, {
 					},
 					activeTab : 1,
 					width : '95%',
-					height : 720,
+					height : 1000,
 					buttons :  [
 								#set ($count=0)
 								#foreach ($v in $nextTrans)
