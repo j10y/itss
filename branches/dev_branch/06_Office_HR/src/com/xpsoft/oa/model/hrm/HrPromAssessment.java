@@ -20,8 +20,10 @@ public class HrPromAssessment extends BaseModel{
 	protected String ratingResult;//评级结果
 	protected Long postManagerId;//直线经理ID
 	protected String postManagerName;//直线经理姓名
+	protected Date postManagerAuditDate;//直线领导签字时间
 	protected Long deptManagerId;//部门主管ID
 	protected String deptManagerName;//部门主管姓名
+	protected Date deptManagerAuditDate;//部门领导签字时间
 	protected Date appointDate;//正式任命时间
 	protected String postRank;//岗位职级
 	protected Long salaryLevelId;//薪资等级ID
@@ -29,6 +31,7 @@ public class HrPromAssessment extends BaseModel{
 	protected String promIntRecord;//晋升面谈记录
 	protected Long auditHrId;//人力资源审核人员ID
 	protected String auditHrName;//人力资源审核人员姓名
+	protected Date hrManagerAuditDate;//人力资源审核人员签字时间
 	/**
 	 * 
 	 */
@@ -37,6 +40,7 @@ public class HrPromAssessment extends BaseModel{
 	protected Date createDate;
 	protected AppUser modifyPerson;
 	protected Date modifyDate;
+	protected Date userManagerAuditDate;//本人签字时间
 	
 	public HrPromAssessment() {}
 
@@ -262,6 +266,38 @@ public class HrPromAssessment extends BaseModel{
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public Date getPostManagerAuditDate() {
+		return postManagerAuditDate;
+	}
+
+	public void setPostManagerAuditDate(Date postManagerAuditDate) {
+		this.postManagerAuditDate = postManagerAuditDate;
+	}
+
+	public Date getDeptManagerAuditDate() {
+		return deptManagerAuditDate;
+	}
+
+	public void setDeptManagerAuditDate(Date deptManagerAuditDate) {
+		this.deptManagerAuditDate = deptManagerAuditDate;
+	}
+
+	public Date getHrManagerAuditDate() {
+		return hrManagerAuditDate;
+	}
+
+	public void setHrManagerAuditDate(Date hrManagerAuditDate) {
+		this.hrManagerAuditDate = hrManagerAuditDate;
+	}
+
+	public Date getUserManagerAuditDate() {
+		return userManagerAuditDate;
+	}
+
+	public void setUserManagerAuditDate(Date userManagerAuditDate) {
+		this.userManagerAuditDate = userManagerAuditDate;
 	}
 	
 }

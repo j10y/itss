@@ -132,12 +132,39 @@
 			not-null="false"
 		/>
 		<property
+			name="postManagerAuditDate"
+			type="java.util.Date"
+			update="true"
+			insert="true"
+			access="property"
+			column="postManagerAuditDate"
+			not-null="false"
+		/>
+		<property
 			name="deptManagerId"
 			type="java.lang.Long"
 			update="true"
 			insert="true"
 			access="property"
+			column="deptManagerId"
+			not-null="false"
+		/>
+		<property
+			name="deptManagerName"
+			type="java.lang.String"
+			update="true"
+			insert="true"
+			access="property"
 			column="deptManagerName"
+			not-null="false"
+		/>
+		<property
+			name="deptManagerAuditDate"
+			type="java.util.Date"
+			update="true"
+			insert="true"
+			access="property"
+			column="deptManagerAuditDate"
 			not-null="false"
 		/>
 		<property
@@ -204,14 +231,23 @@
 			not-null="false"
 		/>
 		<property
-			name="publishStatus"
+			name="hrManagerAuditDate"
 			type="java.lang.Integer"
 			update="true"
 			insert="true"
 			access="property"
-			column="publishStatus"
+			column="hrManagerAuditDate"
 			not-null="false"
 		/>
+		<property
+        	name="publishStatus"
+        	type="java.lang.Integer"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="publishStatus"
+        	not-null="false"
+        />
         <many-to-one name="createPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
         <property
         	name="createDate"
@@ -230,6 +266,15 @@
         	insert="true"
         	access="property"
         	column="modifyDate"
+        	not-null="false"
+        />
+        <property
+        	name="userManagerAuditDate"
+        	type="java.util.Date"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="userManagerAuditDate"
         	not-null="false"
         />
     </class>
