@@ -147,5 +147,16 @@
         	unique="false"
         />
         <many-to-one name="parentPa" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaPerformanceindex" column="parentId"></many-to-one>
+        <property
+        	name="fromPi"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="fromPi"
+        	length="20"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>

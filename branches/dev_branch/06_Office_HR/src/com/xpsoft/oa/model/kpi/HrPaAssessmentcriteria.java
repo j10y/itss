@@ -15,6 +15,7 @@ public class HrPaAssessmentcriteria extends BaseModel {
 	protected int publishStatus;
 	protected Date modifyDate;
 	protected long modifyPerson;
+	protected Long fromAc;
 	
 	public HrPaAssessmentcriteria(){}
 
@@ -96,5 +97,13 @@ public class HrPaAssessmentcriteria extends BaseModel {
 
 	public void setModifyPerson(long modifyPerson) {
 		this.modifyPerson = modifyPerson;
+	}
+
+	public Long getFromAc() {
+		return fromAc;
+	}
+
+	public void setFromAc(Long fromAc) {
+		this.fromAc = fromAc;
 	}
 }

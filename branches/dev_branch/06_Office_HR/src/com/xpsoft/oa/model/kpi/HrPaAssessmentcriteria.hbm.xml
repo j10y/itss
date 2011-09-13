@@ -120,5 +120,15 @@
             not-null="false"
             unique="false"
         />
+        <property
+        	name="fromAc"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="fromAc"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>

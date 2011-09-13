@@ -22,6 +22,7 @@ public class HrPaPerformanceindex extends BaseModel{
 	protected Double baseScore;
 	protected Double finalScore;
 	protected HrPaPerformanceindex parentPa;//父级考核指标
+	protected Long fromPi;
 	
 	public HrPaPerformanceindex(){}
 
@@ -151,6 +152,14 @@ public class HrPaPerformanceindex extends BaseModel{
 
 	public void setParentPa(HrPaPerformanceindex parentPa) {
 		this.parentPa = parentPa;
+	}
+
+	public Long getFromPi() {
+		return fromPi;
+	}
+
+	public void setFromPi(Long fromPi) {
+		this.fromPi = fromPi;
 	}
 
 }
