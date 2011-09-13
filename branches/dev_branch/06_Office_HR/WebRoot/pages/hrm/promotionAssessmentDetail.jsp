@@ -88,12 +88,12 @@
 				<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">评级结果</td>
 			</tr>
 			<tr>
-				<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.proKnowledge}</td>
-				<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.commEffect}</td>
-				<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.solveAbility}</td>
-				<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.difficultyManage}</td>
-				<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.businessFieldEffect}</td>
-				<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">${hrPromAssessment.ratingResult}</td>
+				<td style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.proKnowledge}</td>
+				<td style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.commEffect}</td>
+				<td style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.solveAbility}</td>
+				<td style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.difficultyManage}</td>
+				<td style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromAssessment.businessFieldEffect}</td>
+				<td style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">${hrPromAssessment.ratingResult}</td>
 			</tr>
 			<tr>
 				<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">正式任命时间</td>
