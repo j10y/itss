@@ -38,7 +38,7 @@ public class HrPromApply extends BaseModel{
 	protected String target2;//工作目标二
 	protected String target3;//工作目标三
 	protected String intRecord;//员工面谈记录
-	protected Long postManagerId;//部门领导ID
+	protected Long postManagerId;//直线领导ID
 	protected String postManagerName;//部门领导姓名
 	/**
 	 * 5：待上报审批
@@ -59,22 +59,6 @@ public class HrPromApply extends BaseModel{
 	protected Date postManagerAuditDate;//直线领导签字时间，[上报审批]环节
 	
 	protected Date userManagerAuditDate;//本人签字时间，[目标设定与面谈]环节
-	
-	public Date getPostManagerAuditDate() {
-		return postManagerAuditDate;
-	}
-
-	public void setPostManagerAuditDate(Date postManagerAuditDate) {
-		this.postManagerAuditDate = postManagerAuditDate;
-	}
-
-	public Date getUserManagerAuditDate() {
-		return userManagerAuditDate;
-	}
-
-	public void setUserManagerAuditDate(Date userManagerAuditDate) {
-		this.userManagerAuditDate = userManagerAuditDate;
-	}	
 	
 	public HrPromApply() {}
 
@@ -268,6 +252,22 @@ public class HrPromApply extends BaseModel{
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public Date getPostManagerAuditDate() {
+		return postManagerAuditDate;
+	}
+
+	public void setPostManagerAuditDate(Date postManagerAuditDate) {
+		this.postManagerAuditDate = postManagerAuditDate;
+	}
+
+	public Date getUserManagerAuditDate() {
+		return userManagerAuditDate;
+	}
+
+	public void setUserManagerAuditDate(Date userManagerAuditDate) {
+		this.userManagerAuditDate = userManagerAuditDate;
 	}
 
 }
