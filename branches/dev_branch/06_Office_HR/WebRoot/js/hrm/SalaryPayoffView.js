@@ -345,7 +345,35 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 							text : "计算",
 							iconCls : "btn-save",
 							handler : function(){
+							Ext.getCmp("Q_department.depId_EQ").allowBlank = true;
+							Ext.getCmp("searchPanel.department.depId").allowBlank = true;
 							var depid=Ext.getCmp("searchPanel.department.depId").getValue();
+							Ext.getCmp("deptSalaryPayoffForm").getForm().submit({
+								waitMsg : "正在计算数据...",
+								url : __ctxPath + "/hrm/countSalaryPayoff.do?depid="+depid,
+								success : function (c, d) {
+									Ext.getCmp("caculateWin").close();
+										Ext.getCmp("SalaryPayoffGrid").getStore().reload();
+										Ext.MessageBox
+													.show({
+														title : "操作信息",
+														msg : "计算成功！",
+														buttons : Ext.MessageBox.OK,
+														icon : Ext.MessageBox.INFO
+													});
+								},
+								failure : function(c, d) {
+									Ext.MessageBox
+											.show({
+												title : "操作信息",
+												msg : "信息计算出错，请联系管理员！",
+												buttons : Ext.MessageBox.OK,
+												icon : Ext.MessageBox.ERROR
+											});
+								}
+							});
+							return;
+							//var depid=Ext.getCmp("searchPanel.department.depId").getValue();
 							Ext.Ajax.request({
 									waitMsg : "正在计算数据...",
 									url : __ctxPath+ "/hrm/countSalaryPayoff.do?depid="+depid,
@@ -365,7 +393,7 @@ SalaryPayoffView = Ext.extend(Ext.Panel, {
 											Ext.MessageBox
 													.show({
 														title : "操作信息",
-														msg : "信息保存出错，请联系管理员！",
+														msg : "信息计算出错，请联系管理员！",
 														buttons : Ext.MessageBox.OK,
 														icon : Ext.MessageBox.ERROR
 													});
