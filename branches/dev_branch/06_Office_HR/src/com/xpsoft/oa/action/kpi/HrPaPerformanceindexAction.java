@@ -129,6 +129,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		pi.setFrequency(this.hrPaPerformanceindex.getFrequency());
 		pi.setMode(this.hrPaPerformanceindex.getMode());
 		pi.setPaDesc(this.hrPaPerformanceindex.getPaDesc());
+		pi.setRemark(this.hrPaPerformanceindex.getRemark());
 		pi.setModifyDate(currentDate);
 		pi.setModifyPerson(currentUser);
 		pi.setPublishStatus(0);//置为草稿状态
@@ -151,15 +152,16 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		if(this.hrPaPerformanceindex.getId() == 0) {//新增
 			pi.setCreateDate(currentDate);
 			pi.setCreatePerson(currentUser);
+			pi.setFromPi(new Long(0));
 		} else {//修改
 			//判断是已发布状态还是草稿状态
 			if(this.hrPaPerformanceindex.getPublishStatus() == 3) {
-				pi.setRemark(String.valueOf(this.hrPaPerformanceindex.getId()));
+				pi.setFromPi(this.hrPaPerformanceindex.getId());
 				pi.setCreateDate(currentDate);
 				pi.setCreatePerson(currentUser);
 			} else {
 				pi.setId(this.hrPaPerformanceindex.getId());
-				pi.setRemark(this.hrPaPerformanceindex.getRemark());
+				pi.setFromPi(this.hrPaPerformanceindex.getFromPi());
 				pi.setCreateDate(new Date(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.createDate"))));
 				pi.setCreatePerson(this.hrPaPerformanceindex.getCreatePerson());
 			}
@@ -309,6 +311,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		pi.setFrequency(this.hrPaPerformanceindex.getFrequency());
 		pi.setMode(this.hrPaPerformanceindex.getMode());
 		pi.setPaDesc(this.hrPaPerformanceindex.getPaDesc());
+		pi.setRemark(this.hrPaPerformanceindex.getRemark());
 		pi.setModifyDate(currentDate);
 		pi.setModifyPerson(currentUser);
 		if(this.hrPaPerformanceindex.getParentPa() != null) {
@@ -331,6 +334,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			pi.setCreateDate(currentDate);
 			pi.setCreatePerson(currentUser);
 			pi.setPublishStatus(3);//置为已发布状态
+			pi.setFromPi(new Long(0));
 		} else {//修改
 			//判断是修改已发布的还是从草稿直接发布
 			if(this.hrPaPerformanceindex.getRemark() != null && !"".equals(this.hrPaPerformanceindex.getRemark())) {//修改已发布的
@@ -340,12 +344,12 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			}
 			//判断是已发布状态还是草稿状态
 			if(this.hrPaPerformanceindex.getPublishStatus() == 3) {
-				pi.setRemark(String.valueOf(this.hrPaPerformanceindex.getId()));
+				pi.setFromPi(this.hrPaPerformanceindex.getId());
 				pi.setCreateDate(currentDate);
 				pi.setCreatePerson(currentUser);
 			} else {
 				pi.setId(this.hrPaPerformanceindex.getId());
-				pi.setRemark(this.hrPaPerformanceindex.getRemark());
+				pi.setFromPi(this.hrPaPerformanceindex.getFromPi());
 				pi.setCreateDate(new Date(Long.parseLong(getRequest().getParameter("hrPaPerformanceindex.createDate"))));
 				pi.setCreatePerson(this.hrPaPerformanceindex.getCreatePerson());
 			}
@@ -478,7 +482,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			}
 		}
 		//模拟修改已发布的考核指标审核流程，添加流程后应该移到审核流程中。
-		if(piNew.getRemark() != null && !"".equals(piNew.getRemark())) {
+		if(piNew.getFromPi() != 0) {
 			this.syncIndex(piNew.getId());
 		}
 		
@@ -493,7 +497,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		//获取复制的考核指标
 		HrPaPerformanceindex piCopy = this.hrPaperformanceindexService.get(piId);
 		//获取原考核指标
-		HrPaPerformanceindex piOld = this.hrPaperformanceindexService.get(Long.parseLong(piCopy.getRemark()));
+		HrPaPerformanceindex piOld = this.hrPaperformanceindexService.get(piCopy.getFromPi());
 		//同步原考核指标内容
 		piOld.setPaName(piCopy.getPaName());
 		piOld.setType(piCopy.getType());
@@ -501,6 +505,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		piOld.setMode(piCopy.getMode());
 		piOld.setPaIsOnlyNegative(piCopy.getPaIsOnlyNegative());
 		piOld.setPaDesc(piCopy.getPaDesc());
+		piOld.setRemark(piCopy.getRemark());
 		piOld.setModifyDate(currentDate);
 		piOld.setModifyPerson(currentUser);
 		piOld.setPublishStatus(3);
