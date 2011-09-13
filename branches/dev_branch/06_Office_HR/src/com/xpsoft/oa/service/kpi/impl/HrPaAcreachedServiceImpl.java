@@ -24,8 +24,8 @@ public class HrPaAcreachedServiceImpl extends BaseServiceImpl<HrPaAcreached>
 	 * */
 	public void multiSave(List<HrPaAcreached> list, String templateId) {
 		//删除相同模板ID的当月份的数据
-		String sql = "delete from hr_pa_assessmenttasksassigned where " +
-				" templateId = '" + templateId + "' and publishDate > '" + DateUtil.convertDateToString(DateUtil.getFirstDayOfMonth(new Date())) + "'";
+		String sql = "delete from hr_pa_acreached where " +
+				" templateId = '" + templateId + "' and inputDate > '" + DateUtil.convertDateToString(DateUtil.getFirstDayOfMonth(new Date())) + "'";
 		boolean flag = this.removeDatabySql(sql);
 		if(!flag) {
 			logger.error("模板ID为：" + templateId + "关联的考核标准目标数据删除失败！");
