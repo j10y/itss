@@ -1306,7 +1306,7 @@
 				</Item>
 			</Items>
 			<Items id="promotionManage" text="晋升管理" isPublic="false">
-				<Item id="HrPromApplyView" text="晋升申请">
+				<Item id="HrPromApplyView" text="晋升申请草稿">
 					<Function id="_ApplyQuery" text="查看">
 						<url>/hrm/listHrPromApply.do</url>
 					</Function>
@@ -1323,20 +1323,13 @@
 						<url>/hrm/listHrPromApply.do</url>
 					</Function>
 				</Item>
-				<Item id="HrPromAssessmentView" text="晋升评估">
+				<Item id="HrPromApplyStatusView" text="晋升申请状态">
+					<Function id="_ApplyQuery" text="查看">
+						<url>/hrm/listHrPromApply.do</url>
+					</Function>
+				</Item>
+				<Item id="HrPromAssessmentStatusView" text="晋升评估状态">
 					<Function id="_AssessmentQuery" text="查看">
-						<url>/hrm/listHrPromAssessment.do</url>
-					</Function>
-					<Function id="_AssessmentAdd" text="添加">
-						<url>/hrm/addHrPromAssessment.do</url>
-						<url>/hrm/listHrPromAssessment.do</url>
-					</Function>
-					<Function id="_AssessmentEdit" text="编辑">
-						<url>/hrm/saveHrPromAssessment.do</url>
-						<url>/hrm/listHrPromAssessment.do</url>
-					</Function>
-					<Function id="_AssessmentDel" text="删除">
-						<url>/hrm/multiDelHrPromAssessment.do</url>
 						<url>/hrm/listHrPromAssessment.do</url>
 					</Function>
 				</Item>
