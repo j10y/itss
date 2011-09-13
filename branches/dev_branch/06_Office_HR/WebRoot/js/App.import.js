@@ -409,6 +409,10 @@ App.importJs = {
 	HrPromApplyView	: [__ctxPath + "/js/hrm/HrPromApplyView.js",
 			__ctxPath + "/js/hrm/HrPromApplyForm.js",
 			__ctxPath + "/js/hrm/HrPromAssessmentForm.js"],
+	HrPromApplyStatusView : [__ctxPath + "/js/hrm/HrPromApplyStatusView.js",
+			__ctxPath + "/js/hrm/HrPromApplyPreview.js"],
+	HrPromAssessmentStatusView : [__ctxPath + "/js/hrm/HrPromAssessmentStatusView.js",
+			__ctxPath + "/js/hrm/HrPromAssessmentPreview.js"],
 	HrTZAnlyReportView:[__ctxPath + "/js/hrm/HrTZAnlyReportView.js"],
 	ExportSalaryView : [__ctxPath + "/js/hrm/ExportSalaryView.js",__ctxPath + "/js/hrm/ExportSalaryItemForm.js"]		
 				                    
