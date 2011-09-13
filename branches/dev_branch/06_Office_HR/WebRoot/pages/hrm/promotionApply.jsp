@@ -24,7 +24,7 @@
 					allowBlank : false,
 					hiddenName : "hrPromApply.applyUser.userId",
 					valueField : "userId",
-					width : 249,
+					width : 229,
 					displayField : "fullname",
 					renderTo : "applyUser",
 					triggerAction : "all",
@@ -75,7 +75,7 @@
 					mode : "remote",
 					hiddenName : "hrPromApply.applyPositionName",
 					allowBlank : false,
-					width : 249,
+					width : 229,
 					valueField : "jobName",
 					displayField : "jobName",
 					renderTo : "applyPositionName",
@@ -99,7 +99,7 @@
 					id : "hrPromApply.applyDate",
 					format : "Y-m-d",
 					editable : false,
-					width : 240,
+					width : 230,
 					allowBlank : false,
 					blankText : "拟申请时间不能为空！",
 					renderTo : "applyDate"
@@ -239,83 +239,83 @@
 		<form id="applyForm" onsubmit="return check();" action="${pageContext.request.contextPath}/hrm/saveHrPromApply.do" method="post">
 			<input type="hidden" id="hrPromApply.id" name="hrPromApply.id" value="${hrPromApply.id}"/>
 			<input type="hidden" name="flag" value="0"/>
-			<table width="700" align="center" border="1" cellpadding="0" cellspacing="0">
+			<table style="width:700px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="90" align="right">姓名</td>
-					<td width="250"><div id="applyUser"></div></td>
-					<td width="120" align="right">部门/门店</td>
-					<td style="padding:1px">
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">姓名</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="applyUser"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">部门/门店</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
 						<input type="hidden" id="depId" name="hrPromApply.depId" value="${hrPromApply.depId}"/>
 						<input type="text" id="depName" name="hrPromApply.depName" value="${hrPromApply.depName}" readonly="readonly" style="border:none;width:100%;height:100%"/>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">入职日期</td>
-					<td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">入职日期</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
 						<input type="text" id="accessionTime" name="hrPromApply.accessionTime" value="${hrPromApply.accessionTime}" readonly="readonly" style="border:none;width:100%;height:100%"/>
 					</td>
-					<td align="right">现职位</td>
-					<td style="padding:1px">
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">现职位</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
 						<input type="hidden" id="nowPositionId" name="hrPromApply.nowPositionId" value="${hrPromApply.nowPositionId}"/>
 						<input type="text" id="nowPositionName" name="hrPromApply.nowPositionName" value="${hrPromApply.nowPositionName}" readonly="readonly" style="border:none;width:100%;height:100%"/>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">拟担任职位</td>
-					<td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟担任职位</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
 						<input type="hidden" id="applyPositionId" name="hrPromApply.applyPositionId" value="${hrPromApply.applyPositionId}"/>
 						<div id="applyPositionName"></div>
 					</td>
-					<td align="right">拟晋升时间</td>
-					<td><div id="applyDate"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升时间</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;"><div id="applyDate"></div></td>
 				</tr>
 				<tr>
-					<td align="right">工作年限</td>
-					<td style="padding:1px">
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">工作年限</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
 						<input type="text" id="workYear" name="hrPromApply.workYear" value="${hrPromApply.workYear}" style="border:none;width:100%;height:100%"/>
 					</td>
-					<td align="right">本单位工作年限</td>
-					<td style="padding:1px">
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">本单位工作年限</td>
+					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
 						<input type="text" id="workHereYear" name="hrPromApply.workHereYear" value="${hrPromApply.workHereYear}" style="border:none;width:100%;height:100%"/>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">拟晋升原因</td>
-					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea id="applyReason" name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;">${hrPromApply.applyReason}</textarea>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升原因</td>
+					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
+						<textarea id="applyReason" name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.applyReason}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4" align="center">工作目标设定</td>
+					<td colspan="4" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作目标设定</td>
 				</tr>
 				<tr>
-					<td align="right">目标一</td>
-					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea readonly="readonly" id="target1" name="hrPromApply.target1" style="width:100%;height:100%;border:none;">${hrPromApply.target1}</textarea>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一</td>
+					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
+						<textarea readonly="readonly" id="target1" name="hrPromApply.target1" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target1}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">目标二</td>
-					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea readonly="readonly" id="target2" name="hrPromApply.target2" style="width:100%;height:100%;border:none;">${hrPromApply.target2}</textarea>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二</td>
+					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
+						<textarea readonly="readonly" id="target2" name="hrPromApply.target2" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target2}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">目标三</td>
-					<td colspan="3" style="height:60px;padding:1px;">
-						<textarea readonly="readonly" id="target3" name="hrPromApply.target3" style="width:100%;height:100%;border:none;">${hrPromApply.target3}</textarea>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三</td>
+					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
+						<textarea readonly="readonly" id="target3" name="hrPromApply.target3" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target3}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4" align="center">员工面谈记录</td>
+					<td colspan="4" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工面谈记录</td>
 				</tr>
 				<tr>
-					<td colspan="4" style="height:150px;padding:1px;">
-						<textarea readonly="readonly" id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;">${hrPromApply.intRecord}</textarea>
+					<td colspan="4" style="height:150px;padding:2px;border:1px solid #000000;border-bottom:none;">
+						<textarea readonly="readonly" id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.intRecord}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" colspan="4">
+					<td align="center" colspan="4" style="height:40px;border:1px solid #000000;">
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
 						<input type="submit" value="保存"/>&nbsp;&nbsp;
 						<input type="button" value="提交审核" onclick="onSend();"/>
