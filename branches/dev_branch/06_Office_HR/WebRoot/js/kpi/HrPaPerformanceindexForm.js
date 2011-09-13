@@ -12,7 +12,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			items : this.formPanel,
 			modal : true,
 			height : 385,
-			width : 470,
+			width : 550,
 			title : "绩效考核指标录入",
 			buttonAlign : "center",
 			buttons : this.buttons
@@ -204,11 +204,15 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 														Ext.getCmp("baseScore").show();
 														Ext.getCmp("finalScoreLabel").show();
 														Ext.getCmp("finalScore").show();
+														Ext.getCmp("finalCoefficientLabel").show();
+														Ext.getCmp("finalCoefficient").show();
 													} else {
 														Ext.getCmp("baseScoreLabel").hide();
 														Ext.getCmp("baseScore").hide();
 														Ext.getCmp("finalScoreLabel").hide();
 														Ext.getCmp("finalScore").hide();
+														Ext.getCmp("finalCoefficientLabel").hide();
+														Ext.getCmp("finalCoefficient").hide();
 													}
 												}
 											}
@@ -237,7 +241,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 									id : "baseScore",
 									xtype : "textfield",
 									hideLabel : true,
-									width : 70,
+									width : 50,
 									style : "margin-left:5px",
 									hidden : true
 								}
@@ -263,7 +267,33 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 									id : "finalScore",
 									xtype : "textfield",
 									hideLabel : true,
-									width : 70,
+									width : 50,
+									style : "margin-left:5px",
+									hidden : true
+								}
+							]
+						}, {
+							layout : "form",
+							border : false,
+							items : [
+								{
+									id : "finalCoefficientLabel",
+									xtype : "label",
+									text : "绩效系数:",
+									style : "margin-left:10px",
+									hidden : true
+								}
+							]
+						}, {
+							layout : "form",
+							border : false,
+							items : [
+								{
+									name : "hrPaPerformanceindex.finalCoefficient",
+									id : "finalCoefficient",
+									xtype : "textfield",
+									hideLabel : true,
+									width : 50,
 									style : "margin-left:5px",
 									hidden : true
 								}
@@ -333,6 +363,8 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						Ext.getCmp("baseScore").show();
 						Ext.getCmp("finalScoreLabel").show();
 						Ext.getCmp("finalScore").show();
+						Ext.getCmp("finalCoefficientLabel").show();
+						Ext.getCmp("finalCoefficient").show();
 					}
 				},
 				failure : function() {
@@ -356,7 +388,8 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 	next : function(a, b) {
 		if(Ext.getCmp("paIsOnlyNegative").checked) {
 			var baseScoreValue = Ext.getCmp("baseScore").getValue();
-			var finalScoreValue = Ext.getCmp("finalScore").getValue()
+			var finalScoreValue = Ext.getCmp("finalScore").getValue();
+			var finalCoefficientValue = Ext.getCmp("finalCoefficient").getValue();
 			if(isNaN(baseScoreValue) || baseScoreValue <= 0) {
 				Ext.MessageBox.show({
 					title : "操作信息",
@@ -370,6 +403,15 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 				Ext.MessageBox.show({
 					title : "操作信息",
 					msg : "请正确填写KPI最终得分！",
+					buttons : Ext.MessageBox.OK,
+					icon : Ext.MessageBox.ERROR
+				});
+				return ;
+			}
+			if(isNaN(finalCoefficientValue) || finalCoefficientValue <= 0) {
+				Ext.MessageBox.show({
+					title : "操作信息",
+					msg : "请正确填写绩效系数！",
 					buttons : Ext.MessageBox.OK,
 					icon : Ext.MessageBox.ERROR
 				});
