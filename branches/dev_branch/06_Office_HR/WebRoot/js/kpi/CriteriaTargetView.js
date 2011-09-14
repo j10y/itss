@@ -154,6 +154,11 @@ CriteriaTargetView = Ext.extend(Ext.Panel, {
 				"->"
 			]
 		});
+		var dept = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("targetDept.depName", dept, "请选择所属部门", "targetDept.depId");
+		var downloadDept = new TreeSelector("targetDownloadDept.depName", dept, "请选择所属部门", "targetDownloadDept.depId");
+		departments.hide();
+		downloadDept.hide();
 		this.buttonPanel = new Ext.Panel({
 			id : "buttonPanel",
 			region : "south",
@@ -186,8 +191,22 @@ CriteriaTargetView = Ext.extend(Ext.Panel, {
 											"2",
 											"按人员分类"
 										]
-									]
+									],
+									listeners : {
+										select : function(e) {
+											if(Ext.getCmp("targetDownloadFileType").getValue() == 2) {
+												downloadDept.show();
+											} else {
+												downloadDept.hide();
+											}
+										}
+									}
+								}, {
+									id : "targetDownloadDept.depId",
+									value : "0",
+									xtype : "hidden"
 								},
+								downloadDept,
 								new Ext.Button({
 									id : "targetButton1",
 									text : "生成目标excel模板",
@@ -216,7 +235,8 @@ CriteriaTargetView = Ext.extend(Ext.Panel, {
 											url : __ctxPath + "/kpi/createExcelHrPaAssessmenttasksassigned.do",
 											params : {
 												acIds : acItems,
-												downloadFileType : Ext.getCmp("targetDownloadFileType").getValue()
+												downloadFileType : Ext.getCmp("targetDownloadFileType").getValue(),
+												deptId : Ext.getCmp("targetDownloadDept.depId").getValue()
 											},
 											success : function(d) {
 												var e = Ext.util.JSON.decode(d.responseText);
@@ -262,8 +282,22 @@ CriteriaTargetView = Ext.extend(Ext.Panel, {
 											"2",
 											"按人员分类"
 										]
-									]
+									],
+									listeners : {
+										select : function(e) {
+											if(Ext.getCmp("targetUploadFileType").getValue() == 1) {
+												departments.show();
+											} else {
+												departments.hide();
+											}
+										}
+									}
+								},{
+									id : "targetDept.depId",
+									value : "0",
+									xtype : 'hidden'
 								},
+								departments,
 								new Ext.Button({
 									id : "targetButton2",
 									text : "导入目标excel数据",
@@ -271,6 +305,17 @@ CriteriaTargetView = Ext.extend(Ext.Panel, {
 									handler : function() {
 										if(!Ext.getCmp("targetUploadFileType").isValid()) {
 											return ;
+										}
+										if(Ext.getCmp("targetUploadFileType").getValue() == 1) {
+											if(Ext.getCmp("targetDept.depName").getValue() == "") {
+												Ext.MessageBox.show({
+													title : "操作信息",
+													msg : "请选择所属部门！",
+													buttons : Ext.MessageBox.OK,
+													icon : Ext.MessageBox.ERROR
+												});
+												return ;
+											}
 										}
 										var a = App.createUploadDialog({
 											file_cat : "kpiTasksassigned",
@@ -280,7 +325,8 @@ CriteriaTargetView = Ext.extend(Ext.Panel, {
 														url : __ctxPath + "/kpi/readExcelHrPaAssessmenttasksassigned.do",
 														params : {
 															filePath : c[b].filepath,
-															uploadFileType : Ext.getCmp("targetUploadFileType").getValue()
+															uploadFileType : Ext.getCmp("targetUploadFileType").getValue(),
+															deptId : Ext.getCmp("targetDept.depId").getValue()
 														},
 														success : function(d) {
 															var e = Ext.util.JSON.decode(d.responseText);

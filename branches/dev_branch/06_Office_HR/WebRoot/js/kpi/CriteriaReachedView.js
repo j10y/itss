@@ -154,6 +154,11 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 				"->"
 			]
 		});
+		var dept = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("reachedDept.depName", dept, "请选择所属部门", "reachedDept.depId");
+		var downloadDept = new TreeSelector("reachedDownloadDept.depName", dept, "请选择所属部门", "reachedDownloadDept.depId");
+		departments.hide();
+		downloadDept.hide();
 		this.buttonPanel = new Ext.Panel({
 			id : "reachButtonPanel",
 			region : "south",
@@ -186,8 +191,22 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 											"2",
 											"按人员分类"
 										]
-									]
+									],
+									listeners : {
+										select : function(e) {
+											if(Ext.getCmp("reachDownloadFileType").getValue() == 2) {
+												downloadDept.show();
+											} else {
+												downloadDept.hide();
+											}
+										}
+									}
+								}, {
+									id : "reachedDownloadDept.depId",
+									value : "0",
+									xtype : "hidden"
 								},
+								downloadDept,
 								new Ext.Button({
 									id : "reachButton1",
 									text : "生成达成excel模板",
@@ -216,7 +235,8 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 											url : __ctxPath + "/kpi/createExcelHrPaAcreached.do",
 											params : {
 												acIds : acItems,
-												downloadFileType : Ext.getCmp("reachDownloadFileType").getValue()
+												downloadFileType : Ext.getCmp("reachDownloadFileType").getValue(),
+												deptId : Ext.getCmp("reachedDownloadDept.depId").getValue()
 											},
 											success : function(d) {
 												var e = Ext.util.JSON.decode(d.responseText);
@@ -262,15 +282,41 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 											"2",
 											"按人员分类"
 										]
-									]
+									],
+									listeners : {
+										select : function(e) {
+											if(Ext.getCmp("reachUploadFileType").getValue() == 1) {
+												departments.show();
+											} else {
+												departments.hide();
+											}
+										}
+									}
+								}, {
+									id : "reachedDept.depId",
+									value : "0",
+									xtype : 'hidden'
 								},
+								departments,
 								new Ext.Button({
 									id : "reachButton2",
 									text : "导入达成excel数据",
 									style : "margin:10px 0 0 70px",
 									handler : function() {
+										var deptId = 0;
 										if(!Ext.getCmp("reachUploadFileType").isValid()) {
 											return ;
+										}
+										if(Ext.getCmp("reachUploadFileType").getValue() == 1) {
+											if(Ext.getCmp("reachedDept.depName").getValue() == "") {
+												Ext.MessageBox.show({
+													title : "操作信息",
+													msg : "请选择所属部门！",
+													buttons : Ext.MessageBox.OK,
+													icon : Ext.MessageBox.ERROR
+												});
+												return ;
+											}
 										}
 										var a = App.createUploadDialog({
 											file_cat : "kpiReached",
@@ -280,7 +326,8 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 														url : __ctxPath + "/kpi/readExcelHrPaAcreached.do",
 														params : {
 															filePath : c[b].filepath,
-															uploadFileType : Ext.getCmp("reachUploadFileType").getValue()
+															uploadFileType : Ext.getCmp("reachUploadFileType").getValue(),
+															deptId : Ext.getCmp("reachedDept.depId").getValue()
 														},
 														success : function(d) {
 															var e = Ext.util.JSON.decode(d.responseText);
