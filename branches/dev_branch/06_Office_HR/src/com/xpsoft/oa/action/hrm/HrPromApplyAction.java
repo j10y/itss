@@ -98,9 +98,9 @@ public class HrPromApplyAction extends BaseAction{
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		Date currentDate = new Date();
 		String fullname = this.getRequest().getParameter("fullname");
-		String sql = "select userId, fullname, jobId, position, depId, depName, accessionTime, startWorkDate from emp_profile where " +
-				"depId = " + currentUser.getDepartment().getDepId();
-		sql += (fullname == null || "".equals(fullname)) ? "" : " and fullname like '%" + fullname + "%'";
+		String sql = "select b.userId, b.username, a.fullname, a.jobId, a.position, a.depId, a.depName, a.accessionTime, a.startWorkDate from emp_profile a, app_user b where " +
+				"a.userId = b.userId and a.depId = " + currentUser.getDepartment().getDepId();
+		sql += (fullname == null || "".equals(fullname)) ? "" : " and (a.fullname like '%" + fullname + "%' or b.username like '%" + fullname + "%')";
 		sql += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		List<Map<String, Object>> mapList = this.hrPromApplyService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
@@ -110,7 +110,7 @@ public class HrPromApplyAction extends BaseAction{
 			Long workYear = (currentDate.getTime() - startWorkDate.getTime()) / 1000 / 60 / 60 / 24 / 365;
 			Long workHereYear = (currentDate.getTime() - accessionTime.getTime()) / 1000 / 60 / 60 / 24 / 365;
 			buff.append("{'userId':'" + mapList.get(i).get("userId"))
-					.append("','fullname':'" + mapList.get(i).get("fullname"))
+					.append("','fullname':'" + mapList.get(i).get("fullname") + "/" + mapList.get(i).get("username"))
 					.append("','nowPositionId':'" + mapList.get(i).get("jobId"))
 					.append("','nowPositionName':'" + mapList.get(i).get("position"))
 					.append("','depId':'" + mapList.get(i).get("depId"))
