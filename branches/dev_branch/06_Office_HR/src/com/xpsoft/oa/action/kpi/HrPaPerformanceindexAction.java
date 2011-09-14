@@ -295,6 +295,8 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			}
 		}
 		
+		this.jsonString = "{success:true}";
+		
 		return "success";
 	}
 	
@@ -489,6 +491,8 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		if(piNew.getFromPi() != 0) {
 			this.syncIndex(piNew.getId());
 		}
+		
+		this.jsonString = "{success:true}";
 		
 		return "success";
 	}
