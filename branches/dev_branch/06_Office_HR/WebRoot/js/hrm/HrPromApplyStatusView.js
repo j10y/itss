@@ -138,6 +138,9 @@ HrPromApplyStatusView = Ext.extend(Ext.Panel, {
 						if(d == 7) {        //待目标设定和面谈
 							return "<font color='red'>待目标设定和面谈</font>";
 						}
+						if(d == 8) {        //待目标设定和面谈
+							return "<font color='red'>待考核期评估</font>";
+						}
 					}
 				},
 				this.rowActions

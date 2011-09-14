@@ -206,7 +206,8 @@
 				});
 				var postRankCombo = new Ext.form.ComboBox({
 					mode : "local",
-					allowBlank : false,
+					disable : true,
+					//allowBlank : false,
 					width:120,
 					name : "hrPromAssessment.postRank",
 					renderTo : "postRank",
@@ -238,8 +239,9 @@
 					mode : "local",
 					width:120,
 					renderTo : "salaryLevelName",
-					allowBlank : false,
-					editable : false,
+					disable : true,
+					//allowBlank : false,
+					//editable : false,
 					valueField : "standardName",
 					displayField : "standardName",
 					triggerAction : "all",
@@ -282,7 +284,8 @@
 					name : "hrPromApply.appointDate",
 					format : "Y-m-d",
 					width:120,
-					editable : false,
+					disable : true,
+					//editable : false,
 					renderTo : "appointDate"
 				});
 				if("${hrPromAssessment.id}" != 0) {
@@ -304,16 +307,16 @@
 					alert("请填写目标一的完成情况！");
 					return false;
 				}
-				if(document.getElementById("reached2").value == "") {
-					alert("请填写目标一的完成情况！");
+				/*if(document.getElementById("reached2").value == "") {
+					alert("请填写目标二的完成情况！");
 					return false;
 				}
 				if(document.getElementById("reached3").value == "") {
-					alert("请填写目标一的完成情况！");
+					alert("请填写目标三的完成情况！");
 					return false;
-				}
+				}*/
 				if(document.getElementById("performResult").value == "") {
-					alert("请填写目标一的完成情况！");
+					alert("请填写工作业绩信息！");
 					return false;
 				}
 				if(!Ext.getCmp("proKnowledgeCombo").isValid()) {
