@@ -13,6 +13,7 @@ public class HrPaAssessmenttasksassigned extends BaseModel {
 	protected Long publishPerson;
 	protected Long userId;
 	protected String templateId;
+	protected Long deptId;
 	
 	public HrPaAssessmenttasksassigned(){}
 
@@ -78,6 +79,14 @@ public class HrPaAssessmenttasksassigned extends BaseModel {
 
 	public void setTemplateId(String templateId) {
 		this.templateId = templateId;
+	}
+
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
 	}
 
 }
