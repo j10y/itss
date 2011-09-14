@@ -47,7 +47,15 @@ public class SalaryPayoff extends BaseModel {
 	
 	protected BigDecimal taxableAmount;// 应税金额
 	
+	protected BigDecimal perNumber;//绩效基数
 	
+	public BigDecimal getPerNumber() {
+		return perNumber;
+	}
+
+	public void setPerNumber(BigDecimal perNumber) {
+		this.perNumber = perNumber;
+	}
 	
 	public BigDecimal getPerCoefficient() {
 		return perCoefficient;
