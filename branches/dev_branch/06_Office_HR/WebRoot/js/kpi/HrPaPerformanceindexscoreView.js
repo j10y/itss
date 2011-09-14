@@ -214,6 +214,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 			success : function(c, d) {
 				Ext.getCmp("HrPaPerformanceindexFormWin").close();
 				Ext.getCmp("HrPaPerformanceindexscoreView").close();
+				Ext.ux.Toast.msg("提示信息","成功保存草稿！");
 				if(b.from == "draft") {
 					Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
 						params : {
@@ -264,6 +265,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 			success : function(c, d) {
 				Ext.getCmp("HrPaPerformanceindexFormWin").close();
 				Ext.getCmp("HrPaPerformanceindexscoreView").close();
+				Ext.ux.Toast.msg("提示信息","成功发布！");
 				if(b.from == "draft") {
 					Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
 						params : {
