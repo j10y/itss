@@ -10,5 +10,5 @@ public interface HrPaAssessmenttasksassignedService extends BaseService<HrPaAsse
 	 * 批量保存数据
 	 * params: 数据集，数据保存类型
 	 * */
-	public void multiSave(List<HrPaAssessmenttasksassigned> list, String templateId);
+	public void multiSave(List<HrPaAssessmenttasksassigned> list, String templateId, Long deptId);
 }
