@@ -21,7 +21,7 @@
 				var proKnowledgeCombo = new Ext.form.ComboBox({
 					id : "proKnowledgeCombo",
 					mode : "local",
-					width:100,
+					width:120,
 					allowBlank : false,
 					name : "hrPromAssessment.proKnowledge",
 					renderTo : "proKnowledge",
@@ -52,7 +52,7 @@
 				var commEffectCombo = new Ext.form.ComboBox({
 					id : "commEffectCombo",
 					mode : "local",
-					width:100,
+					width:120,
 					allowBlank : false,
 					name : "hrPromAssessment.commEffect",
 					renderTo : "commEffect",
@@ -83,7 +83,7 @@
 				var solveAbilityCombo = new Ext.form.ComboBox({
 					id : "solveAbilityCombo",
 					mode : "local",
-					width:100,
+					width:120,
 					allowBlank : false,
 					name : "hrPromAssessment.solveAbility",
 					renderTo : "solveAbility",
@@ -114,6 +114,7 @@
 				var difficultyManageCombo = new Ext.form.ComboBox({
 					id : "difficultyManageCombo",
 					mode : "local",
+					width:120,
 					allowBlank : false,
 					name : "hrPromAssessment.difficultyManage",
 					renderTo : "difficultyManage",
@@ -144,7 +145,7 @@
 				var businessFieldEffectCombo = new Ext.form.ComboBox({
 					id : "businessFieldEffectCombo",
 					mode : "local",
-					width:100,
+					width:120,
 					allowBlank : false,
 					name : "hrPromAssessment.businessFieldEffect",
 					renderTo : "businessFieldEffect",
@@ -175,6 +176,7 @@
 				var ratingResultCombo = new Ext.form.ComboBox({
 					id : "ratingResultCombo",
 					mode : "local",
+					width:120,
 					allowBlank : false,
 					name : "hrPromAssessment.ratingResult",
 					renderTo : "ratingResult",
@@ -205,6 +207,7 @@
 				var postRankCombo = new Ext.form.ComboBox({
 					mode : "local",
 					allowBlank : false,
+					width:120,
 					name : "hrPromAssessment.postRank",
 					renderTo : "postRank",
 					triggerAction : "all",
@@ -233,6 +236,7 @@
 					id : "salaryLevelNameCombo",
 					name : "hrPromAssessment.salaryLevelName",
 					mode : "local",
+					width:120,
 					renderTo : "salaryLevelName",
 					allowBlank : false,
 					editable : false,
@@ -277,6 +281,7 @@
 				var appointDate = new Ext.form.DateField({
 					name : "hrPromApply.appointDate",
 					format : "Y-m-d",
+					width:120,
 					editable : false,
 					renderTo : "appointDate"
 				});
@@ -344,110 +349,110 @@
 			<input type="hidden" name="hrPromAssessment.createPerson.userId" value="${hrPromAssessment.createPerson.userId}"/>
 			<input type="hidden" name="hrPromAssessment.createDate" value="${hrPromAssessment.createDate}"/>
 			<input type="hidden" name="hrPromAssessment.publishStatus" value="${hrPromAssessment.publishStatus}"/>
-			<table width="700" align="center" border="1" cellpadding="0" cellspacing="0">
+			<table style="width:720px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
-					<td align="right">姓名</td>
-					<td colspan="2">${hrPromAssessment.promApply.applyUser.fullname}</td>
-					<td align="right">部门/门店</td>
-					<td colspan="2">${hrPromAssessment.promApply.depName}</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">姓名</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.applyUser.fullname}</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">部门/门店</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.depName}</td>
 				</tr>
 				<tr>
-					<td align="right">入职日期</td>
-					<td colspan="2">
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">入职日期</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">
 						<fmt:formatDate value="${hrPromAssessment.promApply.applyUser.accessionTime}" type="date"/>
 					</td>
-					<td align="right">现职位</td>
-					<td colspan="2">
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">现职位</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">
 						<input type="hidden" id="nowPositionId" value="${hrPromAssessment.promApply.nowPositionId}"/>
 						${hrPromAssessment.promApply.nowPositionName}
 					</td>
 				</tr>
 				<tr>
-					<td align="right">拟担任职位</td>
-					<td colspan="2">${hrPromAssessment.promApply.applyPositionName}</td>
-					<td align="right">拟晋升时间</td>
-					<td colspan="2">
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟担任职位</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.applyPositionName}</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升时间</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">
 						<fmt:formatDate value="${hrPromAssessment.promApply.applyDate}" type="date"/>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">工作年限</td>
-					<td colspan="2">${hrPromAssessment.promApply.workYear}</td>
-					<td align="right">本单位工作年限</td>
-					<td colspan="2">${hrPromAssessment.promApply.workHereYear}</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">工作年限</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2" colspan="2">${hrPromAssessment.promApply.workYear}</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">本单位工作年限</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.workHereYear}</td>
 				</tr>
 				<tr>
-					<td colspan="6" align="center">工作目标完成情况</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作目标完成情况</td>
 				</tr>
 				<tr>
-					<td align="right">目标一</td>
-					<td colspan="5" style="height:60px;padding:1px;">
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一</td>
+					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="reached1" name="hrPromAssessment.reached1" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">目标二</td>
-					<td colspan="5" style="height:60px;padding:1px;">
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二</td>
+					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="reached2" name="hrPromAssessment.reached2" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td align="right">目标三</td>
-					<td colspan="5" style="height:60px;padding:1px;">
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三</td>
+					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="reached3" name="hrPromAssessment.reached3" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" align="center">工作业绩</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作业绩</td>
 				</tr>
 				<tr>
-					<td align="right">绩效结果</td>
-					<td colspan="5" style="height:60px;padding:1px;">
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">绩效结果</td>
+					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="performResult" name="hrPromAssessment.performResult" style="width:100%;height:100%;border:none;">${hrPromAssessment.performResult}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" align="center">工作能力匹配</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作能力匹配</td>
 				</tr>
 				<tr>
-					<td align="center">专业知识</td>
-					<td align="center">沟通影响</td>
-					<td align="center">问题解决能力</td>
-					<td align="center">工作难度管理幅度</td>
-					<td align="center">业务领域影响</td>
-					<td align="center">评级结果</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">专业知识</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">沟通影响</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">问题解决能力</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">工作难度管理幅度</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">业务领域影响</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">评级结果</td>
 				</tr>
 				<tr>
-					<td><div id="proKnowledge"></div></td>
-					<td><div id="commEffect"></div></td>
-					<td><div id="solveAbility"></div></td>
-					<td><div id="difficultyManage"></div></td>
-					<td><div id="businessFieldEffect"></div></td>
-					<td><div id="ratingResult"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="proKnowledge"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="commEffect"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="solveAbility"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="difficultyManage"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="businessFieldEffect"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;"><div id="ratingResult"></div></td>
 				</tr>
 				<tr>
-					<td align="right">正式任命时间</td>
-					<td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">正式任命时间</td>
+					<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
 						<div id="appointDate"></div>
 					</td>
-					<td align="right">岗位职级</td>
-					<td><div id="postRank"></div></td>
-					<td align="right">薪资等级</td>
-					<td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">岗位职级</td>
+					<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="postRank"></div></td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">薪资等级</td>
+					<td style="text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
 						<input type="hidden" id="salaryLevelId" name="hrPromAssessment.salaryLevelId" value="${hrPromAssessment.salaryLevelId}"/>
 						<div id="salaryLevelName"></div>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" align="center">晋升面谈</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">晋升面谈</td>
 				</tr>
 				<tr>
-					<td colspan="6" style="height:150px;padding:1px;">
+					<td colspan="6" style="height:150px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea name="hrPromAssessment.promIntRecord" style="width:100%;height:100%;border:none;">${hrPromAssessment.promIntRecord}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" colspan="6">
+					<td align="center" colspan="6" style="height:40px;border:1px solid #000000;">
 						<!-- 
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
 						 -->
