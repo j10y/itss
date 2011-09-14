@@ -165,7 +165,7 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 			columnWidth : 1,
 			autoScroll:true,
 			autoLoad:{
-				url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id}
+				url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id} + '&stamp=' + Math.random()
 			}
 		});
 		//显示请假详细信息
@@ -176,7 +176,7 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 			autoScroll:true,
 			autoLoad:{
 				//url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id}
-				url: __ctxPath + '/hrm/getViewByApplyIdHrPromAssessment.do?isView=true&applyId=' + ${hrPromApply_id}
+				url: __ctxPath + '/hrm/getViewByApplyIdHrPromAssessment.do?isView=true&applyId=' + ${hrPromApply_id} + '&stamp=' + Math.random()
 			}
 		});
 		// 初始化表单

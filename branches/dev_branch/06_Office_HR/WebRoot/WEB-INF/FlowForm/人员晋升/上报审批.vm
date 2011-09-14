@@ -158,7 +158,7 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 			columnWidth : 1,
 			autoScroll:true,
 			autoLoad:{
-				url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id}
+				url:__ctxPath+ '/pages/hrm/promotionDetail.jsp?hrPromApplyId=' + ${hrPromApply_id} + '&stamp=' + Math.random()
 			}
 		});
 		// 初始化表单
