@@ -219,6 +219,7 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 				hpa.setModifyPerson(currentUser.getUserId());
 				hpa.setFromAc(new Long(0));
 				hpa.setPublishStatus(this.hrPaAssessmentcriteria.getPublishStatus());
+				this.hrPaAssessmentcriteriaService.save(hpa);
 			} else {
 				hpa = this.hrPaAssessmentcriteriaService.get(this.hrPaAssessmentcriteria.getId());
 				if(hpa.getFromAc() == 0) {
