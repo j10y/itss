@@ -114,6 +114,9 @@ SalaryPayoffForm = Ext.extend(Ext.Panel, {
 									}, {
 										name : "SalaryPayoffForm.taxableAmount",
 										mapping : "taxableAmount"
+									}, {
+										name : "SalaryPayoffForm.perNumber",
+										mapping : "perNumber"
 									}
 								]),
 							items : [{
@@ -341,10 +344,10 @@ SalaryPayoffForm = Ext.extend(Ext.Panel, {
 													name : "salaryPayoff.perCoefficient",
 													id : "SalaryPayoffForm.perCoefficient"
 												}, {
-													fieldLabel : "绩效工资",
+													fieldLabel : "绩效基数",
 													xtype : "numberfield",
-													name : "salaryPayoff.achieveAmount",
-													id : "SalaryPayoffForm.achieveAmount"
+													name : "salaryPayoff.perNumber",
+													id : "SalaryPayoffForm.perNumber"
 												}
 											]
 										},{
@@ -368,7 +371,12 @@ SalaryPayoffForm = Ext.extend(Ext.Panel, {
 											layout : "form",
 											columnWidth : 0.5,
 											xtype : "container",
-											items : [{
+											items : [ {
+													fieldLabel : "绩效工资",
+													xtype : "numberfield",
+													name : "salaryPayoff.achieveAmount",
+													id : "SalaryPayoffForm.achieveAmount"
+												},{
 													fieldLabel : "实发金额",
 													xtype : "numberfield",
 													allowBlank : false,
