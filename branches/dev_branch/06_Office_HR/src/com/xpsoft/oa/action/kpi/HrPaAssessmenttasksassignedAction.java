@@ -151,6 +151,10 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 			EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("Q_delFlag_SN_EQ", "0");
+			String depId = this.getRequest().getParameter("deptId");
+			if(!"0".equals(depId)) {
+				map.put("Q_depId_L_EQ", depId);
+			}
 			QueryFilter filter = new QueryFilter(map);
 			List<EmpProfile> empProfileList = empProfileService.getAll(filter);
 			//从用户表里边取得所有有档案的User
@@ -229,6 +233,7 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 			int col = sheet.getColumns();
 			int row = sheet.getRows();
 			if("1".equals(uploadFileType)) {//按品类导入数据
+				Long deptId = Long.parseLong(this.getRequest().getParameter("deptId"));
 				for(int i = 2; i < col; i++) {
 					for(int j = 2; j < row; j++) {
 						if(sheet.getCell(i, j) != null && !"".equals(sheet.getCell(i, j).getContents().trim())) {
@@ -239,11 +244,12 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 							assign.setPublishDate(currentDate);
 							assign.setPublishPerson(currentUser.getUserId());
 							assign.setTemplateId(templateId);
+							assign.setDeptId(deptId);
 							assignList.add(assign);
 						}
 					}
 				}
-				this.hrPaAssessmenttasksassignedService.multiSave(assignList, templateId);
+				this.hrPaAssessmenttasksassignedService.multiSave(assignList, templateId, deptId);
 			} else if("2".equals(uploadFileType)) {//按人员导入数据
 				for(int i = 3; i < col; i++) {
 					for(int j = 2; j < row; j++) {
@@ -259,7 +265,7 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 						}
 					}
 				}
-				this.hrPaAssessmenttasksassignedService.multiSave(assignList, templateId);
+				this.hrPaAssessmenttasksassignedService.multiSave(assignList, templateId, null);
 			}
 			this.jsonString = "{success:true,'flag':'1','count':'" + assignList.size() + "'}";
 		} catch(Exception e) {
