@@ -942,6 +942,11 @@ EmpProfileForm = Ext
 																								"empProfileForm.jobId")
 																						.setValue(
 																								c.data.jobId);
+																				
+																				var d = Ext
+																					.getCmp("empProfileForm.standardName");
+																				d.getStore().removeAll();
+																				d.reset();
 																			}
 																		}
 																	},
@@ -982,8 +987,10 @@ EmpProfileForm = Ext
 																					Ext.getCmp("empProfileForm.standardName")
 																						.getStore()
 																						.reload({
-																							'Q_job.jobId_L_EQ' : jobId,
-																							'Q_deleteFlag_N_EQ' : 0
+																							params : {
+																								'Q_job.jobId_L_EQ' : jobId,
+																								'Q_deleteFlag_N_EQ' : 0
+																							}
 																						});
 																				}
 																				
@@ -1000,6 +1007,11 @@ EmpProfileForm = Ext
 																						.setValue(c.data.totalMoney);
 																				Ext.getCmp("empProfileForm.perCoefficient")
 																					.setValue(c.data.perCoefficient);
+																			},
+																			beforeload : function(store, options){
+																				if(jobId==null || jobId==undefined || jobId==0){
+																					return false;
+																				}
 																			}
 																		}
 																	},

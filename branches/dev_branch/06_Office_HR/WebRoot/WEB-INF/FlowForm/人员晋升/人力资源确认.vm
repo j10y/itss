@@ -229,7 +229,7 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 						anchor : '50%,96%',
 						id : "salaryLevelNameCombo",
 						name : "hrPromAssessment.salaryLevelName",
-						mode : "remote",
+						mode : "local",
 						allowBlank : false,
 						xtype: "combo",
 						editable : false,
@@ -257,9 +257,12 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 								}),
 						listeners : {
 							focus : function() {
+								var positionId = '${hrPromApply_nowPositionId}';
 								Ext.getCmp("salaryLevelNameCombo").getStore().reload({
-									'Q_job.jobId_L_EQ' : '${hrPromApply_nowPositionId}',
-									'Q_deleteFlag_N_EQ' : 0
+									params : {
+										'Q_job.jobId_L_EQ' : positionId,
+										'Q_deleteFlag_N_EQ' : 0
+									}
 								});
 							},
 							select : function(e, c, d) {
