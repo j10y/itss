@@ -11,7 +11,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 385,
+			height : 410,
 			width : 550,
 			title : "绩效考核指标录入",
 			buttonAlign : "center",
@@ -19,6 +19,8 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 		});
 	},
 	initComponents : function() {
+		var dept = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("hrPaPerformanceindex.belongDept.depName", dept, "所属部门", "hrPaPerformanceindex.belongDept.depId");
 		this.formPanel = new Ext.FormPanel({
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
@@ -37,15 +39,19 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					value : this.piId == null ? "" : this.piId
 				}, {
 					fieldLabel : "考核指标名称",
-					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.paName",
 					id : "paName",
 					allowBlank : false,
 					blankText : "考核指标名称不能为空！"
 				}, {
+					id : "hrPaPerformanceindex.belongDept.depId",
+					name : "hrPaPerformanceindex.belongDept.depId",
+					xtype : "hidden"
+				},
+				departments,
+				{
 					fieldLabel : "考核指标类型",
 					hiddenName : "hrPaPerformanceindex.type.id",
-					labelStyle : "text-align:right",
 					maxHeight : 200,
 					id : "typeName",
 					xtype : "combo",
@@ -78,7 +84,6 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "考核频度",
 					hiddenName : "hrPaPerformanceindex.frequency.id",
-					labelStyle : "text-align:right",
 					maxHeight : 200,
 					id : "frequencyName",
 					xtype : "combo",
@@ -111,7 +116,6 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "考核方式",
 					hiddenName : "hrPaPerformanceindex.mode.id",
-					labelStyle : "text-align:right",
 					maxHeight : 200,
 					id : "modeName",
 					xtype : "combo",
@@ -144,7 +148,6 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "父考核指标",
 					hiddenName : "hrPaPerformanceindex.parentPa.id",
-					labelStyle : "text-align:right",
 					maxHeight : 200,
 					id : "parentPa",
 					xtype : "combo",
@@ -188,7 +191,6 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 							items : [
 								{
 									fieldLabel : "是否唯一否决",
-									labelStyle : "text-align:right",
 									xtype : "checkboxgroup",
 									columns : 1,
 									items : [
@@ -302,13 +304,11 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					]
 				}, {
 					fieldLabel : "考核指标描述",
-					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.paDesc",
 					id : "paDesc",
 					xtype : "textarea"
 				}, {
 					fieldLabel : "备注信息",
-					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindex.remark",
 					id : "remark",
 					xtype : "textarea"
@@ -347,6 +347,8 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
+					Ext.getCmp("hrPaPerformanceindex.belongDept.depId").setValue(e.data.belongDept.depId);
+					Ext.getCmp("hrPaPerformanceindex.belongDept.depName").setRawValue(e.data.belongDept.depName);
 					Ext.getCmp("typeName").setValue(e.data.type.id);
 					Ext.getCmp("typeName").setRawValue(e.data.type.name);
 					Ext.getCmp("frequencyName").setValue(e.data.frequency.id);

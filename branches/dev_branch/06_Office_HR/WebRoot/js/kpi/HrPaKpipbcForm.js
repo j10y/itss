@@ -357,6 +357,17 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 	},
 	addHrPaKpiitem : function() {
 		var fId = Ext.getCmp("frequency").getValue();
+		var depId = Ext.getCmp("hrPaKpipbc.belongDept.depId").getValue();
+		//判断是否已选择部门
+		if(isNaN(depId) || depId <= 0) {
+			Ext.MessageBox.show({
+				title : "操作信息",
+				msg : "请选择部门！",
+				buttons : Ext.MessageBox.OK,
+				icon : Ext.MessageBox.ERROR
+			});
+			return ;
+		}
 		//判断是否已选择考核频度
 		if(isNaN(fId) || fId <= 0) {
 			Ext.MessageBox.show({
@@ -368,7 +379,8 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			return ;
 		}
 		new HrPaPiView({
-			frequencyId : Ext.getCmp("frequency").getValue()
+			frequencyId : Ext.getCmp("frequency").getValue(),
+			depId : Ext.getCmp("hrPaKpipbc.belongDept.depId").getValue()
 		}).show();
 	},
 	delHrPaKpiitem : function() {

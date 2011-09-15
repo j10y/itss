@@ -58,7 +58,7 @@ HrPaPiView = Ext.extend(Ext.Window, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_EQ=3&Q_frequency.id_L_LE=" + this.frequencyId,
+			url : __ctxPath + "/kpi/listHrPaPerformanceindex.do?Q_publishStatus_N_EQ=3&Q_frequency.id_L_LE=" + this.frequencyId + "&Q_belongDept.depId_L_EQ=" + this.depId,
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
