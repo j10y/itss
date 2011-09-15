@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
 
 public class HrPaPerformanceindex extends BaseModel{
 	protected Long id;
@@ -24,6 +25,7 @@ public class HrPaPerformanceindex extends BaseModel{
 	protected HrPaPerformanceindex parentPa;//父级考核指标
 	protected Long fromPi;
 	protected Double finalCoefficient;//最终否决值的系数
+	protected Department belongDept;
 	
 	public HrPaPerformanceindex(){}
 
@@ -169,6 +171,14 @@ public class HrPaPerformanceindex extends BaseModel{
 
 	public void setFromPi(Long fromPi) {
 		this.fromPi = fromPi;
+	}
+
+	public Department getBelongDept() {
+		return belongDept;
+	}
+
+	public void setBelongDept(Department belongDept) {
+		this.belongDept = belongDept;
 	}
 
 }

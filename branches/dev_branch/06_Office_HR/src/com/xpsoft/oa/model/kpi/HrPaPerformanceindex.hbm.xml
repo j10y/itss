@@ -169,6 +169,6 @@
         	not-null="false"
         	unique="false"
         />
-        
+        <many-to-one name="belongDept" not-null="false" class="com.xpsoft.oa.model.system.Department" column="belongDept"></many-to-one>
     </class>
 </hibernate-mapping>
