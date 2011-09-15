@@ -3,12 +3,13 @@
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.runqian.report4.usermodel.Context"%>
-<script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+
 <html>
 <head>
 <script language="javascript" type="text/javascript" src="jsDate/WdatePicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jquery-1.4.4.min.js"></script>
 </head>
-<body bgcolor="#FFFFFF" topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0>
+<body topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0>
 <%	
 	request.setCharacterEncoding( "GBK" );
 	String report = request.getParameter( "raq" );
@@ -84,7 +85,6 @@
 		var temp=document.getElementById(columnname).getValue();
 		document.getElementById(columnname).innerText=temp;
 	}
-	
 	function getSignData() {
 		$("div:last").html("");           
  	}

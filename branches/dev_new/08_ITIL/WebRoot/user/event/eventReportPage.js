@@ -214,6 +214,35 @@ PagePanel = Ext.extend(Ext.Panel, {
 		                handler:onItemClick
 		            }]
             }); 
+            var menu8 = new Ext.menu.Menu({
+	        id: 'mainMenu8',
+	        items: [{
+		            	id : "tree31",
+		                text: '按处理方式统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree32",
+		                text: '按处理人统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree33",
+		                text: '按部门统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree34",
+		                text: '按问题类型统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree35",
+		                text: '按事件状态统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            }]
+            }); 
 		// ---------
         function onItemClick(node){
         	//---------
@@ -413,6 +442,35 @@ PagePanel = Ext.extend(Ext.Panel, {
 		                handler:onItemClick
 		            }]
             }); 
+            var menu8 = new Ext.menu.Menu({
+	        id: 'mainMenu8',
+	        items: [{
+		            	id : "tree31",
+		                text: '按处理方式统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree32",
+		                text: '按处理人统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree33",
+		                text: '按部门统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree34",
+		                text: '按问题类型统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            },{
+		            	id : "tree35",
+		                text: '按事件状态统计事件数量',
+		                iconCls:'search',
+		                handler:onItemClick
+		            }]
+            }); 
         	//--------
 	       	var tempJsp = "/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForDay.raq";
 	       	//var menu=this.menu;
@@ -493,6 +551,19 @@ PagePanel = Ext.extend(Ext.Panel, {
 			} else if (node.id == "tree25") {
 				tempJsp = "/user/event/eventReport/oneTimeSloveBySupportGroupForMonth.jsp";
 			} 
+			
+			else if (node.id == "tree31") {
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventbydealtype.raq";
+			} else if (node.id == "tree32") {
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventbydealuser.raq";
+			} else if (node.id == "tree33") {
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventbydepart.raq";
+			} else if (node.id == "tree34") {
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventbyprotype.raq";
+			} else if (node.id == "tree35") {
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventbystatus.raq";
+			} 
+			
 			var item = {
 				xtype : "panel",
 				//title : '查询结果',
@@ -523,13 +594,17 @@ PagePanel = Ext.extend(Ext.Panel, {
 		                text: '满意度相关分析',
 		                menu: menu5         // <-- Add the action directly to a menu
 		            }
-		            ,{                   // <-- Add the action directly to a toolbar
+		           /* ,{                   // <-- Add the action directly to a toolbar
 		                text: '再分配事件百分比',
 		                menu: menu6        // <-- Add the action directly to a menu
 		            }
 		            ,{                   // <-- Add the action directly to a toolbar
 		                text: '一次性解决事件的百分比',
 		                menu: menu7         // <-- Add the action directly to a menu
+		            }*/
+		            ,{                   // <-- Add the action directly to a toolbar
+		                text: '事件月度分析',
+		                menu: menu8         // <-- Add the action directly to a menu
 		            }
 		        ],
 				autoLoad : {
@@ -576,13 +651,17 @@ PagePanel = Ext.extend(Ext.Panel, {
 		                text: '满意度相关分析',
 		                menu: menu5         // <-- Add the action directly to a menu
 		            }
-		            ,{                   // <-- Add the action directly to a toolbar
+		           /* ,{                   // <-- Add the action directly to a toolbar
 		                text: '再分配事件百分比',
 		                menu: menu6        // <-- Add the action directly to a menu
 		            }
 		            ,{                   // <-- Add the action directly to a toolbar
 		                text: '一次性解决事件的百分比',
 		                menu: menu7         // <-- Add the action directly to a menu
+		            }*/
+		            ,{                   // <-- Add the action directly to a toolbar
+		                text: '事件月度分析',
+		                menu: menu8         // <-- Add the action directly to a menu
 		            }
 	        ],
 			autoLoad : {
