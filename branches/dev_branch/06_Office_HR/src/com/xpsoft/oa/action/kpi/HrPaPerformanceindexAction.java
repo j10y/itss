@@ -125,6 +125,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		//保存考核指标基本信息
 		HrPaPerformanceindex pi = new HrPaPerformanceindex();
 		pi.setPaName(this.hrPaPerformanceindex.getPaName());
+		pi.setBelongDept(this.hrPaPerformanceindex.getBelongDept());
 		pi.setType(this.hrPaPerformanceindex.getType());
 		pi.setFrequency(this.hrPaPerformanceindex.getFrequency());
 		pi.setMode(this.hrPaPerformanceindex.getMode());
@@ -311,6 +312,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		//保存考核指标基本信息
 		HrPaPerformanceindex pi = new HrPaPerformanceindex();
 		pi.setPaName(this.hrPaPerformanceindex.getPaName());
+		pi.setBelongDept(this.hrPaPerformanceindex.getBelongDept());
 		pi.setType(this.hrPaPerformanceindex.getType());
 		pi.setFrequency(this.hrPaPerformanceindex.getFrequency());
 		pi.setMode(this.hrPaPerformanceindex.getMode());
@@ -508,6 +510,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		HrPaPerformanceindex piOld = this.hrPaperformanceindexService.get(piCopy.getFromPi());
 		//同步原考核指标内容
 		piOld.setPaName(piCopy.getPaName());
+		piOld.setBelongDept(piCopy.getBelongDept());
 		piOld.setType(piCopy.getType());
 		piOld.setFrequency(piCopy.getFrequency());
 		piOld.setMode(piCopy.getMode());
