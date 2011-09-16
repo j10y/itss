@@ -64,6 +64,7 @@ public class AuthenticationMngImpl implements AuthenticationMng {
 			}else{
 				//被注释掉的原本的数据库登录
 				boolean isLdap = new Boolean(PropertiesUtil.getProperties("system.security.auth.isldap","false")).booleanValue();
+				//isLdap = false;
 				if(isLdap){
 					UsernamePasswordAuthenticationToken authLdap = new UsernamePasswordAuthenticationToken(username, password);
 					org.springframework.security.core.Authentication result = ldap.authenticate(authLdap);

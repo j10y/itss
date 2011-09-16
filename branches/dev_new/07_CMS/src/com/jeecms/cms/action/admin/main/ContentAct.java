@@ -312,7 +312,7 @@ public class ContentAct {
 				false);
 		// 栏目列表
 		Set<Channel> rights;
-		if(cid.equals(new Integer(71))){
+		if(cid != null && cid.equals(new Integer(71))){
 			rights = null;
 		}else{
 			if (user.getUserSite(siteId).getAllChannel()) {

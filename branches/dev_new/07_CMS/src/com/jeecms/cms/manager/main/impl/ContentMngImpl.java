@@ -55,7 +55,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer channelId, Integer userId, int orderBy, int pageNo,
 			int pageSize) {
 		//add by awen for strong cod for add channel 71 logic on 2011-07-12 begin		
-		if(channelId.equals(new Integer("71"))){
+		if(channelId != null && channelId.equals(new Integer("71"))){
 			return dao.getPageBySelf(title, typeId, inputUserId, topLevel,
 					recommend, status, checkStep, siteId, channelId, userId,
 					orderBy, pageNo, pageSize);
