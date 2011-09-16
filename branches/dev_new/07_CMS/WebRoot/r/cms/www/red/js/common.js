@@ -10,10 +10,12 @@ function jeeNav(o,n){
 	   s = document.getElementById("sub"+i);
 	   if(id != o.id){
 	   	 t.className="hide";
-	   	 s.style.display = "none";
+	   	 if(s != null)
+	   		 s.style.display = "none";
 	   }
 	   else{
-			s.style.display = "block";
+		   if(s != null)
+			   s.style.display = "block";
 	   }
 	 }
 }
