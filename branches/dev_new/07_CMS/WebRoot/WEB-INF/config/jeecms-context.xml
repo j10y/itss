@@ -38,6 +38,7 @@
 	<bean id="cms_vote" class="com.jeecms.cms.action.directive.CmsVoteDirective"/>
 	<bean id="cms_lucene_list" class="com.jeecms.cms.lucene.LuceneDirectiveList"/>
 	<bean id="cms_lucene_page" class="com.jeecms.cms.lucene.LuceneDirectivePage"/>
+	<bean id="cms_weather" class="com.jeecms.cms.action.directive.GoogleWeatherDirective"/>
 	
 	<!--后台权限标签-->
 	<bean id="cms_perm" class="com.jeecms.cms.web.PermistionDirective"/>
@@ -75,6 +76,7 @@
 						<entry key="cms_vote" value-ref="cms_vote"/>
 						<entry key="cms_lucene_list" value-ref="cms_lucene_list"/>
 						<entry key="cms_lucene_page" value-ref="cms_lucene_page"/>
+						<entry key="cms_weather" value-ref="cms_weather"/>
 					</map>
 				</property>
 				<property name="templateLoaderPath" value=""/>

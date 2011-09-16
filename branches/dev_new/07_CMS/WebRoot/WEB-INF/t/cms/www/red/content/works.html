@@ -58,7 +58,14 @@ $(function() {
 		  	<strong>摘要：</strong> [@text_cut s=content.description len='50' append='...'/]
 		  </div>
 		  [/#if]	  
-		  
+		  [#if content.attachments?size gt 0]
+                   <ui class="box">
+                   附件：
+		   [#list content.attachments as attach]
+		       <li><a id="attach${attach_index}">${attach.filename}</a></li>
+                   [/#list]
+                   </ui>
+	      [/#if]
 		  [#if content.mediaPath?? && content.mediaType??]
 		  <p style="text-align:center; margin:5px auto">
 		   [#if  content.mediaType=='FLV']

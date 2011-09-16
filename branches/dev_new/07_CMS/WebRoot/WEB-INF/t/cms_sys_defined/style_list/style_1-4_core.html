@@ -15,13 +15,15 @@
 		[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
 	[/#if]
 [/#if]
-<li>
-		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>
-			<img src="${imgUrl}" alt="${ctt.tit?html}" border="0"/>
-		</a>
-	[#if !noTitle?? || noTitle!="1"]
 
-		[#if useShortTitle=='1'][#assign tit=ctt.stit/][#else][#assign tit=ctt.tit/][/#if]
+
+<li>
+<a href="${ctt.url}" title="${ctt.tit?html}" target="_blank" class="fclistcover">
+<img border="0"  src="${imgUrl}" alt="${ctt.tit?html}" width="200" height="150" />
+</a>
+<p>
+	[#if !noTitle?? || noTitle!="1"]
+	[#if useShortTitle=='1'][#assign tit=ctt.stit/][#else][#assign tit=ctt.tit/][/#if]
 		<a href="${ctt.url}" title="${ctt.tit?html}"[#if (ctt.target?? && ctt.target) || target=='1'] target="_blank"[/#if]>
 		[#if showTitleStyle=='1']
 			[@text_cut s=tit len=titLen append=append/]
@@ -30,5 +32,7 @@
 		[/#if]
 		</a>
 	[/#if]
-
+	<br />
+	<span>创建于<em>${ctt.date?string('yyyy-MM-dd')}</em></span>
+</p>
 </li>

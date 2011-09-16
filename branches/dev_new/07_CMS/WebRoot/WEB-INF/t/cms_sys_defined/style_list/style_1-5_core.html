@@ -1,0 +1,38 @@
+[#--
+文字列表
+
+lineHeight：行高；【行高】
+headMarkImg: 列表头图片；【图片地址】
+headMark: 列表头编号；【1：小黑点；2：小红点；3：单箭头；4：双箭头】
+bottomLine: 下划线；【0：无；1：有】不能为空。
+dateFormat: 日期格式；【java日期格式，如：yyyy-MM-dd】
+datePosition: 日期位置；【1：后面左边；2：后面右边；3：前面】不能为空
+ctgForm: 类别；【0：无；1：栏目；2：站点】不能为空
+
+showTitleStyle：显示标题样式；【0：不显示；1：显示】不能为空
+useShortTitle: 是否使用简短标题；【0：不使用；1：使用】不能为空
+titLen: 标题长度；【英文字母按半个计算】为空则不截断
+target: 是否新窗口打开；【0：原窗口；1：新窗口】不能为空
+--]
+
+[#if ctt_index = 0]
+	<ul class="clist gglist newslist mb0 mt0" id="gsnews">
+	<li>
+		<a href="${ctt.url}" title="${ctt.tit?html}" target="_blank">[@text_cut s=ctt.tit?substring(ctt.tit?index_of("】")+1) len=titLen append=append/]</a>
+		<span><em>${ctt.date?string(dateFormat)}</em></span>
+	</li>
+[#elseif ctt_index % 10 = 0]
+	<li>
+		<a href="${ctt.url}" title="${ctt.tit?html}" target="_blank">[@text_cut s=ctt.tit?substring(ctt.tit?index_of("】")+1) len=titLen append=append/]</a>
+		<span><em>${ctt.date?string(dateFormat)}</em></span>
+	</li>
+	</ul> 
+    <div class="cline ggline"></div>
+    <ul class="clist gglist newslist mb0 mt0" id="gsnews">
+[#else]
+	<li>
+		<a href="${ctt.url}" title="${ctt.tit?html}" target="_blank">[@text_cut s=ctt.tit?substring(ctt.tit?index_of("】")+1) len=titLen append=append/]</a>
+		<span><em>${ctt.date?string(dateFormat)}</em></span>
+	</li>
+[/#if]
+<div  ></div>

@@ -1,5 +1,5 @@
 [#--
-照片
+图文列表
 --]
 [#if !picWidth?? || picWidth==''][#assign picWidth='24.9'/][/#if]
 [#if !picHeight?? || picHeight==''][#assign picHeight=''/][/#if]
@@ -9,13 +9,27 @@
 [#if !showTitleStyle?? || showTitleStyle==''][#assign showTitleStyle='1'/][/#if]
 [#if !useShortTitle?? || useShortTitle==''][#assign useShortTitle='1'/][/#if]
 
+[#assign dateFormat='yyyy-MM-dd' /]
+[#assign titLen='18' /]
+[#assign descLen='40' /]
+[#assign append='...' /]
+
+
 [#if tag_list?size gt 0 || !emptyMsg??]
-<ul>
+ <div class="info">
 		[#list tag_list as ctt]
-			[#include "style_1-4_core.html" /]
+			[#include "style_1-6_core.html" /]
 		[/#list]
-</ul>
-<div class="clr"></div>
+		[#if tag_list?size < 9]
+				<div class="clr"></div>
+	        </div>
+        	<div class="clr"></div>
+        </div>
+		[#else]
+			<div class="clr"></div>
+	     </div>
+     	[/#if]
+</div>
 [#else]
 <div class="${emptyClass!'empty-body'}"[#if emptyStyle??] style="${emptyStyle}"[/#if]>${emptyMsg!}</div>
 [/#if]

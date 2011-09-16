@@ -1,0 +1,54 @@
+[#--
+焦点图
+
+focusType: 焦点图类型；【1；2；3】不能为空
+
+flashWidth: flash宽度；【按像素px计算】不能为空。
+flashHeight: flash高度；【按像素px计算】不能为空。
+textHeight: 文本高度；【按像素px计算】不能为空。
+
+useShortTitle: 是否使用简短标题；【0：不使用；1：使用】不能为空
+titLen: 标题长度；【英文字母按半个计算】为空则不截断
+
+--]
+<div class="albumshow">
+    		<dl>
+    			<dt>
+		    			[#list tag_list as ctt]
+		    				[#if imgType?? && (imgType?string=="1"||imgType?string=="2")]
+								[#if imgType?string=="2"]
+									[#if ctt.imgUrl2??][#assign imgUrl=ctt.imgUrl2/][#else][#assign imgUrl=site.defImg/][/#if]
+								[#else]
+									[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
+								[/#if]
+							[#else]
+								[#if typeId?? && typeId?string!=""]
+									[#if ctt.imgUrl2??][#assign imgUrl=ctt.imgUrl2/][#else][#assign imgUrl=site.defImg/][/#if]
+								[#else]
+									[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
+								[/#if]
+							[/#if]
+		    				<a><img src="${imgUrl}" width="111" height="74" /></a>
+		    			[/#list]
+		    	</dt>
+		    	<dd>
+		    			[#list tag_list as ctt]
+		    				[#if imgType?? && (imgType?string=="1"||imgType?string=="2")]
+								[#if imgType?string=="2"]
+									[#if ctt.imgUrl2??][#assign imgUrl=ctt.imgUrl2/][#else][#assign imgUrl=site.defImg/][/#if]
+								[#else]
+									[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
+								[/#if]
+							[#else]
+								[#if typeId?? && typeId?string!=""]
+									[#if ctt.imgUrl2??][#assign imgUrl=ctt.imgUrl2/][#else][#assign imgUrl=site.defImg/][/#if]
+								[#else]
+									[#if ctt.imgUrl??][#assign imgUrl=ctt.imgUrl/][#else][#assign imgUrl=site.defImg/][/#if]
+								[/#if]
+							[/#if]
+							[#if useShortTitle=='1'][#assign tit=ctt.stit/][#else][#assign tit=ctt.tit/][/#if]
+		    				<ul><a href="${ctt.url}" title="${tit}" target='_blank'><img src="${imgUrl}" width="360" height="240" /></a></ul>
+            			[/#list]
+                </dd>
+             </dl>
+        </div>

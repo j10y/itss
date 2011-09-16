@@ -1,0 +1,27 @@
+[#--
+焦点图
+
+focusType: 焦点图类型；【1；2；3】不能为空
+
+flashWidth: flash宽度；【按像素px计算】不能为空。
+flashHeight: flash高度；【按像素px计算】不能为空。
+textHeight: 文本高度；【按像素px计算】不能为空。
+
+useShortTitle: 是否使用简短标题；【0：不使用；1：使用】不能为空
+titLen: 标题长度；【英文字母按半个计算】为空则不截断
+
+--]
+<div class="albumshow">
+    		<dl>
+    			<dt>
+		    			[#list tag_list as ctt]
+		    				<a><img src="${ctt.typeImg!site.defImg}" alt="${ctt.title}" width="111" height="74" /></a>
+		    			[/#list]
+		    	</dt>
+		    	<dd>
+		    			[#list tag_list as ctt]
+		    				<ul><a href="${ctt.url}" title="${ctt.title}" target='_blank'><img src="${ctt.typeImg!site.defImg}" width="360" height="240" /></a></ul>
+            			[/#list]
+                </dd>
+             </dl>
+        </div>

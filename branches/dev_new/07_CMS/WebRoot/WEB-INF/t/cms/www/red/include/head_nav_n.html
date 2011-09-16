@@ -1,0 +1,43 @@
+<div class="hl3 hmenu">
+    	<div class="info">
+        	<ul>
+                [@cms_channel_list]
+            	<li><a href="${base}/" target="_self" class="selected" id="nav1" onmouseover="jeeNav(this,${tag_list?size+1})"><span>首 页</span></a>
+                    <dl class="gdnews show">
+                        <dt>滚动资讯：</dt>
+                        <dd>
+                            [@cms_content_list channelId='1,45,49,9,71,73' count='10' orderBy='4' channelOption='1'
+										dateFormat='yyyy-MM-dd' titLen='15' descLen='40' append='...'] 
+							[#list tag_list as a]
+								[#if a_index % 2 == 0]
+									<a href="${a.url}" title="${a.title}" target='_blank'>[@text_cut s=a.title?substring(a.title?index_of("】")+1) len=titLen append=append/]</a>
+								</p>
+								[#else]
+								<p>
+									<a href="${a.url}" title="${a.title}" target='_blank'>[@text_cut s=a.title?substring(a.title?index_of("】")+1) len=titLen append=append/]</a>
+								[/#if]
+							[/#list]
+							[#if tag_list?size % 2 >0]
+							</p>
+							[/#if]
+							[/@cms_content_list]
+                        </dd>
+                    </dl>
+                </li>
+                [#list tag_list as c]
+                <li>
+                	<a href="${c.url}" target="_self" id="nav${c_index+2}" onmouseover="jeeNav(this,${tag_list?size+1})"><span>${c.name}</span></a>
+                	 [@cms_channel_list parentId=c.id]
+                	 <dl class="norsm pd5">
+                	 [#list tag_list as sub]
+                	 	<dd><a href='${sub.url}'>${sub.name}</a></dd>
+                	 [/#list]
+                	 </dl>
+                	 [/@cms_channel_list]
+                </li>
+                [/#list]
+                [/@cms_channel_list]
+            </ul>
+            <div class="clr"></div>
+        </div>
+    </div>
