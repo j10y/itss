@@ -154,6 +154,8 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 									valueField : "id",
 									displayField : "name",
 									triggerAction : "all",
+									allowBlank : false,
+									blankText : "考核频度不能为空！",
 									store : new Ext.data.SimpleStore({
 										fields : ["id","name"]
 									}),
@@ -186,6 +188,8 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 									valueField : "id",
 									displayField : "name",
 									triggerAction : "all",
+									allowBlank : false,
+									blankText : "所属岗位不能为空！",
 									store : new Ext.data.SimpleStore({
 										fields : ["id","name"]
 									}),
