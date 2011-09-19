@@ -1,5 +1,6 @@
 package com.xpsoft.oa.action.kpi;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -37,16 +38,37 @@ public class HrPaKpiitem2userAction extends BaseAction {
 	
 	@SuppressWarnings("unchecked")
 	public String authorList() {
+		DecimalFormat myformat = new DecimalFormat();
+		myformat.applyPattern("###%");
 		//取得该PBC关联的考核项对应的考核指标为定性考核的列表
 		String sql = "select a.id, b.paName from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
 				"a.pbcId = " + this.getRequest().getParameter("pbcId") + " and a.piId = b.id and b.paMode = 12";
 		List<Map<String, Object>> list = this.hrPaKpiitem2userService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
 		for(int i = 0; i < list.size(); i++) {
-			buff.append("{'id':'" + list.get(i).get("id")).append("','paName':'" + list.get(i).get("paName")).append("'},");
+			//取得该考核项的授权信息
+			String sql2 = "select a.weight, c.fullname from hr_pa_authpbcitem a, hr_pa_authorizepbc b, emp_profile c, hr_pa_kpiitem2user d where " +
+					"d.id = " + list.get(i).get("id") + " and a.akpiItem2uId = d.id" +
+							" and a.apbcId = b.id and b.userId = c.userId order by b.authDate";
+			List<Map<String, Object>> mapList2 = this.hrPaKpiitem2userService.findDataList(sql2);
+			String desc = "";
+			if(mapList2.size() <= 0) {
+				desc = "该考核指标尚未授权给任何人！";
+			} else {
+				desc = "该考核指标已授权给：";
+				for(int j = 0; j < mapList2.size(); j++) {
+					desc += mapList2.get(j).get("fullname") + " " + myformat.format(Double.parseDouble(mapList2.get(j).get("weight").toString())) + "，";
+				}
+				desc = desc.substring(0, desc.length() - 1);
+			}
+			buff.append("{'id':'" + list.get(i).get("id"))
+					.append("','paName':'" + list.get(i).get("paName"))
+					.append("','desc':'" + desc + "'},");
 		}
 		this.jsonString = buff.toString();
-		this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		if(list.size() > 0) {
+			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		}
 		this.jsonString += "]}";
 		
 		return "success";
