@@ -73,7 +73,20 @@
 				</tr>
 				<c:forEach items="${itemMap}" var="item" varStatus="status">
 					<c:choose>
-						<c:when test="${item.key['paMode'] == 12}">
+						<c:when test="${item.key['paMode'] == 13 || item.key['isShop'] == 'true'}">
+							<tr>
+								<td style="width:40px">&nbsp;</td>
+								<td colspan="6">
+									${status.index + 1}.&nbsp;&nbsp;${item.key['paName']}&nbsp;&nbsp;&nbsp;&nbsp;
+									权重：<fmt:formatNumber value="${item.key['weight']}" pattern="###%" type="number"/>&nbsp;&nbsp;&nbsp;&nbsp;
+									得分：<fmt:formatNumber value="${item.key['result']}" pattern="#" type="number"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="7">&nbsp;</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
 							<tr>
 								<td style="width:40px">&nbsp;</td>
 								<td colspan="6">
@@ -96,20 +109,7 @@
 							<tr>
 								<td colspan="7">&nbsp;</td>
 							</tr>
-						</c:when>
-						<c:when test="${item.key['paMode'] == 13}">
-							<tr>
-								<td style="width:40px">&nbsp;</td>
-								<td colspan="6">
-									${status.index + 1}.&nbsp;&nbsp;${item.key['paName']}&nbsp;&nbsp;&nbsp;&nbsp;
-									权重：<fmt:formatNumber value="${item.key['weight']}" pattern="###%" type="number"/>&nbsp;&nbsp;&nbsp;&nbsp;
-									得分：<fmt:formatNumber value="${item.key['result']}" pattern="#" type="number"/>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="7">&nbsp;</td>
-							</tr>
-						</c:when>
+						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<tr style="text-align:center">
