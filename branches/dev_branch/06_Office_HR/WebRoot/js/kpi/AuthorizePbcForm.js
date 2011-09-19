@@ -8,8 +8,8 @@ AuthorizePbcForm = Ext.extend(Ext.Window, {
 		AuthorizePbcForm.superclass.constructor.call(this, {
 			id : "AuthorizePbcFormWin",
 			title : "授权操作界面",
-			width : 530,
-			height : 300,
+			width : 830,
+			height : 500,
 			modal : true,
 			layout : "border",
 			items : [
@@ -106,7 +106,8 @@ AuthorizePbcForm = Ext.extend(Ext.Window, {
 					type : "int"
 				},
 				"paName",
-				"weight"
+				"weight",
+				"desc"
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -128,13 +129,21 @@ AuthorizePbcForm = Ext.extend(Ext.Window, {
 				}, {
 					header : "考核指标名称",
 					dataIndex : "paName",
-					width : 300
+					width : 60
 				}, {
-					header : "权重",
+					header : "权重（%）",
 					dataIndex : "authorWeight",
 					editor : new Ext.form.Field({
 						xtype : "textfield"
-					})
+					}),
+					width : 30
+				}, {
+					header : "授权信息",
+					dataIndex : "desc",
+					renderer : function(value, metadata, record) {
+						metadata.attr = 'style="white-space:normal;"';
+						return value;
+					}
 				}
 			],
 			defaults : {
