@@ -132,6 +132,14 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
 			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			for(int i = 0; i < mapList2.size(); i++) {
+				//判断是否门店打分考核项
+				String sql4 = "select id from sp_pa_kpipbc2user where fromPi = " + mapList2.get(i).get("id");
+				List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
+				if(mapList4.size() > 0) {//是门店打分考核项
+					mapList2.get(i).put("isShop", "true");
+				} else {//不是门店打分考核项
+					mapList2.get(i).put("isShop", "false");
+				}
 				String sql3 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
 						mapList2.get(i).get("piId").toString() + " order by pisScore";
 				List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
@@ -184,9 +192,10 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			try {
 				//取得PBC
 				String pbcId = this.getRequest().getParameter("pbcId");
-				//取得PBC关联的定性定性考核项
+				//取得PBC关联的定性定性考核项且不是门店打分的考核项
 				String sql2 = "select a.id from hr_pa_kpiitem2user a, hr_pa_kpipbc2user b, hr_pa_performanceindex c where " +
-						"a.pbcId = b.id and a.piId = c.id and b.id = " + pbcId + " and c.paMode = 12";
+						"a.pbcId = b.id and a.piId = c.id and b.id = " + pbcId + " and c.paMode = 12 and not exists " +
+						"(select d.fromPi from sp_pa_kpipbc2user d where a.id = d.fromPi)";
 				List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
 				List<HrPaKpiitem2user> itemList = new ArrayList<HrPaKpiitem2user>();
 				for(int i = 0; i < mapList2.size(); i++) {
