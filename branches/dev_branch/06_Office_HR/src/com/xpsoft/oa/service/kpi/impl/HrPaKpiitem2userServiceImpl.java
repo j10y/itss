@@ -1,6 +1,7 @@
 package com.xpsoft.oa.service.kpi.impl;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.oa.dao.kpi.HrPaKpiitem2userDao;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
 import com.xpsoft.oa.service.kpi.HrPaAuthpbccitemService;
@@ -32,11 +34,20 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 		doubleFormat.applyPattern("###.00");
 		//取得个人考核模板关联的该考核项，并与部门负责人打分合并，保存结果
 		HrPaKpiitem2user item = this.get(itemId);
+		Date fdOfMonth = DateUtil.getFirstDayOfMonth(new Date());
 		//判断是否门店打分考核指标
-		String sql3 = "select id, totalScore, fromPi from sp_pa_kpipbc2user where fromPi = " + itemId;
+		String sql3 = "select id, totalScore, fromPi from sp_pa_kpipbc2user where " +
+				"createDate >= '" + DateUtil.convertDateToString(fdOfMonth) + "' and fromPi = " + itemId;
 		List<Map<String, Object>> mapList3 = this.findDataList(sql3);
 		if(mapList3.size() > 0) {
-			item.setResult(Double.parseDouble(mapList3.get(0).get("totalScore").toString()));
+			Double totalResult = 0.0d;
+			int totalCount = 0;
+			for(int i = 0; i < mapList3.size(); i++) {
+				totalResult += Double.parseDouble(mapList3.get(i).get("totalScore").toString());
+				totalCount++;
+			}
+			Double avgResult = totalResult / totalCount;
+			item.setResult(Double.parseDouble(doubleFormat.format(avgResult)));
 			this.save(item);
 			return ;
 		}
