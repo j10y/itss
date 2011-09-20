@@ -63,54 +63,44 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		//判断当前用户是不是部门负责人
 		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
 		List<Map<String, Object>> mapList1 = this.hrPaAuthorizepbcService.findDataList(sql1);
-		if(mapList1.size() > 0) {//当前用户是部门负责人
-			String depIds = "";
+		String depIds = "";
+		if(mapList1.size() > 0) {
 			for(int m = 0; m < mapList1.size() - 1; m++) {
 				depIds += mapList1.get(m).get("depId").toString() + ",";
 			}
 			depIds += mapList1.get(mapList1.size() - 1).get("depId").toString();
-			String sql4 = "select count(*) as total from hr_pa_kpipbc2user a, emp_profile b where " + 
-					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId in (" + depIds + ") ";
-			sql4 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
-			List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
-			String sql2 = "select a.id, a.pbcName, b.fullname from hr_pa_kpipbc2user a, emp_profile b where " +
-					"a.belongUser = b.userId and a.publishStatus in (0, 2) and b.depId in (" + depIds + ") ";
-			sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
-			sql2 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
-			List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
-			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
-			for(int j = 0; j < mapList2.size(); j++) {
-				buff.append("{'id':'").append(mapList2.get(j).get("id").toString())
-						.append("','fullname':'").append(mapList2.get(j).get("fullname").toString())
-						.append("','pbcName':'").append(mapList2.get(j).get("pbcName")).append("'},");
-			}
-			this.jsonString = buff.toString();
-			if(mapList2.size() > 0) {
-				this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
-			}
-			this.jsonString += "]}";
-		} else {//当前用户不是部门负责人
-			String sql5 = "select count(*) as total from hr_pa_authorizepbc a, hr_pa_kpipbc2user b, emp_profile c where " + 
-					"a.userId = " + currentUser.getUserId() + " and a.pbcId = b.id and b.belongUser = c.userId";
-			sql5 += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
-			List<Map<String, Object>> mapList5 = this.hrPaAuthorizepbcService.findDataList(sql5);
-			String sql3 = "select a.id, b.pbcName, c.fullname from hr_pa_authorizepbc a, hr_pa_kpipbc2user b, emp_profile c where " +
-					"a.userId = " + currentUser.getUserId() + " and a.pbcId = b.id and b.belongUser = c.userId";
-			sql3 += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
-			sql3 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
-			List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
-			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList5.get(0).get("total") + "',result:[");
-			for(int i = 0; i < mapList3.size(); i++) {
-				buff.append("{'id':'").append(mapList3.get(i).get("id").toString())
-						.append("','fullname':'").append(mapList3.get(i).get("fullname").toString())
-							.append("','pbcName':'").append(mapList3.get(i).get("pbcName")).append("'},");
-			}
-			this.jsonString = buff.toString();
-			if(mapList3.size() > 0) {
-				this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
-			}
-			this.jsonString += "]}";
 		}
+		String sql2 = "select * from (" +
+				"SELECT DISTINCT count(*) as total FROM hr_pa_kpipbc2user LEFT JOIN hr_pa_authorizepbc ON " +
+				"hr_pa_kpipbc2user.id = hr_pa_authorizepbc.pbcid, app_user WHERE " +
+				"hr_pa_kpipbc2user.belongUser = app_user.userId  and hr_pa_authorizepbc.userid = " + currentUser.getUserId() + 
+				" union SELECT DISTINCT count(*) as total FROM hr_pa_kpipbc2user , app_user WHERE hr_pa_kpipbc2user.belongUser = app_user.userId  ";
+		sql2 += ("".equals(depIds)) ? " and app_user.depId in(0)) a" : "and app_user.depId in (" + depIds + ")) a";
+		List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
+		//int total = Integer.parseInt(mapList2.get(0).get("total").toString()) + Integer.parseInt(mapList2.get(1).get("total").toString());
+		String sql3 = "select * from (" +
+				"SELECT DISTINCT hr_pa_kpipbc2user.id as pbcId, hr_pa_authorizepbc.id as authId, " +
+				"hr_pa_kpipbc2user.pbcName, app_user.fullname FROM hr_pa_kpipbc2user LEFT JOIN hr_pa_authorizepbc ON " +
+				"hr_pa_kpipbc2user.id = hr_pa_authorizepbc.pbcid, app_user WHERE " +
+				"hr_pa_kpipbc2user.belongUser = app_user.userId  and hr_pa_authorizepbc.userid = " + currentUser.getUserId() + 
+				" union SELECT DISTINCT hr_pa_kpipbc2user.id as pbcId, '0' as authId, hr_pa_kpipbc2user.pbcName, " +
+				"app_user.fullname FROM hr_pa_kpipbc2user , app_user WHERE hr_pa_kpipbc2user.belongUser = app_user.userId  ";
+		sql3 += ("".equals(depIds)) ? " and app_user.depId in(0)) a" : "and app_user.depId in (" + depIds + ")) a";
+		sql3+= (fullname == null || "".equals(fullname)) ? "" : " where a.fullname like '%" + fullname + "%'";
+		sql3 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
+		List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList2.get(0).get("total") + "',result:[");
+		for(int j = 0; j < mapList3.size(); j++) {
+			buff.append("{'authId':'").append(mapList3.get(j).get("authId") == null ? "0" : mapList3.get(j).get("authId").toString())
+					.append("','pbcId':'").append(mapList3.get(j).get("pbcId").toString())
+					.append("','fullname':'").append(mapList3.get(j).get("fullname").toString())
+					.append("','pbcName':'").append(mapList3.get(j).get("pbcName")).append("'},");
+		}
+		this.jsonString = buff.toString();
+		if(mapList3.size() > 0) {
+			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		}
+		this.jsonString += "]}";
 		
 		return "success";
 	}
@@ -123,12 +113,11 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 	public String preview() {
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
-		//判断当前用户是不是部门负责人
-		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
-		List<Map<String, Object>> mapList1 = this.hrPaAuthorizepbcService.findDataList(sql1);
-		if(mapList1.size() > 0) {//当前用户是部门负责人
+		String authId = this.getRequest().getParameter("authId");
+		String pbcId = this.getRequest().getParameter("pbcId");
+		if("0".equals(authId)) {
 			String sql2 = "select a.id, a.weight, a.result, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
-					"a.pbcId = " + this.id + " and a.piId = b.id order by a.id";
+					"a.pbcId = " + pbcId + " and a.piId = b.id order by a.id";
 			List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
 			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			for(int i = 0; i < mapList2.size(); i++) {
@@ -157,13 +146,14 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			}
 			//调用接口填充未导入数据
 			this.getRequest().setAttribute("unfinished", unfinished);
-			this.getRequest().setAttribute("pbcId", this.id);
+			this.getRequest().setAttribute("pbcId", pbcId);
+			this.getRequest().setAttribute("authId", authId);
 			this.getRequest().setAttribute("itemMap", itemMap);
 			this.getRequest().setAttribute("isDeptUser", "true");
-		} else {//当前用户不是部门负责人
+		} else {
 			//拼装SQL语句取出id, weight和关联的paName
 			String sql = "select a.id, a.weight, a.result, c.id as piId, c.paName, c.paMode from hr_pa_authpbcitem a, hr_pa_kpiitem2user b, " +
-					"hr_pa_performanceindex c where a.apbcId = " + this.id + " and a.akpiItem2uId = b.id and b.piId = c.id";
+					"hr_pa_performanceindex c where a.apbcId = " + authId + " and a.akpiItem2uId = b.id and b.piId = c.id";
 			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			List<Map<String, Object>> authorItemList = this.hrPaAuthorizepbcService.findDataList(sql);
 			for(int i = 0; i < authorItemList.size(); i++) {
@@ -172,7 +162,8 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 				List<Map<String, Object>> pisList = this.hrPaAuthorizepbcService.findDataList(sql2);
 				itemMap.put(authorItemList.get(i), pisList);
 			}
-			this.getRequest().setAttribute("pbcId", this.id);
+			this.getRequest().setAttribute("pbcId", pbcId);
+			this.getRequest().setAttribute("authId", authId);
 			this.getRequest().setAttribute("itemMap", itemMap);
 			this.getRequest().setAttribute("isDeptUser", "false");
 		}
@@ -183,15 +174,13 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 	@SuppressWarnings("unchecked")
 	public String gridScore() {
 		AppUser currentUser = ContextUtil.getCurrentUser();
-		//判断当前用户是不是部门负责人
-		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
-		List<Map<String, Object>> mapList1 = this.hrPaAuthorizepbcService.findDataList(sql1);
 		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
-		if(mapList1.size() > 0) {//当前用户是部门负责人
+		//取得pbc
+		String authId = this.getRequest().getParameter("authId");
+		String pbcId = this.getRequest().getParameter("pbcId");
+		if("0".equals(authId)) {//当前用户是部门负责人
 			try {
-				//取得PBC
-				String pbcId = this.getRequest().getParameter("pbcId");
 				//取得PBC关联的定性定性考核项且不是门店打分的考核项
 				String sql2 = "select a.id from hr_pa_kpiitem2user a, hr_pa_kpipbc2user b, hr_pa_performanceindex c where " +
 						"a.pbcId = b.id and a.piId = c.id and b.id = " + pbcId + " and c.paMode = 12 and not exists " +
@@ -235,12 +224,10 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			}
 		} else {//当前用户不是部门负责人
 			try {
-				//取得pbc
-				String pbcId = this.getRequest().getParameter("pbcId");
-				this.hrPaAuthorizepbc = this.hrPaAuthorizepbcService.get(Long.parseLong(pbcId));
+				this.hrPaAuthorizepbc = this.hrPaAuthorizepbcService.get(Long.parseLong(authId));
 				//取得pbc关联的考核项
 				Map<String, String> map = new HashMap<String, String>();
-				map.put("Q_authorPbc.id_L_EQ", pbcId);
+				map.put("Q_authorPbc.id_L_EQ", authId);
 				QueryFilter filter = new QueryFilter(map);
 				HrPaAuthpbccitemService hrPaAuthpbccitemService = (HrPaAuthpbccitemService)AppUtil.getBean("hrPaAuthpbccitemService");
 				List<HrPaAuthpbccitem> itemList = hrPaAuthpbccitemService.getAll(filter);
