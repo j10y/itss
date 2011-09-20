@@ -30,6 +30,16 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 	public void calculateAvg(Long itemId) {
 		DecimalFormat doubleFormat = new DecimalFormat();
 		doubleFormat.applyPattern("###.00");
+		//取得个人考核模板关联的该考核项，并与部门负责人打分合并，保存结果
+		HrPaKpiitem2user item = this.get(itemId);
+		//判断是否门店打分考核指标
+		String sql3 = "select id, totalScore, fromPi from sp_pa_kpipbc2user where fromPi = " + itemId;
+		List<Map<String, Object>> mapList3 = this.findDataList(sql3);
+		if(mapList3.size() > 0) {
+			item.setResult(Double.parseDouble(mapList3.get(0).get("totalScore").toString()));
+			this.save(item);
+			return ;
+		}
 		//从授权考核模板关联的考核项中取到所有该考核项的打分记录
 		String sql = "select id, weight, result from hr_pa_authpbcitem where akpiItem2uId = " + itemId;
 		List<Map<String, Object>> list = this.findDataList(sql);
@@ -43,8 +53,6 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 				totalWeight = totalWeight - Double.parseDouble(map.get("weight").toString());
 			}
 		}
-		//取得个人考核模板关联的该考核项，并与部门负责人打分合并，保存结果
-		HrPaKpiitem2user item = this.get(itemId);
 		Double result = Double.valueOf(doubleFormat.format(avgResult + item.getResult() * totalWeight));
 		item.setResult(result);
 		//保存相关联的绩效系数
