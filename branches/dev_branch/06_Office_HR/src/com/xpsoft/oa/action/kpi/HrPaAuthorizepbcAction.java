@@ -13,6 +13,7 @@ import org.apache.commons.collections.map.LinkedMap;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaAuthorizepbc;
 import com.xpsoft.oa.model.kpi.HrPaAuthpbccitem;
@@ -115,6 +116,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		HrPaKpiPBC2UserCmpService hrPaKpiPBC2UserCmpService = (HrPaKpiPBC2UserCmpService)AppUtil.getBean("hrPaKpiPBC2UserCmpService");
 		String authId = this.getRequest().getParameter("authId");
 		String pbcId = this.getRequest().getParameter("pbcId");
+		Date fdOfMonth = DateUtil.getFirstDayOfMonth(new Date());
 		if("0".equals(authId)) {
 			String sql2 = "select a.id, a.weight, a.result, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
 					"a.pbcId = " + pbcId + " and a.piId = b.id order by a.id";
@@ -122,7 +124,8 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			for(int i = 0; i < mapList2.size(); i++) {
 				//判断是否门店打分考核项
-				String sql4 = "select id from sp_pa_kpipbc2user where fromPi = " + mapList2.get(i).get("id");
+				String sql4 = "select id from sp_pa_kpipbc2user where " +
+						"createDate >= '" + DateUtil.convertDateToString(fdOfMonth) + "' and fromPi = " + mapList2.get(i).get("id");
 				List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
 				if(mapList4.size() > 0) {//是门店打分考核项
 					mapList2.get(i).put("isShop", "true");
@@ -179,6 +182,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		//取得pbc
 		String authId = this.getRequest().getParameter("authId");
 		String pbcId = this.getRequest().getParameter("pbcId");
+		Date fdOfMonth = DateUtil.getFirstDayOfMonth(new Date());
 		if("0".equals(authId)) {//当前用户是部门负责人
 			try {
 				//取得PBC关联的定性定性考核项且不是门店打分的考核项
@@ -202,6 +206,15 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 					List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
 					Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 					for(int i = 0; i < mapList3.size(); i++) {
+						//判断是否门店打分考核项
+						String sql5 = "select id from sp_pa_kpipbc2user where " +
+								"createDate >= '" + DateUtil.convertDateToString(fdOfMonth) + "' and fromPi = " + mapList3.get(i).get("id");
+						List<Map<String, Object>> mapList5 = this.hrPaAuthorizepbcService.findDataList(sql5);
+						if(mapList5.size() > 0) {//是门店打分考核项
+							mapList3.get(i).put("isShop", "true");
+						} else {//不是门店打分考核项
+							mapList3.get(i).put("isShop", "false");
+						}
 						String sql4 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
 								mapList3.get(i).get("piId").toString();
 						List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
@@ -210,6 +223,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 					if("true".equals(calResult[0])) {
 						this.getRequest().setAttribute("totalScore", calResult[1]);
 					}
+					this.getRequest().setAttribute("authId", authId);
 					this.getRequest().setAttribute("pbcId", pbcId);
 					this.getRequest().setAttribute("itemMap", itemMap);
 					this.getRequest().setAttribute("isDeptUser", "true");

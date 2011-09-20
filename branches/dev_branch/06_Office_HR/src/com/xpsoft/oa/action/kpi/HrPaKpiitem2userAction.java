@@ -42,7 +42,8 @@ public class HrPaKpiitem2userAction extends BaseAction {
 		myformat.applyPattern("###%");
 		//取得该PBC关联的考核项对应的考核指标为定性考核的列表
 		String sql = "select a.id, b.paName from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
-				"a.pbcId = " + this.getRequest().getParameter("pbcId") + " and a.piId = b.id and b.paMode = 12";
+				"a.pbcId = " + this.getRequest().getParameter("pbcId") + " and a.piId = b.id and b.paMode = 12 and not exists " +
+						"(select d.fromPi from sp_pa_kpipbc2user d where a.id = d.fromPi)";
 		List<Map<String, Object>> list = this.hrPaKpiitem2userService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
 		for(int i = 0; i < list.size(); i++) {
