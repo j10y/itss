@@ -620,4 +620,62 @@
 		<constructor-arg index="0" ref="exportSalaryItemDao"/>
 	</bean>
 	
+<!-- start:  Generated for Package shop From Template: app-service.xml.beansvm -->
+	<bean id="spPaAcreachedService" class="com.xpsoft.oa.service.shop.impl.SpPaAcreachedServiceImpl">
+		<constructor-arg index="0" ref="spPaAcreachedDao"/>
+	</bean>
+	<bean id="spPaAssessmentcriteriaService" class="com.xpsoft.oa.service.shop.impl.SpPaAssessmentcriteriaServiceImpl">
+		<constructor-arg index="0" ref="spPaAssessmentcriteriaDao"/>
+	</bean>
+	<bean id="spPaAssessmenttasksassignedService" class="com.xpsoft.oa.service.shop.impl.SpPaAssessmenttasksassignedServiceImpl">
+		<constructor-arg index="0" ref="spPaAssessmenttasksassignedDao"/>
+	</bean>
+	<bean id="spPaAuthorizepbcService" class="com.xpsoft.oa.service.shop.impl.SpPaAuthorizepbcServiceImpl">
+		<constructor-arg index="0" ref="spPaAuthorizepbcDao"/>
+	</bean>
+	<bean id="spPaAuthpbccitemService" class="com.xpsoft.oa.service.shop.impl.SpPaAuthpbccitemServiceImpl">
+		<constructor-arg index="0" ref="spPaAuthpbccitemDao"/>
+	</bean>
+	<bean id="spPaCategoryService" class="com.xpsoft.oa.service.shop.impl.SpPaCategoryServiceImpl">
+		<constructor-arg index="0" ref="spPaCategoryDao"/>
+	</bean>
+	<bean id="spPaDatadictionaryService" class="com.xpsoft.oa.service.shop.impl.SpPaDatadictionaryServiceImpl">
+		<constructor-arg index="0" ref="spPaDatadictionaryDao"/>
+	</bean>
+	<bean id="spPaKpiitemService" class="com.xpsoft.oa.service.shop.impl.SpPaKpiitemServiceImpl">
+		<constructor-arg index="0" ref="spPaKpiitemDao"/>
+	</bean>
+	<bean id="spPaKpipbcService" class="com.xpsoft.oa.service.shop.impl.SpPaKpipbcServiceImpl">
+		<constructor-arg index="0" ref="spPaKpipbcDao"/>
+	</bean>
+	<bean id="spPaPerformanceindexscoreService" class="com.xpsoft.oa.service.shop.impl.SpPaPerformanceindexscoreServiceImpl">
+		<constructor-arg index="0" ref="spPaPerformanceindexscoreDao"/>
+	</bean>
+	<bean id="spPaPerformanceindexService" class="com.xpsoft.oa.service.shop.impl.SpPaPerformanceindexServiceImpl">
+		<constructor-arg index="0" ref="spPaPerformanceindexDao"/>
+	</bean>
+	<bean id="spPaPisruleService" class="com.xpsoft.oa.service.shop.impl.SpPaPisruleServiceImpl">
+		<constructor-arg index="0" ref="spPaPisruleDao"/>
+	</bean>
+	<bean id="spPaKpiPBC2UserService" class="com.xpsoft.oa.service.shop.impl.SpPaKpiPBC2UserServiceImpl">
+		<constructor-arg index="0" ref="spPaKpiPBC2UserDao"/>
+	</bean>
+	<bean id="spPaKpiitem2userService" class="com.xpsoft.oa.service.shop.impl.SpPaKpiitem2userServiceImpl">
+		<constructor-arg index="0" ref="spPaKpiitem2userDao"/>
+	</bean>
+	<bean id="spPaKpipbcHistService" class="com.xpsoft.oa.service.shop.impl.SpPaKpipbcHistServiceImpl">
+		<constructor-arg index="0" ref="spPaKpipbcHistDao"/>
+	</bean>
+	<bean id="spPaKpiitemHistService" class="com.xpsoft.oa.service.shop.impl.SpPaKpiitemHistServiceImpl">
+		<constructor-arg index="0" ref="spPaKpiitemHistDao"/>
+	</bean>
+	
+	<bean id="spPaKpiPBC2UserCmpService" class="com.xpsoft.oa.service.shop.impl.SpPaKpiPBC2UserCmpServiceImpl">
+		<constructor-arg index="0" ref="spPaKpiPBC2UserCmpDao"/>
+	</bean>
+	<bean id="spPaKpiitem2userCmpService" class="com.xpsoft.oa.service.shop.impl.SpPaKpiitem2userCmpServiceImpl">
+		<constructor-arg index="0" ref="spPaKpiitem2userCmpDao"/>
+	</bean>
+<!-- end:  Generated for Package shop From Template: app-service.xml.beansvm -->
+	
 </beans>

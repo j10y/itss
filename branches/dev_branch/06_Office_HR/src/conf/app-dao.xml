@@ -330,4 +330,26 @@
     <bean id="hrPromAssessmentDao" class="com.xpsoft.oa.dao.hrm.impl.HrPromAssessmentDaoImpl" parent="baseDao"/>
     <bean id="exportSalaryDao" class="com.xpsoft.oa.dao.hrm.impl.ExportSalaryDaoImpl" parent="baseDao"/>
     <bean id="exportSalaryItemDao" class="com.xpsoft.oa.dao.hrm.impl.ExportSalaryItemDaoImpl" parent="baseDao"/>
+
+<!-- start:  Generated for Package shop From Template: app-dao.xml.beansvm -->
+	<bean id="spPaAcreachedDao" class="com.xpsoft.oa.dao.shop.impl.SpPaAcreachedDaoImpl" parent="baseDao"/>
+	<bean id="spPaAssessmentcriteriaDao" class="com.xpsoft.oa.dao.shop.impl.SpPaAssessmentcriteriaDaoImpl" parent="baseDao"/>
+	<bean id="spPaAssessmenttasksassignedDao" class="com.xpsoft.oa.dao.shop.impl.SpPaAssessmenttasksassignedDaoImpl" parent="baseDao"/>
+	<bean id="spPaAuthorizepbcDao" class="com.xpsoft.oa.dao.shop.impl.SpPaAuthorizepbcDaoImpl" parent="baseDao"/>
+	<bean id="spPaAuthpbccitemDao" class="com.xpsoft.oa.dao.shop.impl.SpPaAuthpbccitemDaoImpl" parent="baseDao"/>
+	<bean id="spPaCategoryDao" class="com.xpsoft.oa.dao.shop.impl.SpPaCategoryDaoImpl" parent="baseDao"/>
+	<bean id="spPaDatadictionaryDao" class="com.xpsoft.oa.dao.shop.impl.SpPaDatadictionaryDaoImpl" parent="baseDao"/>
+	<bean id="spPaKpiitemDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiitemDaoImpl" parent="baseDao"/>
+	<bean id="spPaKpipbcDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpipbcDaoImpl" parent="baseDao"/>
+	<bean id="spPaPerformanceindexDao" class="com.xpsoft.oa.dao.shop.impl.SpPaPerformanceindexDaoImpl" parent="baseDao"/>
+	<bean id="spPaPerformanceindexscoreDao" class="com.xpsoft.oa.dao.shop.impl.SpPaPerformanceindexscoreDaoImpl" parent="baseDao"/>
+	<bean id="spPaPisruleDao" class="com.xpsoft.oa.dao.shop.impl.SpPaPisruleDaoImpl" parent="baseDao"/>
+	<bean id="spPaKpiPBC2UserDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiPBC2UserDaoImpl" parent="baseDao"/>
+	<bean id="spPaKpiitem2userDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiitem2userDaoImpl" parent="baseDao"/>
+	<bean id="spPaKpipbcHistDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpipbcHistDaoImpl" parent="baseDao"/>
+	<bean id="spPaKpiitemHistDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiitemHistDaoImpl" parent="baseDao"/>
+	
+	<bean id="spPaKpiPBC2UserCmpDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiPBC2UserCmpDaoImpl" parent="baseDao"/>
+	<bean id="spPaKpiitem2userCmpDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiitem2userCmpDaoImpl" parent="baseDao"/>
+<!-- end:  Generated for Package shop From Template: app-dao.xml.beansvm -->
 </beans>

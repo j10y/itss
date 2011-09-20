@@ -312,5 +312,24 @@
   <bean id="HrPromApplyAction" class="com.xpsoft.oa.action.hrm.HrPromApplyAction" scope="prototype"/>
   <bean id="HrPromAssessmentAction" class="com.xpsoft.oa.action.hrm.HrPromAssessmentAction" scope="prototype"/>
   <bean id="ExportSalaryAction" class="com.xpsoft.oa.action.hrm.ExportSalaryAction" scope="prototype"/>
+  
+<!-- start:  Generated for Package shop From Template: app-action.xml.beansvm -->
+  <bean id="SpPaAcreachedAction" class="com.xpsoft.oa.action.shop.SpPaAcreachedAction" scope="prototype"/>
+  <bean id="SpPaAssessmentcriteriaAction" class="com.xpsoft.oa.action.shop.SpPaAssessmentcriteriaAction" scope="prototype"/>
+  <bean id="SpPaAssessmenttasksassignedAction" class="com.xpsoft.oa.action.shop.SpPaAssessmenttasksassignedAction" scope="prototype"/>
+  <bean id="SpPaAuthorizepbcAction" class="com.xpsoft.oa.action.shop.SpPaAuthorizepbcAction" scope="prototype"/>
+  <bean id="SpPaAuthpbccitemAction" class="com.xpsoft.oa.action.shop.SpPaAuthpbccitemAction" scope="prototype"/>
+  <bean id="SpPaCategoryAction" class="com.xpsoft.oa.action.shop.SpPaCategoryAction" scope="prototype"/>
+  <bean id="SpPaDatadictionaryAction" class="com.xpsoft.oa.action.shop.SpPaDatadictionaryAction" scope="prototype"/>
+  <bean id="SpPaKpiitemAction" class="com.xpsoft.oa.action.shop.SpPaKpiitemAction" scope="prototype"/>
+  <bean id="SpPaKpipbcAction" class="com.xpsoft.oa.action.shop.SpPaKpipbcAction" scope="prototype"/>
+  <bean id="SpPaPerformanceindexscoreAction" class="com.xpsoft.oa.action.shop.SpPaPerformanceindexscoreAction" scope="prototype"/>
+  <bean id="SpPaPerformanceindexAction" class="com.xpsoft.oa.action.shop.SpPaPerformanceindexAction" scope="prototype"/>
+  <bean id="SpPaPisruleAction" class="com.xpsoft.oa.action.shop.SpPaPisruleAction" scope="prototype"/>
+  <bean id="SpPaKpiPBC2UserAction" class="com.xpsoft.oa.action.shop.SpPaKpiPBC2UserAction" scope="prototype"/>
+  <bean id="SpPaKpiitem2userAction" class="com.xpsoft.oa.action.shop.SpPaKpiitem2userAction" scope="prototype"/>
+  <bean id="SpPaKpipbcHistAction" class="com.xpsoft.oa.action.shop.SpPaKpipbcHistAction" scope="prototype"/>
+  <bean id="SpPaKpiitemHistAction" class="com.xpsoft.oa.action.shop.SpPaKpiitemHistAction" scope="prototype"/>
+<!-- end:  Generated for Package shop From Template: app-action.xml.beansvm -->
 
 </beans>
