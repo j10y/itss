@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.shop.SpPaAuthorizepbc"
+        table="sp_pa_authorizepbc"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        <many-to-one name="userPbc" not-null="false" class="com.xpsoft.oa.model.shop.SpPaKpiPBC2User" column="pbcId"></many-to-one>
+        <many-to-one name="authorTo" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="userId"></many-to-one>
+        <property
+            name="authDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="authDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <many-to-one name="authPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="authPerson"></many-to-one>
+    </class>
+</hibernate-mapping>

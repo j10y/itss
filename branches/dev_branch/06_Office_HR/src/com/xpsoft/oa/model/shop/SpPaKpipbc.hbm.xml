@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.shop.SpPaKpipbc"
+        table="sp_pa_kpipbc"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+         <property
+            name="pbcName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="pbcName"
+            length="150"
+            not-null="false"
+            unique="false"
+        />
+        <many-to-one name="belongDept" not-null="false" class="com.xpsoft.oa.model.system.Department" column="belongDept"></many-to-one>
+        <many-to-one name="belongPost" not-null="false" class="com.xpsoft.oa.model.hrm.Job" column="belongPost"></many-to-one>
+        <many-to-one name="frequency" not-null="false" class="com.xpsoft.oa.model.shop.SpPaDatadictionary" column="frequency"></many-to-one>
+        <property
+            name="createDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="createDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <many-to-one name="createPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="createPerson"></many-to-one>
+        <property
+            name="publishStatus"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="publishStatus"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="totalScore"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="totalScore"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="modifyDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="modifyDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <many-to-one name="modifyPerson" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="modifyPerson"></many-to-one>
+        <property
+        	name="fromPbc"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="fromPbc"
+        	length="19"
+        	not-null="false"
+        	unique="false"
+        />
+        <property
+            name="coefficient"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="coefficient"
+            length="20"
+            not-null="false"
+            unique="false"
+        />
+        <property
+        	name="fromPi"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="fromPi"
+        	length="19"
+        	not-null="false"
+        	unique="false"
+        />
+        <many-to-one name="pbcType" not-null="false" class="com.xpsoft.oa.model.shop.SpPaDatadictionary" column="pbcType"></many-to-one>
+    </class>
+</hibernate-mapping>
