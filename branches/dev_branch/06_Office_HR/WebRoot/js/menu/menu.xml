@@ -1683,4 +1683,74 @@
 		
 		
 	</Items>
+	<Items id="Shop" text="门店绩效考核" isPublic="false">
+		<Items id="ShopPaManage" text="绩效管理" isPublic="false">
+			<Items id="SpPaPerformanceindexManage" text="考核指标管理">
+				<Item id="DraftSpPaPerformanceindexView" text="草稿管理">
+					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+						<url>/shop/listSpPaPerformanceindex.do</url>
+						<url>/shop/saveSpPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaDel" text="删除" iconCls="menu-del">
+						<url>/shop/multiDelSpPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+						<url>/shop/editSpPaPerformanceindex.do</url>
+					</Function>
+				</Item>
+				<Item id="PublishSpPaPerformanceindexView" text="已发布指标">
+					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+						<url>/shop/listSpPaPerformanceindex.do</url>
+						<url>/shop/saveSpPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaDel" text="删除" iconCls="menu-del">
+						<url>/shop/multiDelSpPaPerformanceindex.do</url>
+					</Function>
+					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+						<url>/shop/editSpPaPerformanceindex.do</url>
+					</Function>
+				</Item>
+			</Items>
+			<Items id="SpPaKpipbcManage" text="PBC管理">
+				<Item id="DraftSpPaKpipbcView" text="草稿管理">
+					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+						<url>/shop/listSpPaKpipbc.do</url>
+						<url>/shop/saveSpPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+						<url>/shop/multiDelSpPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+						<url>/sp/editSpPaKpipbc.do</url>
+					</Function>
+				</Item>
+				<Item id="PublishSpPaKpipbcView" text="已发布PBC">
+					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+						<url>/shop/listSpPaKpipbc.do</url>
+						<url>/shop/saveSpPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+						<url>/shop/multiDelSpPaKpipbc.do</url>
+					</Function>
+					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+						<url>/shop/editSpPaKpipbc.do</url>
+					</Function>
+				</Item>
+			</Items>
+			<Items id="SpGradePbcScore" text="PBC打分">
+				<Item id="SpPaKpiPBC2UserView" text="个人PBC授权">
+				</Item>
+				<Item id="SpGradeAuthorizePbcView" text="授权PBC打分">
+				</Item>
+				<Item id="SpGradeTotalScoreView" text="PBC打分结果">
+				</Item>
+				<Item id="SpResultTotalScoreView" text="审核中个人PBC">
+				</Item>
+				<!--
+				<Item id="SpShowHistoryView" text="查看历史记录">
+				</Item>
+				-->
+			</Items>
+		</Items>
+	</Items>
 </Menus>
