@@ -61,9 +61,11 @@
 		</div>
 		<br/>
 		<form id="auditForm" action="${pageContext.request.contextPath}/kpi/submitToAuditHrPaKpiPBC2User.do" method="post">
+			<input type="hidden" name="authId" value="${authId}"/>
 			<input type="hidden" name="pbcId" value="${pbcId}"/>
 		</form>
 		<form id="pbcForm" onsubmit="javascript:document.getElementById('saveSubmit').disabled='disabled';" action="${pageContext.request.contextPath}/kpi/gridScoreHrPaAuthorizepbc.do" method="post">
+			<input type="hidden" name="authId" value="${authId}"/>
 			<input type="hidden" name="pbcId" value="${pbcId}"/>
 			<input type="hidden" name="unfinished" value="${unfinished}"/>
 			<input type="hidden" name="calTotal" value="false"/>
