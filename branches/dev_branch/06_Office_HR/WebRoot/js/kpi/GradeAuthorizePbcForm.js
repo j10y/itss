@@ -26,7 +26,7 @@ GradeAuthorizePbcForm = Ext.extend(Ext.Window, {
 		this.panel = new Ext.Panel({
 			border : false,
 			bodyBorder : false,
-			html : "<iframe frameborder='no' width=100% height=100% src='" + __ctxPath + "/kpi/previewHrPaAuthorizepbc.do?id=" + this.pbcId + "'>"
+			html : "<iframe frameborder='no' width=100% height=100% src='" + __ctxPath + "/kpi/previewHrPaAuthorizepbc.do?authId=" + this.authId + "&pbcId=" + this.pbcId + "'>"
 		});
 	}
 });

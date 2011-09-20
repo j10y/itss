@@ -61,14 +61,15 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 			remoteSort : true,
 			fields : [
 				{
-					name : "id",
+					name : "authId",
 					type : "int"
 				},
+				"pbcId",
 				"fullname",
 				"pbcName"
 			]
 		});
-		this.store.setDefaultSort("id", "desc");
+		this.store.setDefaultSort("authId", "desc");
 		this.store.load({
 			params : {
 				start : 0,
@@ -92,8 +93,12 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 				c,
 				new Ext.grid.RowNumberer(),
 				{
-					header : "id",
-					dataIndex : "id",
+					header : "authId",
+					dataIndex : "authId",
+					hidden : true
+				}, {
+					header : "pbcId",
+					dataIndex : "pbcId",
 					hidden : true
 				}, {
 					header : "姓名",
@@ -140,7 +145,8 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
 				new GradeAuthorizePbcForm({
-					pbcId : e.data.id
+					authId : e.data.authId,
+					pbcId : e.data.pbcId
 				}).show();
 			});
 		});
@@ -148,7 +154,8 @@ GradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 	},
 	gradeAuthorizePbc : function(a) {
 		new GradeAuthorizePbcForm({
-			pbcId : a.data.id
+			authId : a.data.authId,
+			pbcId : a.data.pbcId
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
