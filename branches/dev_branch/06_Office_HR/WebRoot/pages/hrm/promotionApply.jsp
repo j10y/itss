@@ -21,7 +21,6 @@
 				var applyUserCombo = new Ext.form.ComboBox({
 					id : "applyUserCombo",
 					mode : "remote",
-					allowBlank : false,
 					hiddenName : "hrPromApply.applyUser.userId",
 					valueField : "userId",
 					width : 229,
