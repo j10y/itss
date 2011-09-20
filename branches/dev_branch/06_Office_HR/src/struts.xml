@@ -479,6 +479,50 @@
 		</action>
 	</package>
 	
+	<package name="shop" extends="struts-default" namespace="/shop">
+		<action name="*SpPaPerformanceindex" class="SpPaPerformanceindexAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaDatadictionary" class="SpPaDatadictionaryAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaPerformanceindexscore" class="SpPaPerformanceindexscoreAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaAssessmentcriteria" class="SpPaAssessmentcriteriaAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaAssessmentcriteria" class="SpPaAssessmentcriteriaAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaKpipbc" class="SpPaKpipbcAction" method="{1}">
+			<result>${successResultValue}</result>
+			<result name="show">/pages/shop/pbcPreview.jsp</result>
+		</action>
+		<action name="*SpPaKpiitem" class="SpPaKpiitemAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaAssessmenttasksassigned" class="SpPaAssessmenttasksassignedAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaAcreached" class="SpPaAcreachedAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaKpiPBC2User" class="SpPaKpiPBC2UserAction" method="{1}">
+			<result>${successResultValue}</result>
+			<result name="gradeResult">/pages/shop/gradeResult.jsp</result>
+		</action>
+		<action name="*SpPaKpiitem2user" class="SpPaKpiitem2userAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*SpPaAuthorizepbc" class="SpPaAuthorizepbcAction" method="{1}">
+			<result>${successResultValue}</result>
+			<result name="show">/pages/shop/gradeUserPbc.jsp</result>
+			<result name="showTotal">/pages/shop/gradeTotalUserPbc.jsp</result>
+			<result name="gradeResult">/pages/shop/gradeResult.jsp</result>
+		</action>
+	</package>
+	
 </struts>
 
 		
