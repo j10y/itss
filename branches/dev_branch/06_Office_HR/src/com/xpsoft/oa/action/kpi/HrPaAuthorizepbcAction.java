@@ -139,7 +139,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			}
 			//判断定量考核指标目标和达成数据是否已经导入
 			String unfinished = "";
-			List<Map> unfinishList = hrPaKpiPBC2UserCmpService.isKpiItemScoreForUser(currentUser.getUserId().toString(), null, this.id + "");
+			List<Map> unfinishList = hrPaKpiPBC2UserCmpService.isKpiItemScoreForUser(currentUser.getUserId().toString(), null, pbcId);
 			if(unfinishList.size() > 0) {
 				unfinished += "下列定量考核指标任务额度和达成数据未导入：\r\n";
 				for(int j = 0; j < unfinishList.size() - 1; j++) {
