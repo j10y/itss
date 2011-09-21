@@ -34,12 +34,8 @@
 		<script type="text/javascript">
 			window.onload = function() {
 				if(${forAudit == 'true'}) {
-					if(confirm("计算结果总分为：" + ${totalScore} + "\r\n确定要提交审核吗？")) {
-						var auditForm = document.getElementById("auditForm");
-						auditForm.submit();
-					} else {
-						return ;
-					}
+					var totalScore = ${totalScore};
+					alert("计算结果总分为：" + totalScore);
 				}
 			}
 			function check(a) {
@@ -55,9 +51,6 @@
 			PBC定性考核计算总分
 		</div>
 		<br/>
-		<form id="auditForm" action="${pageContext.request.contextPath}/shop/submitToAuditSpPaKpiPBC2User.do" method="post">
-			<input type="hidden" name="pbcId" value="${pbcId}"/>
-		</form>
 		<form id="auditForm" action="${pageContext.request.contextPath}/shop/gridTotalScoreSpPaAuthorizepbc.do" method="post">
 			<input type="hidden" name="pbcId" value="${pbcId}"/>
 			<table id="contentTable" cellpadding="0" cellspacing="0">
