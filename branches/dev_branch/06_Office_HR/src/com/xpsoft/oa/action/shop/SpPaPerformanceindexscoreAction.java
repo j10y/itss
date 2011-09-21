@@ -59,10 +59,8 @@ public class SpPaPerformanceindexscoreAction extends BaseAction{
 	
 	public String multiDel() {
 		String[] ids = this.getRequest().getParameterValues("ids");
-		SpPaPisruleService spPaPisruleService = (SpPaPisruleService)AppUtil.getBean("spPaPisruleService");
 		if(ids != null) {
 			for(String id : ids) {
-				spPaPisruleService.removeByPisId(Long.valueOf(id));
 				this.spPaPerformanceindexscoreService.remove(new Long(id));
 			}
 		}
