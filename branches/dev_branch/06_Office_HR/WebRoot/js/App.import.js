@@ -414,6 +414,7 @@ App.importJs = {
 	HrPromAssessmentStatusView : [__ctxPath + "/js/hrm/HrPromAssessmentStatusView.js",
 			__ctxPath + "/js/hrm/HrPromAssessmentPreview.js"],
 	HrTZAnlyReportView:[__ctxPath + "/js/hrm/HrTZAnlyReportView.js"],
+	SpReportView:[__ctxPath + "/js/spreport/spreport.js"],
 	ExportSalaryView : [__ctxPath + "/js/hrm/ExportSalaryView.js",__ctxPath + "/js/hrm/ExportSalaryItemForm.js"],
 	
 	DraftSpPaPerformanceindexView : [__ctxPath + "/js/shop/DraftSpPaPerformanceindexView.js",
@@ -444,5 +445,5 @@ App.importJs = {
 			__ctxPath + "/ext3/ux/RowExpander.js"],
 	SpGradeTotalScoreView : [__ctxPath + "/js/shop/SpGradeTotalScoreView.js",
 			__ctxPath + "/js/shop/SpGradeTotalScoreForm.js"]		
-				                    
+			
 };
