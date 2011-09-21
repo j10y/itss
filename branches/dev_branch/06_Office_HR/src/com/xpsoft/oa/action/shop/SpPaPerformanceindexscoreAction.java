@@ -77,17 +77,7 @@ public class SpPaPerformanceindexscoreAction extends BaseAction{
 		JSONSerializer json = new JSONSerializer();
 		StringBuffer buff = new StringBuffer("{success:true,data:");
 		buff.append(json.exclude(new String[] {}).serialize(this.spPaPerformanceindexscore));
-		//为定量考核添加公式
-		if(this.spPaPerformanceindexscore.getPisType().getId() == SpPaDatadictionary.PA_QUALITATIVE_ASSESSMENT) {
-			SpPaPisruleService hrPaPisruleService = (SpPaPisruleService)AppUtil.getBean("hrPaPisruleService");
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("Q_pis.id_L_EQ", String.valueOf(this.spPaPerformanceindexscore.getId()));
-			QueryFilter filter = new QueryFilter(map);
-			long prId = hrPaPisruleService.getAll(filter).get(0).getId();
-			String formula = hrPaPisruleService.getAll(filter).get(0).getFormula();
-			buff.deleteCharAt(buff.length() - 1);
-			buff.append(",'prId':'" + prId + "','formula':'" + formula + "'}");
-		}
+		
 		buff.append("}");
 		this.jsonString = buff.toString();
 		
