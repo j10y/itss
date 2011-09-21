@@ -256,68 +256,30 @@ public class SpPaAuthorizepbcAction extends BaseAction{
 		map.put("Q_authorTo.id_L_EQ", String.valueOf(userId));
 		QueryFilter filter = new QueryFilter(map);
 		List<SpPaAuthorizepbc> list = this.spPaAuthorizepbcService.getAll(filter);
-		if(list.size() <= 0) {//不存在该userId的授权打分模板
-			//保存授权PBC基本信息
-			SpPaAuthorizepbc authorPbc = new SpPaAuthorizepbc();
-			AppUser authorTo = new AppUser(userId);
-			SpPaKpiPBC2User userPbc = new SpPaKpiPBC2User();
-			userPbc.setId(pbcId);
-			authorPbc.setAuthorTo(authorTo);
-			authorPbc.setUserPbc(userPbc);
-			authorPbc.setAuthDate(currentDate);
-			authorPbc.setAuthPerson(currentUser);
-			//插入数据库
-			SpPaAuthorizepbc authorPbcNew = this.spPaAuthorizepbcService.save(authorPbc);
-			//保存授权PBC关联的考核指标信息
-			List<SpPaAuthpbccitem> itemList = new ArrayList<SpPaAuthpbccitem>();
-			for(int i = 0; i < authorPbcItems.length; i++) {
-				String[] properties = authorPbcItems[i].trim().split(",");
-				SpPaAuthpbccitem item = new SpPaAuthpbccitem();
-				item.setAuthorPbc(authorPbcNew);
-				item.setAkpiItem2uId(Long.parseLong(properties[0]));
-				item.setWeight(new Double(0));
-				item.setResult(new Double(0));//得分默认为0
-				itemList.add(item);
-			}
-			//批量插入数据库
-			spPaAuthpbccitemService.multiSave(itemList, pbcId);
-		} else {//存在该userId的授权打分模板
-			//保存授权PBC基本信息
-			SpPaAuthorizepbc authorPbc = list.get(0);
-			authorPbc.setAuthDate(currentDate);
-			authorPbc.setAuthPerson(currentUser);
-			//插入数据库
-			SpPaAuthorizepbc authorPbcNew = this.spPaAuthorizepbcService.save(authorPbc);
-			//保存授权PBC关联的考核指标信息
-			//取得原授权PBC关联的考核指标信息
-			Map<String, String> map2 = new HashMap<String, String>();
-			map2.put("Q_authorPbc.id_L_EQ", String.valueOf(authorPbc.getId()));
-			QueryFilter filter2 = new QueryFilter(map2);
-			List<SpPaAuthpbccitem> authpbcItemList = spPaAuthpbccitemService.getAll(filter2);
-			//判断原考核指标信息有没有被更改，如果被更改则覆盖
-			for(int i = 0; i < authorPbcItems.length; i++) {
-				boolean flag = false;
-				String[] properties = authorPbcItems[i].trim().split(",");
-				for(int j = 0; j < authpbcItemList.size(); j++) {
-					SpPaAuthpbccitem item = authpbcItemList.get(j);
-					if(Long.parseLong(properties[0]) == item.getAkpiItem2uId()) {//原考核指标信息列表中存在要插入的数据，则为更改
-						authpbcItemList.get(j).setWeight(new Double(0));//重新设置权重
-						flag = true;
-						break;
-					}
-				}
-				//如果不存在要插入的信息，则插入
-				if(!flag) {
-					SpPaAuthpbccitem item = new SpPaAuthpbccitem();
-					item.setAuthorPbc(authorPbcNew);
-					item.setAkpiItem2uId(Long.parseLong(properties[0]));
-					item.setWeight(new Double(0));
-					item.setResult(new Double(0));
-					authpbcItemList.add(item);
-				}
-			}
-			spPaAuthpbccitemService.multiSave(authpbcItemList, pbcId);
+		//保存授权PBC基本信息
+		SpPaAuthorizepbc authorPbc = new SpPaAuthorizepbc();
+		AppUser authorTo = new AppUser(userId);
+		SpPaKpiPBC2User userPbc = new SpPaKpiPBC2User();
+		userPbc.setId(pbcId);
+		authorPbc.setAuthorTo(authorTo);
+		authorPbc.setUserPbc(userPbc);
+		authorPbc.setAuthDate(currentDate);
+		authorPbc.setAuthPerson(currentUser);
+		//插入数据库
+		SpPaAuthorizepbc authorPbcNew = this.spPaAuthorizepbcService.save(authorPbc);
+		//保存授权PBC关联的考核指标信息
+		List<SpPaAuthpbccitem> itemList = new ArrayList<SpPaAuthpbccitem>();
+		for(int i = 0; i < authorPbcItems.length; i++) {
+			String[] properties = authorPbcItems[i].trim().split(",");
+			SpPaAuthpbccitem item = new SpPaAuthpbccitem();
+			item.setAuthorPbc(authorPbcNew);
+			item.setAkpiItem2uId(Long.parseLong(properties[0]));
+			item.setWeight(new Double(0));
+			item.setResult(new Double(0));//得分默认为0
+			itemList.add(item);
 		}
+		//批量插入数据库
+		spPaAuthpbccitemService.multiSave(itemList, pbcId);
 		
 		this.jsonString = new String("{success:true}");
 		
