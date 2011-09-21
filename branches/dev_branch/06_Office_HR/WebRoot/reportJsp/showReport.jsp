@@ -3,10 +3,10 @@
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.runqian.report4.usermodel.Context"%>
-<script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jquery-1.4.4.min.js"></script>
 <html>
 <head>
-<script language="javascript" type="text/javascript" src="jsDate/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/jsDate/WdatePicker.js"></script>
 </head>
 <body bgcolor="#FFFFFF" topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0>
 <%	
