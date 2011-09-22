@@ -264,6 +264,10 @@ EmpProfileForm = Ext
 														mapping : "departureTime"
 													},
 													{
+														name : "empProfileForm.organization",
+														mapping : "organization"
+													},
+													{
 														name : "empProfileForm.positiveTime",
 														mapping : "positiveTime"
 													} ]),
@@ -534,6 +538,31 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.departureTime",
 																		xtype : "datefield",
 																		format : "Y-m-d"
+																	} ,
+																	{
+																		fieldLabel : "所属岗位",
+																		name : "empProfile.organization",
+																		xtype : "hidden",
+																		id : "empProfileForm.organization"
+																	},
+																	{
+																		fieldLabel : "编制",
+																		name : "empProfile.organizationid",
+																		id : "empProfileForm.organizationid",
+																		xtype : "combo",
+																		allowBlank : false,
+																		emptyText : "请选择",
+																		mode : "local",
+																		editable : false,
+																		triggerAction : "all",
+																		store : [ [ "1", "正编" ], [ "0", "非正编" ]
+																		],
+																		listeners : {
+																		select:function(e,c,d){
+																			var rganizationid=Ext.getCmp("empProfileForm.organizationid").getValue();
+																			Ext.getCmp("empProfileForm.organization").setValue(rganizationid);
+																		}
+																		}
 																	}]
 														},
 														{
@@ -1340,7 +1369,10 @@ EmpProfileForm = Ext
 																.setValue(
 																		new Date(
 																				c));
-													}
+													}		
+														Ext.getCmp("empProfileForm.organizationid")
+																.setValue(e.organization);
+													
 													if (e.birthday != ""
 															&& e.birthday != null
 															&& e.birthday != "undefined") {
