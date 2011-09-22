@@ -7,7 +7,7 @@ SpResultTotalScoreView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		SpResultTotalScoreView.superclass.constructor.call(this, {
 			id : "SpResultTotalScoreView",
-			title : "审核中个人PBC",
+			title : "历史记录列表",
 			region : "center",
 			autoScroll : true,
 			layout : "border",
