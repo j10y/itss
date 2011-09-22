@@ -149,6 +149,52 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		return "success";
 	}
 	
+	public String listForAudit() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
+		String fullname = this.getRequest().getParameter("fullname");
+		String depId = this.getRequest().getParameter("depId");
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		System.out.println(depId);
+		String sql4 = "select distinct count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b, department c where " +
+		"a.belongUser = b.userId and publishStatus = 1";
+		sql4 += (depId == null || "".equals(depId)) ? "" : " and b.depId = c.depId and c.depId = " + depId;
+		sql4 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
+		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
+		//获取部门下所有员工处于审核状态的个人PBC信息
+		String sql2 = "select distinct a.id, a.pbcName, a.totalScore, b.fullname from hr_pa_kpipbc2user a, emp_profile b, department c where " +
+				"a.belongUser = b.userId and publishStatus = 1 ";
+		sql2 += (depId == null || "".equals(depId)) ? "" : " and b.depId = c.depId and c.depId = " + depId;
+		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
+		sql2 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
+		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
+		for(int i = 0; i < list.size(); i++) {
+			buff.append("{'fullname':'" + (String)list.get(i).get("fullname"))
+					.append("','pbcName':'" + (String)list.get(i).get("pbcName"))
+					.append("','totalScore':'" + list.get(i).get("totalScore").toString());
+			String sql3 = "select b.paName, a.result, a.weight from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+					"a.pbcId = " + list.get(i).get("id").toString() + " and a.piId = b.id";
+			List<Map<String, Object>> list3 = hrPaKpiitem2userService.findDataList(sql3);
+			String content = "<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">";
+			content += "<tr><td>考核指标名称</td><td>得分</td><td>权重</td></tr>";
+			for(int j = 0; j < list3.size(); j++) {
+				content += "<tr><td>" + list3.get(j).get("paName") + "</td><td>" + list3.get(j).get("result") + "</td><td>" + 
+						list3.get(j).get("weight") + "</td></tr>";
+			}
+			content +="</table>";
+			buff.append("','content':'" + content);
+			buff.append("'},");
+		}
+		this.jsonString = buff.toString();
+		if(list.size() > 0) {
+			this.jsonString = this.jsonString.substring(0, this.jsonString.length() - 1);
+		}
+		this.jsonString += "]}";
+		
+		return "success";
+	}
+	
 	@SuppressWarnings("unchecked")
 	public String listHistory() {
 		QueryFilter filter = new QueryFilter(this.getRequest());
