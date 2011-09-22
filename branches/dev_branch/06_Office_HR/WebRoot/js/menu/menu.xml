@@ -1680,7 +1680,26 @@
 			<Item id="HrAnlyReportView" text="人力资源分析" iconCls="" isPublic="false">
 			</Item>
 		</Items>
-		
+		<Item id="HrPaDatadictionaryView" iconCls="menu-dictionary" text="数据字典">
+			<Function id="_HrPaDatadictionaryQuery" text="查看字典" iconCls="menu-list">
+			   <url>/system/listHrPaDatadictionary.do</url>
+			</Function>
+			<Function id="_HrPaDatadictionaryAdd" text="添加" iconCls="menu-add">
+			   <url>/system/listHrPaDatadictionary.do</url>
+			   <url>/system/saveHrPaDatadictionary.do</url>
+			   <url>/system/itemsHrPaDatadictionary.do</url>
+			</Function>
+			<Function id="_HrPaDatadictionaryEdit" text="编辑" iconCls="btn-edit">
+			    <url>/system/listHrPaDatadictionary.do</url>
+			    <url>/system/saveHrPaDatadictionary.do</url>
+			    <url>/system/itemsHrPaDatadictionary.do</url>
+			    <url>/system/getHrPaDatadictionary.do</url>
+			</Function>
+			<Function id="_HrPaDatadictionaryDel" text="删除" iconCls="menu-del">
+			    <url>/system/listHrPaDatadictionary.do</url>
+			    <url>/system/multiDelHrPaDatadictionary.do</url>
+			</Function>
+		</Item>
 		
 	</Items>
 	<Items id="Shop" text="门店绩效考核" isPublic="false">
@@ -1744,12 +1763,8 @@
 				</Item>
 				<Item id="SpGradeTotalScoreView" text="PBC打分结果">
 				</Item>
-				<Item id="SpResultTotalScoreView" text="审核中个人PBC">
+				<Item id="SpResultTotalScoreView" text="查看历史记录">
 				</Item>
-				<!--
-				<Item id="SpShowHistoryView" text="查看历史记录">
-				</Item>
-				-->
 			</Items>
 			<Items id="SpReport" text="门店绩效考核统计">
 				<Item id="SpReportView" text="门店绩效考核评分统计">
