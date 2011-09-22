@@ -15,6 +15,7 @@ public class HrPostApply extends BaseModel{
 	protected Long postId;//职务ID
 	protected String postName;//职务名称
 	protected Date accessionTime;//入职日期
+	protected String proSummary;//员工试用期总结
 	protected Long postManagerId;//直属上级ID
 	protected String postManagerName;//直属上级姓名
 	protected Date postManagerAuditDate;//直属上级确认日期
@@ -169,5 +170,13 @@ public class HrPostApply extends BaseModel{
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public String getProSummary() {
+		return proSummary;
+	}
+
+	public void setProSummary(String proSummary) {
+		this.proSummary = proSummary;
 	}
 }

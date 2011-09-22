@@ -87,6 +87,15 @@
         	not-null="false"
         />
         <property
+        	name="proSummary"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="proSummary"
+        	not-null="false"
+        />
+        <property
         	name="postManagerId"
         	type="java.lang.Long"
         	update="true"
