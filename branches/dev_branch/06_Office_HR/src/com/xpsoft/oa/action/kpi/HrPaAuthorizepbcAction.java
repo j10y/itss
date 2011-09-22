@@ -71,26 +71,31 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			}
 			depIds += mapList1.get(mapList1.size() - 1).get("depId").toString();
 		}
-		String sql2 = "select * from (" +
-				"SELECT DISTINCT count(*) as total FROM hr_pa_kpipbc2user LEFT JOIN hr_pa_authorizepbc ON " +
+		String sql2 = "SELECT DISTINCT count(*) as total FROM hr_pa_kpipbc2user LEFT JOIN hr_pa_authorizepbc ON " +
 				"hr_pa_kpipbc2user.id = hr_pa_authorizepbc.pbcid, app_user WHERE " +
-				"hr_pa_kpipbc2user.belongUser = app_user.userId  and hr_pa_authorizepbc.userid = " + currentUser.getUserId() + 
-				" union SELECT DISTINCT count(*) as total FROM hr_pa_kpipbc2user , app_user WHERE hr_pa_kpipbc2user.belongUser = app_user.userId  ";
-		sql2 += ("".equals(depIds)) ? " and app_user.depId in(0)) a" : "and app_user.depId in (" + depIds + ")) a";
+				"hr_pa_kpipbc2user.publishStatus in (0, 2) and hr_pa_kpipbc2user.belongUser = app_user.userId " +
+				"and hr_pa_authorizepbc.userid = " + currentUser.getUserId();
+		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and app_user.fullname like '%" + fullname + "%'";
 		List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
-		//int total = Integer.parseInt(mapList2.get(0).get("total").toString()) + Integer.parseInt(mapList2.get(1).get("total").toString());
+		String sql4 = "select count(*) as total from hr_pa_kpipbc2user , app_user WHERE " +
+				"hr_pa_kpipbc2user.belongUser = app_user.userId and hr_pa_kpipbc2user.publishStatus in (0, 2) ";
+		sql4 += ("".equals(depIds)) ? " and app_user.depId in(0)) a" : "and app_user.depId in (" + depIds + ")";
+		sql4 += (fullname == null || "".equals(fullname)) ? "" : " and app_user.fullname like '%" + fullname + "%'";
+		List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
+		int total = Integer.parseInt(mapList2.get(0).get("total").toString()) + Integer.parseInt(mapList4.get(0).get("total").toString());
 		String sql3 = "select * from (" +
 				"SELECT DISTINCT hr_pa_kpipbc2user.id as pbcId, hr_pa_authorizepbc.id as authId, " +
 				"hr_pa_kpipbc2user.pbcName, app_user.fullname FROM hr_pa_kpipbc2user LEFT JOIN hr_pa_authorizepbc ON " +
 				"hr_pa_kpipbc2user.id = hr_pa_authorizepbc.pbcid, app_user WHERE " +
-				"hr_pa_kpipbc2user.belongUser = app_user.userId  and hr_pa_authorizepbc.userid = " + currentUser.getUserId() + 
+				"hr_pa_kpipbc2user.publishStatus in (0, 2) and hr_pa_kpipbc2user.belongUser = app_user.userId  and hr_pa_authorizepbc.userid = " + currentUser.getUserId() + 
 				" union SELECT DISTINCT hr_pa_kpipbc2user.id as pbcId, '0' as authId, hr_pa_kpipbc2user.pbcName, " +
-				"app_user.fullname FROM hr_pa_kpipbc2user , app_user WHERE hr_pa_kpipbc2user.belongUser = app_user.userId  ";
+				"app_user.fullname FROM hr_pa_kpipbc2user , app_user WHERE " +
+				"hr_pa_kpipbc2user.belongUser = app_user.userId  and hr_pa_kpipbc2user.publishStatus in (0, 2) ";
 		sql3 += ("".equals(depIds)) ? " and app_user.depId in(0)) a" : "and app_user.depId in (" + depIds + ")) a";
-		sql3+= (fullname == null || "".equals(fullname)) ? "" : " where a.fullname like '%" + fullname + "%'";
+		sql3 += (fullname == null || "".equals(fullname)) ? "" : " where a.fullname like '%" + fullname + "%'";
 		sql3 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
-		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList2.get(0).get("total") + "',result:[");
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + total + "',result:[");
 		for(int j = 0; j < mapList3.size(); j++) {
 			buff.append("{'authId':'").append(mapList3.get(j).get("authId") == null ? "0" : mapList3.get(j).get("authId").toString())
 					.append("','pbcId':'").append(mapList3.get(j).get("pbcId").toString())
