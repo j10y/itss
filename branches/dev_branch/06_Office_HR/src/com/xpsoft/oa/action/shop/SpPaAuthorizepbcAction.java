@@ -217,6 +217,9 @@ public class SpPaAuthorizepbcAction extends BaseAction{
 			try {
 				String pbcId = this.getRequest().getParameter("pbcId");
 				String[] calResult = spPaKpiPBC2UserService.calTotalScore(Long.parseLong(pbcId)).trim().split(",");
+				SpPaKpiPBC2User pbcNew = spPaKpiPBC2UserService.get(Long.parseLong(pbcId));
+				pbcNew.setPublishStatus(3);//置为已完成状态
+				spPaKpiPBC2UserService.save(pbcNew);
 				String sql3 = "select a.id, a.weight, a.result, b.id as piId, b.paName, b.paMode from sp_pa_kpiitem2user a, sp_pa_performanceindex b where " +
 						"a.pbcId = " + pbcId + " and a.piId = b.id order by a.id";
 				List<Map<String, Object>> mapList3 = this.spPaAuthorizepbcService.findDataList(sql3);

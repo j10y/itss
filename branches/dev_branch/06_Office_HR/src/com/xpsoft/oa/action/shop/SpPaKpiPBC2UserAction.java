@@ -110,23 +110,13 @@ public class SpPaKpiPBC2UserAction extends BaseAction {
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		SpPaKpiitem2userService spPaKpiitem2userService = (SpPaKpiitem2userService)AppUtil.getBean("spPaKpiitem2userService");
 		AppUser currentUser = ContextUtil.getCurrentUser();
-		//判断当前用户是不是部门负责人
-		String sql1 = "select depId from arch_rec_user where deptUserId = " + currentUser.getUserId();
-		List<Map<String, Object>> mapList1 = this.spPaKpiPBC2UserService.findDataList(sql1);
-		if(mapList1.size() == 0) {
-			return "success";
-		}
-		String depIds = "";
-		for(int m = 0; m < mapList1.size() - 1; m++) {
-			depIds += mapList1.get(m).get("depId").toString() + ",";
-		}
-		depIds += mapList1.get(mapList1.size() - 1).get("depId").toString();
+		
 		String sql4 = "select count(a.id) as total from sp_pa_kpipbc2user a, emp_profile b where " +
-		"a.belongUser = b.userId and b.depId in (" + depIds + ") and publishStatus = 1";
+		"a.belongUser = b.userId and publishStatus = 1";
 		List<Map<String, Object>> mapList4 = this.spPaKpiPBC2UserService.findDataList(sql4);
 		//获取部门下所有员工处于审核状态的个人PBC信息
 		String sql2 = "select a.id, a.pbcName, a.totalScore, b.fullname from sp_pa_kpipbc2user a, emp_profile b where " +
-				"a.belongUser = b.userId and b.depId in (" + depIds + ") and publishStatus = 1 order by a.modifyDate desc, a.id limit " + 
+				"a.belongUser = b.userId and b.depId and publishStatus = 3 order by a.modifyDate desc, a.id limit " + 
 				filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
 		List<Map<String, Object>> list = this.spPaKpiPBC2UserService.findDataList(sql2);
@@ -138,10 +128,9 @@ public class SpPaKpiPBC2UserAction extends BaseAction {
 					"a.pbcId = " + list.get(i).get("id").toString() + " and a.piId = b.id";
 			List<Map<String, Object>> list3 = spPaKpiitem2userService.findDataList(sql3);
 			String content = "<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">";
-			content += "<tr><td>考核指标名称</td><td>得分</td><td>权重</td></tr>";
+			content += "<tr><td>考核指标名称</td><td>得分</td></tr>";
 			for(int j = 0; j < list3.size(); j++) {
-				content += "<tr><td>" + list3.get(j).get("paName") + "</td><td>" + list3.get(j).get("result") + "</td><td>" + 
-						list3.get(j).get("weight") + "</td></tr>";
+				content += "<tr><td>" + list3.get(j).get("paName") + "</td><td>" + list3.get(j).get("result") + "</td></tr>";
 			}
 			content +="</table>";
 			buff.append("','content':'" + content);
