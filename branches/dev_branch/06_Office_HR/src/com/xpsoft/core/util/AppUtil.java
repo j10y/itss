@@ -304,4 +304,23 @@ public class AppUtil implements ApplicationContextAware {
 		}
 		return null;
 	}
+	public void reloadUserRole(){
+		String filePath = servletContext.getRealPath("/WEB-INF/classes/conf/");
+		Properties props = new Properties();
+		try {
+			InputStream is = new BufferedInputStream(new FileInputStream(filePath + "/config.properties"));
+			props.load(is);
+			Iterator it = props.keySet().iterator();
+			while (it.hasNext()) {
+				String key = (String) it.next();
+				//if(key.equals("role.leaderId")||key.equals("role.proxyLeaderId")){
+					configMap.put(key, props.get(key));
+					//System.out.println("-----------------------读取资源文件"+configMap.get(key)+"-------------------");
+				//}
+			}
+			
+		} catch (Exception ex) {
+			logger.error(ex.getMessage());
+		}
+	}
 }
