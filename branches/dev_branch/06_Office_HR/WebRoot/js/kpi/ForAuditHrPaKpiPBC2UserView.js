@@ -58,6 +58,10 @@ ForAuditHrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 					text : "查询",
 					handler : this.search.createCallback(this)
 				}, {
+					xtype : "button",
+					text : "重置",
+					handler : this.reset.createCallback(this)
+				}, {
 					name : "depId",
 					id : "depId",
 					xtype : "hidden"
@@ -154,5 +158,8 @@ ForAuditHrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 				}
 			});
 		}
+	},
+	reset : function(a) {
+		a.searchPanel.getForm().reset();
 	}
 });
