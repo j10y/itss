@@ -78,7 +78,17 @@ public class EmpProfile extends BaseModel {
 	//是否离职
 	private Integer isDepart;//
 	
+	private Integer organization;//编制 1是正编 0还是非编
 	
+	
+	public Integer getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Integer organization) {
+		this.organization = organization;
+	}
+
 	public Integer getIsDepart() {
 		return isDepart;
 	}
