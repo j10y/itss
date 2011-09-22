@@ -373,6 +373,12 @@
 		<action name="*ExportSalary" class="ExportSalaryAction" method="{1}">
 		   <result>${successResultValue}</result>
 		</action>
+		<action name="*HrPostApply" class="HrPostApplyAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*HrPostAssessment" class="HrPostAssessmentAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 		
 	</package>
 	<package name="budget" extends="struts-default" namespace="/budget">
