@@ -81,7 +81,7 @@
 								<td colspan="6">
 									${status.index + 1}.&nbsp;&nbsp;${item.key['paName']}&nbsp;&nbsp;&nbsp;&nbsp;
 									权重：<fmt:formatNumber value="${item.key['weight']}" pattern="###%" type="number"/>&nbsp;&nbsp;&nbsp;&nbsp;
-									得分：<fmt:formatNumber value="${item.key['result']}" pattern="#" type="number"/>
+									得分：<fmt:formatNumber value="${item.key['result']}" pattern="#.##" type="number"/>
 								</td>
 							</tr>
 							<tr>
