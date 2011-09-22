@@ -406,6 +406,8 @@ App.importJs = {
 			__ctxPath + "/ext3/ux/RowExpander.js"],
 	ShowHistoryView : [__ctxPath + "/js/kpi/ShowHistoryView.js",
 			__ctxPath + "/ext3/ux/RowExpander.js"],
+	ForAuditHrPaKpiPBC2UserView : [__ctxPath + "/js/kpi/ForAuditHrPaKpiPBC2UserView.js",
+			__ctxPath + "/ext3/ux/RowExpander.js"],
 	HrPromApplyView	: [__ctxPath + "/js/hrm/HrPromApplyView.js",
 			__ctxPath + "/js/hrm/HrPromApplyForm.js",
 			__ctxPath + "/js/hrm/HrPromAssessmentForm.js"],
