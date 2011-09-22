@@ -677,5 +677,10 @@
 		<constructor-arg index="0" ref="spPaKpiitem2userCmpDao"/>
 	</bean>
 <!-- end:  Generated for Package shop From Template: app-service.xml.beansvm -->
-	
+	<bean id="hrPostApplyService" class="com.xpsoft.oa.service.hrm.impl.HrPostApplyServiceImpl">
+		<constructor-arg index="0" ref="hrPostApplyDao"/>
+	</bean>
+	<bean id="hrPostAssessmentService" class="com.xpsoft.oa.service.hrm.impl.HrPostAssessmentServiceImpl">
+		<constructor-arg index="0" ref="hrPostAssessmentDao"/>
+	</bean>
 </beans>

@@ -352,4 +352,6 @@
 	<bean id="spPaKpiPBC2UserCmpDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiPBC2UserCmpDaoImpl" parent="baseDao"/>
 	<bean id="spPaKpiitem2userCmpDao" class="com.xpsoft.oa.dao.shop.impl.SpPaKpiitem2userCmpDaoImpl" parent="baseDao"/>
 <!-- end:  Generated for Package shop From Template: app-dao.xml.beansvm -->
+	<bean id="hrPostApplyDao" class="com.xpsoft.oa.dao.hrm.impl.HrPostApplyDaoImpl" parent="baseDao"/>
+    <bean id="hrPostAssessmentDao" class="com.xpsoft.oa.dao.hrm.impl.HrPostAssessmentDaoImpl" parent="baseDao"/>
 </beans>

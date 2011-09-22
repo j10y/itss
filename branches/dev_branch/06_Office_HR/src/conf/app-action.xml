@@ -331,5 +331,6 @@
   <bean id="SpPaKpipbcHistAction" class="com.xpsoft.oa.action.shop.SpPaKpipbcHistAction" scope="prototype"/>
   <bean id="SpPaKpiitemHistAction" class="com.xpsoft.oa.action.shop.SpPaKpiitemHistAction" scope="prototype"/>
 <!-- end:  Generated for Package shop From Template: app-action.xml.beansvm -->
-
+  <bean id="HrPostApplyAction" class="com.xpsoft.oa.action.hrm.HrPostApplyAction" scope="prototype"/>
+  <bean id="HrPostAssessmentAction" class="com.xpsoft.oa.action.hrm.HrPostAssessmentAction" scope="prototype"/>
 </beans>
