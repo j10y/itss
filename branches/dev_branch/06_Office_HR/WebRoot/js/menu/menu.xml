@@ -1675,10 +1675,6 @@
 				<Item id="ShowHistoryView" text="查看历史记录">
 				</Item>
 			</Items>
-			<Items id="SpReport" text="门店绩效考核统计">
-				<Item id="SpReportView" text="门店绩效考核评分统计">
-				</Item>
-			</Items>
 		</Items>
 		<Items id="HrAnlyReport" text="人力资源分析" isPublic="false">
 			<Item id="HrAnlyReportView" text="人力资源分析" iconCls="" isPublic="false">
@@ -1754,6 +1750,10 @@
 				<Item id="SpShowHistoryView" text="查看历史记录">
 				</Item>
 				-->
+			</Items>
+			<Items id="SpReport" text="门店绩效考核统计">
+				<Item id="SpReportView" text="门店绩效考核评分统计">
+				</Item>
 			</Items>
 		</Items>
 	</Items>
