@@ -50,6 +50,7 @@ public class HrPromAssessmentAction extends BaseAction{
 		filter.addFilter("Q_publishStatus_N_NEQ", "0");
 		filter.addFilter("Q_publishStatus_N_NEQ", "2");
 		filter.addFilter("Q_publishStatus_N_NEQ", "4");
+		filter.addFilter("Q_createPerson.userId_L_EQ", ContextUtil.getCurrentUserId().toString());
 		List<HrPromAssessment> list = this.hrPromAssessmentService.getAll(filter);
 		
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")

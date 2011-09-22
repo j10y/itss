@@ -61,6 +61,7 @@ public class HrPromApplyAction extends BaseAction{
 		filter.addFilter("Q_publishStatus_N_NEQ", "5");
 		filter.addFilter("Q_publishStatus_N_NEQ", "6");
 		filter.addFilter("Q_publishStatus_N_NEQ", "7");
+		filter.addFilter("Q_createPerson.userId_L_EQ", ContextUtil.getCurrentUserId().toString());
 		List<HrPromApply> list = this.hrPromApplyService.getAll(filter);
 		
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
@@ -78,6 +79,7 @@ public class HrPromApplyAction extends BaseAction{
 		filter.addFilter("Q_publishStatus_N_NEQ", "0");
 		filter.addFilter("Q_publishStatus_N_NEQ", "2");
 		filter.addFilter("Q_publishStatus_N_NEQ", "4");
+		filter.addFilter("Q_createPerson.userId_L_EQ", ContextUtil.getCurrentUserId().toString());
 		List<HrPromApply> list = this.hrPromApplyService.getAll(filter);
 		
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
