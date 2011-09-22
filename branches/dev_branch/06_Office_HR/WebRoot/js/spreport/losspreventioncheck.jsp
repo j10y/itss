@@ -5,7 +5,7 @@
 	<HEAD>
 	</HEAD>
 <body >
-<iframe frameborder="0" scrolling="yes"width="99%" height="44%"src="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/losspreventioncheck.raq&typeid=18,20&authMonth=${param.curMonth}"></iframe>
-<iframe frameborder="0" scrolling="yes"width="99%" height="44%"src="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/losspreventioncheck_s.raq&typeid=18,20&authMonth=${param.curMonth}"></iframe>
+<iframe frameborder="0" scrolling="yes"width="99%" height="49%"src="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/losspreventioncheck.raq&typeid=18,20&authMonth=${param.curMonth}"></iframe>
+<iframe frameborder="0" scrolling="yes"width="99%" height="49%"src="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/losspreventioncheck_s.raq&typeid=18,20&authMonth=${param.curMonth}"></iframe>
 </body>	
 </HTML>
