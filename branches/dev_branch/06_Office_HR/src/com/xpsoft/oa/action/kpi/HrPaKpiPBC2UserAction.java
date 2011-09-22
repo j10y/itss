@@ -226,7 +226,7 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		this.hrPaKpiPBC2UserService.save(this.hrPaKpiPBC2User);
 		
 		//移动到完成表
-		hrPaKpiPBC2UserCmpService.saveHrPaKpiPBC2UserCmp(pbcId);
+		//hrPaKpiPBC2UserCmpService.saveHrPaKpiPBC2UserCmp(pbcId);
 		
 		this.getRequest().setAttribute("flag", "2");
 		
