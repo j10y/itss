@@ -5,7 +5,7 @@ import com.xpsoft.core.model.BaseModel;
 public class HrPaDatadictionary extends BaseModel {
 	protected long id;
 	protected String name;
-	protected long parentId;
+	protected Long parentId;
 	
 	public HrPaDatadictionary(){}
 	
@@ -29,11 +29,11 @@ public class HrPaDatadictionary extends BaseModel {
 		this.name = name;
 	}
 
-	public long getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(long parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 }
