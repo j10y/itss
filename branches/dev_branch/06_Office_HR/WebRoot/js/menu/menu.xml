@@ -1674,6 +1674,8 @@
 				</Item>
 				<Item id="ShowHistoryView" text="查看历史记录">
 				</Item>
+				<Item id="ForAuditHrPaKpiPBC2UserView" text="待审核个人PBC">
+				</Item>
 			</Items>
 		</Items>
 		<Items id="HrAnlyReport" text="人力资源分析" isPublic="false">
