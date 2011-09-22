@@ -144,6 +144,7 @@ DepartmentView.prototype.setup = function() {
 		split : true,
 		height : 800,
 		width : 180,
+		autoScroll : true,
 		tbar : new Ext.Toolbar( {
 			items : [ {
 				xtype : "button",
