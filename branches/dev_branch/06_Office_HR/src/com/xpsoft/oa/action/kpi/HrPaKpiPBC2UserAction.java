@@ -157,14 +157,14 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		System.out.println(depId);
 		String sql4 = "select distinct count(a.id) as total from hr_pa_kpipbc2user a, emp_profile b, department c where " +
-		"a.belongUser = b.userId and publishStatus = 1";
-		sql4 += (depId == null || "".equals(depId)) ? "" : " and b.depId = c.depId and c.depId = " + depId;
+		"a.belongUser = b.userId and publishStatus = 1 and b.depId = c.depId";
+		sql4 += (depId == null || "".equals(depId)) ? "" : " and c.depId = " + depId;
 		sql4 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
 		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
 		//获取部门下所有员工处于审核状态的个人PBC信息
 		String sql2 = "select distinct a.id, a.pbcName, a.totalScore, b.fullname from hr_pa_kpipbc2user a, emp_profile b, department c where " +
-				"a.belongUser = b.userId and publishStatus = 1 ";
-		sql2 += (depId == null || "".equals(depId)) ? "" : " and b.depId = c.depId and c.depId = " + depId;
+				"a.belongUser = b.userId and publishStatus = 1 and b.depId = c.depId";
+		sql2 += (depId == null || "".equals(depId)) ? "" : " and c.depId = " + depId;
 		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and b.fullname like '%" + fullname + "%'";
 		sql2 += " limit " + filter.getPagingBean().getStart() + ", " + filter.getPagingBean().getPageSize();
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
