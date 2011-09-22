@@ -416,6 +416,8 @@ App.importJs = {
 	HrTZAnlyReportView:[__ctxPath + "/js/hrm/HrTZAnlyReportView.js"],
 	SpReportView:[__ctxPath + "/js/spreport/spreport.js"],
 	ExportSalaryView : [__ctxPath + "/js/hrm/ExportSalaryView.js",__ctxPath + "/js/hrm/ExportSalaryItemForm.js"],
+	HrPaDatadictionaryView : [__ctxPath + "/js/kpi/HrPaDatadictionaryView.js",
+			__ctxPath + "/js/kpi/HrPaDatadictionaryForm.js"],
 	
 	DraftSpPaPerformanceindexView : [__ctxPath + "/js/shop/DraftSpPaPerformanceindexView.js",
 			__ctxPath + "/js/shop/SpPaPerformanceindexForm.js",
