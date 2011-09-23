@@ -448,6 +448,11 @@ App.importJs = {
 	SpShowHistoryView : [__ctxPath + "/js/shop/SpShowHistoryView.js",
 			__ctxPath + "/ext3/ux/RowExpander.js"],
 	SpGradeTotalScoreView : [__ctxPath + "/js/shop/SpGradeTotalScoreView.js",
-			__ctxPath + "/js/shop/SpGradeTotalScoreForm.js"]		
-			
+			__ctxPath + "/js/shop/SpGradeTotalScoreForm.js"],		
+	HrPostApplyView	: [__ctxPath + "/js/hrm/HrPostApplyView.js",
+			__ctxPath + "/js/hrm/HrPostApplyForm.js"],
+	HrPostApplyStatusView : [__ctxPath + "/js/hrm/HrPostApplyStatusView.js",
+			__ctxPath + "/js/hrm/HrPostApplyPreview.js"],
+	HrPostAssessmentStatusView : [__ctxPath + "/js/hrm/HrPostAssessmentStatusView.js",
+			__ctxPath + "/js/hrm/HrPostAssessmentPreview.js"]
 };
