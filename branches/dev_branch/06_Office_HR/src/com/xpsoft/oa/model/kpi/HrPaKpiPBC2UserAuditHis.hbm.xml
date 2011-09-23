@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.kpi.HrPaKpiPBC2UserAuditHis"
+        table="hr_pa_kpipbc2userAuditHis"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+
+        <many-to-one name="checkUser" not-null="true" class="com.xpsoft.oa.model.system.AppUser" column="checkUser"></many-to-one>
+        
+        <property
+        	name="hrPaKpiPBC2UserId"
+        	type="java.lang.Long"
+        	update="false"
+        	insert="true"
+        	access="property"
+        	column="kpipbc2user"
+        	length="19"
+        	not-null="true"
+        	unique="false"
+        />
+        <property
+        	name="checkStatus"
+        	type="java.lang.Short"
+        	update="false"
+        	insert="true"
+        	access="property"
+        	column="checkStatus"
+        	length="19"
+        	not-null="true"
+        	unique="false"
+        />
+        <property
+        	name="checkTime"
+        	type="java.util.Date"
+        	update="false"
+        	insert="true"
+        	access="property"
+        	column="checkTime"
+        	length="19"
+        	not-null="false"
+        	unique="false"
+        />
+		<property
+        	name="checkRemark"
+        	type="java.lang.String"
+        	update="false"
+        	insert="true"
+        	access="property"
+        	column="checkRemark"
+        	length="19"
+        	not-null="false"
+        	unique="false"
+        />
+    </class>
+</hibernate-mapping>

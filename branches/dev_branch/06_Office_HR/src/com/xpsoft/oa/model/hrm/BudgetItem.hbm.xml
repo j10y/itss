@@ -89,5 +89,6 @@
             not-null="false"
             unique="false"
         />   
+        <many-to-one name="belongItem" not-null="false" class="com.xpsoft.oa.model.hrm.BudgetItem" column="belongItem"></many-to-one>
     </class>
 </hibernate-mapping>

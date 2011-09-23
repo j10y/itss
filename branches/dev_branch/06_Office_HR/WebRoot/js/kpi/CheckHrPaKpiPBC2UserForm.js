@@ -1,4 +1,4 @@
-CheckSalaryPayoffForm = Ext.extend(Ext.Window, {
+CheckHrPaKpiPBC2UserForm = Ext.extend(Ext.Window, {
 	formPanel : null,
 	constructor : function(a) {
 		if (a == null) {
@@ -6,8 +6,8 @@ CheckSalaryPayoffForm = Ext.extend(Ext.Window, {
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		CheckSalaryPayoffForm.superclass.constructor.call(this, {
-			id : "CheckSalaryPayoffFormWin",
+		CheckHrPaKpiPBC2UserForm.superclass.constructor.call(this, {
+			id : "CheckHrPaKpiPBC2UserFormWin",
 			iconCls : "btn-empProfile-pass",
 			layout : "form",
 			items : [ this.displayPanel, this.formPanel ],
@@ -15,29 +15,29 @@ CheckSalaryPayoffForm = Ext.extend(Ext.Window, {
 			height : 415,
 			shadow : false,
 			autoScroll : true,
-			width : 520,
+			width : 600,
 			maximizable : true,
-			title : "薪酬发放审核",
+			title : "个人PBC得分审核",
 			buttonAlign : "center",
 			buttons : this.buttons
 		});
 	},
 	initComponents : function() {
 		this.displayPanel = new Ext.Panel({
-			id : "CheckSalaryPayoffFormPanel",
+			id : "CheckHrPaKpiPBC2UserFormPanel",
 			autoHeight : true,
 			border : false,
 			autoLoad : {
-				url : __ctxPath + "/pages/hrm/checkSalaryPayoff.jsp?recordId="
+				url : __ctxPath + "/kpi/getViewHrPaKpiPBC2User.do?id="
 						+ this.recordId
 			}
 		});
 		this.formPanel = new Ext.FormPanel({
 			layout : "form",
 			border : false,
-			url : __ctxPath + "/hrm/checkSalaryPayoff.do?recordId="
+			url : __ctxPath + "/kpi/checkHrPaKpiPBC2UserAuditHis.do?hrPaKpiPBC2UserId="
 					+ this.recordId,
-			id : "CheckSalaryPayoffForm",
+			id : "CheckHrPaKpiPBC2UserForm",
 			bodyStyle : "padding:0 0 0 10px;",
 			defaultType : "recordId",
 			items : [ {
@@ -46,22 +46,22 @@ CheckSalaryPayoffForm = Ext.extend(Ext.Window, {
 				anchor : "98%",
 				allowBlank : false,
 				blankText : "审核意见为必填!",
-				name : "salaryPayoff.checkOpinion",
-				id : "CheckSalaryPayoffForm.checkOpinion"
+				name : "hrPaKpiPBC2UserAuditHis.checkRemark",
+				id : "CheckHrPaKpiPBC2UserForm.checkRemark"
 			}, {
 				xtype : "hidden",
-				name : "salaryPayoff.checkStatus",
-				id : "CheckSalaryPayoffForm.checkStatus"
+				name : "hrPaKpiPBC2UserAuditHis.checkStatus",
+				id : "CheckHrPaKpiPBC2UserForm.checkStatus"
 			} ]
 		});
 		this.buttons = [ {
 			text : "审核通过",
 			iconCls : "btn-salaryPayoff-pass",
-			id : "salaryPayoffbtnY",
+			id : "hrPaKpiPBC2UserbtnY",
 			handler : this.check.createCallback(this.formPanel, this)
 		}, {
 			text : "审核未通过",
-			id : "salaryPayoffbtnN",
+			id : "hrPaKpiPBC2UserbtnN",
 			iconCls : "btn-salaryPayoff-notpass",
 			handler : this.refuse.createCallback(this.formPanel, this)
 		}, {
@@ -71,14 +71,14 @@ CheckSalaryPayoffForm = Ext.extend(Ext.Window, {
 		} ];
 	},
 	refuse : function(a, b) {
-		Ext.getCmp("CheckSalaryPayoffForm.checkStatus").setValue("2");
+		Ext.getCmp("CheckHrPaKpiPBC2UserForm.checkStatus").setValue("0");
 		if (a.getForm().isValid()) {
 			a.getForm().submit({
 				method : "POST",
 				waitMsg : "正在提交数据...",
 				success : function(c, e) {
 					Ext.ux.Toast.msg("操作信息", "成功保存信息！");
-					var d = Ext.getCmp("SalaryPayoffGrid");
+					var d = Ext.getCmp("ForAuditHrPaKpiPBC2UserGrid");
 					if (d != null) {
 						d.getStore().reload();
 					}
@@ -100,14 +100,14 @@ CheckSalaryPayoffForm = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	check : function(a, b) {
-		Ext.getCmp("CheckSalaryPayoffForm.checkStatus").setValue("1");
+		Ext.getCmp("CheckHrPaKpiPBC2UserForm.checkStatus").setValue("1");
 		if (a.getForm().isValid()) {
 			a.getForm().submit({
 				method : "POST",
 				waitMsg : "正在提交数据...",
 				success : function(c, e) {
 					Ext.ux.Toast.msg("操作信息", "成功保存信息！");
-					var d = Ext.getCmp("SalaryPayoffGrid");
+					var d = Ext.getCmp("ForAuditHrPaKpiPBC2UserGrid");
 					if (d != null) {
 						d.getStore().reload();
 					}

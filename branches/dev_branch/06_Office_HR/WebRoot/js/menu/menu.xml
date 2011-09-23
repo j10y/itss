@@ -1551,7 +1551,9 @@
 		</Items>
 		<Items id="Budget" text="预算管理" iconCls="menu-budget"
 			isPublic="false">
-			<Item id="BudgetView" text="预算草稿" iconCls="menu-budget">
+			<Items id="Budget" text="年度预算管理" iconCls="menu-budget"
+			isPublic="false">
+			<Item id="BudgetView" text="年度预算草稿" iconCls="menu-budget">
 			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
@@ -1569,16 +1571,50 @@
 			       <url>/budget/multiDelBudget.do</url>
 			    </Function>
 			</Item>
-			<Item id="BudgetStatusView" text="预算状态" iconCls="menu-budget">
+			<Item id="BudgetStatusView" text="年度预算状态" iconCls="menu-budget">
 			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
 			</Item>
-			<Item id="BudgetAlarmView" text="预算预警" iconCls="menu-budget">
+			<Item id="BudgetAlarmView" text="年度预算预警" iconCls="menu-budget">
 			    <Function id="_BudgetAlarmQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listAlarmBudget.do</url>
 			    </Function>
 			</Item>
+			</Items>
+			
+			<Items id="BudgetQuarter" text="季度预算管理" iconCls="menu-budget"
+			isPublic="false">
+			<Item id="BudgetQuarterView" text="季度预算草稿" iconCls="menu-budget">
+			    <Function id="_BudgetQuarterQuery" text="查看" iconCls="menu-list">
+			       <url>/budget/listBudget.do</url>
+			    </Function>
+			    <Function id="_BudgetQuarterAdd" text="添加" iconCls="menu-add">
+			       <url>/budget/listBudget.do</url>
+			       <url>/budget/saveBudget.do</url>
+			    </Function>
+			    <Function id="_BudgetQuarterEdit" text="编辑" iconCls="btn-edit">
+			       <url>/budget/listBudget.do</url>
+			       <url>/budget/saveBudget.do</url>
+			       <url>/budget/getBudget.do</url>
+			    </Function>
+			    <Function id="_BudgetQuarterDel" text="删除" iconCls="menu-del">
+			       <url>/budget/listBudget.do</url>
+			       <url>/budget/multiDelBudget.do</url>
+			    </Function>
+			</Item>
+			<Item id="BudgetQuarterStatusView" text="季度预算状态" iconCls="menu-budget">
+			    <Function id="_BudgetQuarterQuery" text="查看" iconCls="menu-list">
+			       <url>/budget/listBudget.do</url>
+			    </Function>
+			</Item>
+			<Item id="BudgetQuarterAlarmView" text="季度预算预警" iconCls="menu-budget">
+			    <Function id="_BudgetQuarterAlarmQuery" text="查看" iconCls="menu-list">
+			       <url>/budget/listAlarmBudget.do</url>
+			    </Function>
+			</Item>
+			</Items>
+			
 			<!-- 
 			<Item id="RealExecutionView" text="执行跟踪" iconCls="menu-budget">
 			    <Function id="_RealExecutionQuery" text="查看" iconCls="menu-list">

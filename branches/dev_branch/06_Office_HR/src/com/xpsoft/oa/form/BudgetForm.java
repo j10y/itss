@@ -8,6 +8,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 
@@ -42,6 +43,11 @@ public class BudgetForm{
 	public static final String ALARM_GREEN="0";
 	public static final String ALARM_YELLOW="1";
 	public static final String ALARM_RED="2";
+	
+	@Expose
+	protected Budget belongBudget;//所属（年度）预算
+	@Expose
+	protected Integer budgetType;//年度1 季度2 月度3（待议）
 	
 	public Long getBudgetId() {
 		return budgetId;
@@ -116,6 +122,19 @@ public class BudgetForm{
 	}
 	public void setAlarmStatus(String alarmStatus) {
 		this.alarmStatus = alarmStatus;
+	}
+	
+	public Budget getBelongBudget() {
+		return belongBudget;
+	}
+	public void setBelongBudget(Budget belongBudget) {
+		this.belongBudget = belongBudget;
+	}
+	public Integer getBudgetType() {
+		return budgetType;
+	}
+	public void setBudgetType(Integer budgetType) {
+		this.budgetType = budgetType;
 	}
 	public int hashCode() {
 		return new HashCodeBuilder(-82280557, -700257973)

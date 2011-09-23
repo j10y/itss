@@ -41,6 +41,11 @@ public class Budget extends BaseModel{
 	public static final String ALARM_YELLOW="1";
 	public static final String ALARM_RED="2";
 	
+	@Expose
+	protected Budget belongBudget;//所属（年度）预算
+	@Expose
+	protected Integer budgetType;//年度1 季度2 月度3（待议）
+	
 	public Long getBudgetId() {
 		return budgetId;
 	}
@@ -108,7 +113,18 @@ public class Budget extends BaseModel{
 		this.publishStatus = publishStatus;
 	}
 
-	
+	public Budget getBelongBudget() {
+		return belongBudget;
+	}
+	public void setBelongBudget(Budget belongBudget) {
+		this.belongBudget = belongBudget;
+	}
+	public Integer getBudgetType() {
+		return budgetType;
+	}
+	public void setBudgetType(Integer budgetType) {
+		this.budgetType = budgetType;
+	}
 	public int hashCode() {
 		return new HashCodeBuilder(-82280557, -700257973)
 	       .append(this.budgetId)
@@ -122,6 +138,7 @@ public class Budget extends BaseModel{
 	       .append(this.modifyPerson)
 	       .append(this.remark)
 	       .append(this.publishStatus)
+	       .append(this.belongBudget)
 	       .toHashCode();
 	}
 	@Override
@@ -142,6 +159,7 @@ public class Budget extends BaseModel{
 			.append(this.modifyPerson, rhs.modifyPerson)
 			.append(this.remark, rhs.remark)
 			.append(this.publishStatus, rhs.publishStatus)
+			.append(this.belongBudget, rhs.belongBudget)
 			.isEquals();
 	}
 	@Override
@@ -158,6 +176,7 @@ public class Budget extends BaseModel{
 			.append("modifyPerson", this.modifyPerson)
 			.append("remark", this.remark)
 			.append("publishStatus", this.publishStatus)
+			.append("budgetType", this.budgetType)
 			.toString();
 	}
 

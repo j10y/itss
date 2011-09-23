@@ -1,6 +1,5 @@
 package com.xpsoft.oa.action.hrm;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,8 +8,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.xpsoft.core.command.QueryFilter;
-import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.Budget;
@@ -20,6 +20,7 @@ import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.BudgetItemService;
+import com.xpsoft.oa.service.hrm.BudgetService;
 import com.xpsoft.oa.service.hrm.JobSalaryRelationService;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
 
@@ -37,6 +38,9 @@ public class BudgetItemAction extends BaseAction {
 	
 	@Resource
 	private RealExecutionService realExecutionService;
+	
+	@Resource
+	private BudgetService budgetService;
 	
 	public Long getBudgetItemId() {
 		/* 35 */return this.budgetItemId;
@@ -137,6 +141,36 @@ public class BudgetItemAction extends BaseAction {
 
 		return "success";
 	}
+	
+	public String load() {
+		BudgetItem budgetItem = (BudgetItem) this.budgetItemService.load(this.budgetItemId);
+		//add by awen for add get default budgetItem value logic on 2011-09-01 begin
+		
+		/*if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
+			Department department = budgetItem.getBudget().getBelongDept();
+			Map filterMap = new HashMap();
+			filterMap.put("Q_deleteFlag_N_EQ", "0");
+			filterMap.put("Q_department.depId_L_EQ", department.getDepId().toString());
+			QueryFilter filter = new QueryFilter(filterMap);
+			List<JobSalaryRelation> list = this.jobSalaryRelationService.getAll(filter);
+			BigDecimal totalMoney = new BigDecimal(0);
+			for(JobSalaryRelation relation : list){
+				totalMoney = totalMoney.add(relation.getTotalMoney());
+			}
+			budgetItem.setValue(totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
+		}*/
+		//add by awen for add get default budgetItem value logic on 2011-09-01 end
+		StringBuffer sb = new StringBuffer("{success:true,totalCounts:1,data:[");
+
+		JSONSerializer serializer = new JSONSerializer();
+		sb.append(serializer.exclude(new String[] { "class", "department.class" })
+			.serialize(budgetItem));
+		sb.append("]}");
+		setJsonString(sb.toString());
+		//setJsonString("{success:true,totalCounts:1,data:[{'budget':{'beginDate':1312992000000,'belongDept':{'class':'com.xpsoft.oa.model.system.Department_$$_javassist_122','depDesc':'维护系统','depId':1,'depLevel':2,'depName':'信息部门','parentId':0,'path':'0.1.'},'budgetId':1,'class':'com.xpsoft.oa.model.hrm.Budget_$$_javassist_62','createDate':1313047728000,'createPerson':{'accessionTime':1261065600000,'accountNonExpired':true,'accountNonLocked':true,'address':null,'businessEmail':'csx@jee-soft.cn','class':'com.xpsoft.oa.model.system.AppUser_$$_javassist_133','credentialsNonExpired':true,'delFlag':0,'department':{'class':'com.xpsoft.oa.model.system.Department_$$_javassist_122','depDesc':'维护系统','depId':1,'depLevel':2,'depName':'信息部门','parentId':0,'path':'0.1.'},'education':null,'email':'csx@jee-soft.cn','enabled':true,'familyName':'超级管理员','fax':null,'firstKeyColumnName':'userId','fullname':'超级管理员','functionRights':'','givenName':'超级管理员','id':'1','mobile':null,'password':'a4ayc/80/OGda4BO/1o/V0etpOqiLx1JwB5S3beHW0s=','phone':null,'photo':null,'position':null,'status':1,'title':1,'userId':1,'username':'admin','zip':null},'endDate':1313078400000,'modifyDate':1313113100000,'modifyPerson':{'accessionTime':1261065600000,'accountNonExpired':true,'accountNonLocked':true,'address':null,'businessEmail':'csx@jee-soft.cn','class':'com.xpsoft.oa.model.system.AppUser_$$_javassist_133','credentialsNonExpired':true,'delFlag':0,'department':{'class':'com.xpsoft.oa.model.system.Department_$$_javassist_122','depDesc':'维护系统','depId':1,'depLevel':2,'depName':'信息部门','parentId':0,'path':'0.1.'},'education':null,'email':'csx@jee-soft.cn','enabled':true,'familyName':'超级管理员','fax':null,'firstKeyColumnName':'userId','fullname':'超级管理员','functionRights':'','givenName':'超级管理员','id':'1','mobile':null,'password':'a4ayc/80/OGda4BO/1o/V0etpOqiLx1JwB5S3beHW0s=','phone':null,'photo':null,'position':null,'status':1,'title':1,'userId':1,'username':'admin','zip':null},'name':'2011IT预算','publishStatus':null,'remark':null},'budgetItemId':1,'code':'1.1','deleteFlag':0,'key':'cost','name':'成本','parent':{budgetItemId:0},'threshold':0.1,'value':100.0}]}");
+
+		return "success";
+	}
 
 	public String save() {
 		AppUser user = ContextUtil.getCurrentUser();
@@ -208,8 +242,12 @@ public class BudgetItemAction extends BaseAction {
 			}
 		}
 		
+		Budget budget = (Budget)budgetService.get(Long.valueOf(getRequest().getParameter("budgetId")));
+		
 		for(Map node : result){//所有root
-			buildDefaultBudgetItem(node);
+			if(budget.getBudgetType().intValue()==1){//年度才会显示岗位树
+				buildDefaultBudgetItem(node);
+			}			
 			cascade(node, itemList);
 		}
 		
@@ -301,5 +339,40 @@ public class BudgetItemAction extends BaseAction {
 				defaultNode.put("children", childList);
 			}
 		}		
+	}
+	
+	/**
+	 * 校验某一层级所有成本要素的和小于其父成本要素
+	 * 1,季度预算
+	 *     a,第一层增加必须选择年度的有的增加，且小于年度中相应的ITEM
+	 *     b,第二层增加必须的和必须小于其父亲
+	 * 2,年度预算
+	 *     a,无所谓
+	 *     b,第二层增加必须的和必须小于其父亲
+	 */
+	public void validateSum(){
+		//this.budgetItem;
+		
+		BudgetItem parent = null;
+		Map filterMap = new HashMap();
+		if(StringUtils.isNotEmpty(getRequest().getParameter("budgetItem.parent.budgetItemId"))){
+			filterMap.put("Q_parent.budgetItemId_L_EQ", getRequest().getParameter("budgetItem.parent.budgetItemId"));
+			parent = this.budgetItemService.get(Long.valueOf(getRequest().getParameter("budgetItem.parent.budgetItemId")));
+		}else{
+			filterMap.put("Q_parent.budgetItemId_L_NULL", "");
+			//
+		}
+		filterMap.put("Q_deleteFlag_N_EQ", "0");
+		QueryFilter queryFilter = new QueryFilter(filterMap);
+		List<BudgetItem> list = this.budgetItemService.getAll(queryFilter);
+		
+		//求之前同一级别的预算和
+		Double result = new Double(0);
+		for(BudgetItem item : list){
+			result += item.getValue();
+		}
+		
+		//求父亲的和
+		
 	}
 }

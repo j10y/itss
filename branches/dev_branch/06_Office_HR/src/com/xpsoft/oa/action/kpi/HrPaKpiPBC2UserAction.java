@@ -148,6 +148,25 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		
 		return "success";
 	}
+	public String getView(){
+		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
+		HrPaKpiPBC2User hrPaKpiPBC2User = this.hrPaKpiPBC2UserService.get(this.id);
+		String sql = "select b.paName, a.result, a.weight from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+		"a.pbcId = " + hrPaKpiPBC2User.getId() + " and a.piId = b.id";
+		List<Map<String, Object>> list3 = hrPaKpiitem2userService.findDataList(sql);
+		String content = "<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">";
+		content += "<tr><td>考核指标名称</td><td>得分</td><td>权重</td></tr>";
+		for(int j = 0; j < list3.size(); j++) {
+			content += "<tr><td>" + list3.get(j).get("paName") + "</td><td>" + list3.get(j).get("result") + "</td><td>" + 
+					list3.get(j).get("weight") + "</td></tr>";
+		}
+		content +="</table>";
+		getRequest().setAttribute("content", content);
+		getRequest().setAttribute("totalScore", hrPaKpiPBC2User.getTotalScore());
+		getRequest().setAttribute("pbcName", hrPaKpiPBC2User.getPbcName());
+		getRequest().setAttribute("user", hrPaKpiPBC2User.getBelongUser().getFullname());
+		return "view";
+	}
 	
 	public String listForAudit() {
 		QueryFilter filter = new QueryFilter(this.getRequest());
@@ -170,7 +189,8 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList4.get(0).get("total") + "',result:[");
 		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
 		for(int i = 0; i < list.size(); i++) {
-			buff.append("{'fullname':'" + (String)list.get(i).get("fullname"))
+			buff.append("{'id':'" + list.get(i).get("id").toString())
+					.append("','fullname':'" + (String)list.get(i).get("fullname"))
 					.append("','pbcName':'" + (String)list.get(i).get("pbcName"))
 					.append("','totalScore':'" + list.get(i).get("totalScore").toString());
 			String sql3 = "select b.paName, a.result, a.weight from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
@@ -235,7 +255,8 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + totalCounts + "',result:[");
 		List<Map<String, Object>> list = this.hrPaKpiPBC2UserService.findDataList(sql2);
 		for(int i = 0; i < list.size(); i++) {
-			buff.append("{'fullname':'" + (String)list.get(i).get("fullname"))
+			buff.append("{'id':'" + list.get(i).get("id").toString())
+					.append("','fullname':'" + (String)list.get(i).get("fullname"))
 					.append("','pbcName':'" + (String)list.get(i).get("pbcName"))
 					.append("','totalScore':'" + list.get(i).get("totalScore").toString())
 					.append("','createDate':'" + sdf.format(list.get(i).get("createDate")));

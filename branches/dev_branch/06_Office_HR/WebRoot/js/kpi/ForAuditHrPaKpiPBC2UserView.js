@@ -112,6 +112,20 @@ ForAuditHrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 				}, {
 					header : "总分",
 					dataIndex : "totalScore"
+				}, {
+					header : "管理",
+					dataIndex : "profileId",
+					width : 100,
+					sortable : false,
+					renderer : function (g, f, d, j, e) {
+						var i = d.data.id;
+						var c = d.data.checkStatus;
+						var h = "";
+						if (isGranted("_HrPaKpiPBC2UserCheck")) {
+							h += '<button title="审核" value=" " class="btn-empProfile-check" onclick="ForAuditHrPaKpiPBC2UserView.check(' + i + ')">&nbsp;&nbsp;</button>';
+						}
+						return h;
+					}
 				}
 			],
 			defaults : {
@@ -163,3 +177,9 @@ ForAuditHrPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 		a.searchPanel.getForm().reset();
 	}
 });
+
+ForAuditHrPaKpiPBC2UserView.check = function (a) {
+	new CheckHrPaKpiPBC2UserForm({
+			recordId : a
+		}).show();
+};

@@ -1,4 +1,4 @@
-BudgetAlarmView = Ext.extend(Ext.Panel, {
+BudgetQuarterStatusView = Ext.extend(Ext.Panel, {
 	searchPanel : null,
 	gridPanel : null,
 	store : null,
@@ -6,9 +6,9 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		Ext.applyIf(this, a);
 		this.initUIComponents();
-		BudgetAlarmView.superclass.constructor.call(this, {
-			id : "BudgetAlarmView",
-			title : "年度预算监控",
+		BudgetQuarterStatusView.superclass.constructor.call(this, {
+			id : "BudgetQuarterStatusView",
+			title : "季度预算状态列表",
 			iconCls : "menu-arch-rec-type",
 			region : "center",
 			layout : "border",
@@ -55,7 +55,7 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 			} ]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listAlarmBudget.do?Q_budgetType_N_EQ=1&Q_publishStatus_N_EQ=3",
+			url : __ctxPath + "/budget/listBudget.do?Q_budgetType_N_EQ=2&Q_publishStatus_N_GT=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=2",
 			root : "result",
 			totalProperty : "totalCounts",
 			remoteSort : true,
@@ -65,10 +65,8 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 			}, "name", {
 				name : "depName",
 				mapping : "belongDept.depName"
-			}, "beginDate"
-			, "budgetType"
+			}, "beginDate" 
 			, "endDate" 
-			, "alarmStatus"
 			, "publishStatus"
 			, "createDate"
 			, "createPerson", {
@@ -85,14 +83,13 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 		});
 		var b = new Array();
 
-		if (isGranted("_BudgetAlarmView")) {
+		if (isGranted("_BudgetView")) {
 			b.push({
 				iconCls : "btn-preview",
-				qtip : "查询详情",
+				qtip : "查看详情",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -105,40 +102,8 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 				dataIndex : "budgetId",
 				hidden : true
 			}, {
-				header : "告警信息",
-				dataIndex : "alarmStatus",
-				renderer : function(v){
-					if(v==""){
-            			return "---";
-            		}else{
-            			if(v=="0"){
-            				return "<img src='" + __ctxPath + "/images/budget/alarm_green.png'></img>绿色安全";
-            			}else{
-            				if(v=="1"){
-            					return "<img src='" + __ctxPath + "/images/budget/alarm_yellow.png'></img>黄色警报";
-            				}else{
-            					if(v=="2"){
-            						return "<img src='" + __ctxPath + "/images/budget/alarm_red.png'></img>红色危险";
-            					}else{
-            						
-            					}            					
-            				}
-            			}
-            		}
-				}
-			}, {
 				header : "名称",
 				dataIndex : "name"
-			}, {
-				header : "类型",
-				dataIndex : "budgetType",
-				renderer : function(v){
-					if(v=='1'){
-						return "<font color='red'>年度</font>";
-					}else if(v=="2"){
-						return "<font color='red'>季度</font>";
-					}
-				}
 			}, {
 				header : "所属部门",
 				dataIndex : "depName"
@@ -189,7 +154,6 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 			bodyStyle : "text-align:left",
 			items : []
 		});
-		
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "BudgetGrid",
 			region : "center",
@@ -216,20 +180,28 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 				emptyMsg : "当前没有记录"
 			})
 		});
-//		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
-//			f.getSelectionModel().each(function(e) {
-//				new BudgetForm({
-//					budgetId : e.data.budgetId
-//				}).show();
-//			});
-//		});
+		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
+			f.getSelectionModel().each(function(e) {				
+				var a = Ext.getCmp("centerTabPanel");
+				var b = Ext.getCmp("BudgetFormWin");
+				if (b != null) {
+					a.remove("BudgetFormWin");
+				}
+				b = new BudgetForm({
+					budgetId : e.data.budgetId,
+					itEdit:false
+				});
+				a.add(b);
+				a.activate(b);
+			});
+		});
 		this.rowActions.on("action", this.onRowAction, this);
 	},
 	search : function(a) {
 		if (a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询",
-				url : __ctxPath + "/budget/listAlarmBudget.do?Q_budgetType_N_EQ=1&Q_publishStatus_N_EQ=3",
+				url : __ctxPath + "/budget/listBudget.do?Q_budgetType_N_EQ=2&Q_publishStatus_N_GT=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=2",
 				success : function(c, d) {
 					var b = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(b);
@@ -243,7 +215,7 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 		if (b != null) {
 			a.remove("BudgetFormWin");
 		}
-		b = new BudgetForm();
+		b = new BudgetForm({isEdit:true});
 		a.add(b);
 		a.activate(b);
 	},
@@ -276,7 +248,11 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 		}
 		var d = Array();
 		for ( var b = 0; b < a.length; b++) {
+			if(a[b].data.publishStatus!=3)//3为已经发布
 			d.push(a[b].data.budgetId);
+		}
+		if(a.length>=1 && d.length==0){
+			Ext.ux.Toast.msg("信息", "不允许删除已经发布预算记录！");
 		}
 		this.delByIds(d);
 	},
@@ -287,19 +263,21 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 			a.remove("BudgetFormWin");
 		}
 		b = new BudgetForm({
-			budgetId : l.data.budgetId
+			budgetId : l.data.budgetId,
+			isEdit:true
 		});
 		a.add(b);
 		a.activate(b);
 	},
 	viewByIds : function(l) {		
 		var a = Ext.getCmp("centerTabPanel");
-		var b = Ext.getCmp("BudgetFormViewWin");
+		var b = Ext.getCmp("BudgetFormWin");
 		if (b != null) {
-			a.remove("BudgetFormViewWin");
+			a.remove("BudgetFormWin");
 		}
-		b = new BudgetFormView({
-			budgetId : l.data.budgetId
+		b = new BudgetForm({
+			budgetId : l.data.budgetId,
+			isEdit:false
 		});
 		a.add(b);
 		a.activate(b);
@@ -310,10 +288,24 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 			this.viewByIds(a);
 			break;
 		case "btn-del":
-			this.delByIds(a.data.budgetId);
+			{
+				if(a.data.publishStatus==3){
+					Ext.ux.Toast.msg("信息", "不允许删除已经发布预算记录！");
+				}else{
+					this.delByIds(a.data.budgetId)
+				}
+			};
 			break;
 		case "btn-edit":
-			this.editRecord(a);
+			{
+				if(a.data.publishStatus==1){
+					Ext.ux.Toast.msg("信息", "不允许修改审批中预算记录！");
+				}else if(a.data.publishStatus==3){
+					Ext.ux.Toast.msg("信息", "不允许修改已经发布预算记录！");
+				}else{
+					this.editRecord(a);
+				}
+			};
 			break;
 		default:
 			break;

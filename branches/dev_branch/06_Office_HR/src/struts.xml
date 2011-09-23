@@ -454,6 +454,11 @@
 		<action name="*HrPaKpiPBC2User" class="HrPaKpiPBC2UserAction" method="{1}">
 			<result>${successResultValue}</result>
 			<result name="gradeResult">/pages/kpi/gradeResult.jsp</result>
+			<result name="view">/pages/kpi/hrPaKpiPBC2UserView.jsp</result>
+		</action>
+		<action name="*HrPaKpiPBC2UserAuditHis" class="HrPaKpiPBC2UserAuditHisAction" method="{1}">
+			<result>${successResultValue}</result>
+			<result name="listHis">/pages/kpi/hrPaKpiPBC2UserAuditHis.jsp</result>
 		</action>
 		<action name="*HrPaKpiitem2user" class="HrPaKpiitem2userAction" method="{1}">
 			<result>${successResultValue}</result>

@@ -116,6 +116,20 @@ ShowHistoryView = Ext.extend(Ext.Panel, {
 				}, {
 					header : "时间",
 					dataIndex : "createDate"
+				}, {
+					header : "管理",
+					dataIndex : "profileId",
+					width : 100,
+					sortable : false,
+					renderer : function (g, f, d, j, e) {
+						var i = d.data.id;
+						var c = d.data.checkStatus;
+						var h = "";
+						if (isGranted("_HrPaKpiPBC2UserHis")) {
+							h += '<button title="查看审批历史" value=" " class="btn-preview" onclick="ShowHistoryView.check(' + i + ')">&nbsp;&nbsp;</button>';
+						}
+						return h;
+					}
 				}
 			],
 			defaults : {
@@ -164,3 +178,8 @@ ShowHistoryView = Ext.extend(Ext.Panel, {
 		}
 	}
 });
+ShowHistoryView.check = function (a) {
+	new HisHrPaKpiPBC2UserForm({
+		recordId : a
+	}).show();
+};

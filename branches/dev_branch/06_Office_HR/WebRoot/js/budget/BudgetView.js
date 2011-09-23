@@ -8,7 +8,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		this.initUIComponents();
 		BudgetView.superclass.constructor.call(this, {
 			id : "BudgetView",
-			title : "预算草稿列表",
+			title : "年度预算草稿列表",
 			iconCls : "menu-arch-rec-type",
 			region : "center",
 			layout : "border",
@@ -55,7 +55,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			} ]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_GE=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=1&alarm=true",
+			url : __ctxPath + "/budget/listBudget.do?Q_budgetType_N_EQ=1&Q_publishStatus_N_GE=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=1&alarm=true",
 			root : "result",
 			totalProperty : "totalCounts",
 			remoteSort : true,
@@ -72,7 +72,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 			, "createPerson", {
 				name : "createPerson",
 				mapping : "createPerson.fullname"
-			}]
+			},"budgetType"]
 		});
 		this.store.setDefaultSort("budgetId", "desc");
 		this.store.load({
@@ -117,6 +117,16 @@ BudgetView = Ext.extend(Ext.Panel, {
 			}, {
 				header : "名称",
 				dataIndex : "name"
+			}, {
+				header : "类型",
+				dataIndex : "budgetType",
+				renderer : function(v){
+					if(v=='1'){
+						return "<font color='red'>年度</font>";
+					}else if(v=="2"){
+						return "<font color='red'>季度</font>";
+					}
+				}
 			}, {
 				header : "所属部门",
 				dataIndex : "depName"
@@ -170,11 +180,19 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (isGranted("_BudgetAdd")) {
 			this.topbar.add({
 				iconCls : "btn-add",
-				text : "添加预算",
+				text : "添加年度预算",
 				xtype : "button",
-				handler : this.createRecord
+				handler : this.createYearRecord
 			});
 		}
+//		if (isGranted("_BudgetAdd")) {
+//			this.topbar.add({
+//				iconCls : "btn-add",
+//				text : "添加季度预算",
+//				xtype : "button",
+//				handler : this.createQuarterRecord
+//			});
+//		}
 		if (isGranted("_BudgetDel")) {
 			this.topbar.add({
 				iconCls : "btn-del",
@@ -231,7 +249,7 @@ BudgetView = Ext.extend(Ext.Panel, {
 		if (a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询",
-				url : __ctxPath + "/budget/listBudget.do?Q_publishStatus_N_GE=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=1&alarm=true",
+				url : __ctxPath + "/budget/listBudget.do?Q_budgetType_N_EQ=1&Q_publishStatus_N_GE=0&Q_publishStatus_N_LT=3&Q_publishStatus_N_NEQ=1&alarm=true",
 				success : function(c, d) {
 					var b = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(b);
@@ -239,13 +257,23 @@ BudgetView = Ext.extend(Ext.Panel, {
 			});
 		}
 	},
-	createRecord : function() {
+	createYearRecord : function() {
 		var a = Ext.getCmp("centerTabPanel");
 		var b = Ext.getCmp("BudgetFormWin");
 		if (b != null) {
 			a.remove("BudgetFormWin");
 		}
 		b = new BudgetForm({isEdit:true});
+		a.add(b);
+		a.activate(b);
+	},
+	createQuarterRecord : function() {
+		var a = Ext.getCmp("centerTabPanel");
+		var b = Ext.getCmp("BudgetQuarterFormWin");
+		if (b != null) {
+			a.remove("BudgetQuarterFormWin");
+		}
+		b = new BudgetQuarterForm({isEdit:true});
 		a.add(b);
 		a.activate(b);
 	},
@@ -283,30 +311,58 @@ BudgetView = Ext.extend(Ext.Panel, {
 		this.delByIds(d);
 	},
 	editRecord : function(l) {		
-		var a = Ext.getCmp("centerTabPanel");
-		var b = Ext.getCmp("BudgetFormWin");
-		if (b != null) {
-			a.remove("BudgetFormWin");
+		if(l.data.budgetType==1){
+			var a = Ext.getCmp("centerTabPanel");
+			var b = Ext.getCmp("BudgetFormWin");
+			if (b != null) {
+				a.remove("BudgetFormWin");
+			}
+			b = new BudgetForm({
+				budgetId : l.data.budgetId,
+				isEdit:true
+			});
+			a.add(b);
+			a.activate(b);
+		}else if(l.data.budgetType==2){
+			var a = Ext.getCmp("centerTabPanel");
+			var b = Ext.getCmp("BudgetQuarterFormWin");
+			if (b != null) {
+				a.remove("BudgetQuarterFormWin");
+			}
+			b = new BudgetQuarterForm({
+				budgetId : l.data.budgetId,
+				isEdit:true
+			});
+			a.add(b);
+			a.activate(b);
 		}
-		b = new BudgetForm({
-			budgetId : l.data.budgetId,
-			isEdit:true
-		});
-		a.add(b);
-		a.activate(b);
 	},
 	viewByIds : function(l) {		
-		var a = Ext.getCmp("centerTabPanel");
-		var b = Ext.getCmp("BudgetFormWin");
-		if (b != null) {
-			a.remove("BudgetFormWin");
+		if(l.data.budgetType==1){
+			var a = Ext.getCmp("centerTabPanel");
+			var b = Ext.getCmp("BudgetFormWin");
+			if (b != null) {
+				a.remove("BudgetFormWin");
+			}
+			b = new BudgetForm({
+				budgetId : l.data.budgetId,
+				isEdit:false
+			});
+			a.add(b);
+			a.activate(b);
+		}else if(l.data.budgetType==2){
+			var a = Ext.getCmp("centerTabPanel");
+			var b = Ext.getCmp("BudgetQuarterFormWin");
+			if (b != null) {
+				a.remove("BudgetQuarterFormWin");
+			}
+			b = new BudgetQuarterForm({
+				budgetId : l.data.budgetId,
+				isEdit:false
+			});
+			a.add(b);
+			a.activate(b);
 		}
-		b = new BudgetForm({
-			budgetId : l.data.budgetId,
-			isEdit:false
-		});
-		a.add(b);
-		a.activate(b);
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch (d) {

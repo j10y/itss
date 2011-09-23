@@ -233,33 +233,47 @@ public class BudgetAction extends BaseAction {
 		//this.budget.setPublishStatus(new Integer("0"));
 		
 		this.budget.setBelongDept(new Department(Long.valueOf(getRequest().getParameter("budget.belongDept.depId"))));
+		if(this.budget.getBudgetType().intValue()==2){//季度
+			Budget belongBudget = new Budget();
+			belongBudget.setBudgetId(Long.valueOf(getRequest().getParameter("budget.belongBudget.budgetId")));
+			this.budget.setBelongBudget(belongBudget);
+		}
 		this.budgetService.save(this.budget);
 		//add by awen add default budgetItem hr on 2011-09-01 begin
 		if(isNew){
-			BudgetItem budgetItem = new BudgetItem();
-			budgetItem.setBudget(this.budget);
-			budgetItem.setName(AppUtil.getPropertity("budget.default.budgetItemName"));
-			budgetItem.setCode(AppUtil.getPropertity("budget.default.budgetItemCode"));
-			budgetItem.setKey(AppUtil.getPropertity("budget.default.budgetItemKey"));
-			budgetItem.setThreshold(Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemThreshold")));
-			budgetItem.setIsDefault(1);
-			budgetItem.setDeleteFlag(0);
-			//add by awen for add get default budgetItem value logic on 2011-09-01 begin			
+			if (this.budget.getBudgetType().intValue()==1) {//年度
+				BudgetItem budgetItem = new BudgetItem();
+				budgetItem.setBudget(this.budget);
+				budgetItem.setName(AppUtil
+						.getPropertity("budget.default.budgetItemName"));
+				budgetItem.setCode(AppUtil
+						.getPropertity("budget.default.budgetItemCode"));
+				budgetItem.setKey(AppUtil
+						.getPropertity("budget.default.budgetItemKey"));
+				budgetItem.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.default.budgetItemThreshold")));
+				budgetItem.setIsDefault(1);
+				budgetItem.setDeleteFlag(0);
+				//add by awen for add get default budgetItem value logic on 2011-09-01 begin			
 				Department department = budgetItem.getBudget().getBelongDept();
 				Map filterMap = new HashMap();
 				filterMap.put("Q_deleteFlag_N_EQ", "0");
-				filterMap.put("Q_department.depId_L_EQ", department.getDepId().toString());
+				filterMap.put("Q_department.depId_L_EQ", department.getDepId()
+						.toString());
 				QueryFilter filter = new QueryFilter(filterMap);
-				List<JobSalaryRelation> list = this.jobSalaryRelationService.getAll(filter);
+				List<JobSalaryRelation> list = this.jobSalaryRelationService
+						.getAll(filter);
 				BigDecimal totalMoney = new BigDecimal(0);
-				for(JobSalaryRelation relation : list){
+				for (JobSalaryRelation relation : list) {
 					totalMoney = totalMoney.add(relation.getTotalMoney());
 				}
-				budgetItem.setValue(totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
-			//add by awen for add get default budgetItem value logic on 2011-09-01 end
-			this.budgetItemService.save(budgetItem);
-			
-			//add by awen for add default realExecution on 2011-09-07 begin
+				budgetItem
+						.setValue(totalMoney.doubleValue()
+								* Double.valueOf(AppUtil
+										.getPropertity("budget.default.budgetItemMonth")));
+				//add by awen for add get default budgetItem value logic on 2011-09-01 end
+				this.budgetItemService.save(budgetItem);
+				//add by awen for add default realExecution on 2011-09-07 begin
 				RealExecution re = new RealExecution();
 				re.setBudget(budgetItem.getBudget());
 				re.setBudgetItem(budgetItem);
@@ -267,7 +281,42 @@ public class BudgetAction extends BaseAction {
 				re.setRealValue(0d);
 				re.setDeleteFlag(0);
 				this.realExecutionService.save(re);
-			//add by awen for add default realExecution on 2011-09-07 end
+				//add by awen for add default realExecution on 2011-09-07 end
+			}else if (this.budget.getBudgetType().intValue()==2) {//季度
+				//增加默认的成本科目：人力成本，默认金额为总的1/4
+				BudgetItem budgetItem = new BudgetItem();
+				budgetItem.setBudget(this.budget);
+				budgetItem.setName(AppUtil
+						.getPropertity("budget.default.budgetItemName"));
+				budgetItem.setCode(AppUtil
+						.getPropertity("budget.default.budgetItemCode"));
+				budgetItem.setKey(AppUtil
+						.getPropertity("budget.default.budgetItemKey"));
+				budgetItem.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.default.budgetItemThreshold")));
+				budgetItem.setIsDefault(1);
+				budgetItem.setDeleteFlag(0);
+				//查询belongItem
+				Map filterMap = new HashMap();
+				filterMap.put("Q_budget.budgetId_L_EQ", this.budget.getBelongBudget().getBudgetId().toString());
+				filterMap.put("Q_isDefault_N_EQ", "1");
+				filterMap.put("Q_deleteFlag_N_EQ", "0");
+				QueryFilter filter = new QueryFilter(filterMap);
+				List<BudgetItem> list = this.budgetItemService.getAll(filter);				
+				BudgetItem belongItem = list.get(0);
+				budgetItem.setBelongItem(belongItem);
+				budgetItem.setValue(belongItem.getValue()/4);
+				this.budgetItemService.save(budgetItem);
+				//add by awen for add default realExecution on 2011-09-07 begin
+				RealExecution re = new RealExecution();
+				re.setBudget(budgetItem.getBudget());
+				re.setBudgetItem(budgetItem);
+				re.setMonth(0);//默认
+				re.setRealValue(0d);
+				re.setDeleteFlag(0);
+				this.realExecutionService.save(re);
+				//add by awen for add default realExecution on 2011-09-07 end
+			}
 		}
 		//add by awen add default budgetItem hr on 2011-09-01 end
 		setJsonString("{success:true,budgetId:'" + budget.getBudgetId() + "'}");

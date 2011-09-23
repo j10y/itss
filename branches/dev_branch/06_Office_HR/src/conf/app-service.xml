@@ -569,6 +569,9 @@
 	<bean id="hrPaKpiPBC2UserService" class="com.xpsoft.oa.service.kpi.impl.HrPaKpiPBC2UserServiceImpl">
 		<constructor-arg index="0" ref="hrPaKpiPBC2UserDao"/>
 	</bean>
+	<bean id="hrPaKpiPBC2UserAuditHisService" class="com.xpsoft.oa.service.kpi.impl.HrPaKpiPBC2UserAuditHisServiceImpl">
+		<constructor-arg index="0" ref="hrPaKpiPBC2UserAuditHisDao"/>
+	</bean>
 	<bean id="hrPaKpiitem2userService" class="com.xpsoft.oa.service.kpi.impl.HrPaKpiitem2userServiceImpl">
 		<constructor-arg index="0" ref="hrPaKpiitem2userDao"/>
 	</bean>

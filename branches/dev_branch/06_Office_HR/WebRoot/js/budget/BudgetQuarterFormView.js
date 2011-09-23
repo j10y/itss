@@ -1,10 +1,10 @@
-BudgetFormView = Ext.extend(Ext.Panel, {
+BudgetQuarterFormView = Ext.extend(Ext.Panel, {
 	formPanel : null,
 	constructor : function(a) {
 		Ext.applyIf(this, a);
 		this.initUIComponents();
-		BudgetFormView.superclass.constructor.call(this, {
-			id : "BudgetFormViewWin",
+		BudgetQuarterFormView.superclass.constructor.call(this, {
+			id : "BudgetQuarterFormViewWin",
 			layout : "border",
 			scope : this,
 //			items : [this.leftTypePanel,this.itemFormPanel, {xtype:'container', height:150, region:'north', items: this.mainFormPanel}],

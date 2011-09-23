@@ -8,7 +8,7 @@ BudgetStatusView = Ext.extend(Ext.Panel, {
 		this.initUIComponents();
 		BudgetStatusView.superclass.constructor.call(this, {
 			id : "BudgetStatusView",
-			title : "预算状态列表",
+			title : "年度预算状态列表",
 			iconCls : "menu-arch-rec-type",
 			region : "center",
 			layout : "border",

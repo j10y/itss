@@ -87,6 +87,21 @@
             length="32"
             not-null="true"
             unique="false"
-        />   
+        />
+        
+        <many-to-one name="belongBudget" class="com.xpsoft.oa.model.hrm.Budget" column="belongBudget"></many-to-one>
+        
+        <property
+            name="budgetType"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="budgetType"
+            length="32"
+            not-null="true"
+            unique="false"
+        />
+        
     </class>
 </hibernate-mapping>

@@ -1,4 +1,4 @@
-BudgetAlarmView = Ext.extend(Ext.Panel, {
+BudgetQuarterAlarmView = Ext.extend(Ext.Panel, {
 	searchPanel : null,
 	gridPanel : null,
 	store : null,
@@ -6,9 +6,9 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		Ext.applyIf(this, a);
 		this.initUIComponents();
-		BudgetAlarmView.superclass.constructor.call(this, {
-			id : "BudgetAlarmView",
-			title : "年度预算监控",
+		BudgetQuarterAlarmView.superclass.constructor.call(this, {
+			id : "BudgetQuarterAlarmView",
+			title : "季度预算监控",
 			iconCls : "menu-arch-rec-type",
 			region : "center",
 			layout : "border",
@@ -55,7 +55,7 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 			} ]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/budget/listAlarmBudget.do?Q_budgetType_N_EQ=1&Q_publishStatus_N_EQ=3",
+			url : __ctxPath + "/budget/listAlarmBudget.do?Q_budgetType_N_EQ=2&Q_budgetType_N_EQ=1&Q_publishStatus_N_EQ=3",
 			root : "result",
 			totalProperty : "totalCounts",
 			remoteSort : true,
@@ -85,7 +85,7 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 		});
 		var b = new Array();
 
-		if (isGranted("_BudgetAlarmView")) {
+		if (isGranted("_BudgetQuarterAlarmView")) {
 			b.push({
 				iconCls : "btn-preview",
 				qtip : "查询详情",
@@ -229,7 +229,7 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 		if (a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询",
-				url : __ctxPath + "/budget/listAlarmBudget.do?Q_budgetType_N_EQ=1&Q_publishStatus_N_EQ=3",
+				url : __ctxPath + "/budget/listAlarmBudget.do?Q_budgetType_N_EQ=2&Q_budgetType_N_EQ=1&Q_publishStatus_N_EQ=3",
 				success : function(c, d) {
 					var b = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(b);
@@ -294,11 +294,11 @@ BudgetAlarmView = Ext.extend(Ext.Panel, {
 	},
 	viewByIds : function(l) {		
 		var a = Ext.getCmp("centerTabPanel");
-		var b = Ext.getCmp("BudgetFormViewWin");
+		var b = Ext.getCmp("BudgetQuarterFormViewWin");
 		if (b != null) {
-			a.remove("BudgetFormViewWin");
+			a.remove("BudgetQuarterFormViewWin");
 		}
-		b = new BudgetFormView({
+		b = new BudgetQuarterFormView({
 			budgetId : l.data.budgetId
 		});
 		a.add(b);
