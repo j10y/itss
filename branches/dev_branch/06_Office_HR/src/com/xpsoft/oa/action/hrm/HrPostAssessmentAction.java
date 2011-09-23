@@ -65,4 +65,18 @@ public class HrPostAssessmentAction extends BaseAction{
 		
 		return "showStatus";
 	}
+	
+	/**
+	 * 通过申请表ID查询评估表，如果不存在则建立
+	 * @return
+	 */
+	public String getViewByApplyId() {
+		boolean isView = Boolean.valueOf(getRequest().getParameter("isView"));
+		Long applyId = Long.valueOf(getRequest().getParameter("applyId"));
+		this.hrPostAssessment = this.hrPostAssessmentService.saveViewByApplyId(applyId);
+		if(isView){
+			return "view";
+		}
+		return "show";
+	}
 }

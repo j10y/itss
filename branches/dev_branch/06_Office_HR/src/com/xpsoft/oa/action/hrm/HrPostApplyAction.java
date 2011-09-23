@@ -13,7 +13,7 @@ import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.HrPostApply;
-import com.xpsoft.oa.model.hrm.HrPromApply;
+import com.xpsoft.oa.model.hrm.HrPostAssessment;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.hrm.HrPostApplyService;
@@ -117,39 +117,87 @@ public class HrPostApplyAction extends BaseAction{
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		Date currentDate = new Date();
 		HrPostApply postApply = new HrPostApply();
-		
-		if(this.hrPostApply.getId() == 0) {//新增
-			EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("Q_userId_L_EQ", currentUser.getUserId().toString());
-			QueryFilter filter = new QueryFilter(map);
-			List<EmpProfile> empProfileList = empProfileService.getAll(filter);
-			postApply.setApplyUser(currentUser);
-			postApply.setGender(empProfileList.get(0).getSex());
-			postApply.setAge(this.hrPostApply.getAge());
-			postApply.setDeptId(empProfileList.get(0).getDepId());
-			postApply.setDeptName(empProfileList.get(0).getDepName());
-			postApply.setPostId(empProfileList.get(0).getJobId());
-			postApply.setPostName(empProfileList.get(0).getPosition());
-			postApply.setAccessionTime(empProfileList.get(0).getAccessionTime());
-			postApply.setProSummary(this.hrPostApply.getProSummary());
-			postApply.setUserManagerAuditDate(currentDate);
-			postApply.setPublishStatus(this.hrPostApply.getPublishStatus());
-			postApply.setCreateDate(currentDate);
-			postApply.setCreatePerson(currentUser);
-			postApply.setModifyDate(currentDate);
-			postApply.setModifyPerson(currentUser);
-		} else {//修改
-			postApply = this.hrPostApplyService.get(this.hrPostApply.getId());
-			postApply.setAge(this.hrPostApply.getAge());
-			postApply.setProSummary(this.hrPostApply.getProSummary());
-			postApply.setModifyPerson(currentUser);
-			postApply.setModifyDate(currentDate);
-			postApply.setUserManagerAuditDate(currentDate);
-			postApply.setPublishStatus(this.hrPostApply.getPublishStatus());
+		boolean isSubmit = false;//是否提交工作流
+		if(this.getRequest().getParameter("isSubmit") != null && Boolean.valueOf(this.getRequest().getParameter("isSubmit")).booleanValue()) {
+			isSubmit = true;
 		}
-		this.hrPostApplyService.save(postApply);
+		try {
+			if(this.hrPostApply.getId() == 0) {//新增
+				EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("Q_userId_L_EQ", currentUser.getUserId().toString());
+				QueryFilter filter = new QueryFilter(map);
+				List<EmpProfile> empProfileList = empProfileService.getAll(filter);
+				postApply.setApplyUser(currentUser);
+				postApply.setGender(empProfileList.get(0).getSex());
+				postApply.setAge(this.hrPostApply.getAge());
+				postApply.setDeptId(empProfileList.get(0).getDepId());
+				postApply.setDeptName(empProfileList.get(0).getDepName());
+				postApply.setPostId(empProfileList.get(0).getJobId());
+				postApply.setPostName(empProfileList.get(0).getPosition());
+				postApply.setAccessionTime(empProfileList.get(0).getAccessionTime());
+				postApply.setProSummary(this.hrPostApply.getProSummary());
+				postApply.setUserManagerAuditDate(currentDate);
+				postApply.setPublishStatus(this.hrPostApply.getPublishStatus());
+				postApply.setCreateDate(currentDate);
+				postApply.setCreatePerson(currentUser);
+				postApply.setModifyDate(currentDate);
+				postApply.setModifyPerson(currentUser);
+			} else {//修改
+				postApply = this.hrPostApplyService.get(this.hrPostApply.getId());
+				postApply.setAge(this.hrPostApply.getAge());
+				postApply.setProSummary(this.hrPostApply.getProSummary());
+				postApply.setModifyPerson(currentUser);
+				postApply.setModifyDate(currentDate);
+				postApply.setUserManagerAuditDate(currentDate);
+				postApply.setPublishStatus(this.hrPostApply.getPublishStatus());
+			}
+			this.getRequest().setAttribute("flag", "1");
+			HrPostApply postApplyNew = this.hrPostApplyService.save(postApply);
+			if(isSubmit) {
+				this.jsonString = "{success:true,'applyId':'" + postApplyNew.getId() + 
+						"','fullname':'" + postApplyNew.getApplyUser().getFullname() + 
+						"','deptName':'" +postApplyNew.getDeptName() + 
+						"','postName':'" + postApplyNew.getPostName() + 
+						"','accessionTime':'" + postApplyNew.getAccessionTime() + 
+						"','proSummary':'" + postApplyNew.getProSummary() + 
+						"'}";
+				return "success";
+			}
+		} catch(Exception e) {
+			this.getRequest().setAttribute("flag", "0");
+			e.printStackTrace();
+		}
 		
+		return "result";
+	}
+	
+	/**
+	 * 仅修改状态
+	 * @return
+	 */
+	public String modStatus() {		
+		HrPostApply postApply = this.hrPostApplyService.get(this.id);
+		Integer publishStatus = Integer.valueOf(getRequest().getParameter("publishStatus"));
+		boolean isAssess = Boolean.valueOf(getRequest().getParameter("isAssess"));//评估阶段
+		if(!isAssess){
+			postApply.setPublishStatus(publishStatus);//申请阶段可以修改状态，或者指定节点可以修改
+		}
+		HrPostAssessment assessment = null;
+		if(getRequest().getParameter("auditStep")!=null){
+			String auditStep = getRequest().getParameter("auditStep");
+			if(auditStep.equalsIgnoreCase("LineManagerAudit")){//直线经理审核
+				postApply.setPostManagerId(ContextUtil.getCurrentUserId());
+				postApply.setPostManagerName(ContextUtil.getCurrentUser().getFullname());
+				postApply.setPostManagerAuditDate(new Date());
+			}else if(auditStep.equalsIgnoreCase("HRConfirmAudit")){//人力资源复核
+				
+			}else if(auditStep.equalsIgnoreCase("VicePresidentConfirm")){//分管副总裁确认
+				
+			}
+		}	
+		this.hrPostApplyService.save(postApply);
+		this.jsonString = "{success:true}";		
 		return "success";
 	}
 	
