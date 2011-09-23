@@ -34,16 +34,15 @@ a:hover{ color:#FF0000; text-decoration:underline}
 <img src="http://172.16.100.26/r/cms/www/red/css/images/logo.gif" border="0" title="${company.companyName}"/>
   <div class="gap"></div>
   <div class="content">
-  来自的你客户 <font color="#ff0000">${appUser.fullname}</font> 的邮件。<br/>
+  来自的你客户 <font color="#ff0000">${toUserName}</font> 的邮件。<br/>
 <br/>
 <br/> 
- 你好，我是来自${company.companyName}的<font color="#ff0000">${appUser.fullname}</font>${appUser.position}，<br/>
-   太高兴能与你们合作。
-<br/><br/><br/><br/>
-  您也可以点击以下链接进行访问：<a href=${company.site} target="_blank">${company.site}</a><br/> 
+ 你好，目前上品折扣办公系统中有您需要审批的信息，请您登录系统进行审批。
+<br/>
+  访问地址为：<a href=${approveUrl} target="_blank">${approveUrlName}</a><br/> 
   </div>
   <div class="gap"></div>
-  <div class="foot"><a style="color:#0033FF; text-decoration:underline" href=${company.site} target="_blank">${company.companyName}</a></div>
+  <div class="foot" align="right"><a style="color:#0033FF; text-decoration:underline" href="mailto:${replyTo}" target="_blank">${signature}</a></div>
 </div>
 </body>
 </html>

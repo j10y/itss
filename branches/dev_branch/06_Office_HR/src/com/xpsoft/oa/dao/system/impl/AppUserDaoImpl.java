@@ -30,25 +30,42 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		UserDetailsService {
 	
 	public AppUserDaoImpl() {
-		/* 35 */super(AppUser.class);
+		super(AppUser.class);
 	}
 
 	public AppUser findByUserName(String username) {
-		/* 40 */String hql = "from AppUser au where au.username=?";
-		/* 41 */Object[] params = { username };
-		/* 42 */List list = findByHql(hql, params);
-		/* 43 */AppUser user = null;
-		/* 44 */if (list.size() != 0) {
-			/* 45 */user = (AppUser) list.get(0);
-			/* 46 */String hql2 = "select count(*) from AppUser";
-			/* 47 */Object obj = findUnique(hql2, null);
-			/* 48 *///if (new Integer(obj.toString()).intValue() > 11) {
-				if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
-				/* 49 */user.setStatus(Short.valueOf((short) 0));
+		String hql = "from AppUser au where au.username=?";
+		Object[] params = { username };
+		List list = findByHql(hql, params);
+		AppUser user = null;
+		if (list.size() != 0) {
+			user = (AppUser) list.get(0);
+			String hql2 = "select count(*) from AppUser";
+			Object obj = findUnique(hql2, null);
+			//if (new Integer(obj.toString()).intValue() > 11) {
+			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
+				user.setStatus(Short.valueOf((short) 0));
 			}
 		}
 
-		/* 53 */return user;
+		return user;
+	}
+	
+	public AppUser findByFullName(String fullName) {
+		String hql = "from AppUser au where au.fullname=?";
+		Object[] params = { fullName };
+		List list = findByHql(hql, params);
+		AppUser user = null;
+		if (list.size() != 0) {
+			user = (AppUser) list.get(0);
+			String hql2 = "select count(*) from AppUser";
+			Object obj = findUnique(hql2, null);
+			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
+				user.setStatus(Short.valueOf((short) 0));
+			}
+		}
+
+		return user;
 	}
 
 	public UserDetails loadUserByUsername(String username)
