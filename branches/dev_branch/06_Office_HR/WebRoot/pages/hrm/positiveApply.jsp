@@ -9,6 +9,13 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>员工转正申请</title>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext3/resources/css/ext-all.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext3/resources/css/ext-patch.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css" />
+		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/adapter/ext/ext-base.gzjs"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-all.gzjs"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/ext3/ext-lang-zh_CN.js"></script>		
+		<script type="text/javascript" src="<%=basePath%>/ext3/ux/Toast.js"></script>
 		<style type="text/css">
 			.label {
 				width:120px;
@@ -38,6 +45,63 @@
 				}
 				return true;
 			}
+			function onSend(){
+				var result = check();
+				if(!result){
+					return;
+				}
+				Ext.Ajax.request({
+					url : "${pageContext.request.contextPath}/hrm/saveHrPostApply.do",
+					params : {
+							"hrPostApply.id" : "${hrPostApply.id}",
+							"hrPostApply.age" : document.getElementById("age").value,
+							"hrPostApply.proSummary" : document.getElementById("proSummary").value,
+							"hrPostApply.publishStatus" : 5, //提交申请
+							"isSubmit" : "true" //提交申请
+					},
+					method : "post",
+					success : function(h, j) {
+						var data = Ext.decode(h.responseText);
+						//document.getElementById("hrPostApply.id").value= data.applyId;	
+						Ext.Ajax.request({
+							url : "${pageContext.request.contextPath}/archive/getByCurrentUserArchRecUser.do",
+							success : function(h, j) {
+								var k = Ext.util.JSON.decode(h.responseText).data;
+								Ext.Ajax.request({							
+									url : "${pageContext.request.contextPath}/flow/saveProcessActivity.do",
+									waitMsg : "正在提交流程表单信息...",
+									scope : this,
+									params : {
+										defId : 18,
+										startFlow : true,
+										"hrPostApply.id" : data.applyId,
+										"hrPostApply.depName" : data.deptName,
+										"hrPostApply.postName" : data.postName,
+										"hrPostApply.accessionTime" : data.accessionTime,
+										"hrPostApply.proSummary" : data.proSummary,
+										"hrPostApply.publishStatus" : 5, //上报审批
+										"isSubmit" : "true", //上报审批
+										flowAssignId : k.deptUserId
+									},
+									success : function(
+											i,
+											j) {
+										Ext.ux.Toast.msg("操作信息", "成功保存信息！");
+										window.location = "${pageContext.request.contextPath}/pages/hrm/applyResult.jsp?flag=2";
+										return;
+										Ext.getCmp("HrPostApplyForm").close();
+										var k = Ext.getCmp("ProcessRunGrid");
+										if (k != null) {
+											k.getStore().reload();
+										}
+									}
+																				
+								});
+							}
+						});
+					}
+				});
+			}
 		</script>
 	</head>
 
@@ -50,7 +114,7 @@
 		</div>
 		<form id="applyForm" onsubmit="return check();" action="${pageContext.request.contextPath}/hrm/saveHrPostApply.do" method="post">
 			<input type="hidden" name="hrPostApply.id" value="${hrPostApply.id}"/>
-			<input type="hidden" name="hrPostApply.publishStatus" value="0"/>
+			<input type="hidden" id="publishStatus" name="hrPostApply.publishStatus" value="0"/>
 			<table style="width:700px;margin:0 auto;border:1px solid #000000" cellpadding="0" cellspacing="0">
 				<tr>
 					<td colspan="6" class="label" style="border-right:1px solid #000000;">员工基本信息表</td>

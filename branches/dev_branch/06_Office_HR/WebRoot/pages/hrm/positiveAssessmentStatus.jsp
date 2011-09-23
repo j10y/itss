@@ -116,20 +116,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="field">人力资源部意见</td>
-					<td class="field" colspan="2"  style="height:70px;padding:2px">
+					<td class="field" style="border-bottom:1px solid #000000;">人力资源部意见</td>
+					<td class="field" colspan="2"  style="height:70px;padding:2px;border-bottom:1px solid #000000;">
 						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.hrOpinion}</textarea>
 					</td>
-					<td class="field">总经理意见</td>
-					<td class="field" colspan="2" style="height:70px;padding:2px;border-right:1px solid #000000;padding:2px;">
+					<td class="field" style="border-bottom:1px solid #000000;">总经理意见</td>
+					<td class="field" colspan="2" style="height:70px;padding:2px;border-right:1px solid #000000;border-bottom:1px solid #000000;">
 						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.bossOpinion}</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" colspan="6" style="height:40px;border:1px solid #000000;">
-						<input type="reset" value="取消"/>&nbsp;&nbsp;
-						<input type="submit" value="保存"/>&nbsp;&nbsp;
-						<input type="button" value="提交审核" onclick="onSend();"/>
 					</td>
 				</tr>
 			</table>
