@@ -472,14 +472,14 @@ PagePanel = Ext.extend(Ext.Panel, {
 		            }]
             }); 
         	//--------
-	       	var tempJsp = "/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForDay.raq";
+	       	var tempJsp = "/reportJsp/showReport.jsp?raq=/eventwholeanalysisforday.raq";
 	       	//var menu=this.menu;
 			if (node.id == "tree0") {
-				tempJsp ="/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForDay.raq";
+				tempJsp ="/reportJsp/showReport.jsp?raq=/eventwholeanalysisforday.raq";
 			} else if (node.id == "tree1") {
-				tempJsp ="/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForMonth.raq";
+				tempJsp ="/reportJsp/showReport.jsp?raq=/eventwholeanalysisformonth.raq";
 			} else if (node.id == "tree2") {
-				tempJsp = "/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForYear.raq";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/eventwholeanalysisforyear.raq";
 			}  
 			
 			else if (node.id == "tree3") {
@@ -487,7 +487,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 			}  else if (node.id == "tree4") {
 				tempJsp = "/reportJsp/showReport.jsp?raq=/dealingEventsList.raq";
 			} else if (node.id == "tree28") {
-				tempJsp = "/reportJsp/showReport.jsp?raq=/AllEventDetail.raq";
+				tempJsp = "/reportJsp/showReport.jsp?raq=/allEventDetail.raq";
 			}  
 			
 			/*else if (node.id == "tree5") {
@@ -666,7 +666,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	        ],
 			autoLoad : {
 				url : webContext + "/tabFrame.jsp?url=" + webContext
-						+ "/reportJsp/showReport.jsp?raq=/eventWholeAnalysisForDay.raq",
+						+ "/reportJsp/showReport.jsp?raq=/eventwholeanalysisforday.raq",
 				text : "页面正在加载中......",
 				method : 'post',
 				scope : this
