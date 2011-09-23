@@ -139,6 +139,15 @@ HrPostApplyView = Ext.extend(Ext.Panel, {
 						if(d == 4) {        //删除标记
 							return "<font color='red'>已删除</font>";
 						}
+						if(d == 5) {
+							return "<font color='red'>待直线经理审批</font>";
+						}
+						if(d == 6) {
+							return "<font color='red'>待人力资源部复核</font>";
+						}
+						if(d == 7) {
+							return "<font color='red'>待分管副总裁确认</font>";
+						}
 					}
 				},
 				this.rowActions

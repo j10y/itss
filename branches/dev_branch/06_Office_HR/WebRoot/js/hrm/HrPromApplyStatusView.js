@@ -129,17 +129,14 @@ HrPromApplyStatusView = Ext.extend(Ext.Panel, {
 						if(d == 4) {        //删除标记
 							return "<font color='red'>已删除</font>";
 						}
-						if(d == 5) {        //待上报审批
-							return "<font color='red'>待上报审批</font>";
+						if(d == 5) {
+							return "<font color='red'>待直线经理审批</font>";
 						}
-						if(d == 6) {        //待人力资源核实并确认
-							return "<font color='red'>待人力资源核实并确认</font>";
+						if(d == 6) {
+							return "<font color='red'>待人力资源部复核</font>";
 						}
-						if(d == 7) {        //待目标设定和面谈
-							return "<font color='red'>待目标设定和面谈</font>";
-						}
-						if(d == 8) {        //待目标设定和面谈
-							return "<font color='red'>待考核期评估</font>";
+						if(d == 7) {
+							return "<font color='red'>待分管副总裁确认</font>";
 						}
 					}
 				},

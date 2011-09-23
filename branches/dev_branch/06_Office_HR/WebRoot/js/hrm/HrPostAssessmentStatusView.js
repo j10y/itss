@@ -93,20 +93,14 @@ HrPostAssessmentStatusView = Ext.extend(Ext.Panel, {
 						if(d == 4) {        //删除标记
 							return "<font color='red'>已删除</font>";
 						}
-						if(d == 8) {        //待考核期评估
-							return "<font color='red'>待考核期评估</font>";
+						if(d == 5) {
+							return "<font color='red'>待直线经理审批</font>";
 						}
-						if(d == 9) {        //待领导批准
-							return "<font color='red'>待领导批准</font>";
+						if(d == 6) {
+							return "<font color='red'>待人力资源部复核</font>";
 						}
-						if(d == 10) {        //待人力资源确认
-							return "<font color='red'>待人力资源确认</font>";
-						}
-						if(d == 11) {        //待晋升面谈
-							return "<font color='red'>待晋升面谈</font>";
-						}
-						if(d == 12) {        //待任命发文
-							return "<font color='red'>待任命发文</font>";
+						if(d == 7) {
+							return "<font color='red'>待分管副总裁确认</font>";
 						}
 					}
 				},
