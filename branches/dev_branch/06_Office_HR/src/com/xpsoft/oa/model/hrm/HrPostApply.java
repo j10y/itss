@@ -6,6 +6,13 @@ import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 
 public class HrPostApply extends BaseModel{
+	
+	public static final Integer STATUS_DRAFT = 0;
+	public static final Integer STATUS_AUDITING = 1;
+	public static final Integer STATUS_BACK = 2;
+	public static final Integer STATUS_APPROVED = 3;
+	public static final Integer STATUS_DEL = 4;
+	
 	protected Long id;
 	protected AppUser applyUser;//转正申请人
 	protected String gender;//申请人性别
