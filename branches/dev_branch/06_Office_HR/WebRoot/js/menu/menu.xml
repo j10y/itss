@@ -1333,6 +1333,35 @@
 						<url>/hrm/listHrPromAssessment.do</url>
 					</Function>
 				</Item>
+			</Items>
+			<Items id="positiveManage" text="转正管理" isPublic="false">
+				<Item id="HrPostApplyView" text="转正申请草稿">
+					<Function id="_HrPostApplyQuery" text="查看">
+						<url>/hrm/listHrPostApply.do</url>
+					</Function>
+					<Function id="_HrPostApplyAdd" text="添加">
+						<url>/hrm/addHrPostApply.do</url>
+						<url>/hrm/listHrPostApply.do</url>
+					</Function>
+					<Function id="_HrPostApplyEdit" text="编辑">
+						<url>/hrm/saveHrPostApply.do</url>
+						<url>/hrm/listHrPostApply.do</url>
+					</Function>
+					<Function id="_HrPostApplyDel" text="删除">
+						<url>/hrm/multiDelHrPostApply.do</url>
+						<url>/hrm/listHrPostApply.do</url>
+					</Function>
+				</Item>
+				<Item id="HrPostApplyStatusView" text="转正申请状态">
+					<Function id="_HrPostApplyQuery" text="查看">
+						<url>/hrm/listHrPostApply.do</url>
+					</Function>
+				</Item>
+				<Item id="HrPostAssessmentStatusView" text="试用期评估状态">
+					<Function id="_HrPostAssessmentQuery" text="查看">
+						<url>/hrm/listHrPostAssessment.do</url>
+					</Function>
+				</Item>
 			</Items>			
 		</Items>
 		<Items id="SalaryManage" text="薪酬管理" iconCls="menu-salary"
