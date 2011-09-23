@@ -152,4 +152,18 @@ public class HrPostApplyAction extends BaseAction{
 		
 		return "success";
 	}
+	
+	public String multiDel() {
+		String[] ids = this.getRequest().getParameterValues("ids");
+		if(ids != null) {
+			for(String id : ids) {
+				HrPostApply pa = this.hrPostApplyService.get(Long.parseLong(id));
+				pa.setPublishStatus(4);//置为已删除状态
+				this.hrPostApplyService.save(pa);
+			}
+		}
+		this.jsonString = "{success:true}";
+		
+		return "success";
+	}
 }
