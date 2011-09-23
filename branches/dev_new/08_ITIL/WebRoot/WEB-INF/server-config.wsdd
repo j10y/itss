@@ -4,7 +4,7 @@
   <parameter name="sendMultiRefs" value="true"/>
   <parameter name="disablePrettyXML" value="true"/>
   <parameter name="adminPassword" value="admin"/>
-  <parameter name="attachments.Directory" value="D:\jboss-4.2.2.GA\server\default\.\deploy\itil.war\WEB-INF\attachments"/>
+  <parameter name="attachments.Directory" value="/usr/local/cluster/server/NG1/deploy/itil.war/WEB-INF/attachments"/>
   <parameter name="dotNetSoapEncFix" value="true"/>
   <parameter name="enableNamespacePrefixOptimization" value="false"/>
   <parameter name="sendXMLDeclaration" value="true"/>
