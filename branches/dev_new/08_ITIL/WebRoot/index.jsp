@@ -24,22 +24,13 @@
             color: gray;
             font-size:11px;
         }
-        .itil-top{
+      .itil-top{
         	background-image:url(images/titlelog.png);
         	background-color:#ffffff;
-	    	background-repeat:no-repeat;
-	    	height:45px;
+	    		background-repeat:no-repeat;
+	    		height:55px;
 	    }
-	    .itil-top-logo{
-	    	position:absolute;
-	    	top:0px;
-	    	right:0px;
-	    	background-image:url();
-	    	background-repeat:no-repeat;
-	    	width:130px;
-	    	height:65px;
-	    	z-index:99;
-	    }
+	    
 	    .itil-top-tool{
 	    	position:absolute;
 	    	top:25px;
@@ -112,10 +103,11 @@
 	</script>
 </head>
 <body onload="refreshWorkflow();">
-<div class="itil-top-logo"></div>
-  <div id="north" >
+
+<div id="north" >
     <div id="up" class="itil-top"></div>
     <div id="down" class="itil-top-tool"></div>
-  </div>
+</div>
+
 </body>
 </html>

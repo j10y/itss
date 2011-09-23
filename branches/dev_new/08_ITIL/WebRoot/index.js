@@ -131,11 +131,13 @@ com.dc.ui.IndexPage = {
 		var viewport = new Ext.Viewport({
 			id:'mainViewport',
 			layout : 'border',
-			items : [new Ext.BoxComponent({
-				region : 'north',
-				el : 'north',
-				height : 'auto'
-			}),{
+			items : [
+				new Ext.BoxComponent({
+					region : 'north',
+					el : 'north',
+					height : 'auto'
+				}),
+				{
 				region : 'west',
 				id : 'west-panel',
 				title : 'IT服务支撑系统',
@@ -151,11 +153,12 @@ com.dc.ui.IndexPage = {
 				layoutConfig : {
 					animate : true
 				},        
-				
 				items : menu
-			},new Ext.Panel({
+			},
+			new Ext.Panel({
 				region : 'center',
 				layout:'fit',
+				margins : '0 0 0 3',
 				bbar:[
 				      //{xtype: 'tbtext',text:"IT服务热线:7888&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IT服务邮箱:it@DC&nbsp;&nbsp;&nbsp;&nbsp;IT投诉建议:7888-0&nbsp;&nbsp;&nbsp;IT投诉建议邮箱:it-manage@DC"}
 				      ],
@@ -177,10 +180,10 @@ com.dc.ui.IndexPage = {
 					text : "注销",
 					handler : logout
 				},
-				//"-",{
-				//	text : "DCone",
-				//	handler : toDCone
-				//},
+				"-",{ 
+					text : "ShopinOne",
+					handler : toDCone
+				},
 				"-", {
 					text : "ITcenter",
 					handler : toITService
@@ -208,10 +211,10 @@ com.dc.ui.IndexPage = {
 					text : "注销",
 					handler : logout
 				},
-				//"-",{ 
-				//	text : "DCone",
-				//	handler : toDCone
-				//},
+				"-",{ 
+					text : "ShopinOne",
+					handler : toDCone
+				},
 				"-", {
 					text : "IT服务专栏",
 					handler : toITService
@@ -244,10 +247,10 @@ com.dc.ui.IndexPage = {
 		        html:'<div class="itil-sugBox-content">感谢您使用我们提供的IT服务，并对我们的服务提出意见和建议！</div>'
 	   		 });
 		function toDCone() {
-			window.open("http://dcone.zsgj.com","_blank");
+			window.open("http://172.16.100.26","_blank");
 		}
 		function toITService() {
-			window.open("/ITcenter","_blank");
+			window.open("http://172.16.100.26/ITC/","_blank");
 		}
 		function toFlowCenter() {
 			window.open("http://10.1.120.248/column/FY09Aris/workflow.html","_blank");
