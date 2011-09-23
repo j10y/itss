@@ -1678,8 +1678,8 @@
 				</Item>
 			</Items>
 		</Items>
-		<Items id="HrAnlyReport" text="人力资源分析" isPublic="false">
-			<Item id="HrAnlyReportView" text="人力资源分析" iconCls="" isPublic="false">
+		<Items id="HrAnlyReport" text="人力资源分析" iconCls="menu-report" isPublic="false">
+			<Item id="HrAnlyReportView" text="人力资源分析" iconCls="menu-report" isPublic="false">
 			</Item>
 		</Items>
 		<Item id="HrPaDatadictionaryView" iconCls="menu-dictionary" text="数据字典">
