@@ -29,7 +29,7 @@
             access="property"
             column="userId"
             length="19"
-            not-null="true"
+            not-null="false"
             unique="false"
         />
         <property
@@ -40,7 +40,7 @@
             access="property"
             column="fullname"
             length="128"
-            not-null="true"
+            not-null="false"
             unique="false"
         />
         
@@ -52,7 +52,7 @@
             access="property"
             column="leaderUserId"
             length="19"
-            not-null="true"
+            not-null="false"
             unique="false"
         />
         <property
@@ -63,7 +63,7 @@
             access="property"
             column="leaderFullname"
             length="128"
-            not-null="true"
+            not-null="false"
             unique="false"
         />
         <property
@@ -74,7 +74,7 @@
             access="property"
             column="deptUserId"
             length="19"
-            not-null="true"
+            not-null="false"
             unique="false"
         />
         <property
@@ -85,7 +85,7 @@
             access="property"
             column="deptFullname"
             length="128"
-            not-null="true"
+            not-null="false"
             unique="false"
         />
         <!--

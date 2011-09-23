@@ -5,9 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.archive.ArchRecUser;
-import com.xpsoft.oa.model.archive.ArchivesDoc;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.archive.ArchRecUserService;
@@ -15,8 +13,8 @@ import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.oa.service.system.DepartmentService;
 import java.lang.reflect.Type;
 import java.util.List;
+
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
 public class ArchRecUserAction extends BaseAction {
@@ -128,28 +126,37 @@ public class ArchRecUserAction extends BaseAction {
 	}
 
 	public String save() {
-		/* 138 */String data = getRequest().getParameter("data");
-		/* 139 */if (StringUtils.isNotEmpty(data)) {
-			/* 140 */Gson gson = new Gson();
-			/* 141 */ArchRecUser[] aru = gson.fromJson(data,
+		String data = getRequest().getParameter("data");
+		if (StringUtils.isNotEmpty(data)) {
+			Gson gson = new Gson();
+			ArchRecUser[] aru = gson.fromJson(data,
 					new com.google.gson.reflect.TypeToken<ArchRecUser[]>() {
 					}.getType());
-			/* 142 */for (ArchRecUser archRecUser : aru) {
-				/* 143 */if (archRecUser.getArchRecId().longValue() == -1L) {
-					/* 144 */archRecUser.setArchRecId(null);
+			for (ArchRecUser archRecUser : aru) {
+				if (archRecUser.getArchRecId().longValue() == -1L) {
+					archRecUser.setArchRecId(null);
 				}
-				/* 146 */if (archRecUser.getDepId() != null) {
-					/* 147 */Department department = (Department) this.departmentService
+				if (archRecUser.getUserId().longValue() == -1L) {
+					archRecUser.setUserId(null);
+				}
+				if (archRecUser.getDeptUserId().longValue() == -1L) {
+					archRecUser.setDeptUserId(null);
+				}
+				if (archRecUser.getLeaderUserId().longValue() == -1L) {
+					archRecUser.setLeaderUserId(null);
+				}
+				if (archRecUser.getDepId() != null) {
+					Department department = (Department) this.departmentService
 							.get(archRecUser.getDepId());
-					/* 148 */archRecUser.setDepartment(department);
-					/* 149 */this.archRecUserService.save(archRecUser);
+					archRecUser.setDepartment(department);
+					this.archRecUserService.save(archRecUser);
 				} else {
-					/* 151 */setJsonString("{success:false}");
+					setJsonString("{success:false}");
 				}
 			}
 		}
-		/* 155 */setJsonString("{success:true}");
-		/* 156 */return "success";
+		setJsonString("{success:true}");
+		return "success";
 	}
 
 	public String select() {
