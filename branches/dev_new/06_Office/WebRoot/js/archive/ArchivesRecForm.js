@@ -245,14 +245,14 @@ ArchivesRecForm = Ext
 																				{
 																					fieldLabel : "发文字号",
 																					name : "archives.archivesNo",
-																					id : "ArchivesRecForm.archivesNo",
-																					allowBlank : false
+																					id : "ArchivesRecForm.archivesNo"//,
+																					//allowBlank : false
 																				},
 																				{
 																					fieldLabel : "公文自编号",
 																					name : "archives.depSignNo",
-																					id : "ArchivesRecForm.depSignNo",
-																					allowBlank : false
+																					id : "ArchivesRecForm.depSignNo"//,
+																					//allowBlank : false
 																				},
 //																				{
 //																					fieldLabel : "发文机关或部门",
@@ -278,8 +278,8 @@ ArchivesRecForm = Ext
 																						name : "archives.issueDep",
 																						id : "ArchivesRecForm.issueDep",
 																						xtype : "textfield",
-																						width : "70%",
-																						allowBlank : false/*,
+																						width : "70%"/*,
+																						allowBlank : false,
 																						readOnly : true*/
 																					},
 																					{
@@ -303,8 +303,8 @@ ArchivesRecForm = Ext
 																				{
 																					fieldLabel : "文件标题",
 																					name : "archives.subject",
-																					id : "ArchivesRecForm.subject",
-																					allowBlank : false
+																					id : "ArchivesRecForm.subject"//,
+																					//allowBlank : false
 																				},
 																				{
 																					fieldLabel : "主题词",
@@ -332,7 +332,8 @@ ArchivesRecForm = Ext
 																					xtype : "datefield",
 																					format : "Y-m-d",
 																					id : "ArchivesRecForm.createtime",
-																					allowBlank : false
+																					//allowBlank : false,
+																					value : formatDate(new Date(), "yyyy-MM-dd")
 																				},
 																				{
 																					fieldLabel : "紧急程度",
@@ -340,7 +341,7 @@ ArchivesRecForm = Ext
 																					id : "ArchivesRecForm.urgentLevel",
 																					xtype : "combo",
 																					mode : "local",
-																					allowBlank : false,
+																					//allowBlank : false,
 																					editable : false,
 																					triggerAction : "all",
 																					store : [
@@ -355,7 +356,7 @@ ArchivesRecForm = Ext
 																					id : "ArchivesRecForm.privacyLevel",
 																					xtype : "combo",
 																					mode : "local",
-																					allowBlank : false,
+																					//allowBlank : false,
 																					editable : false,
 																					triggerAction : "all",
 																					store : [
@@ -598,6 +599,20 @@ ArchivesRecForm = Ext
 						}
 					},
 					save : function(a, c) {
+						//设置发文字号
+						if(Ext.getCmp("ArchivesRecForm.archivesNo").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.archivesNo").setValue("空编号");
+						}
+						//密级、紧急程度、标题、内容
+						if(Ext.getCmp("ArchivesRecForm.privacyLevel").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.privacyLevel").setValue("空");
+						}
+						if(Ext.getCmp("ArchivesRecForm.urgentLevel").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.urgentLevel").setValue("空");
+						}
+						if(Ext.getCmp("ArchivesRecForm.subject").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.subject").setValue("无标题");
+						}
 						Ext.getCmp("ArchivesRecForm.status").setValue(0);
 						var b = Ext.getCmp("archivesRecfileIds").getValue();
 						if (b != "" && b != null && b != "undefined") {
@@ -635,6 +650,21 @@ ArchivesRecForm = Ext
 						}
 					},
 					submit : function(a, c) {
+						//设置发文字号
+						if(Ext.getCmp("ArchivesRecForm.archivesNo").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.archivesNo").setValue("空编号");
+						}
+						//密级、紧急程度、标题、内容
+						if(Ext.getCmp("ArchivesRecForm.privacyLevel").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.privacyLevel").setValue("空");
+						}
+						if(Ext.getCmp("ArchivesRecForm.urgentLevel").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.urgentLevel").setValue("空");
+						}
+						if(Ext.getCmp("ArchivesRecForm.subject").getValue()==""){
+							Ext.getCmp("ArchivesRecForm.subject").setValue("无标题");
+						}
+						
 						if(c.defId==""||c.defId==null
 								||c.defId==undefined||c.defId=="0"){
 							Ext.ux.Toast.msg("操作信息", "请指定相应收文流程！");

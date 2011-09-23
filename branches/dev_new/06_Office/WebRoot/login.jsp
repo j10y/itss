@@ -116,6 +116,7 @@ body {
 		    Ext.QuickTips.init();
 		    Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
 			var username = new Ext.form.TextField({id:"namefield",allowBlank:false,width:200,name:"username",renderTo :"username"});
+			username.focus();
 			var password = new Ext.form.TextField({id:"pwdfield",allowBlank:false,width:200,name:"password",inputType:"password",renderTo :"password"});
 			var password = new Ext.form.TextField({id:"codefield",allowBlank:false,width:200,name:"checkCode",renderTo :"checkCode"});
 		});
