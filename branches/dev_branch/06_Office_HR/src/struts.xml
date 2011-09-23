@@ -376,11 +376,15 @@
 		<action name="*HrPostApply" class="HrPostApplyAction" method="{1}">
 			<result>${successResultValue}</result>
 			<result name="show">/pages/hrm/positiveApply.jsp</result>
+			<result name="result">/pages/hrm/applyResult.jsp</result>
 			<result name="showStatus">/pages/hrm/positiveApplyStatus.jsp</result>
 		</action>
 		<action name="*HrPostAssessment" class="HrPostAssessmentAction" method="{1}">
 			<result>${successResultValue}</result>
+			<result name="show">/pages/hrm/positiveAssessment.jsp</result>
+			<result name="view">/pages/hrm/positiveAssessmentDetail.jsp</result>
 			<result name="showStatus">/pages/hrm/positiveAssessmentStatus.jsp</result>
+			<result name="result">/pages/hrm/applyResult.jsp</result>
 		</action>
 		
 	</package>
