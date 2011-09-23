@@ -366,11 +366,22 @@ ArchFlowConfView = Ext
 												var h = j.getAt(i);
 												if (h.data.archRecId == ""
 														|| h.data.archRecId == null) {
-													if (h.data.userId != null
-															&& h.data.userId != "") {
+													if ((h.data.userId != null&& h.data.userId != "")||
+														(h.data.deptUserId != null&& h.data.deptUserId != "")||
+														(h.data.leaderUserId != null&& h.data.leaderUserId != "")) {
 														h.set("archRecId", -1);
+														if(h.data.userId == null|| h.data.userId == ""){
+															h.set("userId", -1);
+														}
+														if(h.data.deptUserId == null|| h.data.deptUserId == ""){
+															h.set("deptUserId", -1);
+														}
+														if(h.data.leaderUserId == null|| h.data.leaderUserId == ""){
+															h.set("leaderUserId", -1);
+														}
 													}
 												}
+												
 												if (h.dirty) {
 													l.push(h.data);
 												}
