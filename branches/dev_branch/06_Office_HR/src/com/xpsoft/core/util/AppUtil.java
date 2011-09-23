@@ -39,93 +39,92 @@ import com.xpsoft.oa.service.system.FunUrlService;
 import com.xpsoft.oa.service.system.SysConfigService;
 
 public class AppUtil implements ApplicationContextAware {
-	/* 54 */private static Log logger = LogFactory.getLog(AppUtil.class);
+	private static Log logger = LogFactory.getLog(AppUtil.class);
 
-	/* 59 */private static Map configMap = new HashMap();
+	private static Map configMap = new HashMap();
 
-	/* 63 */private static ServletContext servletContext = null;
+	private static ServletContext servletContext = null;
 
-	/* 66 */private static Map<String, OnlineUser> onlineUsers = new LinkedHashMap();
+	private static Map<String, OnlineUser> onlineUsers = new LinkedHashMap();
 	private static ApplicationContext appContext;
-	/* 78 */private static Document lefMenuDocument = null;
+	private static Document lefMenuDocument = null;
 
-	/* 83 */private static Document publicDocument = null;
+	private static Document publicDocument = null;
 
-	/* 88 */private static Set<String> publicMenuIds = null;
+	private static Set<String> publicMenuIds = null;
 
 	public void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {
-		/* 71 */appContext = applicationContext;
+		appContext = applicationContext;
 	}
 
 	public static Document getLeftMenuDocument() {
-		/* 92 */return lefMenuDocument;
+		return lefMenuDocument;
 	}
 
 	public static void setLeftMenuDocument(Document doc) {
-		/* 96 */lefMenuDocument = doc;
+		lefMenuDocument = doc;
 	}
 
 	public static Document getPublicDocument() {
-		/* 101 */return publicDocument;
+		return publicDocument;
 	}
 
 	public static void setPublicDocument(Document pubDoc) {
-		/* 105 */publicDocument = pubDoc;
+		publicDocument = pubDoc;
 	}
 
 	public static void setPublicMenuIds(Set<String> pubIds) {
-		/* 109 */publicMenuIds = pubIds;
+		publicMenuIds = pubIds;
 	}
 
 	public static Object getBean(String beanId) {
-		/* 118 */return appContext.getBean(beanId);
+		return appContext.getBean(beanId);
 	}
 
 	public static Map<String, OnlineUser> getOnlineUsers() {
-		/* 125 */return onlineUsers;
+		return onlineUsers;
 	}
 
 	public static void removeOnlineUser(String sessionId) {
-		/* 132 */onlineUsers.remove(sessionId);
+		onlineUsers.remove(sessionId);
 	}
 
 	public static void addOnlineUser(String sessionId, AppUser user) {
-		/* 137 */if (!onlineUsers.containsKey(sessionId)) {
-			/* 138 */OnlineUser onlineUser = new OnlineUser();
-			/* 139 */onlineUser.setFullname(user.getFullname());
-			/* 140 */onlineUser.setSessionId(sessionId);
-			/* 141 */onlineUser.setUsername(user.getUsername());
-			/* 142 */onlineUser.setUserId(user.getUserId());
-			/* 143 */if (!user.getUserId().equals(AppUser.SUPER_USER)) {
-				/* 144 */onlineUser.setDepPath("."
-						+ user.getDepartment().getPath());
+		if (!onlineUsers.containsKey(sessionId)) {
+			OnlineUser onlineUser = new OnlineUser();
+			onlineUser.setFullname(user.getFullname());
+			onlineUser.setSessionId(sessionId);
+			onlineUser.setUsername(user.getUsername());
+			onlineUser.setUserId(user.getUserId());
+			if (!user.getUserId().equals(AppUser.SUPER_USER)) {
+				onlineUser.setDepPath("." + user.getDepartment().getPath());
 			}
-			/* 146 */Set<AppRole> roles = user.getRoles();
-			/* 147 */StringBuffer roleIds = new StringBuffer(",");
-			/* 148 */for (AppRole role : roles) {
-				/* 149 */roleIds.append(role.getRoleId() + ",");
+			Set<AppRole> roles = user.getRoles();
+			StringBuffer roleIds = new StringBuffer(",");
+			for (AppRole role : roles) {
+				roleIds.append(role.getRoleId() + ",");
 			}
-			/* 151 */onlineUser.setRoleIds(roleIds.toString());
-			/* 152 */onlineUser.setTitle(user.getTitle());
-			/* 153 */onlineUsers.put(sessionId, onlineUser);
+			onlineUser.setRoleIds(roleIds.toString());
+			onlineUser.setTitle(user.getTitle());
+			onlineUsers.put(sessionId, onlineUser);
 		}
 	}
 
 	public static String getAppAbsolutePath() {
-		/* 162 */return servletContext.getRealPath("/");
+		return servletContext.getRealPath("/");
 	}
 
 	public static String getFlowFormAbsolutePath() {
-		/* 170 */String path = (String) configMap.get("app.flowFormPath");
-		/* 171 */if (path == null)
+		String path = (String) configMap.get("app.flowFormPath");
+		if (path == null)
 			path = "/WEB-INF/FlowForm/";
-		/* 172 */return getAppAbsolutePath() + path;
+		return getAppAbsolutePath() + path;
 	}
 
 	public static void reloadSecurityDataSource() {
-		/* 180 */SecurityInterceptorFilter securityInterceptorFilter = (SecurityInterceptorFilter) getBean("securityInterceptorFilter");
-		/* 181 */securityInterceptorFilter.loadDataSource();
+		SecurityInterceptorFilter securityInterceptorFilter = (SecurityInterceptorFilter) getBean("securityInterceptorFilter");
+		securityInterceptorFilter.loadDataSource();
 	}
 
 	public static void init(ServletContext in_servletContext) {

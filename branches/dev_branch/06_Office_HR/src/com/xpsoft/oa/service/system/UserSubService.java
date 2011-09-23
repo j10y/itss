@@ -13,8 +13,3 @@ public abstract interface UserSubService extends BaseService<UserSub>
 
   public abstract List<Long> upUser(Long paramLong);
 }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.service.system.UserSubService
- * JD-Core Version:    0.6.0
- */

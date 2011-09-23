@@ -1,185 +1,204 @@
-/*     */ package com.xpsoft.core.engine;
-/*     */ 
-/*     */ import com.xpsoft.core.util.AppUtil;
-/*     */ import java.io.File;
-/*     */ import java.util.Map;
-/*     */ import java.util.Properties;
-/*     */ import javax.mail.MessagingException;
-/*     */ import javax.mail.internet.MimeMessage;
-/*     */ import org.apache.commons.lang.StringUtils;
-/*     */ import org.apache.commons.logging.Log;
-/*     */ import org.apache.commons.logging.LogFactory;
-/*     */ import org.apache.velocity.app.VelocityEngine;
-/*     */ import org.apache.velocity.exception.VelocityException;
-/*     */ import org.htmlparser.Parser;
-/*     */ import org.htmlparser.visitors.HtmlPage;
-/*     */ import org.springframework.core.io.ClassPathResource;
-/*     */ import org.springframework.mail.MailException;
-/*     */ import org.springframework.mail.SimpleMailMessage;
-/*     */ import org.springframework.mail.javamail.JavaMailSender;
-/*     */ import org.springframework.mail.javamail.JavaMailSenderImpl;
-/*     */ import org.springframework.mail.javamail.MimeMessageHelper;
-/*     */ import org.springframework.ui.velocity.VelocityEngineUtils;
-/*     */ 
-/*     */ public class MailEngine
-/*     */ {
-/*  34 */   private final Log logger = LogFactory.getLog(MailEngine.class);
-/*     */   private JavaMailSender mailSender;
-/*     */   private VelocityEngine velocityEngine;
-/*     */   private String defaultFrom;
-/*     */ 
-/*     */   public void setMailSender(JavaMailSender mailSender)
-/*     */   {
-/*  40 */     this.mailSender = mailSender;
-/*     */   }
-/*     */ 
-/*     */   public void setVelocityEngine(VelocityEngine velocityEngine) {
-/*  44 */     this.velocityEngine = velocityEngine;
-/*     */   }
-/*     */ 
-/*     */   public void setFrom(String from) {
-/*  48 */     this.defaultFrom = from;
-/*     */   }
-/*     */ 
-/*     */   public void sendMessage(SimpleMailMessage msg, String templateName, Map model)
-/*     */   {
-/*  58 */     String result = null;
-/*     */     try
-/*     */     {
-/*  61 */       result = VelocityEngineUtils.mergeTemplateIntoString(this.velocityEngine, templateName, model);
-/*     */     } catch (VelocityException e) {
-/*  63 */       e.printStackTrace();
-/*  64 */       this.logger.error(e.getMessage());
-/*     */     }
-/*     */ 
-/*  67 */     msg.setText(result);
-/*  68 */     send(msg);
-/*     */   }
-/*     */ 
-/*     */   public void send(SimpleMailMessage msg)
-/*     */     throws MailException
-/*     */   {
-/*     */     try
-/*     */     {
-/*  78 */       this.mailSender.send(msg);
-/*     */     } catch (MailException ex) {
-/*  80 */       this.logger.error(ex.getMessage());
-/*  81 */       throw ex;
-/*     */     }
-/*     */   }
-/*     */ 
-/*     */   public void sendMessage(String[] recipients, String sender, ClassPathResource resource, String bodyText, String subject, String attachmentName)
-/*     */     throws MessagingException
-/*     */   {
-/* 100 */     MimeMessage message = ((JavaMailSenderImpl)this.mailSender).createMimeMessage();
-/*     */ 
-/* 103 */     MimeMessageHelper helper = new MimeMessageHelper(message, true);
-/*     */ 
-/* 105 */     helper.setTo(recipients);
-/*     */ 
-/* 108 */     if (sender == null)
-/* 109 */       helper.setFrom(this.defaultFrom);
-/*     */     else {
-/* 111 */       helper.setFrom(sender);
-/*     */     }
-/*     */ 
-/* 114 */     helper.setText(bodyText);
-/* 115 */     helper.setSubject(subject);
-/*     */ 
-/* 117 */     helper.addAttachment(attachmentName, resource);
-/*     */ 
-/* 119 */     ((JavaMailSenderImpl)this.mailSender).send(message);
-/*     */   }
-/*     */ 
-/*     */   public String sendMimeMessage(String from, String[] tos, String cc, String replyTo, String subject, String htmlMsgContent, String[] attachedFileNames, File[] attachedFiles, boolean inline)
-/*     */   {
-/* 142 */     if ((tos == null) || (tos.length == 0) || (tos[0] == null) || 
-/* 143 */       ("".equals(tos[0]))) {
-/* 144 */       if (this.logger.isErrorEnabled()) {
-/* 145 */         this.logger
-/* 146 */           .error("Recipient found empty while sending a email, no further processing. Mail subject is:" + 
-/* 147 */           subject);
-/*     */       }
-/* 149 */       return "Recipient is empty";
-/*     */     }
-/*     */ 
-/* 152 */     JavaMailSenderImpl mailSender = (JavaMailSenderImpl)AppUtil.getBean("mailSender");
-/* 153 */     Map configs = AppUtil.getSysConfig();
-/* 154 */     mailSender.setHost((String)configs.get("host"));
-/* 155 */     mailSender.setUsername((String)configs.get("username"));
-/* 156 */     mailSender.setPassword((String)configs.get("password"));
-/* 157 */     mailSender.setDefaultEncoding("UTF-8");
-/* 158 */     mailSender.setProtocol("smtp");
-/* 159 */     Properties props = new Properties();
-/* 160 */     props.put("mail.smtp.auth", "true");
-/* 161 */     setFrom((String)configs.get("from"));
-/* 162 */     mailSender.setJavaMailProperties(props);
-/* 163 */     MimeMessage message = mailSender.createMimeMessage();
-/*     */     try
-/*     */     {
-/* 166 */       MimeMessageHelper helper = new MimeMessageHelper(message, attachedFiles != null);
-/*     */ 
-/* 168 */       helper.setFrom(from == null ? this.defaultFrom : from);
-/* 169 */       helper.setTo(tos);
-/* 170 */       if ((cc != null) && (!"".equals(cc))) {
-/* 171 */         helper.setCc(cc);
-/*     */       }
-/* 173 */       if ((replyTo != null) && (!"".equals(replyTo))) {
-/* 174 */         helper.setReplyTo(replyTo);
-/*     */       }
-/*     */ 
-/* 177 */       helper.setSubject(subject);
-/*     */ 
-/* 179 */       helper.setText(htmlMsgContent, true);
-/*     */ 
-/* 182 */       if (attachedFiles != null) {
-/* 183 */         if (inline) {
-/* 184 */           for (int i = 0; i < attachedFiles.length; i++)
-/* 185 */             helper.addInline(attachedFileNames[i], attachedFiles[i]);
-/*     */         }
-/*     */         else {
-/* 188 */           for (int i = 0; i < attachedFiles.length; i++) {
-/* 189 */             helper.addAttachment(attachedFileNames[i], attachedFiles[i]);
-/*     */           }
-/*     */         }
-/*     */ 
-/*     */       }
-/*     */ 
-/* 195 */       mailSender.send(message);
-/* 196 */       if (this.logger.isDebugEnabled())
-/* 197 */         this.logger.debug("A email has been sent successfully to: " + StringUtils.join(tos, ','));
-/*     */     }
-/*     */     catch (Throwable e) {
-/* 200 */       this.logger.error("Error occured when sending email.", e);
-/* 201 */       return "Error occured when sending email." + e.getMessage();
-/*     */     }
-/*     */ 
-/* 204 */     return null;
-/*     */   }
-/*     */ 
-/*     */   public String sendTemplateMail(String templateName, Map<String, Object> model, String subject, String from, String[] tos, String cc, String replyTo, String[] attachedFileNames, File[] attachedFiles, boolean inline)
-/*     */   {
-/* 227 */     String mailContent = null;
-/* 228 */     String mailSubject = subject;
-/*     */     try {
-/* 230 */       mailContent = VelocityEngineUtils.mergeTemplateIntoString(this.velocityEngine, templateName, model);
-/* 231 */       if (subject == null) {
-/* 232 */         Parser myParser = Parser.createParser(mailContent, "UTF-8");
-/* 233 */         HtmlPage visitor = new HtmlPage(myParser);
-/* 234 */         myParser.visitAllNodesWith(visitor);
-/* 235 */         mailSubject = visitor.getTitle();
-/*     */       }
-/*     */     } catch (Throwable e) {
-/* 238 */       throw new RuntimeException("Email template processing error, Check log for detail infomation. Template path: " + 
-/* 238 */         templateName, e);
-/*     */     }
-/*     */ 
-/* 241 */     return sendMimeMessage(from, tos, cc, replyTo, mailSubject, 
-/* 242 */       mailContent, attachedFileNames, attachedFiles, inline);
-/*     */   }
-/*     */ }
+package com.xpsoft.core.engine;
 
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.core.engine.MailEngine
- * JD-Core Version:    0.6.0
- */
+import java.io.File;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.VelocityException;
+import org.htmlparser.Parser;
+import org.htmlparser.visitors.HtmlPage;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+
+import com.xpsoft.core.util.AppUtil;
+
+public class MailEngine {
+	private final Log logger = LogFactory.getLog(MailEngine.class);
+	private JavaMailSender mailSender;
+	private VelocityEngine velocityEngine;
+	private String defaultFrom;
+
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
+	public void setVelocityEngine(VelocityEngine velocityEngine) {
+		this.velocityEngine = velocityEngine;
+	}
+
+	public void setFrom(String from) {
+		this.defaultFrom = from;
+	}
+
+	public void sendMessage(SimpleMailMessage msg, String templateName,
+			Map model) {
+		String result = null;
+		try {
+			result = VelocityEngineUtils.mergeTemplateIntoString(
+					this.velocityEngine, templateName, model);
+		} catch (VelocityException e) {
+			e.printStackTrace();
+			this.logger.error(e.getMessage());
+		}
+
+		msg.setText(result);
+		send(msg);
+	}
+
+	public void send(SimpleMailMessage msg) throws MailException {
+		try {
+			this.mailSender.send(msg);
+		} catch (MailException ex) {
+			this.logger.error(ex.getMessage());
+			throw ex;
+		}
+	}
+
+	public void sendMessage(String[] recipients, String sender,
+			ClassPathResource resource, String bodyText, String subject,
+			String attachmentName) throws MessagingException {
+		MimeMessage message = ((JavaMailSenderImpl) this.mailSender).createMimeMessage();
+
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+		helper.setTo(recipients);
+
+		if (sender == null)
+			helper.setFrom(this.defaultFrom);
+		else {
+			helper.setFrom(sender);
+		}
+
+		helper.setText(bodyText);
+		helper.setSubject(subject);
+
+		helper.addAttachment(attachmentName, resource);
+
+		((JavaMailSenderImpl) this.mailSender).send(message);
+	}
+
+	public String sendMimeMessage(String from, String[] tos, String cc,
+			String replyTo, String subject, String htmlMsgContent,
+			String[] attachedFileNames, File[] attachedFiles, boolean inline) {
+		if ((tos == null) || (tos.length == 0) || (tos[0] == null) ||
+		("".equals(tos[0]))) {
+			if (this.logger.isErrorEnabled()) {
+				this.logger.error("Recipient found empty while sending a email, no further processing. Mail subject is:"
+								+
+								subject);
+			}
+			return "Recipient is empty";
+		}
+
+		JavaMailSenderImpl mailSender = (JavaMailSenderImpl) AppUtil.getBean("mailSender");
+		Map configs = AppUtil.getSysConfig();
+		mailSender.setHost((String) configs.get("host"));
+		mailSender.setUsername((String) configs.get("username"));
+		mailSender.setPassword((String) configs.get("password"));
+		mailSender.setDefaultEncoding("UTF-8");
+		mailSender.setProtocol("smtp");
+		Properties props = new Properties();
+		//add by jack for mail send config at 2011-9-22 begin
+		String auth = (String) configs.get("smtpAuth");
+		String defReplyTo = ((String) configs.get("replyTo") == null ? "zhangpeng@shopin.cn" : (String) configs.get("replyTo"));
+		String displayName = (String) configs.get("displayName");
+		
+		auth = (auth != null && !"".equalsIgnoreCase(auth) ? auth : "true");
+		props.put("mail.smtp.auth", auth);
+		//add by jack for mail send config at 2011-9-22 end
+		
+		setFrom((String) configs.get("from"));
+		
+		mailSender.setJavaMailProperties(props);
+		MimeMessage message = mailSender.createMimeMessage();
+		
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message,attachedFiles != null);
+			
+			//modify by jack for mail send config at 2011-9-22 begin
+			from = (from == null ? this.defaultFrom : from);
+			InternetAddress fromIndess = new InternetAddress(from, displayName);
+			helper.setFrom(fromIndess);
+			//modify by jack for mail send config at 2011-9-22 end
+			
+			helper.setTo(tos);
+			if ((cc != null) && (!"".equals(cc))) {
+				helper.setCc(cc);
+			}
+			
+			//modify by jack for mail send config at 2011-9-22 begin
+			if ((replyTo != null) && (!"".equals(replyTo))) {
+				helper.setReplyTo(replyTo);
+			}else if(StringUtils.isNotBlank(defReplyTo) ){
+				helper.setReplyTo(defReplyTo);
+			}
+			//modify by jack for mail send config at 2011-9-22 end
+			
+			helper.setSubject(subject);
+
+			helper.setText(htmlMsgContent, true);
+
+			if (attachedFiles != null) {
+				if (inline) {
+					for (int i = 0; i < attachedFiles.length; i++)
+						helper.addInline(attachedFileNames[i],
+								attachedFiles[i]);
+				} else {
+					for (int i = 0; i < attachedFiles.length; i++) {
+						helper.addAttachment(attachedFileNames[i],
+								attachedFiles[i]);
+					}
+				}
+
+			}
+
+			mailSender.send(message);
+			if (this.logger.isDebugEnabled())
+				this.logger.debug("A email has been sent successfully to: "
+								+ StringUtils.join(tos, ','));
+		} catch (Throwable e) {
+			this.logger.error("Error occured when sending email.", e);
+			return "Error occured when sending email."+ e.getMessage();
+		}
+
+		return null;
+	}
+
+	public String sendTemplateMail(String templateName,
+			Map<String, Object> model, String subject, String from,
+			String[] tos, String cc, String replyTo,
+			String[] attachedFileNames, File[] attachedFiles, boolean inline) {
+		String mailContent = null;
+		String mailSubject = subject;
+		try {
+			mailContent = VelocityEngineUtils.mergeTemplateIntoString(
+					this.velocityEngine, templateName, model);
+			if (subject == null) {
+				Parser myParser = Parser.createParser(mailContent,
+						"UTF-8");
+				HtmlPage visitor = new HtmlPage(myParser);
+				myParser.visitAllNodesWith(visitor);
+				mailSubject = visitor.getTitle();
+			}
+		} catch (Throwable e) {
+			throw new RuntimeException(
+					"Email template processing error, Check log for detail infomation. Template path: "
+							+ templateName, e);
+		}
+
+		return sendMimeMessage(from, tos, cc, replyTo, mailSubject, mailContent, attachedFileNames, attachedFiles, inline);
+	}
+}
