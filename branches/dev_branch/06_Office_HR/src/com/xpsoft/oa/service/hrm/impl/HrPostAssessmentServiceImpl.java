@@ -15,9 +15,11 @@ import com.xpsoft.oa.model.hrm.HrPostApply;
 import com.xpsoft.oa.model.hrm.HrPostAssessment;
 import com.xpsoft.oa.model.hrm.HrPromApply;
 import com.xpsoft.oa.model.hrm.HrPromAssessment;
+import com.xpsoft.oa.model.hrm.StandSalary;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.hrm.HrPostApplyService;
 import com.xpsoft.oa.service.hrm.HrPostAssessmentService;
+import com.xpsoft.oa.service.hrm.StandSalaryService;
 
 public class HrPostAssessmentServiceImpl extends BaseServiceImpl<HrPostAssessment>
 		implements HrPostAssessmentService{
@@ -40,6 +42,7 @@ public class HrPostAssessmentServiceImpl extends BaseServiceImpl<HrPostAssessmen
 	}
 	
 	public HrPostAssessment saveViewByApplyId(Long applyId) {
+		StandSalaryService standSalaryService = (StandSalaryService)AppUtil.getBean("standSalaryService");
 		String HQL = "FROM HrPostAssessment v WHERE v.postApply.id=? AND v.publishStatus!=?";
 		Object[] paramArrayOfObject = new Object [] {applyId, HrPostApply.STATUS_DEL};
 		List<HrPostAssessment> list = dao.findByHql(HQL, paramArrayOfObject);
@@ -57,7 +60,25 @@ public class HrPostAssessmentServiceImpl extends BaseServiceImpl<HrPostAssessmen
 			hrPostAssessment.setApplyPostDate(empProfileList.get(0).getPositiveTime());
 			hrPostAssessment.setStandardPostId(hrPostApply.getPostId());
 			hrPostAssessment.setStandardPostName(hrPostApply.getPostName());
-			hrPostAssessment.setPublishStatus(HrPostApply.STATUS_DRAFT);//待人力资源复核
+			hrPostAssessment.setOldSalaryLevelId(empProfileList.get(0).getStandardId());
+			hrPostAssessment.setOldSalaryLevelName(empProfileList.get(0).getStandardName());
+			hrPostAssessment.setOldSalary(empProfileList.get(0).getStandardMoney());
+			StandSalary salaryLevel = standSalaryService.get(hrPostAssessment.getOldSalaryLevelId());
+			hrPostAssessment.setNewSalaryLevelId(salaryLevel.getStandardId());
+			hrPostAssessment.setNewSalaryLevelName(salaryLevel.getStandardName());
+			hrPostAssessment.setNewFixedSalary(salaryLevel.getTotalMoney().subtract(salaryLevel.getPerCoefficient()));
+			hrPostAssessment.setNewFloatSalary(salaryLevel.getPerCoefficient());
+			hrPostAssessment.setYearEndBonusCoefficient(salaryLevel.getYearEndBonusCoefficient());
+			hrPostAssessment.setTotalYearSalary(salaryLevel.getYearTotalMoney());
+			//将薪资标准名称分拆成为岗位层级的“Band”和“档”
+			String[] bandGrade = salaryLevel.getStandardName().trim().split("_");
+			if(bandGrade.length == 2) {
+				hrPostAssessment.setPostBand(bandGrade[0]);
+				hrPostAssessment.setPostGrade(bandGrade[1]);
+			} else {
+				this.logger.error("该薪资标准名称不符合规范，请重新命名！");
+			}
+			hrPostAssessment.setPublishStatus(HrPostApply.STATUS_HRCONFIRMAUDIT);//待人力资源复核
 			hrPostAssessment.setCreatePerson(ContextUtil.getCurrentUser());
 			hrPostAssessment.setCreateDate(new Date());
 			hrPostAssessment.setModifyDate(new Date());
