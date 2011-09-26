@@ -12,6 +12,9 @@ public class HrPostApply extends BaseModel{
 	public static final Integer STATUS_BACK = 2;
 	public static final Integer STATUS_APPROVED = 3;
 	public static final Integer STATUS_DEL = 4;
+	public static final Integer STATUS_LINEMANAGERAUDIT = 5;//待直线经理审核
+	public static final Integer STATUS_HRCONFIRMAUDIT = 6;//待人力资源复核
+	public static final Integer STATUS_VICEPRESIDENTCONFIRM = 7;//待分管副总裁确认
 	
 	protected Long id;
 	protected AppUser applyUser;//转正申请人
