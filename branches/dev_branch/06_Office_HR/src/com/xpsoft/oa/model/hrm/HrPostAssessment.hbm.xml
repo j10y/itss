@@ -123,12 +123,39 @@
 			not-null="false"
 		/>
 		<property
-			name="postRank"
+			name="postBand"
 			type="java.lang.String"
 			update="true"
 			insert="true"
 			access="property"
-			column="postRank"
+			column="postBand"
+			not-null="false"
+		/>
+		<property
+			name="postGrade"
+			type="java.lang.String"
+			update="true"
+			insert="true"
+			access="property"
+			column="postGrade"
+			not-null="false"
+		/>
+		<property
+			name="newSalaryLevelId"
+			type="java.lang.Long"
+			update="true"
+			insert="true"
+			access="property"
+			column="newSalaryLevelId"
+			not-null="false"
+		/>
+		<property
+			name="newSalaryLevelName"
+			type="java.lang.String"
+			update="true"
+			insert="true"
+			access="property"
+			column="newSalaryLevelName"
 			not-null="false"
 		/>
 		<property

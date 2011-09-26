@@ -20,7 +20,10 @@ public class HrPostAssessment extends BaseModel{
 	protected String ratingResult;//评级结果
 	protected Long standardPostId;//被评估者标准岗位ID
 	protected String standardPostName;//被评估者标准岗位名称
-	protected String postRank;//被评估者岗位职级
+	protected String postBand;//被评估者岗位层级（Band）
+	protected String postGrade;//被评估者岗位层级（档）
+	protected Long newSalaryLevelId;//被评估者薪资标准ID
+	protected String newSalaryLevelName;//被评估者薪资标准名称
 	protected Long oldSalaryLevelId;//转正前薪酬级别ID
 	protected String oldSalaryLevelName;//转正前薪酬级别名称
 	protected BigDecimal oldSalary;//转正前薪酬金额
@@ -146,14 +149,6 @@ public class HrPostAssessment extends BaseModel{
 
 	public void setStandardPostName(String standardPostName) {
 		this.standardPostName = standardPostName;
-	}
-
-	public String getPostRank() {
-		return postRank;
-	}
-
-	public void setPostRank(String postRank) {
-		this.postRank = postRank;
 	}
 
 	public Long getOldSalaryLevelId() {
@@ -314,5 +309,37 @@ public class HrPostAssessment extends BaseModel{
 
 	public void setPostManagerAuditDate(Date postManagerAuditDate) {
 		this.postManagerAuditDate = postManagerAuditDate;
+	}
+
+	public String getPostBand() {
+		return postBand;
+	}
+
+	public void setPostBand(String postBand) {
+		this.postBand = postBand;
+	}
+
+	public String getPostGrade() {
+		return postGrade;
+	}
+
+	public void setPostGrade(String postGrade) {
+		this.postGrade = postGrade;
+	}
+
+	public Long getNewSalaryLevelId() {
+		return newSalaryLevelId;
+	}
+
+	public void setNewSalaryLevelId(Long newSalaryLevelId) {
+		this.newSalaryLevelId = newSalaryLevelId;
+	}
+
+	public String getNewSalaryLevelName() {
+		return newSalaryLevelName;
+	}
+
+	public void setNewSalaryLevelName(String newSalaryLevelName) {
+		this.newSalaryLevelName = newSalaryLevelName;
 	}
 }
