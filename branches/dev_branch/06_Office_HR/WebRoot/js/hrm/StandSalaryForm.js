@@ -55,6 +55,9 @@ StandSalaryForm.prototype.setup = function (c) {
 							name : "standSalaryForm.yearEndBonusCoefficient",
 							mapping : "yearEndBonusCoefficient"
 						}, {
+							name : "standSalaryForm.yearTotalMoney",
+							mapping : "yearTotalMoney"
+						}, {
 							name : "standSalaryForm.memo",
 							mapping : "memo"
 						}
@@ -126,6 +129,13 @@ StandSalaryForm.prototype.setup = function (c) {
 												xtype : "textfield",
 												readOnly : true,
 												anchor : "100%"
+											}, {
+												fieldLabel : "年度总薪酬",
+												name : "standSalary.yearTotalMoney",
+												id : "standSalaryForm.yearTotalMoney",
+												xtype : "numberfield",
+												allowBlank : false,
+												anchor : "100%"
 											}
 										]
 									}, {
@@ -156,12 +166,14 @@ StandSalaryForm.prototype.setup = function (c) {
 												name : "standSalary.perCoefficient",
 												id : "standSalaryForm.perCoefficient",
 												xtype:"numberfield",
+												allowBlank : false,
 												anchor : "100%"
 											}, {
 												fieldLabel : "年终奖金绩效基数",
 												name : "standSalary.yearEndBonusCoefficient",
 												id : "standSalaryForm.yearEndBonusCoefficient",
 												xtype:"numberfield",
+												allowBlank : false,
 												anchor : "100%"
 											}
 										]

@@ -178,6 +178,18 @@
             not-null="false"
             unique="false"
         />
+        <property
+            name="yearTotalMoney"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="yearTotalMoney"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
   <!-- exported bi-directional one-to-many association to StandSalaryItem -->
 	<set name="standSalaryItems"
 	     table="stand_salary_item"
