@@ -10,13 +10,17 @@ import javax.annotation.Resource;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.HrPostApply;
 import com.xpsoft.oa.model.hrm.HrPostAssessment;
+import com.xpsoft.oa.model.hrm.StandSalary;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.hrm.HrPostApplyService;
+import com.xpsoft.oa.service.hrm.HrPostAssessmentService;
+import com.xpsoft.oa.service.hrm.StandSalaryService;
 
 import flexjson.JSONSerializer;
 
@@ -157,7 +161,9 @@ public class HrPostApplyAction extends BaseAction{
 			if(isSubmit) {
 				this.jsonString = "{success:true,'applyId':'" + postApplyNew.getId() + 
 						"','fullname':'" + postApplyNew.getApplyUser().getFullname() + 
+						"','deptId':'" + postApplyNew.getDeptId() + 
 						"','deptName':'" +postApplyNew.getDeptName() + 
+						"','postId':'" + postApplyNew.getPostId() + 
 						"','postName':'" + postApplyNew.getPostName() + 
 						"','accessionTime':'" + postApplyNew.getAccessionTime() + 
 						"','proSummary':'" + postApplyNew.getProSummary() + 
@@ -176,24 +182,92 @@ public class HrPostApplyAction extends BaseAction{
 	 * 仅修改状态
 	 * @return
 	 */
-	public String modStatus() {		
-		HrPostApply postApply = this.hrPostApplyService.get(this.id);
-		Integer publishStatus = Integer.valueOf(getRequest().getParameter("publishStatus"));
-		boolean isAssess = Boolean.valueOf(getRequest().getParameter("isAssess"));//评估阶段
-		if(!isAssess){
-			postApply.setPublishStatus(publishStatus);//申请阶段可以修改状态，或者指定节点可以修改
-		}
+	public String modStatus() {
+		Date currentDate = new Date();
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		HrPostAssessmentService hrPostAssessmentService = (HrPostAssessmentService)AppUtil.getBean("hrPostAssessmentService");
+		StandSalaryService standSalaryService = (StandSalaryService)AppUtil.getBean("standSalaryService");
+		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
+		HrPostApply postApply = this.hrPostApplyService.get(this.hrPostApply.getId());
+		Integer publishStatus = Integer.valueOf(this.getRequest().getParameter("publishStatus"));
+		boolean isAssess = Boolean.valueOf(this.getRequest().getParameter("isAssess"));//评估阶段
+		//if(!isAssess){
+			postApply.setPublishStatus(publishStatus);
+		//}
 		HrPostAssessment assessment = null;
-		if(getRequest().getParameter("auditStep")!=null){
-			String auditStep = getRequest().getParameter("auditStep");
+		if(this.getRequest().getParameter("auditStep")!=null){
+			String auditStep = this.getRequest().getParameter("auditStep");
 			if(auditStep.equalsIgnoreCase("LineManagerAudit")){//直线经理审核
 				postApply.setPostManagerId(ContextUtil.getCurrentUserId());
 				postApply.setPostManagerName(ContextUtil.getCurrentUser().getFullname());
 				postApply.setPostManagerAuditDate(new Date());
+				postApply.setModifyDate(currentDate);
+				postApply.setModifyPerson(currentUser);
 			}else if(auditStep.equalsIgnoreCase("HRConfirmAudit")){//人力资源复核
-				
+				assessment = hrPostAssessmentService.getByApplyId(this.hrPostApply.getId());
+				assessment.setActualPostDate(DateUtil.parseDate(this.getRequest().getParameter("hrPostAssessment.actualPostDate")));
+				assessment.setStandardPostId(Long.parseLong(this.getRequest().getParameter("hrPostAssessment.standardPostId")));
+				assessment.setStandardPostName(this.getRequest().getParameter("hrPostAssessment.standardPostName"));
+				assessment.setNewSalaryLevelId(Long.parseLong(this.getRequest().getParameter("hrPostAssessment.newSalaryLevelId")));
+				assessment.setNewSalaryLevelName(this.getRequest().getParameter("hrPostAssessment.newSalaryLevelName"));
+				assessment.setHrOpinion(this.getRequest().getParameter("leaderRead.leaderOpinion"));
+				String[] bandGrade = this.getRequest().getParameter("hrPostAssessment.newSalaryLevelName").trim().split("_");
+				if(bandGrade.length == 2) {
+					assessment.setPostBand(bandGrade[0]);
+					assessment.setPostGrade(bandGrade[1]);
+				} else {
+					this.logger.error("该薪资标准名称不符合规范，请重新命名！");
+				}
+				StandSalary newSalary = standSalaryService.get(assessment.getNewSalaryLevelId());
+				if(newSalary != null) {
+					assessment.setNewFixedSalary(newSalary.getTotalMoney().subtract(newSalary.getPerCoefficient()));
+					assessment.setNewFloatSalary(newSalary.getPerCoefficient());
+					assessment.setYearEndBonusCoefficient(newSalary.getYearEndBonusCoefficient());
+					assessment.setTotalYearSalary(newSalary.getYearTotalMoney());
+				} else {
+					this.logger.error("该薪资标准不存在或已删除，请联系管理员！");
+				}
+				assessment.setModifyDate(currentDate);
+				assessment.setModifyPerson(currentUser);
+				assessment.setPublishStatus(publishStatus);
+				hrPostAssessmentService.save(assessment);
+				if(publishStatus == 3) {//更新档案表
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("Q_userId_L_EQ", assessment.getPostApply().getApplyUser().getUserId().toString());
+					QueryFilter filter = new QueryFilter(map);
+					List<EmpProfile> empProfileList = empProfileService.getAll(filter);
+					if(empProfileList.size() > 0) {
+						empProfileList.get(0).setJobId(assessment.getStandardPostId());
+						empProfileList.get(0).setPosition(assessment.getStandardPostName());
+						empProfileList.get(0).setStandardMoney(assessment.getNewFixedSalary().add(assessment.getNewFloatSalary()));
+						empProfileList.get(0).setStandardId(assessment.getNewSalaryLevelId());
+						empProfileList.get(0).setStandardName(assessment.getNewSalaryLevelName());
+						empProfileList.get(0).setPerCoefficient(assessment.getNewFloatSalary());
+						empProfileList.get(0).setAccessionTime(assessment.getActualPostDate());
+					}
+				}
 			}else if(auditStep.equalsIgnoreCase("VicePresidentConfirm")){//分管副总裁确认
-				
+				assessment = hrPostAssessmentService.getByApplyId(this.hrPostApply.getId());
+				//assessment.setDeptOpinion(this.getRequest().getParameter("leaderRead.leaderOpinion"));
+				assessment.setModifyDate(currentDate);
+				assessment.setModifyPerson(currentUser);
+				assessment.setPublishStatus(publishStatus);
+				hrPostAssessmentService.save(assessment);
+				if(publishStatus == 3) {//更新档案表
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("Q_userId_L_EQ", assessment.getPostApply().getApplyUser().getUserId().toString());
+					QueryFilter filter = new QueryFilter(map);
+					List<EmpProfile> empProfileList = empProfileService.getAll(filter);
+					if(empProfileList.size() > 0) {
+						empProfileList.get(0).setJobId(assessment.getStandardPostId());
+						empProfileList.get(0).setPosition(assessment.getStandardPostName());
+						empProfileList.get(0).setStandardMoney(assessment.getNewFixedSalary().add(assessment.getNewFloatSalary()));
+						empProfileList.get(0).setStandardId(assessment.getNewSalaryLevelId());
+						empProfileList.get(0).setStandardName(assessment.getNewSalaryLevelName());
+						empProfileList.get(0).setPerCoefficient(assessment.getNewFloatSalary());
+						empProfileList.get(0).setAccessionTime(assessment.getActualPostDate());
+					}
+				}
 			}
 		}	
 		this.hrPostApplyService.save(postApply);
