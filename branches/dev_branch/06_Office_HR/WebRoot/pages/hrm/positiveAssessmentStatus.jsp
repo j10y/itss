@@ -81,18 +81,24 @@
 					<td class="field">被评估者标准岗位名称</td>
 					<td class="field" colspan="2">${hrPostAssessment.standardPostName}</td>
 					<td class="field">被评估者岗位层级</td>
-					<td class="field" colspan="2" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.postRank}</td>
+					<td class="field" colspan="2" style="border-right:1px solid #000000;padding:2px;">
+						Band&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postBand}</font>&nbsp;&nbsp;
+						档&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postGrade}</font>
+					</td>
 				</tr>
 				<tr>
 					<td class="field">转正前薪酬级别</td>
-					<td class="field" colspan="2">${hrPostAssessment.oldSalaryLevelName}</td>
+					<td class="field" colspan="2">
+						<font style="text-decoration:underline">${hrPostAssessment.oldSalaryLevelName}</font>，
+						<font style="text-decoration:underline">${hrPostAssessment.oldSalary}</font>元/月
+					</td>
 					<td class="field">转正后薪酬（由人力资源部填写）</td>
 					<td class="field" colspan="2" style="border-right:1px solid #000000;padding:2px;text-align:left">
-						月度工资为${hrPostAssessment.newFixedSalary + hrPostAssessment.newFloadSalary}元，其中<br/>
-						固定部分为${hrPostAssessment.newFixedSalary}元，<br/>
-						浮动部分为${hrPostAssessment.newFloadSalary}元，<br/>
-						年终奖金基数为${hrPostAssessment.yearEndBonusCoefficient}元，<br/>
-						年度总酬为${hrPostAssessment.totalYearSalary}元。
+						月度工资为<font style="text-decoration:underline">${hrPostAssessment.newFixedSalary + hrPostAssessment.newFloatSalary}</font>元，其中<br/>
+						固定部分为<font style="text-decoration:underline">${hrPostAssessment.newFixedSalary}</font>元，<br/>
+						浮动部分为<font style="text-decoration:underline">${hrPostAssessment.newFloatSalary}</font>元，<br/>
+						年终奖金基数为<font style="text-decoration:underline">${hrPostAssessment.yearEndBonusCoefficient}</font>元，<br/>
+						年度总酬为<font style="text-decoration:underline">${hrPostAssessment.totalYearSalary}</font>元。
 					</td>
 				</tr>
 				<tr>
