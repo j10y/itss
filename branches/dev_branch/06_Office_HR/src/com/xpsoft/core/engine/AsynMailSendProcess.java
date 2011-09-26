@@ -101,7 +101,6 @@ public class AsynMailSendProcess implements Runnable {
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		MailEngine me = (MailEngine)AppUtil.getBean("mailEngine");
