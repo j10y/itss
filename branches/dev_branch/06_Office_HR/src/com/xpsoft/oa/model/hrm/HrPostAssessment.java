@@ -28,7 +28,7 @@ public class HrPostAssessment extends BaseModel{
 	protected String oldSalaryLevelName;//转正前薪酬级别名称
 	protected BigDecimal oldSalary;//转正前薪酬金额
 	protected BigDecimal newFixedSalary;//转正后固定工资金额
-	protected BigDecimal newFloadSalary;//转正后浮动工资金额
+	protected BigDecimal newFloatSalary;//转正后浮动工资金额
 	protected BigDecimal yearEndBonusCoefficient;//年终绩效基数金额
 	protected BigDecimal totalYearSalary;//年度总薪酬金额
 	protected String proPerformance;//员工试用期间工作表现评价
@@ -183,14 +183,6 @@ public class HrPostAssessment extends BaseModel{
 		this.newFixedSalary = newFixedSalary;
 	}
 
-	public BigDecimal getNewFloadSalary() {
-		return newFloadSalary;
-	}
-
-	public void setNewFloadSalary(BigDecimal newFloadSalary) {
-		this.newFloadSalary = newFloadSalary;
-	}
-
 	public BigDecimal getYearEndBonusCoefficient() {
 		return yearEndBonusCoefficient;
 	}
@@ -341,5 +333,13 @@ public class HrPostAssessment extends BaseModel{
 
 	public void setNewSalaryLevelName(String newSalaryLevelName) {
 		this.newSalaryLevelName = newSalaryLevelName;
+	}
+
+	public BigDecimal getNewFloatSalary() {
+		return newFloatSalary;
+	}
+
+	public void setNewFloatSalary(BigDecimal newFloatSalary) {
+		this.newFloatSalary = newFloatSalary;
 	}
 }
