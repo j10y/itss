@@ -46,6 +46,63 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 									#set ($count=$count+1)
 								#end
 								,new Ext.Button({
+								iconCls:'btn-transition',
+								//hidden : true,
+								text : '结束',
+								handler : function(){
+									Ext.getCmp("publishStatus").setValue(3);//已确认
+									if (Ext.getCmp("auditForm").getForm().isValid()) {
+										//流程结束，修改状态
+										Ext.getCmp("auditForm").getForm().submit({
+											method : 'POST',
+											waitMsg : '正在提交数据...',
+											success : function(fp, action) {
+												Ext.getCmp("auditForm").getForm().submit({
+										            url:__ctxPath+ "/flow/nextProcessActivity.do",
+													method:'post',
+													params:{taskId:Ext.getCmp("HrPostApplyHRConfirmAuditFlowView").taskId,signalName:"to结束1",activityName:"人力资源复核",destName:'结束1'},
+													success : function(fp, action) {
+													    Ext.ux.Toast.msg('操作信息','成功保存！');
+													    
+													    AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPostApplyHRConfirmAuditFlowView").taskId);
+	
+													    
+														var myTaskView=Ext.getCmp("MyTaskGrid");
+														if(myTaskView!=null){
+															//AppUtil.activateTab(taskView);
+															myTaskView.getStore().reload();
+														}
+													},
+													failure : function(fp, action) {
+														Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+													}
+											    });
+											},
+											failure : function(fp, action) {
+												Ext.MessageBox.show({
+															title : '操作信息',
+															msg : '信息保存出错，请联系管理员！',
+															buttons : Ext.MessageBox.OK,
+															icon : Ext.MessageBox.ERROR
+														});
+												            AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPostApplyHRConfirmAuditFlowView").taskId);
+															var myTaskView=Ext.getCmp("MyTaskGrid");
+															var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+															if(appHomeTaskGrid!=null){
+																appHomeTaskGrid.getStore().reload();
+															}
+															if(myTaskView!=null){
+																//AppUtil.activateTab(taskView);
+																myTaskView.getStore().reload();
+															}
+											}
+										});
+									}else{
+										Ext.ux.Toast.msg('操作信息','请选择岗位、薪资标准，并填写审批意见！');
+									}
+								}
+							})
+								,new Ext.Button({
 								iconCls:'btn-save',
 								//hidden : true,
 								text : '拒绝',
@@ -98,7 +155,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 											}
 										});
 									}else{
-										Ext.ux.Toast.msg('操作信息','请填写审批意见！');
+										Ext.ux.Toast.msg('操作信息','请选择岗位、薪资标准，并填写审批意见！');
 									}
 								}
 							})
@@ -115,7 +172,6 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 	onSave : function(formPanel,panel,signalName,activityName) {
 		if (formPanel.getForm().isValid()) {						
 			formPanel.getForm().submit({
-				url : __ctxPath + '/hrm/modStatusHrPostApply.do',//不加参数
 				method : 'POST',
 				waitMsg : '正在提交数据...',
 				success : function(fp, action) {
@@ -153,7 +209,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 				}
 			});
 		}else{
-			Ext.ux.Toast.msg('操作信息','请填写审批意见！');
+			Ext.ux.Toast.msg('操作信息','请选择岗位、薪资标准，并填写审批意见！');
 		}
 	},
 	/**
@@ -163,7 +219,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 	
 		//查询是否存在评估表，不存在则建立
 	
-		//显示请假详细信息
+		//显示转正申请表详细信息
 		this.detailPanel = new Ext.Panel({
 			title:'<font color="green">转正申请表</font>',
 			autoHeight : true,
@@ -173,7 +229,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 				url:__ctxPath+ '/pages/hrm/positiveApplyDetail.jsp?hrPostApplyId=' + ${hrPostApply_id} + '&stamp=' + Math.random()
 			}
 		});
-		//显示请假详细信息
+		//显示试用期评估表详细信息
 		this.detailPanel2 = new Ext.Panel({
 			title:'<font color="red">试用期评估表</font>',
 			autoHeight : true,
@@ -191,47 +247,78 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 			id : 'auditForm',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/hrm/modStatusHrPostApply.do?isAssess=true&auditStep=HRConfirmAudit',//人力资源复核
+			url : __ctxPath + '/hrm/modStatusHrPostApply.do',//人力资源复核
 			defaults : {
 				anchor : '94%,96%'
 			},
-			items : [{
+			items : [
+					{
+						xtype : "hidden",
+						name : "isAssess",
+						value : "true",
+					}, {
+						xtype : "hidden",
+						name : "auditStep",
+						value : "HRConfirmAudit",
+					}, {
 						xtype : 'hidden',
 						id : 'standardPostId',
-						name : 'hrPromAssessment.standardPostId'
+						name : 'hrPostAssessment.standardPostId',
+						value : '${hrPostAssessment_standardPostId}'
 					}, {
-						fieldLabel: "所属岗位",
+						fieldLabel : "所属岗位",
 						anchor : '50%,96%',
-						width : 200,
-						xtype: "combo",
+						id : "standardPostNameCombo",
+						name : "hrPostAssessment.standardPostName",
 						mode : "local",
 						allowBlank : false,
-						name : "hrPostAssessment.standardPostName",
+						xtype: "combo",
+						editable : false,
+						valueField : "jobName",
+						displayField : "jobName",
 						triggerAction : "all",
-						store : [
-							["1级","1级"],
-							["2级","2级"],
-							["3级","3级"],
-							["4级","4级"],
-							["5级","5级"],
-							["6级","6级"],
-							["7级","7级"],
-							["8级","8级"],
-							["9级","9级"],
-							["10级","10级"],
-							["11级","11级"],
-							["12级","12级"]
-						],
+						store : new Ext.data.JsonStore(
+								{
+									remoteSort : true,
+									root:"result",
+									fields : [
+											{
+												name : "jobId",
+												type : "int"
+											},
+											"jobName" ]
+								}),
 						listeners : {
-							select : function(l, h, k) {
-								
+							focus : function() {
+								document.getElementById("standardPostId").value = "";
+								Ext.getCmp("newSalaryLevelNameCombo").setValue("");
+								Ext.Ajax.request({
+									url : __ctxPath + "/hrm/applyPositionHrPostAssessment.do",
+									method : "post",
+									params : {
+										'Q_department.depId_L_EQ' : '${hrPostApply_deptId}',
+										'Q_delFlag_SN_EQ' : '0'
+									},
+									success : function(f) {
+										var e = Ext.util.JSON.decode(f.responseText);
+										Ext.getCmp("standardPostNameCombo").getStore().loadData(e);
+									}
+								});
+							},
+							select : function(e, c, d) {
+								document.getElementById("standardPostId").value = c.data.jobId;
 							}
 						}
 					},{
-						fieldLabel : "岗位职级",
+						xtype : 'hidden',
+						id : 'newSalaryLevelId',
+						name : 'hrPostAssessment.newSalaryLevelId',
+						value : '${hrPostAssessment_newSalaryLevelId}'
+					},{
+						fieldLabel : "薪资标准",
 						anchor : '50%,96%',
-						id : "salaryLevelNameCombo",
-						name : "hrPostAssessment.postRank",
+						id : "newSalaryLevelNameCombo",
+						name : "hrPostAssessment.newSalaryLevelName",
 						mode : "local",
 						allowBlank : false,
 						xtype: "combo",
@@ -241,37 +328,43 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 						triggerAction : "all",
 						store : new Ext.data.JsonStore(
 								{
-									url : __ctxPath + "/hrm/comboSalaryJobSalaryRelation.do",
-									params : {
-										'Q_job.jobId_L_EQ' : '${hrPostApply_standardPostId}',
-										'Q_deleteFlag_N_EQ' : 0
-									},
+									remoteSort : true,
 									fields : [
 											{
 												name : "standardId",
 												type : "int"
 											},
-											"standardNo",
-											"standardName",
-											"totalMoney",
-											"setdownTime",
-											"perCoefficient",
-											"status" ]
+											"standardName"]
 								}),
 						listeners : {
 							focus : function() {
-								var positionId = '${hrPostApply_standardPostId}';
-								Ext.getCmp("salaryLevelNameCombo").getStore().reload({
+								var positionId = document.getElementById("standardPostId").value;
+								Ext.Ajax.request({
+									url : __ctxPath + "/hrm/comboSalaryJobSalaryRelation.do",
+									method : "post",
 									params : {
 										'Q_job.jobId_L_EQ' : positionId,
 										'Q_deleteFlag_N_EQ' : 0
+									},
+									success : function(f) {
+										var e = Ext.util.JSON.decode(f.responseText);
+										Ext.getCmp("newSalaryLevelNameCombo").getStore().loadData(e);
 									}
 								});
 							},
 							select : function(e, c, d) {
-								document.getElementById("hrPostAssessment.salaryLevelId").value = c.data.standardId;
+								document.getElementById("newSalaryLevelId").value = c.data.standardId;
 							}
 						}
+					}, {
+						fieldLabel : "转正时间",
+						xtype : "datefield",
+						anchor : '50%,96%',
+						id : "hrPostAssessment.actualPostDate",
+						format : "Y-m-d",
+						editable : false,
+						allowBlank : false,
+						blankText : "转正时间不能为空！"
 					}, {
 						name : 'leaderRead.readId',
 						id : 'readId',
@@ -290,15 +383,17 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 							#end
 					},{
 						fieldLabel : '所属申请ID',
-						name : 'hrPromApply.id',
+						name : 'hrPostApply.id',
 						xtype : 'hidden',
-						value : '${hrPromApply_id}'
+						value : '${hrPostApply_id}'
 					},{
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',
-						value :  6 //待人力资源复核
+						value :  7 //待分管副总裁确认
 					}]
 		});
+		Ext.getCmp("standardPostNameCombo").setValue('${hrPostAssessment_standardPostName}');
+		Ext.getCmp("newSalaryLevelNameCombo").setValue('${hrPostAssessment_newSalaryLevelName}');
 	}
 })

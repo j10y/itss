@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fields>
 	<field name="hrPostApply.id" label="primaryKey" type="long" isShowed="false" />
-	<field name="hrPostApply.depName" label="部门名称" type="varchar" length="256"/>
+	<field name="hrPostApply.deptId" label="部门ID" type="long" isShowed="false"/>
+	<field name="hrPostApply.deptName" label="部门名称" type="varchar" length="256"/>
 	<field name="hrPostApply.accessionTime" label="入职时间" type="varchar" length="256"/>
+	<field name="hrPostApply.postId" label="工作岗位ID" type="long" isShowed="false"/>
 	<field name="hrPostApply.postName" label="工作岗位" type="varchar" length="256"/>
 	<field name="hrPostApply.proSummary" label="员工试用期总结" type="varchar" length="1000"/>
 	<field name="flowAssignId" label="负责人" type="varchar" length="256" isShowed="false" />
