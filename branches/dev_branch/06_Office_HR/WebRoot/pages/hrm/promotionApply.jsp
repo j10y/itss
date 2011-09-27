@@ -129,45 +129,14 @@
 				if(!result){
 					return;
 				}
-				Ext.Ajax.request({
-					url : "${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
-					params : {
-							"hrPromApply.id" : "${hrPromApply.id}",
-							"hrPromApply.depId" : document.getElementById("depId").value,
-							"hrPromApply.depName" : document.getElementById("depName").value,
-							"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
-							"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
-							"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
-							"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
-							"hrPromApply.workYear" : document.getElementById("workYear").value,
-							"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
-							"hrPromApply.applyReason" : document.getElementById("applyReason").value,
-							"hrPromApply.target1" : document.getElementById("target1").value,
-							"hrPromApply.target2" : document.getElementById("target2").value,
-							"hrPromApply.target3" : document.getElementById("target3").value,
-							"hrPromApply.intRecord" : document.getElementById("intRecord").value,
-							"hrPromApply.applyPositionId" : document.getElementById("applyPositionId").value,
-							"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
-							"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
-							"hrPromApply.publishStatus" : 5, //上报审批
-							"isSubmit" : "true" //上报审批
-					},
-					method : "post",
-					success : function(h, j) {
-						var data = Ext.decode(h.responseText);
-						document.getElementById("hrPromApply.id").value= data.applyId;	
-						Ext.Ajax.request({
-							url : "${pageContext.request.contextPath}/archive/getByCurrentUserArchRecUser.do",
-							success : function(h, j) {
-								var k = Ext.util.JSON.decode(h.responseText).data;
-								Ext.Ajax.request({							
-									url : "${pageContext.request.contextPath}/flow/saveProcessActivity.do",
-									waitMsg : "正在提交流程表单信息...",
-									scope : this,
-									params : {
-										defId : 16,
-										startFlow : true,
-										"hrPromApply.id" : document.getElementById("hrPromApply.id").value,
+				
+				UserSelector.getView(
+					function(id, name) {
+						if(id!=""){
+							Ext.Ajax.request({
+								url : "${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
+								params : {
+										"hrPromApply.id" : "${hrPromApply.id}",
 										"hrPromApply.depId" : document.getElementById("depId").value,
 										"hrPromApply.depName" : document.getElementById("depName").value,
 										"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
@@ -185,27 +154,115 @@
 										"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
 										"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
 										"hrPromApply.publishStatus" : 5, //上报审批
-										"isSubmit" : "true", //上报审批
-										flowAssignId : k.deptUserId
-									},
-									success : function(
-											i,
-											j) {
-										Ext.ux.Toast.msg("操作信息", "成功保存信息！");
-										window.location = "${pageContext.request.contextPath}/pages/hrm/applyResult.jsp?flag=2";
-										return;
-										Ext.getCmp("HrPromApplyForm").close();
-										var k = Ext.getCmp("ProcessRunGrid");
-										if (k != null) {
-											k.getStore().reload();
+										"isSubmit" : "true" //上报审批
+								},
+								method : "post",
+								success : function(h, j) {
+									var data = Ext.decode(h.responseText);
+									document.getElementById("hrPromApply.id").value= data.applyId;
+									Ext.Ajax.request({							
+										url : "${pageContext.request.contextPath}/flow/saveProcessActivity.do",
+										waitMsg : "正在提交流程表单信息...",
+										scope : this,
+										params : {
+											defId : 16,
+											startFlow : true,
+											"hrPromApply.id" : document.getElementById("hrPromApply.id").value,
+											"hrPromApply.depId" : document.getElementById("depId").value,
+											"hrPromApply.depName" : document.getElementById("depName").value,
+											"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
+											"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
+											"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
+											"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
+											"hrPromApply.workYear" : document.getElementById("workYear").value,
+											"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
+											"hrPromApply.applyReason" : document.getElementById("applyReason").value,
+											"hrPromApply.target1" : document.getElementById("target1").value,
+											"hrPromApply.target2" : document.getElementById("target2").value,
+											"hrPromApply.target3" : document.getElementById("target3").value,
+											"hrPromApply.intRecord" : document.getElementById("intRecord").value,
+											"hrPromApply.applyPositionId" : document.getElementById("applyPositionId").value,
+											"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
+											"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
+											"hrPromApply.publishStatus" : 5, //上报审批
+											"isSubmit" : "true", //上报审批
+											//flowAssignId : k.deptUserId
+											flowAssignId : id
+										},
+										success : function(
+												i,
+												j) {
+											Ext.ux.Toast.msg("操作信息", "成功保存信息！");
+											window.location = "${pageContext.request.contextPath}/pages/hrm/applyResult.jsp?flag=2";
+											return;
+											Ext.getCmp("HrPromApplyForm").close();
+											var k = Ext.getCmp("ProcessRunGrid");
+											if (k != null) {
+												k.getStore().reload();
+											}
 										}
-									}
-																				
-								});
-							}
-						});
-					}
-				});
+																					
+									});
+									return ;
+									Ext.Ajax.request({
+										url : "${pageContext.request.contextPath}/archive/getByCurrentUserArchRecUser.do",
+										success : function(h, j) {
+											var k = Ext.util.JSON.decode(h.responseText).data;
+											Ext.Ajax.request({							
+												url : "${pageContext.request.contextPath}/flow/saveProcessActivity.do",
+												waitMsg : "正在提交流程表单信息...",
+												scope : this,
+												params : {
+													defId : 16,
+													startFlow : true,
+													"hrPromApply.id" : document.getElementById("hrPromApply.id").value,
+													"hrPromApply.depId" : document.getElementById("depId").value,
+													"hrPromApply.depName" : document.getElementById("depName").value,
+													"hrPromApply.accessionTime" : document.getElementById("accessionTime").value,
+													"hrPromApply.applyUser.userId" : document.getElementById("hrPromApply.applyUser.userId").value,
+													"hrPromApply.nowPositionId" : document.getElementById("nowPositionId").value,
+													"hrPromApply.nowPositionName" : document.getElementById("nowPositionName").value,
+													"hrPromApply.workYear" : document.getElementById("workYear").value,
+													"hrPromApply.workHereYear" : document.getElementById("workHereYear").value,
+													"hrPromApply.applyReason" : document.getElementById("applyReason").value,
+													"hrPromApply.target1" : document.getElementById("target1").value,
+													"hrPromApply.target2" : document.getElementById("target2").value,
+													"hrPromApply.target3" : document.getElementById("target3").value,
+													"hrPromApply.intRecord" : document.getElementById("intRecord").value,
+													"hrPromApply.applyPositionId" : document.getElementById("applyPositionId").value,
+													"hrPromApply.applyPositionName" : document.getElementById("hrPromApply.applyPositionName").value,
+													"hrPromApply.applyDate" : document.getElementById("hrPromApply.applyDate").value,
+													"hrPromApply.publishStatus" : 5, //上报审批
+													"isSubmit" : "true", //上报审批
+													//flowAssignId : k.deptUserId
+													flowAssignId : id
+												},
+												success : function(
+														i,
+														j) {
+													Ext.ux.Toast.msg("操作信息", "成功保存信息！");
+													window.location = "${pageContext.request.contextPath}/pages/hrm/applyResult.jsp?flag=2";
+													return;
+													Ext.getCmp("HrPromApplyForm").close();
+													var k = Ext.getCmp("ProcessRunGrid");
+													if (k != null) {
+														k.getStore().reload();
+													}
+												}
+																							
+											});
+										}
+									});
+								}
+							});
+							
+						}else{
+							Ext.ux.Toast.msg('操作信息','请选择上级领导！');
+						}
+				}).show();
+				
+				
+				
 				/*$.post("${pageContext.request.contextPath}/hrm/saveHrPromApply.do",
 						{
 							"hrPromApply.id" : "${hrPromApply.id}",
@@ -317,7 +374,7 @@
 					<td align="center" colspan="4" style="height:40px;border:1px solid #000000;">
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
 						<input type="submit" value="保存"/>&nbsp;&nbsp;
-						<input type="button" value="提交审核" onclick="onSend();"/>
+						<input type="button" value="提交上级领导审核" onclick="onSend();"/>
 					</td>
 				</tr>
 			</table>

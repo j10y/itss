@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.xpsoft.core.service.impl.BaseServiceImpl;
+import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.oa.dao.hrm.BudgetDao;
 import com.xpsoft.oa.dao.hrm.RealExecutionDao;
+import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
 import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
@@ -26,7 +29,17 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 		// TODO 1,首先获取list{budgetId,sumrealValue)} 2,重组数据
 		List<Map> result = new ArrayList();//结果
 		
-		List<Object []> list = dao.treeStatics(paramLong);
+		Budget budget = ((BudgetDao)AppUtil.getBean("budgetDao")).get(paramLong);
+		int budgetType = budget.getBudgetType();
+		List<Object []> list = null;
+		if(budgetType==1){//年度
+			list = dao.treeStatics(paramLong);
+		}else{//季度
+			//查询第一级别			
+			list = dao.treeQuarterStatics(budget.getBelongBudget().getBudgetId(), budget.getBeginDate(), budget.getEndDate());
+		}
+		
+		//List<Object []> list = dao.treeStatics(paramLong);
 		if(list.size()<=0){
 			return result;
 		}

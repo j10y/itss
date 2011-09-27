@@ -38,6 +38,16 @@
             not-null="true"
             unique="false"
         />
+        <property
+            name="onEmpCount"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="onEmpCount"
+            not-null="true"
+            unique="false"
+        />
 		 <property
             name="totalMoney"
             type="java.math.BigDecimal"

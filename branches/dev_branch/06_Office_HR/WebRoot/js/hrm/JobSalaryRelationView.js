@@ -78,6 +78,7 @@ JobSalaryRelationView = Ext.extend(Ext.Panel, {
 			, "job"
 			, "standSalary"
 			, "empCount"
+			, "onEmpCount"
 			, "totalMoney" ]
 		});
 		this.store.setDefaultSort("relationId", "desc");
@@ -134,6 +135,9 @@ JobSalaryRelationView = Ext.extend(Ext.Panel, {
 			}, {
 				header : "总人数",
 				dataIndex : "empCount"
+			}, {
+				header : "在编人数",
+				dataIndex : "onEmpCount"
 			}, {
 				header : "总金额",
 				dataIndex : "totalMoney"

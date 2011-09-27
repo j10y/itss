@@ -154,10 +154,11 @@ public class BudgetAction extends BaseAction {
 			for(JobSalaryRelation relation : list){
 				totalMoney = totalMoney.add(relation.getTotalMoney());
 			}
-			defaultNode.put("value", totalMoney.doubleValue());
+			//defaultNode.put("value", totalMoney.doubleValue());
 			try {
 				defaultNode.put("alarm", 
-						RealExecutionUtil.alarm(totalMoney.doubleValue(), 
+						//RealExecutionUtil.alarm(totalMoney.doubleValue(), 
+						RealExecutionUtil.alarm(Double.valueOf(defaultNode.get("value").toString()),
 								Double.valueOf(defaultNode.get("threshold").toString()), 
 								Double.valueOf(defaultNode.get("realValue").toString())));
 			} catch (NumberFormatException e) {

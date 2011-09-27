@@ -19,6 +19,9 @@ public class JobSalaryRelation extends BaseModel {
 	protected Integer empCount;//人数
 	protected BigDecimal totalMoney;
 	protected Integer deleteFlag;
+	
+	protected Integer onEmpCount;//在编人数
+	
 	public Long getRelationId() {
 		return relationId;
 	}
@@ -62,6 +65,13 @@ public class JobSalaryRelation extends BaseModel {
 	public void setDeleteFlag(Integer deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
+
+	public Integer getOnEmpCount() {
+		return onEmpCount;
+	}
+	public void setOnEmpCount(Integer onEmpCount) {
+		this.onEmpCount = onEmpCount;
+	}
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(-82280557, -700257973)
@@ -72,6 +82,7 @@ public class JobSalaryRelation extends BaseModel {
 		.append(this.empCount)
 		.append(this.totalMoney)
 		.append(this.deleteFlag)
+		.append(this.onEmpCount)
 		.toHashCode();
 	}
 	@Override
@@ -88,6 +99,7 @@ public class JobSalaryRelation extends BaseModel {
 			.append(this.empCount, rhs.empCount)
 			.append(this.totalMoney, rhs.totalMoney)
 			.append(this.deleteFlag, rhs.deleteFlag)
+			.append(this.onEmpCount, rhs.onEmpCount)
 			.isEquals();
 	}
 	@Override
@@ -100,6 +112,7 @@ public class JobSalaryRelation extends BaseModel {
 			.append("empCount", this.empCount)
 			.append("totalMoney", this.totalMoney)
 			.append("deleteFlag", this.deleteFlag)
+			.append("onEmpCount", this.onEmpCount)
 			.toString();
 	}
 	

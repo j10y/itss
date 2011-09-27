@@ -28,7 +28,7 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 			region: 'center',
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/budget/saveBudgetItem.do",
+			url : __ctxPath + "/budget/saveBudgetItem.do?isQuarter=true",//isQuarter 保存季度成本要素
 			id : "BudgetItemForm",
 			defaults : {
 				anchor : "98%,98%"
@@ -86,7 +86,7 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 					if(v!=null){
 						return v.budgetItemId;
 					}else{
-						return 0;
+						return "";
 					}
 				}
 			}, {
@@ -97,7 +97,7 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 					if(v!=null){
 						return v.name;
 					}else{
-						return 0;
+						return "";
 					}
 				}
 			}, {
@@ -135,9 +135,19 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 				}),
 				listeners : {
 					select : function(l, h, k) {
-						
+						//仅限制第一级
+						var childs = Ext.getCmp("budgetItemQuarterTree").getRootNode().childNodes[0].childNodes;//.children;
+						//Ext.encode(childs[0].attributes.data.belongItem.budgetItemId)
+						for(var i=0; i<childs.length; i++){
+							if(childs[i].attributes.data.belongItem.budgetItemId == h.data.budgetItemId){
+								Ext.Msg.alert("提示信息", "已经存在隶属此年度成本要素的月度成本要素");
+								return;
+							}
+						}
 						Ext.getCmp("budgetQuarterItem.belongItem.budgetItemId").setValue(h.data.budgetItemId);
 						//这里需要设置值。。。。。。。。。。。。。。。。。。。。。
+						
+						
 					},
 					beforequery : function(queryEvent) {
 						//alert(Ext.getCmp("BudgetQuarterItemWin").budgetId);
@@ -229,7 +239,7 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 		this.buttons = buttons;
 		
 		if (this.budgetItemId != null && this.budgetItemId != "undefined") {
-			Ext.getCmp("budgetQuarterItem.belongItem.name").disable();
+			Ext.getCmp("budgetQuarterItem.belongItem.name").setReadOnly(true);
 			this.formPanel.getForm().load({
 				deferredRender : false,
 				url : __ctxPath
@@ -250,7 +260,11 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 				}
 			});
 		}
-		
+		//alert(this.parentBudgetItemId);
+		if(this.parentBudgetItemId!=0 && !this.parentBudgetItemId=="" 
+			&& this.parentBudgetItemId != "undefined"){
+			Ext.getCmp("budgetQuarterItem.belongItem.name").setReadOnly(true);
+		}
 	},
 	reset : function(a) {
 		a.getForm().reset();
@@ -267,10 +281,20 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 				waitMsg : "正在提交数据...",
 				success : function(c, e) {
 					var data = Ext.decode(e.response.responseText);
-					Ext.getCmp("budgetQuarterItem.budgetItemId").setValue(data.budgetItemId);
-					Ext.getCmp("budgetItemQuarterTree").root.reload();
-					Ext.ux.Toast.msg("操作信息", "成功保存信息！");
-					Ext.getCmp("BudgetQuarterItemWin").close();
+					if(data.success && data.isValid){
+						Ext.getCmp("budgetQuarterItem.budgetItemId").setValue(data.budgetItemId);
+						Ext.getCmp("budgetItemQuarterTree").root.reload();
+						Ext.ux.Toast.msg("操作信息", "成功保存信息！");
+						Ext.getCmp("BudgetQuarterItemWin").close();
+					}else{
+						Ext.MessageBox.show({
+							title : "提示信息",
+							msg : "请确定成本要素金额是否超出范围！",
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.ERROR
+						});
+					}
+					
 				},
 				failure : function(c, d) {
 					Ext.MessageBox.show({

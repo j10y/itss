@@ -193,6 +193,26 @@ public class BudgetItemAction extends BaseAction {
 		budget.setBudgetId(Long.valueOf(getRequest().getParameter("budgetItem.budget.budgetId")));
 		this.budgetItem.setBudget(budget);
 		this.budgetItem.setDeleteFlag(Integer.valueOf(0));//未删除
+		
+		//add by awen for add belongItem logic on 2011-09-27 begin
+		BudgetItem belongItem = null;
+		if(!StringUtils.isEmpty(getRequest().getParameter("budgetItem.belongItem.budgetItemId"))){
+			belongItem = new BudgetItem();
+			belongItem.setBudgetItemId(Long.valueOf(getRequest().getParameter("budgetItem.belongItem.budgetItemId")));
+		}
+		this.budgetItem.setBelongItem(belongItem);
+		//add by awen for add belongItem logic on 2011-09-27 end
+		
+		//add by awen for add validate totalMoney logic on 2011-09-27 begin
+		//TODO:1,如果存在belongItem那么所有属于这个belongItem的所有季度item的和必须小于belongItem的value
+		//TODO:2,如果不存在belongItem，那么隶属于这个ITEM的parentItem的所有子item的和小于这个Item的和才可以
+		if(Boolean.valueOf(getRequest().getParameter("isQuarter")) && !validateValue(this.budgetItem)){
+			setJsonString("{success:true,isValid:false}");
+			return "success";
+		}
+		
+		//add by awen for add validate totalMoney logic on 2011-09-27 end
+		
 		this.budgetItemService.save(this.budgetItem);
 		
 		//add by awen for add default realExecution on 2011-09-07 begin
@@ -207,8 +227,43 @@ public class BudgetItemAction extends BaseAction {
 		}
 		//add by awen for add default realExecution on 2011-09-07 end
 		
-		setJsonString("{success:true, budgetItemId:'" + this.budgetItem.getBudgetItemId() + "'}");
+		setJsonString("{success:true,isValid:true, budgetItemId:'" + this.budgetItem.getBudgetItemId() + "'}");
 		return "success";
+	}
+	
+	private boolean validateValue(BudgetItem budgetItem){
+		Long belongItemId = budgetItem.getBelongItem().getBudgetItemId();
+		Map mapFilter = new HashMap();
+		List<BudgetItem> list = null;
+		QueryFilter filter = null;
+		mapFilter.put("Q_deleteFlag_N_EQ", "0");
+		
+		BudgetItem compare = null;
+		
+		if(belongItemId!=null){
+			mapFilter.put("Q_belongItem.budgetItemId_L_EQ", belongItemId.toString());
+			filter = new QueryFilter(mapFilter);
+			list = this.budgetItemService.getAll(filter);
+			compare = this.budgetItemService.get(belongItemId);
+		}else{
+			mapFilter.put("Q_parent.budgetItemId_L_EQ", budgetItem.getParent().getBudgetItemId().toString());
+			filter = new QueryFilter(mapFilter);
+			list = this.budgetItemService.getAll(filter);
+			compare = this.budgetItemService.get(budgetItem.getParent().getBudgetItemId());
+		}
+		Double total = new Double(0);
+		for(BudgetItem item : list){
+			if(item.getBudgetItemId()!=budgetItem.getBudgetItemId()){//不包含他
+				total += item.getValue();
+			}
+		}
+		
+		total += budgetItem.getValue();//小于他的父亲或者
+		if(total<=compare.getValue()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public String tree(){

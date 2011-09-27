@@ -212,7 +212,8 @@ public class RealExecutionAction extends BaseAction {
 			//defaultNode.put("value", totalMoney.doubleValue()*Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
 			try {
 				defaultNode.put("alarm", 
-						RealExecutionUtil.alarm(totalMoney.doubleValue(), 
+						//RealExecutionUtil.alarm(totalMoney.doubleValue(), 
+						RealExecutionUtil.alarm(Double.valueOf(defaultNode.get("value").toString()),//进行了修改
 								Double.valueOf(defaultNode.get("threshold").toString()), 
 								Double.valueOf(defaultNode.get("realValue").toString())));
 			} catch (NumberFormatException e) {

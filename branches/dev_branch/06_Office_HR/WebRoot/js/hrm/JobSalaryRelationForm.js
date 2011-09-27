@@ -15,7 +15,7 @@ JobSalaryRelationForm = Ext.extend(
 									iconCls : "menu-JobSalaryRelation",
 									items : this.formPanel,
 									modal : true,
-									height : 220,
+									height : 240,
 									width : 400,
 									maximizable : true,
 									title : "岗位薪标详细信息",
@@ -192,6 +192,14 @@ JobSalaryRelationForm = Ext.extend(
 															.setValue(Ext.getCmp("jobSalaryRelationForm.standardMoney").getValue()*newValue);
 													}
 												}
+											},  {
+												fieldLabel : "在编人数",
+												name : "jobSalaryRelation.onEmpCount",
+												xtype : "numberfield",
+												decimalPrecision : "0",
+												minValue : "0",
+												emptyText : "0",
+												id : "jobSalaryRelationForm.onEmpCount"
 											}, {
 												fieldLabel : "总金额",
 												name : "jobSalaryRelation.totalMoney",
@@ -227,6 +235,8 @@ JobSalaryRelationForm = Ext.extend(
 											c.result.data.standSalary.standardName);
 									Ext.getCmp("jobSalaryRelationForm.empCount").setValue(
 											c.result.data.empCount);
+									Ext.getCmp("jobSalaryRelationForm.onEmpCount").setValue(
+											c.result.data.onEmpCount);
 									Ext.getCmp("jobSalaryRelationForm.totalMoney").setValue(
 											c.result.data.totalMoney);
 									Ext.getCmp("jobSalaryRelationForm.standardMoney").setValue(
