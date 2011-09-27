@@ -319,7 +319,7 @@
             not-null="false"
             unique="false"
         />
-        <property
+       <property
             name="taxableAmount"
             type="java.math.BigDecimal"
             update="true"
@@ -331,5 +331,18 @@
             not-null="false"
             unique="false"
         />
+        <property
+            name="perNumber"
+            type="java.math.BigDecimal"
+            update="true"
+            insert="true"
+            access="property"
+            column="perNumber"
+            precision="18"
+            scale="2"
+            not-null="false"
+            unique="false"
+        />
+        
      </class>
 </hibernate-mapping>
