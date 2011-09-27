@@ -392,8 +392,9 @@ public class FlowServiceImpl implements FlowService {
 //			for(Map user:userList){
 //				usermap.put(user.get("userId").toString(), user.get("userId").toString());
 //			}
+			//不管是不是局长，都不需要再查分管领导了
 			if(this.activityName.equals("分管或主管领导批示")&&userMap.get(userId)!=null){
-				json += "fgld:true,";
+				json += "fgld:false,";
 			}else{
 				json += "fgld:false,";
 			}
@@ -1388,8 +1389,9 @@ public class FlowServiceImpl implements FlowService {
 		sql += "and app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+")";
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
+		//+"/"+ap.get("username")
 		for(Map ap:list){
-			json+="{id:\""+ap.get("userId")+"\",name:\""+ap.get("fullname")+"/"+ap.get("username")+"\"},";
+			json+="{id:\""+ap.get("userId")+"\",name:\""+ap.get("fullname")+"\"},";
 		}
 		if(list.size()>0){
 			json=json.substring(0,json.length()-1);
@@ -1403,8 +1405,9 @@ public class FlowServiceImpl implements FlowService {
 		String sql = "select app_user.* from department,app_user where app_user.depId=department.depId and department.isDist=1 and app_user.userId>0";
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
+		//+"/"+ap.get("username")
 		for(Map ap:list){
-			json+="{id:\""+ap.get("userId")+"\",name:\""+ap.get("fullname")+"/"+ap.get("username")+"\"},";
+			json+="{id:\""+ap.get("userId")+"\",name:\""+ap.get("fullname")+"\"},";
 		}
 		if(list.size()>0){
 			json=json.substring(0,json.length()-1);
@@ -1420,8 +1423,9 @@ public class FlowServiceImpl implements FlowService {
 		sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+"))";
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
+		//+"/"+ap.get("username")
 		for(Map ap:list){
-			json+="{id:\""+ap.get("userId")+"\",name:\""+ap.get("fullname")+"/"+ap.get("username")+"\"},";
+			json+="{id:\""+ap.get("userId")+"\",name:\""+ap.get("fullname")+"\"},";
 		}
 		if(list.size()>0){
 			json=json.substring(0,json.length()-1);

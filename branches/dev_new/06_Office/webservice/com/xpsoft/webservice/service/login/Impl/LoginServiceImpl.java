@@ -99,8 +99,9 @@ public class LoginServiceImpl implements LoginServie {
 		}
 		List<AppUser> list=userService.getAll(filter);
 		String json="{\"success\":true,data:[";
+		//+"/"+ap.getUsername()
 		for(AppUser ap:list){
-			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"/"+ap.getUsername()+"\"},";
+			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"\"},";
 		}
 		if(list.size()>0){
 			json=json.substring(0,json.length()-1);
@@ -121,8 +122,9 @@ public class LoginServiceImpl implements LoginServie {
 		}
 		List<AppUser> list=userService.getAll(filter);
 		String json="{\"success\":true,data:[";
+		//+"/"+ap.getUsername()
 		for(AppUser ap:list){
-			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"/"+ap.getUsername()+"\"},";
+			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"\"},";
 		}
 		if(list.size()>0){
 			json=json.substring(0,json.length()-1);
@@ -155,8 +157,9 @@ public class LoginServiceImpl implements LoginServie {
 		filter.addFilter("Q_department.depId_L_EQ", departId);
 		List<AppUser> list=userService.getAll(filter);
 		String json="{\"success\":true,data:[";
+		//+"/"+ap.getUsername()
 		for(AppUser ap:list){
-			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"/"+ap.getUsername()+"\"},";
+			json+="{id:\""+ap.getId()+"\",name:\""+ap.getFullname()+"\"},";
 		}
 		if(list.size()>0){
 			json=json.substring(0,json.length()-1);
