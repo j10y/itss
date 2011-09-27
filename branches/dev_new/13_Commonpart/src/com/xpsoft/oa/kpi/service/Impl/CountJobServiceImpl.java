@@ -68,7 +68,7 @@ public class CountJobServiceImpl implements CountJobService{
 		//2.遍历绩效考核指标
 		for(HrPaPerformanceindex hp:hplist){
 			//3.查询改绩效考核指标是否有人使用
-			String pbcitemusersql="select hr_pa_kpiitem2user.id from hr_pa_kpiitem2user,hr_pa_kpipbc2user,app_user,department " +
+			String pbcitemusersql="select hr_pa_kpiitem2user.id,app_user.depId from hr_pa_kpiitem2user,hr_pa_kpipbc2user,app_user,department " +
 					"where hr_pa_kpiitem2user.pbcId=hr_pa_kpipbc2user.id and hr_pa_kpipbc2user.belongUser=app_user.userId " +
 					"and app_user.depId=department.depId and hr_pa_kpipbc2user.publishStatus!=3 and hr_pa_kpiitem2user.piId="+hp.getId();
 			if(depid!=null&&depid.length()>0){
@@ -80,7 +80,7 @@ public class CountJobServiceImpl implements CountJobService{
 			List pbcitemuserlist=selectDataService.getData(pbcitemusersql);
 			//4.如果没有，则跳出该指标的人员模板查询，有则继续
 			if(pbcitemuserlist==null||pbcitemuserlist.size()==0){
-				logger.error(hp.getPaName()+"没有人使用该绩效指标，跳出该指标的算分.");
+				//logger.error(hp.getPaName()+"没有人使用该绩效指标，跳出该指标的算分.");
 				continue;//继续下一个绩效指标的得分
 			}
 			String frequency=hp.getPaFrequency()+"";//频率
@@ -102,6 +102,7 @@ public class CountJobServiceImpl implements CountJobService{
 					hsmap.put("piId", hp.getId());
 					for(int i=0;i<pbcitemuserlist.size();i++){
 						Map pbciumap=(Map) pbcitemuserlist.get(i);
+						String depId=pbciumap.get("depId").toString();
 						String getchildhp="select * from hr_pa_performanceindex where hr_pa_performanceindex.parentId="+hp.getId();
 						List<Map> getchildhplist=selectDataService.getData(getchildhp);
 						if(getchildhplist.size()>0){//说明需要从每月的考核中归集到年得考核
@@ -169,7 +170,7 @@ public class CountJobServiceImpl implements CountJobService{
 												 		"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
 														"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
 												 String usersql=sql+" and hr_pa_assessmentTasksAssigned.userId="+hrPaKpiitem2user.getPbc2User().getBelongUser();
-												 String categorysql=sql+" and hr_pa_assessmentTasksAssigned.category is not null";
+												 String categorysql=sql+" and hr_pa_assessmentTasksAssigned.deptId="+depId+" and hr_pa_assessmentTasksAssigned.category is not null";
 												 List<Map> userlist=selectDataService.getData(usersql);
 												 //先通过用户去查该指标的目标是否存在
 												 if(userlist.size()>0){
@@ -198,7 +199,7 @@ public class CountJobServiceImpl implements CountJobService{
 												"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
 												"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
 												 String usersql=sql+" and hr_pa_acReached.userId="+hrPaKpiitem2user.getPbc2User().getBelongUser();
-												 String categorysql=sql+" and hr_pa_acReached.category is not null";
+												 String categorysql=sql+" and hr_pa_acReached.deptId="+depId+" and hr_pa_acReached.category is not null";
 												 List<Map> userlist=selectDataService.getData(usersql);
 												 //先通过用户去查该指标的目标是否存在
 												 if(userlist.size()>0){
@@ -289,7 +290,7 @@ public class CountJobServiceImpl implements CountJobService{
 		datajson.append("data:[");
 		for(HrPaPerformanceindex hp:hplist){
 			//3.查询改绩效考核指标是否有人使用
-			String pbcitemusersql="select hr_pa_kpiitem2user.id,app_user.fullname,hr_pa_kpipbc2user.pbcName from hr_pa_kpiitem2user,hr_pa_kpipbc2user,app_user,department " +
+			String pbcitemusersql="select hr_pa_kpiitem2user.id,app_user.fullname,hr_pa_kpipbc2user.pbcName,app_user.depId from hr_pa_kpiitem2user,hr_pa_kpipbc2user,app_user,department " +
 					"where hr_pa_kpiitem2user.pbcId=hr_pa_kpipbc2user.id and hr_pa_kpipbc2user.belongUser=app_user.userId " +
 					"and app_user.depId=department.depId and hr_pa_kpipbc2user.publishStatus!=3 and hr_pa_kpiitem2user.piId="+hp.getId();
 			if(depid!=null&&depid.length()>0){
@@ -325,6 +326,7 @@ public class CountJobServiceImpl implements CountJobService{
 						Map pbciumap=(Map) pbcitemuserlist.get(i);
 						String getchildhp="select * from hr_pa_performanceindex where hr_pa_performanceindex.parentId="+hp.getId();
 						List<Map> getchildhplist=selectDataService.getData(getchildhp);
+						String depId=pbciumap.get("depId").toString();
 						if(getchildhplist!=null&&getchildhplist.size()>0){
 							//查看当月的月该年度考核相关的指标是否已审核
 							String sd=DateUtil.convertDateToString(DateUtil.addMonths(new Date(), -(1+offset)));
@@ -380,7 +382,7 @@ public class CountJobServiceImpl implements CountJobService{
 										 		"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
 												"and DATE_FORMAT(hr_pa_assessmentTasksAssigned.publishDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
 										 String usersql=sql+" and hr_pa_assessmentTasksAssigned.userId="+hrPaKpiitem2user.getPbc2User().getBelongUser();
-										 String categorysql=sql+" and hr_pa_assessmentTasksAssigned.category is not null";
+										 String categorysql=sql+" and hr_pa_assessmentTasksAssigned.deptId="+depId+" and hr_pa_assessmentTasksAssigned.category is not null";
 										 List<Map> userlist=selectDataService.getData(usersql);
 										 //先通过用户去查该指标的目标是否存在
 										 if(userlist.size()>0){
@@ -398,7 +400,7 @@ public class CountJobServiceImpl implements CountJobService{
 										"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')>DATE_FORMAT('"+sd+"','%Y-%m') " +
 										"and DATE_FORMAT(hr_pa_acReached.inputDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') " ;
 										 String usersql=sql+" and hr_pa_acReached.userId="+hrPaKpiitem2user.getPbc2User().getBelongUser();
-										 String categorysql=sql+" and hr_pa_acReached.category is not null";
+										 String categorysql=sql+" and hr_pa_acReached.deptId="+depId+" and hr_pa_acReached.category is not null";
 										 List<Map> userlist=selectDataService.getData(usersql);
 										 //先通过用户去查该指标的目标是否存在
 										 if(userlist.size()>0){
@@ -418,7 +420,6 @@ public class CountJobServiceImpl implements CountJobService{
 				}
 			}
 		}
-		
 		Long endtime=new Date().getTime();
 		//logger.info("共有考核项目:"+allcount+"个,成功："+succount+"个,失败："+(allcount-succount)+"个,共计时间"+((endtime-starttime)/1000)+"秒,零"+((endtime-starttime)%1000)+"毫秒");
 		String json=datajson.toString();
@@ -466,6 +467,19 @@ public class CountJobServiceImpl implements CountJobService{
 		List<Map> empprolist=selectDataService.getData(sqlemp);
 		Integer allcount=empprolist.size();
 		Integer succount=0;
+		//从资源配置文件获取不同频率的相关数据
+		String jobexcutedate=PropertiesUtil.getProperties("hr.jobexcutedate");
+		String[] ejobexcutedate=jobexcutedate.split(",");
+		Map jobexcutedatemap=new HashMap();
+		for(String ej:ejobexcutedate){
+			String [] ejs=ej.split("_");
+			Map datemap=new HashMap();
+			datemap.put("startdate", ejs[1]);//开始执行时间
+			datemap.put("excutefre", ejs[2]);//执行频率
+			datemap.put("offset", ejs[3]);//时间偏移量，0为计算当月，1为计算前一个月
+			jobexcutedatemap.put(ejs[0], datemap);
+		}
+		
 		//遍历档案人员的具体薪资信息
 		for(Map emppro:empprolist){
 			//公积金
@@ -474,6 +488,7 @@ public class CountJobServiceImpl implements CountJobService{
 			Double insurance=emppro.get("insurance")!=null?Double.parseDouble(emppro.get("insurance").toString()):0d;
 			//绩效基数
 			Double perCoefficient=emppro.get("perCoefficient")!=null?Double.parseDouble(emppro.get("perCoefficient").toString()):0d;
+			
 			//用户id
 			Long userId=emppro.get("userId")!=null?Long.parseLong(emppro.get("userId").toString()):0;
 			String fullname=emppro.get("fullname")!=null?emppro.get("fullname").toString():"";
@@ -509,21 +524,12 @@ public class CountJobServiceImpl implements CountJobService{
 				Map kpipbcmap=kpipbclist.get(0);
 				String totalScore=kpipbcmap.get("totalScore").toString();
 				factorValue=Double.parseDouble(kpipbcmap.get("coefficient").toString());
-//				Integer intscore=Integer.parseInt(totalScore.substring(0, totalScore.indexOf(".")));
-//				//获取改userid下的人的部门下的审核完毕的绩效系数
-//				String facsql="select hr_sr_factoritem.factorValue from hr_sr_factoritem,hr_sr_performancefactor " +
-//						"where hr_sr_factoritem.belongPF and hr_sr_performancefactor.id " +
-//						"and hr_sr_performancefactor.belongDept="+depId+" " +
-//						"and hr_sr_performancefactor.publishStatus=2 " +
-//						"and hr_sr_factoritem.factorScore="+intscore;
-//				List<Map> faclist=selectDataService.getData(facsql);
-//				if(faclist.size()>0){
-//					Map facmap=faclist.get(0);
-//					factorValue=Double.parseDouble(facmap.get("factorValue").toString());
-//				}else{
-//					logger.error("找不到"+emppro.get("fullname")+"的部门下的对应绩效系数，有可能该绩效系数没有录入");
-//					continue;
-//				}
+				String frequency=kpipbcmap.get("frequency").toString();
+				Map datemap=(Map) jobexcutedatemap.get(frequency);
+				if(datemap!=null){
+					int excutefre=Integer.parseInt(datemap.get("excutefre").toString());
+					perCoefficient=perCoefficient*excutefre;//获取该频率的基数是每隔几个月的，基数就是月基数*月数
+				}
 			}else{
 				logger.info("该月没有此人"+emppro.get("fullname")+"相应的PBC模板，因此绩效系数为0");
 			}
@@ -587,7 +593,7 @@ public class CountJobServiceImpl implements CountJobService{
 					salaryPayoff.setDeductDesc(deductStr);
 					salaryPayoff.setAchieveAmount(new BigDecimal(myformat.format(perCoefficient*factorValue)));
 					salaryPayoff.setAcutalAmount(new BigDecimal(myformat.format(realincome)));
-					String memo="标准金额："+standardMoney+"+ (绩效基数为："+perCoefficient+" *绩效系数为："+factorValue+")+"+encourageStr+deductStr+"公积金：-"+provident+"保险：-"+insurance+"个人所得税:-"+selftax+"=实际工资："+realincome+"(注：该员工工资的税率为:"+taxValue+",数算扣除数为："+deductValue+")";
+					String memo="标准金额："+standardMoney+"+ (绩效基数为："+perCoefficient+" *绩效系数为："+factorValue+")+"+encourageStr+deductStr+"公积金：-"+provident+"保险：-"+insurance+"个人所得税:-"+selftax+"=实际工资："+myformat.format(realincome)+"(注：该员工工资的税率为:"+taxValue+",数算扣除数为："+deductValue+")";
 					salaryPayoff.setMemo("系统自动计算,"+memo);
 					salaryPayoff.setRegister(sysfullname);
 					salaryPayoff.setRegTime(new Date());
@@ -600,6 +606,7 @@ public class CountJobServiceImpl implements CountJobService{
 					salaryPayoff.setTaxableAmount(new BigDecimal(myformat.format(ksgz)));
 					salaryPayoff.setIssuedAmount(new BigDecimal(myformat.format(standardMoney+perCoefficient*factorValue+encourageAmount)));
 					salaryPayoff.setPerCoefficient(new BigDecimal(myformat.format(factorValue)));
+					salaryPayoff.setPerNumber(new BigDecimal(myformat.format(perCoefficient)));
 					BaseService baseService =(BaseService) ContextHolder.getBean("baseService");	
 					try {
 						baseService.save(salaryPayoff, SalaryPayoff.class, "recordId");
