@@ -103,7 +103,7 @@
 											<td>
 												<input <c:if test="${(item.key['result'] - pis.pisScore >= 0) && (item.key['result'] - pis.pisScore < 1)}">checked="checked"</c:if> type="radio" name="${item.key['id']}" value="${pis.pisScore}" title="${pis.pisDesc}" alt="${pis.pisDesc}"/>
 												<font  title="${pis.pisDesc}" alt="${pis.pisDesc}">
-													<fmt:formatNumber value="${pis.pisScore}" pattern="#" type="number"/>分
+													<fmt:formatNumber value="${pis.pisScore}" pattern="#.##" type="number"/>分
 												</font>
 											</td>
 										</c:forEach>
