@@ -73,7 +73,13 @@
 /* 84 */         return true;
 /*    */       }
 /*    */     }
-/* 87 */     return false;
+			 if(url.equals("/index.jsp")&&auth instanceof org.springframework.security.providers.anonymous.AnonymousAuthenticationToken){
+				 url = "/";
+			 }
+			 if(url.equals("/")&&auth instanceof org.springframework.security.providers.anonymous.AnonymousAuthenticationToken){
+				 return false;
+			 }
+/* 87 */     return true;
 /*    */   }
 /*    */ 
 /*    */   public void loadDataSource() {
@@ -87,8 +93,3 @@
 /* 98 */       throw new RuntimeException("没有进行设置系统的权限匹配数据源");
 /*    */   }
 /*    */ }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.core.web.filter.SecurityInterceptorFilter
- * JD-Core Version:    0.6.0
- */
