@@ -41,6 +41,7 @@ import org.jbpm.pvm.internal.task.TaskImpl;
 import com.xpsoft.core.engine.AsynMailSendProcess;
 import com.xpsoft.core.jbpm.jpdl.Node;
 import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.oa.model.flow.ProDefinition;
 import com.xpsoft.oa.model.flow.ProUserAssign;
 import com.xpsoft.oa.model.flow.ProcessRun;
@@ -306,8 +307,16 @@ public class JbpmServiceImpl implements JbpmService {
 				.startProcessInstanceById(pd.getId(), variables);
 
 		// add by jack for send approve email to approve user at 2011-9-23 begin
-		ProcessRun pr = this.processRunService.getByTaskId(pi.getId());
-		String cc = appUserService.findByFullName(pr.getCreator()).getEmail();
+		//ProcessRun pr = this.processRunService.getByTaskId(pi.getId());
+		//String cc = appUserService.findByFullName(pr.getCreator()).getEmail();
+		//ProcessRun pr = this.processRunService.getByPiId(pi.getId());
+		/**
+		 * 由于在startProcess之后才会processRun.setPiId(piId);，故取当前人
+		 * 启动顺序
+		 * 1,String piId = this.jbpmService.startProcess<br>
+		 * 2,processRun.setPiId(piId);
+		 */
+		String cc = ContextUtil.getCurrentUser().getEmail();
 		// add by jack for send approve email to approve user at 2011-9-23 end
 		
 		String assignId = (String) variables.get("flowAssignId");
@@ -357,7 +366,14 @@ public class JbpmServiceImpl implements JbpmService {
 
 		// add by jack for send approve email to approve user at 2011-9-23 begin
 		ProcessRun pr = this.processRunService.getByPiId(pi.getId());
-		String cc = appUserService.findByFullName(pr.getCreator()).getEmail();
+		//String cc = appUserService.findByFullName(pr.getCreator()).getEmail();
+		String cc = null;
+		if(pr!=null){
+			appUserService.get(pr.getUserId()).getEmail();
+		}else{
+			cc = ContextUtil.getCurrentUser().getEmail();
+		}
+		
 		// add by jack for send approve email to approve user at 2011-9-23 end
 
 		List<Task> taskList = null;
