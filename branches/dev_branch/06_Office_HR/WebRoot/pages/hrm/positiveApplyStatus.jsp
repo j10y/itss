@@ -37,32 +37,32 @@
 		</div>
 		<table style="width:700px;margin:0 auto;border:1px solid #000000" cellpadding="0" cellspacing="0">
 			<tr>
-				<td colspan="6" class="label" style="border-right:1px solid #000000;">员工基本信息表</td>
+				<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工基本信息表</td>
 			</tr>
 			<tr>
 				<td class="field">姓名</td>
-				<td class="field">${hrPostApply.applyUser.fullname}</td>
+				<td class="field">${hrPostApply.applyUser.fullname}&nbsp;</td>
 				<td class="field">性别</td>
-				<td class="field">${hrPostApply.gender}</td>
+				<td class="field">${hrPostApply.gender}&nbsp;</td>
 				<td class="field">年龄</td>
-				<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostApply.age}</td>
+				<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostApply.age}&nbsp;</td>
 			</tr>
 			<tr>
 				<td class="field">部门/门店</td>
-				<td class="field">${hrPostApply.deptName}</td>
+				<td class="field">${hrPostApply.deptName}&nbsp;</td>
 				<td class="field">职务</td>
-				<td class="field">${hrPostApply.postName}</td>
+				<td class="field">${hrPostApply.postName}&nbsp;</td>
 				<td class="field">入职日期</td>
 				<td class="field" style="border-right:1px solid #000000;">
-					<fmt:formatDate value="${hrPostApply.accessionTime}" type="date"/>
+					<fmt:formatDate value="${hrPostApply.accessionTime}" type="date"/>&nbsp;
 				</td>
 			</tr>
 			<tr>
-				<td colspan="6" class="label" style="border-right:1px solid #000000;">员工试用期（实习）总结</td>
+				<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用期（实习）总结</td>
 			</tr>
 			<tr>
 				<td colspan="6" style="height:600px;padding:2px;border:1px solid #000000;">
-					<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
+					<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
 				</td>
 			</tr>
 		</table>

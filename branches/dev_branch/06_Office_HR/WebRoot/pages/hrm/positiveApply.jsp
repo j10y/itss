@@ -131,7 +131,7 @@
 			<input type="hidden" id="publishStatus" name="hrPostApply.publishStatus" value="0"/>
 			<table style="width:700px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
-					<td colspan="6" class="label" style="border-right:1px solid #000000;">员工基本信息表</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工基本信息表</td>
 				</tr>
 				<tr>
 					<td class="field">姓名</td>
@@ -140,7 +140,7 @@
 					<td class="field">${hrPostApply.gender}</td>
 					<td class="field">年龄</td>
 					<td class="field" style="border-right:1px solid #000000;padding:2px;">
-						<input type="text" id="age" name="hrPostApply.age" value="${hrPostApply.age}" style="width:100%;height:100%;border:none;line-height:40px;text-align:center;"/>
+						<input type="text" id="age" name="hrPostApply.age" value="${hrPostApply.age}" style="width:100%;*width:110px;height:100%;*height:30px;border:none;line-height:40px;*line-height:30px;text-align:center;"/>
 					</td>
 				</tr>
 				<tr>
@@ -150,15 +150,15 @@
 					<td class="field">${hrPostApply.postName}</td>
 					<td class="field">入职日期</td>
 					<td class="field" style="border-right:1px solid #000000;">
-						<fmt:formatDate value="${hrPostApply.accessionTime}" type="date"/>
+						<fmt:formatDate value="${hrPostApply.accessionTime}" type="date"/>&nbsp;
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" class="label" style="border-right:1px solid #000000;">员工试用期（实习）总结</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用期（实习）总结</td>
 				</tr>
 				<tr>
 					<td colspan="6" style="height:600px;padding:2px;border:1px solid #000000;">
-						<textarea id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
+						<textarea id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
 					</td>
 				</tr>
 				<tr>

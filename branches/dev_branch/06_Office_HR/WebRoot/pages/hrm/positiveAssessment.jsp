@@ -282,19 +282,19 @@
 			<table style="width:700px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="field">姓名</td>
-					<td class="field">${hrPostAssessment.postApply.applyUser.fullname}</td>
+					<td class="field">${hrPostAssessment.postApply.applyUser.fullname}&nbsp;</td>
 					<td class="field">部门/门店</td>
-					<td class="field">${hrPostAssessment.postApply.gender}</td>
+					<td class="field">${hrPostAssessment.postApply.gender}&nbsp;</td>
 					<td class="field">职务</td>
-					<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.postApply.postName}</td>
+					<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.postApply.postName}&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="field">实际报到日期</td>
-					<td class="field"><fmt:formatDate value="${hrPostAssessment.actualReportDate}" type="date"/></td>
+					<td class="field"><fmt:formatDate value="${hrPostAssessment.actualReportDate}" type="date"/>&nbsp;</td>
 					<td class="field">拟定转正日期</td>
-					<td class="field"><fmt:formatDate value="${hrPostAssessment.applyPostDate}" type="date"/></td>
+					<td class="field"><fmt:formatDate value="${hrPostAssessment.applyPostDate}" type="date"/>&nbsp;</td>
 					<td class="field">实际转正日期</td>
-					<td class="field" style="border-right:1px solid #000000;"><fmt:formatDate value="${hrPostAssessment.actualPostDate}" type="date"/></td>
+					<td class="field" style="border-right:1px solid #000000;"><fmt:formatDate value="${hrPostAssessment.actualPostDate}" type="date"/>&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="field">专业知识</td>
@@ -314,7 +314,7 @@
 				</tr>
 				<tr>
 					<td class="field">被评估者标准岗位名称</td>
-					<td class="field" colspan="2">${hrPostAssessment.standardPostName}</td>
+					<td class="field" colspan="2">${hrPostAssessment.standardPostName}&nbsp;</td>
 					<td class="field">被评估者岗位层级</td>
 					<td class="field" colspan="2" style="border-right:1px solid #000000;padding:2px;">
 						Band&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postBand}</font>&nbsp;&nbsp;
@@ -337,7 +337,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" class="label" style="border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
 				</tr>
 				<tr>
 					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
@@ -345,8 +345,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="label">本部门/门店意见</td>
-					<td colspan="3" class="label" style="border-right:1px solid #000000;">主管部门意见（无主管部门可不填写）</td>
+					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">本部门/门店意见</td>
+					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">主管部门意见（无主管部门可不填写）</td>
 				</tr>
 				<tr>
 					<td colspan="3" class="field" style="height:150px;padding:2px">

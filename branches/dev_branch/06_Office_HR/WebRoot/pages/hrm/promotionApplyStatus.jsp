@@ -34,65 +34,61 @@
 		<table style="width:700px;margin:0 auto;border:1px solid #000000" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="label">姓名</td>
-				<td class="field" style="width:230px;">${hrPromApply.applyUser.fullname}</td>
+				<td class="field" style="width:230px;">${hrPromApply.applyUser.fullname}&nbsp;</td>
 				<td class="label">部门/门店</td>
-				<td class="field" style="border-right:1px solid #000000;">${hrPromApply.depName}</td>
+				<td class="field" style="width:230px;border-right:1px solid #000000;">${hrPromApply.depName}&nbsp;</td>
 			</tr>
 			<tr>
 				<td class="label">入职日期</td>
-				<td class="field">
-					<fmt:formatDate value="${hrPromApply.accessionTime}" type="date"/>
-				</td>
+				<td class="field"><fmt:formatDate value="${hrPromApply.accessionTime}" type="date"/>&nbsp;</td>
 				<td class="label">现职位</td>
-				<td class="field" style="border-right:1px solid #000000;">${hrPromApply.nowPositionName}</td>
+				<td class="field" style="border-right:1px solid #000000;">${hrPromApply.nowPositionName}&nbsp;</td>
 			</tr>
 			<tr>
 				<td class="label">拟担任职位</td>
-				<td class="field">${hrPromApply.applyPositionName}</td>
+				<td class="field">${hrPromApply.applyPositionName}&nbsp;</td>
 				<td class="label">拟晋升时间</td>
-				<td class="field" style="border-right:1px solid #000000;">
-					<fmt:formatDate value="${hrPromApply.applyDate}" type="date"/>
-				</td>
+				<td class="field" style="border-right:1px solid #000000;"><fmt:formatDate value="${hrPromApply.applyDate}" type="date"/>&nbsp;</td>
 			</tr>
 			<tr>
 				<td class="label">工作年限</td>
 				<td class="field">${hrPromApply.workYear}</td>
 				<td class="label">本单位工作年限</td>
-				<td class="field" style="border-right:1px solid #000000;">${hrPromApply.workHereYear}</td>
+				<td class="field" style="border-right:1px solid #000000;">${hrPromApply.workHereYear}&nbsp;</td>
 			</tr>
 			<tr>
 				<td class="label">拟晋升原因</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="applyReason" name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.applyReason}</textarea>
+					<textarea readonly="readonly" id="applyReason" name="hrPromApply.applyReason" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.applyReason}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4" class="label" style="border-right:1px solid #000000;">工作目标设定</td>
+				<td colspan="4" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作目标设定</td>
 			</tr>
 			<tr>
 				<td class="label">目标一</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="target1" name="hrPromApply.target1" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target1}</textarea>
+					<textarea readonly="readonly" id="target1" name="hrPromApply.target1" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target1}</textarea>
 				</td>
 			</tr>
 			<tr>
 				<td class="label">目标二</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="target2" name="hrPromApply.target2" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target2}</textarea>
+					<textarea readonly="readonly" id="target2" name="hrPromApply.target2" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target2}</textarea>
 				</td>
 			</tr>
 			<tr>
 				<td class="label">目标三</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="target3" name="hrPromApply.target3" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target3}</textarea>
+					<textarea readonly="readonly" id="target3" name="hrPromApply.target3" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target3}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4" class="label" style="border-right:1px solid #000000;">员工面谈记录</td>
+				<td colspan="4" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工面谈记录</td>
 			</tr>
 			<tr>
 				<td colspan="4" style="height:150px;padding:2px;border:1px solid #000000;">
-					<textarea readonly="readonly" id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.intRecord}</textarea>
+					<textarea readonly="readonly" id="intRecord" name="hrPromApply.intRecord" style="width:100%;*width:690px;height:100%;*height:140px;border:none;overflow-y:hidden;">${hrPromApply.intRecord}</textarea>
 				</td>
 			</tr>
 		</table>

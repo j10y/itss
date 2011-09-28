@@ -41,24 +41,24 @@
 			<table style="width:700px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="field">姓名</td>
-					<td class="field">${hrPostAssessment.postApply.applyUser.fullname}</td>
+					<td class="field">${hrPostAssessment.postApply.applyUser.fullname}&nbsp;</td>
 					<td class="field">部门/门店</td>
-					<td class="field">${hrPostAssessment.postApply.deptName}</td>
+					<td class="field">${hrPostAssessment.postApply.deptName}&nbsp;</td>
 					<td class="field">职务</td>
-					<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.postApply.postName}</td>
+					<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.postApply.postName}&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="field">实际报到日期</td>
 					<td class="field">
-						<fmt:formatDate value="${hrPostAssessment.actualReportDate}" type="date"/>
+						<fmt:formatDate value="${hrPostAssessment.actualReportDate}" type="date"/>&nbsp;
 					</td>
 					<td class="field">拟定转正日期</td>
 					<td class="field">
-						<fmt:formatDate value="${hrPostAssessment.applyPostDate}" type="date"/>
+						<fmt:formatDate value="${hrPostAssessment.applyPostDate}" type="date"/>&nbsp;
 					</td>
 					<td class="field">实际转正日期</td>
 					<td class="field" style="border-right:1px solid #000000;">
-						<fmt:formatDate value="${hrPostAssessment.actualPostDate}" type="date"/>
+						<fmt:formatDate value="${hrPostAssessment.actualPostDate}" type="date"/>&nbsp;
 					</td>
 				</tr>
 				<tr>
@@ -70,20 +70,20 @@
 					<td class="field" style="border-right:1px solid #000000;padding:2px;">评级结果</td>
 				</tr>
 				<tr>
-					<td class="field">${hrPostAssessment.proKnowledge}</td>
-					<td class="field">${hrPostAssessment.commEffect}</td>
-					<td class="field">${hrPostAssessment.solveAbility}</td>
-					<td class="field">${hrPostAssessment.difficultyManage}</td>
-					<td class="field">${hrPostAssessment.businessFieldEffect}</td>
-					<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.ratingResult}</td>
+					<td class="field">${hrPostAssessment.proKnowledge}&nbsp;</td>
+					<td class="field">${hrPostAssessment.commEffect}&nbsp;</td>
+					<td class="field">${hrPostAssessment.solveAbility}&nbsp;</td>
+					<td class="field">${hrPostAssessment.difficultyManage}&nbsp;</td>
+					<td class="field">${hrPostAssessment.businessFieldEffect}&nbsp;</td>
+					<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.ratingResult}&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="field">被评估者标准岗位名称</td>
-					<td class="field" colspan="2">${hrPostAssessment.standardPostName}</td>
+					<td class="field" colspan="2">${hrPostAssessment.standardPostName}&nbsp;</td>
 					<td class="field">被评估者岗位层级</td>
 					<td class="field" colspan="2" style="border-right:1px solid #000000;padding:2px;">
-						Band&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postBand}</font>&nbsp;&nbsp;
-						档&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postGrade}</font>
+						Band&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postBand}&nbsp;</font>&nbsp;&nbsp;
+						档&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postGrade}&nbsp;</font>
 					</td>
 				</tr>
 				<tr>
@@ -102,33 +102,33 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" class="label" style="border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
 				</tr>
 				<tr>
 					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
+						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="label">本部门/门店意见</td>
-					<td colspan="3" class="label" style="border-right:1px solid #000000;">主管部门意见（无主管部门可不填写）</td>
+					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">本部门/门店意见</td>
+					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">主管部门意见（无主管部门可不填写）</td>
 				</tr>
 				<tr>
 					<td colspan="3" class="field" style="height:150px;padding:2px">
-						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.postOpinion}</textarea>
+						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:340px;height:100%;*height:140px;border:none;overflow-y:hidden;">${hrPostAssessment.postOpinion}</textarea>
 					</td>
 					<td colspan="3" class="field" style="height:150px;padding:2px;border-right:1px solid #000000;">
-						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.deptOpinion}</textarea>
+						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:340px;height:100%;*height:140px;border:none;overflow-y:hidden;">${hrPostAssessment.deptOpinion}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td class="field" style="border-bottom:1px solid #000000;">人力资源部意见</td>
 					<td class="field" colspan="2"  style="height:70px;padding:2px;border-bottom:1px solid #000000;">
-						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.hrOpinion}</textarea>
+						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:220px;height:100%;*height:60px;border:none;overflow-y:hidden;">${hrPostAssessment.hrOpinion}</textarea>
 					</td>
 					<td class="field" style="border-bottom:1px solid #000000;">总经理意见</td>
 					<td class="field" colspan="2" style="height:70px;padding:2px;border-right:1px solid #000000;border-bottom:1px solid #000000;">
-						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.bossOpinion}</textarea>
+						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:220px;height:100%;*height:60px;border:none;overflow-y:hidden;">${hrPostAssessment.bossOpinion}</textarea>
 					</td>
 				</tr>
 			</table>

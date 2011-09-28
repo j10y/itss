@@ -48,20 +48,20 @@
 			</tr>
 			<tr>
 				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">姓名</td>
-				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.applyUser.fullname}</td>
+				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.applyUser.fullname}&nbsp;</td>
 				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">性别</td>
-				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.gender}</td>
+				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.gender}&nbsp;</td>
 				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">年龄</td>
-				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">${hrPostApply.age}</td>
+				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">${hrPostApply.age}&nbsp;</td>
 			</tr>
 			<tr>
 				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">部门/门店</td>
-				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.deptName}</td>
+				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.deptName}&nbsp;</td>
 				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">职务</td>
-				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.postName}</td>
+				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostApply.postName}&nbsp;</td>
 				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">入职日期</td>
 				<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
-					<fmt:formatDate value="${hrPostApply.accessionTime}" type="date"/>
+					<fmt:formatDate value="${hrPostApply.accessionTime}" type="date"/>&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -69,7 +69,7 @@
 			</tr>
 			<tr>
 				<td colspan="6" style="height:600px;padding:2px;border:1px solid #000000;">
-					<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
+					<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
 				</td>
 			</tr>
 		</table>

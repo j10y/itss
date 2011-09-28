@@ -45,24 +45,24 @@
 			<table style="width:700px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">姓名</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.postApply.applyUser.fullname}</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.postApply.applyUser.fullname}&nbsp;</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">部门/门店</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.postApply.deptName}</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.postApply.deptName}&nbsp;</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">职务</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">${hrPostAssessment.postApply.postName}</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">${hrPostAssessment.postApply.postName}&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">实际报到日期</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
-						<fmt:formatDate value="${hrPostAssessment.actualReportDate}" type="date"/>
+						<fmt:formatDate value="${hrPostAssessment.actualReportDate}" type="date"/>&nbsp;
 					</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">拟定转正日期</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
-						<fmt:formatDate value="${hrPostAssessment.applyPostDate}" type="date"/>
+						<fmt:formatDate value="${hrPostAssessment.applyPostDate}" type="date"/>&nbsp;
 					</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">实际转正日期</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
-						<fmt:formatDate value="${hrPostAssessment.actualPostDate}" type="date"/>
+						<fmt:formatDate value="${hrPostAssessment.actualPostDate}" type="date"/>&nbsp;
 					</td>
 				</tr>
 				<tr>
@@ -74,16 +74,16 @@
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">评级结果</td>
 				</tr>
 				<tr>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.proKnowledge}</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.commEffect}</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.solveAbility}</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.difficultyManage}</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.businessFieldEffect}</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">${hrPostAssessment.ratingResult}</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.proKnowledge}&nbsp;</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.commEffect}&nbsp;</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.solveAbility}&nbsp;</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.difficultyManage}&nbsp;</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPostAssessment.businessFieldEffect}&nbsp;</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">${hrPostAssessment.ratingResult}&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">被评估者标准岗位名称</td>
-					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPostAssessment.standardPostName}</td>
+					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPostAssessment.standardPostName}&nbsp;</td>
 					<td style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">被评估者岗位层级</td>
 					<td colspan="2" style="height:40px;width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;padding:2px;">
 						Band&nbsp;<font style="text-decoration:underline">${hrPostAssessment.postBand}</font>&nbsp;&nbsp;
@@ -106,11 +106,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
 				</tr>
 				<tr>
 					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
+						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:290px;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
 					</td>
 				</tr>
 				<tr>

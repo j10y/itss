@@ -38,7 +38,7 @@
 			<tr>
 				<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">入职日期</td>
 				<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
-					<fmt:formatDate value="${hrPromApply.accessionTime}" type="date"/>
+					<fmt:formatDate value="${hrPromApply.accessionTime}" type="date"/>&nbsp;
 				</td>
 				<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">现职位</td>
 				<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">${hrPromApply.nowPositionName}</td>
@@ -48,7 +48,7 @@
 				<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">${hrPromApply.applyPositionName}</td>
 				<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升时间</td>
 				<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
-					<fmt:formatDate value="${hrPromApply.applyDate}" type="date"/>
+					<fmt:formatDate value="${hrPromApply.applyDate}" type="date"/>&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -60,7 +60,7 @@
 			<tr>
 				<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升原因</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="applyReason" name="hrPromApply.applyReason" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.applyReason}</textarea>
+					<textarea readonly="readonly" id="applyReason" name="hrPromApply.applyReason" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.applyReason}</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -69,19 +69,19 @@
 			<tr>
 				<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="target1" name="hrPromApply.target1" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target1}</textarea>
+					<textarea readonly="readonly" id="target1" name="hrPromApply.target1" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target1}</textarea>
 				</td>
 			</tr>
 			<tr>
 				<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="target2" name="hrPromApply.target2" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target2}</textarea>
+					<textarea readonly="readonly" id="target2" name="hrPromApply.target2" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target2}</textarea>
 				</td>
 			</tr>
 			<tr>
 				<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三</td>
 				<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-					<textarea readonly="readonly" id="target3" name="hrPromApply.target3" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.target3}</textarea>
+					<textarea readonly="readonly" id="target3" name="hrPromApply.target3" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target3}</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -89,7 +89,7 @@
 			</tr>
 			<tr>
 				<td colspan="4" style="height:150px;padding:2px;border:1px solid #000000;">
-					<textarea readonly="readonly" id="intRecord" name="hrPromApply.intRecord" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPromApply.intRecord}</textarea>
+					<textarea readonly="readonly" id="intRecord" name="hrPromApply.intRecord" style="width:100%;*width:690px;height:100%;*height:140px;border:none;overflow-y:hidden;">${hrPromApply.intRecord}</textarea>
 				</td>
 			</tr>
 		</table>

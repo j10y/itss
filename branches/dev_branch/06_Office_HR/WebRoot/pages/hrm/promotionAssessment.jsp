@@ -355,34 +355,34 @@
 			<table style="width:720px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">姓名</td>
-					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.applyUser.fullname}</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.applyUser.fullname}&nbsp;</td>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">部门/门店</td>
-					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.depName}</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.depName}&nbsp;</td>
 				</tr>
 				<tr>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">入职日期</td>
 					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">
-						<fmt:formatDate value="${hrPromAssessment.promApply.applyUser.accessionTime}" type="date"/>
+						<fmt:formatDate value="${hrPromAssessment.promApply.applyUser.accessionTime}" type="date"/>&nbsp;
 					</td>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">现职位</td>
 					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">
 						<input type="hidden" id="nowPositionId" value="${hrPromAssessment.promApply.nowPositionId}"/>
-						${hrPromAssessment.promApply.nowPositionName}
+						${hrPromAssessment.promApply.nowPositionName}&nbsp;
 					</td>
 				</tr>
 				<tr>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟担任职位</td>
-					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.applyPositionName}</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.applyPositionName}&nbsp;</td>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升时间</td>
 					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">
-						<fmt:formatDate value="${hrPromAssessment.promApply.applyDate}" type="date"/>
+						<fmt:formatDate value="${hrPromAssessment.promApply.applyDate}" type="date"/>&nbsp;
 					</td>
 				</tr>
 				<tr>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">工作年限</td>
-					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2" colspan="2">${hrPromAssessment.promApply.workYear}</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;" colspan="2" colspan="2">${hrPromAssessment.promApply.workYear}&nbsp;</td>
 					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">本单位工作年限</td>
-					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.workHereYear}</td>
+					<td style="width:240px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;" colspan="2">${hrPromAssessment.promApply.workHereYear}&nbsp;</td>
 				</tr>
 				<tr>
 					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作目标完成情况</td>
@@ -390,19 +390,19 @@
 				<tr>
 					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一</td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea id="reached1" name="hrPromAssessment.reached1" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
+						<textarea id="reached1" name="hrPromAssessment.reached1" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二</td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea id="reached2" name="hrPromAssessment.reached2" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
+						<textarea id="reached2" name="hrPromAssessment.reached2" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三</td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea id="reached3" name="hrPromAssessment.reached3" style="width:100%;height:100%;border:none;">${hrPromAssessment.reached1}</textarea>
+						<textarea id="reached3" name="hrPromAssessment.reached3" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -411,7 +411,7 @@
 				<tr>
 					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">绩效结果</td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea id="performResult" name="hrPromAssessment.performResult" style="width:100%;height:100%;border:none;">${hrPromAssessment.performResult}</textarea>
+						<textarea id="performResult" name="hrPromAssessment.performResult" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.performResult}</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -451,7 +451,7 @@
 				</tr>
 				<tr>
 					<td colspan="6" style="height:150px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea name="hrPromAssessment.promIntRecord" style="width:100%;height:100%;border:none;">${hrPromAssessment.promIntRecord}</textarea>
+						<textarea name="hrPromAssessment.promIntRecord" style="width:100%;*width:690px;height:100%;*height:140px;border:none;overflow-y:hidden;">${hrPromAssessment.promIntRecord}</textarea>
 					</td>
 				</tr>
 				<tr>
