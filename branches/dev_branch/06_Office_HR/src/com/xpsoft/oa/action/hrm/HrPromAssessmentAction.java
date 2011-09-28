@@ -84,6 +84,18 @@ public class HrPromAssessmentAction extends BaseAction{
 		return "show";
 	}
 	
+	public String getAssessByApplyId() {
+		Long applyId = Long.valueOf(getRequest().getParameter("applyId"));
+		this.hrPromAssessment = this.hrPromAssessmentService.getByApplyId(applyId);
+		StringBuffer buff = new StringBuffer("{success:true,data:");
+		JSONSerializer json = new JSONSerializer();
+		buff.append(json.exclude(new String[] {}).serialize(this.hrPromAssessment));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
 	public String previewStatus() {
 		if(this.id != 0) {
 			this.hrPromAssessment = this.hrPromAssessmentService.get(this.id);

@@ -154,6 +154,7 @@ public class HrPostAssessmentAction extends BaseAction{
 				"','standardPostName':'" + this.hrPostAssessment.getStandardPostName() + 
 				"','newSalaryLevelId':'" + this.hrPostAssessment.getNewSalaryLevelId() + 
 				"','newSalaryLevelName':'" + this.hrPostAssessment.getNewSalaryLevelName() + 
+				"','hrPostAssessmentId':'" + this.hrPostAssessment.getId() + 
 				"'}";
 		return "success";
 	}
