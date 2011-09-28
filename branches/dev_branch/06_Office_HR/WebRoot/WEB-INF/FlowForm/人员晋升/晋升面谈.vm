@@ -28,6 +28,7 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 						border : false,
 						autoScroll : true
 					},
+					hrPromAssess : null,
 					activeTab : 1,
 					width : '95%',
 					height : 1000,
@@ -98,6 +99,29 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 									
 								}
 							})*/
+							,new Ext.Button({
+								text : "晋升评估表打印",
+								handler : function() {
+									new Ext.Window({
+										region : "center",
+										layout : "fit",
+										border : false,
+										maximizable : true,
+										items : [
+											new Ext.Panel({
+												border : false,
+												bodyBorder : false,
+												html : "<iframe frameborder='no' width=100% height=100% src='" + __ctxPath + "/reportJsp/showReport.jsp?raq=/hrpromassessment.raq&id=" + Ext.getCmp("HrPromApplyPromotionInterviewsFlowView").hrPromAssess + "'>"
+											})
+										],
+										modal : true,
+										height : 600,
+										width : 850,
+										autoScroll : true,
+										title : "晋升评估表打印"
+									}).show();
+								}
+							})
 								],
 					buttonAlign : 'center',
 					items : [this.detailPanel, this.detailPanel2,this.formPanel]
@@ -155,9 +179,17 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 	 * init the components
 	 */
 	init : function() {
-	
-		//查询是否存在评估表，不存在则建立
-	
+		
+		Ext.Ajax.request({
+			url : __ctxPath + "/hrm/getAssessByApplyIdHrPromAssessment.do",
+			params : {
+			applyId : '${hrPromApply_id}'
+			},
+			success : function(d) {
+				var e = Ext.util.JSON.decode(d.responseText);
+				Ext.getCmp("HrPromApplyPromotionInterviewsFlowView").hrPromAssess = e.data.id;
+			}
+		});
 		//显示请假详细信息
 		this.detailPanel = new Ext.Panel({
 			title:'<font color="green">晋升申请表</font>',

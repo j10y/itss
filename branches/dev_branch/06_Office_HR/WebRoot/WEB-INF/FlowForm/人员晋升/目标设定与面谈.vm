@@ -92,6 +92,29 @@ HrPromApplyTargetConfirmFlowView = Ext.extend(Ext.Panel, {
 									});
 									
 								}
+							}),
+							new Ext.Button({
+								text : "晋升申请表打印",
+								handler : function() {
+									new Ext.Window({
+										region : "center",
+										layout : "fit",
+										border : false,
+										maximizable : true,
+										items : [
+											new Ext.Panel({
+												border : false,
+												bodyBorder : false,
+												html : "<iframe frameborder='no' width=100% height=100% src='" + __ctxPath + "/reportJsp/showReport.jsp?raq=/hrpromapply.raq&id=${hrPromApply_id}'>"
+											})
+										],
+										modal : true,
+										height : 600,
+										width : 850,
+										autoScroll : true,
+										title : "晋升申请表打印"
+									}).show();
+								}
 							})
 								],
 					buttonAlign : 'center',
