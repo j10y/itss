@@ -125,7 +125,7 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 			scope : this,
 			url : __ctxPath + "/hrm/validateAssessByApplyIdHrPromAssessment.do",
 			params : {
-				applyId : applyId,														
+				applyId : applyId														
 			},
 			success : function(resp,opts) {
 				var result = Ext.decode(resp.responseText);
