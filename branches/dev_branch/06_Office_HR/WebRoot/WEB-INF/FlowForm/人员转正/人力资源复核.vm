@@ -278,11 +278,11 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 					{
 						xtype : "hidden",
 						name : "isAssess",
-						value : "true",
+						value : "true"
 					}, {
 						xtype : "hidden",
 						name : "auditStep",
-						value : "HRConfirmAudit",
+						value : "HRConfirmAudit"
 					}, {
 						xtype : 'hidden',
 						id : 'standardPostId',
