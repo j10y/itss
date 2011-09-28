@@ -80,7 +80,7 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 			],
 			defaults : {
 				sortable : true,
-				menuDisable : false,
+				menuDisable : false
 			}
 		});
 		//构造第一个GridPanel
