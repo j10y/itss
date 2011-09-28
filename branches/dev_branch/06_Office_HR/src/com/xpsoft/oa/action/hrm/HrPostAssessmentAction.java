@@ -2,6 +2,7 @@ package com.xpsoft.oa.action.hrm;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -45,18 +46,26 @@ public class HrPostAssessmentAction extends BaseAction{
 	}
 	
 	public String listStatus() {
-		QueryFilter filter = new QueryFilter(this.getRequest());
-		filter.addFilter("Q_publishStatus_N_NEQ", "0");
-		filter.addFilter("Q_publishStatus_N_NEQ", "2");
-		filter.addFilter("Q_publishStatus_N_NEQ", "4");
-		filter.addFilter("Q_createPerson.userId_L_EQ", ContextUtil.getCurrentUserId().toString());
-		List<HrPostAssessment> list = this.hrPostAssessmentService.getAll(filter);
-		
-		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
-				.append(filter.getPagingBean().getTotalItems()).append(",result:");
-		JSONSerializer json = new JSONSerializer();
-		buff.append(json.exclude(new String[] {}).serialize(list));
-		buff.append("}");
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		String sql = "select distinct a.id, c.userId, c.fullname, b.postId, b.postName, b.accessionTime, a.publishStatus from " +
+				"hr_post_assessment a, hr_post_apply b, app_user c where a.publishStatus not in (0, 2, 4) " +
+				"and a.applyId = b.id and b.applyUser = c.userId and c.userId = " + currentUser.getUserId();
+		List<Map<String, Object>> mapList = this.hrPostAssessmentService.findDataList(sql);
+		StringBuffer buff = new StringBuffer("{success:true,result:[");
+		for(int i = 0; i < mapList.size(); i++) {
+			buff.append("{'id':'" + mapList.get(i).get("id"))
+					.append("','userId':'" + mapList.get(i).get("userId"))
+					.append("','fullname':'" + mapList.get(i).get("fullname"))
+					.append("','postId':'" + mapList.get(i).get("postId"))
+					.append("','postName':'" + mapList.get(i).get("postName"))
+					.append("','accessionTime':'" + mapList.get(i).get("accessionTime"))
+					.append("','publishStatus':'" + mapList.get(i).get("publishStatus"))
+					.append("'},");
+		}
+		if(mapList.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]}");
 		this.jsonString = buff.toString();
 		
 		return "success";
