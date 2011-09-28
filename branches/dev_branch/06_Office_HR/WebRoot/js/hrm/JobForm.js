@@ -54,7 +54,7 @@ JobForm = Ext.extend(Ext.Window, {
 				fieldLabel : "备注",
 				name : "job.memo",
 				id : "memo",
-				height: 150,
+				height: 250,
 				xtype : "fckeditor"
 			} ]
 		});
