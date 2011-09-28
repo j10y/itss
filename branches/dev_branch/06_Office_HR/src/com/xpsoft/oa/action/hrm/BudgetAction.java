@@ -306,8 +306,25 @@ public class BudgetAction extends BaseAction {
 				List<BudgetItem> list = this.budgetItemService.getAll(filter);				
 				BudgetItem belongItem = list.get(0);
 				budgetItem.setBelongItem(belongItem);
+				budgetItem.setIsDefault(belongItem.getIsDefault());//isDefault可以代表类型，不仅仅是 0/1(默认人力成本) 扩展的话2，外包成本 3 其他成本等
 				budgetItem.setValue(belongItem.getValue()/4);
 				this.budgetItemService.save(budgetItem);
+				
+				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 begin
+//				Department department = budgetItem.getBudget().getBelongDept();
+//				Map filterMap = new HashMap();
+//				filterMap.put("Q_deleteFlag_N_EQ", "0");
+//				filterMap.put("Q_department.depId_L_EQ", department.getDepId()
+//						.toString());
+//				QueryFilter filter = new QueryFilter(filterMap);
+//				List<JobSalaryRelation> list = this.jobSalaryRelationService
+//						.getAll(filter);
+//				BigDecimal totalMoney = new BigDecimal(0);
+//				for (JobSalaryRelation relation : list) {
+//					totalMoney = totalMoney.add(relation.getTotalMoney());
+//				}
+				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 end
+				
 				//add by awen for add default realExecution on 2011-09-07 begin
 				RealExecution re = new RealExecution();
 				re.setBudget(budgetItem.getBudget());
