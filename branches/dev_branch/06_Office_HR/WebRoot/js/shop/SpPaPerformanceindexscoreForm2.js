@@ -163,7 +163,7 @@ SpPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 										"+",
 										"-",
 										"*",
-										"/",
+										"/"
 									],
 									listeners : {
 										select : function(d) {
@@ -240,7 +240,7 @@ SpPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 					name : "spPaPerformanceindexscore.pisDesc",
 					id : "pisDesc",
 					anchor : "98%,98%",
-					xtype : "textarea",
+					xtype : "textarea"
 				}
 			]
 		});
