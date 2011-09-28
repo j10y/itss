@@ -163,7 +163,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 										"+",
 										"-",
 										"*",
-										"/",
+										"/"
 									],
 									listeners : {
 										select : function(d) {
@@ -240,7 +240,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 					name : "hrPaPerformanceindexscore.pisDesc",
 					id : "pisDesc",
 					anchor : "98%,98%",
-					xtype : "textarea",
+					xtype : "textarea"
 				}
 			]
 		});
