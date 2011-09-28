@@ -106,6 +106,29 @@ HrPostApplyLineManagerAuditFlowView = Ext.extend(Ext.Panel, {
 									});
 									
 								}
+							}),
+							new Ext.Button({
+								text : "转正申请表打印",
+								handler : function() {
+									new Ext.Window({
+										region : "center",
+										layout : "fit",
+										border : false,
+										maximizable : true,
+										items : [
+											new Ext.Panel({
+												border : false,
+												bodyBorder : false,
+												html : "<iframe frameborder='no' width=100% height=100% src='" + __ctxPath + "/reportJsp/showReport.jsp?raq=/hrpostapply.raq&id=${hrPostApply_id}'>"
+											})
+										],
+										modal : true,
+										height : 600,
+										width : 850,
+										autoScroll : true,
+										title : "转正申请表打印"
+									}).show();
+								}
 							})
 								],
 					buttonAlign : 'center',
@@ -135,6 +158,7 @@ HrPostApplyLineManagerAuditFlowView = Ext.extend(Ext.Panel, {
 					Ext.getCmp("standardPostName").setValue(result.standardPostName);
 					Ext.getCmp("newSalaryLevelId").setValue(result.newSalaryLevelId);
 					Ext.getCmp("newSalaryLevelName").setValue(result.newSalaryLevelName);
+					Ext.getCmp("hrPostAssessmentId").setValue(result.hrPostAssessmentId);
 					if (formPanel.getForm().isValid()) {
 						formPanel.getForm().submit({
 									method : 'POST',
@@ -262,6 +286,11 @@ HrPostApplyLineManagerAuditFlowView = Ext.extend(Ext.Panel, {
 						name : 'publishStatus',
 						xtype : 'hidden',
 						value :  6 //待人力资源复核
+					},{
+						fieldLabel : '试用期评估表ID',
+						id : 'hrPostAssessmentId',
+						name : 'hrPostAssessment.id',
+						xtype : 'hidden'
 					}]
 		});
 	}

@@ -3,6 +3,7 @@
     <field name="leaderRead.leaderOpinion" label="审批意见" type="varchar" length="1024"/>
 	<field name="hrPostApply.id" label="primaryKey" type="long" isShowed="false" />
 	<field name="hrPostApply.deptId" label="部门ID" type="long" isShowed="false" />
+	<field name="hrPostAssessment.id" label="试用期评估表ID" type="long" isShowed="false" />
 	<field name="hrPostAssessment.standardPostId" label="标准岗位ID" type="long" isShowed="false" />
 	<field name="hrPostAssessment.newSalaryLevelId" label="薪资标准ID" type="long" isShowed="false" />
 	<field name="hrPostAssessment.standardPostName" label="标准岗位名称" type="varchar" isShowed="false" />

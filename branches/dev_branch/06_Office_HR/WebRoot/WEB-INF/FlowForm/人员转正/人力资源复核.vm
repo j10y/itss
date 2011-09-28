@@ -158,6 +158,29 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 										Ext.ux.Toast.msg('操作信息','请选择岗位、薪资标准，并填写审批意见！');
 									}
 								}
+							}),
+							new Ext.Button({
+								text : "试用期评估表打印",
+								handler : function() {
+									new Ext.Window({
+										region : "center",
+										layout : "fit",
+										border : false,
+										maximizable : true,
+										items : [
+											new Ext.Panel({
+												border : false,
+												bodyBorder : false,
+												html : "<iframe frameborder='no' width=100% height=100% src='" + __ctxPath + "/reportJsp/showReport.jsp?raq=/hrpostassessment.raq&id=${hrPostAssessment_id}'>"
+											})
+										],
+										modal : true,
+										height : 600,
+										width : 850,
+										autoScroll : true,
+										title : "试用期评估表打印"
+									}).show();
+								}
 							})
 								],
 					buttonAlign : 'center',
@@ -391,6 +414,11 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 						name : 'publishStatus',
 						xtype : 'hidden',
 						value :  7 //待分管副总裁确认
+					},{
+						fieldLabel : '试用期评估表ID',
+						name : 'hrPostAssessment.id',
+						xtype : 'hidden',
+						value : '${hrPostAssessment_id}'
 					}]
 		});
 		Ext.getCmp("standardPostNameCombo").setValue('${hrPostAssessment_standardPostName}');
