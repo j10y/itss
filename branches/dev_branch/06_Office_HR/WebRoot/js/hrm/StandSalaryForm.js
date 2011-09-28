@@ -240,6 +240,29 @@ StandSalaryForm.saveStandSalary = function () {
 			d.push(a.data);
 		}
 	}
+	//标准名称正确格式：名称说明_Band_档
+	var standSalaryNames = Ext.getCmp("standSalaryForm.standardName").getValue().split("_");
+	if(standSalaryNames.length != 3) {
+		Ext.MessageBox.show({
+			title : "操作信息",
+			msg : "请填写正确格式的标准名称。",
+			buttons : Ext.MessageBox.OK,
+			icon : Ext.MessageBox.ERROR
+		});
+		return ;
+	} else {
+		for(var i = 0; i < standSalaryNames.length; i++) {
+			if(standSalaryNames[i].replace(/(^\s*)|(\s*$)/g, "") == "") {
+				Ext.MessageBox.show({
+					title : "操作信息",
+					msg : "请填写正确格式的标准名称。",
+					buttons : Ext.MessageBox.OK,
+					icon : Ext.MessageBox.ERROR
+				});
+				return ;
+			}
+		}
+	}
 	if (c.getForm().isValid()) {
 		c.getForm().submit({
 				method : "post",
