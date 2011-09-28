@@ -10,7 +10,7 @@
 			<td width="26"><c:choose>
 				<c:when test="${fn:length(news.subjectIcon)>0}">
 					<img
-						src="<%=request.getContextPath()%>/attachFiles/${news.subjectIcon}" />
+						src="${news.subjectIcon}" />
 				</c:when>
 				<c:otherwise>
 					<img

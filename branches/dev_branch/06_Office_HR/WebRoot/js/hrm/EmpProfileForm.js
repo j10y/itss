@@ -789,8 +789,7 @@ EmpProfileForm = Ext
 																												.setValue(h[0].filepath);
 																										i.body
 																												.update('<img src="'
-																														+ __ctxPath
-																														+ "/attachFiles/"
+																														+ ""
 																														+ h[0].filepath
 																														+ '"  width="88" height="120"/>');
 																									},
@@ -1431,8 +1430,7 @@ EmpProfileForm = Ext
 														Ext
 																.getCmp("ProfilePhotoPanel").body
 																.update('<img src="'
-																		+ __ctxPath
-																		+ "/attachFiles/"
+																		+ ""
 																		+ d
 																		+ '" width="88" height="120"/>');
 													}

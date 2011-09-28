@@ -62,7 +62,7 @@
 			// document.all.WebOfficeObj.HideMenuItem(0x04 + 0x2000);
 			webObj.ShowToolBar = false;
 			var fullDocPath = '';
-			fullDocPath = __fullPath + '/attachFiles/' + '${OnlineAccountFilePath}';
+			fullDocPath = "" + '${OnlineAccountFilePath}';
 			webObj.LoadOriginalFile(fullDocPath, 'doc');
 		
 			// 一定需要加上这个控制，保证关闭窗口后，office实例也需要关闭

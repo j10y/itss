@@ -97,7 +97,7 @@
 	<c:if test="${news.isDeskImage==1}">
 	<tr>
 		<td align="center">
-			<img src="${ctxPath}/attachFiles/${news.subjectIcon}"/>
+			<img src="${news.subjectIcon}"/>
 		</td>
 	</tr>
 	</c:if>

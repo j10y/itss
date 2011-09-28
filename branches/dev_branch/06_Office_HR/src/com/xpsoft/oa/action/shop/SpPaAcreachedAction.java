@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.shop;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.model.Ftp;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.UUIDGenerator;
@@ -220,7 +222,37 @@ public class SpPaAcreachedAction extends BaseAction{
 		String filePath = this.getRequest().getParameter("filePath");
 		//用来存放读取出来的数据
 		List<SpPaAcreached> reachList = new ArrayList<SpPaAcreached>();
-		File file = new File(this.getRequest().getRealPath("/") + "attachFiles/" + filePath);
+
+		//modify by jack for FTP support at 2011-9-21 begin
+		boolean isFtp = new Boolean(String.valueOf(AppUtil.getSysConfig().get("isFtp")));
+		File file = null;
+		if(isFtp){
+			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"));
+			Ftp ftp = new Ftp(1, "fileUpload", String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.host")),
+					new Integer(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.port"))), "", "");
+			ftp.setUsername(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.user")));
+			ftp.setPassword(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.passwd")));
+			ftp.setPath("");
+			
+			String fileP = filePath;
+			int index = defaultProfix.lastIndexOf("/");
+			fileP = fileP.substring(fileP.indexOf(defaultProfix) + index);
+			try {
+				file = ftp.retrieve(fileP);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("数据导入失败！");
+				this.jsonString = "{success:true,'flag':'0'}";
+				e.printStackTrace();
+			}
+			
+		}else{
+			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
+			int len = defaultProfix.length();
+			filePath = filePath.substring(filePath.indexOf(defaultProfix));
+			file = new File(this.getRequest().getRealPath("/") + filePath);
+		}
+		//modify by jack for FTP support at 2011-9-21 end
 		String uploadFileType = this.getRequest().getParameter("uploadFileType");
 		try {
 			//取得要导入的excel文件

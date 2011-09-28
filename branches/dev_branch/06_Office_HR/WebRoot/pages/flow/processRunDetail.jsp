@@ -27,7 +27,7 @@
 				<td width="80%">
 					<c:choose>
 						<c:when test="${formData.fieldType=='file'}">
-							<a href="<%=request.getContextPath()%>/attachFiles/${formData.strValue}" target="_blank">${formData.strValue}</a>
+							<a href="${formData.strValue}" target="_blank">${formData.strValue}</a>
 						</c:when>
 						<c:otherwise>
 							${formData.val}

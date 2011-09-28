@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.customer;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import com.google.gson.Gson;
 import com.xpsoft.core.engine.MailEngine;
+import com.xpsoft.core.model.Ftp;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -53,21 +55,42 @@ public class MutilMailAction extends BaseAction {
 		this.customerMail = customerMail;
 	}
 
-	public String send() {
+	public String send() throws IOException {
 		Short type = this.customerMail.getType();
 		String ids = this.customerMail.getIds();
 		String files = this.customerMail.getFiles();
 		List atFiles = new ArrayList();
 		List fileName = new ArrayList();
+		//add by jack for FTP support at 2011-9-21 begin
+		boolean isFtp = new Boolean(String.valueOf(AppUtil.getSysConfig().get("isFtp")));
+		//add by jack for FTP support at 2011-9-21 emd
 		if (StringUtils.isNotEmpty(files)) {
 			String[] fIds = files.split(",");
 			for (int i = 0; i < fIds.length; i++) {
 				FileAttach fileAttach = (FileAttach) this.fileAttachService.get(new Long(fIds[i]));
-				File file = new File(getSession().getServletContext().getRealPath("/attachFiles/")
-						+ "/"
-						+ fileAttach.getFilePath());
-				fileName.add(fileAttach.getFileName());
-				atFiles.add(file);
+				//modify by jack for FTP support at 2011-9-21 begin
+				if(!isFtp){
+					String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
+					int len = defaultProfix.length();
+					String filePath = fileAttach.getFilePath().substring(fileAttach.getFilePath().indexOf(defaultProfix));
+					File file = new File(getSession().getServletContext().getRealPath(filePath));
+					fileName.add(fileAttach.getFileName());
+					atFiles.add(file);
+				}else{
+					Ftp ftp = new Ftp(1, "fileUpload", String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.host")),
+							new Integer(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.port"))), "", "");
+					ftp.setUsername(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.user")));
+					ftp.setPassword(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.passwd")));
+					ftp.setPath("");
+					
+					String fileP = fileAttach.getFilePath();
+					fileP = fileP.substring(fileP.indexOf(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"))) + 5);
+					File file = ftp.retrieve(fileP);
+					
+					fileName.add(fileAttach.getFileName());
+					atFiles.add(file);
+				}
+				//modify by jack for FTP support at 2011-9-21 end
 			}
 		}
 		String[] id = ids.split(",");

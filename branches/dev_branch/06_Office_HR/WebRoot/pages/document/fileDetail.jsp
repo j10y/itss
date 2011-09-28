@@ -45,7 +45,7 @@
 		<th>操作</th>
 		<td>
 			<img src="<%=request.getContextPath()%>/images/system/download.png"/>
-			<a href="<%=request.getContextPath()%>/attachFiles/${fileAttach.filePath}" target="_blank">下载</a>
+			<a href="${fileAttach.filePath}" target="_blank">下载</a>
 		</td>
 	</tr>
 </table>

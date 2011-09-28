@@ -35,7 +35,7 @@
 	  	 		<td colspan="3">
 	  	 			<img src="<%=request.getContextPath()%>/images/flag/attachment.png"/>
 	      			<!-- <a href="#" onclick="new ArchivesDocForm({docPath :'${doc.fileAttach.filePath}'}).show();return false;"  target="_blank">${doc.docName}</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
-	      			<a href="<%=request.getContextPath()%>/attachFiles/${doc.fileAttach.filePath}"  target="_blank">${doc.docName}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	      			<a href="${doc.fileAttach.filePath}"  target="_blank">${doc.docName}</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	  			</td>
 	  		</tr>
 	  	</c:forEach>

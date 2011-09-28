@@ -170,7 +170,7 @@
 		<c:choose>
 			<c:when test="${fn:length(news.subjectIcon)>0}">
 				<img class="newsdisplayImg"
-					src="<%=request.getContextPath()%>/attachFiles/${news.subjectIcon}"
+					src="${news.subjectIcon}"
 					alt="${news.subject}"/>
 			</c:when>
 			<c:otherwise>

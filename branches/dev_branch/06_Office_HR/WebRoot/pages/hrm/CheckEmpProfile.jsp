@@ -19,7 +19,7 @@
 	
 		<tr>
 			<td rowspan="7" width="15%">
-				&nbsp;<img title="${empProfile.fullname}" width="88" height="120" src="<%=request.getContextPath()%>/attachFiles/${empProfile.photo}">
+				&nbsp;<img title="${empProfile.fullname}" width="88" height="120" src="${empProfile.photo}">
 			</td>
 		</tr>
 		<tr >

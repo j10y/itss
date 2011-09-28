@@ -1,48 +1,42 @@
-/*    */ package com.xpsoft.oa.service.system.impl;
-/*    */ 
-/*    */ import com.xpsoft.core.service.impl.BaseServiceImpl;
-/*    */ import com.xpsoft.core.util.AppUtil;
-/*    */ import com.xpsoft.oa.dao.system.FileAttachDao;
-/*    */ import com.xpsoft.oa.model.system.FileAttach;
-/*    */ import com.xpsoft.oa.service.system.FileAttachService;
-/*    */ import java.io.File;
-/*    */ import org.apache.commons.logging.Log;
-/*    */ 
-/*    */ public class FileAttachServiceImpl extends BaseServiceImpl<FileAttach>
-/*    */   implements FileAttachService
-/*    */ {
-/*    */   private FileAttachDao dao;
-/*    */ 
-/*    */   public FileAttachServiceImpl(FileAttachDao dao)
-/*    */   {
-/* 18 */     super(dao);
-/* 19 */     this.dao = dao;
-/*    */   }
-/*    */ 
-/*    */   public void removeByPath(String filePath)
-/*    */   {
-/* 26 */     FileAttach fileAttach = this.dao.getByPath(filePath);
-/*    */ 
-/* 28 */     String fullFilePath = AppUtil.getAppAbsolutePath() + "/attachFiles/" + filePath;
-/*    */ 
-/* 30 */     this.logger.info("file:" + fullFilePath);
-/*    */ 
-/* 32 */     File file = new File(fullFilePath);
-/*    */ 
-/* 34 */     if (file.exists()) {
-/* 35 */       file.delete();
-/*    */     }
-/* 37 */     if (fileAttach != null)
-/* 38 */       this.dao.remove(fileAttach);
-/*    */   }
-/*    */ 
-/*    */   public FileAttach getByPath(String filePath)
-/*    */   {
-/* 44 */     return this.dao.getByPath(filePath);
-/*    */   }
-/*    */ }
+package com.xpsoft.oa.service.system.impl;
 
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.service.system.impl.FileAttachServiceImpl
- * JD-Core Version:    0.6.0
- */
+import com.xpsoft.core.service.impl.BaseServiceImpl;
+import com.xpsoft.core.util.AppUtil;
+import com.xpsoft.oa.dao.system.FileAttachDao;
+import com.xpsoft.oa.model.system.FileAttach;
+import com.xpsoft.oa.service.system.FileAttachService;
+import java.io.File;
+import org.apache.commons.logging.Log;
+
+public class FileAttachServiceImpl extends BaseServiceImpl<FileAttach>
+		implements FileAttachService {
+	private FileAttachDao dao;
+
+	public FileAttachServiceImpl(FileAttachDao dao) {
+		super(dao);
+		this.dao = dao;
+	}
+
+	public void removeByPath(String filePath) {
+		FileAttach fileAttach = this.dao.getByPath(filePath);
+
+		//String fullFilePath = AppUtil.getAppAbsolutePath() + "/attachFiles/"
+		//		+ filePath;
+		
+		String fullFilePath = filePath;
+
+		this.logger.info("file:" + fullFilePath);
+
+		File file = new File(fullFilePath);
+
+		if (file.exists()) {
+			file.delete();
+		}
+		if (fileAttach != null)
+			this.dao.remove(fileAttach);
+	}
+
+	public FileAttach getByPath(String filePath) {
+		return this.dao.getByPath(filePath);
+	}
+}

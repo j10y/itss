@@ -24,7 +24,7 @@
 <div>
   <span style="font-weight: bolder">公文原件：</span>
   <c:forEach var="doc" items="${arch.archivesDocs}">
-      <a href="<%=request.getContextPath()%>/attachFiles/${doc.fileAttach.filePath}" target="_blank">${doc.fileAttach.fileName}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="${doc.fileAttach.filePath}" target="_blank">${doc.fileAttach.fileName}</a>&nbsp;&nbsp;&nbsp;&nbsp;
   </c:forEach>
 </div>
 <span style="float:right;padding-right:12%;">创建日期:<fmt:formatDate value="${arch.createtime}" pattern="yyyy-MM-dd"/></span>

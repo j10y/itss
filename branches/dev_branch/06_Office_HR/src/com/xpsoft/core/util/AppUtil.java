@@ -281,7 +281,7 @@ public class AppUtil implements ApplicationContextAware {
 		String defaultLogoPath = "/images/xp-logo.png";
 		String path = (String) configMap.get("app.logoPath");
 		if (StringUtils.isNotEmpty(path)) {
-			defaultLogoPath = "/attachFiles/" + path;
+			defaultLogoPath =   path;
 		}
 		return defaultLogoPath;
 	}

@@ -123,8 +123,7 @@ SearchNoticeNew.prototype.grid = function(d) {
 								var j = null;
 								if (h != "") {
 									j = '<img style="border:0;" width="48" height="48" src="'
-											+ __ctxPath
-											+ "/attachFiles/"
+											+ ""
 											+ h
 											+ '" border="0"/>';
 								} else {
