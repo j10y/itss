@@ -212,9 +212,9 @@ public class HrPostApplyAction extends BaseAction{
 				assessment.setNewSalaryLevelName(this.getRequest().getParameter("hrPostAssessment.newSalaryLevelName"));
 				assessment.setHrOpinion(this.getRequest().getParameter("leaderRead.leaderOpinion"));
 				String[] bandGrade = this.getRequest().getParameter("hrPostAssessment.newSalaryLevelName").trim().split("_");
-				if(bandGrade.length == 2) {
-					assessment.setPostBand(bandGrade[0]);
-					assessment.setPostGrade(bandGrade[1]);
+				if(bandGrade.length == 3) {
+					assessment.setPostBand(bandGrade[1]);
+					assessment.setPostGrade(bandGrade[2]);
 				} else {
 					this.logger.error("该薪资标准名称不符合规范，请重新命名！");
 				}
