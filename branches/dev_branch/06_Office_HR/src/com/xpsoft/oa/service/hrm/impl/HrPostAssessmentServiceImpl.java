@@ -72,9 +72,9 @@ public class HrPostAssessmentServiceImpl extends BaseServiceImpl<HrPostAssessmen
 			hrPostAssessment.setTotalYearSalary(salaryLevel.getYearTotalMoney());
 			//将薪资标准名称分拆成为岗位层级的“Band”和“档”
 			String[] bandGrade = salaryLevel.getStandardName().trim().split("_");
-			if(bandGrade.length == 2) {
-				hrPostAssessment.setPostBand(bandGrade[0]);
-				hrPostAssessment.setPostGrade(bandGrade[1]);
+			if(bandGrade.length == 3) {
+				hrPostAssessment.setPostBand(bandGrade[1]);
+				hrPostAssessment.setPostGrade(bandGrade[2]);
 			} else {
 				this.logger.error("该薪资标准名称不符合规范，请重新命名！");
 			}
