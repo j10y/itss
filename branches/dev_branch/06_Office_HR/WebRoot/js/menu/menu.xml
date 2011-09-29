@@ -1767,52 +1767,52 @@
 		<Items id="ShopPaManage" text="绩效管理" isPublic="false">
 			<Items id="SpPaPerformanceindexManage" text="绩效考评库">
 				<Item id="DraftSpPaPerformanceindexView" text="草稿管理">
-					<Function id="_DraftPaAdd" text="添加" iconCls="menu-add">
+					<Function id="_DraftSpPaAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaPerformanceindex.do</url>
 						<url>/shop/saveSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_DraftPaDel" text="删除" iconCls="menu-del">
+					<Function id="_DraftSpPaDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_DraftPaEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_DraftSpPaEdit" text="编辑" iconCls="menu-edit">
 						<url>/shop/editSpPaPerformanceindex.do</url>
 					</Function>
 				</Item>
 				<Item id="PublishSpPaPerformanceindexView" text="已发布考评库">
-					<Function id="_PublishPaAdd" text="添加" iconCls="menu-add">
+					<Function id="_PublishSpPaAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaPerformanceindex.do</url>
 						<url>/shop/saveSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PublishPaDel" text="删除" iconCls="menu-del">
+					<Function id="_PublishSpPaDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PublishPaEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_PublishSpPaEdit" text="编辑" iconCls="menu-edit">
 						<url>/shop/editSpPaPerformanceindex.do</url>
 					</Function>
 				</Item>
 			</Items>
 			<Items id="SpPaKpipbcManage" text="考评项目管理">
 				<Item id="DraftSpPaKpipbcView" text="草稿管理">
-					<Function id="_DraftPbcAdd" text="添加" iconCls="menu-add">
+					<Function id="_DraftSpPbcAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaKpipbc.do</url>
 						<url>/shop/saveSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_DraftPbcDel" text="删除" iconCls="menu-del">
+					<Function id="_DraftSpPbcDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_DraftPbcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_DraftSpPbcEdit" text="编辑" iconCls="menu-edit">
 						<url>/sp/editSpPaKpipbc.do</url>
 					</Function>
 				</Item>
 				<Item id="PublishSpPaKpipbcView" text="已发布项目">
-					<Function id="_PublishPbcAdd" text="添加" iconCls="menu-add">
+					<Function id="_PublishSpPbcAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaKpipbc.do</url>
 						<url>/shop/saveSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_PublishPbcDel" text="删除" iconCls="menu-del">
+					<Function id="_PublishSpPbcDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_PublishPbcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_PublishSpPbcEdit" text="编辑" iconCls="menu-edit">
 						<url>/shop/editSpPaKpipbc.do</url>
 					</Function>
 				</Item>
