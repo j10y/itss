@@ -280,22 +280,18 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 			bodyStyle : "text-align:left",
 			items : []
 		});
-		if(isGranted("_PbcItemAdd")) {
-			this.topbar.add({
-				iconCls : "btn-add",
-				text : "添加考核指标",
-				xtype : "button",
-				handler : this.addHrPaKpiitem
-			});
-		}
-		if(isGranted("_PbcItemDel")) {
-			this.topbar.add({
-				iconCls : "btn-del",
-				text : "删除考核指标",
-				xtype : "button",
-				handler : this.delHrPaKpiitem
-			});
-		}
+		this.topbar.add({
+			iconCls : "btn-add",
+			text : "添加考核指标",
+			xtype : "button",
+			handler : this.addHrPaKpiitem
+		});
+		this.topbar.add({
+			iconCls : "btn-del",
+			text : "删除考核指标",
+			xtype : "button",
+			handler : this.delHrPaKpiitem
+		});
 		this.gridPanel = new Ext.grid.EditorGridPanel({
 			id : "HrPaKpiitemGrid",
 			region : "center",

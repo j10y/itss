@@ -86,14 +86,14 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_PaDel")) {
+		if(isGranted("_PublishPaDel")) {
 			b.push({
 				iconCls : "btn-del",
 				qtip : "删除",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-		if(isGranted("_PaEdit")) {
+		if(isGranted("_PublishPaEdit")) {
 			b.push({
 				iconCls : "btn-edit",
 				qtip : "编辑",
@@ -200,7 +200,7 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_PaEdit")) {
+				if(isGranted("_PublishPaEdit")) {
 					new HrPaPerformanceindexForm({
 						piId : e.data.id,
 						from : "publish"

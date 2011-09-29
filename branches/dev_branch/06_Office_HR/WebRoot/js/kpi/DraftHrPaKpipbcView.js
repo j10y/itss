@@ -87,14 +87,14 @@ DraftHrPaKpipbcView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_PbcDel")) {
+		if(isGranted("_DraftPbcDel")) {
 			b.push({
 				iconCls : "btn-del",
 				qtip : "删除",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-		if(isGranted("_PbcEdit")) {
+		if(isGranted("_DraftPbcEdit")) {
 			b.push({
 				iconCls : "btn-edit",
 				qtip : "编辑",
@@ -161,7 +161,7 @@ DraftHrPaKpipbcView = Ext.extend(Ext.Panel, {
 			bodyStyle : "text-align:left",
 			items : []
 		});
-		if(isGranted("_PbcAdd")) {
+		if(isGranted("_DraftPbcAdd")) {
 			this.topbar.add({
 				iconCls : "btn-add",
 				text : "添加PBC",
@@ -169,7 +169,7 @@ DraftHrPaKpipbcView = Ext.extend(Ext.Panel, {
 				handler : this.addHrPaKpipbc
 			});
 		}
-		if(isGranted("_PbcDel")) {
+		if(isGranted("_DraftPbcDel")) {
 			this.topbar.add({
 				iconCls : "btn-del",
 				text : "删除PBC",
@@ -207,7 +207,7 @@ DraftHrPaKpipbcView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function (f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_PbcEdit")) {
+				if(isGranted("_DraftPbcEdit")) {
 					new HrPaKpipbcForm({
 						pbcId : e.data.id,
 						from : "draft"

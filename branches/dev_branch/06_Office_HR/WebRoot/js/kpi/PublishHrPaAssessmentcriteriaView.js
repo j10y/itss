@@ -84,14 +84,14 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_AcDel")) {
+		if(isGranted("_PublishAcDel")) {
 			b.push({
 				iconCls : "btn-del",
 				qtip : "删除",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-		if(isGranted("_AcEdit")) {
+		if(isGranted("_PublishAcEdit")) {
 			b.push({
 				iconCls : "btn-edit",
 				qtip : "编辑",
@@ -192,7 +192,7 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_AcEdit")) {
+				if(isGranted("_PublishAcEdit")) {
 					new HrPaAssessmentcriteriaForm({
 						acId : e.data.id,
 						from : "publish"
