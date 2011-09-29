@@ -1639,28 +1639,28 @@
 		<Items id="KpiManage" text="绩效管理" isPublic="false">
 			<Items id="HrPaPerformanceindexManage" text="考核指标管理">
 				<Item id="DraftHrPaPerformanceindexView" text="草稿管理">
-					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+					<Function id="_DraftPaAdd" text="添加" iconCls="menu-add">
 						<url>/kpi/listHrPaPerformanceindex.do</url>
 						<url>/kpi/saveHrPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaDel" text="删除" iconCls="menu-del">
+					<Function id="_DraftPaDel" text="删除" iconCls="menu-del">
 						<url>/kpi/multiDelHrPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_DraftPaEdit" text="编辑" iconCls="menu-edit">
 						<url>/kpi/editHrPaPerformanceindex.do</url>
 					</Function>
 				</Item>
 				<Item id="InAuditHrPaPerformanceindexView" text="审核中指标">
 				</Item>
 				<Item id="PublishHrPaPerformanceindexView" text="已发布指标">
-					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+					<Function id="_PublishPaAdd" text="添加" iconCls="menu-add">
 						<url>/kpi/listHrPaPerformanceindex.do</url>
 						<url>/kpi/saveHrPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaDel" text="删除" iconCls="menu-del">
+					<Function id="_PublishPaDel" text="删除" iconCls="menu-del">
 						<url>/kpi/multiDelHrPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_PublishPaEdit" text="编辑" iconCls="menu-edit">
 						<url>/kpi/editHrPaPerformanceindex.do</url>
 					</Function>
 				</Item>
@@ -1672,56 +1672,56 @@
 		
 			<Items id="HrPaAssessmentcriteriaManage" text="考核标准管理">
 				<Item id="DraftHrPaAssessmentcriteriaView" text="草稿管理">
-					<Function id="_AcAdd" text="添加" iconCls="menu-add">
+					<Function id="_DraftAcAdd" text="添加" iconCls="menu-add">
 						<url>/kpi/listHrPaAssessmentcriteria.do</url>
 						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
 					</Function>
-					<Function id="_AcDel" text="删除" iconCls="menu-del">
+					<Function id="_DraftAcDel" text="删除" iconCls="menu-del">
 						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
 					</Function>
-					<Function id="_AcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_DraftAcEdit" text="编辑" iconCls="menu-edit">
 						<url>/kpi/editHrPaAssessmentcriteria.do</url>
 					</Function>
 				</Item>
 				<Item id="InAuditHrPaAssessmentcriteriaView" text="审核中标准">
 				</Item>
 				<Item id="PublishHrPaAssessmentcriteriaView" text="已发布标准">
-					<Function id="_AcAdd" text="添加" iconCls="menu-add">
+					<Function id="_PublishAcAdd" text="添加" iconCls="menu-add">
 						<url>/kpi/listHrPaAssessmentcriteria.do</url>
 						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
 					</Function>
-					<Function id="_AcDel" text="删除" iconCls="menu-del">
+					<Function id="_PublishAcDel" text="删除" iconCls="menu-del">
 						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
 					</Function>
-					<Function id="_AcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_PublishAcEdit" text="编辑" iconCls="menu-edit">
 						<url>/kpi/editHrPaAssessmentcriteria.do</url>
 					</Function>
 				</Item>
 			</Items>
 			<Items id="HrPaKpipbcManage" text="PBC管理">
 				<Item id="DraftHrPaKpipbcView" text="草稿管理">
-					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+					<Function id="_DraftPbcAdd" text="添加" iconCls="menu-add">
 						<url>/kpi/listHrPaKpipbc.do</url>
 						<url>/kpi/saveHrPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+					<Function id="_DraftPbcDel" text="删除" iconCls="menu-del">
 						<url>/kpi/multiDelHrPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_DraftPbcEdit" text="编辑" iconCls="menu-edit">
 						<url>/kpi/editHrPaKpipbc.do</url>
 					</Function>
 				</Item>
 				<Item id="InAuditHrPaKpipbcView" text="审核中PBC">
 				</Item>
 				<Item id="PublishHrPaKpipbcView" text="已发布PBC">
-					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+					<Function id="_PublishPbcAdd" text="添加" iconCls="menu-add">
 						<url>/kpi/listHrPaKpipbc.do</url>
 						<url>/kpi/saveHrPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+					<Function id="_PublishPbcDel" text="删除" iconCls="menu-del">
 						<url>/kpi/multiDelHrPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_PublishPbcEdit" text="编辑" iconCls="menu-edit">
 						<url>/kpi/editHrPaKpipbc.do</url>
 					</Function>
 				</Item>
