@@ -7,7 +7,7 @@ PublishSpPaKpipbcView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		PublishSpPaKpipbcView.superclass.constructor.call(this, {
 			id : "PublishSpPaKpipbcView",
-			title : "PBC发布",
+			title : "已发布项目列表",
 			region : "center",
 			layout : "border",
 			items : [

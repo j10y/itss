@@ -58,7 +58,7 @@ SpResultTotalScoreView = Ext.extend(Ext.Panel, {
 					header : "姓名",
 					dataIndex : "fullname"
 				}, {
-					header : "个人考核模板名称",
+					header : "个人考评项目名称",
 					dataIndex : "pbcName"
 				}, {
 					header : "总分",

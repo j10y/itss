@@ -7,7 +7,7 @@ SpAuthorizePbcView = Ext.extend(Ext.Window, {
 		this.initComponents();
 		SpAuthorizePbcView.superclass.constructor.call(this, {
 			id : "SpAuthorizePbcView",
-			title : "个人PBC列表",
+			title : "待授权项目列表",
 			width : 700,
 			modal : true,
 			height : 500,
@@ -62,7 +62,7 @@ SpAuthorizePbcView = Ext.extend(Ext.Window, {
 					header : "岗位",
 					dataIndex : "position"
 				}, {
-					header : "待考核PBC",
+					header : "待考评项目",
 					dataIndex : "pbcName"
 				}
 			],
@@ -119,7 +119,7 @@ SpAuthorizePbcView = Ext.extend(Ext.Window, {
 		if(a.gridPanel.getStore().getCount() > 0) {
 			Ext.MessageBox.show({
 				title : "操作信息",
-				msg : "您还有未授权的PBC，请核实！",
+				msg : "您还有未授权的考评项目，请核实！",
 				buttons : Ext.MessageBox.OK,
 				icon : Ext.MessageBox.ERROR
 			});

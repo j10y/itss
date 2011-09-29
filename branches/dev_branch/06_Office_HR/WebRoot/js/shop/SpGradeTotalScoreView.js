@@ -7,7 +7,7 @@ SpGradeTotalScoreView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		SpGradeTotalScoreView.superclass.constructor.call(this, {
 			id : "SpGradeTotalScoreView",
-			title : "授权PBC打分",
+			title : "评分结果列表",
 			region : "center",
 			layout : "border",
 			items : [

@@ -21,7 +21,7 @@ SpPaKpipbcForm = Ext.extend(Ext.Window, {
 			height : 625,
 			width : 850,
 			autoScroll : true,
-			title : "PBC录入/修改",
+			title : "考评项目录入/修改",
 			buttonAlign : "center",
 			buttons : this.buttons
 		});
@@ -129,13 +129,13 @@ SpPaKpipbcForm = Ext.extend(Ext.Window, {
 							columnWidth : 0.5,
 							items : [
 								{
-									fieldLabel : "PBC名称",
+									fieldLabel : "项目名称",
 									name : "spPaKpipbc.pbcName",
 									id : "pbcName",
 									xtype : "textfield",
 									width : 165,
 									allowBlank : false,
-									blankText : "PBC名称不能为空！"
+									blankText : "项目名称不能为空！"
 								},
 								departments,
 								{
@@ -179,7 +179,7 @@ SpPaKpipbcForm = Ext.extend(Ext.Window, {
 										}
 									}
 								}, {
-									fieldLabel : "PBC类型",
+									fieldLabel : "项目类型",
 									hiddenName : "spPaKpipbc.pbcType.id",
 									maxHeight : 200,
 									id : "pbcType",
@@ -306,7 +306,6 @@ SpPaKpipbcForm = Ext.extend(Ext.Window, {
 									displayField : "paName",
 									triggerAction : "all",
 									allowBlank : false,
-									blankText : "PBC类型不能为空！",
 									store : new Ext.data.JsonStore({
 										root : "result",
 										remoteSort : true,

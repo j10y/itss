@@ -7,7 +7,7 @@ DraftSpPaKpipbcView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		DraftSpPaKpipbcView.superclass.constructor.call(this, {
 			id : "DraftSpPaKpipbcView",
-			title : "PBC草稿",
+			title : "考评项目草稿列表",
 			region : "center",
 			layout : "border",
 			items : [

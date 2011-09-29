@@ -7,7 +7,7 @@ SpPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		SpPaKpiPBC2UserView.superclass.constructor.call(this, {
 			id : "SpPaKpiPBC2UserView",
-			title : "个人PBC授权",
+			title : "待授权项目列表",
 			region : "center",
 			layout : "border",
 			items : [

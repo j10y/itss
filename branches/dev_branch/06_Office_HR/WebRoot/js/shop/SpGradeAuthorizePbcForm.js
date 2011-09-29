@@ -19,7 +19,7 @@ SpGradeAuthorizePbcForm = Ext.extend(Ext.Window, {
 			height : 600,
 			width : 850,
 			autoScroll : true,
-			title : "授权PBC打分"
+			title : "授权项目评分"
 		});
 	},
 	initComponents : function() {

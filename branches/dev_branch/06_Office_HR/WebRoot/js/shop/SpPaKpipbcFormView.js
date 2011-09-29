@@ -18,7 +18,7 @@ SpPaKpipbcFormView = Ext.extend(Ext.Window, {
 			height : 600,
 			width : 850,
 			autoScroll : true,
-			title : "PBC预览"
+			title : "考评项目预览"
 		});
 	},
 	initComponents : function() {

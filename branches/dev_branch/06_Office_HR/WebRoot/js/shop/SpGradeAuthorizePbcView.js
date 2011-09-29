@@ -7,7 +7,7 @@ SpGradeAuthorizePbcView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		SpGradeAuthorizePbcView.superclass.constructor.call(this, {
 			id : "SpGradeAuthorizePbcView",
-			title : "授权PBC打分",
+			title : "授权项目评分列表",
 			region : "center",
 			layout : "border",
 			items : [

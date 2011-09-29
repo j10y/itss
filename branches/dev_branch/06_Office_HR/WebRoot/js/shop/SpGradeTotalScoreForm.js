@@ -19,7 +19,7 @@ SpGradeTotalScoreForm = Ext.extend(Ext.Window, {
 			height : 600,
 			width : 850,
 			autoScroll : true,
-			title : "授权PBC打分"
+			title : "评分结果"
 		});
 	},
 	initComponents : function() {
