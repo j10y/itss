@@ -152,8 +152,11 @@ public class RealExecutionAction extends BaseAction {
 		List<Map> list = this.realExecutionService.treeStatics(Long.valueOf(getRequest().getParameter("budgetId")));
 		
 		//add default budgetItem alarm logic on 2011-09-01 begin
-		for(Map map : list)
-			this.buildDefaultBudgetItem(map);
+		if(!Boolean.valueOf(getRequest().getParameter("isQuarter"))){
+			for(Map map : list)
+				this.buildDefaultBudgetItem(map);	
+		}
+		
 		//add default budgetItem alarm logic on 2011-09-01 end
 
 		StringBuffer buff = new StringBuffer();
