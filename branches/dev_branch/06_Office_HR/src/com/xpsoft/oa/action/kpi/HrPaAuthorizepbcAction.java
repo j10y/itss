@@ -79,7 +79,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
 		String sql4 = "select count(*) as total from hr_pa_kpipbc2user , app_user WHERE " +
 				"hr_pa_kpipbc2user.belongUser = app_user.userId and hr_pa_kpipbc2user.publishStatus in (0, 2) ";
-		sql4 += ("".equals(depIds)) ? " and app_user.depId in(0)) a" : "and app_user.depId in (" + depIds + ")";
+		sql4 += ("".equals(depIds)) ? " and app_user.depId in(0) " : "and app_user.depId in (" + depIds + ")";
 		sql4 += (fullname == null || "".equals(fullname)) ? "" : " and app_user.fullname like '%" + fullname + "%'";
 		List<Map<String, Object>> mapList4 = this.hrPaAuthorizepbcService.findDataList(sql4);
 		int total = Integer.parseInt(mapList2.get(0).get("total").toString()) + Integer.parseInt(mapList4.get(0).get("total").toString());
