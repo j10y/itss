@@ -1324,9 +1324,6 @@
 					</Function>
 				</Item>
 				<Item id="HrPromApplyStatusView" text="晋升申请状态">
-					<Function id="_ApplyQuery" text="查看">
-						<url>/hrm/listHrPromApply.do</url>
-					</Function>
 				</Item>
 				<Item id="HrPromAssessmentStatusView" text="晋升评估状态">
 					<Function id="_AssessmentQuery" text="查看">
@@ -1353,9 +1350,6 @@
 					</Function>
 				</Item>
 				<Item id="HrPostApplyStatusView" text="转正申请状态">
-					<Function id="_HrPostApplyQuery" text="查看">
-						<url>/hrm/listHrPostApply.do</url>
-					</Function>
 				</Item>
 				<Item id="HrPostAssessmentStatusView" text="试用期评估状态">
 					<Function id="_HrPostAssessmentQuery" text="查看">
@@ -1771,70 +1765,70 @@
 	</Items>
 	<Items id="Shop" text="门店绩效考核" isPublic="false">
 		<Items id="ShopPaManage" text="绩效管理" isPublic="false">
-			<Items id="SpPaPerformanceindexManage" text="考核指标管理">
+			<Items id="SpPaPerformanceindexManage" text="绩效考评库">
 				<Item id="DraftSpPaPerformanceindexView" text="草稿管理">
-					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+					<Function id="_DraftPaAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaPerformanceindex.do</url>
 						<url>/shop/saveSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaDel" text="删除" iconCls="menu-del">
+					<Function id="_DraftPaDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_DraftPaEdit" text="编辑" iconCls="menu-edit">
 						<url>/shop/editSpPaPerformanceindex.do</url>
 					</Function>
 				</Item>
-				<Item id="PublishSpPaPerformanceindexView" text="已发布指标">
-					<Function id="_PaAdd" text="添加" iconCls="menu-add">
+				<Item id="PublishSpPaPerformanceindexView" text="已发布考评库">
+					<Function id="_PublishPaAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaPerformanceindex.do</url>
 						<url>/shop/saveSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaDel" text="删除" iconCls="menu-del">
+					<Function id="_PublishPaDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaPerformanceindex.do</url>
 					</Function>
-					<Function id="_PaEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_PublishPaEdit" text="编辑" iconCls="menu-edit">
 						<url>/shop/editSpPaPerformanceindex.do</url>
 					</Function>
 				</Item>
 			</Items>
-			<Items id="SpPaKpipbcManage" text="PBC管理">
+			<Items id="SpPaKpipbcManage" text="考评项目管理">
 				<Item id="DraftSpPaKpipbcView" text="草稿管理">
-					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+					<Function id="_DraftPbcAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaKpipbc.do</url>
 						<url>/shop/saveSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+					<Function id="_DraftPbcDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_DraftPbcEdit" text="编辑" iconCls="menu-edit">
 						<url>/sp/editSpPaKpipbc.do</url>
 					</Function>
 				</Item>
-				<Item id="PublishSpPaKpipbcView" text="已发布PBC">
-					<Function id="_PbcAdd" text="添加" iconCls="menu-add">
+				<Item id="PublishSpPaKpipbcView" text="已发布项目">
+					<Function id="_PublishPbcAdd" text="添加" iconCls="menu-add">
 						<url>/shop/listSpPaKpipbc.do</url>
 						<url>/shop/saveSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcDel" text="删除" iconCls="menu-del">
+					<Function id="_PublishPbcDel" text="删除" iconCls="menu-del">
 						<url>/shop/multiDelSpPaKpipbc.do</url>
 					</Function>
-					<Function id="_PbcEdit" text="编辑" iconCls="menu-edit">
+					<Function id="_PublishPbcEdit" text="编辑" iconCls="menu-edit">
 						<url>/shop/editSpPaKpipbc.do</url>
 					</Function>
 				</Item>
 			</Items>
-			<Items id="SpGradePbcScore" text="PBC打分">
-				<Item id="SpPaKpiPBC2UserView" text="个人PBC授权">
+			<Items id="SpGradePbcScore" text="考核评分">
+				<Item id="SpPaKpiPBC2UserView" text="授权考评人员">
 				</Item>
-				<Item id="SpGradeAuthorizePbcView" text="授权PBC打分">
+				<Item id="SpGradeAuthorizePbcView" text="考评人员评分">
 				</Item>
-				<Item id="SpGradeTotalScoreView" text="PBC打分结果">
+				<Item id="SpGradeTotalScoreView" text="评分结果">
 				</Item>
-				<Item id="SpResultTotalScoreView" text="查看历史记录">
+				<Item id="SpResultTotalScoreView" text="历史记录">
 				</Item>
 			</Items>
-			<Items id="SpReport" text="门店绩效考核统计">
-				<Item id="SpReportView" text="门店绩效考核评分统计">
+			<Items id="SpReport" text="绩效考核统计">
+				<Item id="SpReportView" text="绩效考核评分统计">
 				</Item>
 			</Items>
 		</Items>
