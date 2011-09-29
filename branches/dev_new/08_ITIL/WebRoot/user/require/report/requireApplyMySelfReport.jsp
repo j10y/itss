@@ -5,6 +5,6 @@
 	<HEAD>
 	</HEAD>
 <body>
-<jsp:forward page="reportJsp/showReport.jsp?raq=/requireApplyMySelfReport.raq&itCode=${userInfo.itcode}"></jsp:forward>
+<jsp:forward page="../../../reportJsp/showReport.jsp?raq=/requireApplyMySelfReport.raq&itCode=${userInfo.itcode}"></jsp:forward>
 </body>	
 </HTML>
