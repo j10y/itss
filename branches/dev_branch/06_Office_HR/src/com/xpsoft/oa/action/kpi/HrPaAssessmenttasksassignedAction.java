@@ -228,7 +228,7 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 		boolean isFtp = new Boolean(String.valueOf(AppUtil.getSysConfig().get("isFtp")));
 		File file = null;
 		if(isFtp){
-			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"));
+			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.sysprofix"));
 			Ftp ftp = new Ftp(1, "fileUpload", String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.host")),
 					new Integer(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.port"))), "", "");
 			ftp.setUsername(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.user")));
@@ -236,8 +236,7 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 			ftp.setPath("");
 			
 			String fileP = filePath;
-			int index = defaultProfix.lastIndexOf("/");
-			fileP = fileP.substring(fileP.indexOf(defaultProfix) + index);
+			fileP = fileP.substring(fileP.indexOf(defaultProfix));
 			try {
 				file = ftp.retrieve(fileP);
 			} catch (IOException e) {
@@ -249,7 +248,6 @@ public class HrPaAssessmenttasksassignedAction extends BaseAction{
 			
 		}else{
 			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
-			int len = defaultProfix.length();
 			filePath = filePath.substring(filePath.indexOf(defaultProfix));
 			file = new File(this.getRequest().getRealPath("/") + filePath);
 		}

@@ -71,7 +71,7 @@ public class MutilMailAction extends BaseAction {
 				//modify by jack for FTP support at 2011-9-21 begin
 				if(!isFtp){
 					String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
-					int len = defaultProfix.length();
+					
 					String filePath = fileAttach.getFilePath().substring(fileAttach.getFilePath().indexOf(defaultProfix));
 					File file = new File(getSession().getServletContext().getRealPath(filePath));
 					fileName.add(fileAttach.getFileName());
@@ -84,7 +84,7 @@ public class MutilMailAction extends BaseAction {
 					ftp.setPath("");
 					
 					String fileP = fileAttach.getFilePath();
-					fileP = fileP.substring(fileP.indexOf(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"))) + 5);
+					fileP = fileP.substring(fileP.indexOf(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.sysprofix"))));
 					File file = ftp.retrieve(fileP);
 					
 					fileName.add(fileAttach.getFileName());

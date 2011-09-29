@@ -79,7 +79,8 @@
 /*  91 */     String[] ids = getRequest().getParameterValues("ids");
 /*  92 */     if (ids != null) {
 /*  93 */       for (String id : ids) {
-/*  94 */         this.archivesDocService.remove(new Long(id));
+					if(new Integer(id) > 0)
+/*  94 */         		this.archivesDocService.remove(new Long(id));
 /*     */       }
 /*     */     }
 /*     */ 

@@ -100,19 +100,17 @@ public class FileUploadServlet extends HttpServlet {
 						ftp.setPassword(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.passwd")));
 						ftp.setPath("");
 						
+						String defaultPath = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.sysprofix"));
 						String sysPath = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"));
-						if(sysPath != null && !"".equals(sysPath)){
-							sysPath = sysPath.substring(sysPath.lastIndexOf("/") + 1);
-						}
 						
-						relativeFullPath =  sysPath + "/" + this.fileCat + "/"
+						relativeFullPath =  defaultPath + "/" + this.fileCat + "/"
 								+ FileUtil.generateFilename(fileName);
 
 						String desFile = ftp.storeByFilename(relativeFullPath, fi.getInputStream());
 						relativeFullPath = "ftp://" + String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.host"))
 											+ ":"
 											+ String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.port"))
-											+ String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx")) + "/"
+											+ sysPath + "/"
 											+ desFile.substring(desFile.indexOf("/") + 1);
 					} else {
 						relativeFullPath = this.fileCat + "/" + FileUtil.generateFilename(fileName);
@@ -152,7 +150,7 @@ public class FileUploadServlet extends HttpServlet {
 					file.setFilePath(relativeFullPath);
 					file.setFileType(this.fileCat);
 					file.setNote(fi.getSize() + " bytes");
-					this.fileAttachService.save(file);
+					file = this.fileAttachService.save(file);
 				}
 
 				StringBuffer sb = new StringBuffer("{success:true");

@@ -40,8 +40,6 @@ public class Ftp extends BaseFtp {
 
 	public File retrieve(String name) throws IOException {
 		String path = System.getProperty("java.io.tmpdir");
-		String profix = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"));
-		profix = profix.substring(profix.lastIndexOf("/") + 1);
 		
 		String relativeFullPath = path + name;
 		int index = relativeFullPath.lastIndexOf("/");
