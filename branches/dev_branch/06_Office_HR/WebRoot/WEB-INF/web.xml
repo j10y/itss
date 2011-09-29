@@ -18,11 +18,15 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
 	
 	<servlet>
 		<servlet-name>ConnectorServlet</servlet-name>
 		<servlet-class>
-			net.fckeditor.connector.ConnectorServlet
+			com.xpsoft.core.command.ConnectorServlet
 		</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -174,10 +178,6 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
    
-     <filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
 	<!--增加报表图片映射路径，映射的是jasper文件所在的路径-->
 	<servlet-mapping>
 		<servlet-name>ImageServlet</servlet-name>

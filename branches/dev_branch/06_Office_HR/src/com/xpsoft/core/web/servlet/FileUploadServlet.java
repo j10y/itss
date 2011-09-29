@@ -100,17 +100,17 @@ public class FileUploadServlet extends HttpServlet {
 						ftp.setPassword(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.passwd")));
 						ftp.setPath("");
 						
-						String defaultPath = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.sysprofix"));
-						String sysPath = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"));
+						String savePath = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.sysprofix"));
+						String viewPath = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.pathpifx"));
 						
-						relativeFullPath =  defaultPath + "/" + this.fileCat + "/"
+						relativeFullPath =  savePath + "/" + this.fileCat + "/"
 								+ FileUtil.generateFilename(fileName);
 
 						String desFile = ftp.storeByFilename(relativeFullPath, fi.getInputStream());
 						relativeFullPath = "ftp://" + String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.host"))
 											+ ":"
 											+ String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.port"))
-											+ sysPath + "/"
+											+ viewPath + "/"
 											+ desFile.substring(desFile.indexOf("/") + 1);
 					} else {
 						relativeFullPath = this.fileCat + "/" + FileUtil.generateFilename(fileName);
