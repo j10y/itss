@@ -109,6 +109,12 @@
 								</c:forEach>
 							</tr>
 							<tr>
+								<td style="width:40px">&nbsp;</td>
+								<td colspan="6">
+									<font style="font-size:12px;">实际完成情况：</font><input style="width:500px;" type="text" name="${item.key['id']}_remark" value=""/>
+								</td>
+							</tr>
+							<tr>
 								<td colspan="7">&nbsp;</td>
 							</tr>
 						</c:otherwise>
