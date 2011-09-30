@@ -388,9 +388,6 @@
 			</Function>
 		</Item>
 		<Items id="PublicDocument" iconCls="menu-folder" text="公共文档">
-			<Item id="NewPublicDocumentForm" iconCls="menu-new-document"
-				text="新建公共文档">
-			</Item>
 			<Item id="DocFolderSharedView" iconCls="menu-public-fol" text="公共文件夹">
 				<Function id="_DocFolderSharedManage" text="公共文件夹管理"
 					iconCls="menu-manage">
@@ -577,6 +574,9 @@
 	</Items>
 	<Items id="Document" text="文档管理" iconCls="menu-document"
 		isPublic="false">
+		<Item id="NewPublicDocumentForm" iconCls="menu-new-document"
+			text="新建公共文档">
+		</Item>
 		<Item id="PersonalDocumentView" iconCls="menu-personal-doc" text="个人文档" />
 		<Item id="DocumentSharedView" iconCls="menu-folder-shared" text="共享文档" />
 		<Item id="DocFolderMoveForm" iconCls="menu-folder-go" text="文件夹转移" />
