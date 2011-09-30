@@ -24,6 +24,7 @@ App.importJs = {
 			__ctxPath + "/js/document/DocPrivilegeView.js" ],
 	FindPublicDocumentView : [
 			__ctxPath + "/js/document/FindPublicDocumentView.js",
+			__ctxPath + "/js/document/DocumentView.js",
 			__ctxPath + "/js/document/PublicDocumentView.js",
 			__ctxPath + "/js/document/PublicDocumentDetail.js",
 			__ctxPath + "/js/document/NewPublicDocumentForm.js",
