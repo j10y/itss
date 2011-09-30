@@ -111,7 +111,9 @@
 							<tr>
 								<td style="width:40px">&nbsp;</td>
 								<td colspan="6">
-									<font style="font-size:12px;">实际完成情况：</font><input style="width:500px;" type="text" name="${item.key['id']}_remark" value=""/>
+									<c:set var="str" scope="request" value="${item.key['id']}_remark"/>
+									<font style="font-size:12px;">实际完成情况：</font>
+									<input style="width:500px;" type="text" name="${item.key['id']}_remark" value='${item.key[str]}'/>
 								</td>
 							</tr>
 							<tr>
