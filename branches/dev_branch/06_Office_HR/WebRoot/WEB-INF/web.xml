@@ -23,6 +23,50 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 	
+	<!-- spring security delegatingFilterProxy -->
+	 <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    	 
+    <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>*.do</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/j_security_check</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/index.jsp</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/file-upload</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	<!-- 单点登出时用到
+ 	<filter>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	-->
+	<listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener>
+ 	<!-- single sign out -->
 	<servlet>
 		<servlet-name>ConnectorServlet</servlet-name>
 		<servlet-class>
@@ -109,10 +153,7 @@
   	<url-pattern>/jbpmImage</url-pattern>
   </servlet-mapping>
 
-  	<filter>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>  
+  	
 	<!--解决HTML报表中图片不显示的问题-->
 	<servlet>
 		<servlet-name>ImageServlet</servlet-name>
@@ -127,27 +168,7 @@
 	  <filter-name>lazyLoadingFilter</filter-name>
 	  <url-pattern>/*</url-pattern>
    </filter-mapping>
-
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>*.do</url-pattern>
-   </filter-mapping>
-   
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>/j_security_check</url-pattern>
-   </filter-mapping>
-   
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>/index.jsp</url-pattern>
-   </filter-mapping>
-   
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>/file-upload</url-pattern>
-   </filter-mapping>
-
+ 
 	<servlet-mapping>
         <servlet-name>SimpleCaptcha</servlet-name>
         <url-pattern>/CaptchaImg</url-pattern>
@@ -209,6 +230,11 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<error-page>
+		<error-code>401</error-code>
+		<location>/401.jsp</location>
+	</error-page>
 	
 	<error-page>
 		<error-code>403</error-code>

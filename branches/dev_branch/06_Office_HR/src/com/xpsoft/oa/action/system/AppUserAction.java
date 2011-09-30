@@ -52,6 +52,7 @@ import flexjson.DateTransformer;
 
 import flexjson.JSONSerializer;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.logging.Log;
+import org.apache.struts2.ServletActionContext;
 
 public class AppUserAction extends BaseAction {
 	/* 54 */private static Long SUPPER_MANAGER_ID = Long.valueOf(-1L);
@@ -136,10 +138,12 @@ public class AppUserAction extends BaseAction {
 		/* 103 */this.appUser = appUser;
 	}
 
-	public String getCurrent() {
-		/* 112 */AppUser currentUser = ContextUtil.getCurrentUser();
-		/* 113 */Department curDep = currentUser.getDepartment();
-		/* 114 */if (curDep == null) {
+	public String getCurrent() throws IOException {
+		
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		
+		Department curDep = currentUser.getDepartment();
+		if (curDep == null) {
 			/* 115 */curDep = new Department();
 			/* 116 */curDep.setDepId(Long.valueOf(0L));
 			/* 117 */curDep.setDepName(AppUtil.getCompanyName());

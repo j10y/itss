@@ -13,6 +13,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
@@ -39,16 +41,12 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		List list = findByHql(hql, params);
 		AppUser user = null;
 		if (list.size() != 0) {
-			if (!AppUtil.getSysConfig().get("limit").toString().equals("-1")) {
-				user = (AppUser) list.get(0);
-				String hql2 = "select count(*) from AppUser";
-				Object obj = findUnique(hql2, null);
-				//if (new Integer(obj.toString()).intValue() > 11) {
-				if (new Integer(obj.toString()).intValue() > new Integer(
-						AppUtil.getSysConfig().get("limit").toString())
-						.intValue()) {
-					user.setStatus(Short.valueOf((short) 0));
-				}
+			user = (AppUser) list.get(0);
+			String hql2 = "select count(*) from AppUser";
+			Object obj = findUnique(hql2, null);
+			//if (new Integer(obj.toString()).intValue() > 11) {
+			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
+				user.setStatus(Short.valueOf((short) 0));
 			}
 		}
 
@@ -61,15 +59,11 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		List list = findByHql(hql, params);
 		AppUser user = null;
 		if (list.size() != 0) {
-			if (!AppUtil.getSysConfig().get("limit").toString().equals("-1")) {
-				user = (AppUser) list.get(0);
-				String hql2 = "select count(*) from AppUser";
-				Object obj = findUnique(hql2, null);
-				if (new Integer(obj.toString()).intValue() > new Integer(
-						AppUtil.getSysConfig().get("limit").toString())
-						.intValue()) {
-					user.setStatus(Short.valueOf((short) 0));
-				}
+			user = (AppUser) list.get(0);
+			String hql2 = "select count(*) from AppUser";
+			Object obj = findUnique(hql2, null);
+			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
+				user.setStatus(Short.valueOf((short) 0));
 			}
 		}
 
@@ -82,185 +76,184 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		AppUser user = (AppUser) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				/* 64 */String hql = "from AppUser ap where ap.username=? and ap.delFlag = ?";
-				/* 65 */Query query = session.createQuery(hql);
-				/* 66 */query.setString(0, uName);
-				/* 67 */query.setShort(1, Constants.FLAG_UNDELETED.shortValue());
-				/* 68 */AppUser user = null;
+				String hql = "from AppUser ap where ap.username=? and ap.delFlag = ?";
+				Query query = session.createQuery(hql);
+				query.setString(0, uName);
+				query.setShort(1, Constants.FLAG_UNDELETED.shortValue());
+				AppUser user = null;
 				try {
-					/* 71 */user = (AppUser) query.uniqueResult();
+					user = (AppUser) query.uniqueResult();
 
-					/* 73 */if (user != null) {
-						/* 74 */Hibernate.initialize(user.getRoles());
-						/* 75 */Hibernate.initialize(user.getDepartment());
+					if (user != null) {
+						Hibernate.initialize(user.getRoles());
+						Hibernate.initialize(user.getDepartment());
 
-						/* 78 */Set roleSet = user.getRoles();
-						/* 79 */Iterator it = roleSet.iterator();
+						Set roleSet = user.getRoles();
+						Iterator it = roleSet.iterator();
 
-						/* 81 */while (it.hasNext()) {
-							/* 82 */AppRole role = (AppRole) it.next();
-							/* 83 */if (role.getRoleId().equals(
+						while (it.hasNext()) {
+							AppRole role = (AppRole) it.next();
+							if (role.getRoleId().equals(
 									AppRole.SUPER_ROLEID)) {
-								/* 84 */user.getRights().clear();
-								/* 85 */user.getRights().add("__ALL");
-								/* 86 */break;
+								user.getRights().clear();
+								user.getRights().add("__ALL");
+								break;
 							}
-							/* 88 */if (StringUtils.isNotEmpty(role.getRights())) {
-								/* 89 */String[] items = role.getRights()
+							if (StringUtils.isNotEmpty(role.getRights())) {
+								String[] items = role.getRights()
 										.split("[,]");
-								/* 90 */for (int i = 0; i < items.length; i++) {
-									/* 91 */if (!user.getRights().contains(
+								for (int i = 0; i < items.length; i++) {
+									if (!user.getRights().contains(
 											items[i])) {
-										/* 92 */user.getRights().add(items[i]);
+										user.getRights().add(items[i]);
 									}
 								}
 							}
 						}
 					}
 				} catch (Exception ex) {
-					/* 101 */AppUserDaoImpl.this.logger.warn("user:"
+					AppUserDaoImpl.this.logger.warn("user:"
 							+ uName +
-							/* 102 */" can't not loding rights:" +
-							/* 103 */ex.getMessage());
+							" can't not loding rights:" +
+							ex.getMessage());
 				}
-				/* 105 */return user;
+				
+				if(user == null)
+					throw new UsernameNotFoundException(uName + " 不存在，请申请该系统使用权限！");
+				return user;
 			}
 		});
-		/* 108 */String hql2 = "select count(*) from AppUser";
-		/* 109 */Object obj = findUnique(hql2, null);
-		if (!AppUtil.getSysConfig().get("limit").toString().equals("-1")) {
-			/* 110 *///if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString())) {
-			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil
-					.getSysConfig().get("limit").toString()).intValue()) {
-				/* 111 */user.setStatus(Short.valueOf((short) 0));
-			}
+		String hql2 = "select count(*) from AppUser";
+		Object obj = findUnique(hql2, null);
+		//if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString())) {
+		if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
+			user.setStatus(Short.valueOf((short) 0));
 		}
-		/* 113 */return user;
+		return user;
 	}
 
 	public List findByDepartment(String path, PagingBean pb) {
-		/* 121 */List list = new ArrayList();
-		/* 122 */String hql = new String();
-		/* 123 */if ("0.".equals(path)) {
-			/* 124 */hql = "from AppUser vo2 where vo2.delFlag = ?";
-			/* 125 */list.add(Constants.FLAG_UNDELETED);
+		List list = new ArrayList();
+		String hql = new String();
+		if ("0.".equals(path)) {
+			hql = "from AppUser vo2 where vo2.delFlag = ?";
+			list.add(Constants.FLAG_UNDELETED);
 		} else {
-			/* 127 */hql = "select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department and vo1.path like ? and vo2.delFlag = ?";
-			/* 128 */list.add(path + "%");
-			/* 129 */list.add(Constants.FLAG_UNDELETED);
+			hql = "select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department and vo1.path like ? and vo2.delFlag = ?";
+			list.add(path + "%");
+			list.add(Constants.FLAG_UNDELETED);
 		}
-		/* 131 */return findByHql(hql, list.toArray(), pb);
+		return findByHql(hql, list.toArray(), pb);
 	}
 
 	public List findByDepartment(Department department) {
-		/* 136 */String hql = "select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department and vo1.path like ? and vo2.delFlag = ?";
-		/* 137 */Object[] params = { department.getPath() + "%",
+		String hql = "select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department and vo1.path like ? and vo2.delFlag = ?";
+		Object[] params = { department.getPath() + "%",
 				Constants.FLAG_UNDELETED };
-		/* 138 */return findByHql(hql, params);
+		return findByHql(hql, params);
 	}
 
 	public List findByRole(Long roleId) {
-		/* 143 */String hql = "select vo from AppUser vo join vo.roles roles where roles.roleId=? and vo.delFlag = ?";
-		/* 144 */Object[] objs = { roleId, Constants.FLAG_UNDELETED };
-		/* 145 */return findByHql(hql, objs);
+		String hql = "select vo from AppUser vo join vo.roles roles where roles.roleId=? and vo.delFlag = ?";
+		Object[] objs = { roleId, Constants.FLAG_UNDELETED };
+		return findByHql(hql, objs);
 	}
 
 	public List findByRole(Long roleId, PagingBean pb) {
-		/* 150 */String hql = "select vo from AppUser vo join vo.roles roles where roles.roleId=? and vo.delFlag = ?";
-		/* 151 */Object[] objs = { roleId, Constants.FLAG_UNDELETED };
-		/* 152 */return findByHql(hql, objs, pb);
+		String hql = "select vo from AppUser vo join vo.roles roles where roles.roleId=? and vo.delFlag = ?";
+		Object[] objs = { roleId, Constants.FLAG_UNDELETED };
+		return findByHql(hql, objs, pb);
 	}
 
 	public List<AppUser> findByDepartment(String path) {
-		/* 157 */String hql = "select vo2 from Department vo1,AppUser vo2 where vo1.depId=vo2.depId and vo1.path like ? and vo2.delFlag =?";
-		/* 158 */Object[] params = { path + "%", Constants.FLAG_UNDELETED };
-		/* 159 */return findByHql(hql, params);
+		String hql = "select vo2 from Department vo1,AppUser vo2 where vo1.depId=vo2.depId and vo1.path like ? and vo2.delFlag =?";
+		Object[] params = { path + "%", Constants.FLAG_UNDELETED };
+		return findByHql(hql, params);
 	}
 
 	public List findByRoleId(Long roleId) {
-		/* 163 */String hql = "select vo from AppUser vo join vo.roles as roles where roles.roleId=? and vo.delFlag =?";
-		/* 164 */return findByHql(hql, new Object[] { roleId,
+		String hql = "select vo from AppUser vo join vo.roles as roles where roles.roleId=? and vo.delFlag =?";
+		return findByHql(hql, new Object[] { roleId,
 				Constants.FLAG_UNDELETED });
 	}
 
 	public List findByUserIds(Long[] userIds) {
-		/* 168 */String hql = "select vo from AppUser vo where vo.delFlag=? ";
+		String hql = "select vo from AppUser vo where vo.delFlag=? ";
 
-		/* 170 */if ((userIds == null) || (userIds.length == 0))
+		if ((userIds == null) || (userIds.length == 0))
 			return null;
-		/* 171 */hql = hql + " where vo.userId in (";
-		/* 172 */int i = 0;
-		/* 173 */for (Long userId : userIds) {
-			/* 174 */if (i++ > 0) {
-				/* 175 */hql = hql + ",";
+		hql = hql + " where vo.userId in (";
+		int i = 0;
+		for (Long userId : userIds) {
+			if (i++ > 0) {
+				hql = hql + ",";
 			}
-			/* 177 */hql = hql + "?";
+			hql = hql + "?";
 		}
-		/* 179 */hql = hql + " )";
+		hql = hql + " )";
 
-		/* 181 */return findByHql(hql, new Object[] { Constants.FLAG_UNDELETED,
+		return findByHql(hql, new Object[] { Constants.FLAG_UNDELETED,
 				userIds });
 	}
 
 	public List<AppUser> findSubAppUser(String path, Set<Long> userIds,
 			PagingBean pb) {
-		/* 186 */String st = "";
-		/* 187 */if (userIds.size() > 0) {
-			/* 188 */Iterator it = userIds.iterator();
-			/* 189 */StringBuffer sb = new StringBuffer();
-			/* 190 */while (it.hasNext()) {
-				/* 191 */sb.append(((Long) it.next()).toString() + ",");
+		String st = "";
+		if (userIds.size() > 0) {
+			Iterator it = userIds.iterator();
+			StringBuffer sb = new StringBuffer();
+			while (it.hasNext()) {
+				sb.append(((Long) it.next()).toString() + ",");
 			}
-			/* 193 */sb.deleteCharAt(sb.length() - 1);
-			/* 194 */st = sb.toString();
+			sb.deleteCharAt(sb.length() - 1);
+			st = sb.toString();
 		}
 
-		/* 197 */List list = new ArrayList();
-		/* 198 */StringBuffer hql = new StringBuffer();
-		/* 199 */if (path != null) {
-			/* 200 */hql
-					.append("select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department ");
-			/* 201 */hql.append(" and vo1.path like ?");
-			/* 202 */list.add(path + "%");
+		List list = new ArrayList();
+		StringBuffer hql = new StringBuffer();
+		if (path != null) {
+			hql.append("select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department ");
+			hql.append(" and vo1.path like ?");
+			list.add(path + "%");
 		} else {
-			/* 204 */hql.append("from AppUser vo2 where 1=1 ");
+			hql.append("from AppUser vo2 where 1=1 ");
 		}
-		/* 206 */if (st != "") {
-			/* 207 */hql.append(" and vo2.userId not in (" + st + ")");
+		if (st != "") {
+			hql.append(" and vo2.userId not in (" + st + ")");
 		}
-		/* 209 */hql.append(" and vo2.delFlag = ?");
-		/* 210 */list.add(Constants.FLAG_UNDELETED);
-		/* 211 */return findByHql(hql.toString(), list.toArray(), pb);
+		hql.append(" and vo2.delFlag = ?");
+		list.add(Constants.FLAG_UNDELETED);
+		return findByHql(hql.toString(), list.toArray(), pb);
 	}
 
 	public List<AppUser> findSubAppUserByRole(Long roleId, Set<Long> userIds,
 			PagingBean pb) {
-		/* 217 */String st = "";
-		/* 218 */if (userIds.size() > 0) {
-			/* 219 */Iterator it = userIds.iterator();
-			/* 220 */StringBuffer sb = new StringBuffer();
-			/* 221 */while (it.hasNext()) {
-				/* 222 */sb.append(((Long) it.next()).toString() + ",");
+		String st = "";
+		if (userIds.size() > 0) {
+			Iterator it = userIds.iterator();
+			StringBuffer sb = new StringBuffer();
+			while (it.hasNext()) {
+				sb.append(((Long) it.next()).toString() + ",");
 			}
-			/* 224 */sb.deleteCharAt(sb.length() - 1);
-			/* 225 */st = sb.toString();
+			sb.deleteCharAt(sb.length() - 1);
+			st = sb.toString();
 		}
-		/* 227 */StringBuffer hql = new StringBuffer(
+		StringBuffer hql = new StringBuffer(
 				"select vo from AppUser vo join vo.roles roles where roles.roleId=?");
-		/* 228 */List list = new ArrayList();
-		/* 229 */list.add(roleId);
-		/* 230 */if (st != "") {
-			/* 231 */hql.append(" and vo.userId not in (" + st + ")");
+		List list = new ArrayList();
+		list.add(roleId);
+		if (st != "") {
+			hql.append(" and vo.userId not in (" + st + ")");
 		}
-		/* 233 */hql.append(" and vo.delFlag =?");
-		/* 234 */list.add(Constants.FLAG_UNDELETED);
-		/* 235 */return findByHql(hql.toString(), list.toArray(), pb);
+		hql.append(" and vo.delFlag =?");
+		list.add(Constants.FLAG_UNDELETED);
+		return findByHql(hql.toString(), list.toArray(), pb);
 	}
 
 	public List<AppUser> findByDepId(Long depId) {
-		/* 240 */String hql = "from AppUser vo where vo.delFlag=0 and vo.department.depId=?";
-		/* 241 */Object[] objs = { depId };
-		/* 242 */return findByHql(hql, objs);
+		String hql = "from AppUser vo where vo.delFlag=0 and vo.department.depId=?";
+		Object[] objs = { depId };
+		return findByHql(hql, objs);
 	}
 	
 	public List<AppUser> findByDepIdAndPostName(Long depId, String postName) {

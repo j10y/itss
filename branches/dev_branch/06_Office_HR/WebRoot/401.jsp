@@ -25,11 +25,12 @@
 	        <tr>
 	          <td width="34%" align="right"><img src="<%=basePath%>/images/error.gif" width="128" height="128"></td>
 	          <td width="66%" valign="bottom" align="center">
-	          	<span class="STYLE10">访问被拒绝</span>
+	          	<span class="STYLE10">未被授权的用户</span>
 	          	<div style="text-align: left;line-height: 22px;">
-	            <font size="2">对不起，您的当前角色没有查看此页面的权限。请联系您的系统管理员，以获得相应的权限。点击这里返回主页。如果需要技术支持，点击这里发送邮件。</font>
+	            <font size="2">对不起，您还没有访问此系统的权限。请联系您的系统管理员，以获得相应的权限。点击
+	            		<a href="http://172.16.100.26">这里返回主页</a>。如果需要技术支持，点击<a href="mailto:xinxiyunwei@shopin.cn">这里发送邮件</a>。</font>
 		        </div>
-		        <a href="#" onclick="javascript:document.location.href='<%=basePath%>/j_spring_security_logout';">重 新 登 录</a> 
+		        <a href="#" onclick="javascript:document.location.href='<%=basePath%>/j_spring_security_logout';">退出登录</a> 
 		        <a href="#" onclick="javascript:history.back(-1);">后 退</a>
 	     	 </td>
 	      </table>

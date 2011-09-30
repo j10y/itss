@@ -159,7 +159,7 @@
 				</a>
 				<p style="font : bold 14px arial,tahoma,verdana,helvetica;">
 					欢迎您，<security:authentication property="principal.fullname"/>
-					<a href="<%=basePath%>/j_logout.do">注销</a>
+					<a href="<%=basePath%>/j_spring_security_logout">注销</a>
 					<nobr><span id="nowTime"></span><span id="nowTime2"></span></nobr>
 				</p>
 			</div>

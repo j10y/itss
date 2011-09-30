@@ -1,7 +1,10 @@
 package com.xpsoft.core.web.action;
 
 import com.xpsoft.core.engine.MailEngine;
+import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.paging.PagingBean;
+import com.xpsoft.oa.model.system.AppUser;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -137,6 +140,12 @@ public class BaseAction {
 		url = url.replace(".do", ".jsp");
 		url = "/pages" + url;
 
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		if(currentUser == null){
+			ServletActionContext.getResponse().sendRedirect(request.getServletPath() + ":" + request.getServerPort() + request.getServletContext().getContextPath());  
+			return null;  
+
+		}
 		if (this.logger.isInfoEnabled()) {
 			this.logger.info("forward url:" + url);
 		}

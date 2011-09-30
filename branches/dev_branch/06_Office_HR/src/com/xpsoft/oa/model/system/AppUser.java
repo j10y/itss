@@ -12,9 +12,10 @@ import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.userdetails.UserDetails;
 
 public class AppUser extends BaseModel implements UserDetails, User {
-	/* 31 */public static Long SYSTEM_USER = new Long(-1L);
+	
+	public static Long SYSTEM_USER = new Long(-1L);
 
-	/* 35 */public static Long SUPER_USER = new Long(1L);
+	public static Long SUPER_USER = new Long(1L);
 
 	@Expose
 	protected Long userId;
@@ -258,12 +259,11 @@ public class AppUser extends BaseModel implements UserDetails, User {
 	}
 
 	public GrantedAuthority[] getAuthorities() {
-		/* 408 */GrantedAuthority[] rights = (GrantedAuthority[]) this.roles
-				.toArray(new GrantedAuthority[this.roles.size() + 1]);
-		/* 409 */rights[(rights.length - 1)] = new GrantedAuthorityImpl(
-				"ROLE_PUBLIC");
-		/* 410 */return rights;
+		GrantedAuthority[] rights = (GrantedAuthority[]) this.roles.toArray(new GrantedAuthority[this.roles.size() + 1]);
+		rights[(rights.length - 1)] = new GrantedAuthorityImpl("ROLE_PUBLIC");
+		return rights;
 	}
+	
 
 	public boolean isAccountNonExpired() {
 		/* 414 */return true;

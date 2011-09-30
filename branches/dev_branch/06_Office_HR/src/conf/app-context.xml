@@ -8,7 +8,7 @@
    <import resource="app-dao.xml"/>
    <import resource="app-service.xml"/>
    <import resource="app-action.xml"/>
-   <import resource="app-security.xml"/>
+   <import resource="app-security-cas.xml"/>
    <import resource="app-jbpm.xml"/>
    <import resource="app-scheduling.xml"/>
    <!--
