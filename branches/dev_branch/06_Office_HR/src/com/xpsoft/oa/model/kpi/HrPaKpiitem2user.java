@@ -9,6 +9,7 @@ public class HrPaKpiitem2user extends BaseModel {
 	protected Double weight;
 	protected Double result;
 	protected Double coefficient;
+	protected String remark;//实际完成情况
 	
 	public HrPaKpiitem2user() {}
 
@@ -58,6 +59,14 @@ public class HrPaKpiitem2user extends BaseModel {
 
 	public void setCoefficient(Double coefficient) {
 		this.coefficient = coefficient;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

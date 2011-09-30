@@ -7,6 +7,10 @@ public class HrPaDatadictionary extends BaseModel {
 	protected String name;
 	protected Long parentId;
 	
+	public final static Long BUSSINESS_GOAL = 5l;//业务目标
+	public final static Long PEOPLE_MANAGEMENT_GOAL = 6l;//员工管理目标
+	public final static Long INDIVIDUAL_DEVELOPMENT_GOAL = 14l;//个人发展目标
+	
 	public HrPaDatadictionary(){}
 	
 	public HrPaDatadictionary(long id) {

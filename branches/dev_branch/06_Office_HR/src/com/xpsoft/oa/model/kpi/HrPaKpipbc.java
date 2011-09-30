@@ -21,6 +21,7 @@ public class HrPaKpipbc extends BaseModel {
 	protected AppUser modifyPerson;
 	protected long fromPbc;
 	protected Double coefficient;
+	protected AppUser lineManager;//直接上级
 	
 	public HrPaKpipbc(){}
 
@@ -126,5 +127,13 @@ public class HrPaKpipbc extends BaseModel {
 
 	public void setCoefficient(Double coefficient) {
 		this.coefficient = coefficient;
+	}
+
+	public AppUser getLineManager() {
+		return lineManager;
+	}
+
+	public void setLineManager(AppUser lineManager) {
+		this.lineManager = lineManager;
 	}
 }

@@ -8,6 +8,7 @@ public class HrPaAuthpbccitem extends BaseModel {
 	protected Long akpiItem2uId;
 	protected Double result;
 	protected Double weight;
+	protected String remark;//实际完成情况
 	
 	public HrPaAuthpbccitem(){}
 
@@ -49,6 +50,14 @@ public class HrPaAuthpbccitem extends BaseModel {
 
 	public void setWeight(Double weight) {
 		this.weight = weight;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

@@ -103,5 +103,6 @@
             not-null="false"
             unique="false"
         />
+        <many-to-one name="lineManager" not-null="false" class="com.xpsoft.oa.model.system.AppUser" column="lineManager"></many-to-one>
     </class>
 </hibernate-mapping>

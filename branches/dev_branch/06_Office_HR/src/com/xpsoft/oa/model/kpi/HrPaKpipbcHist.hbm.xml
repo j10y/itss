@@ -153,5 +153,16 @@
             not-null="false"
             unique="false"
         />
+        <property
+        	name="lineManager"
+        	type="java.lang.Long"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="lineManager"
+        	length="19"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>

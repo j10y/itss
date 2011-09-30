@@ -18,6 +18,7 @@ public class HrPaKpiPBC2UserCmp extends BaseModel {
 	protected AppUser modifyPerson;
 	protected Date modifyDate;
 	protected Double coefficient;
+	protected AppUser lineManager;
 	
 	public HrPaKpiPBC2UserCmp() {}
 
@@ -115,5 +116,13 @@ public class HrPaKpiPBC2UserCmp extends BaseModel {
 
 	public void setCoefficient(Double coefficient) {
 		this.coefficient = coefficient;
+	}
+
+	public AppUser getLineManager() {
+		return lineManager;
+	}
+
+	public void setLineManager(AppUser lineManager) {
+		this.lineManager = lineManager;
 	}
 }

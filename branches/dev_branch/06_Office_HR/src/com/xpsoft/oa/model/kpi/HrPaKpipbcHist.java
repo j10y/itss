@@ -18,6 +18,7 @@ public class HrPaKpipbcHist extends BaseModel {
 	protected long modifyPerson;
 	protected long fromPbc;
 	protected Double coefficient;
+	protected Long lineManager;
 	
 	public HrPaKpipbcHist() {}
 
@@ -123,5 +124,13 @@ public class HrPaKpipbcHist extends BaseModel {
 
 	public void setCoefficient(Double coefficient) {
 		this.coefficient = coefficient;
+	}
+
+	public Long getLineManager() {
+		return lineManager;
+	}
+
+	public void setLineManager(Long lineManager) {
+		this.lineManager = lineManager;
 	}
 }
