@@ -311,18 +311,31 @@ public class BudgetAction extends BaseAction {
 				this.budgetItemService.save(budgetItem);
 				
 				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 begin
-//				Department department = budgetItem.getBudget().getBelongDept();
-//				Map filterMap = new HashMap();
-//				filterMap.put("Q_deleteFlag_N_EQ", "0");
-//				filterMap.put("Q_department.depId_L_EQ", department.getDepId()
-//						.toString());
-//				QueryFilter filter = new QueryFilter(filterMap);
-//				List<JobSalaryRelation> list = this.jobSalaryRelationService
-//						.getAll(filter);
-//				BigDecimal totalMoney = new BigDecimal(0);
-//				for (JobSalaryRelation relation : list) {
-//					totalMoney = totalMoney.add(relation.getTotalMoney());
-//				}
+				Department department = budgetItem.getBudget().getBelongDept();
+				Map filterMap1 = new HashMap();
+				filterMap.put("Q_deleteFlag_N_EQ", "0");
+				filterMap.put("Q_department.depId_L_EQ", department.getDepId()
+						.toString());
+				QueryFilter filter1 = new QueryFilter(filterMap1);
+				List<JobSalaryRelation> list1 = this.jobSalaryRelationService
+						.getAll(filter1);
+				int count=0;
+				for (JobSalaryRelation relation : list1) {
+					BudgetItem item = new BudgetItem();//从岗位生成
+					item.setBelongItem(null);//第二级的根据岗位获取的没有
+					item.setBudget(budgetItem.getBudget());
+					item.setIsDefault(0);
+					item.setParent(budgetItem);
+					item.setName(relation.getJob().getJobName() + " -- " + relation.getStandSalary().getStandardName());
+					item.setValue(relation.getStandSalary().getTotalMoney().doubleValue()
+							*(relation.getOnEmpCount() == null ? 0 : relation.getOnEmpCount())*3);//默认三个月*在编制人数*工资总金额
+					item.setThreshold(budgetItem.getThreshold());
+					item.setDeleteFlag(0);
+					count++;
+					item.setKey(budgetItem.getKey() + "_" + count);
+					item.setCode(budgetItem.getCode() + "." + count);
+					this.budgetItemService.save(item);
+				}
 				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 end
 				
 				//add by awen for add default realExecution on 2011-09-07 begin

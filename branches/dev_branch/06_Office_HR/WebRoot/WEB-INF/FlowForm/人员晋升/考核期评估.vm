@@ -137,29 +137,38 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 							method : 'POST',
 							waitMsg : '正在提交数据...',
 							success : function(fp, action) {
-								Ext.ux.Toast.msg('操作信息', '成功保存信息！');	
-								formPanel.getForm().submit({
-									url:__ctxPath+ "/flow/nextProcessActivity.do",
-									method:'post',
-									waitMsg:'正在提交处理，请稍等',
-									params:{taskId:taskId,signalName:signalName,activityName:activityName},
-									success : function(fp, action) {
-										Ext.ux.Toast.msg('操作信息','成功保存！');
-										AppUtil.removeTab('ProcessForm'+taskId);
-										var myTaskView=Ext.getCmp("MyTaskGrid");
-										var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
-										if(appHomeTaskGrid!=null){
-											appHomeTaskGrid.getStore().reload();
+								Ext.ux.Toast.msg('操作信息', '成功保存信息！');
+								//选择审批人
+								UserSelector.getView(
+									function(id, name) {
+										if(id!=""){
+											formPanel.getForm().submit({
+												url:__ctxPath+ "/flow/nextProcessActivity.do",
+												method:'post',
+												waitMsg:'正在提交处理，请稍等',
+												params:{taskId:taskId,signalName:signalName,activityName:activityName,flowAssignId : id},
+												success : function(fp, action) {
+													Ext.ux.Toast.msg('操作信息','成功保存！');
+													AppUtil.removeTab('ProcessForm'+taskId);
+													var myTaskView=Ext.getCmp("MyTaskGrid");
+													var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+													if(appHomeTaskGrid!=null){
+														appHomeTaskGrid.getStore().reload();
+													}
+													if(myTaskView!=null){
+														//AppUtil.activateTab(myTaskView);
+														myTaskView.getStore().reload();
+													}
+												},
+												failure : function(fp, action) {
+													Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+												}
+											});
+										}else{
+											Ext.ux.Toast.msg('操作信息','请选择领导！');
 										}
-										if(myTaskView!=null){
-											//AppUtil.activateTab(myTaskView);
-											myTaskView.getStore().reload();
-										}
-									},
-									failure : function(fp, action) {
-										Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
-									}
-								});
+								}).show();								
+								
 							},
 							failure : function(fp, action) {
 								Ext.MessageBox.show({

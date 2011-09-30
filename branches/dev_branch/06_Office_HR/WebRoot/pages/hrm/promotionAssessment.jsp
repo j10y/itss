@@ -212,6 +212,7 @@
 					name : "hrPromAssessment.postRank",
 					renderTo : "postRank",
 					triggerAction : "all",
+					readOnly : true,
 					store : [
 						["1级","1级"],
 						["2级","2级"],
@@ -245,6 +246,7 @@
 					valueField : "standardName",
 					displayField : "standardName",
 					triggerAction : "all",
+					readOnly : true,
 					store : new Ext.data.JsonStore({
 						remoteSort : true,
 						fields : [
@@ -262,6 +264,7 @@
 					}),
 					listeners : {
 						focus : function() {
+						return;
 							Ext.Ajax.request({
 								url : "${pageContext.request.contextPath}/hrm/comboSalaryJobSalaryRelation.do",
 								method : "post",
@@ -286,6 +289,7 @@
 					width:120,
 					disable : true,
 					//editable : false,
+					readOnly : true,
 					renderTo : "appointDate"
 				});
 				if("${hrPromAssessment.id}" != 0) {
@@ -451,7 +455,7 @@
 				</tr>
 				<tr>
 					<td colspan="6" style="height:150px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea name="hrPromAssessment.promIntRecord" style="width:100%;*width:690px;height:100%;*height:140px;border:none;overflow-y:hidden;">${hrPromAssessment.promIntRecord}</textarea>
+						<textarea disabled="disabled" name="hrPromAssessment.promIntRecord" style="width:100%;*width:690px;height:100%;*height:140px;border:none;overflow-y:hidden;">${hrPromAssessment.promIntRecord}</textarea>
 					</td>
 				</tr>
 				<tr>

@@ -143,7 +143,7 @@ BudgetQuarterFormView = Ext.extend(Ext.Panel, {
 			stripeRows : true,
 			tbar : this.topbar,
 			//store : this.store,
-			dataUrl: __ctxPath + "/budget/treeRealExecution.do?budgetId=" + this.budgetId,
+			dataUrl: __ctxPath + "/budget/treeRealExecution.do?isQuarter=true&budgetId=" + this.budgetId,
 			trackMouseOver : true,
 			disableSelection : false,
 			loadMask : true,
