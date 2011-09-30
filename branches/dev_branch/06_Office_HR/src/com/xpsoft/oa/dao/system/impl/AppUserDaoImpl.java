@@ -39,12 +39,16 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		List list = findByHql(hql, params);
 		AppUser user = null;
 		if (list.size() != 0) {
-			user = (AppUser) list.get(0);
-			String hql2 = "select count(*) from AppUser";
-			Object obj = findUnique(hql2, null);
-			//if (new Integer(obj.toString()).intValue() > 11) {
-			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
-				user.setStatus(Short.valueOf((short) 0));
+			if (!AppUtil.getSysConfig().get("limit").toString().equals("-1")) {
+				user = (AppUser) list.get(0);
+				String hql2 = "select count(*) from AppUser";
+				Object obj = findUnique(hql2, null);
+				//if (new Integer(obj.toString()).intValue() > 11) {
+				if (new Integer(obj.toString()).intValue() > new Integer(
+						AppUtil.getSysConfig().get("limit").toString())
+						.intValue()) {
+					user.setStatus(Short.valueOf((short) 0));
+				}
 			}
 		}
 
@@ -57,11 +61,15 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		List list = findByHql(hql, params);
 		AppUser user = null;
 		if (list.size() != 0) {
-			user = (AppUser) list.get(0);
-			String hql2 = "select count(*) from AppUser";
-			Object obj = findUnique(hql2, null);
-			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
-				user.setStatus(Short.valueOf((short) 0));
+			if (!AppUtil.getSysConfig().get("limit").toString().equals("-1")) {
+				user = (AppUser) list.get(0);
+				String hql2 = "select count(*) from AppUser";
+				Object obj = findUnique(hql2, null);
+				if (new Integer(obj.toString()).intValue() > new Integer(
+						AppUtil.getSysConfig().get("limit").toString())
+						.intValue()) {
+					user.setStatus(Short.valueOf((short) 0));
+				}
 			}
 		}
 
@@ -120,9 +128,12 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		});
 		/* 108 */String hql2 = "select count(*) from AppUser";
 		/* 109 */Object obj = findUnique(hql2, null);
-		/* 110 *///if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString())) {
-		if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString()).intValue()) {
-			/* 111 */user.setStatus(Short.valueOf((short) 0));
+		if (!AppUtil.getSysConfig().get("limit").toString().equals("-1")) {
+			/* 110 *///if (new Integer(obj.toString()).intValue() > new Integer(AppUtil.getSysConfig().get("limit").toString())) {
+			if (new Integer(obj.toString()).intValue() > new Integer(AppUtil
+					.getSysConfig().get("limit").toString()).intValue()) {
+				/* 111 */user.setStatus(Short.valueOf((short) 0));
+			}
 		}
 		/* 113 */return user;
 	}
