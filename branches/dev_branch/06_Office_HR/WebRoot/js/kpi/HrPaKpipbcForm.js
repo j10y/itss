@@ -50,7 +50,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 		});
 		this.formPanel = new Ext.FormPanel({
 			region : "north",
-			height : 100,
+			height : 120,
 			id : "HrPaKpipbcForm",
 			bodyStyle : "padding:20px 20px 20px 20px",
 			frame : false,
@@ -83,6 +83,12 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 				}, {
 					name : "hrPaKpipbc.createPerson.userId",
 					mapping : "createPerson.userId"
+				}, {
+					name : "hrPaKpipbc.lineManager.userId",
+					mapping : "lineManager.userId"
+				}, {
+					name : "hrPaKpipbc.lineManager.fullname",
+					mapping : "lineManager.fullname"
 				}
 			]),
 			items : [
@@ -135,7 +141,43 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 									allowBlank : false,
 									blankText : "PBC名称不能为空！"
 								},
-								departments
+								departments,
+								{
+									xtype : "container",
+									border : false,
+									layout : "column",
+									items : [
+										{
+											fieldLabel : "直接上级ID",
+											name : "hrPaKpipbc.lineManager.userId",
+											id : "lineManager.userId",
+											xtype : "hidden"
+										}, {
+											xtype : "label",
+											style : "margin:0 53px 0 0",
+											text : "直接上级:"
+										}, {
+											name : "hrPaKpipbc.lineManager.fullname",
+											id : "lineManager.fullname",
+											xtype : "textfield",
+											width : 170,
+											allowBlank : false,
+											blankText : "直接上级不能为空！",
+											readOnly : true
+										}, {
+											xtype : "button",
+											id : "lineManagerSelect",
+											text : "选择上级",
+											iconCls : "btn-mail_recipient",
+											handler : function() {
+												UserSelector.getView(function(d, c) {
+													Ext.getCmp("lineManager.fullname").setValue(c);
+													Ext.getCmp("lineManager.userId").setValue(d);
+												}, true).show();
+											}
+										}
+									]
+								}
 							]
 						}, {
 							layout : "form",
