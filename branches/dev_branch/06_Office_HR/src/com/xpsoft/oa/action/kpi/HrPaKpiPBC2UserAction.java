@@ -2,21 +2,27 @@ package com.xpsoft.oa.action.kpi;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.collections.map.LinkedMap;
 
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
 import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
+import com.xpsoft.oa.model.kpi.HrPaPerformanceindexscore;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserCmpService;
 import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
 import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
+import com.xpsoft.oa.service.kpi.HrPaPerformanceindexscoreService;
 
 import flexjson.JSONSerializer;
 
@@ -148,23 +154,92 @@ public class HrPaKpiPBC2UserAction extends BaseAction {
 		
 		return "success";
 	}
+	
 	public String getView(){
-		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
-		HrPaKpiPBC2User hrPaKpiPBC2User = this.hrPaKpiPBC2UserService.get(this.id);
-		String sql = "select b.paName, a.result, a.weight from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
-		"a.pbcId = " + hrPaKpiPBC2User.getId() + " and a.piId = b.id";
-		List<Map<String, Object>> list3 = hrPaKpiitem2userService.findDataList(sql);
-		String content = "<table class=\"table-info\" cellpadding=\"0\" cellspacing=\"1\" width=\"98%\" align=\"center\">";
-		content += "<tr><td>考核指标名称</td><td>得分</td><td>权重</td></tr>";
-		for(int j = 0; j < list3.size(); j++) {
-			content += "<tr><td>" + list3.get(j).get("paName") + "</td><td>" + list3.get(j).get("result") + "</td><td>" + 
-					list3.get(j).get("weight") + "</td></tr>";
+		HrPaPerformanceindexscoreService hrPaPerformanceindexscoreService = (HrPaPerformanceindexscoreService)AppUtil.getBean("hrPaPerformanceindexscoreService");
+		//取得PBC基础信息
+		this.hrPaKpiPBC2User = this.hrPaKpiPBC2UserService.get(this.id);
+		String sql = "select depName, position, depName, standardName from emp_profile where userId = " + this.hrPaKpiPBC2User.getBelongUser().getUserId();
+		List<Map<String, Object>> mapList = this.hrPaKpiPBC2UserService.findDataList(sql);
+		if(mapList.size() > 0) {
+			this.getRequest().setAttribute("fullname", this.hrPaKpiPBC2User.getBelongUser().getFullname());
+			this.getRequest().setAttribute("position", mapList.get(0).get("position"));
+			this.getRequest().setAttribute("depName", mapList.get(0).get("depName"));
+			String[] bandGrade = mapList.get(0).get("standardName").toString().trim().split("_");
+			if(bandGrade.length == 3) {
+				this.getRequest().setAttribute("bandGrade", "Band：" + bandGrade[1] + "档：" + bandGrade[2]);
+			}
+			this.getRequest().setAttribute("lineManager", this.hrPaKpiPBC2User.getLineManager().getFullname());
+			this.getRequest().setAttribute("createDate", this.hrPaKpiPBC2User.getCreateDate());
+			this.getRequest().setAttribute("pbcResult", this.hrPaKpiPBC2User.getTotalScore());
 		}
-		content +="</table>";
-		getRequest().setAttribute("content", content);
-		getRequest().setAttribute("totalScore", hrPaKpiPBC2User.getTotalScore());
-		getRequest().setAttribute("pbcName", hrPaKpiPBC2User.getPbcName());
-		getRequest().setAttribute("user", hrPaKpiPBC2User.getBelongUser().getFullname());
+		//取得业务目标考核项信息
+		String sql2 = "select a.id, a.piId, b.paName, b.paDesc, a.result, a.weight, a.remark from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+		"a.pbcId = " + this.hrPaKpiPBC2User.getId() + " and a.piId = b.id and b.paType = " + HrPaDatadictionary.BUSSINESS_GOAL;
+		List<Map<String, Object>> mapList2 = this.hrPaKpiPBC2UserService.findDataList(sql2);
+		Double busResult = 0d;
+		if(mapList2.size() > 0) {
+			for(int i = 0; i < mapList2.size(); i++) {
+				busResult += Double.parseDouble(mapList2.get(i).get("result").toString()) * 
+						Double.parseDouble(mapList2.get(i).get("weight").toString());
+				Map<String, String> map2 = new HashMap<String, String>();
+				map2.put("Q_pi.id_L_EQ", mapList2.get(i).get("piId").toString());
+				QueryFilter filter2 = new QueryFilter(map2);
+				List<HrPaPerformanceindexscore> list2 = hrPaPerformanceindexscoreService.getAll(filter2);
+				Map<String, String> pisMap2 = new LinkedMap();
+				for(int j = 0; j < list2.size(); j++) {
+					pisMap2.put(list2.get(j).getPisScore().toString(), list2.get(j).getPisDesc());
+				}
+				mapList2.get(i).put("busPisMap", pisMap2);
+			}
+		}
+		this.getRequest().setAttribute("busGoalList", mapList2);
+		this.getRequest().setAttribute("busResult", busResult);
+		//取得员工管理目标考核项信息
+		String sql3 = "select a.id, a.piId, b.paName, b.paDesc, a.result, a.weight, a.remark from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+		"a.pbcId = " + this.hrPaKpiPBC2User.getId() + " and a.piId = b.id and b.paType = " + HrPaDatadictionary.PEOPLE_MANAGEMENT_GOAL;
+		List<Map<String, Object>> mapList3 = this.hrPaKpiPBC2UserService.findDataList(sql3);
+		Double pmResult = 0d;
+		if(mapList3.size() > 0) {
+			for(int i = 0; i < mapList3.size(); i++) {
+				pmResult += Double.parseDouble(mapList3.get(i).get("result").toString()) * 
+						Double.parseDouble(mapList3.get(i).get("weight").toString());
+				Map<String, String> map3 = new HashMap<String, String>();
+				map3.put("Q_pi.id_L_EQ", mapList3.get(i).get("piId").toString());
+				QueryFilter filter3 = new QueryFilter(map3);
+				List<HrPaPerformanceindexscore> list3 = hrPaPerformanceindexscoreService.getAll(filter3);
+				Map<String, String> pisMap3 = new LinkedMap();
+				for(int j = 0; j < list3.size(); j++) {
+					pisMap3.put(list3.get(j).getPisScore().toString(), list3.get(j).getPisDesc());
+				}
+				mapList3.get(i).put("pmPisMap", pisMap3);
+			}
+		}
+		this.getRequest().setAttribute("pmGoalList", mapList3);
+		this.getRequest().setAttribute("pmResult", pmResult);
+		//取得个人发展目标考核项信息
+		String sql4 = "select a.id, a.piId, b.paName, b.paDesc, a.result, a.weight, a.remark from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+		"a.pbcId = " + this.hrPaKpiPBC2User.getId() + " and a.piId = b.id and b.paType = " + HrPaDatadictionary.INDIVIDUAL_DEVELOPMENT_GOAL;
+		List<Map<String, Object>> mapList4 = this.hrPaKpiPBC2UserService.findDataList(sql4);
+		Double idResult = 0d;
+		if(mapList4.size() > 0) {
+			for(int i = 0; i < mapList4.size(); i++) {
+				idResult += Double.parseDouble(mapList4.get(i).get("result").toString()) * 
+						Double.parseDouble(mapList4.get(i).get("weight").toString());
+				Map<String, String> map4 = new HashMap<String, String>();
+				map4.put("Q_pi.id_L_EQ", mapList4.get(i).get("piId").toString());
+				QueryFilter filter4 = new QueryFilter(map4);
+				List<HrPaPerformanceindexscore> list4 = hrPaPerformanceindexscoreService.getAll(filter4);
+				Map<String, String> pisMap4 = new LinkedMap();
+				for(int j = 0; j < list4.size(); j++) {
+					pisMap4.put(list4.get(j).getPisScore().toString(), list4.get(j).getPisDesc());
+				}
+				mapList4.get(i).put("idPisMap", pisMap4);
+			}
+		}
+		this.getRequest().setAttribute("idGoalList", mapList4);
+		this.getRequest().setAttribute("idResult", idResult);
+		
 		return "view";
 	}
 	

@@ -217,6 +217,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				pbcOldCopy.setModifyPerson(currentUser);
 				pbcOldCopy.setFromPbc(pbcOld.getId());
 				pbcOldCopy.setCoefficient(new Double(0));
+				pbcOldCopy.setLineManager(pbcOld.getLineManager());
 				//插入数据库
 				HrPaKpipbc pbcNew = this.hrPaKpipbcService.save(pbcOldCopy);
 				//保存PBC模板关联考核项
@@ -249,6 +250,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				pbcOld.setModifyPerson(currentUser);
 				pbcOld.setTotalScore(this.hrPaKpipbc.getTotalScore());
 				pbcOld.setCoefficient(new Double(0));
+				pbcOld.setLineManager(this.hrPaKpipbc.getLineManager());
 				//插入数据库
 				HrPaKpipbc pbcNew = this.hrPaKpipbcService.save(pbcOld);
 				//删除PBC模板关联的考核项
@@ -323,6 +325,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				hrPaKpipbcHist.setModifyDate(currentDate);
 				hrPaKpipbcHist.setModifyPerson(currentUser.getUserId());
 				hrPaKpipbcHist.setCoefficient(fromPbc.getCoefficient());
+				hrPaKpipbcHist.setLineManager(fromPbc.getLineManager().getUserId());
 				//插入数据库
 				HrPaKpipbcHist pbcHist = hrPaKpipbcHistService.save(hrPaKpipbcHist);
 				//将原PBC模板关联的考核项复制到历史表里边
@@ -352,6 +355,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				fromPbc.setModifyDate(currentDate);
 				fromPbc.setModifyPerson(currentUser);
 				fromPbc.setCoefficient(pbcToPublish.getCoefficient());
+				fromPbc.setLineManager(pbcToPublish.getLineManager());
 				//插入数据库
 				HrPaKpipbc pbcAfterPublish = this.hrPaKpipbcService.save(fromPbc);
 				//同步PBC模板关联的考核项
@@ -446,6 +450,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				hrPaKpiPBC2User.setModifyDate(currentDate);
 				hrPaKpiPBC2User.setModifyPerson(currentUser);
 				hrPaKpiPBC2User.setCoefficient(new Double(0));
+				hrPaKpiPBC2User.setLineManager(pbc.getLineManager());
 				//插入数据库
 				hrPaKpiPBC2User = hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
 				
@@ -457,6 +462,7 @@ public class HrPaKpipbcAction extends BaseAction{
 					hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
 					hrPaKpiitem2user.setResult(new Double(0));//等待计算时设置结果
 					hrPaKpiitem2user.setCoefficient(new Double(0));//等待计算时设置结果
+					hrPaKpiitem2user.setRemark("");
 					//插入数据库
 					hrPaKpiitem2userService.save(hrPaKpiitem2user);
 				}
@@ -521,6 +527,7 @@ public class HrPaKpipbcAction extends BaseAction{
 					itemNew.setWeight(hrPaKpiitemList.get(n).getWeight());//直接将岗位PBC模板权值复制给个人
 					itemNew.setResult(new Double(0));//等待计算时设置结果
 					itemNew.setCoefficient(new Double(0));//等待计算时设置结果
+					itemNew.setRemark("");
 					//插入数据库
 					hrPaKpiitem2userService.save(itemNew);
 				}

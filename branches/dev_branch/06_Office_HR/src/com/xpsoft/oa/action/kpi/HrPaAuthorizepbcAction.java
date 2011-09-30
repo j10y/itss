@@ -123,11 +123,13 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 		String pbcId = this.getRequest().getParameter("pbcId");
 		Date fdOfMonth = DateUtil.getFirstDayOfMonth(new Date());
 		if("0".equals(authId)) {
-			String sql2 = "select a.id, a.weight, a.result, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+			String sql2 = "select a.id, a.weight, a.result, a.remark, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
 					"a.pbcId = " + pbcId + " and a.piId = b.id order by a.id";
 			List<Map<String, Object>> mapList2 = this.hrPaAuthorizepbcService.findDataList(sql2);
 			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			for(int i = 0; i < mapList2.size(); i++) {
+				//载入实际完成情况
+				mapList2.get(i).put(mapList2.get(i).get("id") + "_remark", mapList2.get(i).get("remark"));
 				//判断是否门店打分考核项
 				String sql4 = "select id from sp_pa_kpipbc2user where " +
 						"createDate >= '" + DateUtil.convertDateToString(fdOfMonth) + "' and fromPi = " + mapList2.get(i).get("id");
@@ -160,11 +162,13 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			this.getRequest().setAttribute("isDeptUser", "true");
 		} else {
 			//拼装SQL语句取出id, weight和关联的paName
-			String sql = "select a.id, a.weight, a.result, c.id as piId, c.paName, c.paMode from hr_pa_authpbcitem a, hr_pa_kpiitem2user b, " +
+			String sql = "select a.id, a.weight, a.result, a.remark, c.id as piId, c.paName, c.paMode from hr_pa_authpbcitem a, hr_pa_kpiitem2user b, " +
 					"hr_pa_performanceindex c where a.apbcId = " + authId + " and a.akpiItem2uId = b.id and b.piId = c.id";
 			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			List<Map<String, Object>> authorItemList = this.hrPaAuthorizepbcService.findDataList(sql);
 			for(int i = 0; i < authorItemList.size(); i++) {
+				//载入实际完成情况
+				authorItemList.get(i).put(authorItemList.get(i).get("id") + "_remark", authorItemList.get(i).get("remark"));
 				String sql2 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
 						authorItemList.get(i).get("piId").toString() + " order by pisScore";
 				List<Map<String, Object>> pisList = this.hrPaAuthorizepbcService.findDataList(sql2);
@@ -199,6 +203,11 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 				for(int i = 0; i < mapList2.size(); i++) {
 					HrPaKpiitem2user item = hrPaKpiitem2userService.get(Long.parseLong(mapList2.get(i).get("id").toString()));
 					item.setResult(Double.parseDouble(this.getRequest().getParameter(String.valueOf(item.getId()))));
+					if(!"".equals(this.getRequest().getParameter(item.getId() + "_remark"))) {
+						item.setRemark(currentUser.getFullname() + "：" + this.getRequest().getParameter(item.getId() + "_remark"));
+					} else {
+						item.setRemark("");
+					}
 					itemList.add(item);
 				}
 				//插入数据库
@@ -206,7 +215,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 				//判断是否计算最终结果
 				if("true".equals(this.getRequest().getParameter("calTotal"))) {//计算最终结果，则进入计算该PBC总分步骤
 					String[] calResult = hrPaKpiPBC2UserService.calTotalScore(Long.parseLong(pbcId)).trim().split(",");
-					String sql3 = "select a.id, a.weight, a.result, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
+					String sql3 = "select a.id, a.weight, a.result, a.remark, b.id as piId, b.paName, b.paMode from hr_pa_kpiitem2user a, hr_pa_performanceindex b where " +
 							"a.pbcId = " + pbcId + " and a.piId = b.id order by a.id";
 					List<Map<String, Object>> mapList3 = this.hrPaAuthorizepbcService.findDataList(sql3);
 					Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
@@ -263,6 +272,11 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 						resultNew = (resultOld + resultSubmit) / 2;
 					}
 					itemList.get(i).setResult(resultNew);
+					if(!"".equals(this.getRequest().getParameter(item.getId() + "_remark"))) {
+						item.setRemark(currentUser.getFullname() + "：" + this.getRequest().getParameter(item.getId() + "_remark"));
+					} else {
+						item.setRemark("");
+					}
 				}
 				//插入数据库
 				hrPaAuthpbccitemService.multiSave(itemList);
@@ -312,6 +326,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 				item.setAkpiItem2uId(Long.parseLong(properties[0]));
 				item.setWeight(Double.parseDouble(properties[1]));
 				item.setResult(new Double(0));//得分默认为0
+				item.setRemark("");
 				itemList.add(item);
 			}
 			//批量插入数据库
@@ -348,6 +363,7 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 					item.setAkpiItem2uId(Long.parseLong(properties[0]));
 					item.setWeight(Double.parseDouble(properties[1]));
 					item.setResult(new Double(0));
+					item.setRemark("");
 					authpbcItemList.add(item);
 				}
 			}
