@@ -129,7 +129,15 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			Map<Map<String, Object>, List<Map<String, Object>>> itemMap = new LinkedMap();
 			for(int i = 0; i < mapList2.size(); i++) {
 				//载入实际完成情况
-				mapList2.get(i).put(mapList2.get(i).get("id") + "_remark", mapList2.get(i).get("remark"));
+				if(mapList2.get(i).get("remark") != null && !"".equals(mapList2.get(i).get("remark"))) {
+					if(mapList2.get(i).get("remark").toString().trim().split("：").length > 1) {
+						mapList2.get(i).put(mapList2.get(i).get("id") + "_remark", mapList2.get(i).get("remark").toString().trim().split("：")[1]);
+					} else {
+						mapList2.get(i).put(mapList2.get(i).get("id") + "_remark", mapList2.get(i).get("remark").toString());
+					}
+				} else {
+					mapList2.get(i).put(mapList2.get(i).get("id") + "_remark", "");
+				}
 				//判断是否门店打分考核项
 				String sql4 = "select id from sp_pa_kpipbc2user where " +
 						"createDate >= '" + DateUtil.convertDateToString(fdOfMonth) + "' and fromPi = " + mapList2.get(i).get("id");
@@ -168,7 +176,15 @@ public class HrPaAuthorizepbcAction extends BaseAction{
 			List<Map<String, Object>> authorItemList = this.hrPaAuthorizepbcService.findDataList(sql);
 			for(int i = 0; i < authorItemList.size(); i++) {
 				//载入实际完成情况
-				authorItemList.get(i).put(authorItemList.get(i).get("id") + "_remark", authorItemList.get(i).get("remark"));
+				if(authorItemList.get(i).get("remark") != null && !"".equals(authorItemList.get(i).get("remark"))) {
+					if(authorItemList.get(i).get("remark").toString().trim().split("：").length > 1) {
+						authorItemList.get(i).put(authorItemList.get(i).get("id") + "_remark", authorItemList.get(i).get("remark").toString().trim().split("：")[1]);
+					} else {
+						authorItemList.get(i).put(authorItemList.get(i).get("id") + "_remark", authorItemList.get(i).get("remark").toString());
+					}
+				} else {
+					authorItemList.get(i).put(authorItemList.get(i).get("id") + "_remark", "");
+				}
 				String sql2 = "select id, pisScore, pisDesc from hr_pa_performanceindexscore where piId = " + 
 						authorItemList.get(i).get("piId").toString() + " order by pisScore";
 				List<Map<String, Object>> pisList = this.hrPaAuthorizepbcService.findDataList(sql2);
