@@ -1566,7 +1566,7 @@
 			    </Function>
 			</Item>
 			<Item id="BudgetStatusView" text="年度预算状态" iconCls="menu-budget">
-			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
+			    <Function id="_BudgetStatusQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
 			</Item>
@@ -1598,7 +1598,7 @@
 			    </Function>
 			</Item>
 			<Item id="BudgetQuarterStatusView" text="季度预算状态" iconCls="menu-budget">
-			    <Function id="_BudgetQuarterQuery" text="查看" iconCls="menu-list">
+			    <Function id="_BudgetQuarterStatusQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
 			</Item>
