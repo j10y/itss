@@ -87,6 +87,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 		hrPaKpiPBC2UserCmp.setModifyPerson(hrPaKpiPBC2User.getModifyPerson());
 		hrPaKpiPBC2UserCmp.setModifyDate(new Date());
 		hrPaKpiPBC2UserCmp.setCoefficient(hrPaKpiPBC2User.getCoefficient());
+		hrPaKpiPBC2UserCmp.setLineManager(hrPaKpiPBC2User.getLineManager());
 		hrPaKpiPBC2UserCmp=this.save(hrPaKpiPBC2UserCmp);
 		for(HrPaKpiitem2user hpu:list){
 			HrPaKpiitem2userCmp hrPaKpiitem2userCmp=new HrPaKpiitem2userCmp();
@@ -96,6 +97,7 @@ public class HrPaKpiPBC2UserCmpServiceImpl extends BaseServiceImpl<HrPaKpiPBC2Us
 			hrPaKpiitem2userCmp.setWeight(hpu.getWeight());
 			hrPaKpiitem2userCmp.setResult(hpu.getResult());
 			hrPaKpiitem2userCmp.setCoefficient(hpu.getCoefficient());
+			hrPaKpiitem2userCmp.setRemark(hpu.getRemark());
 			hrPaKpiitem2userCmpService.save(hrPaKpiitem2userCmp);
 			Map aimap=new HashMap();
 			aimap.put("Q_akpiItem2uId_L_EQ", hpu.getId()+"");

@@ -52,20 +52,32 @@ public class HrPaKpiitem2userServiceImpl extends BaseServiceImpl<HrPaKpiitem2use
 			return ;
 		}
 		//从授权考核模板关联的考核项中取到所有该考核项的打分记录
-		String sql = "select id, weight, result from hr_pa_authpbcitem where akpiItem2uId = " + itemId;
+		String sql = "select id, weight, result, remark from hr_pa_authpbcitem where akpiItem2uId = " + itemId;
 		List<Map<String, Object>> list = this.findDataList(sql);
 		Double avgResult = new Double(0);
 		Double totalWeight = new Double(1);
+		String remark = "";
 		for(int i = 0; i < list.size(); i++) {
 			Map<String, Object> map = list.get(i);
 			//判断是否已经打分，result为0则表示没有打分
 			if(Double.parseDouble(map.get("result").toString()) != 0) {//已经打分，则进入计算
 				avgResult += (Double.parseDouble(map.get("result").toString()) * Double.parseDouble(map.get("weight").toString()));
 				totalWeight = totalWeight - Double.parseDouble(map.get("weight").toString());
+				if(!"".equals(map.get("remark").toString())) {
+					remark += map.get("remark").toString() + "<br/>";
+				}
 			}
 		}
 		Double result = Double.valueOf(doubleFormat.format(avgResult + item.getResult() * totalWeight));
 		item.setResult(result);
+		if(item.getRemark() != null && !"".equals(item.getRemark())) {
+			item.setRemark(item.getRemark() + "<br/>" + remark);
+		} else {
+			item.setRemark(remark);
+		}
+		if(item.getRemark().endsWith("<br/>")) {
+			item.setRemark(item.getRemark().substring(0, item.getRemark().length() - 6));
+		}
 		//保存相关联的绩效系数
 		int resultIndex = 0;
 		String sql2 = "select a.id, a.pisScore, a.coefficient from hr_pa_performanceindexscore a, hr_pa_kpiitem2user b where " +
