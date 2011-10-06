@@ -85,7 +85,7 @@ import org.apache.commons.logging.Log;
 import org.apache.struts2.ServletActionContext;
 
 public class AppUserAction extends BaseAction {
-	/* 54 */private static Long SUPPER_MANAGER_ID = Long.valueOf(-1L);
+	private static Long SUPPER_MANAGER_ID = Long.valueOf(-1L);
 
 	@Resource
 	private AppUserService appUserService;
@@ -106,81 +106,86 @@ public class AppUserAction extends BaseAction {
 	private Long depId;
 	private Long roleId;
 
-	/* 75 */public Long getDepId() {
+	public Long getDepId() {
 		return this.depId;
 	}
 
 	public void setDepId(Long depId) {
-		/* 79 */this.depId = depId;
+		this.depId = depId;
 	}
 
 	public Long getRoleId() {
-		/* 83 */return this.roleId;
+		return this.roleId;
 	}
 
 	public void setRoleId(Long roleId) {
-		/* 87 */this.roleId = roleId;
+		this.roleId = roleId;
 	}
 
 	public Long getUserId() {
-		/* 91 */return this.userId;
+		return this.userId;
 	}
 
 	public void setUserId(Long userId) {
-		/* 95 */this.userId = userId;
+		this.userId = userId;
 	}
 
 	public AppUser getAppUser() {
-		/* 99 */return this.appUser;
+		return this.appUser;
 	}
 
 	public void setAppUser(AppUser appUser) {
-		/* 103 */this.appUser = appUser;
+		this.appUser = appUser;
 	}
 
 	public String getCurrent() throws IOException {
-		
-		AppUser currentUser = ContextUtil.getCurrentUser();
-		
-		Department curDep = currentUser.getDepartment();
-		if (curDep == null) {
-			/* 115 */curDep = new Department();
-			/* 116 */curDep.setDepId(Long.valueOf(0L));
-			/* 117 */curDep.setDepName(AppUtil.getCompanyName());
-		}
-		/* 119 */Iterator publicIds = AppUtil.getPublicMenuIds().iterator();
-		/* 120 */StringBuffer publicIdSb = new StringBuffer();
 
-		/* 122 */while (publicIds.hasNext()) {
-			/* 123 */publicIdSb.append(",").append((String) publicIds.next());
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		if (currentUser != null) {
+
+			Department curDep = currentUser.getDepartment();
+			if (curDep == null) {
+				curDep = new Department();
+				curDep.setDepId(Long.valueOf(0L));
+				curDep.setDepName(AppUtil.getCompanyName());
+			}
+			Iterator publicIds = AppUtil.getPublicMenuIds().iterator();
+			StringBuffer publicIdSb = new StringBuffer();
+
+			while (publicIds.hasNext()) {
+				publicIdSb.append(",").append((String) publicIds.next());
+			}
+			List<IndexDisplay> list = this.indexDisplayService
+					.findByUser(currentUser.getUserId());
+			List items = new ArrayList();
+			for (IndexDisplay id : list) {
+				PanelItem pi = new PanelItem();
+				pi.setPanelId(id.getPortalId());
+				pi.setColumn(id.getColNum().intValue());
+				pi.setRow(id.getRowNum().intValue());
+				items.add(pi);
+			}
+			StringBuffer sb = new StringBuffer();
+			sb.append("{success:true,user:{userId:'")
+					.append(currentUser.getUserId()).append("',fullname:'")
+					.append(currentUser.getFullname()).append("',depId:'")
+					.append(curDep.getDepId()).append("',depName:'")
+					.append(curDep.getDepName()).append("',rights:'");
+			sb.append(currentUser.getRights().toString().replace("[", "")
+					.replace("]", ""));
+			if ((!"".equals(currentUser.getRights()))
+					&& (publicIdSb.length() > 0)) {
+				sb.append(publicIdSb.toString());
+			}
+			Gson gson = new Gson();
+			sb.append("',items:").append(gson.toJson(items).toString());
+			sb.append("}}");
+			setJsonString(sb.toString());
+			return "success";
 		}
-		/* 125 */List<IndexDisplay> list = this.indexDisplayService
-				.findByUser(currentUser.getUserId());
-		/* 126 */List items = new ArrayList();
-		/* 127 */for (IndexDisplay id : list) {
-			/* 128 */PanelItem pi = new PanelItem();
-			/* 129 */pi.setPanelId(id.getPortalId());
-			/* 130 */pi.setColumn(id.getColNum().intValue());
-			/* 131 */pi.setRow(id.getRowNum().intValue());
-			/* 132 */items.add(pi);
-		}
-		/* 134 */StringBuffer sb = new StringBuffer();
-		/* 135 */sb.append("{success:true,user:{userId:'").append(
-		/* 136 */currentUser.getUserId()).append("',fullname:'").append(
-		/* 137 */currentUser.getFullname()).append("',depId:'")
-		/* 138 */.append(curDep.getDepId()).append("',depName:'")
-		/* 139 */.append(curDep.getDepName()).append("',rights:'");
-		/* 140 */sb.append(currentUser.getRights().toString().replace("[", "")
-				.replace("]", ""));
-		/* 141 */if ((!"".equals(currentUser.getRights()))
-				&& (publicIdSb.length() > 0)) {
-			/* 142 */sb.append(publicIdSb.toString());
-		}
-		/* 144 */Gson gson = new Gson();
-		/* 145 */sb.append("',items:").append(gson.toJson(items).toString());
-		/* 146 */sb.append("}}");
-		/* 147 */setJsonString(sb.toString());
-		/* 148 */return "success";
+
+		return "error";
+
 	}
 
 	public String list() {
@@ -269,16 +274,19 @@ public class AppUserAction extends BaseAction {
 				OnlineUser onlineUser = new OnlineUser();
 				onlineUser = (OnlineUser) onlineUsers.get(sessionId);
 
-				if (Pattern.compile("," + this.roleId + ",").matcher(onlineUser.getRoleIds()).find()) {
+				if (Pattern.compile("," + this.roleId + ",")
+						.matcher(onlineUser.getRoleIds()).find()) {
 					onlineUsersByRole.put(sessionId, onlineUser);
 				}
 			}
 		}
 
-		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':").append(onlineUsers.size()).append(",result:");
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(onlineUsers.size()).append(",result:");
 
 		Gson gson = new Gson();
-		Type type = new TypeToken<Collection<OnlineUser>>() {}.getType();
+		Type type = new TypeToken<Collection<OnlineUser>>() {
+		}.getType();
 		if (this.depId != null)
 			buff.append(gson.toJson(onlineUsersByDep.values(), type));
 		else if (this.roleId != null)
@@ -286,7 +294,7 @@ public class AppUserAction extends BaseAction {
 		else {
 			buff.append(gson.toJson(onlineUsers.values(), type));
 		}
-		
+
 		buff.append("}");
 		this.jsonString = buff.toString();
 		return "success";
@@ -296,8 +304,10 @@ public class AppUserAction extends BaseAction {
 		String strRoleId = getRequest().getParameter("roleId");
 		PagingBean pb = getInitPagingBean();
 		if (StringUtils.isNotEmpty(strRoleId)) {
-			List<AppUser> userList = this.appUserService.findByRole(Long.valueOf(Long.parseLong(strRoleId)), pb);
-			Type type = new TypeToken<List<AppUser>>() {}.getType();
+			List<AppUser> userList = this.appUserService.findByRole(
+					Long.valueOf(Long.parseLong(strRoleId)), pb);
+			Type type = new TypeToken<List<AppUser>>() {
+			}.getType();
 
 			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
 			/* 274 */.append(pb.getTotalItems()).append(",result:");
@@ -514,8 +524,8 @@ public class AppUserAction extends BaseAction {
 		/* 506 */for (Long l : userIdsL) {
 			/* 507 */userIds.add(l);
 		}
-		/* 509 */List<AppUser> list = this.appUserService.findSubAppUser(path, userIds,
-				pb);
+		/* 509 */List<AppUser> list = this.appUserService.findSubAppUser(path,
+				userIds, pb);
 		/* 510 */Type type = new TypeToken<List<AppUser>>() {
 			/* 511 */
 		}.getType();
@@ -543,7 +553,8 @@ public class AppUserAction extends BaseAction {
 			/* 536 */for (Long l : userIdsL) {
 				/* 537 */userIds.add(l);
 			}
-			/* 539 */List<AppUser> userList = this.appUserService.findSubAppUserByRole(new Long(strRoleId), userIds, pb);
+			/* 539 */List<AppUser> userList = this.appUserService
+					.findSubAppUserByRole(new Long(strRoleId), userIds, pb);
 
 			/* 544 */Type type = new TypeToken<List<AppUser>>() {
 				/* 545 */
@@ -583,7 +594,8 @@ public class AppUserAction extends BaseAction {
 				onlineUsersBySub.put(sessionId, onlineUser);
 			}
 		}
-		/* 583 */Type type = new TypeToken<Collection<OnlineUser>>() {}.getType();
+		/* 583 */Type type = new TypeToken<Collection<OnlineUser>>() {
+		}.getType();
 		/* 585 */StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':")
 		/* 586 */.append(onlineUsers.size()).append(",result:");
@@ -626,17 +638,18 @@ public class AppUserAction extends BaseAction {
 		/* 632 */this.jsonString = "{success:true}";
 		/* 633 */return "success";
 	}
-	
+
 	public String findByRoleIds() {
 		String strRoleId = getRequest().getParameter("roleIds");
-		String [] roles = strRoleId.split(",");
-		Long [] roleIds = new Long [roles.length]; 
-		for(int i=0; i<roles.length; i++){
-			roleIds [i] = new Long(roles[i]); 
+		String[] roles = strRoleId.split(",");
+		Long[] roleIds = new Long[roles.length];
+		for (int i = 0; i < roles.length; i++) {
+			roleIds[i] = new Long(roles[i]);
 		}
 		if (StringUtils.isNotEmpty(strRoleId)) {
 			List<AppUser> userList = this.appUserService.findByRoleIds(roleIds);
-			Type type = new TypeToken<List<AppUser>>() {}.getType();
+			Type type = new TypeToken<List<AppUser>>() {
+			}.getType();
 
 			StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
 			/* 274 */.append(userList.size()).append(",result:");
@@ -654,25 +667,24 @@ public class AppUserAction extends BaseAction {
 
 	/**
 	 * 支持模糊查询
+	 * 
 	 * @return
 	 */
 	public String search() {
-		/* 152 */QueryFilter filter = new QueryFilter(getRequest());
-		/* 153 */filter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED
-		/* 154 */.toString());
-		/* 155 */List list = this.appUserService.getAll(filter);
-		/* 156 */StringBuffer buff = new StringBuffer(
-				"{success:true,'totalCounts':")
-		/* 157 */.append(filter.getPagingBean().getTotalItems()).append(
-		/* 158 */",result:");
-		/* 159 */JSONSerializer serializer = new JSONSerializer();
-		/* 160 */serializer.transform(new DateTransformer("yyyy-MM-dd"),
+		QueryFilter filter = new QueryFilter(getRequest());
+		filter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED.toString());
+		List list = this.appUserService.getAll(filter);
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(
+						",result:");
+		JSONSerializer serializer = new JSONSerializer();
+		serializer.transform(new DateTransformer("yyyy-MM-dd"),
 				new String[] { "accessionTime" });
-		/* 161 */buff.append(serializer.exclude(new String[] { "password" })
-				.serialize(list));
-		/* 162 */buff.append("}");
-		/* 163 */this.jsonString = buff.toString();
-		/* 164 */return "success";
+		buff.append(serializer.exclude(new String[] { "password" }).serialize(
+				list));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		return "success";
 	}
 
 }

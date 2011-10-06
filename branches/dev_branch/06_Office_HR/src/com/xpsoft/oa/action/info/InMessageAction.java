@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
 public class InMessageAction extends BaseAction {
-	/* 34 */static short HAVE_DELETE = 1;
+	static short HAVE_DELETE = 1;
 	private InMessage inMessage;
 	private ShortMessage shortMessage;
 	private Date from;
@@ -33,59 +33,59 @@ public class InMessageAction extends BaseAction {
 	private ShortMessageService shortMessageService;
 
 	public InMessage getInMessage() {
-		/* 41 */return this.inMessage;
+		return this.inMessage;
 	}
 
 	public void setInMessage(InMessage inMessage) {
-		/* 45 */this.inMessage = inMessage;
+		this.inMessage = inMessage;
 	}
 
 	public ShortMessage getShortMessage() {
-		/* 48 */return this.shortMessage;
+		return this.shortMessage;
 	}
 
 	public void setShortMessage(ShortMessage shortMessage) {
-		/* 52 */this.shortMessage = shortMessage;
+		this.shortMessage = shortMessage;
 	}
 
 	public Date getFrom() {
-		/* 56 */return this.from;
+		return this.from;
 	}
 
 	public void setFrom(Date from) {
-		/* 60 */this.from = from;
+		this.from = from;
 	}
 
 	public Date getTo() {
-		/* 64 */return this.to;
+		return this.to;
 	}
 
 	public void setTo(Date to) {
-		/* 68 */this.to = to;
+		this.to = to;
 	}
 
 	public String list() {
-		/* 80 */PagingBean pb = getInitPagingBean();
-		/* 81 */AppUser appUser = ContextUtil.getCurrentUser();
+		PagingBean pb = getInitPagingBean();
+		AppUser appUser = ContextUtil.getCurrentUser();
 
-		/* 83 */List list = this.inMessageService.searchInMessage(
+		List list = this.inMessageService.searchInMessage(
 				appUser.getUserId(), this.inMessage, this.shortMessage,
 				this.from, this.to, pb);
 
-		/* 87 */List<InMessage> inList = new ArrayList();
-		/* 88 */StringBuffer buff = new StringBuffer(
+		List<InMessage> inList = new ArrayList();
+		StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':" + pb.getTotalItems()
 						+ ",result:");
-		/* 89 */for (int i = 0; i < list.size(); i++) {
-			/* 90 */InMessage inMessage = (InMessage) ((Object[]) list.get(i))[0];
-			/* 91 */inList.add(inMessage);
+		for (int i = 0; i < list.size(); i++) {
+			InMessage inMessage = (InMessage) ((Object[]) list.get(i))[0];
+			inList.add(inMessage);
 		}
-		/* 93 */Gson gson = new Gson();
-		/* 94 */Type type = new TypeToken<List<InMessage>>() {}.getType();
-		/* 95 */buff.append(gson.toJson(inList, type));
-		/* 96 */buff.append("}");
-		/* 97 */setJsonString(buff.toString());
-		/* 98 */return "success";
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<InMessage>>() {}.getType();
+		buff.append(gson.toJson(inList, type));
+		buff.append("}");
+		setJsonString(buff.toString());
+		return "success";
 	}
 
 	public String know() {
@@ -189,10 +189,12 @@ public class InMessageAction extends BaseAction {
 	}
 
 	public String count() {
-		/* 196 */Integer in = this.inMessageService.findByReadFlag(ContextUtil
-				.getCurrentUser().getUserId());
-		/* 197 */setJsonString("{success:true,count:'" + in + "'}");
-		/* 198 */return "success";
+		Integer in = 0;
+		if(ContextUtil.getCurrentUser() != null){
+			in = this.inMessageService.findByReadFlag(ContextUtil.getCurrentUser().getUserId());
+		}
+		setJsonString("{success:true,count:'" + in + "'}");
+		return "success";
 	}
 
 	public String detail() {

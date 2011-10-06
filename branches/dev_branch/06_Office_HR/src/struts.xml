@@ -18,6 +18,7 @@
 	<package name="system" extends="struts-default" namespace="/system">
 	    <action name="*AppUser" class="AppUserAction" method="{1}">
 			<result>${successResultValue}</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="grantXmlAppRole" class="AppRoleAction" method="grantXml">
 			<result>/jsonXml.jsp</result>

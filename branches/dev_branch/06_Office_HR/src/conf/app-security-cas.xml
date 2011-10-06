@@ -24,7 +24,6 @@
         <sec:intercept-url pattern="/500*" filters="none"/> 
         <sec:intercept-url pattern="/ext3/**" filters="none"/>
         <sec:intercept-url pattern="/fckeditor/**" filters="none"/>  
-        <sec:intercept-url pattern="/j_logout.do" filters="none"/>  
         
         <sec:intercept-url pattern="/*" access="ROLE_PUBLIC" />
         <!-- 
@@ -44,6 +43,7 @@
 			class="org.springframework.security.ui.cas.CasProcessingFilter">
 			<sec:custom-filter position="CAS_PROCESSING_FILTER"/>		
 			<property name="authenticationManager" ref="authenticationManager" />
+			<property name="authenticationFailureUrl" value="/401.jsp" />
 			<property name="defaultTargetUrl" value="/"/>
 	</bean>
 	
@@ -65,7 +65,7 @@
 						value="${system.security.cas.path}" />
 				</bean>
 			</property>
-			<property name="key" value="an_id_for_this_auth_provider_only" />
+			<property name="key" value="an_id_for_hr_auth_provider_only" />
 	</bean>
 	
 	<bean id="logoutFilter"
