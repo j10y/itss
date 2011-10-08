@@ -138,7 +138,7 @@
 					<td class="field">${hrPostApply.applyUser.fullname}</td>
 					<td class="field">性别</td>
 					<td class="field">${hrPostApply.gender}</td>
-					<td class="field">年龄</td>
+					<td class="field">年龄<font style="color:red;">*</font></td>
 					<td class="field" style="border-right:1px solid #000000;padding:2px;">
 						<input type="text" id="age" name="hrPostApply.age" value="${hrPostApply.age}" style="width:100%;*width:110px;height:100%;*height:30px;border:none;line-height:40px;*line-height:30px;text-align:center;"/>
 					</td>
@@ -154,10 +154,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用期（实习）总结</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用期（实习）总结<font style="color:red;">*</font></td>
 				</tr>
 				<tr>
-					<td colspan="6" style="height:600px;padding:2px;border:1px solid #000000;">
+					<td colspan="6" style="height:400px;padding:2px;border:1px solid #000000;">
 						<textarea id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
 					</td>
 				</tr>
@@ -165,7 +165,7 @@
 					<td align="center" colspan="6" style="height:40px;border:1px solid #000000;">
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
 						<input type="submit" value="保存"/>&nbsp;&nbsp;
-						<input type="button" value="提交审核" onclick="onSend();"/>
+						<input type="button" value="提交直线上级审核" onclick="onSend();"/>
 					</td>
 				</tr>
 			</table>

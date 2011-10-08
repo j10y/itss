@@ -392,7 +392,7 @@
 					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作目标完成情况</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一</td>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一<font style="color:red;">*</font></td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="reached1" name="hrPromAssessment.reached1" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.reached1}</textarea>
 					</td>
@@ -413,7 +413,7 @@
 					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作业绩</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">绩效结果</td>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">绩效结果<font style="color:red;">*</font></td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="performResult" name="hrPromAssessment.performResult" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.performResult}</textarea>
 					</td>
@@ -422,12 +422,12 @@
 					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作能力匹配</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">专业知识</td>
-					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">沟通影响</td>
-					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">问题解决能力</td>
-					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">工作难度管理幅度</td>
-					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">业务领域影响</td>
-					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">评级结果</td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">专业知识<font style="color:red;">*</font></td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">沟通影响<font style="color:red;">*</font></td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">问题解决能力<font style="color:red;">*</font></td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">工作难度管理幅度<font style="color:red;">*</font></td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">业务领域影响<font style="color:red;">*</font></td>
+					<td style="width:120px;height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">评级结果<font style="color:red;">*</font></td>
 				</tr>
 				<tr>
 					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="proKnowledge"></div></td>

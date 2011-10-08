@@ -304,7 +304,7 @@
 			<input type="hidden" name="flag" value="0"/>
 			<table style="width:700px;margin:0 auto;border:1px solid #000000;background:#ffffff" cellpadding="0" cellspacing="0">
 				<tr>
-					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">姓名</td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">姓名<font style="color:red;">*</font></td>
 					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;"><div id="applyUser"></div></td>
 					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">部门/门店</td>
 					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;">
@@ -324,12 +324,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟担任职位</td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟担任职位<font style="color:red;">*</font></td>
 					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;">
 						<input type="hidden" id="applyPositionId" name="hrPromApply.applyPositionId" value="${hrPromApply.applyPositionId}"/>
 						<div id="applyPositionName"></div>
 					</td>
-					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升时间</td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升时间<font style="color:red;">*</font></td>
 					<td style="width:230px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;border-right:1px solid #000000;"><div id="applyDate"></div></td>
 				</tr>
 				<tr>
@@ -343,7 +343,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升原因</td>
+					<td style="width:120px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">拟晋升原因<font style="color:red;">*</font></td>
 					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="applyReason" name="hrPromApply.applyReason" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.applyReason}</textarea>
 					</td>

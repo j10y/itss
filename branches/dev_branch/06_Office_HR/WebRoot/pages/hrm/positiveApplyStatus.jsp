@@ -61,7 +61,7 @@
 				<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用期（实习）总结</td>
 			</tr>
 			<tr>
-				<td colspan="6" style="height:600px;padding:2px;border:1px solid #000000;">
+				<td colspan="6" style="height:400px;padding:2px;border:1px solid #000000;">
 					<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostApply.proSummary}</textarea>
 				</td>
 			</tr>

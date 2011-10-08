@@ -297,12 +297,12 @@
 					<td class="field" style="border-right:1px solid #000000;"><fmt:formatDate value="${hrPostAssessment.actualPostDate}" type="date"/>&nbsp;</td>
 				</tr>
 				<tr>
-					<td class="field">专业知识</td>
-					<td class="field">沟通影响</td>
-					<td class="field">问题解决能力</td>
-					<td class="field">工作难度管理幅度</td>
-					<td class="field">业务领域影响</td>
-					<td class="field" style="border-right:1px solid #000000;padding:2px;">评级结果</td>
+					<td class="field">专业知识<font style="color:red;">*</font></td>
+					<td class="field">沟通影响<font style="color:red;">*</font></td>
+					<td class="field">问题解决能力<font style="color:red;">*</font></td>
+					<td class="field">工作难度管理幅度<font style="color:red;">*</font></td>
+					<td class="field">业务领域影响<font style="color:red;">*</font></td>
+					<td class="field" style="border-right:1px solid #000000;padding:2px;">评级结果<font style="color:red;">*</font></td>
 				</tr>
 				<tr>
 					<td class="field2"><div id="proKnowledge"></div></td>
@@ -337,13 +337,14 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价<font style="color:red;">*</font></td>
 				</tr>
 				<tr>
 					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="proPerformance" name="hrPostAssessment.proPerformance" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
 					</td>
 				</tr>
+				<!--
 				<tr>
 					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">本部门/门店意见</td>
 					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">主管部门意见（无主管部门可不填写）</td>
@@ -366,6 +367,7 @@
 						<textarea readonly="readonly" id="bossOpinion" name="hrPostAssessment.bossOpinion" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.bossOpinion}</textarea>
 					</td>
 				</tr>
+				-->
 				<tr>
 					<td align="center" colspan="6" style="height:40px;border:1px solid #000000;">
 						<!-- <input type="reset" value="取消"/>&nbsp;&nbsp; -->
