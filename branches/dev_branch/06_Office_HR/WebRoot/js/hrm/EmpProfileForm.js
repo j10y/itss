@@ -270,6 +270,9 @@ EmpProfileForm = Ext
 													{
 														name : "empProfileForm.positiveTime",
 														mapping : "positiveTime"
+													},{
+														name : "empProfileForm.realPositiveTime",
+														mapping : "realPositiveTime"
 													} ]),
 									defaultType : "textfield",
 									items : [
@@ -740,7 +743,21 @@ EmpProfileForm = Ext
 																		name : "empProfile.positiveTime",
 																		xtype : "datefield",
 																		format : "Y-m-d",
-																		id : "empProfileForm.positiveTime"
+																		id : "empProfileForm.positiveTime",
+																		listeners : {
+																			change : function(field, newValue, oldValue ) {
+																				Ext.getCmp("empProfileForm.realPositiveTime").setValue(newValue);
+																				
+																			}
+																		}
+																	},
+																	{
+																		fieldLabel : "实际转正日期",
+																		name : "empProfile.realPositiveTime",
+																		xtype : "datefield",
+																		format : "Y-m-d",
+																		readOnly: true,
+																		id : "empProfileForm.realPositiveTime"
 																	}]
 														},
 														{
@@ -1424,6 +1441,20 @@ EmpProfileForm = Ext
 																.setValue(
 																		new Date(
 																				f));
+													}
+													
+													if (e.realPositiveTime != ""
+														&& e.realPositiveTime != null
+														&& e.realPositiveTime != "undefined") {
+														var f = getDateFromFormat(
+																e.realPositiveTime,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.realPositiveTime")
+														.setValue(
+																new Date(
+																		f));
 													}
 													
 													if (d != null && d != "") {

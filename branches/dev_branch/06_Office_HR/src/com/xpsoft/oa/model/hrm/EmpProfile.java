@@ -75,6 +75,8 @@ public class EmpProfile extends BaseModel {
 	
 	protected Date positiveTime;//转正时间
 	
+	protected Date realPositiveTime;//实际转正时间
+	
 	//是否离职
 	private Integer isDepart;//
 	
@@ -556,6 +558,14 @@ public class EmpProfile extends BaseModel {
 	public void setPositiveTime(Date positiveTime) {
 		this.positiveTime = positiveTime;
 	}
+	
+	public Date getRealPositiveTime() {
+		return realPositiveTime;
+	}
+
+	public void setRealPositiveTime(Date realPositiveTime) {
+		this.realPositiveTime = realPositiveTime;
+	}
 
 	public boolean equals(Object object) {
 		/* 850 */if (!(object instanceof EmpProfile)) {
@@ -615,6 +625,7 @@ public class EmpProfile extends BaseModel {
 		/* 898 */.append(this.accessionTime, rhs.accessionTime)
 		/* 899 */.append(this.departureTime, rhs.departureTime)
 		.append(this.positiveTime, rhs.positiveTime)
+		.append(this.realPositiveTime, rhs.realPositiveTime)
 		/* 901 */.isEquals();
 	}
 
@@ -672,6 +683,7 @@ public class EmpProfile extends BaseModel {
 		/* 898 */.append(this.accessionTime)
 		/* 899 */.append(this.departureTime)
 		.append(this.positiveTime)
+		.append(this.realPositiveTime)
 		/* 955 */.toHashCode();
 	}
 
@@ -729,6 +741,7 @@ public class EmpProfile extends BaseModel {
 		/* 898 */.append("accessionTime", this.accessionTime)
 		/* 899 */.append("departureTime", this.departureTime)
 		/* 899 */.append("positiveTime", this.positiveTime)
+		/* 899 */.append("realPositiveTime", this.realPositiveTime)
 		/* 1009 */.toString();
 	}
 }
