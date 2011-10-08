@@ -254,7 +254,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 		});
 		//显示试用期评估表详细信息
 		this.detailPanel2 = new Ext.Panel({
-			title:'<font color="red">试用期评估表</font>',
+			title:'<font color="green">试用期评估表</font>',
 			autoHeight : true,
 			columnWidth : 1,
 			autoScroll:true,
