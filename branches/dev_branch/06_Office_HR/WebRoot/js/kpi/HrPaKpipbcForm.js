@@ -305,7 +305,7 @@ HrPaKpipbcForm = Ext.extend(Ext.Window, {
 					dataIndex : "pi.paName",
 					width : 250
 				}, {
-					header : "权重",
+					header : "权重（%）",
 					dataIndex : "weight",
 					editor : new Ext.form.Field({
 						xtype : "textfield"
