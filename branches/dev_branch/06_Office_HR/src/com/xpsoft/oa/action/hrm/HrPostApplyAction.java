@@ -96,6 +96,19 @@ public class HrPostApplyAction extends BaseAction{
 		map.put("Q_userId_L_EQ", currentUser.getUserId().toString());
 		QueryFilter filter = new QueryFilter(map);
 		List<EmpProfile> empProfileList = empProfileService.getAll(filter);
+		//判断当前用户是否已经建立档案
+		if(empProfileList.size() <= 0) {
+			this.getRequest().setAttribute("message", "您目前尚没有档案，请先建立档案！");
+			return "createResult";
+		}
+		//判断当前用户是否已经转正
+		String sql = "select count(*) as total from hr_post_assessment a, hr_post_apply b, emp_profile c, app_user d where " +
+				"a.applyId = b.id and b.applyUser = c.userId and c.userId = d.userId and a.publishStatus = 3";
+		List<Map<String, Object>> mapList = this.hrPostApplyService.findDataList(sql);
+		if(Integer.parseInt(mapList.get(0).get("total").toString()) > 0) {
+			this.getRequest().setAttribute("message", "您已经转正，请核实！");
+			return "createResult";
+		}
 		if(this.id == 0) {
 			this.hrPostApply = new HrPostApply();
 			this.hrPostApply.setId(0l);
