@@ -379,6 +379,7 @@
 			<result name="show">/pages/hrm/positiveApply.jsp</result>
 			<result name="result">/pages/hrm/applyResult.jsp</result>
 			<result name="showStatus">/pages/hrm/positiveApplyStatus.jsp</result>
+			<result name="createResult">/pages/hrm/createPostResult.jsp</result>
 		</action>
 		<action name="*HrPostAssessment" class="HrPostAssessmentAction" method="{1}">
 			<result>${successResultValue}</result>
