@@ -273,8 +273,15 @@ JobSalaryRelationForm = Ext.extend(
 					},
 					save : function(a, b) {
 						if (a.getForm().isValid()) {
-							a
-									.getForm()
+							
+							var empCount = Ext.getCmp("jobSalaryRelationForm.empCount").getValue();
+							var onEmpCount = Ext.getCmp("jobSalaryRelationForm.onEmpCount").getValue();
+							if(!onEmpCount<=empCount){
+								Ext.Msg.alert("提示信息","<font color='red'>在编人数应小于等于岗位人数</font>");
+								return;
+							}
+							
+							a.getForm()
 									.submit(
 											{
 												method : "POST",
