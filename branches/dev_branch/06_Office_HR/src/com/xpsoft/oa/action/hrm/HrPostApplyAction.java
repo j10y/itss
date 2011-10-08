@@ -16,11 +16,20 @@ import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.HrPostApply;
 import com.xpsoft.oa.model.hrm.HrPostAssessment;
 import com.xpsoft.oa.model.hrm.StandSalary;
+import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
+import com.xpsoft.oa.model.kpi.HrPaKpiitem;
+import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
+import com.xpsoft.oa.model.kpi.HrPaKpipbc;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.hrm.HrPostApplyService;
 import com.xpsoft.oa.service.hrm.HrPostAssessmentService;
 import com.xpsoft.oa.service.hrm.StandSalaryService;
+import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
+import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
+import com.xpsoft.oa.service.kpi.HrPaKpiitemService;
+import com.xpsoft.oa.service.kpi.HrPaKpipbcService;
+import com.xpsoft.oa.service.system.AppUserService;
 
 import flexjson.JSONSerializer;
 
@@ -201,6 +210,11 @@ public class HrPostApplyAction extends BaseAction{
 		HrPostAssessmentService hrPostAssessmentService = (HrPostAssessmentService)AppUtil.getBean("hrPostAssessmentService");
 		StandSalaryService standSalaryService = (StandSalaryService)AppUtil.getBean("standSalaryService");
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
+		HrPaKpipbcService hrPaKpipbcService = (HrPaKpipbcService)AppUtil.getBean("hrPaKpipbcService");
+		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
+		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
+		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
+		AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
 		HrPostApply postApply = this.hrPostApplyService.get(this.hrPostApply.getId());
 		Integer publishStatus = Integer.valueOf(this.getRequest().getParameter("publishStatus"));
 		boolean isAssess = Boolean.valueOf(this.getRequest().getParameter("isAssess"));//评估阶段
@@ -244,7 +258,7 @@ public class HrPostApplyAction extends BaseAction{
 				assessment.setModifyPerson(currentUser);
 				assessment.setPublishStatus(publishStatus);
 				hrPostAssessmentService.save(assessment);
-				if(publishStatus == 3) {//更新档案表
+				if(publishStatus == 3) {//更新档案表，为该用户增加个人PBC
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("Q_userId_L_EQ", assessment.getPostApply().getApplyUser().getUserId().toString());
 					QueryFilter filter = new QueryFilter(map);
@@ -257,6 +271,54 @@ public class HrPostApplyAction extends BaseAction{
 						empProfileList.get(0).setStandardName(assessment.getNewSalaryLevelName());
 						empProfileList.get(0).setPerCoefficient(assessment.getNewFloatSalary());
 						empProfileList.get(0).setAccessionTime(assessment.getActualPostDate());
+						empProfileList.get(0).setRealPositiveTime(assessment.getActualPostDate());
+					}
+					//为该用户增加个人PBC
+					String sql = "select distinct a.id from hr_pa_kpipbc a, emp_profile b, app_user c where " +
+							"a.belongPost = " + assessment.getStandardPostId() + " and a.belongPost = b.jobId and " +
+							"b.userId = c.userId and a.publishStatus = 3";
+					List<Map<String, Object>> mapList = this.hrPostApplyService.findDataList(sql);
+					AppUser user = appUserService.get(assessment.getPostApply().getApplyUser().getUserId());
+					for(int i = 0; i < mapList.size(); i++) {
+						HrPaKpipbc pbc = hrPaKpipbcService.get(Long.parseLong(mapList.get(i).get("id").toString()));
+						//取得PBC的考核频度
+						String sql2 = "select name from hr_pa_datadictionary where id = " + pbc.getFrequency().getId();
+						List<Map<String, Object>> mapList2 = hrPaKpipbcService.findDataList(sql2);
+						String frequencyName = mapList2.get(0).get("name").toString();
+						//取出要插入PBC考核模板关联的考核项
+						Map<String, String> map2 = new HashMap<String, String>();
+						map2.put("Q_pbc.id_L_EQ", String.valueOf(pbc.getId()));
+						QueryFilter filter2 = new QueryFilter(map2);
+						List<HrPaKpiitem> hrPaKpiitemList = hrPaKpiitemService.getAll(filter2);
+						//2.1.1. 保存个人考核模板基本信息
+						HrPaKpiPBC2User hrPaKpiPBC2User = new HrPaKpiPBC2User();
+						hrPaKpiPBC2User.setPbcName(user.getFullname() + "的" + frequencyName + "PBC");
+						hrPaKpiPBC2User.setFromPBC(String.valueOf(pbc.getId()));
+						hrPaKpiPBC2User.setBelongUser(user);
+						hrPaKpiPBC2User.setFrequency(pbc.getFrequency());
+						hrPaKpiPBC2User.setCreatePerson(pbc.getCreatePerson());
+						hrPaKpiPBC2User.setCreateDate(currentDate);
+						hrPaKpiPBC2User.setPublishStatus(0);//默认为草稿状态
+						hrPaKpiPBC2User.setTotalScore(pbc.getTotalScore());
+						hrPaKpiPBC2User.setModifyDate(currentDate);
+						hrPaKpiPBC2User.setModifyPerson(currentUser);
+						hrPaKpiPBC2User.setCoefficient(new Double(0));
+						hrPaKpiPBC2User.setLineManager(pbc.getLineManager());
+						//插入数据库
+						hrPaKpiPBC2User = hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
+						
+						//2.1.2. 保存个人考核模板关联的考核项
+						for(int j = 0; j < hrPaKpiitemList.size(); j++) {
+							HrPaKpiitem2user hrPaKpiitem2user = new HrPaKpiitem2user();
+							hrPaKpiitem2user.setPbc2User(hrPaKpiPBC2User);
+							hrPaKpiitem2user.setPiId(hrPaKpiitemList.get(j).getPi().getId());
+							hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
+							hrPaKpiitem2user.setResult(new Double(0));//等待计算时设置结果
+							hrPaKpiitem2user.setCoefficient(new Double(0));//等待计算时设置结果
+							hrPaKpiitem2user.setRemark("");
+							//插入数据库
+							hrPaKpiitem2userService.save(hrPaKpiitem2user);
+						}
 					}
 				}
 			}else if(auditStep.equalsIgnoreCase("VicePresidentConfirm")){//分管副总裁确认
@@ -266,7 +328,7 @@ public class HrPostApplyAction extends BaseAction{
 				assessment.setModifyPerson(currentUser);
 				assessment.setPublishStatus(publishStatus);
 				hrPostAssessmentService.save(assessment);
-				if(publishStatus == 3) {//更新档案表
+				if(publishStatus == 3) {//更新档案表，为该用户增加个人PBC
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("Q_userId_L_EQ", assessment.getPostApply().getApplyUser().getUserId().toString());
 					QueryFilter filter = new QueryFilter(map);
@@ -279,6 +341,54 @@ public class HrPostApplyAction extends BaseAction{
 						empProfileList.get(0).setStandardName(assessment.getNewSalaryLevelName());
 						empProfileList.get(0).setPerCoefficient(assessment.getNewFloatSalary());
 						empProfileList.get(0).setAccessionTime(assessment.getActualPostDate());
+						empProfileList.get(0).setRealPositiveTime(assessment.getActualPostDate());
+					}
+					//为该用户增加个人PBC
+					String sql = "select distinct a.id from hr_pa_kpipbc a, emp_profile b, app_user c where " +
+							"a.belongPost = " + assessment.getStandardPostId() + " and a.belongPost = b.jobId and " +
+							"b.userId = c.userId and a.publishStatus = 3";
+					List<Map<String, Object>> mapList = this.hrPostApplyService.findDataList(sql);
+					AppUser user = appUserService.get(assessment.getPostApply().getApplyUser().getUserId());
+					for(int i = 0; i < mapList.size(); i++) {
+						HrPaKpipbc pbc = hrPaKpipbcService.get(Long.parseLong(mapList.get(i).get("id").toString()));
+						//取得PBC的考核频度
+						String sql2 = "select name from hr_pa_datadictionary where id = " + pbc.getFrequency().getId();
+						List<Map<String, Object>> mapList2 = hrPaKpipbcService.findDataList(sql2);
+						String frequencyName = mapList2.get(0).get("name").toString();
+						//取出要插入PBC考核模板关联的考核项
+						Map<String, String> map2 = new HashMap<String, String>();
+						map2.put("Q_pbc.id_L_EQ", String.valueOf(pbc.getId()));
+						QueryFilter filter2 = new QueryFilter(map2);
+						List<HrPaKpiitem> hrPaKpiitemList = hrPaKpiitemService.getAll(filter2);
+						//2.1.1. 保存个人考核模板基本信息
+						HrPaKpiPBC2User hrPaKpiPBC2User = new HrPaKpiPBC2User();
+						hrPaKpiPBC2User.setPbcName(user.getFullname() + "的" + frequencyName + "PBC");
+						hrPaKpiPBC2User.setFromPBC(String.valueOf(pbc.getId()));
+						hrPaKpiPBC2User.setBelongUser(user);
+						hrPaKpiPBC2User.setFrequency(pbc.getFrequency());
+						hrPaKpiPBC2User.setCreatePerson(pbc.getCreatePerson());
+						hrPaKpiPBC2User.setCreateDate(currentDate);
+						hrPaKpiPBC2User.setPublishStatus(0);//默认为草稿状态
+						hrPaKpiPBC2User.setTotalScore(pbc.getTotalScore());
+						hrPaKpiPBC2User.setModifyDate(currentDate);
+						hrPaKpiPBC2User.setModifyPerson(currentUser);
+						hrPaKpiPBC2User.setCoefficient(new Double(0));
+						hrPaKpiPBC2User.setLineManager(pbc.getLineManager());
+						//插入数据库
+						hrPaKpiPBC2User = hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
+						
+						//2.1.2. 保存个人考核模板关联的考核项
+						for(int j = 0; j < hrPaKpiitemList.size(); j++) {
+							HrPaKpiitem2user hrPaKpiitem2user = new HrPaKpiitem2user();
+							hrPaKpiitem2user.setPbc2User(hrPaKpiPBC2User);
+							hrPaKpiitem2user.setPiId(hrPaKpiitemList.get(j).getPi().getId());
+							hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
+							hrPaKpiitem2user.setResult(new Double(0));//等待计算时设置结果
+							hrPaKpiitem2user.setCoefficient(new Double(0));//等待计算时设置结果
+							hrPaKpiitem2user.setRemark("");
+							//插入数据库
+							hrPaKpiitem2userService.save(hrPaKpiitem2user);
+						}
 					}
 				}
 			}
