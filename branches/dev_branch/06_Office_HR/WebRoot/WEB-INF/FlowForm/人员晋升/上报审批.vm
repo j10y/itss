@@ -203,6 +203,21 @@ HrPromApplySuperAuditFlowView = Ext.extend(Ext.Panel, {
 						xtype : 'hidden',
 						value : '${hrPromApply_nowPositionId}'
 					},{
+						fieldLabel : '目标一',
+						name : 'hrPromApply.target1',
+						xtype : 'hidden',
+						value : '${hrPromApply_target1}'
+					},{
+						fieldLabel : '目标二',
+						name : 'hrPromApply.target2',
+						xtype : 'hidden',
+						value : '${hrPromApply_target2}'
+					},{
+						fieldLabel : '目标三',
+						name : 'hrPromApply.target3',
+						xtype : 'hidden',
+						value : '${hrPromApply_target3}'
+					},{
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',

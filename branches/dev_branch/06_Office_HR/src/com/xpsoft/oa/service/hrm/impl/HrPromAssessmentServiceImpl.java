@@ -51,6 +51,7 @@ public class HrPromAssessmentServiceImpl extends BaseServiceImpl<HrPromAssessmen
 			hrPromAssessment.setCreatePerson(ContextUtil.getCurrentUser());
 			hrPromAssessment.setCreateDate(new Date());
 			dao.save(hrPromAssessment);
+			flush();
 			return dao.get(hrPromAssessment.getId());
 		}else{
 			return list.get(0);

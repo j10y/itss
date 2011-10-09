@@ -2,5 +2,8 @@
 <fields>
     <field name="leaderRead.leaderOpinion" label="审批意见" type="varchar" length="1024"/>
 	<field name="hrPromApply.id" label="primaryKey" type="long" isShowed="false" />
-	<field name="hrPromApply.nowPositionId" label="现工作岗位ID" type="varchar" isShowed="false" />
+	<field name="hrPromApply.nowPositionId" label="现工作岗位ID" type="varchar" isShowed="false" />	
+	<field name="hrPromApply.target1" label="目标一" type="varchar" length="256" isShowed="false" />
+	<field name="hrPromApply.target2" label="目标二" type="varchar" length="256" isShowed="false" />
+	<field name="hrPromApply.target3" label="目标三" type="varchar" length="256" isShowed="false" />
 </fields>

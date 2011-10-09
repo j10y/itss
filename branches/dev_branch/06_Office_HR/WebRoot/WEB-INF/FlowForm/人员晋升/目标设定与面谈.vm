@@ -199,15 +199,18 @@ HrPromApplyTargetConfirmFlowView = Ext.extend(Ext.Panel, {
 						fieldLabel : '目标一',
 						name : 'target1',
 						xtype:'textfield',
-						allowBlank : false
+						allowBlank : false,
+						value : '${hrPromApply_target1}'
 					}, {
 						fieldLabel : '目标二',
 						name : 'target2',
-						xtype:'textfield'
+						xtype:'textfield',
+						value : '${hrPromApply_target2}'
 					}, {
 						fieldLabel : '目标三',
 						name : 'target3',
-						xtype:'textfield'
+						xtype:'textfield',
+						value : '${hrPromApply_target3}'
 					}, {
 						fieldLabel : '面谈记录',
 						name : 'intRecord',

@@ -31,7 +31,7 @@ HrPromAssessmentForm = Ext.extend(Ext.Window, {
 		this.panel = new Ext.Panel({
 			border : false,
 			bodyBorder : false,
-			html : "<iframe frameborder='no' width=100% height=100% src='" + __ctxPath + "/hrm/getViewByApplyIdHrPromAssessment.do?applyId=" + this.applyId + "&assess=" + this.assess +  "&stamp=" + Math.random() +"'>"
+			html : "<iframe id='HrPromAssessmentFrame' frameborder='no' width=100% height=100% src='" + __ctxPath + "/hrm/getViewByApplyIdHrPromAssessment.do?applyId=" + this.applyId + "&assess=" + this.assess +  "&stamp=" + Math.random() +"'>"
 		});
 	}
 });
