@@ -22,7 +22,7 @@ public class StandSalary extends BaseModel {
 	protected String standardName;
 
 	@Expose
-	protected BigDecimal totalMoney;
+	protected BigDecimal totalMoney;//totalMoney = perCoefficient + baseMoney
 
 	@Expose
 	protected String framer;
@@ -60,6 +60,9 @@ public class StandSalary extends BaseModel {
 	
 	@Expose
 	protected BigDecimal yearTotalMoney;//年度总薪酬
+	
+	@Expose
+	protected BigDecimal baseMoney;//固定工资
 
 	public StandSalary() {
 	}
@@ -203,6 +206,14 @@ public class StandSalary extends BaseModel {
 	public void setYearTotalMoney(BigDecimal yearTotalMoney) {
 		this.yearTotalMoney = yearTotalMoney;
 	}
+	
+	public BigDecimal getBaseMoney() {
+		return baseMoney;
+	}
+
+	public void setBaseMoney(BigDecimal baseMoney) {
+		this.baseMoney = baseMoney;
+	}
 
 	public boolean equals(Object object) {
 		/* 279 */if (!(object instanceof StandSalary)) {
@@ -226,6 +237,7 @@ public class StandSalary extends BaseModel {
 		/* 296 */.append(this.perCoefficient, rhs.perCoefficient)
 		/* 296 */.append(this.yearEndBonusCoefficient, rhs.yearEndBonusCoefficient)
 		/* 296 */.append(this.yearTotalMoney, rhs.yearTotalMoney)
+		/* 296 */.append(this.baseMoney, rhs.baseMoney)
 		/* 297 */.isEquals();
 	}
 
@@ -247,6 +259,7 @@ public class StandSalary extends BaseModel {
 		/* 317 */.append(this.perCoefficient)
 		/* 317 */.append(this.yearEndBonusCoefficient)
 		/* 317 */.append(this.yearTotalMoney)
+		/* 317 */.append(this.baseMoney)
 		/* 318 */.toHashCode();
 	}
 
@@ -268,6 +281,7 @@ public class StandSalary extends BaseModel {
 		/* 338 */.append("perCoefficient", this.perCoefficient)
 		/* 338 */.append("yearEndBonusCoefficient", this.yearEndBonusCoefficient)
 		/* 338 */.append("yearTotalMoney", this.yearTotalMoney)
+		/* 338 */.append("baseMoney", this.baseMoney)
 		/* 339 */.toString();
 	}
 }

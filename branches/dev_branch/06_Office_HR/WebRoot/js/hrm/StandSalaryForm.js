@@ -60,6 +60,9 @@ StandSalaryForm.prototype.setup = function (c) {
 						}, {
 							name : "standSalaryForm.memo",
 							mapping : "memo"
+						}, {
+							name : "standSalaryForm.baseMoney",
+							mapping : "baseMoney"
 						}
 					]),
 				items : [{
@@ -123,12 +126,21 @@ StandSalaryForm.prototype.setup = function (c) {
 												blankText : "标准名称不能为空!",
 												id : "standSalaryForm.standardName"
 											}, {
-												fieldLabel : "薪资总额",
-												name : "standSalary.totalMoney",
-												id : "standSalaryForm.totalMoney",
-												xtype : "textfield",
-												readOnly : true,
-												anchor : "100%"
+												fieldLabel : "绩效基数",
+												name : "standSalary.perCoefficient",
+												id : "standSalaryForm.perCoefficient",
+												xtype:"numberfield",
+												allowBlank : false,
+												emptyText : "0",
+												anchor : "100%",
+												listeners : {
+													change : function(field, newValue, oldValue ) {
+														var baseMoney = Ext.getCmp("standSalaryForm.baseMoney").getValue();
+														var perCoefficient = Ext.getCmp("standSalaryForm.perCoefficient").getValue();
+														Ext.getCmp("standSalaryForm.totalMoney").setValue(baseMoney + perCoefficient);
+														
+													}
+												}
 											}, {
 												fieldLabel : "年度总薪酬",
 												name : "standSalary.yearTotalMoney",
@@ -162,11 +174,28 @@ StandSalaryForm.prototype.setup = function (c) {
 														});
 												}
 											}, {
-												fieldLabel : "绩效基数",
-												name : "standSalary.perCoefficient",
-												id : "standSalaryForm.perCoefficient",
-												xtype:"numberfield",
+												fieldLabel : "固定薪资",
+												name : "standSalary.baseMoney",
+												id : "standSalaryForm.baseMoney",
+												xtype : "numberfield",
 												allowBlank : false,
+												anchor : "100%",
+												emptyText : "0",
+												listeners : {
+													change : function(field, newValue, oldValue ) {
+														var baseMoney = Ext.getCmp("standSalaryForm.baseMoney").getValue();
+														var perCoefficient = Ext.getCmp("standSalaryForm.perCoefficient").getValue();
+														Ext.getCmp("standSalaryForm.totalMoney").setValue(baseMoney + perCoefficient);
+														
+													}
+												}
+											}, {
+												fieldLabel : "月度薪资总额",
+												name : "standSalary.totalMoney",
+												id : "standSalaryForm.totalMoney",
+												xtype : "textfield",
+												readOnly : true,
+												emptyText : "0",
 												anchor : "100%"
 											}, {
 												fieldLabel : "年终奖金绩效基数",
@@ -187,7 +216,8 @@ StandSalaryForm.prototype.setup = function (c) {
 								anchor : "99%"
 							}
 						]
-					}, b]
+					//}, b]
+					}]
 			});
 	if (this.standardId != null && this.standardId != "undefined") {
 		a.getForm().load({
@@ -227,7 +257,9 @@ StandSalaryForm.prototype.initToolbar = function () {
 	return a;
 };
 StandSalaryForm.saveStandSalary = function () {
-	StandSalaryItemView.onCalcTotalMoney();
+	var c = Ext.getCmp("StandSalaryFormPanel");
+	var d = [];
+	/*StandSalaryItemView.onCalcTotalMoney();
 	var c = Ext.getCmp("StandSalaryFormPanel");
 	var b = Ext.getCmp("StandSalaryItemGrid").getStore();
 	var d = [];
@@ -239,7 +271,7 @@ StandSalaryForm.saveStandSalary = function () {
 		if (a.dirty) {
 			d.push(a.data);
 		}
-	}
+	}*/
 	//标准名称正确格式：名称说明_Band_档
 	var standSalaryNames = Ext.getCmp("standSalaryForm.standardName").getValue().split("_");
 	if(standSalaryNames.length != 3) {
