@@ -11,7 +11,8 @@ JobView = Ext.extend(Ext.Panel, {
 			title : "岗位管理",
 			region : "center",
 			layout : "border",
-			items : [ this.searchPanel, this.gridPanel ]
+			//items : [ this.searchPanel, this.gridPanel ]
+			items : [ this.deptPanel, this.gridPanel ]
 		});
 	},
 	typeId : null,
@@ -20,6 +21,58 @@ JobView = Ext.extend(Ext.Panel, {
 	store : null,
 	topbar : null,
 	initComponents : function() {
+		
+		//add by awen for add department on 2011-10-11 begin
+
+		this.deptPanel = new Ext.tree.TreePanel({
+			region : "west",
+			id : "treePanel",
+			title : "部门信息显示",
+			collapsible : true,
+			split : true,
+			height : 800,
+			width : 180,
+			tbar : new Ext.Toolbar({
+				items : [ {
+					xtype : "button",
+					iconCls : "btn-refresh",
+					text : "刷新",
+					handler : function() {
+						this.deptPanel.root.reload();
+					},
+					scope : this
+				}, {
+					xtype : "button",
+					text : "展开",
+					iconCls : "btn-expand",
+					handler : function() {
+						this.deptPanel.expandAll();
+					},
+					scope : this
+				}, {
+					xtype : "button",
+					text : "收起",
+					iconCls : "btn-collapse",
+					handler : function() {
+						this.deptPanel.collapseAll();
+					},
+					scope : this
+				} ]
+			}),
+			loader : new Ext.tree.TreeLoader({
+				url : __ctxPath + "/system/listDepartment.do"
+			}),
+			root : new Ext.tree.AsyncTreeNode({
+				expanded : true
+			}),
+			rootVisible : false,
+			listeners : {
+				"click" : JobView.clickNode
+			}
+		});
+		
+		//add by awen for add department on 2011-10-11 end
+		
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
 			height : 40,
@@ -265,3 +318,30 @@ JobView = Ext.extend(Ext.Panel, {
 		}
 	}
 });
+
+JobView.clickNode = function(b) {
+	if (b != null) {
+		var c = Ext.getCmp("JobView");
+		//var a = c.getStore();
+		var a = c.store;
+		a.url = __ctxPath + "/hrm/listJob.do";
+		if(b.id!="0"){
+			a.baseParams = {
+					'Q_department.depId_L_EQ' : b.id
+			};
+		}else{
+			a.baseParams = {
+			};
+		}	
+		a.params = {
+			start : 0,
+			limit : 25
+		};
+		a.reload({
+			params : {
+				start : 0,
+				limit : 25
+			}
+		});
+	}
+};

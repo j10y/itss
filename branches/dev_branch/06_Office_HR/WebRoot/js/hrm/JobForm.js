@@ -12,7 +12,7 @@ JobForm = Ext.extend(Ext.Window, {
 			iconCls : "menu-job",
 			items : this.formPanel,
 			modal : true,
-			height : 400,
+			height : 470,
 			width : 700,
 			maximizable : true,
 			title : "岗位详细信息",
@@ -21,6 +21,7 @@ JobForm = Ext.extend(Ext.Window, {
 		});
 	},
 	initComponents : function() {
+		
 		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
 		this.jobDepartmentName = new TreeSelector("jobDepartmentName", a,
 				"所属部门", "depId", false);
@@ -51,7 +52,103 @@ JobForm = Ext.extend(Ext.Window, {
 				id : "depId",
 				xtype : "hidden"
 			}, this.jobDepartmentName, {
-				fieldLabel : "备注",
+				fieldLabel : "band",
+				hiddenName : "job.band.id",
+				maxHeight : 200,
+				id : "band",
+				xtype : "combo",
+				mode : "local",
+				editable : false,
+				valueField : "id",
+				displayField : "name",
+				triggerAction : "all",
+				store : new Ext.data.SimpleStore({
+					fields : ["id","name"]
+				}),
+				listeners : {
+					focus : function(d) {
+						var c = Ext.getCmp("band").getStore();
+						if(c.getCount() <= 0) {
+							Ext.Ajax.request({
+								url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
+								method : "post",
+								params : {
+									parentId : 24
+								},
+								success : function(f) {
+									var e = Ext.util.JSON.decode(f.responseText);
+									c.loadData(e);
+								}
+							});
+						}
+					}
+				}
+			}, {
+				fieldLabel : "族群",
+				hiddenName : "job.race.id",
+				maxHeight : 200,
+				id : "race",
+				xtype : "combo",
+				mode : "local",
+				editable : false,
+				valueField : "id",
+				displayField : "name",
+				triggerAction : "all",
+				store : new Ext.data.SimpleStore({
+					fields : ["id","name"]
+				}),
+				listeners : {
+					focus : function(d) {
+						var c = Ext.getCmp("race").getStore();
+						if(c.getCount() <= 0) {
+							Ext.Ajax.request({
+								url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
+								method : "post",
+								params : {
+									parentId : 18
+								},
+								success : function(f) {
+									var e = Ext.util.JSON.decode(f.responseText);
+									c.loadData(e);
+								}
+							});
+						}
+					}
+				}
+			}, {
+				fieldLabel : "序列",
+				hiddenName : "job.seq.id",
+				maxHeight : 200,
+				id : "seq",
+				xtype : "combo",
+				mode : "local",
+				editable : false,
+				valueField : "id",
+				displayField : "name",
+				triggerAction : "all",
+				store : new Ext.data.SimpleStore({
+					fields : ["id","name"]
+				}),
+				listeners : {
+					focus : function(d) {
+						var c = Ext.getCmp("seq").getStore();
+						if(c.getCount() <= 0) {
+							Ext.Ajax.request({
+								url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
+								method : "post",
+								params : {
+									parentId : 19          //考核频度的根节点ID
+								},
+								success : function(f) {
+									var e = Ext.util.JSON.decode(f.responseText);
+									c.loadData(e);
+								}
+							});
+						}
+					}
+				}
+			}, {
+				fieldLabel : "说明书",
 				name : "job.memo",
 				id : "memo",
 				height: 250,
@@ -67,6 +164,12 @@ JobForm = Ext.extend(Ext.Window, {
 						success : function(b, c) {
 							Ext.getCmp("jobDepartmentName").setValue(
 									c.result.data.department.depName);
+							Ext.getCmp("band").setValue(c.result.data.band.id);
+							Ext.getCmp("band").setRawValue(c.result.data.band.name);
+							Ext.getCmp("seq").setValue(c.result.data.seq.id);
+							Ext.getCmp("seq").setRawValue(c.result.data.seq.name);
+							Ext.getCmp("race").setValue(c.result.data.race.id);
+							Ext.getCmp("race").setRawValue(c.result.data.race.name);
 						},
 						failure : function(b, c) {
 						}

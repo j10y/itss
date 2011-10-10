@@ -1,12 +1,15 @@
 package com.xpsoft.oa.model.hrm;
 
-import com.xpsoft.core.model.BaseModel;
-import com.xpsoft.oa.model.system.Department;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
+import com.xpsoft.oa.model.system.Department;
 
 public class Job extends BaseModel {
 	public static short DELFLAG_NOT = 0;
@@ -17,6 +20,10 @@ public class Job extends BaseModel {
 	protected Short delFlag;
 	protected Department department;
 	protected Set empProfiles = new HashSet();
+	
+	protected HrPaDatadictionary band;//band
+	protected HrPaDatadictionary seq;//seq序列
+	protected HrPaDatadictionary race;//group族群
 
 	public Job() {
 	}
@@ -87,6 +94,30 @@ public class Job extends BaseModel {
 
 	public void setDelFlag(Short delFlag) {
 		this.delFlag = delFlag;
+	}	
+
+	public HrPaDatadictionary getBand() {
+		return band;
+	}
+
+	public void setBand(HrPaDatadictionary band) {
+		this.band = band;
+	}
+
+	public HrPaDatadictionary getSeq() {
+		return seq;
+	}
+
+	public void setSeq(HrPaDatadictionary seq) {
+		this.seq = seq;
+	}
+
+	public HrPaDatadictionary getRace() {
+		return race;
+	}
+
+	public void setRace(HrPaDatadictionary race) {
+		this.race = race;
 	}
 
 	public boolean equals(Object object) {
@@ -99,6 +130,9 @@ public class Job extends BaseModel {
 			.append(this.jobName, rhs.jobName)
 			.append(this.memo, rhs.memo)
 			.append(this.delFlag, rhs.delFlag)
+			.append(this.band, rhs.band)
+			.append(this.seq, rhs.seq)
+			.append(this.race, rhs.race)
 			.isEquals();
 	}
 
@@ -108,6 +142,9 @@ public class Job extends BaseModel {
 			.append(this.jobName)
 			.append(this.memo)
 			.append(this.delFlag)
+			.append(this.band)
+			.append(this.seq)
+			.append(this.race)
 			.toHashCode();
 	}
 
@@ -117,6 +154,9 @@ public class Job extends BaseModel {
 			.append("jobName", this.jobName)
 			.append("memo", this.memo)
 			.append("delFlag", this.delFlag)
+			.append("band", this.band)
+			.append("seq", this.seq)
+			.append("group", this.race)
 			.toString();
 	}
 }

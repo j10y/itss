@@ -4,12 +4,13 @@
  import com.xpsoft.core.web.action.BaseAction;
  import com.xpsoft.core.web.paging.PagingBean;
  import com.xpsoft.oa.model.hrm.Job;
+import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
  import com.xpsoft.oa.service.hrm.JobService;
  import flexjson.JSONSerializer;
  import java.util.List;
  import javax.annotation.Resource;
  import javax.servlet.http.HttpServletRequest;
- import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringUtils;
  
  public class JobAction extends BaseAction
  {
@@ -87,6 +88,12 @@
    public String save()
    {
 		/* 116 */this.job.setDelFlag(Short.valueOf(Job.DELFLAG_NOT));
+		HrPaDatadictionary band = null;
+		if(StringUtils.isNotEmpty(getRequest().getParameter("job.band.id"))){
+			band = new HrPaDatadictionary();
+			band.setId(Long.valueOf(getRequest().getParameter("job.band.id")));
+		}
+		this.job.setBand(band);
 /* 117 */     this.jobService.save(this.job);
 /* 118 */     setJsonString("{success:true}");
 /* 119 */     return "success";

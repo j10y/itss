@@ -54,6 +54,11 @@
             not-null="false"
             unique="false"
         />
+        
+        <many-to-one name="band" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaDatadictionary" column="band"></many-to-one>
+        <many-to-one name="seq" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaDatadictionary" column="seq"></many-to-one>
+        <many-to-one name="race" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaDatadictionary" column="race"></many-to-one>
+        
      <!-- imported bi-directional many-to-one association to Department -->
 		<many-to-one
 			name="department"
