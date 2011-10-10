@@ -2,6 +2,8 @@ package com.xpsoft.oa.model.hrm;
 
 import com.google.gson.annotations.Expose;
 import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -82,6 +84,12 @@ public class EmpProfile extends BaseModel {
 	
 	private Integer organization;//编制 1是正编 0还是非编
 	
+	protected HrPaDatadictionary empType;//用功形式
+	
+	protected String practiceRecord;//实习记录
+	
+	protected Date contractBeginDate;//合同签署日期
+	protected Date contractEndDate;//合同截止日期
 	
 	public Integer getOrganization() {
 		return organization;
@@ -567,6 +575,38 @@ public class EmpProfile extends BaseModel {
 		this.realPositiveTime = realPositiveTime;
 	}
 
+	public HrPaDatadictionary getEmpType() {
+		return empType;
+	}
+
+	public void setEmpType(HrPaDatadictionary empType) {
+		this.empType = empType;
+	}
+	
+	public String getPracticeRecord() {
+		return practiceRecord;
+	}
+
+	public void setPracticeRecord(String practiceRecord) {
+		this.practiceRecord = practiceRecord;
+	}
+
+	public Date getContractBeginDate() {
+		return contractBeginDate;
+	}
+
+	public void setContractBeginDate(Date contractBeginDate) {
+		this.contractBeginDate = contractBeginDate;
+	}
+
+	public Date getContractEndDate() {
+		return contractEndDate;
+	}
+
+	public void setContractEndDate(Date contractEndDate) {
+		this.contractEndDate = contractEndDate;
+	}
+
 	public boolean equals(Object object) {
 		/* 850 */if (!(object instanceof EmpProfile)) {
 			/* 851 */return false;
@@ -626,6 +666,10 @@ public class EmpProfile extends BaseModel {
 		/* 899 */.append(this.departureTime, rhs.departureTime)
 		.append(this.positiveTime, rhs.positiveTime)
 		.append(this.realPositiveTime, rhs.realPositiveTime)
+		.append(this.empType, rhs.empType)
+		.append(this.practiceRecord, rhs.practiceRecord)
+		.append(this.contractBeginDate, rhs.contractBeginDate)
+		.append(this.contractEndDate, rhs.contractEndDate)
 		/* 901 */.isEquals();
 	}
 
@@ -684,6 +728,10 @@ public class EmpProfile extends BaseModel {
 		/* 899 */.append(this.departureTime)
 		.append(this.positiveTime)
 		.append(this.realPositiveTime)
+		.append(this.empType)
+		.append(this.practiceRecord)
+		.append(this.contractBeginDate)
+		.append(this.contractEndDate)
 		/* 955 */.toHashCode();
 	}
 
@@ -742,6 +790,10 @@ public class EmpProfile extends BaseModel {
 		/* 899 */.append("departureTime", this.departureTime)
 		/* 899 */.append("positiveTime", this.positiveTime)
 		/* 899 */.append("realPositiveTime", this.realPositiveTime)
+		/* 899 */.append("empType", this.empType)
+		/* 899 */.append("practiceRecord", this.practiceRecord)
+		/* 899 */.append("contractBeginDate", this.contractBeginDate)
+		/* 899 */.append("contractEndDate", this.contractEndDate)
 		/* 1009 */.toString();
 	}
 }

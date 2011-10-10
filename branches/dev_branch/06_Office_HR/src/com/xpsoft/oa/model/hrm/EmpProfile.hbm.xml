@@ -651,5 +651,39 @@
             not-null="false"
             unique="false"
         />
+        <many-to-one name="empType" not-null="false" class="com.xpsoft.oa.model.kpi.HrPaDatadictionary" column="empType"></many-to-one>
+        <property
+            name="contractBeginDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="contractBeginDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="contractEndDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="contractEndDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="practiceRecord"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="practiceRecord"
+            length="1024"
+            not-null="false"
+            unique="false"
+        />
     </class>
 </hibernate-mapping>

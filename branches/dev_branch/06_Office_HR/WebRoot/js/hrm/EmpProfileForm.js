@@ -240,6 +240,10 @@ EmpProfileForm = Ext
 														mapping : "memo"
 													},
 													{
+														name : "empProfileForm.practiceRecord",
+														mapping : "practiceRecord"
+													},
+													{
 														name : "empProfileForm.userId",
 														mapping : "userId"
 													},
@@ -566,6 +570,45 @@ EmpProfileForm = Ext
 																			Ext.getCmp("empProfileForm.organization").setValue(rganizationid);
 																		}
 																		}
+																	}, {
+																		fieldLabel : "合同签署日期",
+																		name : "empProfile.contractBeginDate",
+																		id : "empProfileForm.contractBeginDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
+																	},
+																	{
+																		fieldLabel : "用工形式",
+																		hiddenName : "empProfile.empType.id",
+																		id : "empProfileForm.empType.id",
+																		maxHeight : 200,
+																		xtype : "combo",
+																		mode : "local",
+																		editable : false,
+																		valueField : "id",
+																		displayField : "name",
+																		triggerAction : "all",
+																		store : new Ext.data.SimpleStore({
+																			fields : ["id","name"]
+																		}),
+																		listeners : {
+																			focus : function(d) {
+																				var c = Ext.getCmp("empProfileForm.empType.id").getStore();
+																				if(c.getCount() <= 0) {
+																					Ext.Ajax.request({
+																						url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
+																						method : "post",
+																						params : {
+																							parentId : 20
+																						},
+																						success : function(f) {
+																							var e = Ext.util.JSON.decode(f.responseText);
+																							c.loadData(e);
+																						}
+																					});
+																				}
+																			}
+																		}
 																	}]
 														},
 														{
@@ -758,6 +801,13 @@ EmpProfileForm = Ext
 																		format : "Y-m-d",
 																		readOnly: true,
 																		id : "empProfileForm.realPositiveTime"
+																	},
+																	{
+																		fieldLabel : "合同截止日期",
+																		name : "empProfile.contractEndDate",
+																		id : "empProfileForm.contractEndDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
 																	}]
 														},
 														{
@@ -911,6 +961,27 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.bankNo"
 																	},
 																	{
+																		fieldLabel : "基本工资",
+																		name : "empProfile.baseMoney",
+																		id : "empProfileForm.baseMoney",
+																		readOnly : true,
+																		xtype:"numberfield"
+																	},
+																	{
+																		fieldLabel : "年度总薪酬",
+																		name : "empProfile.yearTotalMoney",
+																		id : "empProfileForm.yearTotalMoney",
+																		readOnly : true,
+																		xtype:"numberfield"
+																	},
+																	{
+																		fieldLabel : "试用期固定工资",
+																		name : "empProfile.baseMoneyTmp",
+																		id : "empProfileForm.baseMoneyTmp",
+																		readOnly : true,
+																		xtype:"numberfield"
+																	},
+																	{
 																		fieldLabel : "社会保险",
 																		name : "empProfile.insurance",
 																		id : "empProfileForm.insurance",
@@ -1020,6 +1091,8 @@ EmpProfileForm = Ext
 																							"totalMoney",
 																							"setdownTime",
 																							"perCoefficient",
+																							"yearTotalMoney",
+																							"baseMoney",
 																							"status" ]
 																				}),
 																		listeners : {
@@ -1052,6 +1125,22 @@ EmpProfileForm = Ext
 																						.setValue(c.data.totalMoney);
 																				Ext.getCmp("empProfileForm.perCoefficient")
 																					.setValue(c.data.perCoefficient);
+																				
+																				try{
+																					//年度总薪酬
+																					Ext.getCmp("empProfileForm.yearTotalMoney").setValue(c.data.yearTotalMoney);
+																					//基本工资
+																					Ext.getCmp("empProfileForm.baseMoney").setValue(c.data.baseMoney);
+																					//试用期工资
+																					Ext.getCmp("empProfileForm.standardMoneyTmp").setValue(c.data.totalMoney*0.8);
+																					//试用期固定工资
+																					Ext.getCmp("empProfileForm.baseMoneyTmp").setValue(c.data.baseMoney*0.8);
+																					//试用期绩效基数
+																					Ext.getCmp("empProfileForm.perCoefficientTmp").setValue(c.data.perCoefficient*0.8);
+																				}catch(err){
+																					
+																				}
+																				
 																			},
 																			beforeload : function(store, options){
 																				if(jobId==null || jobId==undefined || jobId==0){
@@ -1076,6 +1165,20 @@ EmpProfileForm = Ext
 																		fieldLabel : "绩效基数",
 																		name : "empProfile.perCoefficient",
 																		id : "empProfileForm.perCoefficient",
+																		xtype:"numberfield"
+																	},
+																	{
+																		fieldLabel : "试用期工资",
+																		name : "empProfile.standardMoneyTmp",
+																		id : "empProfileForm.standardMoneyTmp",
+																		readOnly : true,
+																		xtype:"numberfield"
+																	},
+																	{
+																		fieldLabel : "试用期绩效基数",
+																		name : "empProfile.perCoefficientTmp",
+																		id : "empProfileForm.perCoefficientTmp",
+																		readOnly : true,
 																		xtype:"numberfield"
 																	}]
 														},
@@ -1323,6 +1426,17 @@ EmpProfileForm = Ext
 												} ]
 											}, {
 												xtype : "fieldset",
+												title : "实习记录",
+												layout : "anchor",
+												items : [ {
+													fieldLabel : "实习记录",
+													name : "empProfile.practiceRecord",
+													anchor : "100%",
+													id : "empProfileForm.practiceRecord",
+													xtype : "textarea"
+												} ]
+											}, {
+												xtype : "fieldset",
 												title : "备注",
 												layout : "anchor",
 												items : [ {
@@ -1373,6 +1487,14 @@ EmpProfileForm = Ext
 													var e = Ext.util.JSON
 															.decode(h.response.responseText).data[0];
 													var d = e.photo;
+													//add get empType info logic on 2011-10-11 begin
+													if (e.empType != ""
+														&& e.empType != null
+														&& e.empType != "undefined") {
+														Ext.getCmp("empProfileForm.empType.id").setValue(e.empType.id);
+														Ext.getCmp("empProfileForm.empType.id").setRawValue(e.empType.name);
+													}
+													//add get empType info logic on 2011-10-11 end
 													if (e.startWorkDate != ""
 															&& e.startWorkDate != null
 															&& e.startWorkDate != "undefined") {
@@ -1456,6 +1578,32 @@ EmpProfileForm = Ext
 																new Date(
 																		f));
 													}
+													if (e.contractBeginDate != ""
+														&& e.contractBeginDate != null
+														&& e.contractBeginDate != "undefined") {
+														var f = getDateFromFormat(
+																e.contractBeginDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.contractBeginDate")
+														.setValue(
+																new Date(
+																		f));
+													}
+													if (e.contractEndDate != ""
+														&& e.contractEndDate != null
+														&& e.contractEndDate != "undefined") {
+														var f = getDateFromFormat(
+																e.contractEndDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.contractEndDate")
+														.setValue(
+																new Date(
+																		f));
+													}
 													
 													if (d != null && d != "") {
 														Ext
@@ -1481,6 +1629,34 @@ EmpProfileForm = Ext
 															.getCmp(
 																	"EmpProfileSelectEmp")
 															.hide();
+													//add by awen for get standSalary info by ajax on 2011-10-11 begin
+													
+													Ext.Ajax.request({
+														url : __ctxPath + "/hrm/getStandSalary.do?standardId=" + e.standSalary.standardId,
+														success : function (d, e) {
+															var data = Ext.decode(d.responseText);
+															var standSalary = data.data[0];
+															try{
+																//年度总薪酬
+																Ext.getCmp("empProfileForm.yearTotalMoney").setValue(standSalary.yearTotalMoney);
+																//基本工资
+																Ext.getCmp("empProfileForm.baseMoney").setValue(standSalary.baseMoney);
+																//试用期工资
+																Ext.getCmp("empProfileForm.standardMoneyTmp").setValue(standSalary.totalMoney*0.8);
+																//试用期固定工资
+																Ext.getCmp("empProfileForm.baseMoneyTmp").setValue(standSalary.baseMoney*0.8);
+																//试用期绩效基数
+																Ext.getCmp("empProfileForm.perCoefficientTmp").setValue(standSalary.perCoefficient*0.8);
+															}catch(err){
+																
+															}
+															
+														},
+														failure : function (d, e) {}
+														
+													});
+													
+													//add by awen for get standSalary info by ajax on 2011-10-11 end
 												},
 												failure : function(c, d) {
 												}

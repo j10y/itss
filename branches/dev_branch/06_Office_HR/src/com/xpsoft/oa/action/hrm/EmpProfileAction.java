@@ -7,6 +7,7 @@ import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.archive.ArchivesType;
 import com.xpsoft.oa.model.hrm.EmpProfile;
+import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
 import flexjson.JSONSerializer;
@@ -15,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 public class EmpProfileAction extends BaseAction {
 
@@ -84,7 +87,7 @@ public class EmpProfileAction extends BaseAction {
 				.get(this.profileId);
 
 		/* 110 */JSONSerializer json = JsonUtil.getJSONSerializer(new String[] {
-				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime", "positiveTime" });
+				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime", "positiveTime", "contractEndDate", "contractBeginDate" });
 
 		/* 113 */StringBuffer sb = new StringBuffer("{success:true,data:[");
 
@@ -119,6 +122,14 @@ public class EmpProfileAction extends BaseAction {
 				this.empProfile.setApprovalStatus(Short
 						.valueOf(EmpProfile.CHECK_FLAG_NONE));
 			}
+			//add by awen for add empType logic on 2011-10-11 begin
+			HrPaDatadictionary empType = null;
+			if(StringUtils.isNotEmpty(getRequest().getParameter("empProfile.empType.id"))){
+				empType = new HrPaDatadictionary();
+				empType.setId(Long.valueOf(getRequest().getParameter("empProfile.empType.id")));
+			}
+			this.empProfile.setEmpType(empType);
+			//add by awen for add empType logic on 2011-10-11 end
 			this.empProfileService.save(this.empProfile);
 			buff.append("success:true}");
 		} else {

@@ -93,7 +93,19 @@ import org.apache.commons.lang.StringUtils;
 			band = new HrPaDatadictionary();
 			band.setId(Long.valueOf(getRequest().getParameter("job.band.id")));
 		}
+		HrPaDatadictionary race = null;
+		if(StringUtils.isNotEmpty(getRequest().getParameter("job.race.id"))){
+			race = new HrPaDatadictionary();
+			race.setId(Long.valueOf(getRequest().getParameter("job.race.id")));
+		}
+		HrPaDatadictionary seq = null;
+		if(StringUtils.isNotEmpty(getRequest().getParameter("job.seq.id"))){
+			seq = new HrPaDatadictionary();
+			seq.setId(Long.valueOf(getRequest().getParameter("job.seq.id")));
+		}
 		this.job.setBand(band);
+		this.job.setRace(race);
+		this.job.setSeq(seq);
 /* 117 */     this.jobService.save(this.job);
 /* 118 */     setJsonString("{success:true}");
 /* 119 */     return "success";

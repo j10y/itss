@@ -158,6 +158,8 @@ public class JobSalaryRelationAction extends BaseAction {
 			buff.append("'totalMoney':'").append(salary.getTotalMoney()).append("',");
 			buff.append("'setdownTime':'").append(salary.getSetdownTime()).append("',");
 			buff.append("'perCoefficient':'").append(salary.getPerCoefficient()).append("',");
+			buff.append("'yearTotalMoney':'").append(salary.getYearTotalMoney()).append("',");
+			buff.append("'baseMoney':'").append(salary.getBaseMoney()).append("',");
 			buff.append("'status':'").append(salary.getStatus()).append("'");
 			if(iterator.hasNext()){
 				buff.append("},");
