@@ -155,7 +155,7 @@ public class ExportSalaryAction extends BaseAction{
 			exportSalaryItemOrder7.setExportName("固定工资");
 			exportSalaryItemOrder7.setExportSalId(exportSalary);
 			exportSalaryItemOrder7.setFromTable("3");//系统默认
-			exportSalaryItemOrder7.setFromTableName("standardMoney");
+			exportSalaryItemOrder7.setFromTableName("baseMoney");
 			exportSalaryItemOrder7.setOrderCol(7);
 			exportSalaryItemOrder7.setIsDefaut(0);
 			this.exportSalaryItemService.save(exportSalaryItemOrder7);

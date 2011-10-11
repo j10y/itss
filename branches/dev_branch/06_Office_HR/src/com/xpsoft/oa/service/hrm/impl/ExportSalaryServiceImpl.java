@@ -154,12 +154,12 @@ public class ExportSalaryServiceImpl extends BaseServiceImpl<ExportSalary>
 				i=1;
 				for (int iii = 0; iii < list.size(); iii++) {
 					ExportSalaryItemOrder exportSalaryItemOrder=list.get(iii);
-					if(exportSalaryItemOrder.getFromTable().equals("1")){
+					if(exportSalaryItemOrder.getFromTable().equals("1")){//表示从薪标里获取数据
 						HSSFCell cell = rowj.createCell((short) i++); // 建立标题记录行，从第1行开始			// *******
 						cell.setCellStyle(cellStyle);
 						Object ob=simap.get(exportSalaryItemOrder.getFromTableType().toString());
 						cell.setCellValue(ob == null ? "" : ob.toString());
-					}else if(exportSalaryItemOrder.getFromTable().equals("2")){
+					}else if(exportSalaryItemOrder.getFromTable().equals("2")){//表示从奖惩里获取数据
 						HSSFCell cell = rowj.createCell((short) i++); // 建立标题记录行，从第1行开始			// *******
 						cell.setCellStyle(cellStyle);
 						Object ob=rpmap.get(exportSalaryItemOrder.getFromTableType().toString());
@@ -167,12 +167,12 @@ public class ExportSalaryServiceImpl extends BaseServiceImpl<ExportSalary>
 						HSSFCell cell1 = rowj.createCell((short) i++); // 建立标题记录行，从第1行开始			// *******
 						cell1.setCellStyle(cellStyle);
 						cell1.setCellValue(ob == null ? "" :((Map)ob).get("remark")+"");
-					}else if(exportSalaryItemOrder.getFromTable().equals("3")){
+					}else if(exportSalaryItemOrder.getFromTable().equals("3")){//默认，从导出的sql语句里获取数据
 						HSSFCell cell = rowj.createCell((short) i++); // 建立标题记录行，从第1行开始			// *******
 						cell.setCellStyle(cellStyle);
 						Object ob = npl.get(exportSalaryItemOrder.getFromTableName());
 						cell.setCellValue(ob == null ? "" : ob.toString());
-					}else if(exportSalaryItemOrder.getFromTable().equals("4")){
+					}else if(exportSalaryItemOrder.getFromTable().equals("4")){//判断员工是否是正式员工
 						HSSFCell cell = rowj.createCell((short) i++); // 建立标题记录行，从第1行开始			// *******
 						cell.setCellStyle(cellStyle);
 						Object ob = npl.get(exportSalaryItemOrder.getFromTableName());

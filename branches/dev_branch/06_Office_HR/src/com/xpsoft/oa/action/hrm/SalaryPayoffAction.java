@@ -345,7 +345,8 @@ public class SalaryPayoffAction extends BaseAction {
 	public String export(){
 		String sql="select department.depName,app_user.fullname,app_user.userId," +//部门名称 用户名 用户id
 				"emp_profile.position,emp_profile.accessionTime," +//岗位 入职时间
-				"emp_profile.bankNo,emp_profile.standardMoney," +//银行卡号 基本工资
+				"emp_profile.bankNo,emp_profile.standardMoney," +//银行卡号 总工资（固定工资+浮动工资）
+				"(emp_profile.standardMoney-emp_profile.perCoefficient) as baseMoney," +//固定工资（总工资-浮动工资）
 				"emp_profile.perCoefficient,emp_profile.positiveTime," +//绩效基数 转正日期
 				"salary_payoff.perCoefficient as jxxs,salary_payoff.issuedAmount," +//绩效系数 应发金额
 				"salary_payoff.taxableAmount,salary_payoff.achieveAmount," +//应税金额 绩效奖金

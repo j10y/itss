@@ -150,6 +150,7 @@ public class SalaryPayoffServiceImpl extends BaseServiceImpl<SalaryPayoff>
 		map.put("Q_beginDate_D_LE", DateUtil.formatDateTimeToString(new Date())+"");
 		map.put("Q_endDate_D_GE", DateUtil.formatDateTimeToString(new Date())+"");
 		map.put("Q_publishStatus_N_EQ", "3");
+		map.put("Q_budgetType_N_EQ", "1");
 		QueryFilter filter=new QueryFilter(map);
 		List list=budgetService.getAll(filter);
 		if(list.size()>0){
