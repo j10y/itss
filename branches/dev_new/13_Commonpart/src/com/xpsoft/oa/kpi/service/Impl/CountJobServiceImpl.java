@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.xp.commonpart.countjob.CountWorkDay;
 import com.xp.commonpart.countjob.FormatFm;
 import com.xp.commonpart.countjob.Modle;
 import com.xp.commonpart.service.BaseService;
@@ -450,11 +451,13 @@ public class CountJobServiceImpl implements CountJobService{
 		String sqlemp="select emp_profile.provident as provident," +
 				"emp_profile.insurance as insurance," +
 				"emp_profile.perCoefficient as perCoefficient," +
+				"(emp_profile.standardMoney-emp_profile.perCoefficient) as baseMoney,"+//固定工资
 				"emp_profile.depId as depId," +
 				"emp_profile.fullname as fullname," +
-				"emp_profile.standardMoney as standardMoney," +
+				"emp_profile.standardMoney as standardMoney," +//总工资
 				"emp_profile.profileNo as profileNo," +
 				"emp_profile.standardId as standardId," +
+				"emp_profile.realPositiveTime as realPositiveTime," +
 				"app_user.fullname as fullname," +
 				"emp_profile.idCard as idCard," +
 				"app_user.userId as userId" +
@@ -495,9 +498,9 @@ public class CountJobServiceImpl implements CountJobService{
 			String profileNo=emppro.get("profileNo")!=null?emppro.get("profileNo").toString():"";
 			Long standardId=emppro.get("standardId")!=null?Long.parseLong(emppro.get("standardId").toString()):0;
 			String idCard=emppro.get("idCard")!=null?emppro.get("idCard").toString():"";
-			//薪酬标准金额
+			//薪酬标准金额,总的工资=固定工资+绩效基数
 			Double standardMoney=emppro.get("standardMoney")!=null?Double.parseDouble(emppro.get("standardMoney").toString()):0d;
-			
+			Double baseMoney=emppro.get("baseMoney")!=null?Double.parseDouble(emppro.get("baseMoney").toString()):0d;//固定工资
 			Long depId=emppro.get("depId")!=null?Long.parseLong(emppro.get("depId").toString()):0;
 			//通过userid获取pbc模板的相应月份绩效得分，如果没有，就说明为0
 			int offset=0;
@@ -520,6 +523,7 @@ public class CountJobServiceImpl implements CountJobService{
 					" and DATE_FORMAT(hr_pa_kpipbc2usercmp.createDate,'%Y-%m')<=DATE_FORMAT('"+ed+"','%Y-%m') order by hr_pa_kpipbc2usercmp.modifyDate desc" ;
 			//获取个人的pbc模板的分数
 			List<Map> kpipbclist=selectDataService.getData(kpipbcsql);
+			int excutefre=1;
 			if(kpipbclist.size()>0){
 				Map kpipbcmap=kpipbclist.get(0);
 				String totalScore=kpipbcmap.get("totalScore").toString();
@@ -527,7 +531,7 @@ public class CountJobServiceImpl implements CountJobService{
 				String frequency=kpipbcmap.get("frequency").toString();
 				Map datemap=(Map) jobexcutedatemap.get(frequency);
 				if(datemap!=null){
-					int excutefre=Integer.parseInt(datemap.get("excutefre").toString());
+					excutefre=Integer.parseInt(datemap.get("excutefre").toString());
 					perCoefficient=perCoefficient*excutefre;//获取该频率的基数是每隔几个月的，基数就是月基数*月数
 				}
 			}else{
@@ -557,29 +561,55 @@ public class CountJobServiceImpl implements CountJobService{
 				}
 			}
 			rpamount=encourageAmount-deductAmount;
+			
+			String realPositiveTime=emppro.get("realPositiveTime").toString().substring(0,19);
+			Date realdate=DateUtil.convertStringToDate(realPositiveTime);
+			Date curdate=DateUtil.convertStringToDate(DateUtil.convertDateToString(new Date()));
+			Date firstDayOfMonth=DateUtil.getFirstDayOfMonth(curdate);
+			Date lastDayOfMonth=DateUtil.getLastDayOfMonth(curdate);
 			//薪资发放登记表
 			//实发工资=基本工资+绩效奖金-五险一金+奖励-罚款-个人所得税
 			//绩效奖金=绩效奖金基数×绩效系数
 			//个人所得税=（基本工资+绩效奖金-五险一金+奖励-罚款-个人所得税起征点）*算法
 			String incomesql="select * from hr_sr_incometax order by publishDate desc";
 			List<Map> incomelist=selectDataService.getData(incomesql);
+			DecimalFormat myformat = new DecimalFormat();
+			myformat.applyPattern("###.00");
 			if(incomelist!=null&&incomelist.size()>0){
 				Map incomemap=incomelist.get(0);
 				//个税起征点
 				Double basicAmount=incomemap.get("basicAmount")!=null?Double.parseDouble(incomemap.get("basicAmount").toString()):0d;
+				CountWorkDay cwd=new CountWorkDay();
+				String monthdays=PropertiesUtil.getProperties("monthdays");
+				float fmonthdays=Float.parseFloat(monthdays);
+				String appenddemo="";
+				if(realdate.getTime()<=curdate.getTime()&&realdate.getMonth()==curdate.getMonth()&&realdate.getYear()==curdate.getYear()){
+					int beforpositive=cwd.getWorkingDay(firstDayOfMonth,DateUtil.addDays(curdate, -1));
+					int afterpositive=cwd.getWorkingDay(curdate,lastDayOfMonth);
+					appenddemo="该月转正，因此工资分三部分，转正前固定工资（"+standardMoney+"*"+0.8+"*"+beforpositive+"/"+fmonthdays+"）:"+myformat.format(standardMoney*0.8*beforpositive/fmonthdays)+" 转正后固定工资("+baseMoney+"*"+afterpositive+"/"+fmonthdays+")："+myformat.format(baseMoney*afterpositive/fmonthdays)+" 绩效基数("+perCoefficient+"*"+afterpositive+"/"+fmonthdays+")："+myformat.format(perCoefficient*afterpositive/fmonthdays);
+					logger.info("此人"+emppro.get("fullname")+appenddemo);
+					baseMoney=Double.parseDouble(myformat.format(standardMoney*0.8*beforpositive/fmonthdays+baseMoney*afterpositive/fmonthdays));
+					perCoefficient=Double.parseDouble(myformat.format(perCoefficient*afterpositive/fmonthdays));
+				}else if(realdate.getTime()>curdate.getTime()){
+					appenddemo="处于试用期，因此工资为（固定工资+绩效基数*1）*80%="+standardMoney*0.8;
+					baseMoney=standardMoney*0.8;
+					logger.info("此人"+emppro.get("fullname")+appenddemo);
+				}else{
+					logger.info("此人"+emppro.get("fullname")+"转正，按正常发放");
+				}
 				//基本工资+绩效奖金-五险一金+奖励-罚款-个人所得税起征点
-				double ksgz=standardMoney+perCoefficient*factorValue-provident-insurance+rpamount-basicAmount;
+				double ksgz=baseMoney+perCoefficient*factorValue-provident-insurance+rpamount-basicAmount;
 				String incomeitemsql="select * from hr_sr_incometaxitem where lowerAmount<"+ksgz+"and limitAmount>="+ksgz;
 				List<Map> incometaxitmelist=selectDataService.getData(incomeitemsql);
-				DecimalFormat myformat = new DecimalFormat();
-				myformat.applyPattern("###.00");
+				
+				
 				if(incometaxitmelist!=null&&incometaxitmelist.size()>0){
 					Map intaxitemmap=incometaxitmelist.get(0);
 					Double taxValue=intaxitemmap.get("taxValue")!=null?Double.parseDouble(intaxitemmap.get("taxValue").toString()):0d;
 					Double deductValue=intaxitemmap.get("deductValue")!=null?Double.parseDouble(intaxitemmap.get("deductValue").toString()):0d;
 					Double selftax=ksgz*taxValue-deductValue;
 					selftax=Double.parseDouble(myformat.format(selftax));
-					Double realincome=standardMoney+perCoefficient*factorValue-provident-insurance+rpamount-selftax;
+					Double realincome=baseMoney+perCoefficient*factorValue-provident-insurance+rpamount-selftax;
 					SalaryPayoff salaryPayoff=new SalaryPayoff();
 					salaryPayoff.setStandAmount(new BigDecimal(myformat.format(standardMoney)));
 					salaryPayoff.setFullname(fullname);
@@ -593,7 +623,8 @@ public class CountJobServiceImpl implements CountJobService{
 					salaryPayoff.setDeductDesc(deductStr);
 					salaryPayoff.setAchieveAmount(new BigDecimal(myformat.format(perCoefficient*factorValue)));
 					salaryPayoff.setAcutalAmount(new BigDecimal(myformat.format(realincome)));
-					String memo="标准金额："+standardMoney+"+ (绩效基数为："+perCoefficient+" *绩效系数为："+factorValue+")+"+encourageStr+deductStr+"公积金：-"+provident+"保险：-"+insurance+"个人所得税:-"+selftax+"=实际工资："+myformat.format(realincome)+"(注：该员工工资的税率为:"+taxValue+",数算扣除数为："+deductValue+")";
+					
+					String memo="总金额："+standardMoney+" 固定工资:"+baseMoney+"+ (绩效基数为："+perCoefficient+" *绩效系数为："+factorValue+")+"+encourageStr+deductStr+"公积金：-"+provident+"保险：-"+insurance+"个人所得税:-"+selftax+"=实际工资："+myformat.format(realincome)+"(注：该员工工资的税率为:"+taxValue+",数算扣除数为："+deductValue+","+appenddemo+")";
 					salaryPayoff.setMemo("系统自动计算,"+memo);
 					salaryPayoff.setRegister(sysfullname);
 					salaryPayoff.setRegTime(new Date());
@@ -604,7 +635,7 @@ public class CountJobServiceImpl implements CountJobService{
 					salaryPayoff.setInsurance(new BigDecimal(myformat.format(insurance)));
 					salaryPayoff.setSelftax(new BigDecimal(myformat.format(selftax)));
 					salaryPayoff.setTaxableAmount(new BigDecimal(myformat.format(ksgz)));
-					salaryPayoff.setIssuedAmount(new BigDecimal(myformat.format(standardMoney+perCoefficient*factorValue+encourageAmount)));
+					salaryPayoff.setIssuedAmount(new BigDecimal(myformat.format(baseMoney+perCoefficient*factorValue+encourageAmount)));
 					salaryPayoff.setPerCoefficient(new BigDecimal(myformat.format(factorValue)));
 					salaryPayoff.setPerNumber(new BigDecimal(myformat.format(perCoefficient)));
 					BaseService baseService =(BaseService) ContextHolder.getBean("baseService");	
@@ -620,7 +651,7 @@ public class CountJobServiceImpl implements CountJobService{
 				}else {
 					Double selftax=0d;
 					selftax=Double.parseDouble(myformat.format(selftax));
-					Double realincome=standardMoney+perCoefficient*factorValue-provident-insurance+rpamount-selftax;
+					Double realincome=baseMoney+perCoefficient*factorValue-provident-insurance+rpamount-selftax;
 					SalaryPayoff salaryPayoff=new SalaryPayoff();
 					salaryPayoff.setStandAmount(new BigDecimal(myformat.format(standardMoney)));
 					salaryPayoff.setFullname(fullname);
@@ -634,7 +665,7 @@ public class CountJobServiceImpl implements CountJobService{
 					salaryPayoff.setDeductDesc(deductStr);
 					salaryPayoff.setAchieveAmount(new BigDecimal(myformat.format(perCoefficient*factorValue)));
 					salaryPayoff.setAcutalAmount(new BigDecimal(myformat.format(realincome)));
-					String memo="标准金额："+standardMoney+"+ (绩效基数为："+perCoefficient+" *绩效系数为："+factorValue+")+"+encourageStr+deductStr+"公积金：-"+provident+"保险：-"+insurance+"个人所得税:-"+selftax+"=实际工资："+realincome+"(注：该员工工资的税率为:0)";
+					String memo="总金额："+standardMoney+" 固定工资:"+baseMoney+"+ (绩效基数为："+perCoefficient+" *绩效系数为："+factorValue+")+"+encourageStr+deductStr+"公积金：-"+provident+"保险：-"+insurance+"个人所得税:-"+selftax+"=实际工资："+realincome+"(注：该员工工资的税率为:0"+","+appenddemo+")";
 					salaryPayoff.setMemo("系统自动计算,"+memo);
 					salaryPayoff.setRegister(sysfullname);
 					salaryPayoff.setRegTime(new Date());
@@ -645,7 +676,7 @@ public class CountJobServiceImpl implements CountJobService{
 					salaryPayoff.setInsurance(new BigDecimal(myformat.format(insurance)));
 					salaryPayoff.setSelftax(new BigDecimal(myformat.format(selftax)));
 					salaryPayoff.setTaxableAmount(new BigDecimal(0));
-					salaryPayoff.setIssuedAmount(new BigDecimal(myformat.format(standardMoney+perCoefficient*factorValue+encourageAmount)));
+					salaryPayoff.setIssuedAmount(new BigDecimal(myformat.format(baseMoney+perCoefficient*factorValue+encourageAmount)));
 					salaryPayoff.setPerCoefficient(new BigDecimal(myformat.format(factorValue)));
 					BaseService baseService =(BaseService) ContextHolder.getBean("baseService");	
 					try {
