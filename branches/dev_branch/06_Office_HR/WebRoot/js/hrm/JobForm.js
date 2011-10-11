@@ -131,7 +131,7 @@ JobForm = Ext.extend(Ext.Window, {
 				}),
 				listeners : {
 					focus : function(d) {
-						var c = Ext.getCmp("seq").getStore();R
+						var c = Ext.getCmp("seq").getStore();
 						if(c.getCount() <= 0) {
 							Ext.Ajax.request({
 								url : __ctxPath + "/kpi/loadHrPaDatadictionary.do",
