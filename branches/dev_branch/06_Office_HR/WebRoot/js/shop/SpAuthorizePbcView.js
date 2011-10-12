@@ -30,7 +30,7 @@ SpAuthorizePbcView = Ext.extend(Ext.Window, {
 					type : "int"
 				},
 				"fullname",
-				"pbcName",
+				"position",
 				"pbcName"
 			]
 		});

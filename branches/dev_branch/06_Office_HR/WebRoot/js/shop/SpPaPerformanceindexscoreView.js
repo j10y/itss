@@ -307,7 +307,7 @@ SpPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		}
 	},
 	editSpPaPerformanceindexscore : function(a) {
-		if(a.paMode == QUALITATIVE_ASSESSMENT) {
+		if(this.paMode == QUALITATIVE_ASSESSMENT) {
 			new SpPaPerformanceindexscoreForm1({
 				pisId : a.data.id,
 				piId : this.piId,
@@ -319,7 +319,7 @@ SpPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				pisId : a.data.id,
 				piId : this.piId,
 				pisType : this.paMode,
-				rowNumber : Ext.getCmp("SpPaPerformanceindexscoreGrid").getStore().indexOf(e)
+				rowNumber : Ext.getCmp("SpPaPerformanceindexscoreGrid").getStore().indexOf(a)
 			}).show();
 		}
 	},

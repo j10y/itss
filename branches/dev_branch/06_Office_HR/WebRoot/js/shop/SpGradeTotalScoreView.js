@@ -99,7 +99,7 @@ SpGradeTotalScoreView = Ext.extend(Ext.Panel, {
 					header : "姓名",
 					dataIndex : "fullname"
 				}, {
-					header : "授权PBC名称",
+					header : "授权考评项目名称",
 					dataIndex : "pbcName"
 				},
 				this.rowActions

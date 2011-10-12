@@ -271,7 +271,7 @@ SpPaKpipbcForm = Ext.extend(Ext.Window, {
 									displayField : "name",
 									triggerAction : "all",
 									allowBlank : false,
-									blankText : "PBC类型不能为空！",
+									blankText : "项目类型不能为空！",
 									store : new Ext.data.SimpleStore({
 										fields : ["id","name"]
 									}),

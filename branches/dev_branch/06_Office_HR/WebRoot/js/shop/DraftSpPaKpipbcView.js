@@ -42,9 +42,9 @@ DraftSpPaKpipbcView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：PBC名称"
+					text : "查询条件：考评项目名称"
 				}, {
-					fieldLabel : "PBC名称",
+					fieldLabel : "考评项目名称",
 					name : "Q_pbcName_S_LK",
 					xtype : "textfield"
 				}, {
@@ -116,7 +116,7 @@ DraftSpPaKpipbcView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "PBC名称",
+					header : "考评项目名称",
 					dataIndex : "pbcName"
 				}, {
 					header : "考核频度",
@@ -164,7 +164,7 @@ DraftSpPaKpipbcView = Ext.extend(Ext.Panel, {
 		if(isGranted("_PbcAdd")) {
 			this.topbar.add({
 				iconCls : "btn-add",
-				text : "添加PBC",
+				text : "添加考评项目",
 				xtype : "button",
 				handler : this.addSpPaKpipbc
 			});
@@ -172,7 +172,7 @@ DraftSpPaKpipbcView = Ext.extend(Ext.Panel, {
 		if(isGranted("_PbcDel")) {
 			this.topbar.add({
 				iconCls : "btn-del",
-				text : "删除PBC",
+				text : "删除考评项目",
 				xtype : "button",
 				handler : this.delSpPaKpipbc
 			});

@@ -104,7 +104,7 @@ SpPaKpiPBC2UserView = Ext.extend(Ext.Panel, {
 					header : "岗位",
 					dataIndex : "position"
 				}, {
-					header : "待考核PBC",
+					header : "待考评项目",
 					dataIndex : "pbcName"
 				},
 				this.rowActions

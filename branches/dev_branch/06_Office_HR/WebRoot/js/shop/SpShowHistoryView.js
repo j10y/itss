@@ -7,7 +7,7 @@ SpShowHistoryView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		SpShowHistoryView.superclass.constructor.call(this, {
 			id : "SpShowHistoryView",
-			title : "个人PBC得分",
+			title : "个人考评项目得分",
 			region : "center",
 			autoScroll : true,
 			layout : "border",
@@ -108,7 +108,7 @@ SpShowHistoryView = Ext.extend(Ext.Panel, {
 					header : "姓名",
 					dataIndex : "fullname"
 				}, {
-					header : "个人PBC名称",
+					header : "个人考评项目名称",
 					dataIndex : "pbcName"
 				}, {
 					header : "总分",
