@@ -19,7 +19,7 @@ HrPostApplyForm = Ext.extend(Ext.Window, {
 			height : 600,
 			width : 850,
 			autoScroll : true,
-			title : "晋升申请页面",
+			title : "转正申请页面",
 			listeners : {
 				close : function() {
 					Ext.getCmp("HrPostApplyView").gridPanel.store.reload({
