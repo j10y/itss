@@ -107,6 +107,7 @@ public class Ftp extends BaseFtp {
 				new PrintWriter(System.out)));
 		ftp.setDefaultPort(getPort());
 		ftp.connect(getIp());
+		ftp.setReceiveBufferSize(Integer.MAX_VALUE);//不限制socket
 		int reply = ftp.getReplyCode();
 		if (!FTPReply.isPositiveCompletion(reply)) {
 			log.warn("FTP server refused connection: {}", getIp());
