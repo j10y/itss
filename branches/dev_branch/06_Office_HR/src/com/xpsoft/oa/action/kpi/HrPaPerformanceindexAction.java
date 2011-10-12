@@ -87,6 +87,49 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		return "success";
 	}
 	
+	public String pbcCombo() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		String publishStatus = this.getRequest().getParameter("publishStatus");
+		String frequencyId = this.getRequest().getParameter("frequencyId");
+		String depId = this.getRequest().getParameter("depId");
+		String paName = this.getRequest().getParameter("paName");
+		String sql = "select parentId from department where depId = " + depId;
+		List<Map<String, Object>> mapList = this.hrPaperformanceindexService.findDataList(sql);
+		String parentId = "0";
+		if(mapList.size() > 0) {
+			parentId = mapList.get(0).get("parentId").toString();
+		}
+		String sql3 = "select count(id) as total from hr_pa_performanceindex where " +
+				"belongDept in (" + depId + "," + parentId + ") and paFrequency = " + frequencyId + 
+				" and publishStatus = " + publishStatus;
+		sql3 += (paName == null || "".equals(paName)) ? "" : " and paName like '%" + paName + "%'";
+		List<Map<String, Object>> mapList3 = this.hrPaperformanceindexService.findDataList(sql3);
+		String sql2 = "select a.id, a.paName, b.name as type, c.name as mode, d.name as frequency from " +
+				"hr_pa_performanceindex a, hr_pa_datadictionary b, hr_pa_datadictionary c, hr_pa_datadictionary d where " +
+				"a.paType = b.id and a.paMode = c.id and a.paFrequency = d.id and " +
+				"a.belongDept in (" + depId + "," + parentId + ") and a.paFrequency = " + frequencyId + 
+				" and a.publishStatus = " + publishStatus;
+		sql2 += (paName == null || "".equals(paName)) ? "" : " and a.paName like '%" + paName + "%'";
+		sql2 += " limit " + filter.getPagingBean().getFirstResult() + ", " + filter.getPagingBean().getPageSize();
+		List<Map<String, Object>> mapList2 = this.hrPaperformanceindexService.findDataList(sql2);
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList3.get(0).get("total") + "',result:[");
+		for(int i = 0; i < mapList2.size(); i++) {
+			buff.append("{'id':'" + mapList2.get(i).get("id"))
+					.append("','paName':'" + mapList2.get(i).get("paName"))
+					.append("','type':'" + mapList2.get(i).get("type"))
+					.append("','mode':'" + mapList2.get(i).get("mode"))
+					.append("','frequency':'" + mapList2.get(i).get("frequency"))
+					.append("'},");
+		}
+		if(mapList2.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
 	public String multiDel(){
 		String[] ids = this.getRequest().getParameterValues("ids");
 		if(ids != null) {

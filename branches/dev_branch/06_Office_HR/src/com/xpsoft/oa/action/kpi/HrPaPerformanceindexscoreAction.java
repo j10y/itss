@@ -1,11 +1,16 @@
 package com.xpsoft.oa.action.kpi;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import com.lowagie.text.pdf.hyphenation.TernaryTree.Iterator;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -92,6 +97,43 @@ public class HrPaPerformanceindexscoreAction extends BaseAction{
 		}
 		buff.append("}");
 		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
+	public String getCnFormula() {
+		String enFormula = this.getRequest().getParameter("enFormula");
+		Set set=new HashSet();
+		String regex="\\{[^\\{\\}]+\\}";//匹配{}
+		Pattern pattern=Pattern.compile(regex);
+		Matcher matcher=pattern.matcher(enFormula);
+		while(matcher.find()){
+			String	group=matcher.group();
+			set.add(group);
+		}
+		Map<String, String> cnMap = new HashMap<String, String>();
+		for(Object acKey : set) {
+			String[] keys = acKey.toString().trim().replace("{", "").replace("}", "").split("_");
+			if(keys.length == 2) {
+				String sql = "select acName from hr_pa_assessmentcriteria where acKey = '" + keys[0] + "'";
+				List<Map<String, Object>> mapList = this.hrPaPerformanceindexscoreService.findDataList(sql);
+				String acName = "";
+				if(mapList.size() > 0) {
+					acName = mapList.get(0).get("acName").toString();
+					if("t".equals(keys[1])) {
+						acName += "的目标";
+					} else if("r".equals(keys[1])) {
+						acName += "的达成";
+					}
+					enFormula = enFormula.replace(acKey.toString(), acName);
+				} else {
+					this.logger.error("关键字为【" + keys[0] + "】的标准不存在或已删除，请核实！");
+				}
+			} else {
+				this.logger.error("标准【" + acKey.toString() + "】关键字不符合规则，请核实！");
+			}
+		}
+		this.jsonString = "{success:true,data:{'cnFormula':'" + enFormula + "'}}";
 		
 		return "success";
 	}

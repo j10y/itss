@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.kpi.HrPaAuthpbccitem;
@@ -415,11 +416,21 @@ public class HrPaKpipbcAction extends BaseAction{
 		List<Map<String, Object>> mapList = this.hrPaKpipbcService.findDataList(sql);
 		String frequencyName = mapList.get(0).get("name").toString();
 		//1. 找到哪些人是这个有这个PBC关联的岗位
+		/*
+		 * 修改取得人员逻辑，添加人员已删除，人员档案未审批或未审批通过，人员已删除过滤条件
+		 * */
+		/*
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
 		Map<String, String> profileMap = new HashMap<String, String>();
 		profileMap.put("Q_jobId_L_EQ", String.valueOf(pbc.getBelongPost().getJobId()));
 		QueryFilter profileFilter = new QueryFilter(profileMap);
 		List<EmpProfile> profileList = empProfileService.getAll(profileFilter);
+		*/
+		String sql2 = "select a.userId from emp_profile a, app_user b, job c where " +
+				"a.jobId = " + String.valueOf(pbc.getBelongPost().getJobId()) + " and a.userId = b.userId and a.jobId = c.jobId and " + 
+				"a.approvalStatus = 1 and a.delFlag = 0 and b.delFlag = 0 and " +
+				"a.realPositiveTime < '" + DateUtil.convertDateToString(new Date()) + "'";
+		List<Map<String, Object>> profileList = this.hrPaKpipbcService.findDataList(sql2);
 		AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
 		//2. 循环对每个人添加PBC考核模板
 		for(int i = 0; i < profileList.size(); i++) {
@@ -429,7 +440,7 @@ public class HrPaKpipbcAction extends BaseAction{
 			QueryFilter filter2 = new QueryFilter(map2);
 			List<HrPaKpiitem> hrPaKpiitemList = hrPaKpiitemService.getAll(filter2);
 			
-			AppUser user = appUserService.get(profileList.get(i).getUserId());
+			AppUser user = appUserService.get(Long.parseLong(profileList.get(i).get("userId").toString()));
 			//2.1. 判断hr_pa_kpipbc2user表中有没有该User的模板
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("Q_belongUser.userId_L_EQ", String.valueOf(user.getUserId()));

@@ -149,6 +149,7 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 				}
 				hpa.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 				hpa.setAcName(this.hrPaAssessmentcriteria.getAcName());
+				hpa.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());
 				hpa.setAcDesc(this.hrPaAssessmentcriteria.getAcDesc());
 				if(this.hrPaAssessmentcriteria.getIsSalesAC() == 1) {
 					hpa.setIsSalesAC(1);
@@ -168,6 +169,7 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 					HrPaAssessmentcriteria hpaCopy = new HrPaAssessmentcriteria();
 					hpaCopy.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 					hpaCopy.setAcName(this.hrPaAssessmentcriteria.getAcName());
+					hpaCopy.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());
 					hpaCopy.setAcDesc(this.hrPaAssessmentcriteria.getAcDesc());
 					if(this.hrPaAssessmentcriteria.getIsSalesAC() == 1) {
 						hpaCopy.setIsSalesAC(1);
@@ -184,6 +186,7 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 				} else {
 					hpa.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 					hpa.setAcName(this.hrPaAssessmentcriteria.getAcName());
+					hpa.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());
 					hpa.setAcDesc(this.hrPaAssessmentcriteria.getAcDesc());
 					if(this.hrPaAssessmentcriteria.getIsSalesAC() == 1) {
 						hpa.setIsSalesAC(1);
@@ -207,6 +210,7 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 				}
 				hpa.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 				hpa.setAcName(this.hrPaAssessmentcriteria.getAcName());
+				hpa.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());
 				hpa.setAcDesc(this.hrPaAssessmentcriteria.getAcDesc());
 				if(this.hrPaAssessmentcriteria.getIsSalesAC() == 1) {
 					hpa.setIsSalesAC(1);
@@ -225,6 +229,7 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 				if(hpa.getFromAc() == 0) {
 					hpa.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 					hpa.setAcName(this.hrPaAssessmentcriteria.getAcName());
+					hpa.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());
 					hpa.setAcDesc(this.hrPaAssessmentcriteria.getAcDesc());
 					if(this.hrPaAssessmentcriteria.getIsSalesAC() == 1) {
 						hpa.setIsSalesAC(1);
@@ -240,6 +245,7 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 					HrPaAssessmentcriteria hpaOld = this.hrPaAssessmentcriteriaService.get(hpa.getFromAc());
 					hpaOld.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 					hpaOld.setAcName(this.hrPaAssessmentcriteria.getAcName());
+					hpaOld.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());
 					hpaOld.setAcDesc(this.hrPaAssessmentcriteria.getAcDesc());
 					if(this.hrPaAssessmentcriteria.getIsSalesAC() == 1) {
 						hpaOld.setIsSalesAC(1);
@@ -277,7 +283,8 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 	}
 	
 	public String load() {
-		Map<String, String> map = this.hrPaAssessmentcriteriaService.getKeyAndName();
+		Long depId = Long.parseLong(this.getRequest().getParameter("depId"));
+		Map<String, String> map = this.hrPaAssessmentcriteriaService.getKeyAndName(depId);
 		
 		StringBuffer buff = new StringBuffer("[");
 		for(Map.Entry<String, String> entry : map.entrySet()) {
