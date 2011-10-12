@@ -129,6 +129,18 @@
 				if(!Ext.getCmp("hrPromApply.applyDate").isValid()) {
 					return false;
 				}
+				if(document.getElementById("target1").value == "") {
+					alert("请填写目标一内容！");
+					return false;
+				}
+				if(document.getElementById("target2").value == "") {
+					alert("请填写目标二内容！");
+					return false;
+				}
+				if(document.getElementById("target3").value == "") {
+					alert("请填写目标三内容！");
+					return false;
+				}
 				return true;
 			}
 			function onSend(){
@@ -352,19 +364,19 @@
 					<td colspan="4" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">工作目标设定</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一</td>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标一<font style="color:red;">*</font></td>
 					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="target1" name="hrPromApply.target1" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target1}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二</td>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二<font style="color:red;">*</font></td>
 					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="target2" name="hrPromApply.target2" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target2}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三</td>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三<font style="color:red;">*</font></td>
 					<td colspan="3" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="target3" name="hrPromApply.target3" style="width:100%;*width:570px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromApply.target3}</textarea>
 					</td>

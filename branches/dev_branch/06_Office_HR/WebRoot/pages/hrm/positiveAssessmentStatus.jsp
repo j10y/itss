@@ -78,6 +78,17 @@
 					<td class="field" style="border-right:1px solid #000000;padding:2px;">${hrPostAssessment.ratingResult}&nbsp;</td>
 				</tr>
 				<tr>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
+				</tr>
+				<tr>
+					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
+						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">人力资源部审核</td>
+				</tr>
+				<tr>
 					<td class="field">被评估者标准岗位名称</td>
 					<td class="field" colspan="2">${hrPostAssessment.standardPostName}&nbsp;</td>
 					<td class="field">被评估者岗位层级</td>
@@ -99,14 +110,6 @@
 						浮动部分为<font style="text-decoration:underline">${hrPostAssessment.newFloatSalary}</font>元，<br/>
 						年终奖金基数为<font style="text-decoration:underline">${hrPostAssessment.yearEndBonusCoefficient}</font>元，<br/>
 						年度总酬为<font style="text-decoration:underline">${hrPostAssessment.totalYearSalary}</font>元。
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea readonly="readonly" id="proSummary" name="hrPostApply.proSummary" style="width:100%;*width:690px;height:100%;*height:590px;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
 					</td>
 				</tr>
 				<tr>

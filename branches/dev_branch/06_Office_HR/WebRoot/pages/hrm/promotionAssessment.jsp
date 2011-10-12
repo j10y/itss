@@ -18,6 +18,7 @@
 		<script type="text/javascript" src="<%=basePath%>/ext3/ux/Toast.js"></script>
 		<script type="text/javascript">
 			Ext.onReady(function() {
+				var bandName = "${bandName}";
 				var proKnowledgeCombo = new Ext.form.ComboBox({
 					id : "proKnowledgeCombo",
 					mode : "local",
@@ -26,22 +27,11 @@
 					name : "hrPromAssessment.proKnowledge",
 					renderTo : "proKnowledge",
 					triggerAction : "all",
+					editable : false,
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -57,22 +47,11 @@
 					name : "hrPromAssessment.commEffect",
 					renderTo : "commEffect",
 					triggerAction : "all",
+					editable : false,
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -88,22 +67,11 @@
 					name : "hrPromAssessment.solveAbility",
 					renderTo : "solveAbility",
 					triggerAction : "all",
+					editable : false,
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -119,22 +87,11 @@
 					name : "hrPromAssessment.difficultyManage",
 					renderTo : "difficultyManage",
 					triggerAction : "all",
+					editable : false,
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -150,22 +107,11 @@
 					name : "hrPromAssessment.businessFieldEffect",
 					renderTo : "businessFieldEffect",
 					triggerAction : "all",
+					editable : false,
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -181,22 +127,11 @@
 					name : "hrPromAssessment.ratingResult",
 					renderTo : "ratingResult",
 					triggerAction : "all",
+					editable : false,
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -311,14 +246,14 @@
 					alert("请填写目标一的完成情况！");
 					return false;
 				}
-				/*if(document.getElementById("reached2").value == "") {
+				if(document.getElementById("reached2").value == "") {
 					alert("请填写目标二的完成情况！");
 					return false;
 				}
 				if(document.getElementById("reached3").value == "") {
 					alert("请填写目标三的完成情况！");
 					return false;
-				}*/
+				}
 				if(document.getElementById("performResult").value == "") {
 					alert("请填写工作业绩信息！");
 					return false;
@@ -341,6 +276,7 @@
 				if(!Ext.getCmp("ratingResultCombo").isValid()) {
 					return false;
 				}
+				document.getElementById('submitButton').disabled='disabled';
 				return true;
 			}
 		</script>
@@ -398,13 +334,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二</td>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标二<font style="color:red;">*</font></td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="reached2" name="hrPromAssessment.reached2" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.reached1}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三</td>
+					<td style="width:120px;height:60px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">目标三<font style="color:red;">*</font></td>
 					<td colspan="5" style="height:60px;padding:2px;border:1px solid #000000;border-bottom:none;">
 						<textarea id="reached3" name="hrPromAssessment.reached3" style="width:100%;*width:590px;height:100%;*height:50px;border:none;overflow-y:hidden;">${hrPromAssessment.reached1}</textarea>
 					</td>
@@ -463,7 +399,7 @@
 						<!-- 
 						<input type="reset" value="取消"/>&nbsp;&nbsp;
 						 -->
-						<input type="submit" value="保存"/>&nbsp;&nbsp;
+						<input id="submitButton" type="submit" value="保存"/>&nbsp;&nbsp;
 						<!-- 
 						<input type="button" value="提交审核"/>
 						 -->

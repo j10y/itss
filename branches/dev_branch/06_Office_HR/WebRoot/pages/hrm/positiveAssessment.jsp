@@ -41,6 +41,7 @@
 		</style>
 		<script type="text/javascript">
 			Ext.onReady(function() {
+				var bandName = "${bandName}";
 				var proKnowledgeCombo = new Ext.form.ComboBox({
 					id : "proKnowledgeCombo",
 					mode : "local",
@@ -51,27 +52,10 @@
 					editable : false,
 					triggerAction : "all",
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
-					],
-					listeners : {
-						select : function(l, h, k) {
-							
-						}
-					}
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
+					]
 				});
 				var commEffectCombo = new Ext.form.ComboBox({
 					id : "commEffectCombo",
@@ -83,21 +67,9 @@
 					editable : false,
 					triggerAction : "all",
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -115,21 +87,9 @@
 					editable : false,
 					triggerAction : "all",
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -147,21 +107,9 @@
 					editable : false,
 					triggerAction : "all",
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -179,21 +127,9 @@
 					editable : false,
 					triggerAction : "all",
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -211,21 +147,9 @@
 					editable : false,
 					triggerAction : "all",
 					store : [
-						["1-", "1-"],
-						["1", "1"],
-						["1+", "1+"],
-						["2-", "2-"],
-						["2", "2"],
-						["2+", "2+"],
-						["3-", "3-"],
-						["3", "3"],
-						["3+", "3+"],
-						["4-", "4-"],
-						["4", "4"],
-						["4+", "4+"],
-						["5-", "5-"],
-						["5", "5"],
-						["5+", "5+"]
+						[bandName + "-", bandName + "-"],
+						[bandName, bandName],
+						[bandName + "+", bandName + "+"]
 					],
 					listeners : {
 						select : function(l, h, k) {
@@ -265,6 +189,7 @@
 					alert("请正确填写员工试用（实习）期间工作表现评价！");
 					return false;
 				}
+				document.getElementById('submitButton').disabled='disabled';
 				return true;
 			}
 		</script>
@@ -313,6 +238,18 @@
 					<td class="field2" style="border-right:1px solid #000000;"><div id="ratingResult"></div></td>
 				</tr>
 				<tr>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价<font style="color:red;">*</font></td>
+				</tr>
+				<tr>
+					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
+						<textarea id="proPerformance" name="hrPostAssessment.proPerformance" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">人力资源部审核<font style="color:red;">*</font></td>
+				</tr>
+				<tr>
 					<td class="field">被评估者标准岗位名称</td>
 					<td class="field" colspan="2">${hrPostAssessment.standardPostName}&nbsp;</td>
 					<td class="field">被评估者岗位层级</td>
@@ -334,17 +271,9 @@
 						浮动部分为<font style="text-decoration:underline">${hrPostAssessment.newFloatSalary}</font>元，<br/>
 						年终奖金基数为<font style="text-decoration:underline">${hrPostAssessment.yearEndBonusCoefficient}</font>元，<br/>
 						年度总酬为<font style="text-decoration:underline">${hrPostAssessment.totalYearSalary}</font>元。
+						&nbsp;
 					</td>
 				</tr>
-				<tr>
-					<td colspan="6" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">员工试用（实习）期间工作表现评价<font style="color:red;">*</font></td>
-				</tr>
-				<tr>
-					<td colspan="6" style="height:300px;padding:2px;border:1px solid #000000;border-bottom:none;">
-						<textarea id="proPerformance" name="hrPostAssessment.proPerformance" style="width:100%;height:100%;border:none;overflow-y:hidden;">${hrPostAssessment.proPerformance}</textarea>
-					</td>
-				</tr>
-				<!--
 				<tr>
 					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;">本部门/门店意见</td>
 					<td colspan="3" style="height:40px;text-align:center;border-left:1px solid #000000;border-top:1px solid #000000;background:#ddd;border-right:1px solid #000000;">主管部门意见（无主管部门可不填写）</td>
@@ -371,7 +300,7 @@
 				<tr>
 					<td align="center" colspan="6" style="height:40px;border:1px solid #000000;">
 						<!-- <input type="reset" value="取消"/>&nbsp;&nbsp; -->
-						<input type="submit" value="保存"/>&nbsp;&nbsp;
+						<input id="submitButton" type="submit" value="保存"/>&nbsp;&nbsp;
 						<!-- <input type="button" value="提交审核" onclick="onSend();"/> -->
 					</td>
 				</tr>
