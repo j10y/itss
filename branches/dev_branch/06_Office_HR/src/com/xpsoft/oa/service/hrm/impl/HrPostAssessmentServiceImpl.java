@@ -58,6 +58,7 @@ public class HrPostAssessmentServiceImpl extends BaseServiceImpl<HrPostAssessmen
 			hrPostAssessment.setPostApply(hrPostApply);
 			hrPostAssessment.setActualReportDate(empProfileList.get(0).getAccessionTime());
 			hrPostAssessment.setApplyPostDate(empProfileList.get(0).getPositiveTime());
+			hrPostAssessment.setActualPostDate(empProfileList.get(0).getRealPositiveTime());
 			hrPostAssessment.setStandardPostId(hrPostApply.getPostId());
 			hrPostAssessment.setStandardPostName(hrPostApply.getPostName());
 			hrPostAssessment.setOldSalaryLevelId(empProfileList.get(0).getStandardId());
