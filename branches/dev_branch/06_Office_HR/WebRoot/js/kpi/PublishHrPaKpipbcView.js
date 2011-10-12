@@ -42,9 +42,9 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：考核模板名称"
+					text : "查询条件：PBC名称"
 				}, {
-					fieldLabel : "考核模板名称",
+					fieldLabel : "PBC名称",
 					name : "Q_pbcName_S_LK",
 					xtype : "textfield"
 				}, {
@@ -121,7 +121,7 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "考核模板名称",
+					header : "PBC名称",
 					dataIndex : "pbcName"
 				}, {
 					header : "考核频度",
@@ -169,7 +169,7 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 		if(isGranted("_PublishPbcAdd")) {
 			this.topbar.add({
 				iconCls : "btn-add",
-				text : "添加考核模板",
+				text : "添加PBC",
 				xtype : "button",
 				handler : this.addHrPaKpipbc
 			});
@@ -177,7 +177,7 @@ PublishHrPaKpipbcView = Ext.extend(Ext.Panel, {
 		if(isGranted("_PublishPbcDel")) {
 			this.topbar.add({
 				iconCls : "btn-del",
-				text : "删除考核模板",
+				text : "删除PBC",
 				xtype : "button",
 				handler : this.delHrPaKpipbc
 			});

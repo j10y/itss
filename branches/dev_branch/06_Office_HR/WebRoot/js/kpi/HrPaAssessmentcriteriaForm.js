@@ -11,7 +11,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 270,
+			height : 295,
 			width : 400,
 			title : "绩效考核标准录入",
 			buttonAlign : "center",
@@ -19,6 +19,8 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 		});
 	},
 	initComponents : function() {
+		var dept = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("hrPaAssessmentcriteria.belongDept.depName", dept, "所属部门", "hrPaAssessmentcriteria.belongDept.depId");
 		this.formPanel = new Ext.FormPanel({
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
@@ -37,21 +39,27 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 					value : this.acId == null ? "" : this.acId
 				}, {
 					fieldLabel : "考核标准名称",
-					labelStyle : "text-align:right;width:120px;",
+					labelStyle : "width:120px;",
 					name : "hrPaAssessmentcriteria.acName",
 					id : "acName",
 					allowBlank : false,
 					blankText : "考核标准名称不能为空！"
 				}, {
 					fieldLabel : "考核标准关键字",
-					labelStyle : "text-align:right;width:120px;",
+					labelStyle : "width:120px;",
 					name : "hrPaAssessmentcriteria.acKey",
 					id : "acKey",
 					allowBlank : false,
 					blankText : "考核标准关键字不能为空！"
 				}, {
+					id : "hrPaAssessmentcriteria.belongDept.depId",
+					name : "hrPaAssessmentcriteria.belongDept.depId",
+					xtype : "hidden"
+				},
+				departments,
+				{
 					fieldLabel : "是否销售类定量考核",
-					labelStyle : "text-align:right;width:120px;",
+					labelStyle : "width:120px;",
 					xtype : "checkboxgroup",
 					columns : 1,
 					items : [
@@ -64,7 +72,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 					]
 				}, {
 					fieldLabel : "考核标准描述",
-					labelStyle : "text-align:right;width:120px;",
+					labelStyle : "width:120px;",
 					name : "hrPaAssessmentcriteria.acDesc",
 					height : 100,
 					id : "acDesc",
@@ -99,6 +107,8 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
+					Ext.getCmp("hrPaAssessmentcriteria.belongDept.depId").setValue(e.data.belongDept.depId);
+					Ext.getCmp("hrPaAssessmentcriteria.belongDept.depName").setRawValue(e.data.belongDept.depName);
 					if(e.data.isSalesAC == "1") {
 						Ext.getCmp("isSalesAC").setValue(true);
 					}

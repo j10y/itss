@@ -307,7 +307,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		}
 	},
 	editHrPaPerformanceindexscore : function(a) {
-		if(a.paMode == QUALITATIVE_ASSESSMENT) {
+		if(this.paMode == QUALITATIVE_ASSESSMENT) {
 			new HrPaPerformanceindexscoreForm1({
 				pisId : a.data.id,
 				piId : this.piId,
@@ -319,7 +319,7 @@ HrPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 				pisId : a.data.id,
 				piId : this.piId,
 				pisType : this.paMode,
-				rowNumber : Ext.getCmp("HrPaPerformanceindexscoreGrid").getStore().indexOf(e)
+				rowNumber : Ext.getCmp("HrPaPerformanceindexscoreGrid").getStore().indexOf(a)
 			}).show();
 		}
 	},

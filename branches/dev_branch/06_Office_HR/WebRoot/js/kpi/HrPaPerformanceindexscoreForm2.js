@@ -11,7 +11,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 330,
+			height : 355,
 			width : 650,
 			title : "增加/修改评分标准对话框--计算类",
 			buttonAlign : "center",
@@ -19,6 +19,8 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 		});
 	},
 	initComponents : function() {
+		var dept = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("acDepName", dept, "所属部门", "acDepId");
 		this.formPanel = new Ext.FormPanel({
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
@@ -47,7 +49,6 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 					xtype : "hidden"
 				}, {
 					fieldLabel : "得分",
-					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindexscore.pisScore",
 					id : "pisScore",
 					anchor : "98%,98%",
@@ -56,7 +57,6 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 					blankText : "分数不能为空！"
 				}, {
 					fieldLabel : "绩效系数",
-					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindexscore.coefficient",
 					id : "coefficient",
 					anchor : "98%,98%",
@@ -73,9 +73,20 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 							border : false,
 							items : [
 								{
+									id : "acDepId",
+									xtype : "hidden",
+									value : "0"
+								},
+								departments
+							]
+						}, {
+							layout : "form",
+							border : false,
+							items : [
+								{
 									fieldLabel : "考核标准",
-									labelStyle : "text-align:right",
 									id : "acName",
+									labelStyle : "text-align:right",
 									xtype : "combo",
 									mode : "local",
 									valueField : "key",
@@ -87,16 +98,18 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 									listeners : {
 										focus : function(d) {
 											var c = Ext.getCmp("acName").getStore();
-											if(c.getCount() <= 0) {
-												Ext.Ajax.request({
-													url : __ctxPath + "/kpi/loadHrPaAssessmentcriteria.do",
-													method : "post",
-													success : function(f) {
-														var e = Ext.util.JSON.decode(f.responseText);
-														c.loadData(e);
-													}
-												});
-											}
+											c.loadData("[]");
+											Ext.Ajax.request({
+												url : __ctxPath + "/kpi/loadHrPaAssessmentcriteria.do",
+												params : {
+													depId : Ext.getCmp("acDepId").getValue()
+												},
+												method : "post",
+												success : function(f) {
+													var e = Ext.util.JSON.decode(f.responseText);
+													c.loadData(e);
+												}
+											});
 										},
 										select : function(d) {
 											Ext.getCmp("target").setText(d.getRawValue() + "的目标");
@@ -107,14 +120,21 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 									}
 								}
 							]
-						}, {
+						}
+					]
+				}, {
+					xtype : "container",
+					layout : "column",
+					border : false,
+					items : [
+						{
 							layout : "form",
 							border : false,
 							items : [
 								{
 									text : "目标",
 									id : "target",
-									style : "margin-left:10px",
+									style : "margin-left:105px;margin-bottom:5px;",
 									xtype : "button",
 									hidden : true,
 									listeners : {
@@ -154,7 +174,6 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 							items : [
 								{
 									fieldLabel : "运算符",
-									labelStyle : "text-align:right",
 									id : "yusuanfu",
 									width : 70,
 									xtype : "combo",
@@ -204,8 +223,8 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 							items : [
 								{
 									fieldLabel : "逻辑符",
-									labelStyle : "text-align:right",
 									id : "luojifu",
+									labelStyle : "text-align:right",
 									width : 70,
 									xtype : "combo",
 									triggerAction : "all",
@@ -228,15 +247,28 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 					]
 				}, {
 					fieldLabel : "计算公式",
-					labelStyle : "text-align:right",
 					id : "formula",
 					anchor : "98%,98%",
 					xtype : "textarea",
 					allowBlank : false,
-					blankText : "计算公式不能为空！"
+					blankText : "计算公式不能为空！",
+					listeners : {
+						blur : function() {
+							Ext.Ajax.request({
+								url : __ctxPath + "/kpi/getCnFormulaHrPaPerformanceindexscore.do",
+								params : {
+									enFormula : Ext.getCmp("formula").getValue()
+								},
+								method : "post",
+								success : function(f) {
+									var e = Ext.util.JSON.decode(f.responseText);
+									Ext.getCmp("pisDesc").setValue(e.data.cnFormula);
+								}
+							});
+						}
+					}
 				}, {
 					fieldLabel : "评分说明",
-					labelStyle : "text-align:right",
 					name : "hrPaPerformanceindexscore.pisDesc",
 					id : "pisDesc",
 					anchor : "98%,98%",

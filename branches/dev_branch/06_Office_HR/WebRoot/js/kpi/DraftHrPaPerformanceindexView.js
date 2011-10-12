@@ -74,6 +74,9 @@ DraftHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 				}, {
 					name : "mode.name",
 					mapping : "mode.name"
+				}, {
+					name : "belongDept.depName",
+					mapping : "belongDept.depName"
 				},
 				"publishStatus"
 			]
@@ -115,6 +118,9 @@ DraftHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 				}, {
 					header : "考核指标名称",
 					dataIndex : "paName"
+				}, {
+					header : "所属部门",
+					dataIndex : "belongDept.depName"
 				}, {
 					header : "考核指标类型",
 					dataIndex : "type.name"
