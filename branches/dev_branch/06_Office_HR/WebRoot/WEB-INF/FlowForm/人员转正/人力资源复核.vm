@@ -45,6 +45,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 									})
 									#set ($count=$count+1)
 								#end
+								/*
 								,new Ext.Button({
 								iconCls:'btn-transition',
 								//hidden : true,
@@ -102,6 +103,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 									}
 								}
 							})
+							*/
 								,new Ext.Button({
 								iconCls:'btn-save',
 								//hidden : true,
@@ -313,7 +315,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 								}),
 						listeners : {
 							focus : function() {
-								document.getElementById("standardPostId").value = "";
+								Ext.getCmp("standardPostId").setValue("");
 								Ext.getCmp("newSalaryLevelNameCombo").setValue("");
 								Ext.Ajax.request({
 									url : __ctxPath + "/hrm/applyPositionHrPostAssessment.do",
@@ -329,7 +331,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 								});
 							},
 							select : function(e, c, d) {
-								document.getElementById("standardPostId").value = c.data.jobId;
+								Ext.getCmp("standardPostId").setValue(c.data.jobId);
 							}
 						}
 					},{
@@ -361,7 +363,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 								}),
 						listeners : {
 							focus : function() {
-								var positionId = document.getElementById("standardPostId").value;
+								var positionId = Ext.getCmp("standardPostId").getValue();
 								Ext.Ajax.request({
 									url : __ctxPath + "/hrm/comboSalaryJobSalaryRelation.do",
 									method : "post",
@@ -413,7 +415,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',
-						value :  7 //待分管副总裁确认
+						value :  3 //结束
 					},{
 						fieldLabel : '试用期评估表ID',
 						name : 'hrPostAssessment.id',

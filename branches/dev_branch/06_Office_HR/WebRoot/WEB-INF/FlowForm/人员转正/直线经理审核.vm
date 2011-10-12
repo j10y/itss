@@ -22,7 +22,7 @@ HrPostApplyLineManagerAuditFlowView = Ext.extend(Ext.Panel, {
 		$ImportSimpleJs(jsArr,null);
 		
 		HrPostApplyLineManagerAuditFlowView.superclass.constructor.call(this, {
-					title : '直线经理审核    <font color="red">*转至[人力资源复核]前，请填写试用期评估表</font>',
+					title : '直线经理审核    <font color="red">*转至[人力资源复核]或[分管副总裁确认]前，请填写试用期评估表</font>',
 					id : 'HrPostApplyLineManagerAuditFlowView',
 					layout : 'column',
 					defaults : {
@@ -54,6 +54,84 @@ HrPostApplyLineManagerAuditFlowView = Ext.extend(Ext.Panel, {
 									})
 									#set ($count=$count+1)
 								#end
+								,new Ext.Button({
+								iconCls:'btn-transition',
+								//hidden : true,
+								text : '转至[人力资源复核]',
+								handler : function(){
+									//查询是否存在试用期评估表，如果没有则不能往下走
+									var applyId = ${hrPostApply_id};
+									Ext.Ajax.request({
+										scope : this,
+										url : __ctxPath + "/hrm/validateAssessByApplyIdHrPostAssessment.do",
+										params : {
+											applyId : applyId														
+										},
+										success : function(resp,opts) {
+											var result = Ext.decode(resp.responseText);
+											if(!result.success) {
+												Ext.ux.Toast.msg('操作信息',result.msg);
+											} else {
+												Ext.getCmp("standardPostId").setValue(result.standardPostId);
+												Ext.getCmp("standardPostName").setValue(result.standardPostName);
+												Ext.getCmp("newSalaryLevelId").setValue(result.newSalaryLevelId);
+												Ext.getCmp("newSalaryLevelName").setValue(result.newSalaryLevelName);
+												Ext.getCmp("hrPostAssessmentId").setValue(result.hrPostAssessmentId);
+												Ext.getCmp("publishStatus").setValue(6);//待人力资源复核
+												if (Ext.getCmp("auditForm").getForm().isValid()) {
+													//流程结束，修改状态
+													Ext.getCmp("auditForm").getForm().submit({
+														method : 'POST',
+														waitMsg : '正在提交数据...',
+														success : function(fp, action) {
+															Ext.getCmp("auditForm").getForm().submit({
+													            url:__ctxPath+ "/flow/nextProcessActivity.do",
+																method:'post',
+																params:{taskId:Ext.getCmp("HrPostApplyLineManagerAuditFlowView").taskId,signalName:"to人力资源复核",activityName:"直线经理审核",destName:'人力资源复核'},
+																success : function(fp, action) {
+																    Ext.ux.Toast.msg('操作信息','成功保存！');
+																    
+																    AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPostApplyLineManagerAuditFlowView").taskId);
+				
+																    
+																	var myTaskView=Ext.getCmp("MyTaskGrid");
+																	if(myTaskView!=null){
+																		//AppUtil.activateTab(taskView);
+																		myTaskView.getStore().reload();
+																	}
+																},
+																failure : function(fp, action) {
+																	Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+																}
+														    });
+														},
+														failure : function(fp, action) {
+															Ext.MessageBox.show({
+																		title : '操作信息',
+																		msg : '信息保存出错，请联系管理员！',
+																		buttons : Ext.MessageBox.OK,
+																		icon : Ext.MessageBox.ERROR
+																	});
+															            AppUtil.removeTab('ProcessForm'+Ext.getCmp("HrPostApplyLineManagerAuditFlowView").taskId);
+																		var myTaskView=Ext.getCmp("MyTaskGrid");
+																		var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+																		if(appHomeTaskGrid!=null){
+																			appHomeTaskGrid.getStore().reload();
+																		}
+																		if(myTaskView!=null){
+																			//AppUtil.activateTab(taskView);
+																			myTaskView.getStore().reload();
+																		}
+														}
+													});
+												}else{
+													Ext.ux.Toast.msg('操作信息','请填写审批意见！');
+												}
+											}
+										}
+									});
+								}
+							})
 								,new Ext.Button({
 								iconCls:'btn-save',
 								text : '拒绝',
@@ -165,29 +243,36 @@ HrPostApplyLineManagerAuditFlowView = Ext.extend(Ext.Panel, {
 									waitMsg : '正在提交数据...',
 									success : function(fp, action) {
 										Ext.ux.Toast.msg('操作信息', '成功保存信息！');
-										Ext.getCmp('readId').setValue(action.result.readId);	
-												formPanel.getForm().submit({
-													url:__ctxPath+ "/flow/nextProcessActivity.do",
-													method:'post',
-													waitMsg:'正在提交处理，请稍等',
-													params:{taskId:taskId,signalName:signalName,activityName:activityName},
-													success : function(fp, action) {
-														Ext.ux.Toast.msg('操作信息','成功保存！');
-														AppUtil.removeTab('ProcessForm'+taskId);
-														var myTaskView=Ext.getCmp("MyTaskGrid");
-														var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
-														if(appHomeTaskGrid!=null){
-															appHomeTaskGrid.getStore().reload();
-														}
-														if(myTaskView!=null){
-															//AppUtil.activateTab(myTaskView);
-															myTaskView.getStore().reload();
-														}
-													},
-													failure : function(fp, action) {
-														Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
-													}
-										});
+										//选择审批人
+										UserSelector.getView(function(id, name) {
+											if(id != "") {
+												Ext.getCmp('readId').setValue(action.result.readId);	
+														formPanel.getForm().submit({
+															url:__ctxPath+ "/flow/nextProcessActivity.do",
+															method:'post',
+															waitMsg:'正在提交处理，请稍等',
+															params:{taskId:taskId,signalName:signalName,activityName:activityName,flowAssignId:id},
+															success : function(fp, action) {
+																Ext.ux.Toast.msg('操作信息','成功保存！');
+																AppUtil.removeTab('ProcessForm'+taskId);
+																var myTaskView=Ext.getCmp("MyTaskGrid");
+																var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+																if(appHomeTaskGrid!=null){
+																	appHomeTaskGrid.getStore().reload();
+																}
+																if(myTaskView!=null){
+																	//AppUtil.activateTab(myTaskView);
+																	myTaskView.getStore().reload();
+																}
+															},
+															failure : function(fp, action) {
+																Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+															}
+												});
+											} else {
+												Ext.ux.Toast.msg('操作信息','请选择分管副总裁！');
+											}
+										}).show();
 										// TODO
 									},
 									failure : function(fp, action) {
@@ -285,7 +370,7 @@ HrPostApplyLineManagerAuditFlowView = Ext.extend(Ext.Panel, {
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',
-						value :  6 //待人力资源复核
+						value :  7 //待分管副总裁确认
 					},{
 						fieldLabel : '试用期评估表ID',
 						id : 'hrPostAssessmentId',
