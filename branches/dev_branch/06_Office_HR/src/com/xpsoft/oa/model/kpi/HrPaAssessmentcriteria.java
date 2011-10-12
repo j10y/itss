@@ -3,6 +3,7 @@ package com.xpsoft.oa.model.kpi;
 import java.util.Date;
 
 import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.system.Department;
 
 public class HrPaAssessmentcriteria extends BaseModel {
 	protected long id;
@@ -16,6 +17,7 @@ public class HrPaAssessmentcriteria extends BaseModel {
 	protected Date modifyDate;
 	protected long modifyPerson;
 	protected Long fromAc;
+	protected Department belongDept;
 	
 	public HrPaAssessmentcriteria(){}
 
@@ -105,5 +107,13 @@ public class HrPaAssessmentcriteria extends BaseModel {
 
 	public void setFromAc(Long fromAc) {
 		this.fromAc = fromAc;
+	}
+
+	public Department getBelongDept() {
+		return belongDept;
+	}
+
+	public void setBelongDept(Department belongDept) {
+		this.belongDept = belongDept;
 	}
 }
