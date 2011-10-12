@@ -17,7 +17,7 @@ HrPromApplyTargetConfirmFlowView = Ext.extend(Ext.Panel, {
 		Ext.applyIf(this, _cfg);
 		this.init();
 		HrPromApplyTargetConfirmFlowView.superclass.constructor.call(this, {
-					title : '目标设定与面谈',
+					title : '面谈',
 					id : 'HrPromApplyTargetConfirmFlowView',
 					layout : 'column',
 					defaults : {
@@ -191,7 +191,7 @@ HrPromApplyTargetConfirmFlowView = Ext.extend(Ext.Panel, {
 			id : 'auditForm',
 			autoHeight : true,
 			style : 'padding:6px 6px 16px 5%',
-			url : __ctxPath + '/hrm/modStatusHrPromApply.do?auditStep=setTarget',//目标设定与面谈
+			url : __ctxPath + '/hrm/modStatusHrPromApply.do?auditStep=setTarget',//面谈
 			defaults : {
 				anchor : '94%,96%'
 			},

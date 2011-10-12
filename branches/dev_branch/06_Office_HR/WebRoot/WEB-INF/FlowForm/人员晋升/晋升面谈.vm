@@ -224,10 +224,19 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 				anchor : '94%,96%'
 			},
 			items : [ {
+						fieldLabel : "正式任命时间",
+						xtype : "datefield",
+						anchor : '50%,96%',
+						id : "hrPromAssessment.actualPostDate",
+						format : "Y-m-d",
+						value : formatDate(new Date(), 'yyyy-MM-dd'),
+						editable : false,
+						allowBlank : false,
+						blankText : "正式任命时间不能为空！"
+					}, {
 						fieldLabel : '面谈记录',
 						name : 'hrPromAssessment.promIntRecord',
-						xtype:'textarea',
-						allowBlank : false
+						xtype:'textarea'
 					}, {
 						name : 'leaderRead.readId',
 						id : 'readId',
@@ -263,7 +272,7 @@ HrPromApplyPromotionInterviewsFlowView = Ext.extend(Ext.TabPanel, {
 					    id : "publishStatus",
 						name : 'publishStatus',
 						xtype : 'hidden',
-						value :  12 //任命发文
+						value :  3 //通过
 					}]
 		});
 	}

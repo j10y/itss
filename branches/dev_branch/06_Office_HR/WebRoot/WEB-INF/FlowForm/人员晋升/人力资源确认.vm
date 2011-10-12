@@ -240,7 +240,7 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 								{
 									url : __ctxPath + "/hrm/comboSalaryJobSalaryRelation.do",
 									params : {
-										'Q_job.jobId_L_EQ' : '${hrPromApply_nowPositionId}',
+										'Q_job.jobId_L_EQ' : '${hrPromApply_applyPositionId}',
 										'Q_deleteFlag_N_EQ' : 0
 									},
 									fields : [
@@ -253,11 +253,13 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 											"totalMoney",
 											"setdownTime",
 											"perCoefficient",
+											"yearEndBonusCoefficient",
+											"yearTotalMoney",
 											"status" ]
 								}),
 						listeners : {
 							focus : function() {
-								var positionId = '${hrPromApply_nowPositionId}';
+								var positionId = '${hrPromApply_applyPositionId}';
 								Ext.getCmp("salaryLevelNameCombo").getStore().reload({
 									params : {
 										'Q_job.jobId_L_EQ' : positionId,
@@ -267,8 +269,44 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 							},
 							select : function(e, c, d) {
 								document.getElementById("hrPromAssessment.salaryLevelId").value = c.data.standardId;
+								document.getElementById("totalMoney").value = c.data.totalMoney;
+								document.getElementById("fixMoney").value = c.data.fixMoney;
+								document.getElementById("perCoefficient").value = c.data.perCoefficient;
+								document.getElementById("yearEndBonusCoefficient").value = c.data.yearEndBonusCoefficient;
+								document.getElementById("yearTotalMoney").value = c.data.yearTotalMoney;
+								document.getElementById("fixMoney").value = c.data.totalMoney - c.data.perCoefficient;
 							}
 						}
+					}, {
+						xtype : "textfield",
+						fieldLabel : "月度薪资总额",
+						id : "totalMoney",
+						value : "",
+						readOnly : "true"
+					}, {
+						xtype : "textfield",
+						fieldLabel : "固定工资",
+						id : "fixMoney",
+						value : "",
+						readOnly : "true"
+					}, {
+						xtype : "textfield",
+						fieldLabel : "绩效基数",
+						id : "perCoefficient",
+						value : "",
+						readOnly : "true"
+					}, {
+						xtype : "textfield",
+						fieldLabel : "年度绩效基数",
+						id : "yearEndBonusCoefficient",
+						value : "",
+						readOnly : "true"
+					}, {
+						xtype : "textfield",
+						fieldLabel : "年度总薪酬",
+						id : "yearTotalMoney",
+						value : "",
+						readOnly : "true"
 					}, {
 						name : 'leaderRead.readId',
 						id : 'readId',
@@ -300,6 +338,11 @@ HrPromApplyHRConfirmAssessFlowView = Ext.extend(Ext.TabPanel, {
 						name : 'hrPromApply.nowPositionId',
 						xtype : 'hidden',
 						value : '${hrPromApply_nowPositionId}'
+					},{
+						fieldLabel : '拟担任岗位ID',
+						name : 'hrPromApply.applyPositionId',
+						xtype : 'hidden',
+						value : '${hrPromApply_applyPositionId}'
 					},{
 					    id : "publishStatus",
 						name : 'publishStatus',

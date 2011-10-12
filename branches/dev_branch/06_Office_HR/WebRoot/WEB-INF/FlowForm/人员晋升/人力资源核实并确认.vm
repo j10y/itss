@@ -178,7 +178,8 @@ HrPromApplyHRConfirmAuditFlowView = Ext.extend(Ext.Panel, {
 					},{
 						fieldLabel : '审批意见',
 						name : 'leaderRead.leaderOpinion',
-						xtype:'textarea'
+						xtype:'textarea',
+						allowBlank : false
 					},{
 						name : 'leaderRead.checkName',
 						xtype : 'hidden',
@@ -201,6 +202,11 @@ HrPromApplyHRConfirmAuditFlowView = Ext.extend(Ext.Panel, {
 						name : 'hrPromApply.nowPositionId',
 						xtype : 'hidden',
 						value : '${hrPromApply_nowPositionId}'
+					},{
+						fieldLabel : '拟担任岗位ID',
+						name : 'hrPromApply.applyPositionId',
+						xtype : 'hidden',
+						value : '${hrPromApply_applyPositionId}'
 					},{
 						fieldLabel : '目标一',
 						name : 'hrPromApply.target1',

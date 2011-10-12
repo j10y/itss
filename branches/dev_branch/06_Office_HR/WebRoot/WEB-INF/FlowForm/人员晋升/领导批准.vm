@@ -223,6 +223,11 @@ HrPromApplyHeaderApproveFlowView = Ext.extend(Ext.TabPanel, {
 						xtype : 'hidden',
 						value : '${hrPromApply_nowPositionId}'
 					},{
+						fieldLabel : '拟担任岗位ID',
+						name : 'hrPromApply.applyPositionId',
+						xtype : 'hidden',
+						value : '${hrPromApply_applyPositionId}'
+					},{
 						fieldLabel : '所属申请ID',
 						name : 'hrPromApply.id',
 						xtype : 'hidden',
