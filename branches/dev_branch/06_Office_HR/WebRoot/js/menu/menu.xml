@@ -1330,6 +1330,8 @@
 						<url>/hrm/listHrPromAssessment.do</url>
 					</Function>
 				</Item>
+				<Item id="HrPromotionHistView" text="晋升历史">
+				</Item>
 			</Items>
 			<Items id="positiveManage" text="转正管理" isPublic="false">
 				<Item id="HrPostApplyView" text="转正申请草稿">
@@ -1355,6 +1357,8 @@
 					<Function id="_HrPostAssessmentQuery" text="查看">
 						<url>/hrm/listHrPostAssessment.do</url>
 					</Function>
+				</Item>
+				<Item id="HrPositiveHistView" text="转正历史">
 				</Item>
 			</Items>			
 		</Items>
