@@ -19,8 +19,8 @@ public class HrPaAssessmentcriteriaServiceImpl extends BaseServiceImpl<HrPaAsses
 	/*
 	 * 取得所有考核标准关键字和名称
 	 * */
-	public Map<String, String> getKeyAndName() {
-		return this.dao.getKeyAndName();
+	public Map<String, String> getKeyAndName(Long depId) {
+		return this.dao.getKeyAndName(depId);
 	}
 	/*
 	 * 判断关键字是否存在
