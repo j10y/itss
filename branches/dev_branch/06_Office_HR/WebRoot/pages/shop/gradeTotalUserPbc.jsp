@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>个人PBC模板打分</title>
+		<title>个人考评项目计算总分</title>
 		<style type="text/css">
 			#headTable{
 				width : 500px;
@@ -48,7 +48,7 @@
 
 	<body>
 		<div style="text-align:center;height:80px;line-height:80px;font-size:30px;background:#eee;">
-			PBC定性考核计算总分
+			个人考评项目计算总分
 		</div>
 		<br/>
 		<form id="auditForm" action="${pageContext.request.contextPath}/shop/gridTotalScoreSpPaAuthorizepbc.do" method="post">

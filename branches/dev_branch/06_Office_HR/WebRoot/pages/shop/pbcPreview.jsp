@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>PBC模板预览</title>
+		<title>考评项目预览</title>
 		<style type="text/css">
 			#headTable{
 				width : 500px;
@@ -36,7 +36,7 @@
 		<table id="headTable" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td style="padding-left:20px">
-					名称：${spPaKpipbc.pbcName}考核模板
+					名称：${spPaKpipbc.pbcName}
 				</td>
 				<td>
 					频度：${spPaKpipbc.frequency.name}
