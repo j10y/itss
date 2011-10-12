@@ -9,7 +9,7 @@ public interface HrPaAssessmentcriteriaService extends BaseService<HrPaAssessmen
 	/*
 	 * 取得所有考核标准关键字和名称
 	 * */
-	public abstract Map<String, String> getKeyAndName();
+	public abstract Map<String, String> getKeyAndName(Long depId);
 	/*
 	 * 判断关键字是否存在
 	 * @param key
