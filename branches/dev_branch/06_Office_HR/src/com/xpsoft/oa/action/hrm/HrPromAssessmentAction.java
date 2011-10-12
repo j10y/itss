@@ -7,15 +7,26 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.jbpm.api.ProcessInstance;
+
 import antlr.StringUtils;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.flow.ProcessRun;
 import com.xpsoft.oa.model.hrm.EmpProfile;
+import com.xpsoft.oa.model.hrm.HrPromApply;
 import com.xpsoft.oa.model.hrm.HrPromAssessment;
+import com.xpsoft.oa.model.hrm.Job;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.flow.JbpmService;
+import com.xpsoft.oa.service.flow.ProcessFormService;
+import com.xpsoft.oa.service.flow.ProcessRunService;
+import com.xpsoft.oa.service.hrm.HrPromApplyService;
 import com.xpsoft.oa.service.hrm.HrPromAssessmentService;
+import com.xpsoft.oa.service.hrm.JobService;
 
 import flexjson.JSONSerializer;
 
@@ -63,6 +74,20 @@ public class HrPromAssessmentAction extends BaseAction{
 		return "success";
 	}
 	
+	public String listHist() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<HrPromAssessment> list = this.hrPromAssessmentService.getAll(filter);
+		
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(",result:");
+		JSONSerializer json = new JSONSerializer();
+		buff.append(json.exclude(new String[] {}).serialize(list));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
 	public String preview() {
 		if(this.id != 0) {
 			this.hrPromAssessment = this.hrPromAssessmentService.get(this.id);
@@ -75,9 +100,13 @@ public class HrPromAssessmentAction extends BaseAction{
 	 * @return
 	 */
 	public String getViewByApplyId() {
+		JobService jobService = (JobService)AppUtil.getBean("jobService");
 		boolean isView = Boolean.valueOf(getRequest().getParameter("isView"));
 		Long applyId = Long.valueOf(getRequest().getParameter("applyId"));
 		this.hrPromAssessment = this.hrPromAssessmentService.saveViewByApplyId(applyId);
+		Job job = jobService.get(this.hrPromAssessment.getPromApply().getNowPositionId());
+		String bandName = job.getBand().getName();
+		this.getRequest().setAttribute("bandName", bandName);
 		if(isView){
 			return "view";
 		}
@@ -154,4 +183,33 @@ public class HrPromAssessmentAction extends BaseAction{
 		}
 		return "result";
 	}
+	
+	public String getHist() {
+		HrPromApplyService hrPromApplyService = (HrPromApplyService)AppUtil.getBean("hrPromApplyService");
+		this.hrPromAssessment = this.hrPromAssessmentService.get(this.id);
+		if(this.hrPromAssessment == null) {
+			this.logger.error("ID为：" + this.id.toString() + "的晋升评估表不存在或已删除，请核实！");
+		}
+		return "viewHist";
+	}
+	
+	public String processHist() {
+		JbpmService jbpmService = (JbpmService)AppUtil.getBean("jbpmService");
+		ProcessRunService processRunService = (ProcessRunService)AppUtil.getBean("processRunService");
+		ProcessFormService processFormService = (ProcessFormService)AppUtil.getBean("processFormService");
+		String applyId = this.getRequest().getParameter("applyId");
+		String sql = "select runId from process_form where formId = " +
+				"(select formId from form_data where fieldName = 'hrPromApply_id' and " +
+				"longValue = " + applyId + " order by dataId desc limit 1)";
+		List<Map<String, Object>> mapList = this.hrPromAssessmentService.findDataList(sql);
+		if(mapList.size() > 0) {
+			ProcessRun processRun = null;
+			processRun = (ProcessRun)processRunService.get(Long.parseLong(mapList.get(0).get("runId").toString()));
+			List pfList = processFormService.getByRunId(Long.parseLong(mapList.get(0).get("runId").toString()));
+			getRequest().setAttribute("pfList", pfList);
+		}
+		
+		return "processHist";
+	}
+	
 }

@@ -13,14 +13,27 @@ import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.HrPromApply;
 import com.xpsoft.oa.model.hrm.HrPromAssessment;
 import com.xpsoft.oa.model.hrm.Job;
+import com.xpsoft.oa.model.hrm.StandSalary;
+import com.xpsoft.oa.model.kpi.HrPaKpiPBC2User;
+import com.xpsoft.oa.model.kpi.HrPaKpiitem;
+import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
+import com.xpsoft.oa.model.kpi.HrPaKpipbc;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
+import com.xpsoft.oa.service.hrm.HrPostAssessmentService;
 import com.xpsoft.oa.service.hrm.HrPromApplyService;
 import com.xpsoft.oa.service.hrm.HrPromAssessmentService;
 import com.xpsoft.oa.service.hrm.JobService;
+import com.xpsoft.oa.service.hrm.StandSalaryService;
+import com.xpsoft.oa.service.kpi.HrPaKpiPBC2UserService;
+import com.xpsoft.oa.service.kpi.HrPaKpiitem2userService;
+import com.xpsoft.oa.service.kpi.HrPaKpiitemService;
+import com.xpsoft.oa.service.kpi.HrPaKpipbcService;
+import com.xpsoft.oa.service.system.AppUserService;
 
 import flexjson.JSONSerializer;
 
@@ -107,7 +120,7 @@ public class HrPromApplyAction extends BaseAction{
 		List<Map<String, Object>> mapList = this.hrPromApplyService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
 		for(int i = 0; i < mapList.size(); i++) {
-			Date startWorkDate = (Date)mapList.get(i).get("startWorkDate");
+			Date startWorkDate = mapList.get(i).get("startWorkDate") == null ? new Date() : (Date)mapList.get(i).get("startWorkDate");
 			Date accessionTime = (Date)mapList.get(i).get("accessionTime");
 			Long workYear = (currentDate.getTime() - startWorkDate.getTime()) / 1000 / 60 / 60 / 24 / 365;
 			Long workHereYear = (currentDate.getTime() - accessionTime.getTime()) / 1000 / 60 / 60 / 24 / 365;
@@ -241,6 +254,15 @@ public class HrPromApplyAction extends BaseAction{
 	 * @return
 	 */
 	public String modStatus() {		
+		Date currentDate = new Date();
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		StandSalaryService standSalaryService = (StandSalaryService)AppUtil.getBean("standSalaryService");
+		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
+		HrPaKpipbcService hrPaKpipbcService = (HrPaKpipbcService)AppUtil.getBean("hrPaKpipbcService");
+		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
+		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
+		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
+		AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
 		HrPromApply promApply = this.hrPromApplyService.get(this.id);
 		Integer publishStatus = Integer.valueOf(getRequest().getParameter("publishStatus"));
 		boolean isAssess = Boolean.valueOf(getRequest().getParameter("isAssess"));//评估阶段
@@ -255,10 +277,17 @@ public class HrPromApplyAction extends BaseAction{
 				promApply.setPostManagerName(ContextUtil.getCurrentUser().getFullname());
 				promApply.setPostManagerAuditDate(new Date());
 			}else if(auditStep.equalsIgnoreCase("setTarget")){//目标设定关于面谈
+				//modify by guansq at 2011-10-10 begin
+				/*
+				 * 目标设定提前到提交申请表之前
+				 * */
 				//目标
+				/*
 				promApply.setTarget1(getRequest().getParameter("target1"));
 				promApply.setTarget2(getRequest().getParameter("target2"));
 				promApply.setTarget3(getRequest().getParameter("target3"));
+				*/
+				//modify by guansq at 2011-10-10 end
 				//面谈记录
 				promApply.setIntRecord(getRequest().getParameter("intRecord"));				
 			}else if(auditStep.equalsIgnoreCase("assess")){//考核期评估
@@ -284,11 +313,84 @@ public class HrPromApplyAction extends BaseAction{
 				
 				assessment.setPublishStatus(publishStatus);
 				this.hrPromAssessmentService.save(assessment);
-			}else if(auditStep.equalsIgnoreCase("promotionInterviews")){
+			}else if(auditStep.equalsIgnoreCase("promotionInterviews")){//晋升面谈
 				assessment = this.hrPromAssessmentService.getByApplyId(promApply.getId());
+				assessment.setAppointDate(DateUtil.parseDate(getRequest().getParameter("hrPromAssessment.actualPostDate")));
 				assessment.setPromIntRecord(getRequest().getParameter("hrPromAssessment.promIntRecord"));				
 				assessment.setPublishStatus(publishStatus);
 				this.hrPromAssessmentService.save(assessment);
+				//add by guansq at 2011-10-10 begin
+				/*
+				 * 更新档案表，为该用户增加个人PBC
+				 * */
+				if(publishStatus == 3) {
+					//更新档案表
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("Q_userId_L_EQ", assessment.getPromApply().getApplyUser().getUserId().toString());
+					QueryFilter filter = new QueryFilter(map);
+					List<EmpProfile> empProfileList = empProfileService.getAll(filter);
+					if(empProfileList.size() > 0) {
+						StandSalary standSalary = standSalaryService.get(assessment.getSalaryLevelId());
+						if(standSalary != null) {
+							empProfileList.get(0).setStandardMoney(standSalary.getTotalMoney());
+							empProfileList.get(0).setStandardId(standSalary.getStandardId());
+							empProfileList.get(0).setStandardName(standSalary.getStandardName());
+							empProfileList.get(0).setPerCoefficient(standSalary.getPerCoefficient());
+						} else {
+							this.logger.error("ID为：" + assessment.getSalaryLevelId() + "的薪资标准不存在或已删除，请核实！");
+						}
+						empProfileList.get(0).setJobId(assessment.getPromApply().getApplyPositionId());
+						empProfileList.get(0).setPosition(assessment.getPromApply().getApplyPositionName());
+					}
+					//为该用户增加个人PBC
+					String sql = "select distinct a.id from hr_pa_kpipbc a, emp_profile b, app_user c where " +
+							"a.belongPost = " + assessment.getPromApply().getApplyPositionId() + " and a.belongPost = b.jobId and " +
+							"b.userId = c.userId and a.publishStatus = 3";
+					List<Map<String, Object>> mapList = this.hrPromApplyService.findDataList(sql);
+					AppUser user = appUserService.get(assessment.getPromApply().getApplyUser().getUserId());
+					for(int i = 0; i < mapList.size(); i++) {
+						HrPaKpipbc pbc = hrPaKpipbcService.get(Long.parseLong(mapList.get(i).get("id").toString()));
+						//取得PBC的考核频度
+						String sql2 = "select name from hr_pa_datadictionary where id = " + pbc.getFrequency().getId();
+						List<Map<String, Object>> mapList2 = hrPaKpipbcService.findDataList(sql2);
+						String frequencyName = mapList2.get(0).get("name").toString();
+						//取出要插入PBC考核模板关联的考核项
+						Map<String, String> map2 = new HashMap<String, String>();
+						map2.put("Q_pbc.id_L_EQ", String.valueOf(pbc.getId()));
+						QueryFilter filter2 = new QueryFilter(map2);
+						List<HrPaKpiitem> hrPaKpiitemList = hrPaKpiitemService.getAll(filter2);
+						//2.1.1. 保存个人考核模板基本信息
+						HrPaKpiPBC2User hrPaKpiPBC2User = new HrPaKpiPBC2User();
+						hrPaKpiPBC2User.setPbcName(user.getFullname() + "的" + frequencyName + "PBC");
+						hrPaKpiPBC2User.setFromPBC(String.valueOf(pbc.getId()));
+						hrPaKpiPBC2User.setBelongUser(user);
+						hrPaKpiPBC2User.setFrequency(pbc.getFrequency());
+						hrPaKpiPBC2User.setCreatePerson(pbc.getCreatePerson());
+						hrPaKpiPBC2User.setCreateDate(currentDate);
+						hrPaKpiPBC2User.setPublishStatus(0);//默认为草稿状态
+						hrPaKpiPBC2User.setTotalScore(pbc.getTotalScore());
+						hrPaKpiPBC2User.setModifyDate(currentDate);
+						hrPaKpiPBC2User.setModifyPerson(currentUser);
+						hrPaKpiPBC2User.setCoefficient(new Double(0));
+						hrPaKpiPBC2User.setLineManager(pbc.getLineManager());
+						//插入数据库
+						hrPaKpiPBC2User = hrPaKpiPBC2UserService.save(hrPaKpiPBC2User);
+						
+						//2.1.2. 保存个人考核模板关联的考核项
+						for(int j = 0; j < hrPaKpiitemList.size(); j++) {
+							HrPaKpiitem2user hrPaKpiitem2user = new HrPaKpiitem2user();
+							hrPaKpiitem2user.setPbc2User(hrPaKpiPBC2User);
+							hrPaKpiitem2user.setPiId(hrPaKpiitemList.get(j).getPi().getId());
+							hrPaKpiitem2user.setWeight(hrPaKpiitemList.get(j).getWeight());//直接将岗位PBC模板权值复制给个人
+							hrPaKpiitem2user.setResult(new Double(0));//等待计算时设置结果
+							hrPaKpiitem2user.setCoefficient(new Double(0));//等待计算时设置结果
+							hrPaKpiitem2user.setRemark("");
+							//插入数据库
+							hrPaKpiitem2userService.save(hrPaKpiitem2user);
+						}
+					}
+					//add by guansq at 2011-10-10 end
+				}
 			}else if(auditStep.equalsIgnoreCase("promotionPublish")){
 				assessment = this.hrPromAssessmentService.getByApplyId(promApply.getId());
 				Date date = null;

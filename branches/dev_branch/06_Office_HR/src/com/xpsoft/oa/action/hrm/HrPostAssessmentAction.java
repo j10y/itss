@@ -10,9 +10,13 @@ import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.flow.ProcessRun;
 import com.xpsoft.oa.model.hrm.HrPostAssessment;
 import com.xpsoft.oa.model.hrm.Job;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.flow.JbpmService;
+import com.xpsoft.oa.service.flow.ProcessFormService;
+import com.xpsoft.oa.service.flow.ProcessRunService;
 import com.xpsoft.oa.service.hrm.HrPostAssessmentService;
 import com.xpsoft.oa.service.hrm.JobService;
 
@@ -71,6 +75,40 @@ public class HrPostAssessmentAction extends BaseAction{
 		return "success";
 	}
 	
+	public String listHist() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		String fullname = this.getRequest().getParameter("fullname");
+		String sql2 = "select count(a.id) as total from hr_post_assessment a, hr_post_apply b, app_user c where " +
+				"a.applyId = b.id and b.applyUser = c.userId and a.publishStatus = 3";
+		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+		List<Map<String, Object>> mapList2 = this.hrPostAssessmentService.findDataList(sql2);
+		String sql = "select distinct a.id, b.id as applyId, c.userId, c.fullname, b.postId, b.postName, b.accessionTime, a.publishStatus from " +
+				"hr_post_assessment a, hr_post_apply b, app_user c where " +
+				"a.applyId = b.id and b.applyUser = c.userId and a.publishStatus = 3";
+		sql += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+		sql += " limit " + filter.getPagingBean().getFirstResult() + ", " + filter.getPagingBean().getPageSize();
+		List<Map<String, Object>> mapList = this.hrPostAssessmentService.findDataList(sql);
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList2.get(0).get("total") + "',result:[");
+		for(int i = 0; i < mapList.size(); i++) {
+			buff.append("{'id':'" + mapList.get(i).get("id"))
+					.append("','applyId':'" + mapList.get(i).get("applyId"))
+					.append("','userId':'" + mapList.get(i).get("userId"))
+					.append("','fullname':'" + mapList.get(i).get("fullname"))
+					.append("','postId':'" + mapList.get(i).get("postId"))
+					.append("','postName':'" + mapList.get(i).get("postName"))
+					.append("','accessionTime':'" + mapList.get(i).get("accessionTime"))
+					.append("','publishStatus':'" + mapList.get(i).get("publishStatus"))
+					.append("'},");
+		}
+		if(mapList.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
 	public String previewStatus() {
 		if(this.id != 0) {
 			this.hrPostAssessment = this.hrPostAssessmentService.get(this.id);
@@ -84,9 +122,13 @@ public class HrPostAssessmentAction extends BaseAction{
 	 * @return
 	 */
 	public String getViewByApplyId() {
+		JobService jobService = (JobService)AppUtil.getBean("jobService");
 		boolean isView = Boolean.valueOf(this.getRequest().getParameter("isView"));
 		Long applyId = Long.valueOf(this.getRequest().getParameter("applyId"));
 		this.hrPostAssessment = this.hrPostAssessmentService.saveViewByApplyId(applyId);
+		Job job = jobService.get(this.hrPostAssessment.getPostApply().getPostId());
+		String bandName = job.getBand().getName();
+		this.getRequest().setAttribute("bandName", bandName);
 		if(isView){
 			return "view";
 		}
@@ -166,5 +208,24 @@ public class HrPostAssessmentAction extends BaseAction{
 				"','hrPostAssessmentId':'" + this.hrPostAssessment.getId() + 
 				"'}";
 		return "success";
+	}
+	
+	public String processHist() {
+		JbpmService jbpmService = (JbpmService)AppUtil.getBean("jbpmService");
+		ProcessRunService processRunService = (ProcessRunService)AppUtil.getBean("processRunService");
+		ProcessFormService processFormService = (ProcessFormService)AppUtil.getBean("processFormService");
+		String applyId = this.getRequest().getParameter("applyId");
+		String sql = "select runId from process_form where formId = " +
+				"(select formId from form_data where fieldName = 'hrPostApply_id' and " +
+				"longValue = " + applyId + " order by dataId desc limit 1)";
+		List<Map<String, Object>> mapList = this.hrPostAssessmentService.findDataList(sql);
+		if(mapList.size() > 0) {
+			ProcessRun processRun = null;
+			processRun = (ProcessRun)processRunService.get(Long.parseLong(mapList.get(0).get("runId").toString()));
+			List pfList = processFormService.getByRunId(Long.parseLong(mapList.get(0).get("runId").toString()));
+			getRequest().setAttribute("pfList", pfList);
+		}
+		
+		return "processHist";
 	}
 }
