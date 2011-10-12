@@ -1156,7 +1156,7 @@ EmpProfileForm = Ext
 																		readOnly : true
 																	},
 																	{
-																		fieldLabel : "薪酬标准金额",
+																		fieldLabel : "月度薪资总额",
 																		name : "empProfile.standardMoney",
 																		id : "empProfileForm.standardMoney",
 																		readOnly : true
