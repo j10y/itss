@@ -261,7 +261,7 @@ public class FlowServiceImpl implements FlowService {
 			json += "signalName: \"" + tf.getName() + "\",";
 			json += "type:\"0\",";
 			if (this.activityName.equals("科室负责人核稿")) {
-				json += "boxstatus:true,";
+				json += "boxstatus:true,";//查询所有的局长或分管局长
 			} else {
 				json += "boxstatus:false,";
 			}
@@ -1431,6 +1431,24 @@ public class FlowServiceImpl implements FlowService {
 			json=json.substring(0,json.length()-1);
 		}
 		json+="]}";
+		return json;
+	}
+	public String findPersonDatas(String userId,String passwd,String type){
+		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
+		String json="";
+		if(type.equals("deptmanage")){
+			String sql="select deptUserId,deptFullname from arch_rec_user";
+			List<Map> list = userService.findDataList(sql);
+			json="{\"success\":true,data:[";
+			//+"/"+ap.get("username")
+			for(Map ap:list){
+				json+="{id:\""+ap.get("deptUserId")+"\",name:\""+ap.get("deptFullname")+"\"},";
+			}
+			if(list.size()>0){
+				json=json.substring(0,json.length()-1);
+			}
+			json+="]}";
+		}
 		return json;
 	}
 }

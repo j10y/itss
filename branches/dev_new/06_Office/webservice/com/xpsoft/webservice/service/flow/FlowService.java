@@ -74,4 +74,12 @@ public interface FlowService {
 	 * @return
 	 */
 	public String findJld(String userId,String passwd);
+	/**
+	 * 通过不同类型来获取不同的人员数据列表
+	 * @param userId
+	 * @param passwd
+	 * @param type
+	 * @return
+	 */
+	public String findPersonDatas(String userId,String passwd,String type);
 }
