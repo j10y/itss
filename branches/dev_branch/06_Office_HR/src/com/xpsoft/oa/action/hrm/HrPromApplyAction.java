@@ -74,6 +74,11 @@ public class HrPromApplyAction extends BaseAction{
 		filter.addFilter("Q_publishStatus_N_NEQ", "5");
 		filter.addFilter("Q_publishStatus_N_NEQ", "6");
 		filter.addFilter("Q_publishStatus_N_NEQ", "7");
+		filter.addFilter("Q_publishStatus_N_NEQ", "8");
+		filter.addFilter("Q_publishStatus_N_NEQ", "9");
+		filter.addFilter("Q_publishStatus_N_NEQ", "10");
+		filter.addFilter("Q_publishStatus_N_NEQ", "11");
+		filter.addFilter("Q_publishStatus_N_NEQ", "12");
 		filter.addFilter("Q_createPerson.userId_L_EQ", ContextUtil.getCurrentUserId().toString());
 		List<HrPromApply> list = this.hrPromApplyService.getAll(filter);
 		
