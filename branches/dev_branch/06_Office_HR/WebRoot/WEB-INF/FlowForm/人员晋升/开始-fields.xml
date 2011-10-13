@@ -6,7 +6,7 @@
 	<field name="hrPromApply.accessionTime" label="入职时间" type="varchar" length="256"/>
 	<field name="hrPromApply.nowPositionId" label="现工作岗位ID" type="varchar" isShowed="false" />
 	<field name="hrPromApply.nowPositionName" label="现工作岗位" type="varchar" length="256"/>
-	<field name="hrPromApply.applyPositionId" label="拟晋升岗位id" type="varchar" length="256"/>
+	<field name="hrPromApply.applyPositionId" label="拟晋升岗位ID" type="varchar" isShowed="false"/>
 	<field name="hrPromApply.workYear" label="工作年限" type="varchar" length="256"/>
 	<field name="hrPromApply.workHereYear" label="本单位工作年限" type="varchar" length="256"/>
 	<field name="hrPromApply.applyDate" label="拟晋升时间" type="varchar" length="256"/>
