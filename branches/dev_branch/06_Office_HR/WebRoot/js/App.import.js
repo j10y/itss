@@ -472,6 +472,9 @@ App.importJs = {
 	   			__ctxPath + "/js/budget/BudgetQuarterFormView.js",
 	   			__ctxPath + "/js/budget/BudgetQuarterItemWin.js" ],
 	BudgetQuarterAlarmView : [ __ctxPath + "/js/budget/BudgetQuarterAlarmView.js",
-	       			__ctxPath + "/js/budget/BudgetQuarterFormView.js"]
+	       			__ctxPath + "/js/budget/BudgetQuarterFormView.js"],
+	HrBudgetReportView:[__ctxPath + "/js/hrm/HrBudgetReportView.js"],
+	HrDepartureReportView:[__ctxPath + "/js/hrm/HrDepartureReportView.js"]
+	
 				                    
 };
