@@ -1747,3 +1747,167 @@ li .right {
 	background-repeat: no-repeat;
 	background-position: 10% 50%;
 }
+
+.menu-hrPa {
+	background-image: url('../images/menus/kpi/hrPa.png') !important;
+}
+
+.menu-pi {
+	background-image: url('../images/menus/kpi/pi.png') !important;
+}
+
+.menu-piDraft {
+	background-image: url('../images/menus/kpi/piDraft.png') !important;
+}
+
+.menu-piPublish {
+	background-image: url('../images/menus/kpi/piPublish.png') !important;
+}
+
+.menu-ac {
+	background-image: url('../images/menus/kpi/ac.png') !important;
+}
+
+.menu-acDraft {
+	background-image: url('../images/menus/kpi/acDraft.png') !important;
+}
+
+.menu-acPublish {
+	background-image: url('../images/menus/kpi/acPublish.png') !important;
+}
+
+.menu-pbc {
+	background-image: url('../images/menus/kpi/pbc.png') !important;
+}
+
+.menu-pbcDraft {
+	background-image: url('../images/menus/kpi/pbcDraft.png') !important;
+}
+
+.menu-pbcPublish {
+	background-image: url('../images/menus/kpi/pbcPublish.png') !important;
+}
+
+.menu-gradePbc {
+	background-image: url('../images/menus/kpi/gradePbc.png') !important;
+}
+
+.menu-uploadTarget {
+	background-image: url('../images/menus/kpi/uploadTarget.png') !important;
+}
+
+.menu-uploadReach {
+	background-image: url('../images/menus/kpi/uploadReach.png') !important;
+}
+
+.menu-pbcAuth {
+	background-image: url('../images/menus/kpi/pbcAuth.png') !important;
+}
+
+.menu-pbcInAudit {
+	background-image: url('../images/menus/kpi/pbcInAudit.png') !important;
+}
+
+.menu-pbcResult {
+	background-image: url('../images/menus/kpi/pbcResult.png') !important;
+}
+
+.menu-pbcHist {
+	background-image: url('../images/menus/kpi/pbcHist.png') !important;
+}
+
+.menu-pbcReport {
+	background-image: url('../images/menus/kpi/pbcReport.png') !important;
+}
+
+.menu-shop {
+	background-image: url('../images/menus/shop/shop.png') !important;
+}
+
+.menu-spPa {
+	background-image: url('../images/menus/shop/spPa.png') !important;
+}
+
+.menu-spPi {
+	background-image: url('../images/menus/shop/spPi.png') !important;
+}
+
+.menu-spPiDraft {
+	background-image: url('../images/menus/shop/spPiDraft.png') !important;
+}
+
+.menu-spPiPublish {
+	background-image: url('../images/menus/shop/spPiPublish.png') !important;
+}
+
+.menu-spPbc {
+	background-image: url('../images/menus/shop/spPbc.png') !important;
+}
+
+.menu-spPbcDraft {
+	background-image: url('../images/menus/shop/spPbcDraft.png') !important;
+}
+
+.menu-spPbcPublish {
+	background-image: url('../images/menus/shop/spPbcPublish.png') !important;
+}
+
+.menu-spGradePbc {
+	background-image: url('../images/menus/shop/spGradePbc.png') !important;
+}
+
+.menu-spPbcAuth {
+	background-image: url('../images/menus/shop/spPbcAuth.png') !important;
+}
+
+.menu-spPbcResult {
+	background-image: url('../images/menus/shop/spPbcResult.png') !important;
+}
+
+.menu-spPbcHist {
+	background-image: url('../images/menus/shop/spPbcHist.png') !important;
+}
+
+.menu-spPbcReport {
+	background-image: url('../images/menus/shop/spPbcReport.png') !important;
+}
+
+.menu-promotion {
+	background-image: url('../images/menus/hrm/promotion.png') !important;
+}
+
+.menu-promotionApplyDraft {
+	background-image: url('../images/menus/hrm/promotionApplyDraft.png') !important;
+}
+
+.menu-promotionApplyStatus {
+	background-image: url('../images/menus/hrm/promotionApplyStatus.png') !important;
+}
+
+.menu-promotionAssessmentStatus {
+	background-image: url('../images/menus/hrm/promotionAssessmentStatus.png') !important;
+}
+
+.menu-promotionHist {
+	background-image: url('../images/menus/hrm/promotionHist.png') !important;
+}
+
+.menu-positive {
+	background-image: url('../images/menus/hrm/positive.png') !important;
+}
+
+.menu-positiveApplyDraft {
+	background-image: url('../images/menus/hrm/positiveApplyDraft.png') !important;
+}
+
+.menu-positiveApplyStatus {
+	background-image: url('../images/menus/hrm/positiveApplyStatus.png') !important;
+}
+
+.menu-positiveAssessmentStatus {
+	background-image: url('../images/menus/hrm/positiveAssessmentStatus.png') !important;
+}
+
+.menu-positiveHist {
+	background-image: url('../images/menus/hrm/positiveHist.png') !important;
+}
