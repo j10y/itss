@@ -1551,7 +1551,7 @@
 			isPublic="false">
 			<Items id="Budget" text="年度预算管理" iconCls="menu-budget"
 			isPublic="false">
-			<Item id="BudgetView" text="年度预算草稿" iconCls="menu-budget">
+			<Item id="BudgetView" text="年度预算草稿" iconCls="menu-budget-draft">
 			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
@@ -1569,12 +1569,12 @@
 			       <url>/budget/multiDelBudget.do</url>
 			    </Function>
 			</Item>
-			<Item id="BudgetStatusView" text="年度预算状态" iconCls="menu-budget">
+			<Item id="BudgetStatusView" text="年度预算状态" iconCls="menu-budget-status">
 			    <Function id="_BudgetStatusQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
 			</Item>
-			<Item id="BudgetAlarmView" text="年度预算预警" iconCls="menu-budget">
+			<Item id="BudgetAlarmView" text="年度预算预警" iconCls="menu-budget-alarm">
 			    <Function id="_BudgetAlarmQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listAlarmBudget.do</url>
 			    </Function>
@@ -1583,7 +1583,7 @@
 			
 			<Items id="BudgetQuarter" text="季度预算管理" iconCls="menu-budget"
 			isPublic="false">
-			<Item id="BudgetQuarterView" text="季度预算草稿" iconCls="menu-budget">
+			<Item id="BudgetQuarterView" text="季度预算草稿" iconCls="menu-budget-draft">
 			    <Function id="_BudgetQuarterQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
@@ -1601,12 +1601,12 @@
 			       <url>/budget/multiDelBudget.do</url>
 			    </Function>
 			</Item>
-			<Item id="BudgetQuarterStatusView" text="季度预算状态" iconCls="menu-budget">
+			<Item id="BudgetQuarterStatusView" text="季度预算状态" iconCls="menu-budget-status">
 			    <Function id="_BudgetQuarterStatusQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listBudget.do</url>
 			    </Function>
 			</Item>
-			<Item id="BudgetQuarterAlarmView" text="季度预算预警" iconCls="menu-budget">
+			<Item id="BudgetQuarterAlarmView" text="季度预算预警" iconCls="menu-budget-alarm">
 			    <Function id="_BudgetQuarterAlarmQuery" text="查看" iconCls="menu-list">
 			       <url>/budget/listAlarmBudget.do</url>
 			    </Function>
