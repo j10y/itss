@@ -1911,3 +1911,20 @@ li .right {
 .menu-positiveHist {
 	background-image: url('../images/menus/hrm/positiveHist.png') !important;
 }
+
+.menu-budget{
+	background-image: url('../images/menus/budget/menu_budget_draft.png')
+	!important;
+}
+.menu-budget-draft{
+	background-image: url('../images/menus/budget/menu_budget_draft.png')
+	!important;
+}
+.menu-budget-status{
+	background-image: url('../images/menus/budget/menu_budget_status.png')
+	!important;
+}
+.menu-budget-alarm{
+	background-image: url('../images/menus/budget/menu_budget_alarm.png')
+	!important;
+}
