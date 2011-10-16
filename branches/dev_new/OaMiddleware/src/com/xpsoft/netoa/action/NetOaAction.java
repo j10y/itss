@@ -1,46 +1,22 @@
 package com.xpsoft.netoa.action;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.ServletContext;
-import javax.xml.rpc.ParameterMode;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
-import org.apache.axis.encoding.XMLType;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.xpsoft.netoa.util.InitSys;
-import com.xpsoft.netoa.util.UserCheckMap;
-import com.xpsoft.padoa.test.entity.Children;
-import com.xpsoft.padoa.test.entity.LoginSendLog;
-import com.xpsoft.padoa.test.entity.User;
-import com.xpsoft.padoa.test.service.UserService;
-import com.xpsoft.framework.context.ContextHolder;
 import com.xpsoft.framework.util.FileDownloaderUtil;
 import com.xpsoft.framework.util.HttpUtil;
 import com.xpsoft.framework.util.PropertiesUtil;
-import com.xpsoft.framework.util.StaticHtml;
-import com.xpsoft.framework.util.StringUtil;
 import com.xpsoft.framework.web.adapter.struts2.BaseAction;
+import com.xpsoft.netoa.util.UserCheckMap;
 
 /**
  * pad端访问oa系统接口
@@ -54,6 +30,36 @@ public class NetOaAction extends BaseAction{
 	public static final String OAURL = PropertiesUtil.getProperties("system.oa.webserviceUrl");
 	//中间件访问oa地址
 	public static final String OAURLDOWN = PropertiesUtil.getProperties("system.oa.url");
+	
+	/**
+	 * 检查是否需要更新软件
+	 * @Methods Name checkUpdate
+	 * @Create In 2011-10-12 By Jack
+	 * @return String
+	 * @throws Exception String
+	 */
+	public String checkUpdate() throws Exception{
+		JSONObject jo = new JSONObject();
+		try{
+			String currentVersion = super.getRequest().getParameter("cv");
+			
+			Map<String, String> ck = FileDownloaderUtil.checkUpdate(super.getResponse(), new Integer(currentVersion),super.getSession().getServletContext().getRealPath("/"));
+			if (ck != null){
+				jo.put("success", (new Boolean(ck.get("success")).booleanValue()));
+				jo.put("fn", ck.get("fn"));
+				jo.put("url", ck.get("url"));
+			}else{
+				jo.put("success", false);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		printJson(jo);
+		return null;
+	}
+	
 	/**
 	 * pad端下载文件
 	 * @Methods Name downFile

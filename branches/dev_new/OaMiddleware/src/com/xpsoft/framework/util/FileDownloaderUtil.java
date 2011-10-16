@@ -1,7 +1,6 @@
 package com.xpsoft.framework.util;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +9,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
+
+import com.xpsoft.netoa.entity.UpdateInfo;
 
 /**
  * 下载或显示已字节数组形式存放在数据库中文件数据
@@ -23,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FileDownloaderUtil {
 	//默认类别map
 	public static Hashtable MIME;
-
+	
 	static {
 		MIME = new Hashtable();
 		MIME.put("jpeg", "image/jpeg");
@@ -192,5 +198,67 @@ public class FileDownloaderUtil {
 		os.write(bytes, 0, bytes.length);
 		os.flush();
 		os.close();
+	}
+	 
+	/**
+	 * 检查版本更新信息
+	 * @Methods Name checkUpdate
+	 * @Create In 2011-10-12 By Jack
+	 * @param response
+	 * @param currentVersion
+	 * @return boolean
+	 */
+	public static Map<String, String> checkUpdate(HttpServletResponse response, Integer currentVersion, String fileRootPath){
+		Map<String, String> info = getUploadInfo("","",fileRootPath);
+		Map<String, String> result = new HashMap<String, String>();
+		
+		if(info != null && info.get("fn") != null){
+			String fileName = info.get("fn");
+			String httpUrl = info.get("url");
+			String nv = info.get("version");
+			
+			Integer  nVersion = new Integer(nv);
+			if(nVersion > currentVersion){
+				result.put("success", "true");
+				result.put("fn", fileName);
+				result.put("url", httpUrl);
+			}
+		}else{
+			result.put("success", "false");
+		}
+		return result;
+	}
+	
+	/**
+	 * 获取更新资源信息,预留根据机器型号和跟新版本获取更新链接的功能
+	 * @Methods Name getUploadInfo
+	 * @Create In 2011-10-12 By Jack
+	 * @param cv 当前版本号
+	 * @param mt 当前机器型号
+	 * @return Map<String,String>
+	 */
+	private static Map<String, String> getUploadInfo(String cv, String mt, String fileRootPath){
+		Map<String, String> info = new HashMap<String, String>();
+		
+		try {
+			JAXBContext jc = JAXBContext.newInstance("com.xpsoft.netoa.entity");
+
+			Unmarshaller u = jc.createUnmarshaller();
+			FileInputStream fis = new FileInputStream(fileRootPath + PropertiesUtil.getProperties("system.pad.upload.path", "c:\\Pad\\update\\update.xml"));
+			JAXBElement upload = (JAXBElement) u.unmarshal(fis);
+
+			UpdateInfo sd = (UpdateInfo) upload.getValue();
+
+			 info.put("version", sd.getVersion());
+			 info.put("fn", sd.getFileName());
+			 info.put("url", HttpUtil.htmlEncode(sd.getUrl()));
+			 
+			return info;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }
