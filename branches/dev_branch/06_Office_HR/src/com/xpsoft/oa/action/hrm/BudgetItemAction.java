@@ -242,6 +242,8 @@ public class BudgetItemAction extends BaseAction {
 		
 		BudgetItem compare = null;
 		
+		mapFilter.put("Q_budgetItemId_L_NEQ", budgetItem.getBudgetItemId().toString());//去除自己
+		
 		if(belongItemId!=null){
 			mapFilter.put("Q_belongItem.budgetItemId_L_EQ", belongItemId.toString());
 			filter = new QueryFilter(mapFilter);
@@ -255,9 +257,10 @@ public class BudgetItemAction extends BaseAction {
 		}
 		Double total = new Double(0);
 		for(BudgetItem item : list){
-			if(item.getBudgetItemId()!=budgetItem.getBudgetItemId()){//不包含他
+			/*if(item.getBudgetItemId()!=budgetItem.getBudgetItemId()){//不包含他
 				total += item.getValue();
-			}
+			}*/
+			total += item.getValue();
 		}
 		
 		total += budgetItem.getValue();//小于他的父亲或者
