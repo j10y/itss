@@ -207,7 +207,7 @@ public class BudgetItemAction extends BaseAction {
 		//TODO:1,如果存在belongItem那么所有属于这个belongItem的所有季度item的和必须小于belongItem的value
 		//TODO:2,如果不存在belongItem，那么隶属于这个ITEM的parentItem的所有子item的和小于这个Item的和才可以
 		if(Boolean.valueOf(getRequest().getParameter("isQuarter")) && !validateValue(this.budgetItem)){
-			setJsonString("{success:true,isValid:false}");
+			setJsonString("{suxccess:true,isValid:false}");
 			return "success";
 		}
 		
@@ -232,7 +232,9 @@ public class BudgetItemAction extends BaseAction {
 	}
 	
 	private boolean validateValue(BudgetItem budgetItem){
-		Long belongItemId = budgetItem.getBelongItem().getBudgetItemId();
+		Long belongItemId = null;
+		if(budgetItem.getBelongItem()!=null) belongItemId = budgetItem.getBelongItem().getBudgetItemId();
+		
 		Map mapFilter = new HashMap();
 		List<BudgetItem> list = null;
 		QueryFilter filter = null;
@@ -298,10 +300,9 @@ public class BudgetItemAction extends BaseAction {
 		}
 		
 		Budget budget = (Budget)budgetService.get(Long.valueOf(getRequest().getParameter("budgetId")));
-		
 		for(Map node : result){//所有root
 			if(budget.getBudgetType().intValue()==1){//年度才会显示岗位树
-				buildDefaultBudgetItem(node);
+				//buildDefaultBudgetItem(node);
 			}			
 			cascade(node, itemList);
 		}
@@ -350,7 +351,7 @@ public class BudgetItemAction extends BaseAction {
 					list.add(node);
 					parentNode.put("children", list);
 				}
-				iterator.remove();//删除
+				//iterator.remove();//删除
 				cascade(node, resource);
 			}
 		}

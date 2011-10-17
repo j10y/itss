@@ -240,6 +240,7 @@ BudgetQuarterItemWin = Ext.extend(Ext.Window, {
 		
 		if (this.budgetItemId != null && this.budgetItemId != "undefined") {
 			Ext.getCmp("budgetQuarterItem.belongItem.name").setReadOnly(true);
+			Ext.getCmp("budgetQuarterItem.belongItem.name").allowBlank = true;
 			this.formPanel.getForm().load({
 				deferredRender : false,
 				url : __ctxPath

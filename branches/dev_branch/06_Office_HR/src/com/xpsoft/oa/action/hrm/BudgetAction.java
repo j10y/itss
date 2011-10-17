@@ -274,6 +274,7 @@ public class BudgetAction extends BaseAction {
 										.getPropertity("budget.default.budgetItemMonth")));
 				//add by awen for add get default budgetItem value logic on 2011-09-01 end
 				this.budgetItemService.save(budgetItem);
+				
 				//add by awen for add default realExecution on 2011-09-07 begin
 				RealExecution re = new RealExecution();
 				re.setBudget(budgetItem.getBudget());
@@ -283,6 +284,61 @@ public class BudgetAction extends BaseAction {
 				re.setDeleteFlag(0);
 				this.realExecutionService.save(re);
 				//add by awen for add default realExecution on 2011-09-07 end
+				
+				
+				//add by awen for add second level budgetItem(在编 and 编外) on 2011-10-13 begin
+				//在编
+				BudgetItem in = new BudgetItem();
+				in.setBudget(this.budget);
+				in.setName(AppUtil
+						.getPropertity("budget.in.budgetItemName"));
+				in.setCode(AppUtil
+						.getPropertity("budget.in.budgetItemCode"));
+				in.setKey(AppUtil
+						.getPropertity("budget.in.budgetItemKey"));
+				in.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.in.budgetItemThreshold")));
+				in.setIsDefault(1);
+				in.setDeleteFlag(0);
+				in.setValue(0d);				
+				in.setParent(budgetItem);				
+				this.budgetItemService.save(in);
+				
+				RealExecution rei = new RealExecution();
+				rei.setBudget(budgetItem.getBudget());
+				rei.setBudgetItem(in);
+				rei.setMonth(0);//默认
+				rei.setRealValue(0d);
+				rei.setDeleteFlag(0);
+				this.realExecutionService.save(rei);
+				
+				//编外
+				BudgetItem out = new BudgetItem();
+				out.setBudget(this.budget);
+				out.setName(AppUtil
+						.getPropertity("budget.out.budgetItemName"));
+				out.setCode(AppUtil
+						.getPropertity("budget.out.budgetItemCode"));
+				out.setKey(AppUtil
+						.getPropertity("budget.out.budgetItemKey"));
+				out.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.out.budgetItemThreshold")));
+				out.setIsDefault(1);
+				out.setDeleteFlag(0);
+				out.setValue(0d);				
+				out.setParent(budgetItem);
+				this.budgetItemService.save(out);
+				
+				RealExecution reo = new RealExecution();
+				reo.setBudget(budgetItem.getBudget());
+				reo.setBudgetItem(out);
+				reo.setMonth(0);//默认
+				reo.setRealValue(0d);
+				reo.setDeleteFlag(0);
+				this.realExecutionService.save(reo);
+				
+				//add by awen for add second level budgetItem(在编 and 编外) on 2011-10-13 end
+				
 			}else if (this.budget.getBudgetType().intValue()==2) {//季度
 				//增加默认的成本科目：人力成本，默认金额为总的1/4
 				BudgetItem budgetItem = new BudgetItem();
@@ -310,6 +366,82 @@ public class BudgetAction extends BaseAction {
 				budgetItem.setValue(belongItem.getValue()/4);
 				this.budgetItemService.save(budgetItem);
 				
+				//add by awen for add second level budgetItem(在编 and 编外) on 2011-10-13 begin
+				//在编
+				BudgetItem in = new BudgetItem();
+				in.setBudget(this.budget);
+				in.setName(AppUtil
+						.getPropertity("budget.in.budgetItemName"));
+				in.setCode(AppUtil
+						.getPropertity("budget.in.budgetItemCode"));
+				in.setKey(AppUtil
+						.getPropertity("budget.in.budgetItemKey"));
+				in.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.in.budgetItemThreshold")));
+				in.setIsDefault(1);
+				in.setDeleteFlag(0);
+				in.setValue(0d/4); //1/4				
+				in.setParent(budgetItem);
+				
+				Map filterInMap = new HashMap();
+				filterInMap.put("Q_parent.budgetItemId_L_EQ", budgetItem.getBelongItem().getBudgetItemId().toString());
+				//filterInMap.put("Q_isDefault_N_EQ", "1");
+				filterInMap.put("Q_deleteFlag_N_EQ", "0");
+				filterInMap.put("Q_key_S_EQ", AppUtil
+						.getPropertity("budget.in.budgetItemKey"));
+				QueryFilter filterIn = new QueryFilter(filterInMap);
+				List<BudgetItem> listIn = this.budgetItemService.getAll(filterIn);
+				
+				in.setBelongItem(listIn.get(0));
+				this.budgetItemService.save(in);
+				
+				RealExecution rei = new RealExecution();
+				rei.setBudget(budgetItem.getBudget());
+				rei.setBudgetItem(in);
+				rei.setMonth(0);//默认
+				rei.setRealValue(0d);
+				rei.setDeleteFlag(0);
+				this.realExecutionService.save(rei);
+				
+				//编外
+				BudgetItem out = new BudgetItem();
+				out.setBudget(this.budget);
+				out.setName(AppUtil
+						.getPropertity("budget.out.budgetItemName"));
+				out.setCode(AppUtil
+						.getPropertity("budget.out.budgetItemCode"));
+				out.setKey(AppUtil
+						.getPropertity("budget.out.budgetItemKey"));
+				out.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.out.budgetItemThreshold")));
+				out.setIsDefault(1);
+				out.setDeleteFlag(0);
+				out.setValue(0d/4);    //1/4				
+				out.setParent(budgetItem);
+				
+				
+				Map filterOutMap = new HashMap();
+				filterOutMap.put("Q_parent.budgetItemId_L_EQ", budgetItem.getBelongItem().getBudgetItemId().toString());
+				//filterOutMap.put("Q_isDefault_N_EQ", "1");
+				filterOutMap.put("Q_deleteFlag_N_EQ", "0");
+				filterOutMap.put("Q_key_S_EQ", AppUtil
+						.getPropertity("budget.out.budgetItemKey"));
+				QueryFilter filterOut = new QueryFilter(filterOutMap);
+				List<BudgetItem> listOut = this.budgetItemService.getAll(filterOut);
+				
+				out.setBelongItem(listOut.get(0));
+				this.budgetItemService.save(out);
+				
+				RealExecution reo = new RealExecution();
+				reo.setBudget(budgetItem.getBudget());
+				reo.setBudgetItem(out);
+				reo.setMonth(0);//默认
+				reo.setRealValue(0d);
+				reo.setDeleteFlag(0);
+				this.realExecutionService.save(reo);
+				
+				//add by awen for add second level budgetItem(在编 and 编外) on 2011-10-13 end
+				
 				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 begin
 				Department department = budgetItem.getBudget().getBelongDept();
 				Map filterMap1 = new HashMap();
@@ -322,18 +454,21 @@ public class BudgetAction extends BaseAction {
 				int count=0;
 				for (JobSalaryRelation relation : list1) {
 					BudgetItem item = new BudgetItem();//从岗位生成
-					item.setBelongItem(null);//第二级的根据岗位获取的没有
+					item.setBelongItem(null);//第三级的根据岗位获取的没有
 					item.setBudget(budgetItem.getBudget());
 					item.setIsDefault(0);
-					item.setParent(budgetItem);
+					//item.setParent(budgetItem);
+					item.setParent(in);
 					item.setName(relation.getJob().getJobName() + " -- " + relation.getStandSalary().getStandardName());
 					item.setValue(relation.getStandSalary().getTotalMoney().doubleValue()
 							*(relation.getOnEmpCount() == null ? 0 : relation.getOnEmpCount())*3);//默认三个月*在编制人数*工资总金额
 					item.setThreshold(budgetItem.getThreshold());
 					item.setDeleteFlag(0);
 					count++;
-					item.setKey(budgetItem.getKey() + "_" + count);
-					item.setCode(budgetItem.getCode() + "." + count);
+//					item.setKey(budgetItem.getKey() + "_" + count);
+//					item.setCode(budgetItem.getCode() + "." + count);
+					item.setKey(in.getKey() + "_" + count);
+					item.setCode(in.getCode() + "." + count);
 					this.budgetItemService.save(item);
 				}
 				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 end
