@@ -356,6 +356,39 @@ public class NetOaAction extends BaseAction{
 		return null;
 	}
 	
+	
+	/**
+	 * 1.8 查部门负责人
+	 * @Methods Name queryBmfzr
+	 * @Create In Aug 27, 2011 By likang
+	 * @return
+	 * @throws Exception String
+	 */
+	public String queryBmfzr() throws Exception  {
+		JSONObject jo = new JSONObject();
+		jo.put("success", false);
+		jo.put("data", new JSONArray());
+		//访问oa的url
+		String accessUrl = OAURL + "/FlowServiceImpl";
+		try {
+			String userid = super.getRequest().getParameter("userid");
+			if (userid != null && UserCheckMap.get(userid) != null) {
+				String methodName = "findPersonDatas";
+				//public String findPersonDatas(String userId,String passwd,String type)
+				//通过webserice返回json对象
+				Object [] paramArr = new Object[]{userid,UserCheckMap.get(userid),"deptmanage"};
+				JSONObject backJsonObejct = HttpUtil.getWebserviceJsonStrByUrl(accessUrl, methodName, paramArr);
+				jo = backJsonObejct;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		//输出json
+		printJson(jo);
+		return null;
+	}
+	
 	public String testws() throws Exception  {
 		JSONObject jo = new JSONObject();
 		jo.put("success", false);

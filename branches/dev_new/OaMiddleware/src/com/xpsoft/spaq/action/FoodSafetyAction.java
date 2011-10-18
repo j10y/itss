@@ -262,7 +262,7 @@ public class FoodSafetyAction extends BaseAction{
 	
 	public static void main(String args[]) throws UnsupportedEncodingException {
 //		String aString = "loginName=admin&registerCode=14030200025513&xcRecord=食品过期&xcResult=责令下架&remark=处理完毕&img=sabcdef.jgp";
-		String aString = "registerCode=14030200025513";
+		String aString = "pBarcode=0003554970073&pName=柠檬&pageNum=1&pageSize=15";
 //		try {
 			System.out.println(URLEncoder.encode(aString,"utf-8"));
 //			System.out.println(URLDecoder.decode("billCode=%E6%99%8BC0000100009&startDate=20090101&endDate=20110808&pageNum=1&pageSize=15", "utf-8"));
