@@ -265,8 +265,10 @@ public class BudgetAction extends BaseAction {
 				List<JobSalaryRelation> list = this.jobSalaryRelationService
 						.getAll(filter);
 				BigDecimal totalMoney = new BigDecimal(0);
+				BigDecimal onEmpTotalMoney = new BigDecimal(0);
 				for (JobSalaryRelation relation : list) {
 					totalMoney = totalMoney.add(relation.getTotalMoney());
+					onEmpTotalMoney = onEmpTotalMoney.add(new BigDecimal(relation.getStandSalary().getTotalMoney().doubleValue()*relation.getOnEmpCount()));//在编人数
 				}
 				budgetItem
 						.setValue(totalMoney.doubleValue()
@@ -300,7 +302,9 @@ public class BudgetAction extends BaseAction {
 						.getPropertity("budget.in.budgetItemThreshold")));
 				in.setIsDefault(1);
 				in.setDeleteFlag(0);
-				in.setValue(0d);				
+				//in.setValue(0d);				
+				in.setValue(onEmpTotalMoney.doubleValue()*Double.valueOf(AppUtil
+						.getPropertity("budget.default.budgetItemMonth")));				
 				in.setParent(budgetItem);				
 				this.budgetItemService.save(in);
 				
@@ -325,7 +329,7 @@ public class BudgetAction extends BaseAction {
 						.getPropertity("budget.out.budgetItemThreshold")));
 				out.setIsDefault(1);
 				out.setDeleteFlag(0);
-				out.setValue(0d);				
+				out.setValue(0d);//从档案里面查询 ？				
 				out.setParent(budgetItem);
 				this.budgetItemService.save(out);
 				
