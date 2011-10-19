@@ -197,6 +197,7 @@ BudgetQuarterForm = Ext.extend(Ext.Panel, {
 						store.baseParams={
 							"Q_name_S_LK":queryEvent.query,
 							"Q_budgetType_N_EQ":1,
+							"Q_publishStatus_N_EQ":3,
 							"Q_belongDept.depId_L_EQ":Ext.getCmp("budgetQuarter.belongDept.depId").getValue()
 						};
 						store.load({

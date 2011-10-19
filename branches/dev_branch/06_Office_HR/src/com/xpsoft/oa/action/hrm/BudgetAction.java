@@ -20,12 +20,14 @@ import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.form.BudgetForm;
 import com.xpsoft.oa.model.hrm.Budget;
 import com.xpsoft.oa.model.hrm.BudgetItem;
+import com.xpsoft.oa.model.hrm.EmpProfile;
 import com.xpsoft.oa.model.hrm.JobSalaryRelation;
 import com.xpsoft.oa.model.hrm.RealExecution;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.BudgetItemService;
 import com.xpsoft.oa.service.hrm.BudgetService;
+import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.hrm.JobSalaryRelationService;
 import com.xpsoft.oa.service.hrm.RealExecutionService;
 import com.xpsoft.oa.util.RealExecutionUtil;
@@ -45,6 +47,9 @@ public class BudgetAction extends BaseAction {
 	
 	@Resource
 	private JobSalaryRelationService jobSalaryRelationService;
+	
+	@Resource
+	private EmpProfileService empProfileService;
 	
 	private Budget budget;
 	private Long budgetId;
@@ -329,7 +334,23 @@ public class BudgetAction extends BaseAction {
 						.getPropertity("budget.out.budgetItemThreshold")));
 				out.setIsDefault(1);
 				out.setDeleteFlag(0);
-				out.setValue(0d);//从档案里面查询 ？				
+				
+				Map empFilterMap = new HashMap();
+				empFilterMap.put("Q_depId_L_EQ", this.budget.getBelongDept().getDepId().toString()); //部门
+				empFilterMap.put("Q_organization_N_EQ", "0"); //编外 编制 1是正编 0还是非编
+				empFilterMap.put("Q_isDepart_N_EQ", "0"); //是否离职
+				QueryFilter empFilter = new QueryFilter(empFilterMap);
+				List<EmpProfile> empProfilelist = this.empProfileService.getAll(empFilter);
+				
+				Double outTotalMoney = new Double(0);
+				for(EmpProfile profile : empProfilelist){
+					outTotalMoney += profile.getStandardMoney().doubleValue()*Double.valueOf(AppUtil
+							.getPropertity("budget.default.budgetItemMonth"));
+				}
+				
+				
+				out.setValue(outTotalMoney);//从档案里面查询 ？
+				
 				out.setParent(budgetItem);
 				this.budgetItemService.save(out);
 				
@@ -397,7 +418,7 @@ public class BudgetAction extends BaseAction {
 				List<BudgetItem> listIn = this.budgetItemService.getAll(filterIn);
 				
 				in.setBelongItem(listIn.get(0));
-				in.setValue(listIn.get(0).getValue()/4); //1/4
+				in.setValue((listIn.get(0).getValue() != null ? listIn.get(0).getValue() : 0)/4); //1/4
 				this.budgetItemService.save(in);
 				
 				RealExecution rei = new RealExecution();
@@ -435,7 +456,7 @@ public class BudgetAction extends BaseAction {
 				List<BudgetItem> listOut = this.budgetItemService.getAll(filterOut);
 				
 				out.setBelongItem(listOut.get(0));
-				out.setValue(listOut.get(0).getValue()/4); //1/4
+				out.setValue((listOut.get(0).getValue() != null? listOut.get(0).getValue() : 0)/4); //1/4
 				this.budgetItemService.save(out);
 				
 				RealExecution reo = new RealExecution();
