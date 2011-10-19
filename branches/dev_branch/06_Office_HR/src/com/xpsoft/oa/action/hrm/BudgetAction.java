@@ -268,7 +268,7 @@ public class BudgetAction extends BaseAction {
 				BigDecimal onEmpTotalMoney = new BigDecimal(0);
 				for (JobSalaryRelation relation : list) {
 					totalMoney = totalMoney.add(relation.getTotalMoney());
-					onEmpTotalMoney = onEmpTotalMoney.add(new BigDecimal(relation.getStandSalary().getTotalMoney().doubleValue()*relation.getOnEmpCount()));//在编人数
+					onEmpTotalMoney = onEmpTotalMoney.add(new BigDecimal(relation.getStandSalary().getTotalMoney().doubleValue()*(relation.getOnEmpCount()!=null ? relation.getOnEmpCount() : 0)));//在编人数
 				}
 				budgetItem
 						.setValue(totalMoney.doubleValue()
@@ -384,7 +384,7 @@ public class BudgetAction extends BaseAction {
 						.getPropertity("budget.in.budgetItemThreshold")));
 				in.setIsDefault(1);
 				in.setDeleteFlag(0);
-				in.setValue(0d/4); //1/4				
+				//in.setValue(0d/4); //1/4				
 				in.setParent(budgetItem);
 				
 				Map filterInMap = new HashMap();
@@ -397,6 +397,7 @@ public class BudgetAction extends BaseAction {
 				List<BudgetItem> listIn = this.budgetItemService.getAll(filterIn);
 				
 				in.setBelongItem(listIn.get(0));
+				in.setValue(listIn.get(0).getValue()/4); //1/4
 				this.budgetItemService.save(in);
 				
 				RealExecution rei = new RealExecution();
@@ -420,7 +421,7 @@ public class BudgetAction extends BaseAction {
 						.getPropertity("budget.out.budgetItemThreshold")));
 				out.setIsDefault(1);
 				out.setDeleteFlag(0);
-				out.setValue(0d/4);    //1/4				
+				//out.setValue(0d/4);    //1/4				
 				out.setParent(budgetItem);
 				
 				
@@ -434,6 +435,7 @@ public class BudgetAction extends BaseAction {
 				List<BudgetItem> listOut = this.budgetItemService.getAll(filterOut);
 				
 				out.setBelongItem(listOut.get(0));
+				out.setValue(listOut.get(0).getValue()/4); //1/4
 				this.budgetItemService.save(out);
 				
 				RealExecution reo = new RealExecution();
