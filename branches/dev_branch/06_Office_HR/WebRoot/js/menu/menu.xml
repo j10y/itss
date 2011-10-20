@@ -1549,7 +1549,7 @@
 		</Items>
 		<Items id="Budget" text="预算管理" iconCls="menu-budget"
 			isPublic="false">
-			<Items id="Budget" text="年度预算管理" iconCls="menu-budget"
+			<Items id="BudgetYear" text="年度预算管理" iconCls="menu-budget"
 			isPublic="false">
 			<Item id="BudgetView" text="年度预算草稿" iconCls="menu-budget-draft">
 			    <Function id="_BudgetQuery" text="查看" iconCls="menu-list">
