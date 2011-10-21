@@ -122,13 +122,13 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 				cascade(node, resource);
 			}
 		}
-		if(hasChild){
-			parentNode.put("expanded", "true");
-			parentNode.put("alarm", "");
-			parentNode.put("value", "");
-			parentNode.put("threshold", null);
-			parentNode.put("realValue", "");
-		}
+//		if(hasChild){
+//			parentNode.put("expanded", "true");
+//			parentNode.put("alarm", "");
+//			parentNode.put("value", "");
+//			parentNode.put("threshold", null);
+//			parentNode.put("realValue", "");
+//		}
 	}
 	
 }
