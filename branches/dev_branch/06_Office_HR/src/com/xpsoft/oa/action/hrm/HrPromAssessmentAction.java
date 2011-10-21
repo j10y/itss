@@ -101,10 +101,12 @@ public class HrPromAssessmentAction extends BaseAction{
 	 */
 	public String getViewByApplyId() {
 		JobService jobService = (JobService)AppUtil.getBean("jobService");
+		HrPromApplyService hrPromApplyService = (HrPromApplyService)AppUtil.getBean("hrPromApplyService");
 		boolean isView = Boolean.valueOf(getRequest().getParameter("isView"));
 		Long applyId = Long.valueOf(getRequest().getParameter("applyId"));
 		this.hrPromAssessment = this.hrPromAssessmentService.saveViewByApplyId(applyId);
-		Job job = jobService.get(this.hrPromAssessment.getPromApply().getNowPositionId());
+		HrPromApply apply = hrPromApplyService.get(applyId);
+		Job job = jobService.get(apply.getNowPositionId());
 		String bandName = job.getBand().getName();
 		this.getRequest().setAttribute("bandName", bandName);
 		if(isView){
