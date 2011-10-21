@@ -26,7 +26,7 @@ JobView = Ext.extend(Ext.Panel, {
 
 		this.deptPanel = new Ext.tree.TreePanel({
 			region : "west",
-			id : "treePanel",
+			id : "jobTreePanel",
 			title : "部门信息显示",
 			collapsible : true,
 			split : true,
