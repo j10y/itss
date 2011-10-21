@@ -172,10 +172,11 @@ public class RealExecutionAction extends BaseAction {
 	
 	private void buildDefaultBudgetItem(Map defaultNode){
 		if(!defaultNode.get("isDefault").toString().equals("1")) return;
-		defaultNode.put("leaf", false);
 		String id = defaultNode.get("id").toString();
 		BudgetItem budgetItem = (BudgetItem) this.budgetItemService.get(Long.valueOf(id));
-		if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
+		if(budgetItem.getIsDefault().intValue()==1&&budgetItem.getKey().equals(AppUtil
+				.getPropertity("budget.in.budgetItemKey"))){//默认成本要素
+			defaultNode.put("leaf", false);
 			Department department = budgetItem.getBudget().getBelongDept();
 			Map filterMap = new HashMap();
 			filterMap.put("Q_deleteFlag_N_EQ", "0");

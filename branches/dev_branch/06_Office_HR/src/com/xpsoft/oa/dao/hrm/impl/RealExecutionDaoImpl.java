@@ -17,7 +17,7 @@ public class RealExecutionDaoImpl extends BaseDaoImpl<RealExecution> implements
 		//String hql = "SELECT re.budgetItem, SUM(re.realValue) FROM RealExecution re where re.budget.budgetId=? and re.budgetItem.deleteFlag=0 GROUP BY re.budgetItem ORDER BY re.budgetItem.budgetItemId ASC";
 		String hql = "SELECT re.budgetItem, SUM(re.realValue) FROM RealExecution re where re.budget.budgetId=? " +
 		"and re.budgetItem.deleteFlag=0 " + 
-		"and re.inputDate>re.budget.beginDate AND re.inputDate<re.budget.endDate " +
+		//"and re.inputDate>re.budget.beginDate AND re.inputDate<re.budget.endDate " +
 		"GROUP BY re.budgetItem ORDER BY re.budgetItem.budgetItemId ASC";
 		Object [] objs = new Object[]{paramLong};
 		List list  = super.findByHql(hql, objs);
