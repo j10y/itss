@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.Budget;
@@ -304,9 +305,9 @@ public class BudgetItemAction extends BaseAction {
 		
 		Budget budget = (Budget)budgetService.get(Long.valueOf(getRequest().getParameter("budgetId")));
 		for(Map node : result){//所有root
-			if(budget.getBudgetType().intValue()==1){//年度才会显示岗位树
-				//buildDefaultBudgetItem(node);
-			}			
+//			if(budget.getBudgetType().intValue()==1){//年度才会显示岗位树
+//				buildDefaultBudgetItem(node);
+//			}			
 			cascade(node, itemList);
 		}
 		
@@ -328,6 +329,7 @@ public class BudgetItemAction extends BaseAction {
 	 * 递归组装treeGrid树
 	 */
 	private void cascade(Map parentNode, List resource){
+		buildDefaultBudgetItem(parentNode);
 		boolean hasChild = false;
 		Iterator<BudgetItem> iterator = resource.iterator();
 		while(iterator.hasNext()){
@@ -364,7 +366,10 @@ public class BudgetItemAction extends BaseAction {
 	}
 	
 	private void buildDefaultBudgetItem(Map defaultNode){
+		if(((BudgetItem)defaultNode.get("data")).getBudget().getBudgetType().intValue()!=1) return;
 		if(!defaultNode.get("isDefault").toString().equals("1")) return;
+		if(!((BudgetItem)defaultNode.get("data")).getKey().equals(AppUtil
+				.getPropertity("budget.in.budgetItemKey"))) return;
 		String id = defaultNode.get("id").toString();
 		BudgetItem budgetItem = (BudgetItem) this.budgetItemService.get(Long.valueOf(id));
 		if(budgetItem.getIsDefault().intValue()==1){//默认成本要素
@@ -384,8 +389,10 @@ public class BudgetItemAction extends BaseAction {
 				node.put("id", "0");
 				node.put("text", "岗位：" + item.getJob().getJobName() + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪标：" + item.getStandSalary().getStandardName() 
 						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;人数：" + item.getEmpCount()
-						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;标准金额：" + item.getStandSalary().getTotalMoney()
-						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;总金额（月）：" + item.getTotalMoney()
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;在编人数：" + (item.getOnEmpCount() != null? item.getOnEmpCount() : 0)
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;月度薪酬总额：" + item.getStandSalary().getTotalMoney()
+						//+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;总金额（月）：" + item.getTotalMoney()
+						+ "  <br>&nbsp;&nbsp;&nbsp;&nbsp;总金额（月）：" + item.getStandSalary().getTotalMoney().doubleValue()*(item.getOnEmpCount() != null? item.getOnEmpCount() : 0)
 						+ "");
 				node.put("iconCls", "task-folder");
 				node.put("leaf", "true");

@@ -472,8 +472,8 @@ public class BudgetAction extends BaseAction {
 				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 begin
 				Department department = budgetItem.getBudget().getBelongDept();
 				Map filterMap1 = new HashMap();
-				filterMap.put("Q_deleteFlag_N_EQ", "0");
-				filterMap.put("Q_department.depId_L_EQ", department.getDepId()
+				filterMap1.put("Q_deleteFlag_N_EQ", "0");
+				filterMap1.put("Q_department.depId_L_EQ", department.getDepId()
 						.toString());
 				QueryFilter filter1 = new QueryFilter(filterMap1);
 				List<JobSalaryRelation> list1 = this.jobSalaryRelationService

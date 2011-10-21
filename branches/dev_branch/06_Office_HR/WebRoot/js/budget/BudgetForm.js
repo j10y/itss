@@ -478,6 +478,7 @@ BudgetForm = Ext.extend(Ext.Panel, {
 			width : 200,
 			url : __ctxPath + "/budget/treeBudgetItem.do?budgetId=" + (this.budgetId == null ? "0" : this.budgetId),
 			scope : this,
+			autoScroll:true,
 			showContextMenu : (this.isEdit==true ? true:false),
 			contextHandler : function contextmenu(a, b) {
 				if(a.attributes.isDefault=="1"&&a.id!="0"){
