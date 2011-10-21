@@ -21,6 +21,7 @@ HrPaAssessmentcriteriaForm = Ext.extend(Ext.Window, {
 	initComponents : function() {
 		var dept = __ctxPath + "/system/listDepartment.do?opt=appUser";
 		var departments = new TreeSelector("hrPaAssessmentcriteria.belongDept.depName", dept, "所属部门", "hrPaAssessmentcriteria.belongDept.depId");
+		Ext.getCmp("hrPaAssessmentcriteria.belongDept.depName").labelStyle = "width:120px";
 		this.formPanel = new Ext.FormPanel({
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
