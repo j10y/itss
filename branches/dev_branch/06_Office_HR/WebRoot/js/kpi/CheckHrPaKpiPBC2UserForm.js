@@ -12,7 +12,7 @@ CheckHrPaKpiPBC2UserForm = Ext.extend(Ext.Window, {
 			layout : "form",
 			items : [ this.displayPanel, this.formPanel ],
 			modal : true,
-			height : 700,
+			height : 500,
 			shadow : false,
 			autoScroll : true,
 			width : 950,
