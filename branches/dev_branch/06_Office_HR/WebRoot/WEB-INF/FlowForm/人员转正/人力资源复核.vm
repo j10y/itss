@@ -31,7 +31,7 @@ HrPostApplyHRConfirmAuditFlowView = Ext.extend(Ext.TabPanel, {
 					},
 					activeTab : 1,
 					width : '95%',
-					height : 1060,
+					height : 1100,
 					buttons :  [
 								#set ($count=0)
 								#foreach ($v in $nextTrans)
