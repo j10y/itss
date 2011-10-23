@@ -1635,6 +1635,36 @@
 			 -->
 		</Items>
 		<Items id="KpiManage" text="绩效管理" isPublic="false" iconCls="menu-hrPa">
+			<Items id="HrPaAssessmentcriteriaManage" text="考核标准管理" iconCls="menu-ac">
+				<Item id="DraftHrPaAssessmentcriteriaView" text="草稿管理" iconCls="menu-acDraft">
+					<Function id="_DraftAcAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaAssessmentcriteria.do</url>
+						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_DraftAcDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_DraftAcEdit" text="编辑" iconCls="btn-edit">
+						<url>/kpi/editHrPaAssessmentcriteria.do</url>
+					</Function>
+				</Item>
+				<!--
+				<Item id="InAuditHrPaAssessmentcriteriaView" text="审核中标准">
+				</Item>
+				-->
+				<Item id="PublishHrPaAssessmentcriteriaView" text="已发布标准" iconCls="menu-acPublish">
+					<Function id="_PublishAcAdd" text="添加" iconCls="menu-add">
+						<url>/kpi/listHrPaAssessmentcriteria.do</url>
+						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_PublishAcDel" text="删除" iconCls="menu-del">
+						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
+					</Function>
+					<Function id="_PublishAcEdit" text="编辑" iconCls="btn-edit">
+						<url>/kpi/editHrPaAssessmentcriteria.do</url>
+					</Function>
+				</Item>
+			</Items>
 			<Items id="HrPaPerformanceindexManage" text="考核指标管理" iconCls="menu-pi">
 				<Item id="DraftHrPaPerformanceindexView" text="草稿管理" iconCls="menu-piDraft">
 					<Function id="_DraftPaAdd" text="添加" iconCls="menu-add">
@@ -1670,36 +1700,6 @@
 				</Item>
 			</Items>
 		
-			<Items id="HrPaAssessmentcriteriaManage" text="考核标准管理" iconCls="menu-ac">
-				<Item id="DraftHrPaAssessmentcriteriaView" text="草稿管理" iconCls="menu-acDraft">
-					<Function id="_DraftAcAdd" text="添加" iconCls="menu-add">
-						<url>/kpi/listHrPaAssessmentcriteria.do</url>
-						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
-					</Function>
-					<Function id="_DraftAcDel" text="删除" iconCls="menu-del">
-						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
-					</Function>
-					<Function id="_DraftAcEdit" text="编辑" iconCls="btn-edit">
-						<url>/kpi/editHrPaAssessmentcriteria.do</url>
-					</Function>
-				</Item>
-				<!--
-				<Item id="InAuditHrPaAssessmentcriteriaView" text="审核中标准">
-				</Item>
-				-->
-				<Item id="PublishHrPaAssessmentcriteriaView" text="已发布标准" iconCls="menu-acPublish">
-					<Function id="_PublishAcAdd" text="添加" iconCls="menu-add">
-						<url>/kpi/listHrPaAssessmentcriteria.do</url>
-						<url>/kpi/saveHrPaAssessmentcriteria.do</url>
-					</Function>
-					<Function id="_PublishAcDel" text="删除" iconCls="menu-del">
-						<url>/kpi/multiDelHrPaAssessmentcriteria.do</url>
-					</Function>
-					<Function id="_PublishAcEdit" text="编辑" iconCls="btn-edit">
-						<url>/kpi/editHrPaAssessmentcriteria.do</url>
-					</Function>
-				</Item>
-			</Items>
 			<Items id="HrPaKpipbcManage" text="PBC管理" iconCls="menu-pbc">
 				<Item id="DraftHrPaKpipbcView" text="草稿管理" iconCls="menu-pbcDraft">
 					<Function id="_DraftPbcAdd" text="添加" iconCls="menu-add">
