@@ -36,11 +36,28 @@ HrPromApplyAssessFlowView = Ext.extend(Ext.Panel, {
 									text : '<font color="red">填写【晋升评估表】</font>',
 									handler : function(){
 										var applyId = ${hrPromApply_id};
+										
+										Ext.Ajax.request({
+											scope : this,
+											url : __ctxPath + "/hrm/getViewByApplyIdHrPromAssessment.do?applyId=" + applyId + "&assess=true&stamp=" + Math.random(),
+											params : {
+												applyId : applyId														
+											},
+											success : function(resp,opts) {
+												new HrPromAssessmentForm({
+													applyId : applyId,
+													assess : true
+												}).show();
+											}
+										});
+										
+										/*
 										new HrPromAssessmentForm({
 											applyId : applyId,
 											assess : true
 										}).show();
 										document.getElementById("HrPromAssessmentForm").src= __ctxPath + "/hrm/getViewByApplyIdHrPromAssessment.do?applyId=" + applyId + "&assess=true&stamp=" + Math.random();
+										*/
 									}
 								}),
 								#set ($count=0)
