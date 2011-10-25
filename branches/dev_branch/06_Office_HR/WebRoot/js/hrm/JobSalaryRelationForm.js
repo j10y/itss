@@ -179,7 +179,7 @@ JobSalaryRelationForm = Ext.extend(
 													}
 												}
 											}, {
-												fieldLabel : "岗位人数",
+												fieldLabel : "编制人数",
 												name : "jobSalaryRelation.empCount",
 												xtype : "numberfield",
 												decimalPrecision : "0",
@@ -193,7 +193,7 @@ JobSalaryRelationForm = Ext.extend(
 													}
 												}
 											},  {
-												fieldLabel : "在编人数",
+												fieldLabel : "在岗人数",
 												name : "jobSalaryRelation.onEmpCount",
 												xtype : "numberfield",
 												decimalPrecision : "0",

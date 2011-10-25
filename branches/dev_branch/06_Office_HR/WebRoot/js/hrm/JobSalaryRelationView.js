@@ -133,10 +133,10 @@ JobSalaryRelationView = Ext.extend(Ext.Panel, {
 					return d.standardName+"/"+d.standardNo;
 				}
 			}, {
-				header : "总人数",
+				header : "编制人数",
 				dataIndex : "empCount"
 			}, {
-				header : "在编人数",
+				header : "在岗人数",
 				dataIndex : "onEmpCount"
 			}, {
 				header : "总金额",
