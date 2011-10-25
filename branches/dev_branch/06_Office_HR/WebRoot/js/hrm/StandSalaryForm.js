@@ -124,6 +124,7 @@ StandSalaryForm.prototype.setup = function (c) {
 												name : "standSalary.standardName",
 												allowBlank : false,
 												blankText : "标准名称不能为空!",
+												vtype : "standSalaryName",
 												id : "standSalaryForm.standardName"
 											}, {
 												fieldLabel : "绩效基数",
@@ -273,6 +274,7 @@ StandSalaryForm.saveStandSalary = function () {
 		}
 	}*/
 	//标准名称正确格式：名称说明_Band_档
+	/*
 	var standSalaryNames = Ext.getCmp("standSalaryForm.standardName").getValue().split("_");
 	if(standSalaryNames.length != 3) {
 		Ext.MessageBox.show({
@@ -295,6 +297,7 @@ StandSalaryForm.saveStandSalary = function () {
 			}
 		}
 	}
+	*/
 	if (c.getForm().isValid()) {
 		c.getForm().submit({
 				method : "post",
