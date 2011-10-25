@@ -119,7 +119,7 @@
 /* 127 */       sb.append(" and doc.createtime >= ?");
 /* 128 */       list.add(from);
 /*     */     }
-/* 130 */     sb.append(" group by doc order by doc desc");
+/* 130 */     sb.append(" group by doc order by doc.docName asc,doc.createtime asc");
 /* 131 */     List docList = findByHql(sb.toString(), list.toArray(), pb);
 /* 132 */     return docList;
 /*     */   }

@@ -117,7 +117,7 @@ public class RealExecutionServiceImpl extends BaseServiceImpl<RealExecution> imp
 					list.add(node);
 					parentNode.put("children", list);
 				}
-				iterator.remove();//删除
+				//iterator.remove();//删除
 				node.put("alarm", RealExecutionUtil.alarm(item.getValue(), item.getThreshold(), Double.valueOf(objs[1].toString())));
 				cascade(node, resource);
 			}

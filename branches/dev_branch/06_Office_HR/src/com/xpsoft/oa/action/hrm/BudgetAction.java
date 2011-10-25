@@ -308,8 +308,11 @@ public class BudgetAction extends BaseAction {
 				in.setIsDefault(1);
 				in.setDeleteFlag(0);
 				//in.setValue(0d);				
-				in.setValue(onEmpTotalMoney.doubleValue()*Double.valueOf(AppUtil
-						.getPropertity("budget.default.budgetItemMonth")));				
+//				in.setValue(onEmpTotalMoney.doubleValue()*Double.valueOf(AppUtil
+//						.getPropertity("budget.in.budgetItemMonth")));
+				in.setValue(totalMoney.doubleValue()
+						* Double.valueOf(AppUtil
+								.getPropertity("budget.default.budgetItemMonth")));
 				in.setParent(budgetItem);				
 				this.budgetItemService.save(in);
 				
@@ -320,6 +323,66 @@ public class BudgetAction extends BaseAction {
 				rei.setRealValue(0d);
 				rei.setDeleteFlag(0);
 				this.realExecutionService.save(rei);
+				
+				//add by awen for add children of zbrlcb on 2011-10-25 begin
+				
+				//存量人力成本
+				BudgetItem ine = new BudgetItem();
+				ine.setBudget(this.budget);
+				ine.setName(AppUtil
+						.getPropertity("budget.in.execute.budgetItemName"));
+				ine.setCode(AppUtil
+						.getPropertity("budget.in.execute.budgetItemCode"));
+				ine.setKey(AppUtil
+						.getPropertity("budget.in.execute.budgetItemKey"));
+				ine.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.in.execute.budgetItemThreshold")));
+				ine.setIsDefault(1);
+				ine.setDeleteFlag(0);
+				//in.setValue(0d);				
+				ine.setValue(onEmpTotalMoney.doubleValue()*Double.valueOf(AppUtil
+						.getPropertity("budget.in.execute.budgetItemMonth")));				
+				ine.setParent(in);				
+				this.budgetItemService.save(ine);
+				
+				RealExecution reie = new RealExecution();
+				reie.setBudget(budgetItem.getBudget());
+				reie.setBudgetItem(ine);
+				reie.setMonth(0);//默认
+				reie.setRealValue(0d);
+				reie.setDeleteFlag(0);
+				this.realExecutionService.save(reie);
+				
+				//未发生人力成本
+				BudgetItem inne = new BudgetItem();
+				inne.setBudget(this.budget);
+				inne.setName(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemName"));
+				inne.setCode(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemCode"));
+				inne.setKey(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemKey"));
+				inne.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemThreshold")));
+				inne.setIsDefault(1);
+				inne.setDeleteFlag(0);
+				//in.setValue(0d);				
+//				inne.setValue(onEmpTotalMoney.doubleValue()*Double.valueOf(AppUtil
+//						.getPropertity("budget.in.noexecute.budgetItemMonth")));
+				inne.setValue(in.getValue()-ine.getValue());
+				inne.setParent(in);				
+				this.budgetItemService.save(inne);
+				
+				RealExecution reine = new RealExecution();
+				reine.setBudget(budgetItem.getBudget());
+				reine.setBudgetItem(inne);
+				reine.setMonth(0);//默认
+				reine.setRealValue(0d);
+				reine.setDeleteFlag(0);
+				this.realExecutionService.save(reine);
+				
+				
+				//add by awen for add children of zbrlcb on 2011-10-25 end
 				
 				//编外
 				BudgetItem out = new BudgetItem();
@@ -345,7 +408,7 @@ public class BudgetAction extends BaseAction {
 				Double outTotalMoney = new Double(0);
 				for(EmpProfile profile : empProfilelist){
 					outTotalMoney += profile.getStandardMoney().doubleValue()*Double.valueOf(AppUtil
-							.getPropertity("budget.default.budgetItemMonth"));
+							.getPropertity("budget.out.budgetItemMonth"));
 				}
 				
 				
@@ -353,6 +416,12 @@ public class BudgetAction extends BaseAction {
 				
 				out.setParent(budgetItem);
 				this.budgetItemService.save(out);
+				
+				//add by awen for change the value of rlcb on 2011-10-25 begin
+				budgetItem.setValue(outTotalMoney + totalMoney.doubleValue()
+						* Double.valueOf(AppUtil.getPropertity("budget.default.budgetItemMonth")));
+				this.budgetItemService.save(budgetItem);
+				//add by awen for change the value of rlcb on 2011-10-25 end
 				
 				RealExecution reo = new RealExecution();
 				reo.setBudget(budgetItem.getBudget());
@@ -469,6 +538,91 @@ public class BudgetAction extends BaseAction {
 				
 				//add by awen for add second level budgetItem(在编 and 编外) on 2011-10-13 end
 				
+				
+				
+				//add by awen for add children of zbrlcb on 2011-10-25 begin
+				
+				//存量人力成本
+				BudgetItem ine = new BudgetItem();
+				ine.setBudget(this.budget);
+				ine.setName(AppUtil
+						.getPropertity("budget.in.execute.budgetItemName"));
+				ine.setCode(AppUtil
+						.getPropertity("budget.in.execute.budgetItemCode"));
+				ine.setKey(AppUtil
+						.getPropertity("budget.in.execute.budgetItemKey"));
+				ine.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.in.execute.budgetItemThreshold")));
+				ine.setIsDefault(1);
+				ine.setDeleteFlag(0);
+				//in.setValue(0d);
+				
+				Map filterIneMap = new HashMap();
+				filterIneMap.put("Q_parent.budgetItemId_L_EQ", listIn.get(0).getBudgetItemId().toString());
+				//filterInMap.put("Q_isDefault_N_EQ", "1");
+				filterIneMap.put("Q_deleteFlag_N_EQ", "0");
+				filterIneMap.put("Q_key_S_EQ", AppUtil
+						.getPropertity("budget.in.execute.budgetItemKey"));
+				QueryFilter filterIne = new QueryFilter(filterIneMap);
+				List<BudgetItem> listIne = this.budgetItemService.getAll(filterIne);			
+				
+				
+				ine.setValue((listIne.get(0).getValue() != null ? listIne.get(0).getValue() : 0)/4);				
+				ine.setParent(in);	
+				ine.setBelongItem(belongItem);
+				this.budgetItemService.save(ine);
+				
+				RealExecution reie = new RealExecution();
+				reie.setBudget(budgetItem.getBudget());
+				reie.setBudgetItem(ine);
+				reie.setMonth(0);//默认
+				reie.setRealValue(0d);
+				reie.setDeleteFlag(0);
+				this.realExecutionService.save(reie);
+				
+				//未发生人力成本
+				BudgetItem inne = new BudgetItem();
+				inne.setBudget(this.budget);
+				inne.setName(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemName"));
+				inne.setCode(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemCode"));
+				inne.setKey(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemKey"));
+				inne.setThreshold(Double.valueOf(AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemThreshold")));
+				inne.setIsDefault(1);
+				inne.setDeleteFlag(0);
+				//in.setValue(0d);				
+//				inne.setValue(onEmpTotalMoney.doubleValue()*Double.valueOf(AppUtil
+//						.getPropertity("budget.in.noexecute.budgetItemMonth")));
+				
+				Map filterInneMap = new HashMap();
+				filterInneMap.put("Q_parent.budgetItemId_L_EQ", listIn.get(0).getBudgetItemId().toString());
+				//filterInMap.put("Q_isDefault_N_EQ", "1");
+				filterInneMap.put("Q_deleteFlag_N_EQ", "0");
+				filterInneMap.put("Q_key_S_EQ", AppUtil
+						.getPropertity("budget.in.noexecute.budgetItemKey"));
+				QueryFilter filterInne = new QueryFilter(filterInneMap);
+				List<BudgetItem> listInne = this.budgetItemService.getAll(filterInne);
+				
+				inne.setValue((listInne.get(0).getValue() != null ? listInne.get(0).getValue() : 0)/4);
+				inne.setParent(in);		
+				inne.setBelongItem(belongItem);
+				this.budgetItemService.save(inne);
+				
+				RealExecution reine = new RealExecution();
+				reine.setBudget(budgetItem.getBudget());
+				reine.setBudgetItem(inne);
+				reine.setMonth(0);//默认
+				reine.setRealValue(0d);
+				reine.setDeleteFlag(0);
+				this.realExecutionService.save(reine);
+				
+				
+				//add by awen for add children of zbrlcb on 2011-10-25 end
+				
+				
 				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 begin
 				Department department = budgetItem.getBudget().getBelongDept();
 				Map filterMap1 = new HashMap();
@@ -485,7 +639,7 @@ public class BudgetAction extends BaseAction {
 					item.setBudget(budgetItem.getBudget());
 					item.setIsDefault(0);
 					//item.setParent(budgetItem);
-					item.setParent(in);
+					item.setParent(ine);
 					item.setName(relation.getJob().getJobName() + " -- " + relation.getStandSalary().getStandardName());
 					item.setValue(relation.getStandSalary().getTotalMoney().doubleValue()
 							*(relation.getOnEmpCount() == null ? 0 : relation.getOnEmpCount())*3);//默认三个月*在编制人数*工资总金额
@@ -494,8 +648,8 @@ public class BudgetAction extends BaseAction {
 					count++;
 //					item.setKey(budgetItem.getKey() + "_" + count);
 //					item.setCode(budgetItem.getCode() + "." + count);
-					item.setKey(in.getKey() + "_" + count);
-					item.setCode(in.getCode() + "." + count);
+					item.setKey(ine.getKey() + "_" + count);
+					item.setCode(ine.getCode() + "." + count);
 					this.budgetItemService.save(item);
 				}
 				//add by awen for add some budgetItems for jobsalaryrelation on 2011-09-28 end
