@@ -254,6 +254,14 @@
 /* 283 */       doc.setDocName(this.document.getDocName());
 /* 284 */       doc.setContent(this.document.getContent());
 /* 285 */       doc.setAttachFiles(this.document.getAttachFiles());
+
+				//add by awen for add change document's folder logic begin
+				if ((StringUtils.isNotEmpty(folderId)) && (!"0".equals(folderId))) {
+					DocFolder folder = (DocFolder)this.docFolderService.get(new Long(folderId));
+					doc.setDocFolder(folder);
+				}
+				//add by awen for add change document's folder logic end
+				
 /* 286 */       if (this.document.getAttachFiles().size() > 0)
 /* 287 */         doc.setHaveAttach(Document.HAVE_ATTACH);
 /*     */       else {
