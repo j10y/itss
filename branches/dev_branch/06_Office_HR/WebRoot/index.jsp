@@ -33,6 +33,7 @@
 		<script type="text/javascript" src="<%=basePath%>/js/dynamic.jsp"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/adapter/ext/ext-base.gzjs"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/ext-all.gzjs"></script>
+		<script type="text/javascript" src="<%=basePath%>/ext3/vtype.mine.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/ext3/ext-lang-zh_CN.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/core/ScriptMgr.js"></script>
 		
