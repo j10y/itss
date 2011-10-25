@@ -138,7 +138,8 @@ if(Ext.form.VTypes){
       emailText    : '该输入项必须是电子邮件地址，格式如： "user@domain.com"',
       urlText      : '该输入项必须是URL地址，格式如： "http:/'+'/www.domain.com"',
       alphaText    : '该输入项只能包含字符和_',
-      alphanumText : '该输入项只能包含字符,数字和_'
+      alphanumText : '该输入项只能包含字符,数字和_',
+      standSalaryNameText : '该输入项必须是符合规范的薪酬标准名称，格式如：infoEngineer_7_1'
    });
 }
 
