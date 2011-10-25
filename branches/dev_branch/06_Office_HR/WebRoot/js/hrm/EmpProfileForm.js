@@ -277,6 +277,18 @@ EmpProfileForm = Ext
 													},{
 														name : "empProfileForm.realPositiveTime",
 														mapping : "realPositiveTime"
+													},{
+														name : "empProfileForm.providentDate",
+														mapping : "providentDate"
+													},{
+														name : "empProfileForm.pbcSingedDate",
+														mapping : "pbcSingedDate"
+													},{
+														name : "empProfileForm.pbcExecuteDate",
+														mapping : "pbcExecuteDate"
+													},{
+														name : "empProfileForm.isDepartFiled",
+														mapping : "isDepartFiled"
 													} ]),
 									defaultType : "textfield",
 									items : [
@@ -578,6 +590,13 @@ EmpProfileForm = Ext
 																		format : "Y-m-d"
 																	},
 																	{
+																		fieldLabel : "PBC签署日期",
+																		name : "empProfile.pbcSingedDate",
+																		id : "empProfileForm.pbcSingedDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
+																	},
+																	{
 																		fieldLabel : "用工形式",
 																		hiddenName : "empProfile.empType.id",
 																		id : "empProfileForm.empType.id",
@@ -808,6 +827,20 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.contractEndDate",
 																		xtype : "datefield",
 																		format : "Y-m-d"
+																	},
+																	{
+																		fieldLabel : "PBC执行日期",
+																		name : "empProfile.pbcExecuteDate",
+																		id : "empProfileForm.pbcExecuteDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
+																	},
+																	{
+																		fieldLabel : "是否办理离职手续",
+																		name : "empProfile.isDepartFiled",
+																		id : "empProfileForm.isDepartFiled",
+																		xtype : "checkbox",
+																		inputValue : 1
 																	}]
 														},
 														{
@@ -1180,6 +1213,13 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.perCoefficientTmp",
 																		readOnly : true,
 																		xtype:"numberfield"
+																	},
+																	{
+																		fieldLabel : "社会保险起缴日期",
+																		name : "empProfile.providentDate",
+																		id : "empProfileForm.providentDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
 																	}]
 														},
 														{
@@ -1600,6 +1640,48 @@ EmpProfileForm = Ext
 														Ext
 														.getCmp(
 														"empProfileForm.contractEndDate")
+														.setValue(
+																new Date(
+																		f));
+													}
+													
+													if (e.providentDate != ""
+														&& e.providentDate != null
+														&& e.providentDate != "undefined") {
+														var f = getDateFromFormat(
+																e.providentDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.providentDate")
+														.setValue(
+																new Date(
+																		f));
+													}
+													
+													if (e.pbcSingedDate != ""
+														&& e.pbcSingedDate != null
+														&& e.pbcSingedDate != "undefined") {
+														var f = getDateFromFormat(
+																e.pbcSingedDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.pbcSingedDate")
+														.setValue(
+																new Date(
+																		f));
+													}
+													
+													if (e.pbcExecuteDate != ""
+														&& e.pbcExecuteDate != null
+														&& e.pbcExecuteDate != "undefined") {
+														var f = getDateFromFormat(
+																e.pbcExecuteDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.pbcExecuteDate")
 														.setValue(
 																new Date(
 																		f));

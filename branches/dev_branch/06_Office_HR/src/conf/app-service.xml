@@ -442,6 +442,9 @@
 	 <bean id="empProfileService" class="com.xpsoft.oa.service.hrm.impl.EmpProfileServiceImpl">
    	 	<constructor-arg index="0" ref="empProfileDao"/>
    	 </bean>
+   	 <bean id="empProfileHistService" class="com.xpsoft.oa.service.hrm.impl.EmpProfileHistServiceImpl">
+   	 	<constructor-arg index="0" ref="empProfileHistDao"/>
+   	 </bean>
 <!-- end:  Generated for EmpProfile From Template: app-service.xml.beansvm  -->
 <!-- start:  Generated for ArchivesDep From Template: app-service.xml.beansvm  -->
 	 <bean id="archivesDepService" class="com.xpsoft.oa.service.archive.impl.ArchivesDepServiceImpl">

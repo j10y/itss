@@ -1,28 +1,32 @@
 package com.xpsoft.oa.action.hrm;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
+
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.core.web.paging.PagingBean;
-import com.xpsoft.oa.model.archive.ArchivesType;
 import com.xpsoft.oa.model.hrm.EmpProfile;
+import com.xpsoft.oa.model.hrm.EmpProfileHist;
 import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
-import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.hrm.EmpProfileHistService;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
-import flexjson.JSONSerializer;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
+import flexjson.JSONSerializer;
 
 public class EmpProfileAction extends BaseAction {
 
 	@Resource
 	private EmpProfileService empProfileService;
+	@Resource
+	private EmpProfileHistService empProfileHistService;
 	private EmpProfile empProfile;
 	private Long profileId;
 
@@ -87,7 +91,8 @@ public class EmpProfileAction extends BaseAction {
 				.get(this.profileId);
 
 		/* 110 */JSONSerializer json = JsonUtil.getJSONSerializer(new String[] {
-				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime", "positiveTime", "contractEndDate", "contractBeginDate" });
+				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime", "positiveTime", 
+				"contractEndDate", "contractBeginDate", "providentDate", "pbcSingedDate", "pbcExecuteDate" });
 
 		/* 113 */StringBuffer sb = new StringBuffer("{success:true,data:[");
 
@@ -128,9 +133,26 @@ public class EmpProfileAction extends BaseAction {
 				empType = new HrPaDatadictionary();
 				empType.setId(Long.valueOf(getRequest().getParameter("empProfile.empType.id")));
 			}
+			
+			if(StringUtils.isNotEmpty(getRequest().getParameter("empProfile.isDepartFiled"))){
+				Integer isDepartFiled = Integer.valueOf(getRequest().getParameter("empProfile.isDepartFiled"));
+				this.empProfile.setIsDepartFiled(isDepartFiled);
+			}else{
+				this.empProfile.setIsDepartFiled(0);
+			}
+			
 			this.empProfile.setEmpType(empType);
 			//add by awen for add empType logic on 2011-10-11 end
 			this.empProfileService.save(this.empProfile);
+			
+			//add by awen for add empProfile changelist on 2011-12-25 begin
+			EmpProfileHist empProfileHist = new EmpProfileHist();
+			BeanUtils.copyProperties(this.empProfile, empProfileHist);		
+			empProfileHist.setModifiedDate(new Date());
+			empProfileHist.setModifiedUser(ContextUtil.getCurrentUser());
+			this.empProfileHistService.save(empProfileHist);
+			//add by awen for add empProfile changelist on 2011-12-25 end
+			
 			buff.append("success:true}");
 		} else {
 			buff.append("failure:true}");

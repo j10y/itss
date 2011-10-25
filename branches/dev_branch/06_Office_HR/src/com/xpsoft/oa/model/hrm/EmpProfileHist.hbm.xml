@@ -6,21 +6,32 @@
 
 <hibernate-mapping>
     <class
-        name="com.xpsoft.oa.model.hrm.EmpProfile"
-        table="emp_profile"
+        name="com.xpsoft.oa.model.hrm.EmpProfileHist"
+        table="emp_profile_hist"
         select-before-update="false"
         dynamic-update="false"
         dynamic-insert="false"
         optimistic-lock="version"
     >
 		<id
-            name="profileId"
-            column="profileId"
+            name="profileHistId"
+            column="profileHistId"
             type="java.lang.Long"
             length="19"
         >
             <generator class="native"/>
         </id>
+        <property
+            name="profileId"
+            type="java.lang.Long"
+            update="false"
+            insert="true"
+            access="property"
+            column="profileId"
+            length="100"
+            not-null="true"
+            unique="false"
+        />
          <property
             name="profileNo"
             type="java.lang.String"
@@ -731,5 +742,19 @@
             not-null="false"
             unique="false"
         />
+        
+        <property
+            name="modifiedDate"
+            type="java.util.Date"
+            update="false"
+            insert="true"
+            access="property"
+            column="modifiedDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <many-to-one name="modifiedUser" class="com.xpsoft.oa.model.system.AppUser" column="modifiedUser" insert="true" update="false"></many-to-one>
+        
     </class>
 </hibernate-mapping>

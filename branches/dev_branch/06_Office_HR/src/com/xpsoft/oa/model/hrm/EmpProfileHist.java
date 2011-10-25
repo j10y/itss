@@ -1,22 +1,24 @@
 package com.xpsoft.oa.model.hrm;
 
-import com.google.gson.annotations.Expose;
-import com.xpsoft.core.model.BaseModel;
-import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
-
 import java.math.BigDecimal;
 import java.util.Date;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class EmpProfile extends BaseModel {
+import com.xpsoft.core.model.BaseModel;
+import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
+import com.xpsoft.oa.model.system.AppUser;
+
+public class EmpProfileHist extends BaseModel {
 	/* 18 */public static short CHECK_FLAG_NONE = 0;
 	/* 19 */public static short CHECK_FLAG_PASS = 1;
 	/* 20 */public static short CHECK_FLAG_NOT_PASS = 2;
 
 	/* 22 */public static short DELETE_FLAG_NOT = 0;
 	/* 23 */public static short DELETE_FLAG_HAD = 1;
+	protected Long profileHistId;
 	protected Long profileId;
 	protected String profileNo;
 	protected String fullname;
@@ -97,6 +99,18 @@ public class EmpProfile extends BaseModel {
 	protected Date pbcExecuteDate;//PBC执行日期
 	protected Integer isDepartFiled;//是否办理离职手续
 	
+	protected Date modifiedDate;//修改时间
+	protected AppUser modifiedUser;//修改人
+	
+	
+	public Long getProfileHistId() {
+		return profileHistId;
+	}
+
+	public void setProfileHistId(Long profileHistId) {
+		this.profileHistId = profileHistId;
+	}
+
 	public Integer getOrganization() {
 		return organization;
 	}
@@ -121,10 +135,10 @@ public class EmpProfile extends BaseModel {
 		/* 81 */this.jobId = jobId;
 	}
 
-	public EmpProfile() {
+	public EmpProfileHist() {
 	}
 
-	public EmpProfile(Long in_profileId) {
+	public EmpProfileHist(Long in_profileId) {
 		/* 97 */setProfileId(in_profileId);
 	}
 
@@ -645,12 +659,29 @@ public class EmpProfile extends BaseModel {
 		this.isDepartFiled = isDepartFiled;
 	}
 
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public AppUser getModifiedUser() {
+		return modifiedUser;
+	}
+
+	public void setModifiedUser(AppUser modifiedUser) {
+		this.modifiedUser = modifiedUser;
+	}
+
 	public boolean equals(Object object) {
-		/* 850 */if (!(object instanceof EmpProfile)) {
+		/* 850 */if (!(object instanceof EmpProfileHist)) {
 			/* 851 */return false;
 		}
-		/* 853 */EmpProfile rhs = (EmpProfile) object;
+		/* 853 */EmpProfileHist rhs = (EmpProfileHist) object;
 		/* 854 */return new EqualsBuilder()
+		/* 855 */.append(this.profileHistId, rhs.profileHistId)
 		/* 855 */.append(this.profileId, rhs.profileId)
 		/* 856 */.append(this.profileNo, rhs.profileNo)
 		/* 857 */.append(this.fullname, rhs.fullname)
@@ -717,6 +748,7 @@ public class EmpProfile extends BaseModel {
 
 	public int hashCode() {
 		/* 908 */return new HashCodeBuilder(-82280557, -700257973)
+		/* 909 */.append(this.profileHistId)
 		/* 909 */.append(this.profileId)
 		/* 910 */.append(this.profileNo)
 		/* 911 */.append(this.fullname)
@@ -783,6 +815,7 @@ public class EmpProfile extends BaseModel {
 
 	public String toString() {
 		/* 962 */return new ToStringBuilder(this)
+		/* 963 */.append("profileHistId", this.profileHistId)
 		/* 963 */.append("profileId", this.profileId)
 		/* 964 */.append("profileNo", this.profileNo)
 		/* 965 */.append("fullname", this.fullname)
