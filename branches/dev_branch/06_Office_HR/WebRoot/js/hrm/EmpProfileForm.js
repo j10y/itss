@@ -982,13 +982,13 @@ EmpProfileForm = Ext
 																		xtype:"numberfield"
 																	},
 																	{
-																		fieldLabel : "社会保险",
+																		fieldLabel : "社会保险金额",
 																		name : "empProfile.insurance",
 																		id : "empProfileForm.insurance",
 																		xtype:"numberfield"
 																	},
 																	{
-																		fieldLabel : "公积金",
+																		fieldLabel : "公积金金额",
 																		name : "empProfile.provident",
 																		id : "empProfileForm.provident",
 																		xtype:"numberfield"
