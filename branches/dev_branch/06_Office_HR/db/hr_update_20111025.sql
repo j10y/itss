@@ -92,3 +92,5 @@ CREATE TABLE `emp_profile_hist` (
   KEY `FK_SD_R_SY` (`standardId`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='员工档案历史表';
 
+alter table department add column sort int(11) default null COMMENT '排序';
+
