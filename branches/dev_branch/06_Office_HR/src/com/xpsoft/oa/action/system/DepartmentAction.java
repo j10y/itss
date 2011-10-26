@@ -130,8 +130,10 @@ public class DepartmentAction extends BaseAction {
 		/* 130 */this.department.setDepLevel(Integer.valueOf(level + 1));
 		/* 131 */this.departmentService.save(this.department);
 		/* 132 */if (this.department != null) {
-			/* 133 */depPath = depPath + this.department.getDepId().toString()
-					+ ".";
+			//modified by awen for change path setting logic on 2011-10-25 begin
+				depPath = depPath + this.department.getDepId().toString()+ ".";			
+			//depPath = depPath + this.department.getSort().toString()+ ".";
+			//modified by awen for change path setting logic on 2011-10-25 end
 			/* 134 */this.department.setPath(depPath);
 			/* 135 */this.departmentService.save(this.department);
 			/* 136 */setJsonString("{success:true}");

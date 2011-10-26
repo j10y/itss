@@ -20,7 +20,7 @@
 /*    */   {
 /* 24 */     String hql = "from Department d where d.parentId=?";
 /* 25 */     Object[] params = { parentId };
-/* 26 */     return findByHql("from Department d where d.parentId=?", params);
+/* 26 */     return findByHql("from Department d where d.parentId=? order by d.sort", params);
 /*    */   }
 /*    */ 
 /*    */   public List<Department> findByVo(Department department, PagingBean pb)
