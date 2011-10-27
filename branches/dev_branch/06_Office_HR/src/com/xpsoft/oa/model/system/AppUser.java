@@ -61,7 +61,7 @@ public class AppUser extends BaseModel implements UserDetails, User {
 	protected String education;
 
 	@Expose
-	protected Short title;
+	protected Short title;//1男 0 女
 
 	@Expose
 	protected String fullname;

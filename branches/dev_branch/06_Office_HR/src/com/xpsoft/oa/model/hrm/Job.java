@@ -156,7 +156,7 @@ public class Job extends BaseModel {
 			.append("delFlag", this.delFlag)
 			.append("band", this.band)
 			.append("seq", this.seq)
-			.append("group", this.race)
+			.append("race", this.race)
 			.toString();
 	}
 }

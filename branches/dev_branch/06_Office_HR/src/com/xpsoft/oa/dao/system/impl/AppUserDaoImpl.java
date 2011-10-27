@@ -297,5 +297,17 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		return findByHql(hql, new Object[] {
 				Constants.FLAG_UNDELETED });
 	}
+	
+	public AppUser getByUserName(String username) {
+		String hql = "from AppUser au where au.username=?";
+		Object[] params = { username };
+		List list = findByHql(hql, params);
+		AppUser user = null;
+		if (list.size() != 0) {
+			user = (AppUser) list.get(0);
+		}
+
+		return user;
+	}
 
 }

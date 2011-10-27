@@ -10,6 +10,13 @@ import java.util.Set;
 public abstract interface AppUserDao extends BaseDao<AppUser>
 {
   public abstract AppUser findByUserName(String paramString);
+  
+  /**
+   * 新增不涉及limit逻辑
+   * @param paramString
+   * @return
+   */
+  public abstract AppUser getByUserName(String paramString);
 
   public abstract List findByDepartment(String paramString, PagingBean paramPagingBean);
 

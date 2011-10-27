@@ -20,6 +20,13 @@ public class AppUserServiceImpl extends BaseServiceImpl<AppUser> implements
 	public AppUser findByUserName(String username) {
 		return this.dao.findByUserName(username);
 	}
+	
+	/**
+	 * 新增涉及limit限制逻辑
+	 */
+	public AppUser getByUserName(String username) {
+		return this.dao.getByUserName(username);
+	}
 
 	public List findByDepartment(String path, PagingBean pb) {
 		return this.dao.findByDepartment(path, pb);

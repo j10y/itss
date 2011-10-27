@@ -10,6 +10,8 @@ public abstract interface AppUserService extends BaseService<AppUser>
 {
   public abstract AppUser findByUserName(String paramString);
   
+  public abstract AppUser getByUserName(String paramString);
+  
   public abstract AppUser findByFullName(String paramString);
 
   public abstract List findByDepartment(String paramString, PagingBean paramPagingBean);
