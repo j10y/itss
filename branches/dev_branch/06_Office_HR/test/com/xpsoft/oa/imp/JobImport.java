@@ -159,15 +159,15 @@ public class JobImport {
 					Long bandId = null;
 					Cell[] cells = sheet.getRow(i);
 					String jobName = null;
-					if(cells[0]!=null){
-						jobName = cells[0].getContents();//岗位名称
+					if(cells[0]!=null&& !cells[0].getContents().trim().equals("")){
+						jobName = cells[0].getContents().trim();//岗位名称
 					}else{
 						System.out.println("--------Row: " + i + " data not contains jobName info");
 						continue;
 					}
 					
 					String firstDept = null;
-					if(cells[1]!=null&& !cells[1].getContents().equals("")){
+					if(cells[1]!=null&& !cells[1].getContents().trim().equals("")){
 						firstDept = cells[1].getContents();//一级部门名称	
 					}else{
 						System.out.println("--------Row: " + i + " data not contains dept info");
@@ -175,7 +175,7 @@ public class JobImport {
 					}					
 					String secondDept = null;
 					
-					if(cells[2]!=null && !cells[2].getContents().equals("")){
+					if(cells[2]!=null && !cells[2].getContents().trim().equals("")){
 						secondDept = cells[2].getContents();//二级部门名称
 						//结合一、二级部门名称匹配部门信息
 						depId = deptMap.get(firstDept + "/" + secondDept);
@@ -184,26 +184,26 @@ public class JobImport {
 						depId = deptMap.get(firstDept);
 					}					
 					String band = null;
-					if(cells[3]!=null){
-						band = cells[3].getContents();//band
+					if(cells[3]!=null && !cells[3].getContents().trim().equals("")){
+						band = cells[3].getContents().trim();//band
 						//匹配band
 						bandId = dataMap.get("24").get(band);
 					}
 					String race = null;
-					if(cells[4]!=null){
+					if(cells[4]!=null && !cells[4].getContents().trim().equals("")){
 						race = cells[4].getContents();//族群
 						//匹配族群
 						raceId = dataMap.get("18").get(race);
 					}
 					String seq = null;
-					if(cells[5]!=null){
+					if(cells[5]!=null && !cells[5].getContents().trim().equals("")){
 						seq = cells[5].getContents();//序列
 						//匹配序列
 						seqId = dataMap.get("19").get(seq);
 					}
 					
 					String memo = null;
-					if(cells[6]!=null){
+					if(cells[6]!=null && !cells[6].getContents().trim().equals("")){
 						memo = cells[6].getContents();//说明
 					}
 					Job job = new Job();

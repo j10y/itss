@@ -6,8 +6,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -19,10 +21,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.xpsoft.core.util.StringUtil;
 import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
+import com.xpsoft.oa.model.system.AppRole;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.hrm.JobService;
 import com.xpsoft.oa.service.kpi.HrPaDatadictionaryService;
+import com.xpsoft.oa.service.system.AppRoleService;
 import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.oa.service.system.DepartmentService;
 
@@ -37,6 +41,7 @@ public class UserImport {
 	private static String fileName;
 	private static JobService jobService;
 	private static AppUserService appUserService;
+	private static AppRoleService appRoleService;
 	private static DepartmentService departmentService;
 	private static HrPaDatadictionaryService hrPaDatadictionaryService;
 	
@@ -44,7 +49,7 @@ public class UserImport {
 	private static Map<Long, Department> tmpDeptMap = new HashMap<Long, Department>();
 	private static Map<String, Long> deptMap = new HashMap<String, Long>();
 	private static Map<String, Map<String, Long>> dataMap = new HashMap<String, Map<String, Long>>();
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	/**
 	 * 初始化方法<br>
@@ -64,6 +69,7 @@ public class UserImport {
 		hrPaDatadictionaryService = (HrPaDatadictionaryService)context.getBean("hrPaDatadictionaryService");
 		departmentService = (DepartmentService)context.getBean("departmentService");
 		appUserService = (AppUserService)context.getBean("appUserService");
+		appRoleService = (AppRoleService)context.getBean("appRoleService");
 		
 		List<HrPaDatadictionary> datas = hrPaDatadictionaryService.getAll();
 		for(HrPaDatadictionary hrPaDatadictionary : datas){
@@ -134,7 +140,12 @@ public class UserImport {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+//		try {
+//			System.out.println(sdf.parse("2011/10/26").toLocaleString());
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		init(args);
 		
 		process();
@@ -168,38 +179,38 @@ public class UserImport {
 					Cell[] cells = sheet.getRow(i);
 					
 					String userName = null;
-					if(cells[0]!=null && !cells[0].getContents().equals("")){
-						userName = cells[0].getContents();
+					if(cells[0]!=null && !cells[0].getContents().trim().equals("")){
+						userName = cells[0].getContents().trim();
 					}else{
 						System.out.println("--------Row: " + i + " data not contains userName info");
 						continue;
 					}
 					String fullName = null;
-					if(cells[1]!=null && !cells[1].getContents().equals("")){
-						fullName = cells[1].getContents();
+					if(cells[1]!=null && !cells[1].getContents().trim().equals("")){
+						fullName = cells[1].getContents().trim();
 					}else{
 						//fullName = userName;
 					}
 					
 					String title = null;
-					if(cells[2]!=null && !cells[2].getContents().equals("")){
-						title = cells[1].getContents().equals("男") ? "1" : "0";
+					if(cells[2]!=null && !cells[2].getContents().trim().equals("")){
+						title = cells[1].getContents().trim().equals("男") ? "1" : "0";
 					}else{
 						title = "1";//男
 						//fullName = userName;
 					}
 					
 					String firstDept = null;
-					if(cells[3]!=null&& !cells[3].getContents().equals("")){
-						firstDept = cells[3].getContents();//一级部门名称	
+					if(cells[3]!=null&& !cells[3].getContents().trim().equals("")){
+						firstDept = cells[3].getContents().trim();//一级部门名称	
 					}else{
 						System.out.println("--------Row: " + i + " data not contains dept info");
 						continue;
 					}					
 					String secondDept = null;
 					
-					if(cells[4]!=null && !cells[4].getContents().equals("")){
-						secondDept = cells[4].getContents();//二级部门名称
+					if(cells[4]!=null && !cells[4].getContents().trim().equals("")){
+						secondDept = cells[4].getContents().trim();//二级部门名称
 						//结合一、二级部门名称匹配部门信息
 						depId = deptMap.get(firstDept + "/" + secondDept);
 					}else{
@@ -207,9 +218,11 @@ public class UserImport {
 						depId = deptMap.get(firstDept);
 					}					
 					Date accessionTime = null;
-					if(cells[5]!=null && !cells[5].getContents().equals("")){
+					if(cells[5]!=null && !cells[5].getContents().trim().equals("")){
 						try {
-							accessionTime = sdf.parse(cells[5].getContents());//band
+							System.out.println("---------------------------" + cells[5].getContents().trim() + "----------------");
+							accessionTime = sdf.parse(cells[5].getContents().trim());//band
+							System.out.println("---------------------------" + accessionTime.toLocaleString() + "----------------");
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							accessionTime = new Date();
@@ -220,7 +233,7 @@ public class UserImport {
 					}
 					String job = null;
 					if(cells[6]!=null){
-						job = cells[6].getContents();//岗位
+						job = cells[6].getContents().trim();//岗位
 					}
 									
 					
@@ -250,8 +263,11 @@ public class UserImport {
 					user.setStatus((short)1);
 					user.setAccessionTime(accessionTime);
 					user.setPosition(job);
-					
-					appUserService.save(user);
+					Set<AppRole> roles = new HashSet();
+					AppRole appRole = appRoleService.get(6L);
+					roles.add(appRole);
+					user.setRoles(roles);
+					//appUserService.save(user);
 				}
 			}
 		} catch (IndexOutOfBoundsException e) {

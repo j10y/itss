@@ -157,7 +157,7 @@ public class StandSalaryImport {
 
 					Cell[] cells = sheet.getRow(i);
 					String salaryName = null;
-					if(cells[0]!=null){
+					if(cells[0]!=null && !cells[0].getContents().trim().equals("")){
 						salaryName = cells[0].toString();//岗位名称
 					}else{
 						System.out.println("--------Row: " + i + " data not contains salaryName info");
@@ -166,24 +166,24 @@ public class StandSalaryImport {
 					
 					//固定薪资
 					BigDecimal baseMoney = null;
-					if(cells[1]!=null){
+					if(cells[1]!=null && !cells[1].getContents().trim().equals("")){
 						baseMoney = new BigDecimal(cells[1].toString());
 					}
 					
 					//绩效基数
 					BigDecimal perCoefficient = null;
-					if(cells[2]!=null){
+					if(cells[2]!=null && !cells[2].getContents().trim().equals("")){
 						perCoefficient = new BigDecimal(cells[2].toString());
 					}
 					
 					//月度薪酬总额
 					BigDecimal totalMoney = null;
-					if(cells[3]!=null){
+					if(cells[3]!=null && !cells[3].getContents().trim().equals("")){
 						totalMoney = new BigDecimal(cells[3].toString());
 					}
 					
 					String memo = null;
-					if(cells[6]!=null){
+					if(cells[6]!=null && !cells[6].getContents().trim().equals("")){
 						memo = cells[6].toString();//说明
 					}
 					
