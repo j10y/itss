@@ -78,14 +78,17 @@ public class HrPostAssessmentAction extends BaseAction{
 	public String listHist() {
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		String fullname = this.getRequest().getParameter("fullname");
-		String sql2 = "select count(a.id) as total from hr_post_assessment a, hr_post_apply b, app_user c where " +
-				"a.applyId = b.id and b.applyUser = c.userId and a.publishStatus = 3";
+		String depId = this.getRequest().getParameter("depId");
+		String sql2 = "select count(a.id) as total from hr_post_assessment a, hr_post_apply b, app_user c, department d, emp_profile e where " +
+				"a.applyId = b.id and b.applyUser = c.userId and c.userId = e.userId and a.publishStatus = 3";
 		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+		sql2 += (depId == null || "".equals(depId)) ? "" : " and e.depId = d.depId and (d.depId = " + depId + " or d.parentId = " + depId + ") ";
 		List<Map<String, Object>> mapList2 = this.hrPostAssessmentService.findDataList(sql2);
 		String sql = "select distinct a.id, b.id as applyId, c.userId, c.fullname, b.postId, b.postName, b.accessionTime, a.publishStatus from " +
-				"hr_post_assessment a, hr_post_apply b, app_user c where " +
-				"a.applyId = b.id and b.applyUser = c.userId and a.publishStatus = 3";
+				"hr_post_assessment a, hr_post_apply b, app_user c, department d, emp_profile e where " +
+				"a.applyId = b.id and b.applyUser = c.userId and c.userId = e.userId and a.publishStatus = 3";
 		sql += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+		sql += (depId == null || "".equals(depId)) ? "" : " and e.depId = d.depId and (d.depId = " + depId + " or d.parentId = " + depId + ") ";
 		sql += " limit " + filter.getPagingBean().getFirstResult() + ", " + filter.getPagingBean().getPageSize();
 		List<Map<String, Object>> mapList = this.hrPostAssessmentService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList2.get(0).get("total") + "',result:[");
