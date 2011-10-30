@@ -68,7 +68,7 @@
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;" colspan="2">评分标准</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">实际完成情况</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">得分</td>
-						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">权重</td>
+						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">权重（%）</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;border-right:1px solid #000000;">加权分数</td>
 					</tr>
 					<c:forEach items="${busGoalList}" var="busGoal" varStatus="status">
@@ -83,7 +83,9 @@
 							</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;padding:0 5px 0 5px;font-size:14px;text-align:left;line-height:18px;">${busGoal.remark}</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">${busGoal.result}</td>
-							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">${busGoal.weight}</td>
+							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">
+								<fmt:formatNumber value="${busGoal.weight}" type="currency" pattern="#0.00%"/>
+							</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;border-right:1px solid #000000;">
 								<fmt:formatNumber value="${busGoal.result * busGoal.weight}" pattern="#.#" type="number"/>
 							</td>
@@ -110,7 +112,7 @@
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;" colspan="2">评分标准</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">直属领导评价</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">得分</td>
-						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">权重</td>
+						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">权重（%）</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;border-right:1px solid #000000;">加权分数</td>
 					</tr>
 					<c:forEach items="${pmGoalList}" var="pmGoal" varStatus="status">
@@ -125,7 +127,9 @@
 							</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;padding:0 5px 0 5px;font-size:14px;text-align:left;line-height:18px;">${pmGoal.remark}</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">${pmGoal.result}</td>
-							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">${pmGoal.weight}</td>
+							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">
+								<fmt:formatNumber value="${pmGoal.weight}" type="currency" pattern="#0.00%"/>
+							</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;border-right:1px solid #000000;">
 								<fmt:formatNumber value="${pmGoal.result * pmGoal.weight}" pattern="#.#" type="number"/>
 							</td>
@@ -151,7 +155,7 @@
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;" colspan="2">评分标准</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">直线经理评价</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">得分</td>
-						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">权重</td>
+						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">权重（%）</td>
 						<td style="font-weight:bold;border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;border-right:1px solid #000000;">加权分数</td>
 					</tr>
 					<c:forEach items="${idGoalList}" var="idGoal" varStatus="status">
@@ -165,7 +169,9 @@
 							</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;padding:0 5px 0 5px;font-size:14px;text-align:left;line-height:18px;">${idGoal.remark}</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">${idGoal.result}</td>
-							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">${idGoal.weight}</td>
+							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;">
+								<fmt:formatNumber value="${idGoal.weight}" type="currency" pattern="#0.00%"/>
+							</td>
 							<td style="border-left:1px solid #000000;border-top:1px solid #000000;height:30px;line-height:30px;padding:0 5px 0 5px;font-size:14px;text-align:center;border-right:1px solid #000000;">
 								<fmt:formatNumber value="${idGoal.result * idGoal.weight}" pattern="#.#" type="number"/>
 							</td>
