@@ -76,13 +76,34 @@ public class HrPromAssessmentAction extends BaseAction{
 	
 	public String listHist() {
 		QueryFilter filter = new QueryFilter(this.getRequest());
-		List<HrPromAssessment> list = this.hrPromAssessmentService.getAll(filter);
-		
-		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
-				.append(filter.getPagingBean().getTotalItems()).append(",result:");
-		JSONSerializer json = new JSONSerializer();
-		buff.append(json.exclude(new String[] {}).serialize(list));
-		buff.append("}");
+		String fullname = this.getRequest().getParameter("fullname");
+		String depId = this.getRequest().getParameter("depId");
+		String sql = "select count(a.id) as total from hr_prom_assessment a, hr_prom_apply b, app_user c, department d, emp_profile e where " +
+				"a.applyId = b.id and b.applyUser = c.userId and c.userId = e.userId and a.publishStatus = 3";
+		sql += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+		sql += (depId == null || "".equals(depId)) ? "" : " and e.depId = d.depId and (d.depId = " + depId + " or d.parentId = " + depId + ")";
+		List<Map<String, Object>> mapList = this.hrPromAssessmentService.findDataList(sql);
+		String sql2 = "select distinct a.id, b.id as applyId, c.userId, c.fullname, b.nowPositionName, b.applyPositionName, a.publishStatus from " +
+				"hr_prom_assessment a, hr_prom_apply b, app_user c, department d, emp_profile e where " +
+				"a.applyId = b.id and b.applyUser = c.userId and c.userId = e.userId and a.publishStatus = 3";
+		sql2 += (fullname == null || "".equals(fullname)) ? "" : " and c.fullname like '%" + fullname + "%'";
+		sql2 += (depId == null || "".equals(depId)) ? "" : " and e.depId = d.depId and (d.depId = " + depId + " or d.parentId = " + depId + ")";
+		sql2 += " limit " + filter.getPagingBean().getFirstResult() + ", " + filter.getPagingBean().getPageSize();
+		List<Map<String, Object>> mapList2 = this.hrPromAssessmentService.findDataList(sql2);
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':'" + mapList.get(0).get("total") + "',result:[");
+		for(int i = 0; i < mapList2.size(); i++) {
+			buff.append("{'id':'" + mapList2.get(i).get("id"))
+					.append("','applyId':'" + mapList2.get(i).get("applyId"))
+					.append("','fullname':'" + mapList2.get(i).get("fullname"))
+					.append("','nowPositionName':'" + mapList2.get(i).get("nowPositionName"))
+					.append("','applyPositionName':'" + mapList2.get(i).get("applyPositionName"))
+					.append("','publishStatus':'" + mapList2.get(i).get("publishStatus"))
+					.append("'},");
+		}
+		if(mapList2.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]}");
 		this.jsonString = buff.toString();
 		
 		return "success";
