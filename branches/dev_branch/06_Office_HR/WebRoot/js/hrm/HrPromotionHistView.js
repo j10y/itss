@@ -21,6 +21,8 @@ HrPromotionHistView = Ext.extend(Ext.Panel, {
 	store : null,
 	topbar : null,
 	initComponents : function() {
+		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("depName", a, "所属部门", "depId");
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
 			height : 40,
@@ -44,17 +46,26 @@ HrPromotionHistView = Ext.extend(Ext.Panel, {
 					text : "查询条件：姓名"
 				}, {
 					fieldLabel : "姓名",
-					name : "Q_promApply.applyUser.fullname_S_LK",
+					name : "fullname",
 					xtype : "textfield"
 				}, {
+					text : "所属部门"
+				},
+				departments,
+				{
 					xtype : "button",
 					text : "查询",
 					handler : this.search.createCallback(this)
+				}, {
+					name : "depId",
+					id : "depId",
+					xtype : "hidden",
+					value : ""
 				}
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/hrm/listHistHrPromAssessment.do?Q_publishStatus_N_EQ=3",
+			url : __ctxPath + "/hrm/listHistHrPromAssessment.do",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -64,14 +75,14 @@ HrPromotionHistView = Ext.extend(Ext.Panel, {
 					name : "id",
 					type : "int"
 				}, {
-					name : "promApply.applyUser.fullname",
-					mapping : "promApply.applyUser.fullname"
+					name : "fullname",
+					mapping : "fullname"
 				}, {
 					name : "applyId",
-					mapping : "promApply.id"
+					mapping : "applyId"
 				},
-				"promApply.nowPositionName",
-				"promApply.applyPositionName",
+				"nowPositionName",
+				"applyPositionName",
 				"publishStatus"
 			]
 		});
@@ -108,13 +119,13 @@ HrPromotionHistView = Ext.extend(Ext.Panel, {
 					hidden : true
 				}, {
 					header : "姓名",
-					dataIndex : "promApply.applyUser.fullname"
+					dataIndex : "fullname"
 				}, {
 					header : "原岗位",
-					dataIndex : "promApply.nowPositionName"
+					dataIndex : "nowPositionName"
 				}, {
-					header : "拟晋升岗位",
-					dataIndex : "promApply.applyPositionName"
+					header : "晋升岗位",
+					dataIndex : "applyPositionName"
 				}, {
 					header : "状态",
 					dataIndex : "publishStatus",
@@ -200,7 +211,7 @@ HrPromotionHistView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/hrm/listHistHrPromAssessment.do?Q_publishStatus_I_EQ=3",
+				url : __ctxPath + "/hrm/listHistHrPromAssessment.do",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);

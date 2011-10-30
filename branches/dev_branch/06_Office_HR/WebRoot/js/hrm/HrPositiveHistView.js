@@ -21,6 +21,8 @@ HrPositiveHistView = Ext.extend(Ext.Panel, {
 	store : null,
 	topbar : null,
 	initComponents : function() {
+		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("depName", a, "所属部门", "depId");
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
 			height : 40,
@@ -47,9 +49,18 @@ HrPositiveHistView = Ext.extend(Ext.Panel, {
 					name : "fullname",
 					xtype : "textfield"
 				}, {
+					text : "所属部门"
+				},
+				departments,
+				{
 					xtype : "button",
 					text : "查询",
 					handler : this.search.createCallback(this)
+				}, {
+					name : "depId",
+					id : "depId",
+					xtype : "hidden",
+					value : ""
 				}
 			]
 		});
