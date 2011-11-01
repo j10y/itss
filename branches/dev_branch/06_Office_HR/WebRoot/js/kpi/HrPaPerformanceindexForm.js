@@ -12,7 +12,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			items : this.formPanel,
 			modal : true,
 			height : 410,
-			width : 550,
+			width : 600,
 			title : "绩效考核指标录入",
 			buttonAlign : "center",
 			buttons : this.buttons
@@ -188,11 +188,11 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						{
 							layout : "form",
 							border : false,
+							columnWidth : 0.26,
 							items : [
 								{
 									fieldLabel : "是否唯一否决",
 									xtype : "checkboxgroup",
-									columns : 1,
 									items : [
 										{
 											boxLabel : "是",
@@ -225,6 +225,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.125,
 							items : [
 								{
 									id : "baseScoreLabel",
@@ -237,6 +238,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.11,
 							items : [
 								{
 									name : "hrPaPerformanceindex.baseScore",
@@ -251,6 +253,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.16,
 							items : [
 								{
 									id : "finalScoreLabel",
@@ -263,6 +266,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.11,
 							items : [
 								{
 									name : "hrPaPerformanceindex.finalScore",
@@ -277,6 +281,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.125,
 							items : [
 								{
 									id : "finalCoefficientLabel",
@@ -289,6 +294,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.11,
 							items : [
 								{
 									name : "hrPaPerformanceindex.finalCoefficient",

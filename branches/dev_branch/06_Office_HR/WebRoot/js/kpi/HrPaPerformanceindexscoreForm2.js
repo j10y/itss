@@ -71,6 +71,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 						{
 							layout : "form",
 							border : false,
+							columnWidth : 0.5,
 							items : [
 								{
 									id : "acDepId",
@@ -82,6 +83,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.5,
 							items : [
 								{
 									fieldLabel : "考核标准",
@@ -98,7 +100,6 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 									listeners : {
 										focus : function(d) {
 											var c = Ext.getCmp("acName").getStore();
-											c.loadData("[]");
 											Ext.Ajax.request({
 												url : __ctxPath + "/kpi/loadHrPaAssessmentcriteria.do",
 												params : {
@@ -106,6 +107,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 												},
 												method : "post",
 												success : function(f) {
+													
 													var e = Ext.util.JSON.decode(f.responseText);
 													c.loadData(e);
 												}
@@ -130,6 +132,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 						{
 							layout : "form",
 							border : false,
+							columnWidth : 0.5,
 							items : [
 								{
 									text : "目标",
@@ -147,6 +150,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.5,
 							items : [
 								{
 									text : "达成",
@@ -171,6 +175,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 						{
 							layout : "form",
 							border : false,
+							columnWidth : 0.3,
 							items : [
 								{
 									fieldLabel : "运算符",
@@ -194,6 +199,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.3,
 							items : [
 								{
 									fieldLabel : "操作符",
@@ -220,6 +226,7 @@ HrPaPerformanceindexscoreForm2 = Ext.extend(Ext.Window, {
 						}, {
 							layout : "form",
 							border : false,
+							columnWidth : 0.4,
 							items : [
 								{
 									fieldLabel : "逻辑符",
