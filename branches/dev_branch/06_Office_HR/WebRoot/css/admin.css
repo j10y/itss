@@ -1928,3 +1928,15 @@ li .right {
 	background-image: url('../images/menus/budget/menu_budget_alarm.png')
 	!important;
 }
+.menu-incomeTax{
+	background-image: url('../images/menus/hrm/incomeTax.jpg')
+	!important;
+}
+.menu-RewardsPunishmentsType{
+	background-image: url('../images/menus/hrm/RewardsPunishmentsType.jpg')
+	!important;
+}
+.menu-RewardsPunishments{
+	background-image: url('../images/menus/hrm/RewardsPunishments.jpg')
+	!important;
+}
