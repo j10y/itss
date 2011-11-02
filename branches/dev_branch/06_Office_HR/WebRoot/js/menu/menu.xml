@@ -1495,10 +1495,9 @@
 			
 		</Item>	
 		</Items>
-		<Items id="HireIssueView" text="招聘管理" iconCls="menu-hireIssue"
+		<Items id="HireIssue" text="招聘管理" iconCls="menu-hireIssue"
 			isPublic="false">
-		<Item id="HireIssueView" text="招聘管理" iconCls="menu-hireIssue"
-			isPublic="false">
+		<Item id="HireIssueView" text="招聘管理" iconCls="menu-hireIssue">
 			<Function id="_HireIssueQuery" text="查看" iconCls="menu-list">
 				<url>/hrm/listHireIssue.do</url>
 				<url>/hrm/loadHireIssue.do</url>
