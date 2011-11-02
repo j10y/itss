@@ -7,12 +7,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.BeanUtils;
+
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.hrm.EmpProfile;
+import com.xpsoft.oa.model.hrm.EmpProfileHist;
 import com.xpsoft.oa.model.hrm.HrPostApply;
 import com.xpsoft.oa.model.hrm.HrPostAssessment;
 import com.xpsoft.oa.model.hrm.StandSalary;
@@ -21,6 +24,7 @@ import com.xpsoft.oa.model.kpi.HrPaKpiitem;
 import com.xpsoft.oa.model.kpi.HrPaKpiitem2user;
 import com.xpsoft.oa.model.kpi.HrPaKpipbc;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.service.hrm.EmpProfileHistService;
 import com.xpsoft.oa.service.hrm.EmpProfileService;
 import com.xpsoft.oa.service.hrm.HrPostApplyService;
 import com.xpsoft.oa.service.hrm.HrPostAssessmentService;
@@ -264,14 +268,26 @@ public class HrPostApplyAction extends BaseAction{
 					QueryFilter filter = new QueryFilter(map);
 					List<EmpProfile> empProfileList = empProfileService.getAll(filter);
 					if(empProfileList.size() > 0) {
+						//add by guansq for add empProfile changelist at 2011-11-02 begin
+						EmpProfileHistService empProfileHistService = (EmpProfileHistService)AppUtil.getBean("empProfileHistService");
+						EmpProfileHist empProfileHist = new EmpProfileHist();
+						BeanUtils.copyProperties(empProfileList.get(0), empProfileHist);
+						empProfileHist.setModifiedDate(currentDate);
+						empProfileHist.setModifiedUser(currentUser);
+						empProfileHistService.save(empProfileHist);
+						//add by guansq for add empProfile changelist at 2011-11-02 end
 						empProfileList.get(0).setJobId(assessment.getStandardPostId());
 						empProfileList.get(0).setPosition(assessment.getStandardPostName());
+						StandSalary standSalary = new StandSalary();
+						standSalary.setStandardId(assessment.getNewSalaryLevelId());
+						empProfileList.get(0).setStandSalary(standSalary);
 						empProfileList.get(0).setStandardMoney(assessment.getNewFixedSalary().add(assessment.getNewFloatSalary()));
 						empProfileList.get(0).setStandardId(assessment.getNewSalaryLevelId());
 						empProfileList.get(0).setStandardName(assessment.getNewSalaryLevelName());
 						empProfileList.get(0).setPerCoefficient(assessment.getNewFloatSalary());
 						empProfileList.get(0).setAccessionTime(assessment.getActualPostDate());
 						empProfileList.get(0).setRealPositiveTime(assessment.getActualPostDate());
+						empProfileService.save(empProfileList.get(0));
 					}
 					//为该用户增加个人PBC
 					String sql = "select distinct a.id from hr_pa_kpipbc a, emp_profile b, app_user c where " +
