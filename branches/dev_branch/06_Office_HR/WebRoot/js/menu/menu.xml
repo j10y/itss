@@ -1756,6 +1756,8 @@
 			</Item>
 			<Item id="HrDepartureReportView" text="人员离职分析" iconCls="menu-report" isPublic="false">
 			</Item>
+			<Item id="HrPositionAtlasView" text="岗位图谱" iconCls="menu-report" isPublic="false">
+			</Item>
 		</Items>
 		<Item id="HrPaDatadictionaryView" iconCls="menu-dictionary" text="数据字典">
 			<Function id="_HrPaDatadictionaryQuery" text="查看字典" iconCls="menu-list">
