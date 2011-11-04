@@ -24,7 +24,7 @@ public class HrPaAssessmentcriteriaDaoImpl extends BaseDaoImpl<HrPaAssessmentcri
 	 * 取得所有考核标准关键字和名称
 	 * */
 	public Map<String, String> getKeyAndName(Long depId) {
-		final String hql = "select acKey, acName from HrPaAssessmentcriteria where belongDept.depId = " + depId;
+		final String hql = "select acKey, acName from HrPaAssessmentcriteria where (belongDept.depId = " + depId + " or belongDept.parentId = " + depId + ")";
 		
 		return (Map<String, String>) this.getHibernateTemplate().execute(
 				new HibernateCallback() {
