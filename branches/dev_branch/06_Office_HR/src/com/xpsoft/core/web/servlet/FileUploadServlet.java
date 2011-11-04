@@ -125,9 +125,11 @@ public class FileUploadServlet extends HttpServlet {
 						fi.write(new File(this.uploadPath + "/" + relativeFullPath));
 						
 						String profix = this.uploadPath.substring(this.uploadPath.lastIndexOf("\\")+1);
+						//modify by guansq for add "/" after "req.getContextPath()" at 2011-11-03 begin
 						relativeFullPath = "http://" + req.getServerName() + ":" + req.getServerPort() + 
-											(req.getContextPath() != null && !"".equals(req.getContextPath()) ? req.getContextPath() : "/") + 
+											(req.getContextPath() != null && !"".equals(req.getContextPath()) ? req.getContextPath() + "/" : "/") + 
 											profix + "/" + relativeFullPath;
+						//modify by guansq for add "/" after "req.getContextPath()" at 2011-11-03 end
 					}
 				}
 				//modify by jack for FTP support at 2011-9-21 end
