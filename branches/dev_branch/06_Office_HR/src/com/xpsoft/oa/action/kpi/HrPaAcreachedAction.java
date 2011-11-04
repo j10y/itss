@@ -240,9 +240,8 @@ public class HrPaAcreachedAction extends BaseAction{
 				file = ftp.retrieve(fileP);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				System.out.println("数据导入失败！");
+				this.logger.error("数据导入失败，原因：" + e);
 				this.jsonString = "{success:true,'flag':'0'}";
-				e.printStackTrace();
 			}
 			
 		}else{
@@ -296,11 +295,11 @@ public class HrPaAcreachedAction extends BaseAction{
 				}
 				this.hrPaAcreachedService.multiSave(reachList, templateId, null);
 			}
-			this.jsonString = "{success:true,'flag':'1','count':'" + reachList.size() + "'}";
+			this.jsonString = "{success:true,'flag':'1','count':'" + reachList.size() + 
+			"','templateId':'" + templateId + "','uploadFileType':'" + uploadFileType + "'}";
 		} catch(Exception e) {
-			System.out.println("数据导入失败！");
+			this.logger.error("数据导入失败，原因：" + e);
 			this.jsonString = "{success:true,'flag':'0'}";
-			e.printStackTrace();
 		} finally {
 			if(file.exists()) {
 				file.delete();
@@ -309,5 +308,24 @@ public class HrPaAcreachedAction extends BaseAction{
 		}
 		
 		return "success";
+	}
+	
+	public String getUploadResult() {
+		String templateId = this.getRequest().getParameter("templateId");
+		String uploadFileType = this.getRequest().getParameter("uploadFileType");
+		List<Map<String, Object>> resultList = new ArrayList<Map<String,Object>>();
+		if("1".equals(uploadFileType)) {
+			String sql = "select d.depName, c.name, b.acName, a.result from hr_pa_acreached a, hr_pa_assessmentcriteria b, hr_pa_category c, department d where " +
+					"a.templateId = '" + templateId + "' and a.acId = b.id and a.category = c.id and a.deptId = d.depId order by a.id";
+			resultList = this.hrPaAcreachedService.findDataList(sql);
+		} else if("2".equals(uploadFileType)) {
+			String sql = "select c.fullname, b.acName, a.result from hr_pa_acreached a, hr_pa_assessmentcriteria b, app_user c where " +
+					"a.templateId = '" + templateId + "' and a.acId = b.id and a.userId = c.userId order by a.id";
+			resultList = this.hrPaAcreachedService.findDataList(sql);
+		}
+		this.getRequest().setAttribute("uploadFileType", uploadFileType);
+		this.getRequest().setAttribute("resultList", resultList);
+		
+		return "showResult";
 	}
 }
