@@ -218,7 +218,7 @@ public class HrPaKpipbcAction extends BaseAction{
 				pbcOldCopy.setModifyPerson(currentUser);
 				pbcOldCopy.setFromPbc(pbcOld.getId());
 				pbcOldCopy.setCoefficient(new Double(0));
-				pbcOldCopy.setLineManager(pbcOld.getLineManager());
+				pbcOldCopy.setLineManager(this.hrPaKpipbc.getLineManager());
 				//插入数据库
 				HrPaKpipbc pbcNew = this.hrPaKpipbcService.save(pbcOldCopy);
 				//保存PBC模板关联考核项
