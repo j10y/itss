@@ -137,16 +137,16 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 	public String save() {
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
+		//首先判断关键字是否重复
+		if(this.hrPaAssessmentcriteriaService.checkKey(this.hrPaAssessmentcriteria.getAcKey(), this.hrPaAssessmentcriteria.getId())) {
+			this.jsonString = "{msg:'关键字已存在，请重新输入！',failure:true}";
+			return "success";
+		}
 		//新建一个HrPaAssessmentcriteria并为其赋值
 		HrPaAssessmentcriteria hpa = new HrPaAssessmentcriteria();
 		if(this.hrPaAssessmentcriteria.getPublishStatus() == 0) {//保存草稿
 			//判断是新增还是修改
 			if(this.hrPaAssessmentcriteria.getId() == 0) {//新增
-				//首先判断关键字是否重复
-				if(this.hrPaAssessmentcriteriaService.checkKey(this.hrPaAssessmentcriteria.getAcKey())) {
-					this.jsonString = "{msg:'关键字已存在，请重新输入！',failure:true}";
-					return "success";
-				}
 				hpa.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 				hpa.setAcName(this.hrPaAssessmentcriteria.getAcName());
 				hpa.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());
@@ -203,11 +203,6 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 		} else if(this.hrPaAssessmentcriteria.getPublishStatus() == 3) {
 			//判断是新增还是修改
 			if(this.hrPaAssessmentcriteria.getId() == 0) {
-				//首先判断关键字是否重复
-				if(this.hrPaAssessmentcriteriaService.checkKey(this.hrPaAssessmentcriteria.getAcKey())) {
-					this.jsonString = "{msg:'关键字已存在，请重新输入！',failure:true}";
-					return "success";
-				}
 				hpa.setAcKey(this.hrPaAssessmentcriteria.getAcKey());
 				hpa.setAcName(this.hrPaAssessmentcriteria.getAcName());
 				hpa.setBelongDept(this.hrPaAssessmentcriteria.getBelongDept());

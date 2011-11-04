@@ -4,8 +4,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -13,6 +17,7 @@ import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.kpi.HrPaDatadictionary;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindexscore;
 import com.xpsoft.oa.model.kpi.HrPaPisrule;
@@ -151,6 +156,65 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		JSONSerializer json = new JSONSerializer();
 		StringBuffer buff = new StringBuffer("{success:true,data:");
 		buff.append(json.exclude(new String[] {}).serialize(this.hrPaPerformanceindex));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
+	public String getForCopy(){
+		this.hrPaPerformanceindex = (HrPaPerformanceindex)this.hrPaperformanceindexService.get(this.id);
+		this.hrPaPerformanceindex.setPaName(this.hrPaPerformanceindex.getPaName() + " - 副本");
+		
+		JSONSerializer json = new JSONSerializer();
+		StringBuffer buff = new StringBuffer("{success:true,data:");
+		buff.append(json.exclude(new String[] {}).serialize(this.hrPaPerformanceindex));
+		//判断如果是定量考核指标，则取得其分数关联的考核标准
+		String oldAcKeys = "";
+		String oldAcNames = "";
+		String canCopy = "true";
+		if(this.hrPaPerformanceindex.getMode().getId() == 13) {
+			String sql = "select a.formula from hr_pa_pisrule a, hr_pa_performanceindexscore b where " +
+					"a.pisId = b.id and b.piId = " + this.hrPaPerformanceindex.getId();
+			List<Map<String, Object>> mapList = this.hrPaperformanceindexService.findDataList(sql);
+			Map<String, String> map = new HashMap<String, String>();
+			for(Map<String, Object> item : mapList) {
+				String formula = item.get("formula").toString();
+				Set set=new HashSet();
+				String regex="\\{[^\\{\\}]+\\}";//匹配{}
+				Pattern pattern=Pattern.compile(regex);
+				Matcher matcher=pattern.matcher(formula);
+				while(matcher.find()){
+					String	group=matcher.group();
+					set.add(group);
+				}
+				Map<String, String> cnMap = new HashMap<String, String>();
+				for(Object acKey : set) {
+					String[] keys = acKey.toString().trim().replace("{", "").replace("}", "").split("_");
+					String sql2 = "select acName from hr_pa_assessmentcriteria where acKey = '" + keys[0] + "'";
+					List<Map<String, Object>> mapList2 = this.hrPaperformanceindexService.findDataList(sql2);
+					String acName = "";
+					if(mapList2.size() > 0) {
+						acName = mapList2.get(0).get("acName").toString();
+					} else {
+						this.logger.error("关键字为【" + keys[0] + "】的标准不存在或已删除，请核实！");
+					}
+					map.put(keys[0], acName);
+				}
+			}
+			if(map.size() > 1) {
+				canCopy = "false";
+			}
+			for(Map.Entry<String, String> entry : map.entrySet()) {
+				oldAcKeys += entry.getKey() + ",";
+				oldAcNames += entry.getValue() + "，";
+			}
+			if(map.size() > 0) {
+				oldAcKeys = oldAcKeys.substring(0, oldAcKeys.length() - 1);
+				oldAcNames = oldAcNames.substring(0, oldAcNames.length() - 1);
+			}
+		}
+		buff.append(",canCopy:'" + canCopy + "',oldAcKeys:'" + oldAcKeys + "',oldAcNames:'" + oldAcNames + "'");
 		buff.append("}");
 		this.jsonString = buff.toString();
 		
@@ -606,6 +670,98 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		long piId = Long.parseLong(this.getRequest().getParameter("piId"));
 		boolean flag = this.hrPaperformanceindexService.saveToPublish(piId);
 		this.jsonString = "{success:true,flag:" + String.valueOf(flag) + "}";
+		return "success";
+	}
+	
+	public String copy() {
+		HrPaPerformanceindexscoreService hrPaPerformanceindexscoreService = (HrPaPerformanceindexscoreService)AppUtil.getBean("hrPaPerformanceindexscoreService");
+		HrPaPisruleService hrPaPisruleService = (HrPaPisruleService)AppUtil.getBean("hrPaPisruleService");
+		Date currentDate = new Date();
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		//保存考核指标基本信息
+		HrPaPerformanceindex pi = new HrPaPerformanceindex();
+		pi.setPaName(this.hrPaPerformanceindex.getPaName());
+		pi.setBelongDept(this.hrPaPerformanceindex.getBelongDept());
+		pi.setType(this.hrPaPerformanceindex.getType());
+		pi.setFrequency(this.hrPaPerformanceindex.getFrequency());
+		pi.setMode(this.hrPaPerformanceindex.getMode());
+		pi.setPaDesc(this.hrPaPerformanceindex.getPaDesc());
+		pi.setRemark(this.hrPaPerformanceindex.getRemark());
+		pi.setPublishStatus(3);
+		pi.setFromPi(new Long(0));
+		pi.setCreateDate(currentDate);
+		pi.setCreatePerson(currentUser);
+		pi.setModifyDate(currentDate);
+		pi.setModifyPerson(currentUser);
+		//判断是否有父级考核指标
+		if(this.hrPaPerformanceindex.getParentPa() != null) {
+			if(this.hrPaPerformanceindex.getParentPa().getId() != null) {
+				pi.setParentPa(this.hrPaPerformanceindex.getParentPa());
+			}
+		}
+		//判断是否唯一否决项
+		if(this.hrPaPerformanceindex.getPaIsOnlyNegative() == null) {
+			pi.setPaIsOnlyNegative(0);
+			pi.setBaseScore(new Double(0));
+			pi.setFinalScore(new Double(0));
+			pi.setFinalCoefficient(new Double(0));
+		} else {
+			pi.setPaIsOnlyNegative(1);
+			pi.setBaseScore(this.hrPaPerformanceindex.getBaseScore());
+			pi.setFinalScore(this.hrPaPerformanceindex.getFinalScore());
+			pi.setFinalCoefficient(this.hrPaPerformanceindex.getFinalCoefficient());
+		}
+		pi = this.hrPaperformanceindexService.save(pi);
+		
+		//保存考核指标关联的分数
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_pi.id_L_EQ", String.valueOf(this.hrPaPerformanceindex.getId()));
+		QueryFilter filter = new QueryFilter(map);
+		List<HrPaPerformanceindexscore> oldScoreList = hrPaPerformanceindexscoreService.getAll(filter);
+		List<HrPaPerformanceindexscore> newScoreList = new ArrayList<HrPaPerformanceindexscore>();
+		List<HrPaPisrule> newRuleList = new ArrayList<HrPaPisrule>();
+		if(this.hrPaPerformanceindex.getMode().getId() == 12) {
+			for(HrPaPerformanceindexscore item : oldScoreList) {
+				HrPaPerformanceindexscore newItem = new HrPaPerformanceindexscore();
+				newItem.setPi(pi);
+				newItem.setPisScore(item.getPisScore());
+				newItem.setPisDesc(item.getPisDesc());
+				newItem.setPisType(item.getPisType());
+				newItem.setCoefficient(item.getCoefficient());
+				newScoreList.add(newItem);
+			}
+		} else {
+			String oldAcKey = this.getRequest().getParameter("oldAcKey");
+			String newAcKey = this.getRequest().getParameter("newAcKey");
+			if(oldAcKey == "" || newAcKey == "") {
+				this.jsonString = "{failure:true}";
+				return "success";
+			}
+			for(HrPaPerformanceindexscore item : oldScoreList) {
+				String sql = "select pisId, pisAC, formula from hr_pa_pisrule where pisId = " + item.getId();
+				HrPaPerformanceindexscore newItem = new HrPaPerformanceindexscore();
+				newItem.setPi(pi);
+				newItem.setPisScore(item.getPisScore());
+				newItem.setPisDesc(item.getPisDesc());
+				newItem.setPisType(item.getPisType());
+				newItem.setCoefficient(item.getCoefficient());
+				newScoreList.add(newItem);
+				//保存分数关联的公式
+				HrPaPisrule rule = new HrPaPisrule();
+				List<Map<String, Object>> mapList = this.hrPaperformanceindexService.findDataList(sql);
+				if(mapList.size() <= 0) {
+					this.jsonString = "{failure:true}";
+					return "success";
+				}
+				String formula = mapList.get(0).get("formula").toString();
+				formula = formula.replaceAll(oldAcKey + "_", newAcKey + "_");
+				rule.setFormula(formula);
+				newRuleList.add(rule);
+			}
+		}
+		hrPaPerformanceindexscoreService.multiSave(newScoreList, newRuleList, this.hrPaPerformanceindex.getMode().getId());
+		
+		this.jsonString = "{success:true}";
 		return "success";
 	}
 }
