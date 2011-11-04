@@ -332,12 +332,18 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 														success : function(d) {
 															var e = Ext.util.JSON.decode(d.responseText);
 															if(e.flag == 1) {
+																/*
 																Ext.MessageBox.show({
 																	title : "操作信息",
 																	msg : "数据导入成功，共导入" + e.count + "条数据！",
 																	buttons : Ext.MessageBox.OK,
 																	icon : Ext.MessageBox.INFO
 																});
+																*/
+																new ReachUploadResultForm({
+																	templateId : e.templateId,
+																	uploadFileType : e.uploadFileType
+																}).show();
 															} else {
 																Ext.MessageBox.show({
 																	title : "操作信息",
