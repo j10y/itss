@@ -455,9 +455,11 @@
 		</action>
 		<action name="*HrPaAssessmenttasksassigned" class="HrPaAssessmenttasksassignedAction" method="{1}">
 			<result>${successResultValue}</result>
+			<result name="showResult">/pages/kpi/targetUploadResult.jsp</result>
 		</action>
 		<action name="*HrPaAcreached" class="HrPaAcreachedAction" method="{1}">
 			<result>${successResultValue}</result>
+			<result name="showResult">/pages/kpi/reachUploadResult.jsp</result>
 		</action>
 		<action name="*HrPaKpiPBC2User" class="HrPaKpiPBC2UserAction" method="{1}">
 			<result>${successResultValue}</result>
