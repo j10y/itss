@@ -15,5 +15,5 @@ public interface HrPaAssessmentcriteriaService extends BaseService<HrPaAssessmen
 	 * @param key
 	 * 要判断的关键字
 	 * */
-	public boolean checkKey(String key);
+	public boolean checkKey(String key, long id);
 }
