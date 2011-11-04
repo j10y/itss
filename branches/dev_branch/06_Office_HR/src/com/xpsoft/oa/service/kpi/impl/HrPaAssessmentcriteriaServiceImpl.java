@@ -27,9 +27,10 @@ public class HrPaAssessmentcriteriaServiceImpl extends BaseServiceImpl<HrPaAsses
 	 * @param key
 	 * 要判断的关键字
 	 * */
-	public boolean checkKey(String key) {
+	public boolean checkKey(String key, long id) {
 		boolean flag = false;
-		String sql = "select id from hr_pa_assessmentcriteria where acKey = '" + key + "'";
+		String sql = "select id from hr_pa_assessmentcriteria where publishStatus = 3 and acKey = '" + key + "'";
+		sql += (id == 0) ? "" : " and id <> " + id + " and id <> (select fromAc from hr_pa_assessmentcriteria where id = " + id + ")";
 		List<Map<String, Object>> list = this.findDataList(sql);
 		if(list.size() > 0) {//list里边有数据，表明关键字重复
 			flag = true;
