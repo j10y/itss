@@ -103,6 +103,13 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 				style : "margin:0 3px 0 3px"
 			});
 		}
+		if(isGranted("_PublishPaCopy")) {
+			b.push({
+				iconCls : "btn-copyrole",
+				qtip : "拷贝",
+				style : "margin:0 3px 0 3px"
+			});
+		}
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -253,6 +260,12 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			from : "publish"
 		}).show();
 	},
+	copyHrPaPerformanceindex : function(a) {
+		new CopyHrPaPerformanceindexForm({
+			piId : a.data.id,
+			from : "publish"
+		}).show();
+	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
 			case "btn-del":
@@ -261,6 +274,8 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			case "btn-edit":
 				this.editHrPaPerformanceindex(a);
 				break ;
+			case "btn-copyrole":
+				this.copyHrPaPerformanceindex(a);
 			default:
 				break ;
 		}

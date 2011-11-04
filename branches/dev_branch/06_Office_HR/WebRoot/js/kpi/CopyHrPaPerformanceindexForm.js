@@ -1,4 +1,4 @@
-HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
+CopyHrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 	formPanel : null,
 	constructor : function(a) {
 		if(a == null) {
@@ -6,14 +6,14 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		HrPaPerformanceindexForm.superclass.constructor.call(this, {
-			id : "HrPaPerformanceindexFormWin",
+		CopyHrPaPerformanceindexForm.superclass.constructor.call(this, {
+			id : "CopyHrPaPerformanceindexFormWin",
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 410,
+			height : 475,
 			width : 600,
-			title : "绩效考核指标录入",
+			title : "绩效考核指标拷贝",
 			buttonAlign : "center",
 			buttons : this.buttons
 		});
@@ -22,12 +22,13 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 		var dept = __ctxPath + "/system/listDepartment.do?opt=appUser";
 		var departments = new TreeSelector("hrPaPerformanceindex.belongDept.depName", dept, "所属部门", "hrPaPerformanceindex.belongDept.depId");
 		departments.allowBlank = false;
+		var newDepartments = new TreeSelector("newDepName", dept, "标准所属部门", "newDepId");
 		this.formPanel = new Ext.FormPanel({
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/kpi/saveAsDraftHrPaPerformanceindex.do",
-			id : "HrPaPerformanceindexForm",
+			url : __ctxPath + "/kpi/copyHrPaPerformanceindex.do",
+			id : "CopyHrPaPerformanceindexForm",
 			defaults : {
 				anchor : "98%,98%"
 			},
@@ -323,6 +324,75 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 					id : "remark",
 					xtype : "textarea"
 				}, {
+					id : "oldAcKey",
+					name : "oldAcKey",
+					value : "",
+					hidden : true
+				}, {
+					fieldLabel : "原考核标准",
+					id : "oldAcName",
+					border : false,
+					xtype : "textfield",
+					readOnly : true,
+					value : ""
+				}, {
+					xtype : "container",
+					layout : "column",
+					border : false,
+					items : [
+						{
+							layout : "form",
+							border : false,
+							columnWidth : 0.5,
+							items : [
+								{
+									id : "newDepId",
+									xtype : "hidden",
+									value : "0"
+								},
+								newDepartments
+							]
+						}, {
+							layout : "form",
+							border : false,
+							columnWidth : 0.5,
+							items : [
+								{
+									fieldLabel : "新考核标准",
+									id : "newAcName",
+									hiddenName : "newAcKey",
+									labelStyle : "text-align:right",
+									xtype : "combo",
+									mode : "local",
+									editable : false,
+									valueField : "key",
+									displayField : "text",
+									triggerAction : "all",
+									allowBlank : false,
+									store : new Ext.data.SimpleStore({
+										fields : ["key","text"]
+									}),
+									listeners : {
+										focus : function(d) {
+											var c = Ext.getCmp("newAcName").getStore();
+											Ext.Ajax.request({
+												url : __ctxPath + "/kpi/loadHrPaAssessmentcriteria.do",
+												params : {
+													depId : Ext.getCmp("newDepId").getValue()
+												},
+												method : "post",
+												success : function(f) {
+													var e = Ext.util.JSON.decode(f.responseText);
+													c.loadData(e);
+												}
+											});
+										}
+									}
+								}
+							]
+						}
+					]
+				}, {
 					fieldLabel : "创建时间",
 					name : "hrPaPerformanceindex.createDate",
 					id : "createDate",
@@ -353,7 +423,7 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 		if(this.piId != null && this.piId != "undefined") {
 			this.formPanel.getForm().load({
 				deferredRender : false,
-				url : __ctxPath + "/kpi/getHrPaPerformanceindex.do?id=" + this.piId,
+				url : __ctxPath + "/kpi/getForCopyHrPaPerformanceindex.do?id=" + this.piId,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
@@ -378,6 +448,18 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 						Ext.getCmp("finalCoefficientLabel").show();
 						Ext.getCmp("finalCoefficient").show();
 					}
+					Ext.getCmp("oldAcKey").setValue(e.oldAcKeys);
+					Ext.getCmp("oldAcName").setValue(e.oldAcNames);
+					if(e.canCopy == "false") {
+						Ext.getCmp("publish").hide();
+						Ext.MessageBox.show({
+							title : "操作信息",
+							msg : "该考核指标关联多个考核标准，不允许拷贝！",
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.ERROR
+						});
+						return ;
+					}
 				},
 				failure : function() {
 					
@@ -389,15 +471,16 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 				text : "取消",
 				handler : this.cancel.createCallback(this)
 			}, {
-				text : "下一步",
-				handler : this.next.createCallback(this.formPanel, this)
+				id : "publish",
+				text : "确认发布",
+				handler : this.publish.createCallback(this.formPanel, this)
 			}
 		];
 	},
 	cancel : function(a) {
 		a.close();
 	},
-	next : function(a, b) {
+	publish : function(a, b) {
 		if(Ext.getCmp("paIsOnlyNegative").checked) {
 			var baseScoreValue = Ext.getCmp("baseScore").getValue();
 			var finalScoreValue = Ext.getCmp("finalScore").getValue();
@@ -431,14 +514,38 @@ HrPaPerformanceindexForm = Ext.extend(Ext.Window, {
 			}
 		}
 		if(a.getForm().isValid()) {
-			b.hide();
-			var paModeValue = Ext.getCmp("modeName").getValue();
-			var piId = Ext.getCmp("piId").getValue();
-			new HrPaPerformanceindexscoreView({
-				piId : piId == null ? 0 : piId,
-				paMode : paModeValue,
-				from : b.from
-			}).show();
+			a.getForm().submit({
+				url : __ctxPath + "/kpi/copyHrPaPerformanceindex.do",
+				method : "post",
+				waitMsg : "正在提交数据……",
+				success : function() {
+					if(b.from == "draft") {
+						Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					} else if(b.from == "publish") {
+						Ext.getCmp("PublishHrPaPerformanceindexView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					}
+					b.close();
+				},
+				failure : function(c, d) {
+					Ext.MessageBox.show({
+						title : "操作信息",
+						msg : "信息录入有误，请核实！",
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+					return ;
+				}
+			});
 		}
 	}
 });
