@@ -1692,6 +1692,9 @@
 					<Function id="_PublishPaEdit" text="编辑" iconCls="btn-edit">
 						<url>/kpi/editHrPaPerformanceindex.do</url>
 					</Function>
+					<Function id="_PublishPaCopy" text="拷贝" iconCls="btn-edit">
+						<url>/kpi/copyHrPaPerformanceindex.do</url>
+					</Function>
 				</Item>
 			</Items>
 			<Items id="HrTZAnlyReport" text="PBC签订台账" isPublic="false" iconCls="menu-pbcReport">
