@@ -20,6 +20,8 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 	store : null,
 	topbar : null,
 	initComponents : function() {
+		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("depName", a, "所属部门", "depId");
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
 			height : 40,
@@ -47,9 +49,21 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 					name : "Q_paName_S_LK",
 					xtype : "textfield"
 				}, {
+					text : "所属部门"
+				},
+				departments,
+				{
 					xtype : "button",
 					text : "查询",
 					handler : this.search.createCallback(this)
+				}, {
+					xtype : "button",
+					text : "重置",
+					handler : this.reset.createCallback(this)
+				}, {
+					name : "Q_belongDept.depId_L_EQ",
+					id : "depId",
+					xtype : "hidden"
 				}
 			]
 		});
@@ -279,6 +293,9 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			default:
 				break ;
 		}
+	},
+	reset : function(a) {
+		a.searchPanel.getForm().reset();
 	}
 });
 PublishHrPaPerformanceindexView.remove = function(b) {
