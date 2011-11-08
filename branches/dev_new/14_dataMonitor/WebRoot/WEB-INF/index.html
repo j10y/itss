@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>综合监控系统</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="CSS/index/index.css" />
+
+		<link rel="stylesheet" type="text/css"
+			href="JS/Jquery/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css"
+			href="JS/Jquery/themes/icon.css">
+		<script type="text/javascript" src="JS/Jquery/jquery-1.4.2.min.js">
+</script>
+		<script type="text/javascript"
+			src="JS/Jquery/jquery.easyui.min.js">
+</script>
+
+		<script type="text/javascript" src="JS/index/menu.js">
+</script>
+		<script type="text/javascript" src="JS/index/index.js">
+</script>
+		<script type="text/javascript">
+$(function() {
+	initIndex();
+});
+</script>
+	</head>
+
+	<body>
+		<div id="bodyDiv">
+			<div id="top"></div>
+			<div id="menuContainer">
+				<div id="menu" style="float: left;">
+				<img src="Images/Menu/split.gif"/><span onclick="selectTab('资源管理')" style="height:28px;line-height:28px;vertical-align:top;margin: 0 10 0 10;cursor:pointer;">资源管理</span><img src="Images/Menu/split.gif"/><span onclick="selectTab('综合告警')" style="height:28px;line-height:28px;vertical-align:top;margin: 0 10 0 10;cursor:pointer;">综合告警</span><img src="Images/Menu/split.gif"/><span onclick="selectTab('综合态势')" style="height:28px;line-height:28px;vertical-align:top;margin: 0 10 0 10;cursor:pointer;">综合态势</span><img src="Images/Menu/split.gif"/><span onclick="selectTab('业务视图')" style="height:28px;line-height:28px;vertical-align:top;margin: 0 10 0 10;cursor:pointer;">业务视图</span><img src="Images/Menu/split.gif"/><span onclick="selectTab('综合报表')" style="height:28px;line-height:28px;vertical-align:top;margin: 0 10 0 10;cursor:pointer;">综合报表</span><img src="Images/Menu/split.gif"/>
+				</div>
+				<div id="userInfoDiv"
+					style="position: absolute; right: 70px; height: 28px; line-height: 28px;">
+				</div>
+				<img id="btn_close" src="Images/index/close.png"
+					style="position: absolute; right: 2px; height: 20px; padding-top: 4px; cursor: pointer;"
+					onclick='btn_close_click()' />
+			</div>
+
+			<div id="main" class="easyui-tabs">
+
+			</div>
+			<div id="bottom">
+				北京天元创新科技有限公司 CopyRight@2010-2011
+			</div>
+		</div>
+	</body>
+</html>
