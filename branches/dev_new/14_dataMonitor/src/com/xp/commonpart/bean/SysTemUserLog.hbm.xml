@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" package="com.xp.commonpart.bean">
+ <class dynamic-insert="true" dynamic-update="true" name="SysTemUserLog" table="SYS_SEC_USERLOG">
+  <id column="ID" name="id" type="long"/>
+  <property column="OPERATEUSERNAME" generated="never" name="operateUserName" type="string"/>
+  <property column="OPERATEDATE" generated="never"  name="operateDate" type="timestamp"/>
+  <property column="OPERATEDETAIL" generated="never"  name="operateDetail" type="string"/>
+  <property column="OPERATEIP" generated="never"  name="operateIP" type="string"/>
+ </class>
+</hibernate-mapping>

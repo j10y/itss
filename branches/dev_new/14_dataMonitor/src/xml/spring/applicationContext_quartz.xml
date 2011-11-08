@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="countPfJob"
+		class="com.xp.commonpart.countjob.CountPfJob">
+		<property name="scheduler" ref="schedulerFactory"/> 		
+	</bean>
+	
+	<bean id="defJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="countPfJob" />
+		<property name="targetMethod" value="defJob" />
+		<property name="concurrent" value="false" />
+	</bean>
+		
+	<bean id="defJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="defJobDetail" />
+		<property name="cronExpression">
+			<value>0 0/5 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="schedulerFactory"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref local="defJobTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

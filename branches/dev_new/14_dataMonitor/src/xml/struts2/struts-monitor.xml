@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="monitor" extends="struts-default">
+		<action name="monitor_*"  class="monitorAction" method="{1}">
+		    <result name="index">/WEB-INF/monitor/monitor.jsp</result>
+		    <result name="ztjk">/WEB-INF/monitor/ztjk.jsp</result>
+		    
+		</action>
+	</package>
+	
+</struts>

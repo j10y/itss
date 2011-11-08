@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 指定web应用的默认编码集，相当于调用HttpServletRequest的setCharacterEncoding方法 -->
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	<constant name="struts.custom.i18n.resources" value="appResource" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<!--设置上传文件的大小最大是5M-->
+	<constant name="struts.multipart.maxSize" value="104857600" />
+	<!-- 把action交给Spring去管理 -->
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 加载多个子配置文件 -->
+	<include file="xml/struts2/*.xml"></include>
+
+</struts>

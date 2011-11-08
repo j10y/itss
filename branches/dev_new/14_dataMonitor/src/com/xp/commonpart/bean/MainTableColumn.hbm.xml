@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xp.commonpart.bean" default-access="field">
+
+    <class name="MainTableColumn" table="MAINTABLECOLUMN" 
+    	   dynamic-insert="true" dynamic-update="true">
+       
+        <id name="columnid" type="long"  column="COLUMN_ID" >
+        </id>	
+        <property name="maintableid" type="long" column="MAINTABLE_ID"/>  
+        <property name="columnName" type="string" column="COLUMN_NAME"/> 
+        <property name="propertyName" type="string" column="PROPERTY_NAME"/> 
+        <property name="columnCName" type="string" column="COLUMN_CNAME"/>  
+        <property name="isQuery" type="string" column="ISQUERY"/> 
+        <property name="isQueryOrder" type="integer" column="ISQUERY_ORDER"/>
+        <property name="isUpdate" type="string" column="ISUPDATE"/> 
+        <property name="isUpdateOrder" type="integer" column="ISUPDATE_ORDER"/> 
+        <property name="isInsert" type="string" column="ISINSERT"/> 
+        <property name="isInsertOrder" type="integer" column="ISINSERT_ORDER"/> 
+        <property name="isExport" type="string" column="ISEXPORT"/>
+        <property name="isExportOrder" type="integer" column="ISEXPORT_ORDER"/>  
+        <property name="isList" type="string" column="ISLIST"/>  
+        <property name="isListOrder" type="integer" column="ISLIST_ORDER"/>
+        <property name="propertyType" type="string" column="PROPERTY_TYPE"/>
+        <property name="typeSql" type="string" column="TYPESQL" length="2000"/> 
+        <property name="dataType" type="string" column="DATA_TYPE"/>   
+        <property name="isMust" type="string" column="ISMUST"/> 
+        <property name="tolerant" type="string" column="TOLERANT"/>   
+        <property name="isChecked" type="string" column="ISCHECKED"/>    
+      	<property name="likescope" type="string" column="LIKESCOPE"/>   
+      	<property name="isUnique" type="string" column="ISUNIQUE"/>    
+      	<property name="upColumnName" type="string" column="UPCOLUMNNAME"/>     
+      	<property name="validDataType" type="string" column="VALIDDATATYPE"/>
+      	<property name="columnLength" type="string" column="COLUMNLENGTH"/>
+      	<property name="allTreeStatus" type="string" column="allTreeStatus"/>
+    </class>
+</hibernate-mapping>

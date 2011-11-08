@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xp.commonpart.bean" default-access="field">
+
+    <class name="MonitorInfo" table="monitorInfo" 
+    	   dynamic-insert="true" dynamic-update="true">
+       
+        <id name="id" type="long"  column="id" >
+        </id>	
+        <property name="databaseId" type="long" column="databaseId"/>  
+        <property name="createDate" type="timestamp" column="createDate"/> 
+        <property name="status" type="integer" column="status"/>
+         <property name="descrpition" type="string" column="descrpition"/>  
+    </class>
+</hibernate-mapping>

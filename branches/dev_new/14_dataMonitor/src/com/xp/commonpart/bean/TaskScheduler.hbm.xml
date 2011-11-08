@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xp.commonpart.bean" default-access="field">
+    <class
+        name="TaskScheduler"
+        table="sys_scheduler"
+        dynamic-insert="true" dynamic-update="true"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+         <property
+            name="taskName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="taskname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+         <property
+            name="runTime"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="runtime"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="cronTrigger"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="cronTrigger"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="desc"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="description"
+            length="255"
+            not-null="false"
+            unique="false"
+        />
+    </class>
+</hibernate-mapping>
