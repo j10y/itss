@@ -48,4 +48,28 @@ public class HrPaPerformanceindexServiceImpl extends BaseServiceImpl<HrPaPerform
 		this.dao.saveToPublish(piId);
 		return true;
 	}
+	/*
+	 * 批量导入考核指标
+	 * */
+	public boolean uploadPi(List<Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>> list) {
+		HrPaPerformanceindexscoreService hrPaPerformanceindexscoreService = 
+				(HrPaPerformanceindexscoreService)AppUtil.getBean("hrPaPerformanceindexscoreService");
+		try {
+			for(Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>> item : list) {
+				for(Map.Entry<HrPaPerformanceindex, List<HrPaPerformanceindexscore>> entry : item.entrySet()) {
+					HrPaPerformanceindex pi = entry.getKey();
+					List<HrPaPerformanceindexscore> pisList = entry.getValue();
+					pi = this.save(pi);
+					for(HrPaPerformanceindexscore pis : pisList) {
+						pis.setPi(pi);
+						hrPaPerformanceindexscoreService.save(pis);
+					}
+				}
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
