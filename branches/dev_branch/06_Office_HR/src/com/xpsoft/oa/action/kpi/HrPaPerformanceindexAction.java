@@ -233,7 +233,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 	public String saveAsDraft() {
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
-		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split(" ");
+		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split("___");
 		HrPaPerformanceindexscoreService hrPaPerformanceindexscoreService = 
 				(HrPaPerformanceindexscoreService)AppUtil.getBean("hrPaPerformanceindexscoreService");
 		HrPaPisruleService hrPaPisruleService = (HrPaPisruleService)AppUtil.getBean("hrPaPisruleService");
@@ -292,7 +292,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			List<HrPaPisrule> ruleList = new ArrayList<HrPaPisrule>();
 			if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 				for(int i = 0; i < indexScores.length; i++) {
-					String[] itemArray = indexScores[i].trim().split(",");
+					String[] itemArray = indexScores[i].trim().split(",,,");
 					HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 					if(!"0".equals(itemArray[0])) {
 						indexScore=hrPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
@@ -323,7 +323,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 				List<HrPaPisrule> ruleList = new ArrayList<HrPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
@@ -362,7 +362,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 					boolean flag = false;
 					long oldScoreId = oldScoreList.get(i).getId();
 					for(int j = 0; j < indexScores.length; j++) {
-						String[] itemArray = indexScores[j].trim().split(",");
+						String[] itemArray = indexScores[j].trim().split(",,,");
 						if(String.valueOf(oldScoreId).equals(itemArray[0])) {
 							flag = true;
 						}
@@ -378,7 +378,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 				List<HrPaPisrule> ruleList = new ArrayList<HrPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 						if(!"0".equals(itemArray[0])) {
 							indexScore=hrPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
@@ -421,7 +421,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		
-		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split(" ");
+		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split("___");
 		HrPaPerformanceindexscoreService hrPaPerformanceindexscoreService = 
 				(HrPaPerformanceindexscoreService)AppUtil.getBean("hrPaPerformanceindexscoreService");
 		//保存考核指标基本信息
@@ -485,7 +485,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			List<HrPaPisrule> ruleList = new ArrayList<HrPaPisrule>();
 			if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 				for(int i = 0; i < indexScores.length; i++) {
-					String[] itemArray = indexScores[i].trim().split(",");
+					String[] itemArray = indexScores[i].trim().split(",,,");
 					HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 					if(!"0".equals(itemArray[0])) {
 						indexScore=hrPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
@@ -516,7 +516,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 				List<HrPaPisrule> ruleList = new ArrayList<HrPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
@@ -556,7 +556,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 					boolean flag = false;
 					long oldScoreId = oldScoreList.get(i).getId();
 					for(int j = 0; j < indexScores.length; j++) {
-						String[] itemArray = indexScores[j].trim().split(",");
+						String[] itemArray = indexScores[j].trim().split(",,,");
 						if(String.valueOf(oldScoreId).equals(itemArray[0])) {
 							flag = true;
 						}
@@ -572,7 +572,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 				List<HrPaPisrule> ruleList = new ArrayList<HrPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						HrPaPerformanceindexscore indexScore = new HrPaPerformanceindexscore();
 						if(!"0".equals(itemArray[0])) {
 							indexScore=hrPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
