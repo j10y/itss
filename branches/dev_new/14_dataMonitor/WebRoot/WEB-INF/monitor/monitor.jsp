@@ -48,14 +48,12 @@
 					tree.expandAll();
 					tree.on(function(node){
 						if(node.attributes.id!="-1"&&node.attributes.id!=operid){
-							var onurl=node.attributes.url;
+							//var onurl=node.attributes.url;
 							var opid=node.attributes.id;
-							alert(opid);
-							//document.getElementById("monitorright").src="monitor_getPerformance.action?id="+opid;
+							document.getElementById("monitorright").src="monitor_getPerformance.action?id="+opid;
 						}
 					})
 				});
-			
 		 }
 		</script>	
 </head>

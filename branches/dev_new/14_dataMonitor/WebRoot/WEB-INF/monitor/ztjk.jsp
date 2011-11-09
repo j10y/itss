@@ -35,7 +35,7 @@
   
 <table width="100%">
 <tr>
-<td colspan="4"><div align="center"><font size="3"><strong>总体数据库监控</strong></font></div>
+<td colspan="4"><div align="center"><font size="3"><strong>总体数据库连通性监控</strong></font></div>
 </td>
 </tr>
 </table>
