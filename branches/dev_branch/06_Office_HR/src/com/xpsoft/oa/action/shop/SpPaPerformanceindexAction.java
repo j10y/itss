@@ -181,7 +181,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 	public String saveAsDraft() {
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
-		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split(" ");
+		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split("___");
 		SpPaPerformanceindexscoreService spPaPerformanceindexscoreService = 
 				(SpPaPerformanceindexscoreService)AppUtil.getBean("spPaPerformanceindexscoreService");
 		SpPaPisruleService spPaPisruleService = (SpPaPisruleService)AppUtil.getBean("spPaPisruleService");
@@ -243,7 +243,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 			List<SpPaPisrule> ruleList = new ArrayList<SpPaPisrule>();
 			if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 				for(int i = 0; i < indexScores.length; i++) {
-					String[] itemArray = indexScores[i].trim().split(",");
+					String[] itemArray = indexScores[i].trim().split(",,,");
 					SpPaPerformanceindexscore indexScore = new SpPaPerformanceindexscore();
 					if(!"0".equals(itemArray[0])) {
 						indexScore=spPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
@@ -274,7 +274,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 				List<SpPaPisrule> ruleList = new ArrayList<SpPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						SpPaPerformanceindexscore indexScore = new SpPaPerformanceindexscore();
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
@@ -313,7 +313,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 					boolean flag = false;
 					long oldScoreId = oldScoreList.get(i).getId();
 					for(int j = 0; j < indexScores.length; j++) {
-						String[] itemArray = indexScores[j].trim().split(",");
+						String[] itemArray = indexScores[j].trim().split(",,,");
 						if(String.valueOf(oldScoreId).equals(itemArray[0])) {
 							flag = true;
 						}
@@ -329,7 +329,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 				List<SpPaPisrule> ruleList = new ArrayList<SpPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						SpPaPerformanceindexscore indexScore = new SpPaPerformanceindexscore();
 						if(!"0".equals(itemArray[0])) {
 							indexScore=spPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
@@ -372,7 +372,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 		Date currentDate = new Date();
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		
-		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split(" ");
+		String[] indexScores = this.getRequest().getParameter("indexScores").trim().split("___");
 		SpPaPerformanceindexscoreService spPaPerformanceindexscoreService = 
 				(SpPaPerformanceindexscoreService)AppUtil.getBean("spPaPerformanceindexscoreService");
 		//保存考核指标基本信息
@@ -439,7 +439,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 			List<SpPaPisrule> ruleList = new ArrayList<SpPaPisrule>();
 			if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 				for(int i = 0; i < indexScores.length; i++) {
-					String[] itemArray = indexScores[i].trim().split(",");
+					String[] itemArray = indexScores[i].trim().split(",,,");
 					SpPaPerformanceindexscore indexScore = new SpPaPerformanceindexscore();
 					if(!"0".equals(itemArray[0])) {
 						indexScore=spPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
@@ -470,7 +470,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 				List<SpPaPisrule> ruleList = new ArrayList<SpPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						SpPaPerformanceindexscore indexScore = new SpPaPerformanceindexscore();
 						indexScore.setPi(piNew);
 						indexScore.setPisType(piNew.getMode());
@@ -510,7 +510,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 					boolean flag = false;
 					long oldScoreId = oldScoreList.get(i).getId();
 					for(int j = 0; j < indexScores.length; j++) {
-						String[] itemArray = indexScores[j].trim().split(",");
+						String[] itemArray = indexScores[j].trim().split(",,,");
 						if(String.valueOf(oldScoreId).equals(itemArray[0])) {
 							flag = true;
 						}
@@ -526,7 +526,7 @@ public class SpPaPerformanceindexAction extends BaseAction {
 				List<SpPaPisrule> ruleList = new ArrayList<SpPaPisrule>();
 				if(!"".equals(this.getRequest().getParameter("indexScores").trim())) {
 					for(int i = 0; i < indexScores.length; i++) {
-						String[] itemArray = indexScores[i].trim().split(",");
+						String[] itemArray = indexScores[i].trim().split(",,,");
 						SpPaPerformanceindexscore indexScore = new SpPaPerformanceindexscore();
 						if(!"0".equals(itemArray[0])) {
 							indexScore=spPaPerformanceindexscoreService.get(Long.parseLong(itemArray[0]));
