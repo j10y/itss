@@ -197,12 +197,12 @@ SpPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		if(b.paMode == QUALITATIVE_ASSESSMENT) {//定性考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + " ";
+				pisList += pisItem.id + ",,," + pisItem.pisScore + ",,," + pisItem.pisDesc + ",,," + pisItem.coefficient + "___";
 			}
 		} else {//定量考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + "," + pisItem.formula + " ";
+				pisList += pisItem.id + ",,," + pisItem.pisScore + ",,," + pisItem.pisDesc + ",,," + pisItem.coefficient + ",,," + pisItem.formula + "___";
 			}
 		}
 		Ext.getCmp("indexScores").setValue(pisList);
@@ -248,12 +248,12 @@ SpPaPerformanceindexscoreView = Ext.extend(Ext.Window, {
 		if(b.paMode == QUALITATIVE_ASSESSMENT) {//定性考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + " ";
+				pisList += pisItem.id + ",,," + pisItem.pisScore + ",,," + pisItem.pisDesc + ",,," + pisItem.coefficient + "___";
 			}
 		} else {//定量考核指标
 			for(var i = 0; i < pisStore.getCount(); i++) {
 				var pisItem = pisStore.getAt(i).data;
-				pisList += pisItem.id + "," + pisItem.pisScore + "," + pisItem.pisDesc + "," + pisItem.coefficient + "," + pisItem.formula + " ";
+				pisList += pisItem.id + ",,," + pisItem.pisScore + ",,," + pisItem.pisDesc + ",,," + pisItem.coefficient + ",,," + pisItem.formula + "___";
 			}
 		}
 		Ext.getCmp("indexScores").setValue(pisList);
