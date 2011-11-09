@@ -830,12 +830,6 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			boolean flag = false;
 			for(int i = 1; i < row; i++) {
 				flag = true;
-				System.out.println("部门名称：" + sheet.getCell(0, i).getContents());
-				System.out.println("考核指标名称：" + sheet.getCell(1, i).getContents());
-				System.out.println("是否唯一否决指标：" + sheet.getCell(2, i).getContents());
-				System.out.println("描述：" + sheet.getCell(3, i).getContents());
-				System.out.println("备注信息：" + sheet.getCell(4, i).getContents());
-				System.out.println("评分标准：" + sheet.getCell(5, i).getContents());
 				scoreStandard = sheet.getCell(5, i).getContents();
 				String[] scores = scoreStandard.trim().split("&");
 				for(int j = 0; j < scores.length; j++) {
@@ -851,7 +845,6 @@ public class HrPaPerformanceindexAction extends BaseAction {
 					System.out.println("评分分标准格式有误，请核实！");
 					break;
 				}
-				System.out.println("***************************************************");
 			}
 			//数据格式正确，则进行导入操作
 			if(flag) {
