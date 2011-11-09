@@ -9,6 +9,7 @@ vertical-align:middle;
 .MzTreeViewCell0 {width:25px;border-bottom:1px solid #CCCCCC;border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;padding:0px;margin:0px; text-align:center;}
 .MzTreeViewCell1 {border-bottom:1px solid #CCCCCC;border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;padding:0px;margin:0px; text-align:center;}
 .MzTreeViewCell2 {border-bottom:1px solid #CCCCCC;border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;padding:0px;margin:0px; text-align:left;}
+.MzTreeViewCell3 {background-color: #EBF3F3;border-top:1px solid #CCCCCC;border-bottom:1px solid #CCCCCC;border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;padding:0px;margin:0px; text-align:center;}
 
 A:link {
     color: #4189C4;

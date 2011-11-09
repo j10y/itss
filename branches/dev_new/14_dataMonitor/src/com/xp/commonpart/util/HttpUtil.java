@@ -233,7 +233,17 @@ public final class HttpUtil {
         text = text.replaceAll("\n", "&#10"); //换行
         return text.replaceAll("\r", "&#13"); //回车
     }
-    
+    public static String EncodeToHtml(String text) {
+        if(text==null || "".equals(text))
+            return "";
+        text = text.replaceAll("&lt;", "<");
+        text = text.replaceAll("&gt;", ">");
+        text = text.replaceAll("&nbsp;", " ");
+        text = text.replaceAll("&quot;", "\"");
+        text = text.replaceAll("&apos;", "\'");
+        text = text.replaceAll("&#10", "\n"); //换行
+        return text.replaceAll("&#13", "\r"); //回车
+    }
     public static String htmlOutEncode1(String text) {
         if(text==null || "".equals(text))
             return "";
@@ -250,7 +260,7 @@ public final class HttpUtil {
             return "";
         text = text.replaceAll("'", ",");
         text = text.replaceAll(":", ";");
-        text = text.replaceAll("�?", ";");
+        text = text.replaceAll("?", ";");
         text = text.replaceAll("\n", "  "); //换行
         return text.replaceAll("\r", ""); //回车
     }

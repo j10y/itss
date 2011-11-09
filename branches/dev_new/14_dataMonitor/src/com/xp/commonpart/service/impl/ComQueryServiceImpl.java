@@ -3,10 +3,14 @@ package com.xp.commonpart.service.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +30,7 @@ import com.xp.commonpart.service.ComQueryService;
 import com.xp.commonpart.service.SelectDataService;
 import com.xp.commonpart.util.ContextHolder;
 import com.xp.commonpart.util.ExceptionMessage;
+import com.xp.commonpart.util.HttpUtil;
 import com.xp.commonpart.util.JDBCUtil;
 import com.xp.commonpart.util.SqlUtil;
 
@@ -376,7 +381,189 @@ public class ComQueryServiceImpl implements ComQueryService{
 			monitorInfo.setDescrpition("连接数据库成功！url:"+url);
 			baseDao.save(monitorInfo,MonitorInfo.class,"id");
 			log.info("连接数据库成功！url:"+url);
+			this.connectDataBaseByBaseId(id, "0");
 		}
 		return true;
+	}
+	public Map connectDataBaseByBaseId(String id,String type){
+		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");
+		String sql="select * from dataBaseList where id="+id;
+		List<Map> list=selectDataService.getData(sql);
+		String usersql="select * from sys_sec_userinfo where issendmessage=1";
+		List<Map> userlist=selectDataService.getData(usersql);
+		if(list!=null&&list.size()>0){
+			Map map=list.get(0);
+			String url=map.get("dataBaseUrl")!=null?map.get("dataBaseUrl").toString():"";
+			String username=map.get("userName")!=null?map.get("userName").toString():"";
+			String pwd=map.get("passwd")!=null?map.get("passwd").toString():"";
+			String ip=map.get("ipaddress")!=null?map.get("ipaddress").toString():"";
+			String port=map.get("port")!=null?map.get("port").toString():"";
+			String sid=map.get("dataName")!=null?map.get("dataName").toString():"";
+			String dbType=map.get("dataBaseType")!=null?map.get("dataBaseType").toString():"";
+			MonitorInfo monitorInfo=new MonitorInfo();
+			monitorInfo.setCreateDate(new Date());
+			monitorInfo.setDatabaseId(Long.parseLong(id));
+			if(dbType.equals("4")){
+				
+			}else{
+				url=JDBCUtil.getUrl(ip, port, sid, Integer.parseInt(dbType));
+			}
+			Connection con=JDBCUtil.getConnection(url, username, pwd);
+			LinkedHashMap resultMap=new LinkedHashMap();
+			if(con==null){
+				return null;
+			}else{
+				String pisql="select * from datapi where dataBaseID="+id+" order by id";
+				List<Map> pilist=selectDataService.getData(pisql);
+				int index=0;
+				String message="";
+				for(Map pimap:pilist){
+					index++;
+					try {
+						String piSql=pimap.get("piSql").toString();
+						String piName=pimap.get("piName").toString();
+						String piid=pimap.get("id").toString();
+						String comParMark=pimap.get("comParMark")+"";
+						String threshold=pimap.get("threshold")+"";
+						String colName=pimap.get("columnName")+"";
+						Statement st=con.createStatement();
+						piSql=HttpUtil.EncodeToHtml(piSql);
+						ResultSet rs=st.executeQuery(piSql);
+						HashMap datamap=new HashMap();
+						int colid=0;
+						try {
+							ResultSetMetaData rr=rs.getMetaData();
+							int count=rr.getColumnCount();
+							List titleList=new ArrayList();
+							for(int i=1;i<=count;i++){
+								String columnName=rr.getColumnName(i);
+								titleList.add(columnName);
+								if(columnName.equalsIgnoreCase(colName)){
+									colid=i;
+								}
+							}
+							datamap.put("title", titleList);
+							List dataList=new ArrayList();
+							Map alarmMap=new HashMap();
+							while(rs.next()){
+								List subdataList=new ArrayList();
+								for(int i=1;i<=count;i++){
+									Object columnvalue=rs.getObject(i);
+									subdataList.add(columnvalue);
+								}
+								if(colName!=null&&colName.length()>0){
+									String compval=rs.getObject(colName)+"";
+									boolean alarmflag=this.conpar(comParMark, compval, threshold);
+									if(alarmflag){
+										alarmMap.put(rs.getRow(), colid);
+										if(type.equals("0")){
+											message+=piName+":"+colName+"已到达警告值"+threshold+",目前为："+compval+",";
+										}
+									}
+								}
+								dataList.add(subdataList);
+							}
+							datamap.put("data", dataList);
+							datamap.put("alarm", alarmMap);
+							resultMap.put(index+"_"+piName, datamap);
+							
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return null;
+					}
+				}
+				if(message!=null&&message.length()>0){
+					for(Map userMap:userlist){
+						String realname=userMap.get("realname")!=null?userMap.get("realname").toString():"";
+						String telp=userMap.get("mobiphone")!=null?userMap.get("mobiphone").toString():"";
+						message="url:"+url+message;
+						ExceptionMessage.sendMessage(message,telp,realname);
+					}
+				}
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				log.info("连接数据库关闭时失败！url:"+url);
+				return null;
+			}
+			log.info("连接数据库成功！url:"+url);
+			return resultMap;
+		}
+		return null;
+	}
+	public boolean conpar(String comParMark,String compval,String threshold){
+		if(comParMark.equals("0")){
+			Double cv=Double.parseDouble(compval);
+			Double cv2=Double.parseDouble(threshold);
+			if(cv>cv2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(comParMark.equals("1")){
+			Double cv=Double.parseDouble(compval);
+			Double cv2=Double.parseDouble(threshold);
+			if(cv>=cv2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(comParMark.equals("2")){
+			Double cv=Double.parseDouble(compval);
+			Double cv2=Double.parseDouble(threshold);
+			if(cv<cv2){
+				return true;
+			}else{
+				return false;
+			}								
+		}else if(comParMark.equals("3")){
+			Double cv=Double.parseDouble(compval);
+			Double cv2=Double.parseDouble(threshold);
+			if(cv<=cv2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(comParMark.equals("4")){
+			Double cv=Double.parseDouble(compval);
+			Double cv2=Double.parseDouble(threshold);
+			if(cv==cv2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(comParMark.equals("5")){
+			Double cv=Double.parseDouble(compval);
+			Double cv2=Double.parseDouble(threshold);
+			if(cv!=cv2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(comParMark.equals("6")){
+			String cv=compval;
+			String cv2=threshold;
+			if(cv.equalsIgnoreCase(cv2)){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(comParMark.equals("7")){
+			String cv=compval;
+			String cv2=threshold;
+			if(!cv.equalsIgnoreCase(cv2)){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
 	}
 }

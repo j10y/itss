@@ -258,6 +258,7 @@
 										style="height: 20px; width: 160px; font-size: 12px;"
 										valueType="${valueType}" mustInput="${mustInput}"
 										ispost="true"
+										isunique="${list.mainTableColumn.isUnique }"
 										<c:if test="${isupdate eq 1 and list.mainTableColumn.isUpdate eq 1 }">disabled="disabled"</c:if>>
 										<option value="">
 											请选择

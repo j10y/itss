@@ -16,4 +16,11 @@ public interface ComQueryService {
 	public String getTreeJson(List<TreeObject> tlist,String ischecked,String pid);
 	
 	public boolean connectDataBase();
+	/**
+	 * 
+	 * @param id
+	 * @param type 0为定时任务，发送短信，1为查看，无需发送短信
+	 * @return
+	 */
+	public Map connectDataBaseByBaseId(String id,String type);
 }
