@@ -1,5 +1,7 @@
 package com.xpsoft.oa.action.kpi;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +15,11 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import jxl.Sheet;
+import jxl.Workbook;
+
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.model.Ftp;
 import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -22,9 +28,11 @@ import com.xpsoft.oa.model.kpi.HrPaPerformanceindex;
 import com.xpsoft.oa.model.kpi.HrPaPerformanceindexscore;
 import com.xpsoft.oa.model.kpi.HrPaPisrule;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.kpi.HrPaPerformanceindexService;
 import com.xpsoft.oa.service.kpi.HrPaPerformanceindexscoreService;
 import com.xpsoft.oa.service.kpi.HrPaPisruleService;
+import com.xpsoft.oa.service.system.DepartmentService;
 
 import flexjson.JSONSerializer;
 
@@ -762,6 +770,153 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		hrPaPerformanceindexscoreService.multiSave(newScoreList, newRuleList, this.hrPaPerformanceindex.getMode().getId());
 		
 		this.jsonString = "{success:true}";
+		return "success";
+	}
+	
+	public String uploadPi() {
+		Date currentDate = new Date();
+		AppUser currentUser	= ContextUtil.getCurrentUser();
+		DepartmentService departmentService = (DepartmentService)AppUtil.getBean("departmentService");
+		//设置部门
+		List<Department> depList = departmentService.getAll();
+		Map<String, Department> depMap = new HashMap<String, Department>();
+		for(Department dept : depList) {
+			depMap.put(dept.getDepName(), dept);
+		}
+		//设置考核指标类型
+		HrPaDatadictionary paType = new HrPaDatadictionary();
+		paType.setId(5);
+		//设置考核指标频度
+		HrPaDatadictionary paFrequency = new HrPaDatadictionary();
+		paFrequency.setId(7);
+		//设置考核方式
+		HrPaDatadictionary paMode = new HrPaDatadictionary();
+		paMode.setId(12);
+		//获取要导入的excel
+		String filePath = this.getRequest().getParameter("filePath");
+		boolean isFtp = new Boolean(String.valueOf(AppUtil.getSysConfig().get("isFtp")));
+		File file = null;
+		if(isFtp){
+			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.sysprofix"));
+			Ftp ftp = new Ftp(1, "fileUpload", String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.host")),
+					new Integer(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.port"))), "", "");
+			ftp.setUsername(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.user")));
+			ftp.setPassword(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.passwd")));
+			ftp.setPath("");
+			
+			String fileP = filePath;
+			fileP = fileP.substring(fileP.indexOf(defaultProfix));
+			try {
+				file = ftp.retrieve(fileP);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				this.logger.error("数据导入失败，原因：" + e);
+				this.jsonString = "{success:true,'flag':'0'}";
+			}
+			
+		}else{
+			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
+			int len = defaultProfix.length();
+			filePath = filePath.substring(filePath.indexOf(defaultProfix));
+			file = new File(this.getRequest().getRealPath("/") + filePath);
+		}
+		try {
+			Workbook book = Workbook.getWorkbook(file);
+			Sheet sheet = book.getSheet(0);
+			int col = sheet.getColumns();
+			int row = sheet.getRows();
+			String scoreStandard = "";
+			//判断数据格式是否有误
+			boolean flag = false;
+			for(int i = 1; i < row; i++) {
+				flag = true;
+				System.out.println("部门名称：" + sheet.getCell(0, i).getContents());
+				System.out.println("考核指标名称：" + sheet.getCell(1, i).getContents());
+				System.out.println("是否唯一否决指标：" + sheet.getCell(2, i).getContents());
+				System.out.println("描述：" + sheet.getCell(3, i).getContents());
+				System.out.println("备注信息：" + sheet.getCell(4, i).getContents());
+				System.out.println("评分标准：" + sheet.getCell(5, i).getContents());
+				scoreStandard = sheet.getCell(5, i).getContents();
+				String[] scores = scoreStandard.trim().split("&");
+				for(int j = 0; j < scores.length; j++) {
+					String[] scoreArray = scores[j].trim().split("_");
+					if(scoreArray.length == 3) {
+						System.out.println("分数：" + scoreArray[0] + "     绩效系数：" + scoreArray[1] + "     描述：" + scoreArray[2]);
+					} else {
+						flag = false;
+						break;
+					}
+				}
+				if(!flag) {
+					System.out.println("评分分标准格式有误，请核实！");
+					break;
+				}
+				System.out.println("***************************************************");
+			}
+			//数据格式正确，则进行导入操作
+			if(flag) {
+				List<Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>> list = 
+						new ArrayList<Map<HrPaPerformanceindex,List<HrPaPerformanceindexscore>>>();
+				for(int i = 1; i < row; i++) {
+					Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>> map = 
+							new HashMap<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>();
+					HrPaPerformanceindex pi = new HrPaPerformanceindex();
+					List<HrPaPerformanceindexscore> pisList = new ArrayList<HrPaPerformanceindexscore>();
+					pi.setPaName(sheet.getCell(1, i).getContents().trim());
+					pi.setBelongDept(depMap.get(sheet.getCell(0, i).getContents().trim()));
+					pi.setType(paType);
+					pi.setFrequency(paFrequency);
+					pi.setMode(paMode);
+					String[] onlyArray = sheet.getCell(2, i).getContents().trim().split("_");
+					if(onlyArray.length == 4) {
+						pi.setPaIsOnlyNegative(1);
+						pi.setBaseScore(Double.parseDouble(onlyArray[1]));
+						pi.setFinalScore(Double.parseDouble(onlyArray[2]));
+						pi.setFinalCoefficient(Double.parseDouble(onlyArray[3]));
+					} else {
+						pi.setPaIsOnlyNegative(0);
+						pi.setBaseScore(new Double(0));
+						pi.setFinalScore(new Double(0));
+						pi.setFinalCoefficient(new Double(0));
+					}
+					pi.setPaDesc(sheet.getCell(3, i).getContents().trim());
+					pi.setRemark(sheet.getCell(4, i).getContents().trim());
+					pi.setPublishStatus(3);
+					pi.setCreateDate(currentDate);
+					pi.setCreatePerson(currentUser);
+					pi.setModifyDate(currentDate);
+					pi.setModifyPerson(currentUser);
+					pi.setFromPi(new Long(0));
+					scoreStandard = sheet.getCell(5, i).getContents();
+					String[] scores = scoreStandard.trim().split("&");
+					for(int j = 0; j < scores.length; j++) {
+						String[] scoreArray = scores[j].trim().split("_");
+						if(scoreArray.length == 3) {
+							HrPaPerformanceindexscore pis = new HrPaPerformanceindexscore();
+							System.out.println("分数：" + scoreArray[0] + "     绩效系数：" + scoreArray[1] + "     描述：" + scoreArray[2]);
+							pis.setPisScore(BigDecimal.valueOf(Double.parseDouble(scoreArray[0].trim())));
+							pis.setCoefficient(Double.parseDouble(scoreArray[1].trim()));
+							pis.setPisType(paMode);
+							pis.setPisDesc(scoreArray[2].trim());
+							pisList.add(pis);
+						} else {
+							flag = false;
+							break;
+						}
+					}
+					map.put(pi, pisList);
+					list.add(map);
+				}
+				boolean result = this.hrPaperformanceindexService.uploadPi(list);
+				if(result) {
+					System.out.println("导入成功！");
+					this.jsonString = "{success:true,'flag':'1','count':'" + list.size() + "'}";
+				}
+			}
+		} catch(Exception e) {
+			this.logger.error("导入出错，原因：" + e);
+			this.jsonString = "{success:true,'flag':'0'}";
+		}
 		return "success";
 	}
 }
