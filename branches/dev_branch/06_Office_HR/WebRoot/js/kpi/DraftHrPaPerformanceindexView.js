@@ -21,7 +21,7 @@ DraftHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 	topbar : null,
 	initComponents : function() {
 		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
-		var departments = new TreeSelector("depName", a, "所属部门", "depId");
+		var departments = new TreeSelector("draftPaDepName", a, "所属部门", "depId");
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
 			height : 40,
@@ -188,6 +188,10 @@ DraftHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			text : "删除考核指标",
 			handler : this.delHrPaPerformanceindex
 		}));
+		this.topbar.add(new Ext.Button({
+			text : "批量导入考核指标",
+			handler : this.uploadPiHrPaPerformanceindex
+		}));
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "DraftHrPaPerformanceindexGrid",
 			region : "center",
@@ -279,6 +283,47 @@ DraftHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 	},
 	reset : function(a) {
 		a.searchPanel.getForm().reset();
+	},
+	uploadPiHrPaPerformanceindex : function() {
+		//上传定性考核指标excel
+		var a = App.createUploadDialog({
+			file_cat : "piUpload",
+			callback : function (c) {
+				for (var b = 0; b < c.length; b++) {
+					Ext.Ajax.request({
+						url : __ctxPath + "/kpi/uploadPiHrPaPerformanceindex.do",
+						params : {
+							filePath : c[b].filepath
+						},
+						success : function(d) {
+							var e = Ext.util.JSON.decode(d.responseText);
+							if(e.flag == 1) {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "数据导入成功，共导入" + e.count + "条数据！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.INFO
+								});
+								Ext.getCmp("DraftHrPaPerformanceindexView").gridPanel.store.reload({
+									params : {
+										start : 0,
+										limit : 25
+									}
+								});
+							} else {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "数据导入失败，请核实数据！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+							}
+						}
+					});
+				}
+			}
+		});
+		a.show();
 	}
 });
 DraftHrPaPerformanceindexView.remove = function(b) {
