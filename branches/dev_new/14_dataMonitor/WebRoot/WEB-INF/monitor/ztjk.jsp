@@ -9,7 +9,7 @@
 			src="${pageContext.request.contextPath}/JS/DatePicker/DatePicker/WdatePicker.js"
 			type="text/javascript"></script>
 		<script type="text/javascript">
-		 var myChart = new FusionCharts("${pageContext.request.contextPath}/FusionChartsFree/swf/ScrollLine2D.swf", "alarm_chart", "100%", "257","0","0");
+		 var myChart = new FusionCharts("${pageContext.request.contextPath}/FusionChartsFree/swf/ScrollColumn2D.swf", "alarm_chart", "100%", "257","0","0");
 	     var xmlData ="${parm}";	     
 	     function bodyLoad() {
 	            myChart.setDataXML(xmlData);
