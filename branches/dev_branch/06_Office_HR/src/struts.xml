@@ -355,6 +355,9 @@
 		<action name="*EmpProfile" class="EmpProfileAction" method="{1}">
 		  <result>${successResultValue}</result>
 		</action>
+		<action name="*EmpProfileHist" class="EmpProfileHistAction" method="{1}">
+		  <result>${successResultValue}</result>
+		</action>
 		<action name="*SalaryPayoff" class="SalaryPayoffAction" method="{1}">
 		   <result>${successResultValue}</result>
 		</action>
