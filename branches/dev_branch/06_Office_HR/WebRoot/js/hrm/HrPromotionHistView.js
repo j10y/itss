@@ -22,7 +22,7 @@ HrPromotionHistView = Ext.extend(Ext.Panel, {
 	topbar : null,
 	initComponents : function() {
 		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
-		var departments = new TreeSelector("depName", a, "所属部门", "depId");
+		var departments = new TreeSelector("hrPromDepName", a, "所属部门", "depId");
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
 			height : 40,
