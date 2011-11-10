@@ -142,5 +142,14 @@
 	</bean> 
 	<bean id="baseService" class="com.xp.commonpart.service.impl.BaseServiceImpl">  
 	  <property name="baseDao" ref="baseDao"></property> 
-	</bean> 	
+	</bean>
+	
+	<bean id="alarmSocketServer" class="com.xp.shopalarm.socket.NonBlockingServer" lazy-init="false" init-method="init" scope="singleton">
+		<property name="port" value="${socketServer.port}"></property>
+		<property name="selectDataService" ref="selectDataService"/>
+		<property name="url" value="${danpin.jdbc.url}"></property>
+		<property name="username" value="${danpin.jdbc.username}"></property>
+		<property name="pwd" value="${danpin.jdbc.pwd}"></property>
+	</bean>
+	
 </beans>
