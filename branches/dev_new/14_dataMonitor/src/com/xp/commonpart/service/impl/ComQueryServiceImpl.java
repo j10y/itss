@@ -321,6 +321,8 @@ public class ComQueryServiceImpl implements ComQueryService{
 		List<Map> list=selectDataService.getData(sql);
 		String usersql="select * from sys_sec_userinfo where issendmessage=1";
 		List<Map> userlist=selectDataService.getData(usersql);
+		//需要把监控日期放到外面来
+		Date curDate=new Date();
 		for(Map map:list){
 			String id=map.get("id")!=null?map.get("id").toString():"";
 			String url=map.get("dataBaseUrl")!=null?map.get("dataBaseUrl").toString():"";
@@ -331,7 +333,7 @@ public class ComQueryServiceImpl implements ComQueryService{
 			String sid=map.get("dataName")!=null?map.get("dataName").toString():"";
 			String dbType=map.get("dataBaseType")!=null?map.get("dataBaseType").toString():"";
 			MonitorInfo monitorInfo=new MonitorInfo();
-			monitorInfo.setCreateDate(new Date());
+			monitorInfo.setCreateDate(curDate);
 			monitorInfo.setDatabaseId(Long.parseLong(id));
 			if(dbType.equals("4")){
 				
@@ -400,9 +402,6 @@ public class ComQueryServiceImpl implements ComQueryService{
 			String port=map.get("port")!=null?map.get("port").toString():"";
 			String sid=map.get("dataName")!=null?map.get("dataName").toString():"";
 			String dbType=map.get("dataBaseType")!=null?map.get("dataBaseType").toString():"";
-			MonitorInfo monitorInfo=new MonitorInfo();
-			monitorInfo.setCreateDate(new Date());
-			monitorInfo.setDatabaseId(Long.parseLong(id));
 			if(dbType.equals("4")){
 				
 			}else{
@@ -413,7 +412,13 @@ public class ComQueryServiceImpl implements ComQueryService{
 			if(con==null){
 				return null;
 			}else{
-				String pisql="select * from datapi where dataBaseID="+id+" order by id";
+				String pisql="select * from datapi where dataBaseID="+id;
+				//start by tongjp 判断如果是从定时任务来的话，只查需要发送消息的性能指标
+						if(type.equals("0")){
+							pisql+=" and isMessage=1";
+						}
+				//end by tongjp 判断如果是从定时任务来的话，只查需要发送消息的性能指标
+						pisql+=" order by id";
 				List<Map> pilist=selectDataService.getData(pisql);
 				int index=0;
 				String message="";
