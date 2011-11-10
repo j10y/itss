@@ -393,7 +393,7 @@ public class ComQueryAction extends ActionSupport{
 					querypanel.setLists(extlist);
 				}
 				detailList.add(querypanel);
-				if(mainTableColumn.getColumnName().equals(maintable.getKeyColumnName())){
+				if(mainTableColumn.getColumnName().equalsIgnoreCase(maintable.getKeyColumnName())){
 					querypanel.setValue(realtableid);
 					queryList.add(querypanel);
 				}
@@ -432,6 +432,7 @@ public class ComQueryAction extends ActionSupport{
 		String isView=request.getParameter("isView");
 		String deleterule=request.getParameter("deleterule");
 		request.setAttribute("deleterule", deleterule);
+		//String userid=request.getSession().getAttribute("userid").toString();
 		if(isView!=null&&isView.equals("true")){
 			return "tabledetailview";
 		}else
