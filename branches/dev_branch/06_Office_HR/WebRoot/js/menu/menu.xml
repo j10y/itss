@@ -1265,6 +1265,8 @@
 					<url>/hrm/recoveryEmpProfile.do</url>
 				</Function>
 			</Item>
+			<Item id="EmpProfileHistView" text="档案历史查询" iconCls="menu-profile" isPublic="false">
+			</Item>
 			<Items id="JobChange" text="调动管理" iconCls="menu-jobchange"
 			isPublic="false">
 				<Item id="JobChangeForm" text="登记" iconCls="menu-job-reg">
