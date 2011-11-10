@@ -75,7 +75,7 @@ public class monitorAction {
 		if(startdate!=null&&startdate.length()>0){
 			sql+=" and UNIX_TIMESTAMP(monitorInfo.createDate)>=UNIX_TIMESTAMP('"+startdate+"')";
 		}else{
-			startdate=DateUtil.convertDateTimeToString(DateUtil.addMinutes(new Date(), -120));
+			startdate=DateUtil.convertDateTimeToString(DateUtil.addMinutes(new Date(), -60*24));
 			sql+=" and UNIX_TIMESTAMP(monitorInfo.createDate)>=UNIX_TIMESTAMP('"+ startdate+"')";
 		}
 		if(enddate!=null&&enddate.length()>0){
