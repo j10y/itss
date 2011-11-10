@@ -82,6 +82,7 @@ public class LoginAction {
 			return "fault";
 		}
 		//usermap.put("username","tongjp");
+		request.getSession().setAttribute("userid", usermap.get("id"));
 		request.getSession().setAttribute("usermap", usermap);
 		return "sucess";
 	}
