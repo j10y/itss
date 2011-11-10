@@ -166,7 +166,7 @@
 					<input type="hidden" id="tableName" name="tableName"
 						value="${maintable.tableName }" ispost="true">
 					<input type="hidden" id="tableRealName"name="tableRealName" value="${maintable.tableRealName }" ispost="true">	
-					<input id="userid" name="userid" type="hidden" value="${userid }"
+					<input id="userid" name="userid" type="hidden" value="${session.userid}"
 						ispost="true" />
 					<c:set var="num" value="0"></c:set>
 					<c:if test="${realTableMap[maintable.keyColumnName] ne null}">
@@ -202,7 +202,7 @@
 										type="text" id="${list.name }" name="${list.name }"
 										value="${realTableMap[list.name]}"
 										valueType="${list.mainTableColumn.validDataType}"
-										isunique="${list.mainTableColumn.isUnique }"
+										isunique="${list.mainTableColumn.isUnique}"
 										mustInput="${mustInput}" onblur="validData('${list.name }');"
 										ispost="true"
 										<c:if test="${isupdate eq 1 and list.mainTableColumn.isUpdate eq 1 }">disabled="disabled"</c:if> />
@@ -259,6 +259,7 @@
 										valueType="${valueType}" mustInput="${mustInput}"
 										ispost="true"
 										isunique="${list.mainTableColumn.isUnique }"
+										onchange="validData('${list.name }');"
 										<c:if test="${isupdate eq 1 and list.mainTableColumn.isUpdate eq 1 }">disabled="disabled"</c:if>>
 										<option value="">
 											请选择
