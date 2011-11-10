@@ -233,6 +233,9 @@
 <!-- start:  Generated for EmpProfile From Template: app-action.xml.beansvm  -->
  <bean id="EmpProfileAction" class="com.xpsoft.oa.action.hrm.EmpProfileAction" scope="prototype"/>
 <!-- end:  Generated for EmpProfile From Template: app-action.xml.beansvm  -->
+<!-- start:  Generated for EmpProfileHist From Template: app-action.xml.beansvm  -->
+ <bean id="EmpProfileHistAction" class="com.xpsoft.oa.action.hrm.EmpProfileHistAction" scope="prototype"/>
+<!-- end:  Generated for EmpProfileHist From Template: app-action.xml.beansvm  -->
 <!-- start:  Generated for Job From Template: app-action.xml.beansvm  -->
  <bean id="JobAction" class="com.xpsoft.oa.action.hrm.JobAction" scope="prototype"/>
  <bean id="JobSalaryRelationAction" class="com.xpsoft.oa.action.hrm.JobSalaryRelationAction" scope="prototype"/>
