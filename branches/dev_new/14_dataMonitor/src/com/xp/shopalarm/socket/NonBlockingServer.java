@@ -62,6 +62,16 @@ public class NonBlockingServer {
 	private String url = null;
 	private String username = null;
 	private String pwd = null;
+	
+	private String alarmFinalEndHour = "22";
+	
+	public String getAlarmFinalEndHour() {
+		return alarmFinalEndHour;
+	}
+
+	public void setAlarmFinalEndHour(String alarmFinalEndHour) {
+		this.alarmFinalEndHour = alarmFinalEndHour;
+	}
 
 	public String getPwd() {
 		return pwd;
@@ -125,16 +135,26 @@ public class NonBlockingServer {
 			Set readyKeys = sel.selectedKeys();
 			Iterator it = readyKeys.iterator();
 
+			/**
+			 * 刚启动如果没有订单号发来，频率为5秒
+			 */
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			while (it.hasNext()) {
 				SelectionKey key = (SelectionKey) it.next();
 				it.remove();
 
 				/**
-				 * 检查是否存在开通短信通知门店
+				 * 检查是否存在开通短信通知门店  频率为30秒
 				 */
 				if (!checkShopAlarm()) {
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(30000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -156,9 +176,7 @@ public class NonBlockingServer {
 
 				if (key.isReadable()) {
 					System.out.println("Key is readable");
-					//if(true)continue;
 					String orderNo = readMessage(key);
-//					String orderNo = "20110628000400";
 					if (orderNo.trim().length() > 0) {
 						try {
 							processMessage(socket, orderNo.trim());
@@ -243,7 +261,7 @@ public class NonBlockingServer {
 		 * 获取开启短信通知的门店SID SELECT shopInfoSid FROM shop_alarm sa WHERE
 		 * sa.isAlarm=1
 		 */
-		String sql = "SELECT shopInfoSid, defaultUserName, defaultUserPhone FROM shop_alarm sa WHERE sa.isAlarm=1";
+		String sql = "SELECT shopInfoSid, defaultUserName, defaultUserPhone FROM shop_alarm sa WHERE HOUR(hour(sysdate()))<" + alarmFinalEndHour + " AND SYSDATE() <= sa.endTime AND sa.isAlarm=1";
 		List<ListOrderedMap> list = selectDataService.getData(sql);
 		StringBuffer sb = new StringBuffer(0);
 		Map<String, String> defaultUserMap = new HashMap();
@@ -294,10 +312,6 @@ public class NonBlockingServer {
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(querySales);
-			int size = rs.getFetchSize();
-			if (size <= 0) {
-				return;
-			}
 			Map<String, String> dataMap = null;
 
 			/**
@@ -333,6 +347,10 @@ public class NonBlockingServer {
 					dataList.add(dataMap);
 					map.put(saleCodeSid, dataList);
 				}
+			}
+			
+			if(map.size()<=0){
+				return;
 			}
 
 		} catch (SQLException e) {
@@ -467,8 +485,10 @@ public class NonBlockingServer {
 	 */
 	public boolean checkShopAlarm() {
 		//selectDataService = (SelectDataService) ContextHolder.getBean("selectDataService");
-		String sql = "SELECT count(*) FROM shop_alarm sa WHERE sa.isAlarm=1";
-		int count = selectDataService.getDataRowNum(sql);
+		int count = 0;
+		String sql = "SELECT COUNT(*) COUN FROM shop_alarm sa WHERE HOUR(hour(sysdate()))<" + alarmFinalEndHour + " AND SYSDATE() <= sa.endTime AND sa.isAlarm=1";
+		List<ListOrderedMap> list = selectDataService.getData(sql);
+		count = Integer.valueOf(list.get(0).get("COUN").toString());
 		if (count > 0) {
 			return true;
 		} else {
@@ -530,6 +550,7 @@ public class NonBlockingServer {
 		 */
 		new Thread(new Runnable(){
 			
+			@Override
 			public void run() {
 				try {
 					startServer();
