@@ -825,86 +825,55 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			Sheet sheet = book.getSheet(0);
 			int col = sheet.getColumns();
 			int row = sheet.getRows();
-			String scoreStandard = "";
 			//判断数据格式是否有误
-			boolean flag = false;
-			for(int i = 1; i < row; i++) {
-				flag = true;
-				scoreStandard = sheet.getCell(5, i).getContents();
-				String[] scores = scoreStandard.trim().split("&");
-				for(int j = 0; j < scores.length; j++) {
-					String[] scoreArray = scores[j].trim().split("_");
-					if(scoreArray.length == 3) {
-						System.out.println("分数：" + scoreArray[0] + "     绩效系数：" + scoreArray[1] + "     描述：" + scoreArray[2]);
-					} else {
-						flag = false;
-						break;
-					}
-				}
-				if(!flag) {
-					System.out.println("评分分标准格式有误，请核实！");
+			List<Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>> list = 
+				new ArrayList<Map<HrPaPerformanceindex,List<HrPaPerformanceindexscore>>>();
+			for(int i = 1; i < row;) {
+				String depName = sheet.getCell(0, i).getContents().trim();
+				String paName = sheet.getCell(1, i).getContents().trim();
+				if(depName == null || "".equals(depName) || paName == null || "".equals(paName)) {
+					this.logger.error("第【" + (i + 1) + "】行考核指标信息有误，请核实！");
 					break;
 				}
+				Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>> map = 
+						new HashMap<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>();
+				HrPaPerformanceindex pi = new HrPaPerformanceindex();
+				List<HrPaPerformanceindexscore> pisList = new ArrayList<HrPaPerformanceindexscore>();
+				pi.setPaName(paName);
+				pi.setBelongDept(depMap.get(depName));
+				pi.setType(paType);
+				pi.setFrequency(paFrequency);
+				pi.setMode(paMode);
+				pi.setPaIsOnlyNegative(0);
+				pi.setBaseScore(new Double(0));
+				pi.setFinalScore(new Double(0));
+				pi.setFinalCoefficient(new Double(0));
+				pi.setPaDesc(sheet.getCell(2, i).getContents().trim());
+				pi.setRemark(sheet.getCell(3, i).getContents().trim());
+				pi.setPublishStatus(3);
+				pi.setCreateDate(currentDate);
+				pi.setCreatePerson(currentUser);
+				pi.setModifyDate(currentDate);
+				pi.setModifyPerson(currentUser);
+				pi.setFromPi(new Long(0));
+				for(int j = i, o = 1; j < i + 5; j++, o++) {
+					HrPaPerformanceindexscore pis = new HrPaPerformanceindexscore();
+					pis.setPisScore(BigDecimal.valueOf(o));
+					pis.setPisType(paMode);
+					pis.setPisDesc(sheet.getCell(4, j).getContents().trim());
+					pis.setCoefficient(Double.parseDouble(sheet.getCell(5, j).getContents().trim()));
+					pisList.add(pis);
+				}
+				map.put(pi, pisList);
+				list.add(map);
+				this.logger.info("名称为【" + paName + "】的考核指标格式符合标准，可以正常导入！");
+				i = i + 5;
 			}
-			//数据格式正确，则进行导入操作
-			if(flag) {
-				List<Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>> list = 
-						new ArrayList<Map<HrPaPerformanceindex,List<HrPaPerformanceindexscore>>>();
-				for(int i = 1; i < row; i++) {
-					Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>> map = 
-							new HashMap<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>();
-					HrPaPerformanceindex pi = new HrPaPerformanceindex();
-					List<HrPaPerformanceindexscore> pisList = new ArrayList<HrPaPerformanceindexscore>();
-					pi.setPaName(sheet.getCell(1, i).getContents().trim());
-					pi.setBelongDept(depMap.get(sheet.getCell(0, i).getContents().trim()));
-					pi.setType(paType);
-					pi.setFrequency(paFrequency);
-					pi.setMode(paMode);
-					String[] onlyArray = sheet.getCell(2, i).getContents().trim().split("_");
-					if(onlyArray.length == 4) {
-						pi.setPaIsOnlyNegative(1);
-						pi.setBaseScore(Double.parseDouble(onlyArray[1]));
-						pi.setFinalScore(Double.parseDouble(onlyArray[2]));
-						pi.setFinalCoefficient(Double.parseDouble(onlyArray[3]));
-					} else {
-						pi.setPaIsOnlyNegative(0);
-						pi.setBaseScore(new Double(0));
-						pi.setFinalScore(new Double(0));
-						pi.setFinalCoefficient(new Double(0));
-					}
-					pi.setPaDesc(sheet.getCell(3, i).getContents().trim());
-					pi.setRemark(sheet.getCell(4, i).getContents().trim());
-					pi.setPublishStatus(3);
-					pi.setCreateDate(currentDate);
-					pi.setCreatePerson(currentUser);
-					pi.setModifyDate(currentDate);
-					pi.setModifyPerson(currentUser);
-					pi.setFromPi(new Long(0));
-					scoreStandard = sheet.getCell(5, i).getContents();
-					String[] scores = scoreStandard.trim().split("&");
-					for(int j = 0; j < scores.length; j++) {
-						String[] scoreArray = scores[j].trim().split("_");
-						if(scoreArray.length == 3) {
-							HrPaPerformanceindexscore pis = new HrPaPerformanceindexscore();
-							System.out.println("分数：" + scoreArray[0] + "     绩效系数：" + scoreArray[1] + "     描述：" + scoreArray[2]);
-							pis.setPisScore(BigDecimal.valueOf(Double.parseDouble(scoreArray[0].trim())));
-							pis.setCoefficient(Double.parseDouble(scoreArray[1].trim()));
-							pis.setPisType(paMode);
-							pis.setPisDesc(scoreArray[2].trim());
-							pisList.add(pis);
-						} else {
-							flag = false;
-							break;
-						}
-					}
-					map.put(pi, pisList);
-					list.add(map);
-				}
-				boolean result = this.hrPaperformanceindexService.uploadPi(list);
-				if(result) {
-					System.out.println("导入成功！");
-					this.jsonString = "{success:true,'flag':'1','count':'" + list.size() + "'}";
-				}
+			//上传数据
+			boolean result = this.hrPaperformanceindexService.uploadPi(list);
+			if(result) {
+				System.out.println("导入成功，共导入【" + list.size() + "】条数据！");
+				this.jsonString = "{success:true,'flag':'1','count':'" + list.size() + "'}";
 			}
 		} catch(Exception e) {
 			this.logger.error("导入出错，原因：" + e);
