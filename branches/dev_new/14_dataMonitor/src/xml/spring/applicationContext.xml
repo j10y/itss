@@ -150,6 +150,7 @@
 		<property name="url" value="${danpin.jdbc.url}"></property>
 		<property name="username" value="${danpin.jdbc.username}"></property>
 		<property name="pwd" value="${danpin.jdbc.pwd}"></property>
+		<property name="alarmFinalEndHour" value="${shopAlarm.finalEndHour}"></property>
 	</bean>
 	
 </beans>
