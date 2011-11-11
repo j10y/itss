@@ -350,6 +350,7 @@ public class HrPromApplyAction extends BaseAction{
 						StandSalary standSalary = standSalaryService.get(assessment.getSalaryLevelId());
 						if(standSalary != null) {
 							empProfileList.get(0).setStandSalary(standSalary);
+							empProfileList.get(0).setStandardMiNo(standSalary.getStandardNo());
 							empProfileList.get(0).setStandardMoney(standSalary.getTotalMoney());
 							empProfileList.get(0).setStandardId(standSalary.getStandardId());
 							empProfileList.get(0).setStandardName(standSalary.getStandardName());

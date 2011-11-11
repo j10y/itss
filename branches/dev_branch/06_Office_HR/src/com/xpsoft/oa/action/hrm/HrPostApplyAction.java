@@ -278,9 +278,9 @@ public class HrPostApplyAction extends BaseAction{
 						//add by guansq for add empProfile changelist at 2011-11-02 end
 						empProfileList.get(0).setJobId(assessment.getStandardPostId());
 						empProfileList.get(0).setPosition(assessment.getStandardPostName());
-						StandSalary standSalary = new StandSalary();
-						standSalary.setStandardId(assessment.getNewSalaryLevelId());
+						StandSalary standSalary = standSalaryService.get(assessment.getNewSalaryLevelId());
 						empProfileList.get(0).setStandSalary(standSalary);
+						empProfileList.get(0).setStandardMiNo(standSalary.getStandardNo());
 						empProfileList.get(0).setStandardMoney(assessment.getNewFixedSalary().add(assessment.getNewFloatSalary()));
 						empProfileList.get(0).setStandardId(assessment.getNewSalaryLevelId());
 						empProfileList.get(0).setStandardName(assessment.getNewSalaryLevelName());
