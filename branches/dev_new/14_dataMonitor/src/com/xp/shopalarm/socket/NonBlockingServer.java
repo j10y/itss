@@ -455,7 +455,7 @@ public class NonBlockingServer {
 			System.out.println(phoneMap);
 			System.out.println(content.toString());
 			System.out.println("**********----------------------**********");
-			//sendSMS(phoneMap, content.toString());
+			sendSMS(phoneMap, content.toString());
 		}
 		
 		JDBCUtil.close(null, null, conn);
@@ -530,6 +530,7 @@ public class NonBlockingServer {
 		 */
 		new Thread(new Runnable(){
 			
+			@Override
 			public void run() {
 				try {
 					startServer();
