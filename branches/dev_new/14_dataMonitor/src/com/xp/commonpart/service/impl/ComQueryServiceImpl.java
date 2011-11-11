@@ -352,7 +352,7 @@ public class ComQueryServiceImpl implements ComQueryService{
 						String message="连接数据库连续2次失败！url:"+url;
 						ExceptionMessage.sendMessage(message,telp,realname);
 					}
-					monitorInfo.setStatus(0);
+					monitorInfo.setStatus(-1);
 					monitorInfo.setDescrpition("连接数据库连续2次失败！url:"+url);
 					baseDao.save(monitorInfo,MonitorInfo.class,"id");
 					log.info("连接数据库连续2次失败！url:"+url);
@@ -373,7 +373,7 @@ public class ComQueryServiceImpl implements ComQueryService{
 					String message="连接数据库关闭时失败！url:"+url;
 					ExceptionMessage.sendMessage(message,telp,realname);
 				}
-				monitorInfo.setStatus(0);
+				monitorInfo.setStatus(-1);
 				monitorInfo.setDescrpition("连接数据库关闭时失败！url:"+url);
 				baseDao.save(monitorInfo,MonitorInfo.class,"id");
 				log.info("连接数据库关闭时失败！url:"+url);
