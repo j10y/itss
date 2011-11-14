@@ -833,7 +833,13 @@ public class HrPaPerformanceindexAction extends BaseAction {
 				String paName = sheet.getCell(1, i).getContents().trim();
 				if(depName == null || "".equals(depName) || paName == null || "".equals(paName)) {
 					this.logger.error("第【" + (i + 1) + "】行考核指标信息有误，请核实！");
-					break;
+					this.jsonString = "{success:true,'flag':'0'}";
+					return "success";
+				}
+				if(depMap.get(depName) == null) {
+					this.logger.error("第【" + (i + 1) + "】行考核指标部门信息有误，请核实！");
+					this.jsonString = "{success:true,'flag':'0'}";
+					return "success";
 				}
 				Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>> map = 
 						new HashMap<HrPaPerformanceindex, List<HrPaPerformanceindexscore>>();
