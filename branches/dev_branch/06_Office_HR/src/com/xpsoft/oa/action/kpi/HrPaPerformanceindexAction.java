@@ -777,6 +777,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 		Date currentDate = new Date();
 		AppUser currentUser	= ContextUtil.getCurrentUser();
 		DepartmentService departmentService = (DepartmentService)AppUtil.getBean("departmentService");
+		String msg = "";
 		//设置部门
 		List<Department> depList = departmentService.getAll();
 		Map<String, Department> depMap = new HashMap<String, Department>();
@@ -811,7 +812,7 @@ public class HrPaPerformanceindexAction extends BaseAction {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				this.logger.error("数据导入失败，原因：" + e);
-				this.jsonString = "{success:true,'flag':'0'}";
+				this.jsonString = "{success:true,'flag':'0','msg':'导入出错，请核实文件格式及内容！'}";
 			}
 			
 		}else{
@@ -832,13 +833,15 @@ public class HrPaPerformanceindexAction extends BaseAction {
 				String depName = sheet.getCell(0, i).getContents().trim();
 				String paName = sheet.getCell(1, i).getContents().trim();
 				if(depName == null || "".equals(depName) || paName == null || "".equals(paName)) {
-					this.logger.error("第【" + (i + 1) + "】行考核指标信息有误，请核实！");
-					this.jsonString = "{success:true,'flag':'0'}";
+					msg = "第【" + (i + 1) + "】行考核指标信息有误，请核实！";
+					this.logger.error(msg);
+					this.jsonString = "{success:true,'flag':'0','msg':'" + msg + "'}";
 					return "success";
 				}
 				if(depMap.get(depName) == null) {
-					this.logger.error("第【" + (i + 1) + "】行考核指标部门信息有误，请核实！");
-					this.jsonString = "{success:true,'flag':'0'}";
+					msg = "第【" + (i + 1) + "】行考核指标部门信息【" + depName + "】有误，请核实！";
+					this.logger.error(msg);
+					this.jsonString = "{success:true,'flag':'0','msg':'" + msg + "'}";
 					return "success";
 				}
 				Map<HrPaPerformanceindex, List<HrPaPerformanceindexscore>> map = 
@@ -872,18 +875,18 @@ public class HrPaPerformanceindexAction extends BaseAction {
 				}
 				map.put(pi, pisList);
 				list.add(map);
-				this.logger.info("名称为【" + paName + "】的考核指标格式符合标准，可以正常导入！");
 				i = i + 5;
 			}
 			//上传数据
 			boolean result = this.hrPaperformanceindexService.uploadPi(list);
 			if(result) {
-				System.out.println("导入成功，共导入【" + list.size() + "】条数据！");
 				this.jsonString = "{success:true,'flag':'1','count':'" + list.size() + "'}";
+			} else {
+				this.jsonString = "{success:true,'flag':'0','msg':'导入出错，请联系管理员！'}";
 			}
 		} catch(Exception e) {
 			this.logger.error("导入出错，原因：" + e);
-			this.jsonString = "{success:true,'flag':'0'}";
+			this.jsonString = "{success:true,'flag':'0','msg':'导入出错，请核实文件格式及内容！'}";
 		}
 		return "success";
 	}

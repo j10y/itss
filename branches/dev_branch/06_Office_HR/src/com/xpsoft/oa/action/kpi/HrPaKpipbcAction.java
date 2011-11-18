@@ -405,8 +405,10 @@ public class HrPaKpipbcAction extends BaseAction{
 	}
 	
 	public void addUserPbc(HrPaKpipbc pbc) {
+		AppUser systemUser = new AppUser();
+		systemUser.setUserId(new Long(-1));
 		Date currentDate = new Date();
-		AppUser currentUser = ContextUtil.getCurrentUser();
+		AppUser currentUser = (ContextUtil.getCurrentUser() == null) ? systemUser : ContextUtil.getCurrentUser();
 		HrPaKpiPBC2UserService hrPaKpiPBC2UserService = (HrPaKpiPBC2UserService)AppUtil.getBean("hrPaKpiPBC2UserService");
 		HrPaKpiitemService hrPaKpiitemService = (HrPaKpiitemService)AppUtil.getBean("hrPaKpiitemService");
 		HrPaKpiitem2userService hrPaKpiitem2userService = (HrPaKpiitem2userService)AppUtil.getBean("hrPaKpiitem2userService");
@@ -417,7 +419,7 @@ public class HrPaKpipbcAction extends BaseAction{
 		String frequencyName = mapList.get(0).get("name").toString();
 		//1. 找到哪些人是这个有这个PBC关联的岗位
 		/*
-		 * 修改取得人员逻辑，添加人员已删除，人员档案未审批或未审批通过，人员已删除过滤条件
+		 * 修改取得人员逻辑，添加【人员档案草稿或未审批通过，人员已删除，人员未转正，人员已离职】过滤条件
 		 * */
 		/*
 		EmpProfileService empProfileService = (EmpProfileService)AppUtil.getBean("empProfileService");
@@ -429,7 +431,7 @@ public class HrPaKpipbcAction extends BaseAction{
 		String sql2 = "select a.userId from emp_profile a, app_user b, job c where " +
 				"a.jobId = " + String.valueOf(pbc.getBelongPost().getJobId()) + " and a.userId = b.userId and a.jobId = c.jobId and " + 
 				"a.approvalStatus = 1 and a.delFlag = 0 and b.delFlag = 0 and " +
-				"a.realPositiveTime < '" + DateUtil.convertDateToString(new Date()) + "'";
+				"a.realPositiveTime < '" + DateUtil.convertDateToString(new Date()) + "' and a.departureTime is null";
 		List<Map<String, Object>> profileList = this.hrPaKpipbcService.findDataList(sql2);
 		AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
 		//2. 循环对每个人添加PBC考核模板
@@ -542,6 +544,34 @@ public class HrPaKpipbcAction extends BaseAction{
 					//插入数据库
 					hrPaKpiitem2userService.save(itemNew);
 				}
+			}
+		}
+	}
+	/*
+	 * 定时任务，每月第一天定时执行为员工发布新的个人PBC
+	 * */
+	public void schedAddUserPbc() {
+		Date currentDate = new Date();
+		String sql = "";
+		//判断今天是不是季度第一天
+		int currentMonth = currentDate.getMonth() + 1;
+		if(currentMonth == 1) {
+			sql = "select id from hr_pa_kpipbc where frequency in (7, 9, 10, 11) and publishStatus = 3";
+		} else if(currentMonth == 1 || currentMonth == 7) {
+			sql = "select id from hr_pa_kpipbc where frequency in (7, 9, 10) and publishStatus = 3";
+		} else if(currentMonth == 1 || currentMonth == 4 || currentMonth == 7 || currentMonth == 10) {
+			sql = "select id from hr_pa_kpipbc where frequency in (7, 9) and publishStatus = 3";
+		} else {
+			sql = "select id from hr_pa_kpipbc where frequency = 7 and publishStatus = 3";
+		}
+		List<Map<String, Object>> mapList = this.hrPaKpipbcService.findDataList(sql);
+		for(Map<String, Object> map : mapList) {
+			try {
+				HrPaKpipbc pbc = this.hrPaKpipbcService.get(Long.parseLong(map.get("id").toString()));
+				this.addUserPbc(pbc);
+			} catch(Exception e) {
+				this.logger.error("ID为【" + map.get("id") + "】的PBC发布个人考核模板失败，请核实！");
+				e.printStackTrace();
 			}
 		}
 	}

@@ -1,17 +1,28 @@
 package com.xpsoft.oa.action.kpi;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import jxl.Sheet;
+import jxl.Workbook;
+
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.model.Ftp;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.kpi.HrPaAssessmentcriteria;
 import com.xpsoft.oa.model.system.AppUser;
+import com.xpsoft.oa.model.system.Department;
 import com.xpsoft.oa.service.kpi.HrPaAssessmentcriteriaService;
+import com.xpsoft.oa.service.system.DepartmentService;
 
 import flexjson.JSONSerializer;
 
@@ -291,6 +302,118 @@ public class HrPaAssessmentcriteriaAction extends BaseAction{
 		}
 		buff.append("]");
 		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
+	public String uploadAc() {
+		Date currentDate = new Date();
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		DepartmentService departmentService = (DepartmentService)AppUtil.getBean("departmentService");
+		String msg = "";
+		//设置部门
+		List<Department> depList = departmentService.getAll();
+		Map<String, Department> depMap = new HashMap<String, Department>();
+		for(Department dept : depList) {
+			depMap.put(dept.getDepName(), dept);
+		}
+		//获取要导入的excel
+		String filePath = this.getRequest().getParameter("filePath");
+		boolean isFtp = new Boolean(String.valueOf(AppUtil.getSysConfig().get("isFtp")));
+		File file = null;
+		if(isFtp){
+			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.sysprofix"));
+			Ftp ftp = new Ftp(1, "fileUpload", String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.host")),
+					new Integer(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.port"))), "", "");
+			ftp.setUsername(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.user")));
+			ftp.setPassword(String.valueOf(AppUtil.getSysConfig().get("file.upload.ftp.passwd")));
+			ftp.setPath("");
+			
+			String fileP = filePath;
+			fileP = fileP.substring(fileP.indexOf(defaultProfix));
+			try {
+				file = ftp.retrieve(fileP);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				this.logger.error("数据导入失败，原因：" + e);
+				this.jsonString = "{success:true,'flag':'0','msg':'数据导入失败，请联系管理员！'}";
+			}
+			
+		}else{
+			String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
+			int len = defaultProfix.length();
+			filePath = filePath.substring(filePath.indexOf(defaultProfix));
+			file = new File(this.getRequest().getRealPath("/") + filePath);
+		}
+		try {
+			Workbook book = Workbook.getWorkbook(file);
+			Sheet sheet = book.getSheet(0);
+			int col = sheet.getColumns();
+			int row = sheet.getRows();
+			List<HrPaAssessmentcriteria> list = new ArrayList<HrPaAssessmentcriteria>();
+			for(int i = 1; i < row; i++) {
+				HrPaAssessmentcriteria ac = new HrPaAssessmentcriteria();
+				String depName = sheet.getCell(0, i).getContents().trim();
+				String acName = sheet.getCell(1, i).getContents().trim();
+				String acKey = sheet.getCell(2, i).getContents().trim();
+				//判断必填项是否非空
+				if(depName == null || "".equals(depName) || acName == null || "".equals(acName) || 
+						acKey == null || "".equals(acKey)) {
+					msg = "第【" + (i + 1) + "】行考核标准信息有误，请核实！";
+					this.logger.error(msg);
+					this.jsonString = "{success:true,'flag':'0','msg':'" + msg + "'}";
+					return "success";
+				}
+				//判断部门名称是否正确
+				if(depMap.get(depName) == null) {
+					msg = "第【" + (i + 1) + "】行考核标准部门信息【" + depName + "】有误，请核实！";
+					this.logger.error(msg);
+					this.jsonString = "{success:true,'flag':'0','msg':'" + msg + "'}";
+					return "success";
+				}
+				ac.setAcName(acName);
+				ac.setAcKey(acKey);
+				ac.setIsSalesAC(0);
+				ac.setAcDesc(sheet.getCell(3, i).getContents().trim());
+				ac.setBelongDept(depMap.get(depName));
+				ac.setPublishStatus(3);
+				ac.setCreateDate(currentDate);
+				ac.setCreatePerson(currentUser.getUserId());
+				ac.setModifyDate(currentDate);
+				ac.setModifyPerson(currentUser.getUserId());
+				ac.setFromAc(new Long(0));
+				list.add(ac);
+			}
+			//判断关键字是否有重复（excel内部重复、与数据库已存在标准重复）
+			for(int i = 0; i < list.size(); i++) {
+				HrPaAssessmentcriteria item = list.get(i);
+				if(this.hrPaAssessmentcriteriaService.checkKey(item.getAcKey(), 0)) {
+					msg = "关键字为【" + item.getAcKey() + "】的考核标准在数据库已存在，请核实！";
+					this.logger.error(msg);
+					this.jsonString = "{success:true,'flag':'0','msg':'" + msg + "'}";
+					return "success";
+				}
+				for(int j = i + 1; j < list.size(); j++) {
+					if(item.getAcKey().equals(list.get(j).getAcKey())) {
+						msg = "文件中存在重复的考核标准关键字【" + item.getAcKey() + "】，请核实！";
+						this.logger.error(msg);
+						this.jsonString = "{success:true,'flag':'0','msg':'" + msg + "'}";
+						return "success";
+					}
+				}
+			}
+			//存入数据库
+			boolean result = this.hrPaAssessmentcriteriaService.multiSave(list);
+			if(result) {
+				System.out.println("导入成功，共导入【" + list.size() + "】条数据！");
+				this.jsonString = "{success:true,'flag':'1','count':'" + list.size() + "'}";
+			} else {
+				this.jsonString = "{success:true,'flag':'0','msg':'导入出错，请联系管理员！'}";
+			}
+		} catch(Exception e) {
+			this.logger.error("导入出错，原因：" + e);
+			this.jsonString = "{success:true,'flag':'0','msg':'导入出错，请核实文件格式及内容！'}";
+		}
 		
 		return "success";
 	}
