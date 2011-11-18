@@ -8,6 +8,7 @@
 			<list>
 				<ref local="sendMessageTrigger"/>
 				<ref local="reloadUserRoleTrigger"/>
+				<ref local="addUserPbcTrigger"/>
 			</list>
 		</property>
 	</bean>
@@ -44,5 +45,21 @@
 		</property> 
 	   <property name="jobDetail" ref="sendMessageDetial"/>
 	</bean>
+	
+	<!-- add by guanshiqiang for scheduling add user personal PBC at every first day of a cycle at 2011-11-18 begin -->
+    <bean name="HrPaKpipbcActionJob" class="com.xpsoft.oa.action.kpi.HrPaKpipbcAction"></bean>
+    <bean id="addUserPbc" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    	<property name="targetObject" ref="HrPaKpipbcActionJob"></property>
+    	<property name="targetMethod" value="schedAddUserPbc"></property>
+    	<property name="concurrent" value="false"></property>
+    </bean>
+    <bean id="addUserPbcTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    	<!-- 每月第一天早上三点调用 schedAddUserPbc方法-->
+    	<property name="cronExpression">
+    		<value>0 0 3 1 * ?</value>
+    	</property>
+    	<property name="jobDetail" ref="addUserPbc"></property>
+    </bean>
+    <!-- add by guanshiqiang for scheduling add user personal PBC at every first day of a cycle at 2011-11-18 end -->
 	
 </beans>
