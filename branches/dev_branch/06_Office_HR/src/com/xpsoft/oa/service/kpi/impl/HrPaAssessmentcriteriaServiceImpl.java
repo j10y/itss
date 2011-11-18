@@ -37,4 +37,18 @@ public class HrPaAssessmentcriteriaServiceImpl extends BaseServiceImpl<HrPaAsses
 		}
 		return flag;
 	}
+	/*
+	 * 批量导入考核标准
+	 * */
+	public boolean multiSave(List<HrPaAssessmentcriteria> list) {
+		for(HrPaAssessmentcriteria ac : list) {
+			try {
+				this.save(ac);
+			} catch(Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return true;
+	}
 }
