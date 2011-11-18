@@ -1,5 +1,6 @@
 package com.xpsoft.oa.service.kpi;
 
+import java.util.List;
 import java.util.Map;
 
 import com.xpsoft.core.service.BaseService;
@@ -16,4 +17,8 @@ public interface HrPaAssessmentcriteriaService extends BaseService<HrPaAssessmen
 	 * 要判断的关键字
 	 * */
 	public boolean checkKey(String key, long id);
+	/*
+	 * 批量导入考核标准
+	 * */
+	public boolean multiSave(List<HrPaAssessmentcriteria> list);
 }
