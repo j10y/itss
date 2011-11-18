@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.map.LinkedMap;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -24,7 +25,7 @@ public class HrPaDatadictionaryDaoImpl extends BaseDaoImpl<HrPaDatadictionary>
 	 * 分类取得项目考核类型、项目考核频度、项目考核方式关键字
 	 * */
 	public Map<Long, String> getAllByParentId(long parentId){
-		final String hql = "select id, name from HrPaDatadictionary where parentId=?";
+		final String hql = "select id, name from HrPaDatadictionary where parentId=? order by id";
 		final long item = parentId;
 		
 		return (Map<Long, String>) this.getHibernateTemplate().execute(
@@ -34,7 +35,7 @@ public class HrPaDatadictionaryDaoImpl extends BaseDaoImpl<HrPaDatadictionary>
 						Query query = session.createQuery(hql);
 						query.setLong(0, item);
 						List list = query.list();
-						Map<Long, String> map = new HashMap<Long, String>();
+						Map<Long, String> map = new LinkedMap();
 						Iterator it = list.iterator();
 						while(it.hasNext()) {
 							Object[] obj = (Object[])it.next();
