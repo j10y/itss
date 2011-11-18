@@ -162,6 +162,11 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			text : "删除考核标准",
 			handler : this.delHrPaAssessmentcriteria
 		}));
+		this.topbar.add(new Ext.Button({
+			iconCls : "btn-upload",
+			text : "批量导入考核标准",
+			handler : this.uploadAcHrPaAssessmentcriteria
+		}));
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "PublishHrPaAssessmentcriteriaGrid",
 			region : "center",
@@ -249,6 +254,47 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			default:
 				break ;
 		}
+	},
+	uploadAcHrPaAssessmentcriteria : function() {
+		//上传考核标准excel
+		var a = App.createUploadDialog({
+			file_cat : "acUpload",
+			callback : function (c) {
+				for (var b = 0; b < c.length; b++) {
+					Ext.Ajax.request({
+						url : __ctxPath + "/kpi/uploadAcHrPaAssessmentcriteria.do",
+						params : {
+							filePath : c[b].filepath
+						},
+						success : function(d) {
+							var e = Ext.util.JSON.decode(d.responseText);
+							if(e.flag == 1) {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "数据导入成功，共导入" + e.count + "条数据！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.INFO
+								});
+								Ext.getCmp("PublishHrPaAssessmentcriteriaView").gridPanel.store.reload({
+									params : {
+										start : 0,
+										limit : 25
+									}
+								});
+							} else {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : e.msg,
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+							}
+						}
+					});
+				}
+			}
+		});
+		a.show();
 	}
 });
 PublishHrPaAssessmentcriteriaView.remove = function(b) {

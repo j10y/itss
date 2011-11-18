@@ -198,6 +198,7 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 			handler : this.delHrPaPerformanceindex
 		}));
 		this.topbar.add(new Ext.Button({
+			iconCls : "btn-upload",
 			text : "批量导入考核指标",
 			handler : this.uploadPiHrPaPerformanceindex
 		}));
@@ -330,7 +331,7 @@ PublishHrPaPerformanceindexView = Ext.extend(Ext.Panel, {
 							} else {
 								Ext.MessageBox.show({
 									title : "操作信息",
-									msg : "数据导入失败，请核实数据！",
+									msg : e.msg,
 									buttons : Ext.MessageBox.OK,
 									icon : Ext.MessageBox.ERROR
 								});
