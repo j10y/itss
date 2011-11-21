@@ -57,8 +57,14 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	private void mapToContext(User user, DirContextAdapter context) {
-		// TODO Auto-generated method stub
-		context.setAttributeValues("objectclass", new String[] { "top", "person","inetOrgPerson","organizationalPerson"});
+		
+		//modified by awen for extend openldap's schema on 2011-11-21 begin
+		
+			/*context.setAttributeValues("objectclass", new String[] { "top", "person","inetOrgPerson","organizationalPerson"});*/
+		
+		context.setAttributeValues("objectclass", new String[] { "top", "shopin-inetOrgPerson"});
+		//modified by awen for extend openldap's schema on 2011-11-21 modify
+		
 		context.setAttributeValue("uid", user.getUid());
 		context.setAttributeValue("userPassword", user.getPassword()!=null && !"".equals(user.getPassword()) ? user.getPassword() : null);
 		context.setAttributeValue("cn", user.getCn());
@@ -77,6 +83,12 @@ public class UserDaoImpl implements UserDao {
 		//context.setAttributeValue("photo", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
 		//只有photo非空的时候才覆盖
 		if(user.getPhoto()!=null && user.getPhoto().length>0) context.setAttributeValue("photo", user.getPhoto());
+		
+		//modified by awen for extend openldap's schema on 2011-11-21 begin
+		context.setAttributeValue("o", user.getO());
+		context.setAttributeValue("status", user.getStatus());
+		context.setAttributeValue("displayOrder", user.getDisplayOrder());
+		//modified by awen for extend openldap's schema on 2011-11-21 begin
 	}
 		
 	/**
@@ -122,7 +134,7 @@ public class UserDaoImpl implements UserDao {
 		if(result.getDepartmentNumber()!=null && !"".equals(result.getDepartmentNumber())){
 			DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 			String filter="(ou=" + result.getDepartmentNumber().trim() + ")";
-			List deptNames = ldapTemplate.search("o=orgnizations", filter, new AttributesMapper(){
+			List deptNames = ldapTemplate.search("ou=orgnizations", filter, new AttributesMapper(){
 				public Object mapFromAttributes(Attributes attributes)
 						throws NamingException {
 					// TODO Auto-generated method stub
@@ -153,7 +165,7 @@ public class UserDaoImpl implements UserDao {
 			User result = (User) users.get(0);
 			if(result.getDepartmentNumber()!=null && !"".equals(result.getDepartmentNumber())){
 				filter="(ou=" + result.getDepartmentNumber().trim() + ")";
-				List deptNames = ldapTemplate.search("o=orgnizations", filter, new AttributesMapper(){
+				List deptNames = ldapTemplate.search("ou=orgnizations", filter, new AttributesMapper(){
 					public Object mapFromAttributes(Attributes attributes)
 							throws NamingException {
 						// TODO Auto-generated method stub

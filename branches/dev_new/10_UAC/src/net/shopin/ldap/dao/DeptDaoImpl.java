@@ -114,8 +114,20 @@ public class DeptDaoImpl implements DeptDao {
 	}
 
 	private void mapToContext(Department department, DirContextAdapter context) {
-		context.setAttributeValues("objectclass", new String[] { "top", "organizationalUnit", "extensibleObject"});
-		context.setAttributeValue("description", department.getDeptName());
+
+		//modified by awen for extend openldap's schema on 2011-11-21 begin
+		
+			/*context.setAttributeValues("objectclass", new String[] { "top", "organizationalUnit", "extensibleObject"});
+			context.setAttributeValue("description", department.getDeptName());*/
+		
+		context.setAttributeValues("objectclass", new String[] { "top", "shopin-organization"});
+		context.setAttributeValue("displayName", department.getDeptName());
+		context.setAttributeValue("description", StringUtils.isNotEmpty(department.getDeptDesc()) ? department.getDeptDesc() : null);
+		context.setAttributeValue("status", department.getStatus());
+		context.setAttributeValue("displayOrder", department.getDisplayOrder());
+		context.setAttributeValue("parentNo", StringUtils.isNotEmpty(department.getParentNo()) ? department.getParentNo() : null);		
+		context.setAttributeValue("erpId", StringUtils.isNotEmpty(department.getErpId()) ? department.getErpId() : null);		
+		//modified by awen for extend openldap's schema on 2011-11-21 end
 	}
 	
 	/* (non-Javadoc)

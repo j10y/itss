@@ -25,30 +25,37 @@
 		<property name="password" value="${password}"></property>
 	</bean>
 	
-	<!-- 
+	 
 	<bean id="poolingContextSource" class="org.springframework.ldap.pool.factory.PoolingContextSource">
 		<property name="contextSource" ref="contextSourceTarget" />
 		<property name="dirContextValidator" ref="dirContextValidator" />
 		<property name="testOnBorrow" value="true" />
 		<property name="testWhileIdle" value="true" />
+		<property name="maxActive" value="10" />
+		<property name="maxTotal" value="10" />
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="5" />
+		<property name="maxWait" value="5" />
 	</bean>
+	
 	<bean id="dirContextValidator"
 		class="org.springframework.ldap.pool.validation.DefaultDirContextValidator" />
-	 -->
-	
+	 
+	<!--
 	<bean id="contextSource"
 		class="org.springframework.ldap.transaction.compensating.manager.TransactionAwareContextSourceProxy">
 		<constructor-arg ref="contextSourceTarget"></constructor-arg>
 	</bean>
-	
+	-->
 	
 	<bean id="ldapTemplate"
-		class="org.springframework.ldap.core.LdapTemplate">		
+		class="org.springframework.ldap.core.LdapTemplate">	
+		<!--	
 		<constructor-arg ref="contextSource" />
-		
-		<!--
-		<constructor-arg ref="poolingContextSource" />
 		-->
+		
+		<constructor-arg ref="poolingContextSource" />
+		
 	</bean>
 	<!-- 
 	<bean id="transactionManager"

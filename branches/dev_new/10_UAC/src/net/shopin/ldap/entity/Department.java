@@ -12,11 +12,19 @@ public class Department implements Serializable {
 	 * ## ## ## ## .. (财年 第一级 第二级 第三级 ..)
 	 * 
 	 */
-	String parentNo;//父部门编号，在LDAP中为orgniztionUnit的ou
+	String parentNo;//父部门编号，在LDAP中为shopin-orgnization的o
 	
-	String deptNo;//部门编号，在LDAP中为orgniztionUnit的ou
+	String deptNo;//部门编号，在LDAP中为shopin-orgnization的o
 	
-	String deptName;//部门名称，在LDAP中为orgniztionUnit的descriptions
+	String deptName;//部门名称，在LDAP中为shopin-orgnization的displayName 必填项
+	
+	String deptDesc;//部门名称，在LDAP中为shopin-orgnization的description 非必填
+	
+	Integer displayOrder;//排序
+	
+	Integer status;//状态
+	
+	String erpId;//对应ERP-HR中的部门编码
 	
 	
 	public String getParentNo() {
@@ -63,6 +71,29 @@ public class Department implements Serializable {
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
-	
+	public String getDeptDesc() {
+		return deptDesc;
+	}
+	public void setDeptDesc(String deptDesc) {
+		this.deptDesc = deptDesc;
+	}
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getErpId() {
+		return erpId;
+	}
+	public void setErpId(String erpId) {
+		this.erpId = erpId;
+	}
 	
 }

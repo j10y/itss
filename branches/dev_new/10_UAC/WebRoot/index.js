@@ -6,13 +6,41 @@ com.dc.ui.IndexPage = {
 	
 		this.buildTools(isAdmin, webContext);
 		var menu = this.buildMenu(webContext);
-		var helpInfo = new Ext.Panel({
-				title : '联系我们',
+		var sysMenu = new Ext.tree.TreePanel({
+				id : 'sysMenu',
+				title : '系统菜单',
 				border : false,
 				iconCls : 'nav',
-				autoScroll : true,
-				html:'请联系信息化系统部运维中心'
+				useArrows: true,
+			    autoScroll: true,
+			    animate: true,
+			    enableDD: true,
+			    containerScroll: true,
+			    border: false,
+			    // auto create TreeLoader
+			    dataUrl: webContext + '/menu/menujs.js',
+			    rootVisible : false,
+				root: {
+			        nodeType: 'async',
+			        text: 'Ext JS',
+			        draggable: false,
+			        id: 'source'
+			    },
+			    listeners : {
+					"click" : function(node,event) {
+						//alert(Ext.encode(node.attributes.url));
+						updateTab(node.id, node.text, node.attributes.url);
+					}
+				}
 			});
+		var helpInfo = new Ext.Panel({
+			title : '联系我们',
+			border : false,
+			iconCls : 'nav',
+			autoScroll : true,
+			html:'请联系信息化系统部运维中心'
+		});
+		menu.push(sysMenu);	
 		menu.push(helpInfo);	
 		if(currentUser=='admin'){
 			//显示按钮
@@ -32,10 +60,10 @@ com.dc.ui.IndexPage = {
 	 				layout:'anchor',
 					iconCls : 'tabs',
 		            items:[]
-		        },*/
+		        },
 		        userPanel,
 		        deptPanel,
-		        userImpPanel],
+		        userImpPanel*/],
 		        plugins: new Ext.ux.TabCloseMenu()
 		    });
 		}else{		
@@ -56,7 +84,7 @@ com.dc.ui.IndexPage = {
 	 				layout:'anchor',
 					iconCls : 'tabs',
 		            items:[userPanel]
-		        },*/userPanel],
+		        },userPanel*/],
 		        plugins: new Ext.ux.TabCloseMenu()
 		    });		
 		    
@@ -220,7 +248,7 @@ com.dc.ui.IndexPage = {
 							//if(currentUser!='admin') return;
 							var dn = node.id;
 							//判断是部门还是人员
-							if(dn.indexOf('o=orgnizations')!=-1){
+							if(dn.indexOf('ou=orgnizations')!=-1){
 								if(currentUser!='admin'){
 									return;
 								}
@@ -280,7 +308,7 @@ com.dc.ui.IndexPage = {
 					}
 				})
 			});
-			panels.push(item);
+			//panels.push(item);
 		}
 		return panels;
 	}	

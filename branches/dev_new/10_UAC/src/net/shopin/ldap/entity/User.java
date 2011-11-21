@@ -26,6 +26,12 @@ public class User  implements Serializable {
 	
 	private String deptName;//部门名称，为了展示方便
 	
+	private Integer displayOrder;//排序
+	
+	private Integer status;//状态
+	
+	private String o;//所属部门（dn） organization this object belongs to
+	
 	public String getGivenName() {
 		return givenName;
 	}
@@ -155,6 +161,30 @@ public class User  implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getO() {
+		return o;
+	}
+
+	public void setO(String o) {
+		this.o = o;
 	}
 	
 }

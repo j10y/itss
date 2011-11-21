@@ -20,6 +20,30 @@
 	<script type="text/javascript" src="<c:url value="/dept/dept.js"/>" ></script>
 	<script type="text/javascript" src="<c:url value="/user/user.js"/>" ></script>
 	<script type="text/javascript" src="<c:url value="/user/userImport.js"/>" ></script>
+	<script type="text/javascript" >
+		function addTab(id,tabTitle, targetUrl){
+	        Ext.getCmp('sysmainpanel').add({
+		       	id:id,
+			    title: tabTitle,
+			    iconCls: 'tabs',
+			    autoLoad: {
+		    		url: "tabFrame.jsp?url="+targetUrl, 
+		    		scope: this
+		    		},
+		        autoScroll:false,
+			   	closable:true
+			}).show();
+	    }
+			    
+	    function updateTab(id,title, url) {
+	    	var tab = Ext.getCmp('sysmainpanel').getItem(id);
+	  		if(tab){
+	   			Ext.getCmp('sysmainpanel').remove(tab);
+	   		}
+	    	tab = addTab(id,title,url);
+	   		Ext.getCmp('sysmainpanel').setActiveTab(tab);
+	    }
+	</script>
   	<script type="text/javascript" src="<c:url value="/index.js"/>" ></script>
     <SCRIPT SRC="<c:url value="/js/stcookie.js"/>" language="JavaScript1.1"></SCRIPT>
 	<style type="text/css">
@@ -81,30 +105,6 @@
 	Ext.BLANK_IMAGE_URL = 'ext-3.2.1/resources/images/default/s.gif';
 	var demoData= new Cookie(document, currentUser, 240);
 	var dataFound=demoData.load();
-    
-	
-    function addTab(id,tabTitle, targetUrl){
-        Ext.getCmp('sysmainpanel').add({
-	       	id:id,
-		    title: tabTitle,
-		    iconCls: 'tabs',
-		    autoLoad: {
-	    		url: "tabFrame.jsp?url="+targetUrl, 
-	    		scope: this
-	    		},
-	        autoScroll:false,
-		   	closable:true
-		}).show();
-    }
-		    
-    function updateTab(id,title, url) {
-    	var tab = Ext.getCmp('sysmainpanel').getItem(id);
-  		if(tab){
-   			Ext.getCmp('sysmainpanel').remove(tab);
-   		}
-    	tab = addTab(id,title,url);
-   		Ext.getCmp('sysmainpanel').setActiveTab(tab);
-    }
 	
 	function refreshWorkflow(){
 		
@@ -112,7 +112,7 @@
     Ext.onReady(function(){
 	   Ext.QuickTips.init();
 	   Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
-	   com.dc.ui.IndexPage.init('${systemAdmin}',webContext,'');
+	   com.dc.ui.IndexPage.init('${systemAdmin}', webContext, '');
     });
 	</script>
 </head>
