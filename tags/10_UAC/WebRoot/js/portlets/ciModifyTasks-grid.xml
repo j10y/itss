@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="GBK"?>
+<grid>
+	<header>
+		<title>主数据ID</title>
+	</header>
+	<header>
+		<title>变更编号</title>
+	</header>
+	<header>
+		<title>变更名称</title>
+	</header>
+	<header>
+		<title>申请人</title>
+	</header>
+	<header>
+		<title>申请日期</title>
+	</header>
+	<header>
+		<title>任务名称</title>
+	</header>
+	<header>
+		<title>任务编号</title>
+	</header>
+	<header>
+		<title>流程名称</title>
+	</header>
+	<header>
+		<title>页面地址</title>
+	</header>
+</grid>

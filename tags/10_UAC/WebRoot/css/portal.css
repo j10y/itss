@@ -1,0 +1,159 @@
+/*
+ * Ext JS Library 2.0.2
+ * Copyright(c) 2006-2008, Ext JS, LLC.
+ * licensing@extjs.com
+ * 
+ * http://extjs.com/license
+ */
+.x-portal .x-panel-dd-spacer {
+	margin-bottom: 10px;
+}
+
+.x-portlet {
+	margin-bottom: 10px;
+}
+
+/* Clean up the look of the portlets */
+.x-portlet .x-panel-ml {
+	padding-left: 2px;
+}
+
+.x-portlet .x-panel-mr {
+	padding-right: 2px;
+}
+
+.x-portlet .x-panel-bl {
+	padding-left: 2px;
+}
+
+.x-portlet .x-panel-br {
+	padding-right: 2px;
+}
+
+.x-portlet .x-panel-body {
+	background: white;
+}
+
+.x-portlet .x-panel-mc {
+	padding-top: 2px;
+}
+
+.x-portlet .x-panel-bc .x-panel-footer {
+	padding-bottom: 2px;
+}
+
+.x-portlet .x-panel-nofooter .x-panel-bc {
+	height: 2px;
+}
+
+.portal-bottom-container {
+	padding-right: 10px;
+	margin-right: 10px;
+}
+/**
+*Rss Home panel
+*/
+.nav {
+	background-image: url(../shared/icons/fam/folder_go.png) !important;
+}
+
+/**
+*版式选择CSS
+*/
+#default-toolbar-column-style-select-window .x-panel-body {
+	background: white;
+	font: 12px Arial, Helvetica, sans-serif;
+}
+
+#default-toolbar-column-style-select-window .thumb {
+	background: #dddddd;
+	padding: 3px;
+}
+
+#default-toolbar-column-style-select-window .thumb img {
+	height: 50px;
+	width: 60px;
+}
+
+#default-toolbar-column-style-select-window .thumb-wrap {
+	float: left;
+	margin: 4px;
+	margin-right: 0;
+	padding: 5px;
+}
+
+#default-toolbar-column-style-select-window .thumb-wrap span {
+	display: block;
+	overflow: hidden;
+	text-align: center;
+}
+
+#default-toolbar-column-style-select-window .x-view-over {
+	border: 1px solid #dddddd;
+	background: #efefef
+		url(../ext-3.2.1/resources/images/default/grid/row-over.gif)
+		repeat-x left top;
+	padding: 4px;
+}
+
+#idefault-toolbar-column-style-select-window .x-view-selected {
+	background: #eff5fb url(../images/portal/columnStyle/selected.gif)
+		no-repeat right bottom;
+	border: 1px solid #99bbe8;
+	padding: 4px;
+}
+
+#default-toolbar-column-style-select-window .x-view-selected .thumb {
+	background: transparent;
+}
+
+#default-toolbar-column-style-select-window .loading-indicator {
+	font-size: 11px;
+	background-image:
+		url('../extEngine/resources/images/default/grid/loading.gif');
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 20px;
+	margin: 10px;
+}
+
+/**
+*protal首页table选择面板
+*/
+.tabs {
+	background-image:
+		url(../images/tabs.gif)
+		!important;
+}
+
+/**
+*添加新面板按扭图标
+*/
+.default-tabs-tool-bar-add {
+	background-image:
+		url(../images/cls/add.gif)
+		!important;
+}
+.default-tabs-tool-bar-remove {
+	background-image:
+		url(../images/cls/delete.gif)
+		!important;
+}
+.default-tabs-tool-bar-refresh {
+	background-image:
+		url(../images/cls/refresh.png)
+		!important;
+}
+.default-tabs-tool-bar-edit {
+	background-image:
+		url(../images/cls/edit.png)
+		!important;
+}
+.default-tabs-tool-bar-style {
+	background-image:
+		url(../ext-3.2.1/resources/images/default/button/btn-arrow.gif)
+		!important;
+}
+.default-tabs-tool-bar-tools {
+	background-image:url(../images/itil_tools.png)!important;
+}
