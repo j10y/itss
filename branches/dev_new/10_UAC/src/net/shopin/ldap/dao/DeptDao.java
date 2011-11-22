@@ -27,17 +27,24 @@ public interface DeptDao {
 	void update(Department department);
 	
 	/**
-	 * 删除部门，如果存在关联需要提前进行用户等数据迁移
+	 * 物理删除部门，如果存在关联需要提前进行用户等数据迁移
 	 * @param department
 	 */
-	void delete(Department department);
+	@Deprecated
+	void remove(Department department);
+	
+	/**
+	 * 逻辑删除部门
+	 * @param deptRDN
+	 */
+	void deleteByRDN(String deptRDN);
 	
 	/**
 	 * 根据部门编号查询部门信息
-	 * @param deptNo
+	 * @param deptRDN
 	 * @return
 	 */
-	Department findByPrimaryKey(String deptNo);
+	Department findByRDN(String deptRDN);
 	
 	/**
 	 * 查询部门列表，每次展开一级

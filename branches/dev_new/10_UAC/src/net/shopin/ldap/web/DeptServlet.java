@@ -39,53 +39,45 @@ public class DeptServlet extends HttpServlet {
 				String dn = req.getParameter("parentDN");
 				dn = dn!=null && !"".equals(dn) ? dn : "o=orgnizations";//一般会有根节点
 				Department department = new Department();
-				department.setParentNo(req.getParameter("parentNo"));
-				department.setDeptName(req.getParameter("deptName"));
-				department.setDeptDesc(req.getParameter("deptDesc"));
-				department.setErpId(req.getParameter("erpId"));
-				if(StringUtils.isNotEmpty(req.getParameter("displayOrder")))
-					department.setDisplayOrder(Integer.valueOf(req.getParameter("displayOrder")));
-				if(StringUtils.isNotEmpty(req.getParameter("Status")))
-					department.setStatus(Integer.valueOf(req.getParameter("Status")));
+				convertReqToDept(req, department);
 				deptDao.create(department);
 				
 			}else if(methodCall.equalsIgnoreCase("delete")){
-				String dn = req.getParameter("dn");
-				Department department = new Department();
-				department.setDeptNo(req.getParameter("deptNo"));
-				deptDao.delete(department);
+				String deptRDN = req.getParameter("deptRDN");
+				deptDao.deleteByRDN(deptRDN);
 			}else if(methodCall.equalsIgnoreCase("modify")){
 				Department department = new Department();
-				department.setDeptName(req.getParameter("deptName"));
-				department.setDeptNo(req.getParameter("deptNo"));
+				convertReqToDept(req, department);
 				deptDao.update(department);				
 			}else if (methodCall.equalsIgnoreCase("searchDepts")){
 				
 				List<Department> depts = deptDao.findDeptsByParam(req.getParameter("param") != null ? req.getParameter("param") : "");
 				json = new StringBuffer();
 				for (Department dept : depts) {
-					json.append( "{deptNo:'" + dept.getDeptNo() + "',");
-					json.append( "deptName:'" + dept.getDeptName() + "',");
-					json.append( "erpId:'" + dept.getErpId() + "',");
-					json.append( "status:'" + dept.getStatus() + "',");
-					json.append( "parentNo:'" + dept.getParentNo() + "',");
-					json.append( "deptDesc:'" + dept.getDeptDesc() + "'},");
+					json.append("{deptNo:'" + (StringUtils.isNotEmpty(dept.getDeptNo()) ? dept.getDeptNo() : "") + "'")
+					.append(",parentNo:'" + (StringUtils.isNotEmpty(dept.getParentNo()) ? dept.getParentNo() : "") + "'")
+					.append(",deptName:'" + dept.getDeptName() + "'")
+					.append(",deptDesc:'" + dept.getDeptDesc() + "'")
+					.append(",displayOrder:'" + (dept.getDisplayOrder() != null ? dept.getDisplayOrder() : "0") + "'")
+					.append(",status:'" + (dept.getStatus() != null ? dept.getStatus() : "") + "'")
+					.append(",erpId:'" + (StringUtils.isNotEmpty(dept.getErpId()) ? dept.getErpId() : "") + "'")
+					.append("},");
 				}
 				if (json.toString().endsWith(",")) {
 					json = new StringBuffer(json.substring(0, json.length() - 1));
 				}
 				json = new StringBuffer("{success: true,rowCount:'" + depts.size() + "',data:[" + json + "]}");
-			}else if (methodCall.equalsIgnoreCase("getDetailByDeptNo")){
-				String deptNo = req.getParameter("deptNo");
-				Department dept = deptDao.findByPrimaryKey(deptNo);
+			}else if (methodCall.equalsIgnoreCase("getDetailByDeptRDN")){
+				String deptRDN = req.getParameter("deptRDN");
+				Department dept = deptDao.findByRDN(deptRDN);
 				json = new StringBuffer("{success:true");
 				json.append(",deptNo:'" + (StringUtils.isNotEmpty(dept.getDeptNo()) ? dept.getDeptNo() : "") + "'")
 					.append(",parentNo:'" + (StringUtils.isNotEmpty(dept.getParentNo()) ? dept.getParentNo() : "") + "'")
 					.append(",deptName:'" + dept.getDeptName() + "'")
 					.append(",deptDesc:'" + dept.getDeptDesc() + "'")
 					.append(",displayOrder:'" + (dept.getDisplayOrder() != null ? dept.getDisplayOrder() : "0") + "'")
-					.append(",status:'" + dept.getStatus() + "'")
-					.append(",erpId:'" + dept.getErpId() + "'")
+					.append(",status:'" + (dept.getStatus() != null ? dept.getStatus() : "") + "'")
+					.append(",erpId:'" + (StringUtils.isNotEmpty(dept.getErpId()) ? dept.getErpId() : "") + "'")
 					.append("}");
 			}
 		} catch (RuntimeException e) {
@@ -101,6 +93,17 @@ public class DeptServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void convertReqToDept(HttpServletRequest req, Department department){
+		department.setParentNo(req.getParameter("parentNo"));
+		department.setDeptName(req.getParameter("deptName"));
+		department.setDeptDesc(req.getParameter("deptDesc"));
+		department.setErpId(req.getParameter("erpId"));
+		if(StringUtils.isNotEmpty(req.getParameter("displayOrder")))
+			department.setDisplayOrder(Integer.valueOf(req.getParameter("displayOrder")));
+		if(StringUtils.isNotEmpty(req.getParameter("Status")))
+			department.setStatus(Integer.valueOf(req.getParameter("Status")));
 	}
 
 }

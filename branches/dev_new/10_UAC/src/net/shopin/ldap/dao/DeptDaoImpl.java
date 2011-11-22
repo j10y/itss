@@ -56,14 +56,14 @@ public class DeptDaoImpl implements DeptDao {
 	 * 删除部门，如果部门下存在人员信息需要将其及其子部门下所有人员转移
 	 * @see net.shopin.ldap.dao.DeptDao#delete(net.shopin.ldap.entity.Department)
 	 */
-	public void delete(Department department) {
-		//modified by awen for change ldap'schema on 2011-11-22 begin
-		
-			/*ldapTemplate.unbind(buildDn(department));*/
-		department  = this.findByPrimaryKey(department.getDeptNo());
-		department.setStatus(Department.SATAL_NOT_NORMAL);
-		update(department);
-		//modified by awen for change ldap'schema on 2011-11-22 begin
+	public void remove(Department department) {
+		ldapTemplate.unbind(buildDn(department));
+	}
+	
+	public void deleteByRDN(String deptRDN) {
+		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(deptRDN);
+		context.setAttributeValue("status", Department.SATAL_NOT_NORMAL);
+		ldapTemplate.modifyAttributes(deptRDN, context.getModificationItems());
 	}
 	
 	private Name buildDn(Department department) {
@@ -105,17 +105,11 @@ public class DeptDaoImpl implements DeptDao {
 	 * (non-Javadoc)
 	 * @see net.shopin.ldap.dao.DeptDao#delete(net.shopin.ldap.entity.Department)
 	 */
-	public Department findByPrimaryKey(String deptNo) {
+	public Department findByRDN(String deptRDN) {
 
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
-		String filter="(o=" + deptNo + ")";
-		List depts = ldapTemplate.search("ou=orgnizations", filter, new DeptContextMapper());
-		if(depts.size()<=0){
-			return null;
-		}else{
-			Department result = (Department) depts.get(0);
-			return result;
-		}
+		return (Department)ldapTemplate.lookup(deptRDN, new DeptContextMapper());
+		
 	}
 
 	/* (non-Javadoc)
@@ -175,8 +169,10 @@ public class DeptDaoImpl implements DeptDao {
 			dept.setDeptNo(context.getStringAttribute("o"));
 			dept.setDeptName(context.getStringAttribute("displayName"));
 			dept.setDeptDesc(context.getStringAttribute("description"));
-			dept.setDisplayOrder(Integer.valueOf(context.getStringAttribute("displayOrder")));
-			dept.setStatus(Integer.valueOf(context.getStringAttribute("status")));
+			if(context.getStringAttribute("displayOrder")!=null)
+				dept.setDisplayOrder(Integer.valueOf(context.getStringAttribute("displayOrder")));
+			if(context.getStringAttribute("status")!=null)
+				dept.setStatus(Integer.valueOf(context.getStringAttribute("status")));
 			dept.setErpId(context.getStringAttribute("erpId"));
 			dept.setParentNo(context.getStringAttribute("parentNo"));
 			return dept;
