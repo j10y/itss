@@ -58,7 +58,7 @@ public class DeptDaoImpl implements DeptDao {
 	
 	public void deleteByRDN(String deptRDN) {
 		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(deptRDN);
-		context.setAttributeValue("status", Department.SATAL_NOT_NORMAL);
+		context.setAttributeValue("status", Department.SATAL_NOT_NORMAL.toString());
 		ldapTemplate.modifyAttributes(deptRDN, context.getModificationItems());
 	}
 	
@@ -125,8 +125,8 @@ public class DeptDaoImpl implements DeptDao {
 		context.setAttributeValues("objectclass", new String[] { "top", "shopin-organization"});
 		context.setAttributeValue("displayName", department.getDeptName());
 		context.setAttributeValue("description", StringUtils.isNotEmpty(department.getDeptDesc()) ? department.getDeptDesc() : null);
-		context.setAttributeValue("status", department.getStatus());
-		context.setAttributeValue("displayOrder", department.getDisplayOrder());
+		context.setAttributeValue("status", department.getStatus().toString());
+		context.setAttributeValue("displayOrder", department.getDisplayOrder().toString());
 		context.setAttributeValue("parentNo", StringUtils.isNotEmpty(department.getParentNo()) ? department.getParentNo() : null);		
 		context.setAttributeValue("erpId", StringUtils.isNotEmpty(department.getErpId()) ? department.getErpId() : null);		
 		//modified by awen for extend openldap's schema on 2011-11-21 end

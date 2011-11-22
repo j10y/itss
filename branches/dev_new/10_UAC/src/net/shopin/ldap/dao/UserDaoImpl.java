@@ -87,8 +87,8 @@ public class UserDaoImpl implements UserDao {
 		
 		//modified by awen for extend openldap's schema on 2011-11-21 begin
 		context.setAttributeValue("o", user.getO());
-		context.setAttributeValue("status", user.getStatus());
-		context.setAttributeValue("displayOrder", user.getDisplayOrder());
+		context.setAttributeValue("status", user.getStatus().toString());
+		context.setAttributeValue("displayOrder", user.getDisplayOrder().toString());
 		//modified by awen for extend openldap's schema on 2011-11-21 begin
 	}
 		
@@ -103,7 +103,7 @@ public class UserDaoImpl implements UserDao {
 	
 	public void delete(String userRDN) {
 		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(userRDN);
-		context.setAttributeValue("status", 3);
+		context.setAttributeValue("status", "3");
 		ldapTemplate.modifyAttributes(userRDN, context.getModificationItems());
 	}
 
