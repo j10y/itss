@@ -110,16 +110,14 @@ public class DeptDaoImpl implements DeptDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		return (Department)ldapTemplate.lookup(deptRDN, new DeptContextMapper());
 		
-		
-		
 	}
 
 	/* (non-Javadoc)
 	 * @see net.shopin.ldap.dao.DeptDao#findSubDeptsByParentNo(java.lang.String)
 	 */
-	public List<Department> findSubDeptsByParentNo(String parentNo) {
+	public List<Department> findSubDeptsByParentRDN(String parentRDN) {
 		// TODO Auto-generated method stub
-		return null;
+		return ldapTemplate.listBindings(parentRDN, getContextMapper());
 	}
 
 	private void mapToContext(Department department, DirContextAdapter context) {
@@ -144,8 +142,6 @@ public class DeptDaoImpl implements DeptDao {
 	 */
 	public List<Department> findDeptsByParam(String param) {
 		// TODO Auto-generated method stub
-		String filters = null;
-		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(param != null && !param.equals("")){
 			filter="(&(objectClass=shopin-organization)|(o=*" + param + "*)(displayName=*" + param + "*)(description=*"+ param + "*))";

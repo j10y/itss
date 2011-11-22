@@ -48,10 +48,10 @@ public interface DeptDao {
 	
 	/**
 	 * 查询部门列表，每次展开一级
-	 * @param parentNo
+	 * @param parentRDN
 	 * @return
 	 */
-	List<Department> findSubDeptsByParentNo(String parentNo);
+	List<Department> findSubDeptsByParentRDN(String parentRDN);
 	
 	/**
 	 * 查询部门列表
