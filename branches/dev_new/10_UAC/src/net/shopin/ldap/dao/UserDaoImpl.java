@@ -595,12 +595,13 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
-			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			filter="(&(status=0)|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 		}else{
-			filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
+			filter="(&(status=0)|(uid=*)(cn=*)(title=*)(displayName=*))";
 		}
 		SearchControls controls  = new SearchControls();
 		controls.setCountLimit(limit);
+		controls.setReturningObjFlag(true);
 		
 		List<User> users = ldapTemplate.search("ou=users", filter, controls, getContextMapper());
 

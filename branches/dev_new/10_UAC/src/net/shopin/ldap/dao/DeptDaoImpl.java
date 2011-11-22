@@ -6,8 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.naming.Name;
+import javax.naming.directory.SearchControls;
 
 import net.shopin.ldap.entity.Department;
+import net.shopin.ldap.entity.User;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.core.ContextMapper;
@@ -112,7 +114,15 @@ public class DeptDaoImpl implements DeptDao {
 	 */
 	public List<Department> findSubDeptsByParentRDN(String parentRDN) {
 		// TODO Auto-generated method stub
-		return ldapTemplate.listBindings(parentRDN, getContextMapper());
+		//return ldapTemplate.listBindings(parentRDN, getContextMapper());
+		SearchControls controls  = new SearchControls();
+		controls.setCountLimit(Integer.MAX_VALUE);
+		controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
+		controls.setReturningObjFlag(true);
+		String filter=null;
+		filter="(&(objectClass=shopin-organization)(status=0)|(displayName=*))";
+		List<Department> depts = ldapTemplate.search(parentRDN, filter, controls, getContextMapper());
+		return depts;
 	}
 
 	private void mapToContext(Department department, DirContextAdapter context) {
