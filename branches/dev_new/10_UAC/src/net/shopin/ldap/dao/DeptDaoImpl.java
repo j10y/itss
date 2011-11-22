@@ -6,14 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.naming.Name;
-import javax.naming.NamingException;
-import javax.naming.directory.Attributes;
 
 import net.shopin.ldap.entity.Department;
-import net.shopin.ldap.entity.User;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
