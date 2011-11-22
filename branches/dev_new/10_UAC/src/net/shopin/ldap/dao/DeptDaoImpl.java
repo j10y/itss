@@ -103,7 +103,6 @@ public class DeptDaoImpl implements DeptDao {
 	 */
 	public Department findByRDN(String deptRDN) {
 
-		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		return (Department)ldapTemplate.lookup(deptRDN, new DeptContextMapper());
 		
 	}
