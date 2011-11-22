@@ -581,10 +581,15 @@ public class UserDaoImpl implements UserDao {
 	
 	}
 	
+	public List<User> findUserList(String deptDN, String uidORName) {
+		return this.findUserList(deptDN, uidORName, Integer.MAX_VALUE);
+	}
+	
+	
 	/* 获取部门DN，用户的uid或cn模糊匹配uidOrName的用户列表
 	 * @see net.shopin.ldap.dao.UserDao#findUserList(java.lang.String, java.lang.String)
 	 */
-	public List<User> findUserList(String deptDN, String uidORName) {
+	public List<User> findUserList(String deptDN, String uidORName, int limit) {
 		String filters = null;
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
@@ -613,6 +618,8 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	
 	}
+	
+	
 
 	public LdapTemplate getLdapTemplate() {
 		return ldapTemplate;

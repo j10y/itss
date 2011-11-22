@@ -79,6 +79,15 @@ public interface UserDao {
 	 * @return
 	 */
 	public List<User> findUserList(String deptDN, String uidORName);
+	
+	/**
+	 * 通过部门dn，用户uid或者名称模糊查询用户列表
+	 * @param deptDN
+	 * @param uidORName
+	 * @param limit
+	 * @return
+	 */
+	public List<User> findUserList(String deptDN, String uidORName, int limit);
 
 	
 }
