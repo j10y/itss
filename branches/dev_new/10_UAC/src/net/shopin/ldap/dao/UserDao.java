@@ -87,7 +87,7 @@ public interface UserDao {
 	 * @param limit
 	 * @return
 	 */
-	public List<User> findUserList(String deptDN, String uidORName, int limit);
+	public List<User> findUserList(String deptDN, String uidORName, long limit);
 
 	
 }

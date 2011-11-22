@@ -9,6 +9,7 @@ import java.util.List;
 import javax.naming.Name;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
+import javax.naming.directory.SearchControls;
 
 import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.User;
@@ -589,7 +590,7 @@ public class UserDaoImpl implements UserDao {
 	/* 获取部门DN，用户的uid或cn模糊匹配uidOrName的用户列表
 	 * @see net.shopin.ldap.dao.UserDao#findUserList(java.lang.String, java.lang.String)
 	 */
-	public List<User> findUserList(String deptDN, String uidORName, int limit) {
+	public List<User> findUserList(String deptDN, String uidORName, long limit) {
 		String filters = null;
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
@@ -598,7 +599,10 @@ public class UserDaoImpl implements UserDao {
 		}else{
 			filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
 		}
-		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
+		SearchControls controls  = new SearchControls();
+		controls.setCountLimit(limit);
+		
+		List<User> users = ldapTemplate.search("ou=users", filter, controls, getContextMapper());
 
 		for(User user : users){
 			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
