@@ -9,7 +9,6 @@ public class Department implements Serializable {
 
 	/**
 	 * 部门标号规则
-	 * \
 	 * ## ## ## ## .. (财年 第一级 第二级 第三级 ..)
 	 * 
 	 */
