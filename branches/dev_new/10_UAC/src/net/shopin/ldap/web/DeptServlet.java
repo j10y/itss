@@ -70,15 +70,15 @@ public class DeptServlet extends HttpServlet {
 			}else if (methodCall.equalsIgnoreCase("getDetailByDeptRDN")){
 				String deptRDN = req.getParameter("deptRDN");
 				Department dept = deptDao.findByRDN(deptRDN);
-				json = new StringBuffer("{success:true");
-				json.append(",deptNo:'" + (StringUtils.isNotEmpty(dept.getDeptNo()) ? dept.getDeptNo() : "") + "'")
-					.append(",parentNo:'" + (StringUtils.isNotEmpty(dept.getParentNo()) ? dept.getParentNo() : "") + "'")
-					.append(",deptName:'" + dept.getDeptName() + "'")
-					.append(",deptDesc:'" + dept.getDeptDesc() + "'")
-					.append(",displayOrder:'" + (dept.getDisplayOrder() != null ? dept.getDisplayOrder() : "0") + "'")
-					.append(",status:'" + (dept.getStatus() != null ? dept.getStatus() : "") + "'")
-					.append(",erpId:'" + (StringUtils.isNotEmpty(dept.getErpId()) ? dept.getErpId() : "") + "'")
-					.append("}");
+				json = new StringBuffer("{success:true,data:{");
+				json.append("'deptNo':'" + (StringUtils.isNotEmpty(dept.getDeptNo()) ? dept.getDeptNo() : "") + "'")
+					.append(",'parentNo':'" + (StringUtils.isNotEmpty(dept.getParentNo()) ? dept.getParentNo() : "") + "'")
+					.append(",'deptName':'" + dept.getDeptName() + "'")
+					.append(",'deptDesc':'" + dept.getDeptDesc() + "'")
+					.append(",'displayOrder':'" + (dept.getDisplayOrder() != null ? dept.getDisplayOrder() : "0") + "'")
+					.append(",'status':'" + (dept.getStatus() != null ? dept.getStatus() : "") + "'")
+					.append(",'erpId':'" + (StringUtils.isNotEmpty(dept.getErpId()) ? dept.getErpId() : "") + "'")
+					.append("}}");
 			}
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
@@ -96,14 +96,15 @@ public class DeptServlet extends HttpServlet {
 	}
 	
 	private void convertReqToDept(HttpServletRequest req, Department department){
+		department.setDeptNo(req.getParameter("deptRDN"));
 		department.setParentNo(req.getParameter("parentNo"));
 		department.setDeptName(req.getParameter("deptName"));
 		department.setDeptDesc(req.getParameter("deptDesc"));
 		department.setErpId(req.getParameter("erpId"));
 		if(StringUtils.isNotEmpty(req.getParameter("displayOrder")))
 			department.setDisplayOrder(Integer.valueOf(req.getParameter("displayOrder")));
-		if(StringUtils.isNotEmpty(req.getParameter("Status")))
-			department.setStatus(Integer.valueOf(req.getParameter("Status")));
+		if(StringUtils.isNotEmpty(req.getParameter("status")))
+			department.setStatus(Integer.valueOf(req.getParameter("status")));
 	}
 
 }
