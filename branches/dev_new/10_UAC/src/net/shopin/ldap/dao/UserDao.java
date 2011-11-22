@@ -32,10 +32,16 @@ public interface UserDao {
 	void updateUserButPwd(User user, boolean modPwd);
 	
 	/**
-	 * 删除用户
+	 * 逻辑删除用户
+	 * @param userRDN
+	 */
+	void delete(String userRDN);
+	
+	/**
+	 * 物理删除用户
 	 * @param department
 	 */
-	void delete(User user);
+	void remove(User user);
 	
 	/**
 	 * 
@@ -65,5 +71,14 @@ public interface UserDao {
 	 * @return
 	 */
 	public List<User> findUserList(String uidORName);
+	
+	/**
+	 * 通过部门dn，用户uid或者名称模糊查询用户列表
+	 * @param deptDN
+	 * @param uidORName
+	 * @return
+	 */
+	public List<User> findUserList(String deptDN, String uidORName);
+
 	
 }

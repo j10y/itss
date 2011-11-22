@@ -218,7 +218,8 @@ public class UserServlet extends HttpServlet {
 			if(methodCall.equalsIgnoreCase("add")){
 				userDao.create(user);
 			}else if(methodCall.equalsIgnoreCase("delete")){
-				userDao.delete(user);
+				String userRDN = req.getParameter("userRDN");
+				userDao.delete(userRDN);
 			}else if(methodCall.equalsIgnoreCase("modify")){
 				userDao.update(user);
 			}else if(methodCall.equalsIgnoreCase("getDetail")){

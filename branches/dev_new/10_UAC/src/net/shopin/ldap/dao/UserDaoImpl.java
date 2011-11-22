@@ -92,13 +92,18 @@ public class UserDaoImpl implements UserDao {
 	}
 		
 	/**
-	 * @see net.shopin.ldap.dao.UserDao#delete(User)
+	 * @see net.shopin.ldap.dao.UserDao#remove(User)
 	 * @author wchao
 	 *
 	 */
-	public void delete(User user) {
-		// TODO Auto-generated method stub
+	public void remove(User user) {
 		ldapTemplate.unbind(buildDn(user));
+	}
+	
+	public void delete(String userRDN) {
+		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(userRDN);
+		context.setAttributeValue("status", 3);
+		ldapTemplate.modifyAttributes(userRDN, context.getModificationItems());
 	}
 
 	private Name buildDn(User user) {
@@ -230,7 +235,7 @@ public class UserDaoImpl implements UserDao {
 		//首先判断userType是否修改
 		User old = this.findByPrimaryKey(user.getUid());
 		if(old.getUserType()==null || !old.getUserType().equals(user.getUserType())){//用户类型改变
-			this.delete(old);
+			this.remove(old);
 			if(user.getPhoto()==null||user.getPhoto().length == 0){
 				user.setPhoto(old.getPhoto());//图片
 			}
@@ -256,7 +261,7 @@ public class UserDaoImpl implements UserDao {
 			user.setPassword(old.getPassword());
 		}
 		if(old.getUserType()==null || !old.getUserType().equals(user.getUserType())){//用户类型改变
-			this.delete(old);
+			this.remove(old);
 			if(user.getPhoto()==null||user.getPhoto().length == 0){
 				user.setPhoto(old.getPhoto());//图片
 			}
@@ -345,7 +350,7 @@ public class UserDaoImpl implements UserDao {
 		            	DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		        		String filter=null;
 		        		filter="(&(objectClass=organizationalUnit)(description=" + deptCell +"))";
-		        		List<Department> depts = ldapTemplate.search("o=orgnizations", filter, deptDao.getContextMapper());
+		        		List<Department> depts = ldapTemplate.search("ou=orgnizations", filter, deptDao.getContextMapper());
 		        		if(depts.size() != 1){//如果指定名称的部门不惟一，那么不倒入数据库，记录日志，手动添加
 		        			rowMs += "Line: "+(rowIndex+1)+", deptName not found or more than one";
 				        	msg += rowMs+"<br>";
@@ -560,7 +565,40 @@ public class UserDaoImpl implements UserDao {
 		for(User user : users){
 			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
 				String deptFilter="(ou=" + user.getDepartmentNumber().trim() + ")";
-				List deptNames = ldapTemplate.search("o=orgnizations", deptFilter, new AttributesMapper(){
+				List deptNames = ldapTemplate.search("ou=orgnizations", deptFilter, new AttributesMapper(){
+					public Object mapFromAttributes(Attributes attributes)
+							throws NamingException {
+						// TODO Auto-generated method stub
+						return attributes.get("description").get();
+					}
+				});
+				if(deptNames.size()>0){
+					user.setDeptName(deptNames.get(0).toString());
+				}
+			}
+		}
+		return users;
+	
+	}
+	
+	/* 获取部门DN，用户的uid或cn模糊匹配uidOrName的用户列表
+	 * @see net.shopin.ldap.dao.UserDao#findUserList(java.lang.String, java.lang.String)
+	 */
+	public List<User> findUserList(String deptDN, String uidORName) {
+		String filters = null;
+		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
+		String filter=null;
+		if(uidORName != null && !uidORName.equals("")){
+			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+		}else{
+			filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
+		}
+		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
+
+		for(User user : users){
+			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
+				String deptFilter="(ou=" + user.getDepartmentNumber().trim() + ")";
+				List deptNames = ldapTemplate.search("ou=orgnizations", deptFilter, new AttributesMapper(){
 					public Object mapFromAttributes(Attributes attributes)
 							throws NamingException {
 						// TODO Auto-generated method stub
