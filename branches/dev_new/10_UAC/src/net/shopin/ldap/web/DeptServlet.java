@@ -58,7 +58,11 @@ public class DeptServlet extends HttpServlet {
 				json = new StringBuffer();
 				for (Department dept : depts) {
 					json.append( "{deptNo:'" + dept.getDeptNo() + "',");
-					json.append( "deptName:'" + dept.getDeptName() + "'},");
+					json.append( "deptName:'" + dept.getDeptName() + "',");
+					json.append( "erpId:'" + dept.getErpId() + "',");
+					json.append( "status:'" + dept.getStatus() + "',");
+					json.append( "parentNo:'" + dept.getParentNo() + "',");
+					json.append( "deptDesc:'" + dept.getDeptDesc() + "'},");
 				}
 				if (json.toString().endsWith(",")) {
 					json = new StringBuffer(json.substring(0, json.length() - 1));

@@ -102,7 +102,15 @@ public class DeptDaoImpl implements DeptDao {
 	 */
 	public Department findByPrimaryKey(String deptNo) {
 
-		return null;
+		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
+		String filter="(o=" + deptNo + ")";
+		List depts = ldapTemplate.search("ou=orgnizations", filter, new DeptContextMapper());
+		if(depts.size()<=0){
+			return null;
+		}else{
+			Department result = (Department) depts.get(0);
+			return result;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -139,11 +147,11 @@ public class DeptDaoImpl implements DeptDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(param != null && !param.equals("")){
-			filter="(&(objectClass=organizationalUnit)|(ou=*" + param + "*)(description=*"+ param + "*))";
+			filter="(&(objectClass=shopin-organization)|(o=*" + param + "*)(displayName=*" + param + "*)(description=*"+ param + "*))";
 		}else{
-			filter="(&(objectClass=organizationalUnit)|(ou=*)(description=*))";
+			filter="(&(objectClass=shopin-organization)|(o=*)(displayName=*)(description=*))";
 		}
-		List<Department> depts = ldapTemplate.search("o=orgnizations", filter, getContextMapper());
+		List<Department> depts = ldapTemplate.search("ou=orgnizations", filter, getContextMapper());
 
 		return depts;
 	}
@@ -159,8 +167,13 @@ public class DeptDaoImpl implements DeptDao {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			Department dept = new Department();
-			dept.setDeptNo(context.getStringAttribute("ou"));
-			dept.setDeptName(context.getStringAttribute("description"));
+			dept.setDeptNo(context.getStringAttribute("o"));
+			dept.setDeptName(context.getStringAttribute("displayName"));
+			dept.setDeptDesc(context.getStringAttribute("description"));
+			dept.setDisplayOrder(Integer.valueOf(context.getStringAttribute("displayOrder")));
+			dept.setStatus(Integer.valueOf(context.getStringAttribute("status")));
+			dept.setErpId(context.getStringAttribute("erpId"));
+			dept.setParentNo(context.getStringAttribute("parentNo"));
 			return dept;
 		}
 	}

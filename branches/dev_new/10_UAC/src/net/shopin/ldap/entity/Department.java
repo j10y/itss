@@ -18,7 +18,7 @@ public class Department implements Serializable {
 	
 	String deptName;//部门名称，在LDAP中为shopin-orgnization的displayName 必填项
 	
-	String deptDesc;//部门名称，在LDAP中为shopin-orgnization的description 非必填
+	String deptDesc;//部门描述，在LDAP中为shopin-orgnization的description 非必填
 	
 	Integer displayOrder;//排序
 	
