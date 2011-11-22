@@ -57,8 +57,13 @@ public class DeptDaoImpl implements DeptDao {
 	 * @see net.shopin.ldap.dao.DeptDao#delete(net.shopin.ldap.entity.Department)
 	 */
 	public void delete(Department department) {
-		// TODO Auto-generated method stub
-		ldapTemplate.unbind(buildDn(department));
+		//modified by awen for change ldap'schema on 2011-11-22 begin
+		
+			/*ldapTemplate.unbind(buildDn(department));*/
+		department  = this.findByPrimaryKey(department.getDeptNo());
+		department.setStatus(Department.SATAL_NOT_NORMAL);
+		update(department);
+		//modified by awen for change ldap'schema on 2011-11-22 begin
 	}
 	
 	private Name buildDn(Department department) {

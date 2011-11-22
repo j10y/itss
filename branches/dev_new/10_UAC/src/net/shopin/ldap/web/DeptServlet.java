@@ -13,6 +13,7 @@ import net.shopin.ldap.dao.DeptDao;
 import net.shopin.ldap.entity.Department;
 import net.shopin.util.SpringContextUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.samples.utils.LdapTreeBuilder;
 
 public class DeptServlet extends HttpServlet {
@@ -40,6 +41,12 @@ public class DeptServlet extends HttpServlet {
 				Department department = new Department();
 				department.setParentNo(req.getParameter("parentNo"));
 				department.setDeptName(req.getParameter("deptName"));
+				department.setDeptDesc(req.getParameter("deptDesc"));
+				department.setErpId(req.getParameter("erpId"));
+				if(StringUtils.isNotEmpty(req.getParameter("displayOrder")))
+					department.setDisplayOrder(Integer.valueOf(req.getParameter("displayOrder")));
+				if(StringUtils.isNotEmpty(req.getParameter("Status")))
+					department.setStatus(Integer.valueOf(req.getParameter("Status")));
 				deptDao.create(department);
 				
 			}else if(methodCall.equalsIgnoreCase("delete")){
@@ -68,6 +75,18 @@ public class DeptServlet extends HttpServlet {
 					json = new StringBuffer(json.substring(0, json.length() - 1));
 				}
 				json = new StringBuffer("{success: true,rowCount:'" + depts.size() + "',data:[" + json + "]}");
+			}else if (methodCall.equalsIgnoreCase("getDetailByDeptNo")){
+				String deptNo = req.getParameter("deptNo");
+				Department dept = deptDao.findByPrimaryKey(deptNo);
+				json = new StringBuffer("{success:true");
+				json.append(",deptNo:'" + (StringUtils.isNotEmpty(dept.getDeptNo()) ? dept.getDeptNo() : "") + "'")
+					.append(",parentNo:'" + (StringUtils.isNotEmpty(dept.getParentNo()) ? dept.getParentNo() : "") + "'")
+					.append(",deptName:'" + dept.getDeptName() + "'")
+					.append(",deptDesc:'" + dept.getDeptDesc() + "'")
+					.append(",displayOrder:'" + (dept.getDisplayOrder() != null ? dept.getDisplayOrder() : "0") + "'")
+					.append(",status:'" + dept.getStatus() + "'")
+					.append(",erpId:'" + dept.getErpId() + "'")
+					.append("}");
 			}
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block

@@ -22,9 +22,12 @@ public class Department implements Serializable {
 	
 	Integer displayOrder;//排序
 	
-	Integer status;//状态
+	Integer status;//状态 0正常 1锁定或删除
 	
 	String erpId;//对应ERP-HR中的部门编码
+	
+	public static final Integer SATAL_NORMAL = Integer.valueOf(0);
+	public static final Integer SATAL_NOT_NORMAL = Integer.valueOf(1);
 	
 	
 	public String getParentNo() {
