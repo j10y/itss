@@ -32,6 +32,10 @@ public class User  implements Serializable {
 	
 	private String o;//所属部门（dn） organization this object belongs to
 	
+	private String employeeNumber;//员工编号
+	
+	private String employeeType;//员工类型，在编，非在编等
+	
 	public String getGivenName() {
 		return givenName;
 	}
