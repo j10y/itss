@@ -206,5 +206,4 @@ public class User  implements Serializable {
 	public void setEmployeeType(String employeeType) {
 		this.employeeType = employeeType;
 	}
-	
 }
