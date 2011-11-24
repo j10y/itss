@@ -12,6 +12,8 @@ public class Department implements Serializable {
 	 * ## ## ## ## .. (财年 第一级 第二级 第三级 ..)
 	 * 
 	 */
+	String dn;
+	
 	String parentNo;//父部门编号，在LDAP中为shopin-orgnization的o
 	
 	String deptNo;//部门编号，在LDAP中为shopin-orgnization的o
@@ -97,6 +99,12 @@ public class Department implements Serializable {
 	}
 	public void setErpId(String erpId) {
 		this.erpId = erpId;
+	}
+	public String getDn() {
+		return dn;
+	}
+	public void setDn(String dn) {
+		this.dn = dn;
 	}
 	
 }

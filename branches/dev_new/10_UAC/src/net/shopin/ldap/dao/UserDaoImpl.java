@@ -206,6 +206,7 @@ public class UserDaoImpl implements UserDao {
 				sb.append("" + (char)bytes[i]);
 			}
 			user.setPassword(sb.toString());
+			user.setDn(context.getDn().toString());
 			user.setCn(context.getStringAttribute("cn"));
 			user.setSn(context.getStringAttribute("sn"));
 			user.setDepartmentNumber(context.getStringAttribute("departmentNumber"));
@@ -646,6 +647,12 @@ public class UserDaoImpl implements UserDao {
 	 */
 	public void setDeptDao(DeptDao deptDao) {
 		this.deptDao = deptDao;
+	}
+
+	@Override
+	public User findByRDN(String userRDN) {
+		// TODO Auto-generated method stub
+		return (User)ldapTemplate.lookup(userRDN, new UserContextMapper());
 	}
 	
 }

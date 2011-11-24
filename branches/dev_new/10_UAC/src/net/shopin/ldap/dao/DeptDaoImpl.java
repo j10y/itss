@@ -169,6 +169,7 @@ public class DeptDaoImpl implements DeptDao {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			Department dept = new Department();
+			dept.setDn(context.getDn().toString());
 			dept.setDeptNo(context.getStringAttribute("o"));
 			dept.setDeptName(context.getStringAttribute("displayName"));
 			dept.setDeptDesc(context.getStringAttribute("description"));
