@@ -64,7 +64,7 @@ public class GroupDaoImpl implements GroupDao {
 	}
 	
 	private Name buildDn(UserGroup userGroup) {
-		return new DistinguishedName("uid=" + userGroup.getCn() + ",ou=groups");
+		return new DistinguishedName("cn=" + userGroup.getCn() + ",ou=groups");
 	}
 
 	/*
@@ -99,6 +99,7 @@ public class GroupDaoImpl implements GroupDao {
 		context.setAttributeValue("displayName", userGroup.getDisplayName());
 		context.setAttributeValue("description", StringUtils.isNotEmpty(userGroup.getDescription()) ? userGroup.getDescription() : null);
 		context.setAttributeValue("status", userGroup.getStatus().toString());
+		context.setAttributeValues("member", userGroup.getMembers().toArray());
 	}
 	
 	/* (non-Javadoc)
