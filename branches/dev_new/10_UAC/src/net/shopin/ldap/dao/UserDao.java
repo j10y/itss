@@ -88,6 +88,13 @@ public interface UserDao {
 	 * @return
 	 */
 	public List<User> findUserList(String deptDN, String uidORName, long limit);
+	
+	/**
+	 * 
+	 * @param userRDN
+	 * @return
+	 */
+	public User findByRDN(String userRDN);
 
 	
 }
