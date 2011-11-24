@@ -30,7 +30,6 @@ public interface GroupDao {
 	 * 物理删除用户组，如果存在关联需要提前进行用户等数据迁移
 	 * @param userGroup
 	 */
-	@Deprecated
 	void remove(UserGroup userGroup);
 	
 	/**
@@ -51,7 +50,7 @@ public interface GroupDao {
 	 * @param parentRDN
 	 * @return
 	 */
-	List<UserGroup> findSubDeptsByParentRDN(String parentRDN);
+	List<UserGroup> findSubGroupsByParentRDN(String parentRDN);
 	
 	/**
 	 * 查询用户组列表
@@ -59,7 +58,7 @@ public interface GroupDao {
 	 * @param parentNo
 	 * @return
 	 */
-	List<UserGroup> findDeptsByParam(String param);
+	List<UserGroup> findGroupsByParam(String param);
 	
 	/**
 	 * 

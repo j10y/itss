@@ -80,7 +80,7 @@ public class GroupDaoImpl implements GroupDao {
 	/* (non-Javadoc)
 	 * @see net.shopin.ldap.dao.UserGroupDao#findSubDeptsByParentNo(java.lang.String)
 	 */
-	public List<UserGroup> findSubDeptsByParentRDN(String parentRDN) {
+	public List<UserGroup> findSubGroupsByParentRDN(String parentRDN) {
 		// TODO Auto-generated method stub
 		//return ldapTemplate.listBindings(parentRDN, getContextMapper());
 		SearchControls controls  = new SearchControls();
@@ -105,7 +105,7 @@ public class GroupDaoImpl implements GroupDao {
 	/* (non-Javadoc)
 	 * @see net.shopin.ldap.dao.UserGroupDao#findDeptsByParam(java.lang.String)
 	 */
-	public List<UserGroup> findDeptsByParam(String param) {
+	public List<UserGroup> findGroupsByParam(String param) {
 		// TODO Auto-generated method stub
 		String filter=null;
 		if(param != null && !param.equals("")){
