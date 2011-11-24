@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Name;
+import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 
 import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.User;
@@ -558,7 +560,7 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
-			filter="(|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			filter="(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 		}else{
 			filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
 		}
@@ -593,18 +595,39 @@ public class UserDaoImpl implements UserDao {
 	 */
 	public List<User> findUserList(String deptDN, String uidORName, long limit) {
 		String filters = null;
+		List<User> users = null;
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
-			filter="(&(status=0)|(uid=" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			filter="(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 		}else{
-			filter="(&(status=0)|(uid=*)(cn=*)(title=*)(displayName=*))";
+			filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
 		}
 		SearchControls controls  = new SearchControls();
+		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 		controls.setCountLimit(limit);
 		controls.setReturningObjFlag(true);
-		
-		List<User> users = ldapTemplate.search("ou=users", filter, controls, getContextMapper());
+		try {
+			NamingEnumeration results = ldapTemplate.getContextSource().getReadOnlyContext().search("ou=users", filter, controls);
+			int totalResults = 0;
+			while (results != null && results.hasMoreElements()) {
+
+                SearchResult sr = (SearchResult)results.next();
+                Attributes attributes = sr.getAttributes();
+                System.out.println("--------" + ((DirContextAdapter)sr.getObject()).getDn());
+                User user = convertAttributesToUser((DirContextAdapter)sr.getObject(), attributes);
+                if(user != null)users.add(user);
+                
+            }			
+			//System.out.println("totalResults---------------" + totalResults);
+		} catch (org.springframework.ldap.NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//users = ldapTemplate.search("ou=users", filter, controls, getContextMapper());
 
 		for(User user : users){
 			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
@@ -626,6 +649,44 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	
+
+	private User convertAttributesToUser(DirContextAdapter dirContextAdapter,Attributes attributes) {
+		try {
+			User user = new User();
+			
+
+			user.setUid(attributes.get("uid").get().toString());
+			byte [] bytes = (byte[]) (attributes.get("userPassword").get());
+			StringBuffer sb = new StringBuffer();
+			for(int i=0; i<bytes.length; i++){
+				sb.append("" + (char)bytes[i]);
+			}
+			String dnStr = dirContextAdapter.getDn().toString();
+			user.setPassword(sb.toString());
+			user.setCn(attributes.get("cn").get().toString());
+			user.setSn(attributes.get("sn").get().toString());
+			user.setDn(dnStr);
+			if(attributes.get("departmentNumber")!=null)user.setDepartmentNumber(attributes.get("departmentNumber").get().toString());
+			if(attributes.get("title")!=null)user.setTitle(attributes.get("title").get().toString());
+			if(attributes.get("mail")!=null)user.setMail(attributes.get("mail").get().toString());
+			if(attributes.get("telephoneNumber")!=null)user.setTelephoneNumber(attributes.get("telephoneNumber").get().toString());
+			if(attributes.get("mobile")!=null)user.setMobile(attributes.get("mobile").get().toString());
+			if(attributes.get("facsimileTelephoneNumber")!=null)user.setFacsimileTelephoneNumber(attributes.get("facsimileTelephoneNumber").get().toString());
+			if(attributes.get("displayName")!=null)user.setDisplayName(attributes.get("displayName").get().toString());
+			if(attributes.get("givenName")!=null)user.setGivenName(attributes.get("givenName").get().toString());
+			if(attributes.get("description")!=null)user.setDescription(attributes.get("description").get().toString());
+			
+			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
+			user.setUserType(userType);
+			user.setPhoto((byte[])attributes.get("photo").get());
+			
+			return user;
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public LdapTemplate getLdapTemplate() {
 		return ldapTemplate;
