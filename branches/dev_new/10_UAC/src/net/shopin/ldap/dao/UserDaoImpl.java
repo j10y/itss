@@ -10,12 +10,14 @@ import javax.naming.Name;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
+import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
 import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.User;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -85,7 +87,7 @@ public class UserDaoImpl implements UserDao {
 		context.setAttributeValue("facsimileTelephoneNumber", user.getFacsimileTelephoneNumber()!=null && !"".equals(user.getFacsimileTelephoneNumber()) ? user.getFacsimileTelephoneNumber() : null);
 		//context.setAttributeValue("photo", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
 		//只有photo非空的时候才覆盖
-		if(user.getPhoto()!=null && user.getPhoto().length>0) context.setAttributeValue("photo", user.getPhoto());
+		//if(user.getPhoto()!=null && user.getPhoto().length>0) context.setAttributeValue("photo", user.getPhoto());
 		
 		//modified by awen for extend openldap's schema on 2011-11-21 begin
 		context.setAttributeValue("o", user.getO());
@@ -224,6 +226,12 @@ public class UserDaoImpl implements UserDao {
 			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
 			user.setUserType(userType);
 			user.setPhoto((byte[])context.getObjectAttribute("photo"));
+			
+			user.setO(context.getStringAttribute("o"));
+			user.setStatus(StringUtils.isNotEmpty(context.getStringAttribute("status")) ? Integer.valueOf(Integer.valueOf(context.getStringAttribute("status"))) : 0);
+			user.setDisplayOrder(StringUtils.isNotEmpty(context.getStringAttribute("displayOrder")) ? Integer.valueOf(Integer.valueOf(context.getStringAttribute("displayOrder"))) : 0);
+			user.setEmployeeNumber(context.getStringAttribute("employeeNumber"));
+			user.setEmployeeType(context.getStringAttribute("employeeType"));
 			
 			return user;
 		}
@@ -598,17 +606,27 @@ public class UserDaoImpl implements UserDao {
 		List<User> users = new ArrayList();
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
-		if(uidORName != null && !uidORName.equals("")){
-			filter="(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+		if(StringUtils.isNotEmpty(uidORName)){
+			if(StringUtils.isNotEmpty(deptDN)){
+				filter="(&(o=" + deptDN + ")&(status=0)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			}else{
+				filter="(&(status=0)|(uid=*" + uidORName + "*))";
+			}
+			
 		}else{
-			filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
+			if(StringUtils.isNotEmpty(deptDN)){
+				filter="(&(o=" + deptDN + ")&(status=0)|(uid=*)(cn=*)(title=*)(displayName=*))";
+			}else{
+				filter="(&(status=0)|(uid=*)(cn=*)(title=*)(displayName=*))";
+			}
 		}
 		SearchControls controls  = new SearchControls();
 		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 		controls.setCountLimit(limit);
 		controls.setReturningObjFlag(true);
+		DirContext dirContext = ldapTemplate.getContextSource().getReadOnlyContext();
 		try {
-			NamingEnumeration results = ldapTemplate.getContextSource().getReadOnlyContext().search("ou=users", filter, controls);
+			NamingEnumeration results = dirContext.search("ou=users", filter, controls);
 			int totalResults = 0;
 			while (results != null && results.hasMoreElements()) {
 
@@ -618,7 +636,7 @@ public class UserDaoImpl implements UserDao {
                 if(user != null)users.add(user);
                 System.out.println(totalResults++);
                 
-            }			
+			} 
 			//System.out.println("totalResults---------------" + totalResults);
 		} catch (org.springframework.ldap.NamingException e) {
 			// TODO Auto-generated catch block
@@ -626,12 +644,19 @@ public class UserDaoImpl implements UserDao {
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			try {
+				dirContext.close();
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		//users = ldapTemplate.search("ou=users", filter, controls, getContextMapper());
 
 		for(User user : users){
 			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
-				String deptFilter="(ou=" + user.getDepartmentNumber().trim() + ")";
+				String deptFilter="(o=" + user.getDepartmentNumber().trim() + ")";
 				List deptNames = ldapTemplate.search("ou=orgnizations", deptFilter, new AttributesMapper(){
 					public Object mapFromAttributes(Attributes attributes)
 							throws NamingException {
@@ -675,6 +700,11 @@ public class UserDaoImpl implements UserDao {
 			if(attributes.get("displayName")!=null)user.setDisplayName(attributes.get("displayName").get().toString());
 			if(attributes.get("givenName")!=null)user.setGivenName(attributes.get("givenName").get().toString());
 			if(attributes.get("description")!=null)user.setDescription(attributes.get("description").get().toString());
+			if(attributes.get("o")!=null)user.setO(attributes.get("o").get().toString());
+			if(attributes.get("status")!=null)user.setStatus(Integer.valueOf(attributes.get("status").get().toString()));
+			if(attributes.get("displayOrder")!=null)user.setDisplayOrder(Integer.valueOf(attributes.get("displayOrder").get().toString()));
+			if(attributes.get("employeeNumber")!=null)user.setEmployeeNumber(attributes.get("employeeNumber").get().toString());
+			if(attributes.get("employeeType")!=null)user.setEmployeeType(attributes.get("employeeType").get().toString());
 			
 			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
 			user.setUserType(userType);
@@ -710,7 +740,6 @@ public class UserDaoImpl implements UserDao {
 		this.deptDao = deptDao;
 	}
 
-	@Override
 	public User findByRDN(String userRDN) {
 		// TODO Auto-generated method stub
 		return (User)ldapTemplate.lookup(userRDN, new UserContextMapper());
