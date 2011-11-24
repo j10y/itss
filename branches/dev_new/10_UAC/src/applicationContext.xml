@@ -97,6 +97,11 @@
 		<property name="ldapTemplate" ref="ldapTemplate" />
 		<property name="deptDao" ref="deptDao" />
 	</bean>
+	
+	<bean id="groupDao"
+		class="net.shopin.ldap.dao.GroupDaoImpl">
+		<property name="ldapTemplate" ref="ldapTemplate" />
+	</bean>
 
 	<bean id="springContextUtils" class="net.shopin.util.SpringContextUtils" lazy-init="false"/>
 	
