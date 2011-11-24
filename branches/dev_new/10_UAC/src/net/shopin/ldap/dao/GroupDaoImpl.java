@@ -118,6 +118,30 @@ public class GroupDaoImpl implements GroupDao {
 		return groups;
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.shopin.ldap.dao.UserGroupDao#findDeptsByParam(java.lang.String)
+	 */
+	public List<UserGroup> findGroupsByParam(String param, String userRDN, boolean isRelation) {
+		// TODO Auto-generated method stub
+		String filter=null;
+		if(param != null && !param.equals("")){
+			if(isRelation){
+				filter="(&(objectClass=shopin-groupOfNames)&(member=" + userRDN + ")&(status=0)|(cn=*" + param + "*)(displayName=*" + param + "*))";
+			}else{
+				filter="(&(objectClass=shopin-groupOfNames)!(member=" + userRDN + ")&(status=0)|(cn=*" + param + "*)(displayName=*" + param + "*))";
+			}			
+		}else{
+			if(isRelation){
+				filter="(&(objectClass=shopin-groupOfNames)&(member=" + userRDN + ")&(status=0)|(cn=*)(displayName=*))";
+			}else{
+				filter="(&(objectClass=shopin-groupOfNames)!(member=" + userRDN + ")&(status=0)|(cn=*)(displayName=*))";
+			}
+		}
+		List<UserGroup> groups = ldapTemplate.search("ou=groups", filter, getContextMapper());
+
+		return groups;
+	}
+	
 	public ContextMapper getContextMapper() {
 		// TODO Auto-generated method stub
 		return new GroupContextMapper();
@@ -135,6 +159,7 @@ public class GroupDaoImpl implements GroupDao {
 			if(context.getStringAttribute("status")!=null)
 				group.setStatus(Integer.valueOf(context.getStringAttribute("status")));
 			group.setMembers(context.getStringAttributes("member"));
+			context.getDn();
 			return group;
 		}
 	}

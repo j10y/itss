@@ -54,11 +54,21 @@ public interface GroupDao {
 	
 	/**
 	 * 查询用户组列表
-	 * 从deptNo和deptName过滤
+	 * 从用户组名称过滤
 	 * @param parentNo
 	 * @return
 	 */
 	List<UserGroup> findGroupsByParam(String param);
+	
+	/**
+	 * 查询用户组列表
+	 * 从用户组名称过滤
+	 * @param parentNo
+	 * @param userRDN
+	 * @param isRelation
+	 * @return
+	 */	
+	List<UserGroup> findGroupsByParam(String param, String userRDN, boolean isRelation);
 	
 	/**
 	 * 
