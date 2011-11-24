@@ -14,7 +14,7 @@ public class UserGroup implements Serializable {
 	private String rdn; //ou=groups,cn=* 英文
 	private String displayName; //用户组名称 必填
 	private String description; //非必填
-	private List members; //至少一个
+	private String [] members; //至少一个
 	private Integer status;
 	
 	public static final Integer SATAL_NORMAL = Integer.valueOf(0);
@@ -38,10 +38,10 @@ public class UserGroup implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List getMembers() {
+	public String[] getMembers() {
 		return members;
 	}
-	public void setMembers(List members) {
+	public void setMembers(String[] members) {
 		this.members = members;
 	}
 	public String getRdn() {
