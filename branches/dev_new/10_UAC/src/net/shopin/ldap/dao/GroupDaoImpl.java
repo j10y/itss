@@ -73,7 +73,7 @@ public class GroupDaoImpl implements GroupDao {
 	 */
 	public UserGroup findByRDN(String deptRDN) {
 
-		return (UserGroup)ldapTemplate.lookup(deptRDN, new DeptContextMapper());
+		return (UserGroup)ldapTemplate.lookup(deptRDN, new GroupContextMapper());
 		
 	}
 
@@ -99,7 +99,7 @@ public class GroupDaoImpl implements GroupDao {
 		context.setAttributeValue("displayName", userGroup.getDisplayName());
 		context.setAttributeValue("description", StringUtils.isNotEmpty(userGroup.getDescription()) ? userGroup.getDescription() : null);
 		context.setAttributeValue("status", userGroup.getStatus().toString());
-		context.setAttributeValues("member", userGroup.getMembers().toArray());
+		context.setAttributeValues("member", userGroup.getMembers());
 	}
 	
 	/* (non-Javadoc)
@@ -120,19 +120,21 @@ public class GroupDaoImpl implements GroupDao {
 	
 	public ContextMapper getContextMapper() {
 		// TODO Auto-generated method stub
-		return new DeptContextMapper();
+		return new GroupContextMapper();
 	}
 	
-	private static class DeptContextMapper implements ContextMapper {
+	private static class GroupContextMapper implements ContextMapper {
 
 		public Object mapFromContext(Object ctx) {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			UserGroup group = new UserGroup();
-			group.setDescription(context.getStringAttribute("displayName"));
+			group.setCn(context.getStringAttribute("cn"));
+			group.setDisplayName(context.getStringAttribute("displayName"));
 			group.setDescription(context.getStringAttribute("description"));
 			if(context.getStringAttribute("status")!=null)
 				group.setStatus(Integer.valueOf(context.getStringAttribute("status")));
+			group.setMembers(context.getStringAttributes("member"));
 			return group;
 		}
 	}
