@@ -31,13 +31,13 @@ public class GroupDaoImplTest {
 	public void testCreat() {
 		
 		UserGroup userGroup = new UserGroup();
-		userGroup.setCn("TestAdmin");
+		userGroup.setCn("TestAdmin11");
 		userGroup.setDisplayName("测试管理员");
 		userGroup.setDescription("描述信息");
 		userGroup.setStatus(1);
-		String [] members = {"uid=admin,ou=employees,ou=users,dc=shopin,dc=net" ,
-		"uid=ansong,ou=employees,ou=users,dc=shopin,dc=net"};
-		userGroup.setMembers(members);
+//		String [] members = {"uid=admin,ou=employees,ou=users,dc=shopin,dc=net" ,
+//		"uid=ansong,ou=employees,ou=users,dc=shopin,dc=net"};
+//		userGroup.setMembers(members);
 		groupDao.create(userGroup);
 	}
 	
@@ -49,15 +49,14 @@ public class GroupDaoImplTest {
 		userGroup.setDisplayName("测试管理员");
 		userGroup.setDescription("描述信息");
 		userGroup.setStatus(1);
-		String [] members = {"uid=admin,ou=employees,ou=users,dc=shopin,dc=net" ,
-				"uid=ansong,ou=employees,ou=users,dc=shopin,dc=net"};
+		String [] members = {"uid=admin,ou=employees,ou=users" ,
+				"uid=ansong,ou=employees,ou=users"};
 		userGroup.setMembers(members);
 		groupDao.update(userGroup);
 	}
 	
 	@Test
-	public void testfindByRDN() {
-		
+	public void testfindByRDN() {		
 		System.out.print(groupDao.findByRDN("cn=TestAdmin,ou=groups"));
 	}
 	
