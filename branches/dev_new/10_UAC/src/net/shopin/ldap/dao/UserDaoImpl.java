@@ -595,7 +595,7 @@ public class UserDaoImpl implements UserDao {
 	 */
 	public List<User> findUserList(String deptDN, String uidORName, long limit) {
 		String filters = null;
-		List<User> users = null;
+		List<User> users = new ArrayList();
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
@@ -614,9 +614,9 @@ public class UserDaoImpl implements UserDao {
 
                 SearchResult sr = (SearchResult)results.next();
                 Attributes attributes = sr.getAttributes();
-                System.out.println("--------" + ((DirContextAdapter)sr.getObject()).getDn());
                 User user = convertAttributesToUser((DirContextAdapter)sr.getObject(), attributes);
                 if(user != null)users.add(user);
+                System.out.println(totalResults++);
                 
             }			
 			//System.out.println("totalResults---------------" + totalResults);
@@ -678,7 +678,7 @@ public class UserDaoImpl implements UserDao {
 			
 			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
 			user.setUserType(userType);
-			user.setPhoto((byte[])attributes.get("photo").get());
+			if(attributes.get("photo")!=null)user.setPhoto((byte[])attributes.get("photo").get());
 			
 			return user;
 		} catch (NamingException e) {
