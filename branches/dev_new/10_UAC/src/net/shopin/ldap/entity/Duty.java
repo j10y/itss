@@ -15,6 +15,8 @@ public class Duty implements Serializable  {
 	private String description; //非必填
 	private String o;
 	private Integer status;
+	public static final Integer SATAL_NORMAL = Integer.valueOf(0);
+	public static final Integer SATAL_NOT_NORMAL = Integer.valueOf(1);
 	public String getCn() {
 		return cn;
 	}
