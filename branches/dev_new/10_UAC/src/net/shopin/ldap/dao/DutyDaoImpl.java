@@ -1,8 +1,5 @@
 package net.shopin.ldap.dao;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.naming.Name;
@@ -13,13 +10,11 @@ import net.shopin.ldap.entity.Duty;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextAdapter;
-import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
-import org.springframework.ldap.core.support.AbstractContextMapper;
 
 /**
- * @see net.shopin.ldap.dao.GroupDao
+ * @see net.shopin.ldap.dao.DutyDao
  * @author wchao
  *
  */
@@ -73,7 +68,7 @@ public class DutyDaoImpl implements DutyDao {
 	 */
 	public Duty findByRDN(String dutyRDN) {
 
-		return (Duty)ldapTemplate.lookup(dutyRDN, new GroupContextMapper());
+		return (Duty)ldapTemplate.lookup(dutyRDN, new DutyContextMapper());
 		
 	}
 
@@ -144,10 +139,10 @@ public class DutyDaoImpl implements DutyDao {
 	
 	public ContextMapper getContextMapper() {
 		// TODO Auto-generated method stub
-		return new GroupContextMapper();
+		return new DutyContextMapper();
 	}
 	
-	private static class GroupContextMapper implements ContextMapper {
+	private static class DutyContextMapper implements ContextMapper {
 
 		public Object mapFromContext(Object ctx) {
 			DirContextAdapter context = (DirContextAdapter) ctx;
@@ -159,7 +154,6 @@ public class DutyDaoImpl implements DutyDao {
 			group.setDescription(context.getStringAttribute("description"));
 			if(context.getStringAttribute("status")!=null)
 				group.setStatus(Integer.valueOf(context.getStringAttribute("status")));
-			context.getDn();
 			return group;
 		}
 	}
