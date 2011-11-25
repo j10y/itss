@@ -36,6 +36,8 @@ public class User  implements Serializable {
 	
 	private String employeeType;//员工类型，在编，非在编等
 	
+	private String titleName;//职务
+	
 	public String getGivenName() {
 		return givenName;
 	}
@@ -206,4 +208,13 @@ public class User  implements Serializable {
 	public void setEmployeeType(String employeeType) {
 		this.employeeType = employeeType;
 	}
+
+	public String getTitleName() {
+		return titleName;
+	}
+
+	public void setTitleName(String titleName) {
+		this.titleName = titleName;
+	}
+	
 }
