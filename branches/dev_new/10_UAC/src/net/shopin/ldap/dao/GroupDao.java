@@ -75,4 +75,12 @@ public interface GroupDao {
 	 * @return
 	 */
 	ContextMapper getContextMapper();
+	
+	
+	/**
+	 * 是否超级管理员
+	 * param userRDN dn(dn+searchBase=fullname)
+	 * @return
+	 */
+	public boolean isSupserAdmin(String userRDN);
 }
