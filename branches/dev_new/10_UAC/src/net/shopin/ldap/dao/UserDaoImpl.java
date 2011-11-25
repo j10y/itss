@@ -630,14 +630,12 @@ public class UserDaoImpl implements UserDao {
 		DirContext dirContext = ldapTemplate.getContextSource().getReadOnlyContext();
 		try {
 			NamingEnumeration results = dirContext.search("ou=users", filter, controls);
-			int totalResults = 0;
 			while (results != null && results.hasMoreElements()) {
 
                 SearchResult sr = (SearchResult)results.next();
                 Attributes attributes = sr.getAttributes();
                 User user = convertAttributesToUser((DirContextAdapter)sr.getObject(), attributes);
                 if(user != null)users.add(user);
-                System.out.println(totalResults++);
                 
 			} 
 			//System.out.println("totalResults---------------" + totalResults);
@@ -664,8 +662,7 @@ public class UserDaoImpl implements UserDao {
 					user.setDeptName(dept.getDeptName());				
 				}
 			} catch (Exception e) {
-				System.out.println("用户【" + user.getDisplayName() + "】的部门信息有误！");
-				//e.printStackTrace();
+				System.out.println("用户【" + user.getDisplayName() + "】的部门信息有误！原因：" + e);
 			}
 			try {
 				if(StringUtils.isNotBlank(user.getTitle())){
@@ -673,8 +670,7 @@ public class UserDaoImpl implements UserDao {
 					user.setTitleName(duty.getTitle());		
 				}
 			} catch(Exception e) {
-				System.out.println("用户【" + user.getDisplayName() + "】的职务信息有误！");
-				System.out.println(e);
+				System.out.println("用户【" + user.getDisplayName() + "】的职务信息有误！原因：" + e);
 			}
 		}
 		return users;
