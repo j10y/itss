@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,8 +19,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.shopin.ldap.dao.DutyDao;
+import net.shopin.ldap.dao.GroupDao;
 import net.shopin.ldap.dao.UserDao;
 import net.shopin.ldap.entity.User;
+import net.shopin.ldap.entity.UserGroup;
 import net.shopin.util.PropertiesUtil;
 import net.shopin.util.SpringContextUtils;
 
@@ -27,6 +32,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.NameAlreadyBoundException;
 import org.springframework.ldap.samples.utils.LdapTreeBuilder;
 
@@ -35,6 +41,8 @@ public class UserServlet extends HttpServlet {
 	
 	LdapTreeBuilder ldapTreeBuilder = (LdapTreeBuilder) SpringContextUtils.getBean("ldapTreeBuilder");
 	UserDao userDao = (UserDao) SpringContextUtils.getBean("userDao");
+	GroupDao groupDao = (GroupDao) SpringContextUtils.getBean("groupDao");
+	DutyDao dutyDao = (DutyDao) SpringContextUtils.getBean("dutyDao");
 	int imgWidth = new Integer(PropertiesUtil.getProperties("imgWidth", "128")).intValue();
 	int imgHeight = new Integer(PropertiesUtil.getProperties("imgHeight", "128")).intValue();
 	int imgSize = new Integer(PropertiesUtil.getProperties("imgHeight", "1024")).intValue();//1024kb
@@ -74,6 +82,16 @@ public class UserServlet extends HttpServlet {
 		user.setMobile(req.getParameter("mobile"));
 		user.setFacsimileTelephoneNumber(req.getParameter("facsimileTelephoneNumber"));
 		user.setUserType(req.getParameter("userType"));
+		if(req.getParameter("status") != null && !"".equals(req.getParameter("status"))) {
+			user.setStatus(Integer.parseInt(req.getParameter("status")));
+		}
+		user.setO(req.getParameter("o"));
+		user.setEmployeeNumber(req.getParameter("employeeNumber"));
+		user.setEmployeeType(req.getParameter("employeeType"));
+		user.setDepartmentNumber(req.getParameter("departmentNumber"));
+		if(req.getParameter("displayOrder") != null && !"".equals(req.getParameter("displayOrder"))) {
+			user.setDisplayOrder(Integer.parseInt(req.getParameter("displayOrder")));
+		}
 		
 		//add by awen for add photo to user on 2001-05-16 begin
 		try {
@@ -153,7 +171,6 @@ public class UserServlet extends HttpServlet {
 									/* (non-Javadoc)
 									 * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
 									 */
-									@Override
 									public boolean accept(File dir, String name) {
 										// TODO Auto-generated method stub
 										if(name.indexOf(fileNameFix)!=-1){
@@ -217,11 +234,46 @@ public class UserServlet extends HttpServlet {
 		try {
 			if(methodCall.equalsIgnoreCase("add")){
 				userDao.create(user);
+				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
+				String[] groupRDNs = req.getParameter("groups").split("___");
+				String userDN = "uid=" + user.getUid() + ",ou=employees,ou=users";
+				for(int i = 0; i < groupRDNs.length; i++) {
+					if(StringUtils.isNotEmpty(groupRDNs[i])) {
+						UserGroup ug = groupDao.findByRDN(groupRDNs[i]);
+						if(ug != null) {
+							List<String> list = Arrays.asList(ug.getMembers());
+							List<String> memberList = new ArrayList<String>(list);
+							if(!memberList.contains(user.getDn())) {//该用户组不包含当前用户，则加入
+								memberList.add(userDN);
+								ug.setMembers(memberList.toArray(new String[memberList.size()]));
+								groupDao.update(ug);
+							}
+						}
+					}
+				}
+				//add by guanshiqiang for add the current user into groups on 2011-11-24 end
 			}else if(methodCall.equalsIgnoreCase("delete")){
 				String userRDN = req.getParameter("userRDN");
 				userDao.delete(userRDN);
 			}else if(methodCall.equalsIgnoreCase("modify")){
 				userDao.update(user);
+				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
+				String[] groupRDNs = req.getParameter("groups").split("___");
+				for(int i = 0; i < groupRDNs.length; i++) {
+					if(StringUtils.isNotEmpty(groupRDNs[i])) {
+						UserGroup ug = groupDao.findByRDN(groupRDNs[i]);
+						if(ug != null) {
+							List<String> list = Arrays.asList(ug.getMembers());
+							List<String> memberList = new ArrayList<String>(list);
+							if(!memberList.contains(user.getDn())) {//该用户组不包含当前用户，则加入
+								memberList.add(user.getDn());
+								ug.setMembers(memberList.toArray(new String[memberList.size()]));
+								groupDao.update(ug);
+							}
+						}
+					}
+				}
+				//add by guanshiqiang for add the current user into groups on 2011-11-24 end
 			}else if(methodCall.equalsIgnoreCase("getDetail")){
 				String uid = null;
 				String userType = "1";//员工
@@ -250,12 +302,17 @@ public class UserServlet extends HttpServlet {
 					.append(",telephoneNumber:'" + (userDetail.getTelephoneNumber() != null ? userDetail.getTelephoneNumber() : "") + "'")
 					.append(",facsimileTelephoneNumber:'" + (userDetail.getFacsimileTelephoneNumber() != null ? userDetail.getFacsimileTelephoneNumber() : "") + "'")
 					.append(",userType:'" + (userDetail.getUserType() != null ? userDetail.getUserType() : userDetail.getDn().contains("ou=employees") ? "1" : (userDetail.getDn().contains("ou=customers") ? "2" : (userDetail.getDn().contains("ou=suppliers") ? "3" : (userDetail.getDn().contains("ou=specialuser") ? "4" : "")))) + "'")
+					.append(",o:'" + (userDetail.getO() != null ? userDetail.getO() : "") + "'")
+					.append(",status:'" + (userDetail.getStatus() != null ? userDetail.getStatus() : "") + "'")
+					.append(",displayOrder:'" + (userDetail.getDisplayOrder() != null ? userDetail.getDisplayOrder() : "") + "'")
+					.append(",employeeNumber:'" + (userDetail.getEmployeeNumber() != null ? userDetail.getEmployeeNumber() : "") + "'")
+					.append(",employeeType:'" + (userDetail.getEmployeeType() != null ? userDetail.getEmployeeType() : "") + "'")
 					.append("}");
 			}else if(methodCall.equalsIgnoreCase("getDetailByUid")){
 				String uid = req.getParameter("uid");
 				User userDetail = userDao.findByPrimaryKey(uid);
-				json = new StringBuffer("{success:true");
-				json.append(",dn:'" + (userDetail.getDn() != null ? userDetail.getDn() : "") + "'")
+				json = new StringBuffer("{success:true,data:{");
+				json.append("dn:'" + (userDetail.getDn() != null ? userDetail.getDn() : "") + "'")
 					.append(",uid:'" + (userDetail.getUid() != null ? userDetail.getUid() : uid) + "'")
 					.append(",password:'" + (userDetail.getPassword() != null ? userDetail.getPassword() : "") + "'")
 					.append(",cn:'" + (userDetail.getCn() != null ? userDetail.getCn() : "") + "'")
@@ -272,7 +329,14 @@ public class UserServlet extends HttpServlet {
 					.append(",telephoneNumber:'" + (userDetail.getTelephoneNumber() != null ? userDetail.getTelephoneNumber() : "") + "'")
 					.append(",facsimileTelephoneNumber:'" + (userDetail.getFacsimileTelephoneNumber() != null ? userDetail.getFacsimileTelephoneNumber() : "") + "'")
 					.append(",userType:'" + (userDetail.getUserType() != null ? userDetail.getUserType() : userDetail.getDn().contains("ou=employees") ? "1" : (userDetail.getDn().contains("ou=customers") ? "2" : (userDetail.getDn().contains("ou=suppliers") ? "3" : (userDetail.getDn().contains("ou=specialuser") ? "4" : "")))) + "'")
-					.append("}");
+					.append(",o:'" + (userDetail.getO() != null ? userDetail.getO() : "") + "'")
+					.append(",status:'" + (userDetail.getStatus() != null ? userDetail.getStatus() : "") + "'")
+					.append(",displayOrder:'" + (userDetail.getDisplayOrder() != null ? userDetail.getDisplayOrder() : "") + "'")
+					.append(",employeeNumber:'" + (userDetail.getEmployeeNumber() != null ? userDetail.getEmployeeNumber() : "") + "'")
+					.append(",employeeType:'" + (userDetail.getEmployeeType() != null ? userDetail.getEmployeeType() : "") + "'")
+					.append(",departmentNumber:'" + (userDetail.getDepartmentNumber() != null ? userDetail.getDepartmentNumber() : "") + "'")
+					.append(",deptName:'" + (userDetail.getDeptName() != null ? userDetail.getDeptName() : "") + "'")
+					.append("}}");
 			}else if(methodCall.equalsIgnoreCase("import")){
 				String msg = null;
 //				try {
@@ -283,6 +347,26 @@ public class UserServlet extends HttpServlet {
 //			        e.printStackTrace();
 //				}
 		        json = new StringBuffer("{success:true,msg:'" + msg.trim() + "'}");
+			} else if(methodCall.equalsIgnoreCase("getList")) {
+				List<User> list = new ArrayList<User>();
+				String deptRDN = req.getParameter("deptRDN");
+				String uidName = "账号/姓名".equals(req.getParameter("uidName")) ? "" : req.getParameter("uidName");
+				long maxSize = (req.getParameter("maxSize") == null || "".equals(req.getParameter("maxSize"))) ? 20 : Long.parseLong(req.getParameter("maxSize"));
+				list = userDao.findUserList(deptRDN, uidName, maxSize);
+				json = new StringBuffer("{success:true,result:[");
+				for(User u : list) {
+					json.append("{'dn':'" + u.getDn() + "',")
+							.append("'uid':'" + u.getUid() + "',")
+							.append("'displayName':'" + u.getDisplayName() + "',")
+							.append("'title':'" + (u.getTitleName() != null ? u.getTitleName() : "") + "',")
+							.append("'deptName':'" + (u.getDeptName() != null ? u.getDeptName() : "") + "',")
+							.append("'status':'" + (u.getStatus() != null ? u.getStatus() : "") + "',")
+							.append("'userType':'" + u.getUserType() + "'},");
+				}
+				if(list.size() > 0) {
+					json = json.deleteCharAt(json.length() - 1);
+				}
+				json.append("]}");
 			}
 		}catch(NameAlreadyBoundException e){
 			e.printStackTrace();
