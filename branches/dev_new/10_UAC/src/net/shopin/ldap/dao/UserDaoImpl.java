@@ -15,6 +15,7 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
 import net.shopin.ldap.entity.Department;
+import net.shopin.ldap.entity.Duty;
 import net.shopin.ldap.entity.User;
 
 import org.apache.commons.lang.StringUtils;
@@ -40,6 +41,8 @@ public class UserDaoImpl implements UserDao {
 	private LdapTemplate ldapTemplate;	
 	
 	private DeptDao deptDao;
+	
+	private DutyDao dutyDao;
 
 	/**
 	 * @see net.shopin.ldap.dao.UserDao#create(User)
@@ -608,16 +611,16 @@ public class UserDaoImpl implements UserDao {
 		String filter=null;
 		if(StringUtils.isNotEmpty(uidORName)){
 			if(StringUtils.isNotEmpty(deptDN)){
-				filter="(&(o=" + deptDN + ")&(status=0)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+				filter="(&(o=" + deptDN + ")|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 			}else{
-				filter="(&(status=0)|(uid=*" + uidORName + "*))";
+				filter="(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 			}
 			
 		}else{
 			if(StringUtils.isNotEmpty(deptDN)){
-				filter="(&(o=" + deptDN + ")&(status=0)|(uid=*)(cn=*)(title=*)(displayName=*))";
+				filter="(&(o=" + deptDN + ")|(uid=*)(cn=*)(title=*)(displayName=*))";
 			}else{
-				filter="(&(status=0)|(uid=*)(cn=*)(title=*)(displayName=*))";
+				filter="(|(uid=*)(cn=*)(title=*)(displayName=*))";
 			}
 		}
 		SearchControls controls  = new SearchControls();
@@ -655,18 +658,23 @@ public class UserDaoImpl implements UserDao {
 		//users = ldapTemplate.search("ou=users", filter, controls, getContextMapper());
 
 		for(User user : users){
-			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
-				String deptFilter="(o=" + user.getDepartmentNumber().trim() + ")";
-				List deptNames = ldapTemplate.search("ou=orgnizations", deptFilter, new AttributesMapper(){
-					public Object mapFromAttributes(Attributes attributes)
-							throws NamingException {
-						// TODO Auto-generated method stub
-						return attributes.get("description").get();
-					}
-				});
-				if(deptNames.size()>0){
-					user.setDeptName(deptNames.get(0).toString());
+			try {
+				if(StringUtils.isNotBlank(user.getO())){
+					Department dept = deptDao.findByRDN(user.getO());
+					user.setDeptName(dept.getDeptName());				
 				}
+			} catch (Exception e) {
+				System.out.println("用户【" + user.getDisplayName() + "】的部门信息有误！");
+				//e.printStackTrace();
+			}
+			try {
+				if(StringUtils.isNotBlank(user.getTitle())){
+					Duty duty = dutyDao.findByRDN(user.getTitle());
+					user.setTitleName(duty.getTitle());		
+				}
+			} catch(Exception e) {
+				System.out.println("用户【" + user.getDisplayName() + "】的职务信息有误！");
+				System.out.println(e);
 			}
 		}
 		return users;
@@ -744,5 +752,15 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		return (User)ldapTemplate.lookup(userRDN, new UserContextMapper());
 	}
+
+	public DutyDao getDutyDao() {
+		return dutyDao;
+	}
+
+	public void setDutyDao(DutyDao dutyDao) {
+		this.dutyDao = dutyDao;
+	}
+	
+	
 	
 }
