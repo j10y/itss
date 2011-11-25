@@ -108,7 +108,7 @@ public class DutyDaoImpl implements DutyDao {
 	public List<Duty> findDutysByParam(String param) {
 		// TODO Auto-generated method stub
 		String filter=null;
-		if(param != null && !param.equals("")){
+		if(StringUtils.isNotEmpty(param)){
 			filter="(&(objectClass=shopin-duty)&(status=0)|(cn=*" + param + "*)(title=*" + param + "*))";
 		}else{
 			filter="(&(objectClass=shopin-duty)&(status=0)|(cn=*)(title=*))";
