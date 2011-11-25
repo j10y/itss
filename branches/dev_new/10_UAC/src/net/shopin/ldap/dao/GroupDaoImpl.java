@@ -10,6 +10,7 @@ import javax.naming.directory.SearchControls;
 
 import net.shopin.ldap.entity.UserGroup;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextAdapter;
@@ -108,10 +109,10 @@ public class GroupDaoImpl implements GroupDao {
 	public List<UserGroup> findGroupsByParam(String param) {
 		// TODO Auto-generated method stub
 		String filter=null;
-		if(param != null && !param.equals("")){
-			filter="(&(objectClass=shopin-groupOfNames)&(status=0)|(cn=*" + param + "*)(displayName=*" + param + "*))";
+		if(StringUtils.isNotEmpty(param)){
+			filter="(&(objectClass=shopin-groupOfNames)(status=0)(displayName=*" + param + "*))";
 		}else{
-			filter="(&(objectClass=shopin-groupOfNames)&(status=0)|(cn=*)(displayName=*))";
+			filter="(&(objectClass=shopin-groupOfNames)(status=0)(displayName=*))";
 		}
 		List<UserGroup> groups = ldapTemplate.search("ou=groups", filter, getContextMapper());
 
@@ -153,13 +154,13 @@ public class GroupDaoImpl implements GroupDao {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			UserGroup group = new UserGroup();
+			group.setRdn(context.getDn().toString());
 			group.setCn(context.getStringAttribute("cn"));
 			group.setDisplayName(context.getStringAttribute("displayName"));
 			group.setDescription(context.getStringAttribute("description"));
 			if(context.getStringAttribute("status")!=null)
 				group.setStatus(Integer.valueOf(context.getStringAttribute("status")));
 			group.setMembers(context.getStringAttributes("member"));
-			context.getDn();
 			return group;
 		}
 	}
@@ -170,6 +171,26 @@ public class GroupDaoImpl implements GroupDao {
 
 	public void setLdapTemplate(LdapTemplate ldapTemplate) {
 		this.ldapTemplate = ldapTemplate;
+	}
+	
+	
+	/**
+	 * 是否超级管理员
+	 * param userRDN dn(dn+searchBase=fullname)
+	 * @return
+	 */
+	public boolean isSupserAdmin(String userRDN){
+		UserGroup group = this.findByRDN("cn=SuperAdmin,ou=groups");
+		if(group!=null){
+			String [] members = group.getMembers();
+			if(ArrayUtils.isEmpty(members))return false;
+			for(String member : members){
+				if(userRDN.equals(member.substring(4, member.indexOf(",")))){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }
