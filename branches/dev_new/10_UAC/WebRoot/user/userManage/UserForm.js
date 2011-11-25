@@ -435,8 +435,10 @@ UserForm = Ext.extend(Ext.Window, {
 						},
 						success : function(f) {
 							var g = Ext.util.JSON.decode(f.responseText);
-							if(g.data.deptName != null) {
+							if(g.data != null) {
 								Ext.getCmp("deptName").setValue(g.data.deptName);
+							} else {
+								Ext.getCmp("deptName").setValue("");
 							}
 						}
 					});
@@ -448,8 +450,10 @@ UserForm = Ext.extend(Ext.Window, {
 						},
 						success : function(f) {
 							var g = Ext.util.JSON.decode(f.responseText);
-							if(g.data.title != null) {
+							if(g.data != null) {
 								Ext.getCmp("titleName").setValue(g.data.title);
+							} else {
+								Ext.getCmp("titleName").setValue("");
 							}
 						}
 					});
