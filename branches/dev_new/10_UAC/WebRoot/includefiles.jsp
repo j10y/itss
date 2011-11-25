@@ -1,4 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" pageEncoding="utf-8" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
+<%@ page import="net.shopin.util.SpringContextUtils,net.shopin.ldap.dao.*" %>
+<%
+	AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal(); 
+	String username = principal.getName(); 
+	request.setAttribute("SERVLETPATH", request.getServletPath());
+	boolean isSuperAdmin = ((GroupDao)SpringContextUtils.getBean("groupDao")).isSupserAdmin(username);
+	if(username==null || username.equals("")) response.sendRedirect(request.getContextPath()+ "/index.jsp");
+%>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -6,7 +17,6 @@
 		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="0">  
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/ext-all.css" />
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ext-3.2.1/resources/css/tabs.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/editable-column-tree.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Ext.ux.UploadDialog.css" />
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common.css"/>
@@ -33,6 +43,7 @@
 		<link rel='stylesheet' type='text/css'  href='${pageContext.request.contextPath}/js/multisel/Multiselect.css'> 
 		<script type="text/javascript"> 
 			var webContext="${pageContext.request.contextPath}";
+			var isSuperAdmin = '<%=isSuperAdmin%>';
 			var sys_pageSize = 10;
 		</script>
 		<script type="text/javascript" src="<c:url value="/js/util/UtilE.js"/>"></script>     

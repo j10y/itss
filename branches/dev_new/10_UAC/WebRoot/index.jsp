@@ -1,13 +1,7 @@
 <%@ page language="java" pageEncoding="utf-8" contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
-<%
-	AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal(); 
-	String username = principal.getName(); 
-	request.setAttribute("SERVLETPATH", request.getServletPath());
-	
-	if(username==null || username.equals("")) response.sendRedirect(request.getContextPath()+ "/index.jsp");
-%>
+<%@ page import="net.shopin.util.SpringContextUtils,net.shopin.ldap.dao.*" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
