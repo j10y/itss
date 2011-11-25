@@ -96,7 +96,7 @@ public class DutyDaoImpl implements DutyDao {
 	private void mapToContext(Duty duty, DirContextAdapter context) {
 		
 		context.setAttributeValues("objectclass", new String[] { "top", "shopin-duty"});
-		context.setAttributeValue("titile", duty.getTitle());
+		context.setAttributeValue("title", duty.getTitle());
 		context.setAttributeValue("description", StringUtils.isNotEmpty(duty.getDescription()) ? duty.getDescription() : null);
 		context.setAttributeValue("status", duty.getStatus().toString());
 		context.setAttributeValue("o", StringUtils.isNotEmpty(duty.getO()) ? duty.getO() : null);
@@ -109,9 +109,9 @@ public class DutyDaoImpl implements DutyDao {
 		// TODO Auto-generated method stub
 		String filter=null;
 		if(StringUtils.isNotEmpty(param)){
-			filter="(&(objectClass=shopin-duty)&(status=0)|(cn=*" + param + "*)(title=*" + param + "*))";
+			filter="(&(objectClass=shopin-duty)(status=0)(title=*" + param + "*))";
 		}else{
-			filter="(&(objectClass=shopin-duty)&(status=0)|(cn=*)(title=*))";
+			filter="(&(objectClass=shopin-duty)(status=0)(title=*))";
 		}
 		List<Duty> groups = ldapTemplate.search("ou=duties", filter, getContextMapper());
 
@@ -153,6 +153,7 @@ public class DutyDaoImpl implements DutyDao {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			Duty group = new Duty();
+			group.setDn(context.getDn().toString());
 			group.setCn(context.getStringAttribute("cn"));
 			group.setTitle(context.getStringAttribute("title"));
 			group.setDescription(context.getStringAttribute("description"));
