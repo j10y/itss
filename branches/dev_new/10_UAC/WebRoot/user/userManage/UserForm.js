@@ -435,7 +435,9 @@ UserForm = Ext.extend(Ext.Window, {
 						},
 						success : function(f) {
 							var g = Ext.util.JSON.decode(f.responseText);
-							Ext.getCmp("deptName").setValue(g.data.deptName);
+							if(g.data.deptName != null) {
+								Ext.getCmp("deptName").setValue(g.data.deptName);
+							}
 						}
 					});
 					Ext.Ajax.request({
@@ -446,7 +448,9 @@ UserForm = Ext.extend(Ext.Window, {
 						},
 						success : function(f) {
 							var g = Ext.util.JSON.decode(f.responseText);
-							Ext.getCmp("titleName").setValue(g.data.title);
+							if(g.data.title != null) {
+								Ext.getCmp("titleName").setValue(g.data.title);
+							}
 						}
 					});
 				},
