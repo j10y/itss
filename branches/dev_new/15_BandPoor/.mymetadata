@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="BandPoor"
+  id="myeclipse.1306516615154"
+  context-root="/bandpoor"
+  j2ee-spec="5.0"
+  archive="BandPoor.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+
