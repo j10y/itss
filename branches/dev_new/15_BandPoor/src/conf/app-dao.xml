@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+	<bean id="genericDao" abstract="true" class="com.xpsoft.core.dao.impl.GenericDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+   		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+   	<bean id="baseDao" abstract="true" class="com.xpsoft.core.dao.impl.BaseDaoImpl" parent="genericDao"/>
+	<bean id="newsTypeDao" class="com.xpsoft.oa.dao.info.impl.NewsTypeDaoImpl" parent="baseDao"/>
+	<bean id="noticeDao" class="com.xpsoft.oa.dao.info.impl.NoticeDaoImpl" parent="baseDao"/>
+	<bean id="appRoleDao" class="com.xpsoft.oa.dao.system.impl.AppRoleDaoImpl" parent="baseDao"/>
+    <bean id="companyDao" class="com.xpsoft.oa.dao.system.impl.CompanyDaoImpl" parent="baseDao"></bean>
+    <bean id="departmentDao" class="com.xpsoft.oa.dao.system.impl.DepartmentDaoImpl" parent="baseDao"/>
+    <bean id="shortMessageDao" class="com.xpsoft.oa.dao.info.impl.ShortMessageDaoImpl" parent="baseDao"/>
+    <bean id="inMessageDao" class="com.xpsoft.oa.dao.info.impl.InMessageDaoImpl" parent="baseDao"/>
+	<bean id="diaryDao" class="com.xpsoft.oa.dao.system.impl.DiaryDaoImpl" parent="baseDao"/>
+	<bean id="fileAttachDao" class="com.xpsoft.oa.dao.system.impl.FileAttachDaoImpl" parent="baseDao"/>
+	<bean id="appUserDao" class="com.xpsoft.oa.dao.system.impl.AppUserDaoImpl" parent="baseDao"/>
+	<bean id="reportTemplateDao" class="com.xpsoft.oa.dao.system.impl.ReportTemplateDaoImpl" parent="baseDao"/>
+	<bean id="newsDao" class="com.xpsoft.oa.dao.info.impl.NewsDaoImpl" parent="baseDao"/>
+	<bean id="proTypeDao" class="com.xpsoft.oa.dao.flow.impl.ProTypeDaoImpl" parent="baseDao"/>
+	<bean id="proDefinitionDao" class="com.xpsoft.oa.dao.flow.impl.ProDefinitionDaoImpl" parent="baseDao"/>
+	<bean id="proUserAssignDao" class="com.xpsoft.oa.dao.flow.impl.ProUserAssignDaoImpl" parent="baseDao"/>
+	<bean id="processRunDao" class="com.xpsoft.oa.dao.flow.impl.ProcessRunDaoImpl" parent="baseDao">
+		<property name="querys">
+			<map>
+				<entry key="MyAttendProcessRun"><value>select vo from ProcessRun as vo join vo.processForms as pf where pf.creatorId=? group by vo.runId order by vo.createtime desc</value></entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="formDataDao" class="com.xpsoft.oa.dao.flow.impl.FormDataDaoImpl" parent="baseDao"/>
+	<bean id="taskDao" class="com.xpsoft.oa.dao.flow.impl.TaskDaoImpl" parent="baseDao"/>
+	<bean id="processFormDao" class="com.xpsoft.oa.dao.flow.impl.ProcessFormDaoImpl" parent="baseDao"/>
+	<bean id="regionDao" class="com.xpsoft.oa.dao.system.impl.RegionDaoImpl" parent="baseDao"/>
+	<bean id="appFunctionDao" class="com.xpsoft.oa.dao.system.impl.AppFunctionDaoImpl" parent="baseDao"/>
+	<bean id="funUrlDao" class="com.xpsoft.oa.dao.system.impl.FunUrlDaoImpl" parent="baseDao"/>
+	<bean id="userSubDao" class="com.xpsoft.oa.dao.system.impl.UserSubDaoImpl" parent="baseDao"/>
+	<bean id="sysConfigDao" class="com.xpsoft.oa.dao.system.impl.SysConfigDaoImpl" parent="baseDao"/>
+	<bean id="newsCommentDao" class="com.xpsoft.oa.dao.info.impl.NewsCommentDaoImpl" parent="baseDao"/>
+	<bean id="reportParamDao" class="com.xpsoft.oa.dao.system.impl.ReportParamDaoImpl" parent="baseDao"/>
+	<bean id="dictionaryDao" class="com.xpsoft.oa.dao.system.impl.DictionaryDaoImpl" parent="baseDao"/>
+	<bean id="formDefDao" class="com.xpsoft.oa.dao.flow.impl.FormDefDaoImpl" parent="baseDao"/>
+	<bean id="indexDisplayDao" class="com.xpsoft.oa.dao.system.impl.IndexDisplayDaoImpl" parent="baseDao"/>
+	<bean id="systemLogDao" class="com.xpsoft.oa.dao.system.impl.SystemLogDaoImpl" parent="baseDao"/>
+    <bean id="appTipsDao" class="com.xpsoft.oa.dao.info.impl.AppTipsDaoImpl" parent="baseDao"/>
+    
+    <bean id="docFolderDao" class="com.xpsoft.oa.dao.document.impl.DocFolderDaoImpl" parent="baseDao"/>
+	<bean id="documentDao" class="com.xpsoft.oa.dao.document.impl.DocumentDaoImpl" parent="baseDao"/>
+	<bean id="docPrivilegeDao" class="com.xpsoft.oa.dao.document.impl.DocPrivilegeDaoImpl" parent="baseDao"/>
+	
+</beans>

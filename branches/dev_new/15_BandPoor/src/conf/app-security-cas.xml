@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                        http://www.springframework.org/schema/security
+           				http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+ 
+	<bean id="serviceProperties" class="org.springframework.security.ui.cas.ServiceProperties">
+		<property name="service"
+			value="${system.security.cas.clientPath}/j_spring_cas_security_check" />
+		<property name="sendRenew" value="false" />
+	</bean>
+	
+	<sec:http auto-config="false" access-denied-page="/403.jsp" servlet-api-provision="true" lowercase-comparisons="true" 
+     	 entry-point-ref="casEntryPoint">
+        <sec:intercept-url pattern="/images/**" filters="none"/>
+        <sec:intercept-url pattern="/css/**" filters="none"/>
+        <sec:intercept-url pattern="/js/**" filters="none"/>
+        <sec:intercept-url pattern="/403*" filters="none"/>
+        <sec:intercept-url pattern="/401*" filters="none"/>
+        <sec:intercept-url pattern="/404*" filters="none"/>
+        <sec:intercept-url pattern="/500*" filters="none"/> 
+        <sec:intercept-url pattern="/ext3/**" filters="none"/>
+        <sec:intercept-url pattern="/fckeditor/**" filters="none"/>  
+        
+        <sec:intercept-url pattern="/*" access="ROLE_PUBLIC" />
+        <!-- 
+        <sec:form-login default-target-url="/index.jsp" login-page="/login.jsp" authentication-failure-url="/login.jsp?error=true" login-processing-url="/j_security_check" />
+        <sec:logout logout-url="/j_logout.do" logout-success-url="/login.jsp"/> 
+         -->
+         <!--  
+   		<sec:remember-me key="RememberAppUser"/>
+   		-->
+    </sec:http>
+	
+	<bean id="casSingleSignOutFilter"
+			class="com.xpsoft.core.security.SingleSignOutFilter" >
+		<sec:custom-filter before="CAS_PROCESSING_FILTER"/>		
+	</bean>
+	<bean id="casFilter"
+			class="org.springframework.security.ui.cas.CasProcessingFilter">
+			<sec:custom-filter position="CAS_PROCESSING_FILTER"/>		
+			<property name="authenticationManager" ref="authenticationManager" />
+			<property name="authenticationFailureUrl" value="/401.jsp" />
+			<property name="defaultTargetUrl" value="/"/>
+	</bean>
+	
+	<bean id="casEntryPoint"
+			class="org.springframework.security.ui.cas.CasProcessingFilterEntryPoint">
+			<property name="loginUrl" value="${system.security.cas.loginPath}" />
+			<property name="serviceProperties" ref="serviceProperties" />
+	</bean>
+	<sec:authentication-manager alias="authenticationManager"/>
+	
+	<bean id="casAuthenticationProvider"
+			class="org.springframework.security.providers.cas.CasAuthenticationProvider">
+			<sec:custom-authentication-provider/>
+			<property name="userDetailsService" ref="appUserDao" />
+			<property name="serviceProperties" ref="serviceProperties" />
+			<property name="ticketValidator">
+				<bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+					<constructor-arg index="0"
+						value="${system.security.cas.path}" />
+				</bean>
+			</property>
+			<property name="key" value="an_id_for_hr_auth_provider_only" />
+	</bean>
+	
+	<bean id="logoutFilter"
+			class="org.springframework.security.ui.logout.LogoutFilter">
+			<sec:custom-filter before="LOGOUT_FILTER"/>
+			<constructor-arg value="${system.security.cas.loginOutPath}" />
+			<constructor-arg>
+				<list>
+					<bean
+						class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
+				</list>
+			</constructor-arg>
+	</bean>
+ 
+	<bean id="accessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+	 	<property name="allowIfAllAbstainDecisions" value="false"/>
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.vote.RoleVoter">
+                    <property name="rolePrefix" value="" />
+                </bean>
+                <bean class="org.springframework.security.vote.AuthenticatedVoter" />
+            </list>
+        </property>
+    </bean>
+ 
+ 	
+    <bean id="securityInterceptorFilter" class="com.xpsoft.core.web.filter.SecurityInterceptorFilter" >
+		<sec:custom-filter after="FILTER_SECURITY_INTERCEPTOR" />
+		<property name="securityDataSource" ref="securityDataSource"/>
+	</bean>
+	
+	 <!-- 
+	<bean id="filterDefinitionSource"
+			class="com.xpsoft.core.security.DBFilterDefinitionSource">
+			<property name="lowercaseComparisons" value="false" />
+			<property name="useAntPath" value="true" />
+	</bean>
+		
+	<bean id="fsi"
+			class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+			<sec:custom-filter after="FILTER_SECURITY_INTERCEPTOR" />
+			<property name="authenticationManager" ref="authenticationManager" />
+			<property name="accessDecisionManager" ref="accessDecisionManager" />
+			<property name="objectDefinitionSource" ref="filterDefinitionSource" />
+	</bean>
+	-->
+	<bean id="securityDataSource" class="com.xpsoft.core.security.SecurityDataSource">
+		<property name="appRoleService" ref="appRoleService"/>
+		<property name="anonymousUrls">
+			<set>
+				<value>/login.do</value>
+				<value>/check.do</value>
+			</set>
+		</property>
+		<property name="publicUrls">
+			<set>
+				<value>/panelTreeMenu.do</value>
+				<value>/file-upload</value>
+				<value>/index.jsp</value>
+				<value>/info/detailInMessage.do</value>
+				<value>/info/sendShortMessage.do</value>
+				<value>/info/listShortMessage.do</value>
+				<value>/info/listInMessage.do</value>
+				<value>/info/replyInMessage.do</value>
+				<value>/info/knowInMessage.do</value>
+				<value>/info/multiRemoveInMessage.do</value>
+				<value>/info/readInMessage.do</value>
+				<value>/info/countInMessage.do</value>
+				<value>/info/showNotice.do</value>
+				<value>/info/showNews.do</value>
+				<value>/info/showShortMessage.do</value>
+				<value>/info/listNews.do</value>
+				<value>/info/getNews.do</value>
+				<value>/info/listNotice.do</value>
+				<value>/info/getNotice.do</value>
+				<value>/info/searchNotice.do</value>
+				<value>/info/searchNews.do</value>
+				<value>/info/listNewsComment.do</value>
+				<value>/info/saveNewsComment.do</value>
+				
+				
+				<value>/fileDetail.do</value>
+				
+				<value>/document/saveDocFolder.do</value>
+				<value>/document/moveDocFolder.do</value>
+				<value>/document/getDocFolder.do</value>
+				<value>/document/selectDocFolder.do</value>
+				<value>/document/listDocFolder.do</value>
+				<value>/document/saveDocument.do</value>
+				<value>/document/getDocument.do</value>
+				<value>/document/shareDocument.do</value>
+				<value>/document/removeDocFolder</value>
+				<value>/document/listDocument.do</value>
+				<value>/document/shareListDocument.do</value>
+				<value>/document/detailDocument.do</value>
+				<value>/document/treeDocFolder.do</value>
+				<value>/document/publicListDocument.do</value>
+				<value>/document/rightDocument.do</value>
+				<value>/document/publicDetailDocument.do</value>
+				<value>/document/saveDocument.do</value>
+				<value>/document/searchDocument.do</value>
+				<value>/document/displayDocument.do</value>
+				
+				<value>/flow/processImage.do</value>
+				<value>/flow/listTask.do</value>
+				<value>/flow/listProcessRun.do</value>
+				<value>/flow/processRunDetail.do</value>
+				<value>/flow/multiDelProcessRun.do</value>
+				<value>/flow/transProcessActivity.do</value>
+				<value>/flow/listProDefinition.do</value>
+				<value>/flow/nextProcessActivity.do</value>
+				<value>/flow/changeTask.do</value>
+				<value>/flow/rootProType.do</value>
+				<value>/flow/saveProcessActivity.do</value>
+				<value>/flow/startProcessActivity.do</value>
+				<value>/flow/getProcessActivity.do</value>
+				<value>/flow/lockTask.do</value>
+				<value>/flow/processDetail.do</value>
+				<value>/flow/unlockTask.do</value>
+				
+				
+				<value>/system/displayDiary.do</value>
+				<value>/info/displayNews.do</value>
+				<value>/info/displayInMessage.do</value>
+				<value>/info/displayNotice.do</value>
+				<value>/flow/displayTask.do</value>
+				<value>/info/imageNews.do</value>
+				<value>/info/scrollerNotice.do</value>
+				
+				<value>/system/saveIndexDisplay.do</value>
+				
+				
+				<value>/info/listAppTips.do</value>
+				<value>/info/saveAppTips.do</value>
+				<value>/info/multiDelAppTips.do</value>
+								
+			</set>
+		</property>
+	</bean>
+</beans>

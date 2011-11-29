@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/context
+	     http://www.springframework.org/schema/context/spring-context-2.5.xsd">      
+	<!-- 为缺省的Action处理 -->
+	<bean id="BaseAction" class="com.xpsoft.core.web.action.BaseAction"/>
+
+   <bean id="LoginAction" class="com.xpsoft.oa.action.system.LoginAction" scope="prototype"/>
+   <bean id="AppUserAction" class="com.xpsoft.oa.action.system.AppUserAction" scope="prototype"/>
+   <bean id="NewsTypeAction" class="com.xpsoft.oa.action.info.NewsTypeAction" scope="prototype"/>
+   <bean id="NoticeAction" class="com.xpsoft.oa.action.info.NoticeAction" scope="prototype"/>
+   <bean id="CompanyAction" class="com.xpsoft.oa.action.system.CompanyAction" scope="prototype"/>
+   <bean id="DepartmentAction" class="com.xpsoft.oa.action.system.DepartmentAction" scope="prototype"/>
+   <bean id="ShortMessageAction" class="com.xpsoft.oa.action.info.ShortMessageAction" scope="prototype"/>
+   <bean id="InMessageAction" class="com.xpsoft.oa.action.info.InMessageAction" scope="prototype"/>  
+   <bean id="AppRoleAction" class="com.xpsoft.oa.action.system.AppRoleAction" scope="prototype"/>
+   <bean id="RegionAction" class="com.xpsoft.oa.action.system.RegionAction" scope="prototype"/>
+  <bean id="FileAttachAction" class="com.xpsoft.oa.action.system.FileAttachAction" scope="prototype"/>
+  <bean id="FileDetailAction" class="com.xpsoft.oa.action.document.FileDetailAction" scope="prototype"/>
+  <bean id="DocFolderAction" class="com.xpsoft.oa.action.document.DocFolderAction" scope="prototype"/>
+  <bean id="DocPrivilegeAction" class="com.xpsoft.oa.action.document.DocPrivilegeAction" scope="prototype"/>
+ <bean id="DocumentAction" class="com.xpsoft.oa.action.document.DocumentAction" scope="prototype"/>
+ <bean id="DiaryAction" class="com.xpsoft.oa.action.system.DiaryAction" scope="prototype"/>
+ <bean id="ReportTemplateAction" class="com.xpsoft.oa.action.system.ReportTemplateAction" scope="prototype"/>
+ <bean id="NewsAction" class="com.xpsoft.oa.action.info.NewsAction" scope="prototype"/>
+ <bean id="ProTypeAction" class="com.xpsoft.oa.action.flow.ProTypeAction" scope="prototype"/>
+ <bean id="ProDefinitionAction" class="com.xpsoft.oa.action.flow.ProDefinitionAction" scope="prototype"/>
+ <bean id="ProcessDetailAction" class="com.xpsoft.oa.action.flow.ProcessDetailAction" scope="prototype"/>
+ <bean id="ProUserAssignAction" class="com.xpsoft.oa.action.flow.ProUserAssignAction" scope="prototype"/>
+ <bean id="ProcessRunAction" class="com.xpsoft.oa.action.flow.ProcessRunAction" scope="prototype"/>
+ <bean id="FormDataAction" class="com.xpsoft.oa.action.flow.FormDataAction" scope="prototype"/>
+ <bean id="ProcessFormAction" class="com.xpsoft.oa.action.flow.ProcessFormAction" scope="prototype"/>
+ 
+ <bean id="ProcessActivityAction" class="com.xpsoft.oa.action.flow.ProcessActivityAction" scope="prototype"/>
+ 
+ <bean id="TaskAction" class="com.xpsoft.oa.action.flow.TaskAction" scope="prototype"/>
+ 
+ <bean id="ProcessRunDetailAction" class="com.xpsoft.oa.action.flow.ProcessRunDetailAction" scope="prototype"/>
+
+ <bean id="MenuAction" class="com.xpsoft.oa.action.menu.MenuAction" scope="prototype"/>
+ <bean id="AppFunctionAction" class="com.xpsoft.oa.action.system.AppFunctionAction" scope="prototype"/>
+ <bean id="FunUrlAction" class="com.xpsoft.oa.action.system.FunUrlAction" scope="prototype"/>
+ <bean id="UserSubAction" class="com.xpsoft.oa.action.system.UserSubAction" scope="prototype"/>
+ <bean id="SysConfigAction" class="com.xpsoft.oa.action.system.SysConfigAction" scope="prototype"/>
+ <bean id="NewsCommentAction" class="com.xpsoft.oa.action.info.NewsCommentAction" scope="prototype"/>
+ <bean id="ReportParamAction" class="com.xpsoft.oa.action.system.ReportParamAction" scope="prototype"/>
+ <bean id="DictionaryAction" class="com.xpsoft.oa.action.system.DictionaryAction" scope="prototype"/>
+ <bean id="FormDefAction" class="com.xpsoft.oa.action.flow.FormDefAction" scope="prototype"/>
+ <bean id="IndexDisplayAction" class="com.xpsoft.oa.action.system.IndexDisplayAction" scope="prototype"/>
+ <bean id="SystemLogAction" class="com.xpsoft.oa.action.system.SystemLogAction" scope="prototype"/>
+  <bean id="AppTipsAction" class="com.xpsoft.oa.action.info.AppTipsAction" scope="prototype"/>
+</beans>
