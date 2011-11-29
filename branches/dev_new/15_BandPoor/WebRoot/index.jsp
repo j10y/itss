@@ -177,10 +177,11 @@
 				</div>
 				<div class="trab">
 					<a href="#" onclick="App.MyDesktopClick()" class="tra1" title="桌面"></a>
+					<!-- 
 					<a href="#" onclick="App.clickTopTab('PersonalMailBoxView')" class="tra2" title="邮件"></a>
 					<a href="#" onclick="App.clickTopTab('CalendarPlanView')" class="tra3" title="任务"></a>
 					<a href="#" onclick="App.clickTopTab('WorkPlanView')" class="tra4" title="计划"></a>
-					<a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="tra5" title="文档"></a>
+					<a href="#" onclick="App.clickTopTab('PersonalDocumentView')" class="tra5" title="文档"></a> -->
 				</div>
 			</div>
 		</div>

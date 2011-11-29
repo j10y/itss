@@ -89,11 +89,6 @@
 			<Function id="_FileAttachQuery" text="查看附件" iconCls="menu-list">
 				<url>/system/listFileAttach.do</url>
 			</Function>
-			<!--
-				<Function id="_FileAttachAdd" text="添加附件" iconCls="menu-add">
-				<url>/system/saveFileAttach.do</url>
-				<url>/system/listFileAttach.do</url> </Function>
-			-->
 			<Function id="_FileAttachEdit" text="编辑附件" iconCls="btn-edit">
 				<url>/system/saveFileAttach.do</url>
 				<url>/system/listFileAttach.do</url>
