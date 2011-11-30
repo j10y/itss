@@ -10,6 +10,8 @@
 /*     */ public class AppRole extends BaseModel
 /*     */   implements GrantedAuthority, Group
 /*     */ {
+			public static String ROLE_ADMIN = "ROLE_ADMIN";
+			
 /*  20 */   public static String ROLE_PUBLIC = "ROLE_PUBLIC";
 /*     */ 
 /*  22 */   public static String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
