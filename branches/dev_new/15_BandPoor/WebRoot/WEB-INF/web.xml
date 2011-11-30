@@ -183,7 +183,7 @@
 		<servlet-name>ImageServlet</servlet-name>
 		<url-pattern>/report/jasper</url-pattern>
 	</servlet-mapping>
-	<servlet>
+	<!--servlet>
 		<servlet-name>reportServlet</servlet-name>
 	    <servlet-class>com.runqian.report4.view.ReportServlet</servlet-class>
 	    <init-param>
@@ -192,10 +192,10 @@
 	    </init-param>
 	    <load-on-startup>2</load-on-startup>
   	</servlet>
-  	<servlet-mapping>
+  	< servlet-mapping>
 	    <servlet-name>reportServlet</servlet-name>
 	    <url-pattern>/reportServlet</url-pattern>
-  	</servlet-mapping>
+  	</servlet-mapping -->
 	<listener>
     	<listener-class>com.xpsoft.core.web.listener.StartupListener</listener-class>
     </listener>
