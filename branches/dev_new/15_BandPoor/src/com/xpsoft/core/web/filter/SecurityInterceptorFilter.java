@@ -1,21 +1,23 @@
 package com.xpsoft.core.web.filter;
 
-import com.xpsoft.core.security.SecurityDataSource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.logging.Log;
+
 import org.springframework.security.AccessDeniedException;
 import org.springframework.security.Authentication;
 import org.springframework.security.GrantedAuthority;
-import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.xpsoft.core.security.SecurityDataSource;
+import com.xpsoft.oa.model.system.AppRole;
 
 public class SecurityInterceptorFilter extends OncePerRequestFilter {
 	private HashMap<String, Set<String>> roleUrlsMap = null;
@@ -67,14 +69,23 @@ public class SecurityInterceptorFilter extends OncePerRequestFilter {
 	}
 
 	private boolean isUrlGrantedRight(String url, Authentication auth) {
-		for (GrantedAuthority ga : auth.getAuthorities()) {
-			Set urlSet = (Set) this.roleUrlsMap.get(ga.getAuthority());
-
-			if ((urlSet != null) && (urlSet.contains(url))) {
-				return true;
+		if("/".equals(url)){
+	    	return false;
+	    }
+		//系统所有的资源
+		Set urlForAdmin = this.roleUrlsMap.get(AppRole.ROLE_ADMIN);
+		if(urlForAdmin != null && urlForAdmin.contains(url)){
+			//1.已授权的资源
+			for (GrantedAuthority ga : auth.getAuthorities()) {
+				 //roleUrlsMapClone.remove(ga.getAuthority());
+				 Set urlSet = (Set) this.roleUrlsMap.get(ga.getAuthority());
+				 if ((urlSet != null) && (urlSet.contains(url))) {
+					return true;
+				 }
 			}
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	public void loadDataSource() {
