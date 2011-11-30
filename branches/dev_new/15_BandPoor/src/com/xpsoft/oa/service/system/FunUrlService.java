@@ -1,11 +1,14 @@
 package com.xpsoft.oa.service.system;
 
+import java.util.Set;
+
 import com.xpsoft.core.service.BaseService;
 import com.xpsoft.oa.model.system.FunUrl;
 
 public abstract interface FunUrlService extends BaseService<FunUrl>
 {
   public abstract FunUrl getByPathFunId(String paramString, Long paramLong);
+  public abstract Set<String> getAdminDataSource();
 }
 
 /* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
