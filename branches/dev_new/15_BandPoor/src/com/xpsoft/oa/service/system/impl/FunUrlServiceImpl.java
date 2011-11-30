@@ -1,9 +1,11 @@
 /*    */ package com.xpsoft.oa.service.system.impl;
 /*    */ 
-/*    */ import com.xpsoft.core.service.impl.BaseServiceImpl;
-/*    */ import com.xpsoft.oa.dao.system.FunUrlDao;
-/*    */ import com.xpsoft.oa.model.system.FunUrl;
-/*    */ import com.xpsoft.oa.service.system.FunUrlService;
+/*    */ import java.util.Set;
+
+import com.xpsoft.core.service.impl.BaseServiceImpl;
+import com.xpsoft.oa.dao.system.FunUrlDao;
+import com.xpsoft.oa.model.system.FunUrl;
+import com.xpsoft.oa.service.system.FunUrlService;
 /*    */ 
 /*    */ public class FunUrlServiceImpl extends BaseServiceImpl<FunUrl>
 /*    */   implements FunUrlService
@@ -20,6 +22,13 @@
 /*    */   {
 /* 24 */     return this.dao.getByPathFunId(path, funId);
 /*    */   }
+
+			public Set<String> getAdminDataSource() {
+        	  return this.dao.getAdminDataSource();
+           }
+           
+           
+           
 /*    */ }
 
 /* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
