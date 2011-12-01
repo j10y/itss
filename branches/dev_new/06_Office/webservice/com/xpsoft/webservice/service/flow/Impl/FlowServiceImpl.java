@@ -238,6 +238,7 @@ public class FlowServiceImpl implements FlowService {
 			model.put("nextTrans", allTrans);
 		}
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
+		//查出局长的id
 		String sql = "select app_user.* from user_role,app_role,app_user "
 			+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
 		sql += "and app_role.roleId in ("+AppUtil.getPropertity("role.leaderId")+")";
@@ -1367,7 +1368,7 @@ public class FlowServiceImpl implements FlowService {
 		info.setParamFields(fieldMap);
 		return info;
 	}
-
+	//归档类型
 	public String getGdlx() {
 		// TODO Auto-generated method stub
 		ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil
@@ -1380,7 +1381,7 @@ public class FlowServiceImpl implements FlowService {
 		buff.append("}");
 		return buff.toString();
 	}
-	
+	//分管领导
 	public String findFgld(String userId,String passwd) {
 		// TODO Auto-generated method stub
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
@@ -1399,6 +1400,7 @@ public class FlowServiceImpl implements FlowService {
 		json+="]}";
 		return json;
 	}
+	//
 	public String findFfry(String userId,String passwd) {
 		// TODO Auto-generated method stub
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
@@ -1415,7 +1417,7 @@ public class FlowServiceImpl implements FlowService {
 		json+="]}";
 		return json;
 	}
-	
+	//局领导
 	public String findJld(String userId,String passwd){
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
 		String sql = "select app_user.* from app_role,app_user,user_role "
