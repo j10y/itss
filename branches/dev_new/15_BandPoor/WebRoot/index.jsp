@@ -93,9 +93,6 @@
 		<script type="text/javascript" src="<%=basePath%>/js/flow/ProcessNextForm.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/system/FileAttachDetail.js"></script>
 		<script type="text/javascript" src="<%=basePath%>/js/system/DiaryDetail.js"></script>
-		<script type="text/javascript" src="<%=basePath%>/js/task/WorkPlanDetail.js"></script>
-		<script type="text/javascript" src="<%=basePath%>/js/personal/DutyView.js"></script>
-		<script type="text/javascript" src="<%=basePath%>/js/personal/DutyForm.js"></script>
         <script type="text/javascript" src="<%=basePath%>/js/sound/soundmanager2.js"></script>
         <script type="text/javascript" src="<%=basePath%>/js/search/SearchForm.js"></script>
         <script type="text/javascript" src="<%=basePath%>/js/changeTheme/changeTheme.js"></script>
