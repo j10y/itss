@@ -115,7 +115,7 @@
 	-->
 	<bean id="securityDataSource" class="com.xpsoft.core.security.SecurityDataSource">
 		<property name="appRoleService" ref="appRoleService"/>
-		<b:property name="funUrlService" ref="funUrlService"/>
+		<property name="funUrlService" ref="funUrlService"/>
 		<property name="anonymousUrls">
 			<set>
 				<value>/login.do</value>
