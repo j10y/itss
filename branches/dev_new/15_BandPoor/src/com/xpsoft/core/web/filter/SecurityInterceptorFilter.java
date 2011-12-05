@@ -69,9 +69,9 @@ public class SecurityInterceptorFilter extends OncePerRequestFilter {
 	}
 
 	private boolean isUrlGrantedRight(String url, Authentication auth) {
-		if("/".equals(url)){
-	    	return false;
-	    }
+//		if("/".equals(url)){
+//	    	return false;
+//	    } 
 		//系统所有的资源
 		Set urlForAdmin = this.roleUrlsMap.get(AppRole.ROLE_ADMIN);
 		if(urlForAdmin != null && urlForAdmin.contains(url)){
