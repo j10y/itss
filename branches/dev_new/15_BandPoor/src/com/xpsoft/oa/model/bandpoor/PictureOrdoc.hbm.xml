@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.bandpoor.PictureOrdoc"
+        table="bp_pictureordoc"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        
+        <many-to-one
+			name="fileAttach"
+			class="com.xpsoft.oa.model.system.FileAttach"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="fileId" />
+		</many-to-one>
+		
+		<many-to-one
+			name="infoPoorId"
+			class="com.xpsoft.oa.model.bandpoor.InfoPoor"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="infoPoorId" />
+		</many-to-one>
+		
+		
+         <property
+            name="docName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="docName"
+        />
+        <property
+            name="docPath"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="docPath"
+        />
+        
+       <property
+            name="createtime"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="createtime"
+        />
+        
+        <property
+            name="status"
+            type="integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="status"
+        />
+        
+    </class>
+</hibernate-mapping>
