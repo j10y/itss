@@ -1,6 +1,7 @@
 /*    */ package com.xpsoft.oa.service.system.impl;
 /*    */ 
-/*    */ import java.util.Set;
+/*    */ import java.util.List;
+import java.util.Set;
 
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.oa.dao.system.FunUrlDao;
@@ -26,6 +27,10 @@ import com.xpsoft.oa.service.system.FunUrlService;
 			public Set<String> getAdminDataSource() {
         	  return this.dao.getAdminDataSource();
            }
+			public List<FunUrl> getByFunId() {
+				// TODO Auto-generated method stub
+				return null;//this.dao.getByFunId();
+			}
            
            
            
