@@ -111,6 +111,8 @@ App.importJs = {
 			__ctxPath + "/ext3/ux/RowExpander.js" ],
 	DictionaryView : [ __ctxPath + "/js/system/DictionaryView.js",
 			__ctxPath + "/js/system/DictionaryForm.js" ],
+	ResourceView : [ __ctxPath + "/js/system/ResourceView.js",
+			__ctxPath + "/js/system/ResourceForm.js" ],
 	SystemLogView : [ __ctxPath + "/js/system/SystemLogView.js" ],
 	MyProcessRunView : [ __ctxPath + "/js/flow/MyProcessRunView.js",
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
