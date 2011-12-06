@@ -8,7 +8,7 @@ import com.xpsoft.oa.model.system.AppUser;
 public class SaleAssessmentForBP extends BaseModel{
 	
 	private Long id;
-	private BandPoor bPId;
+	private BandPoor bpId;
 	private Double targetValue;
 	private Double requireValue;
 	private Integer status;
@@ -20,11 +20,11 @@ public class SaleAssessmentForBP extends BaseModel{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public BandPoor getBPId() {
-		return bPId;
+	public BandPoor getBpId() {
+		return bpId;
 	}
-	public void setBPId(BandPoor id) {
-		bPId = id;
+	public void setBpId(BandPoor bpId) {
+		this.bpId = bpId;
 	}
 	public Double getTargetValue() {
 		return targetValue;
@@ -60,7 +60,7 @@ public class SaleAssessmentForBP extends BaseModel{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bPId == null) ? 0 : bPId.hashCode());
+		result = prime * result + ((bpId == null) ? 0 : bpId.hashCode());
 		result = prime * result
 				+ ((createDate == null) ? 0 : createDate.hashCode());
 		result = prime * result
@@ -82,10 +82,10 @@ public class SaleAssessmentForBP extends BaseModel{
 		if (getClass() != obj.getClass())
 			return false;
 		final SaleAssessmentForBP other = (SaleAssessmentForBP) obj;
-		if (bPId == null) {
-			if (other.bPId != null)
+		if (bpId == null) {
+			if (other.bpId != null)
 				return false;
-		} else if (!bPId.equals(other.bPId))
+		} else if (!bpId.equals(other.bpId))
 			return false;
 		if (createDate == null) {
 			if (other.createDate != null)
