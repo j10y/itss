@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>Office</display-name>
+	<display-name>BandPoor</display-name>
 	<context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:conf/app-context.xml</param-value>
@@ -18,11 +18,59 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
 	
+	<!-- spring security delegatingFilterProxy -->
+	 <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    	 
+    <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>*.do</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/j_security_check</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/index.jsp</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/file-upload</url-pattern>
+   </filter-mapping>
+   
+   <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	<!-- 单点登出时用到
+ 	<filter>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	-->
+	<listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener>
+ 	<!-- single sign out -->
 	<servlet>
 		<servlet-name>ConnectorServlet</servlet-name>
 		<servlet-class>
-			net.fckeditor.connector.ConnectorServlet
+			com.xpsoft.core.command.ConnectorServlet
 		</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -105,10 +153,7 @@
   	<url-pattern>/jbpmImage</url-pattern>
   </servlet-mapping>
 
-  	<filter>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>  
+  	
 	<!--解决HTML报表中图片不显示的问题-->
 	<servlet>
 		<servlet-name>ImageServlet</servlet-name>
@@ -123,27 +168,7 @@
 	  <filter-name>lazyLoadingFilter</filter-name>
 	  <url-pattern>/*</url-pattern>
    </filter-mapping>
-
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>*.do</url-pattern>
-   </filter-mapping>
-   
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>/j_security_check</url-pattern>
-   </filter-mapping>
-   
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>/index.jsp</url-pattern>
-   </filter-mapping>
-   
-   <filter-mapping>
-	  <filter-name>springSecurityFilterChain</filter-name>
-	  <url-pattern>/file-upload</url-pattern>
-   </filter-mapping>
-
+ 
 	<servlet-mapping>
         <servlet-name>SimpleCaptcha</servlet-name>
         <url-pattern>/CaptchaImg</url-pattern>
@@ -174,16 +199,13 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
    
-     <filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
 	<!--增加报表图片映射路径，映射的是jasper文件所在的路径-->
 	<servlet-mapping>
 		<servlet-name>ImageServlet</servlet-name>
 		<url-pattern>/report/jasper</url-pattern>
 	</servlet-mapping>
-	<!--servlet>
+	<!-- 
+	<servlet>
 		<servlet-name>reportServlet</servlet-name>
 	    <servlet-class>com.runqian.report4.view.ReportServlet</servlet-class>
 	    <init-param>
@@ -192,10 +214,10 @@
 	    </init-param>
 	    <load-on-startup>2</load-on-startup>
   	</servlet>
-  	< servlet-mapping>
+  	<servlet-mapping>
 	    <servlet-name>reportServlet</servlet-name>
 	    <url-pattern>/reportServlet</url-pattern>
-  	</servlet-mapping -->
+  	</servlet-mapping> -->
 	<listener>
     	<listener-class>com.xpsoft.core.web.listener.StartupListener</listener-class>
     </listener>
@@ -210,9 +232,10 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
+	<!-- 
 	<error-page>
-		<error-code>403</error-code>
-		<location>/403.jsp</location>
+		<error-code>401</error-code>
+		<location>/401.jsp</location>
 	</error-page>
 	<jsp-config>
 	  	<taglib>
@@ -220,4 +243,10 @@
 		    <taglib-location>/WEB-INF/runqianReport4.tld</taglib-location>
 	  	</taglib>
 	</jsp-config>
+	 -->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/403.jsp</location>
+	</error-page>
+	
 </web-app>
