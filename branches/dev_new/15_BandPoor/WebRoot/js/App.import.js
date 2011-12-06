@@ -121,7 +121,9 @@ App.importJs = {
 	BandView : [__ctxPath + "/js/bandpoor/BandView.js",
 	        __ctxPath + "/js/bandpoor/BandForm.js"],
 	ProClassView : [__ctxPath + "/js/bandpoor/ProClassView.js",
-	        __ctxPath + "/js/bandpoor/ProClassForm.js"]
+	        __ctxPath + "/js/bandpoor/ProClassForm.js"],
+	BandStyleView : [__ctxPath + "/js/bandpoor/BandStyleView.js",
+	        __ctxPath + "/js/bandpoor/BandStyleForm.js"],
 	BusinessAreaView : [__ctxPath + "/js/bandpoor/BusinessAreaView.js",
 	        __ctxPath + "/js/bandpoor/BusinessAreaForm.js"]       
 };
