@@ -230,12 +230,13 @@ ResourceForm = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	save : function(a, b) {
-		var ja = [];
 		var sss = Ext.getCmp("funUrlGrid").getStore();
-		Ext.ux.Toast.msg(sss.getCount());
-		Ext.each(sss,function(item){
-			ja.push(item.data);
-		});
+		var items = [];
+		for(var j = 0; j < sss.getCount(); j++) {
+			var item = sss.getAt(j).data;
+			items.push(item.urlPath);
+		};
+		
 		if (a.getForm().isValid()) {
 			a.getForm().submit( {
 				method : "POST",
@@ -258,7 +259,7 @@ ResourceForm = Ext.extend(Ext.Window, {
 					b.close();
 				},
 				params : {
-					funUrls: encodeURIComponent(Ext.encode(ja))
+					funUrls: items.toString()
 				}
 			});
 		}
