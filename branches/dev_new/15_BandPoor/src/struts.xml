@@ -158,6 +158,12 @@
 		</action>
 	</package>
 	
+	<package name="bandpoor" extends="struts-default" namespace="/bandpoor">
+		<action name="*Band" class="BandAction" method="${1}">
+			<result>${successResultValue}</result>
+		</action>
+	</package>
+	
 </struts>
 
 		
