@@ -54,4 +54,5 @@
   
   <bean id="BandAction" class="com.xpsoft.oa.action.bandpoor.BandAction" scope="prototype"/>
   <bean id="ProClassAction" class="com.xpsoft.oa.action.bandpoor.ProClassAction" scope="prototype"/>
+  <bean id="BandStyleAction" class="com.xpsoft.oa.action.bandpoor.BandStyleAction" scope="prototype"/>
 </beans>

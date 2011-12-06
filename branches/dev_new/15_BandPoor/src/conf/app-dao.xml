@@ -54,4 +54,5 @@
 	
 	<bean id="bandDao" class="com.xpsoft.oa.dao.bandpoor.impl.BandDaoImpl" parent="baseDao"/>
 	<bean id="proClassDao" class="com.xpsoft.oa.dao.bandpoor.impl.ProClassDaoImpl" parent="baseDao"/>
+	<bean id="bandStyleDao" class="com.xpsoft.oa.dao.bandpoor.impl.BandStyleDaoImpl" parent="baseDao"/>
 </beans>

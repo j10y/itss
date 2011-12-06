@@ -216,4 +216,7 @@
    	 <bean id="proClassService" class="com.xpsoft.oa.service.bandpoor.impl.ProClassServiceImpl">
    	 	<constructor-arg index="0" ref="proClassDao"/>
    	 </bean>
+   	 <bean id="bandStyleService" class="com.xpsoft.oa.service.bandpoor.impl.BandStyleServiceImpl">
+   	 	<constructor-arg index="0" ref="bandStyleDao"/>
+   	 </bean>
 </beans>
