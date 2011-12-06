@@ -44,6 +44,9 @@ import com.xpsoft.oa.model.system.FunUrl;
 				});
 				return urlSet;
 			}
+			public List<FunUrl> getByFunId(Long funId) {
+				return null;
+			}
 
 
 /*    */ }
