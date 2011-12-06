@@ -6,20 +6,20 @@ import javax.annotation.Resource;
 
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.oa.model.bandpoor.Band;
-import com.xpsoft.oa.service.bandpoor.BandService;
+import com.xpsoft.oa.model.bandpoor.ProClass;
+import com.xpsoft.oa.service.bandpoor.ProClassService;
 
 import flexjson.JSONSerializer;
 
-public class BandAction extends BaseAction {
+public class ProClassAction extends BaseAction {
 	@Resource
-	private BandService bandService;
-	private Band band;
-	private Long id;
+	ProClassService proClassService;
+	ProClass proClass;
+	Long id;
 	
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
-		List<Band> list = this.bandService.getAll(filter);
+		List<ProClass> list = this.proClassService.getAll(filter);
 		
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
 				.append(filter.getPagingBean().getTotalItems()).append(",result:");
@@ -32,11 +32,11 @@ public class BandAction extends BaseAction {
 	}
 	
 	public String get() {
-		this.band = this.bandService.get(this.id);
+		this.proClass = this.proClassService.get(this.id);
 		
 		JSONSerializer json = new JSONSerializer();
 		StringBuffer buff = new StringBuffer("{success:true,data:");
-		buff.append(json.exclude(new String[] {}).serialize(this.band));
+		buff.append(json.exclude(new String[] {}).serialize(this.proClass));
 		buff.append("}");
 		this.jsonString = buff.toString();
 		
@@ -44,16 +44,17 @@ public class BandAction extends BaseAction {
 	}
 	
 	public String save() {
-		this.band = new Band();
-		if(this.getRequest().getParameter("band.id") != null && !"".equals(this.getRequest().getParameter("band.id"))) {
-			this.band.setId(Long.parseLong(this.getRequest().getParameter("band.id")));
+		/*
+		this.proClass = new ProClass();
+		if(this.getRequest().getParameter("proClass.id") != null && !"".equals(this.getRequest().getParameter("proClass.id"))) {
+			this.proClass.setId(Long.parseLong(this.getRequest().getParameter("proClass.id")));
 		}
-		this.band.setBandChName(this.getRequest().getParameter("band.bandChName"));
-		this.band.setBandEnName(this.getRequest().getParameter("band.bandEnName"));
-		this.band.setBandDesc(this.getRequest().getParameter("band.bandDesc"));
-		this.band.setBandStatus(Integer.parseInt(this.getRequest().getParameter("band.bandStatus")));
-		this.band.setFlag(1);
-		this.bandService.save(this.band);
+		this.proClass.setProClassNum(this.getRequest().getParameter("proClass.proClassNum"));
+		this.proClass.setProClassName(this.getRequest().getParameter("proClass.proClassName"));
+		this.proClass.setFlag(1);
+		*/
+		this.proClass.setFlag(1);
+		this.proClassService.save(this.proClass);
 		this.jsonString = "{success:true}";
 		
 		return "success";
@@ -64,9 +65,9 @@ public class BandAction extends BaseAction {
 		try {
 			if(ids != null) {
 				for(String id : ids) {
-					Band b = this.bandService.get(Long.parseLong(id));
+					ProClass b = this.proClassService.get(Long.parseLong(id));
 					b.setFlag(0);//置为已删除状态
-					this.bandService.save(b);
+					this.proClassService.save(b);
 				}
 			}
 			this.jsonString = "{success:true}";
@@ -78,17 +79,17 @@ public class BandAction extends BaseAction {
 		return "success";
 	}
 	
-	public BandService getBandService() {
-		return bandService;
+	public ProClassService getProClassService() {
+		return proClassService;
 	}
-	public void setBandService(BandService bandService) {
-		this.bandService = bandService;
+	public void setProClassService(ProClassService proClassService) {
+		this.proClassService = proClassService;
 	}
-	public Band getBand() {
-		return band;
+	public ProClass getProClass() {
+		return proClass;
 	}
-	public void setBand(Band band) {
-		this.band = band;
+	public void setProClass(ProClass proClass) {
+		this.proClass = proClass;
 	}
 	public Long getId() {
 		return id;
