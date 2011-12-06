@@ -79,6 +79,25 @@ public class ProClassAction extends BaseAction {
 		return "success";
 	}
 	
+	public String combo() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<ProClass> list = this.proClassService.getAll(filter);
+		StringBuffer buff = new StringBuffer("[");
+		for(ProClass pc : list) {
+			buff.append("[" +
+					"'" + pc.getId() + "'," +
+					"'" + pc.getProClassName() + "'" +
+					"],");
+		}
+		if(list.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
 	public ProClassService getProClassService() {
 		return proClassService;
 	}

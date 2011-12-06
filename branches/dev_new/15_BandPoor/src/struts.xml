@@ -165,6 +165,9 @@
 		<action name="*ProClass" class="ProClassAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*BandStyle" class="BandStyleAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	
 </struts>
