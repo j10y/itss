@@ -52,7 +52,7 @@ public class BandAction extends BaseAction {
 		this.band.setBandEnName(this.getRequest().getParameter("band.bandEnName"));
 		this.band.setBandDesc(this.getRequest().getParameter("band.bandDesc"));
 		this.band.setBandStatus(Integer.parseInt(this.getRequest().getParameter("band.bandStatus")));
-		this.band.setFlag(1);
+		this.band.setFlag(Band.CREATE);
 		this.bandService.save(this.band);
 		this.jsonString = "{success:true}";
 		
@@ -65,7 +65,7 @@ public class BandAction extends BaseAction {
 			if(ids != null) {
 				for(String id : ids) {
 					Band b = this.bandService.get(Long.parseLong(id));
-					b.setFlag(0);//置为已删除状态
+					b.setFlag(Band.DELETE);//置为已删除状态
 					this.bandService.save(b);
 				}
 			}

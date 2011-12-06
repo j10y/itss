@@ -53,7 +53,7 @@ public class ProClassAction extends BaseAction {
 		this.proClass.setProClassName(this.getRequest().getParameter("proClass.proClassName"));
 		this.proClass.setFlag(1);
 		*/
-		this.proClass.setFlag(1);
+		this.proClass.setFlag(ProClass.CREATE);
 		this.proClassService.save(this.proClass);
 		this.jsonString = "{success:true}";
 		
@@ -66,7 +66,7 @@ public class ProClassAction extends BaseAction {
 			if(ids != null) {
 				for(String id : ids) {
 					ProClass b = this.proClassService.get(Long.parseLong(id));
-					b.setFlag(0);//置为已删除状态
+					b.setFlag(ProClass.DELETE);//置为已删除状态
 					this.proClassService.save(b);
 				}
 			}
