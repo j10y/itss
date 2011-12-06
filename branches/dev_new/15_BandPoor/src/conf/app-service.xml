@@ -213,4 +213,7 @@
    	 <bean id="bandService" class="com.xpsoft.oa.service.bandpoor.impl.BandServiceImpl">
    	 	<constructor-arg index="0" ref="bandDao"/>
    	 </bean>
+   	 <bean id="proClassService" class="com.xpsoft.oa.service.bandpoor.impl.ProClassServiceImpl">
+   	 	<constructor-arg index="0" ref="proClassDao"/>
+   	 </bean>
 </beans>
