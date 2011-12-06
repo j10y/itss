@@ -3,6 +3,8 @@ package com.xpsoft.oa.model.bandpoor;
 import com.xpsoft.core.model.BaseModel;
 
 public class Floor extends BaseModel{
+	public static final Integer CREATE = new Integer(1);//新建
+	public static final Integer DELETE = new Integer(0);//删除
 	private Long id;
 	
 	private String floorName;
