@@ -8,6 +8,15 @@ public class BandStyle extends BaseModel{
 	private String styleName;
 	private String styleDesc;
 	private ProClass proClassId;
+	
+	private Integer flag;
+	
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 	public Long getId() {
 		return id;
 	}

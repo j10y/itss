@@ -37,5 +37,13 @@
             access="property"
             column="floorDesc"
         />
+         <property
+            name="flag"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="flag"
+        />
     </class>
 </hibernate-mapping>

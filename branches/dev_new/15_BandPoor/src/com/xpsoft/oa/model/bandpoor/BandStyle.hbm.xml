@@ -55,6 +55,13 @@
 		>	
 		   <column name="proClassId" />
 		</many-to-one>
-		
+		 <property
+            name="flag"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="flag"
+        />
     </class>
 </hibernate-mapping>

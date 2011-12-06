@@ -8,6 +8,15 @@ public class SaleStore extends BaseModel{
 	private String storeDesc;
 	private  BusinessArea allowAreaId;
 	private Double storeScore;
+	
+	private Integer flag;
+	
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 	public Long getId() {
 		return id;
 	}

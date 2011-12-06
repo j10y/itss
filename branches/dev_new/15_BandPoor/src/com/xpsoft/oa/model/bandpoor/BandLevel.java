@@ -6,6 +6,16 @@ public class BandLevel extends BaseModel{
 	private Long id;
 	private String levelName;
 	private String levelDesc;
+	
+	private Integer flag;
+	
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -6,6 +6,15 @@ public class ProClass extends BaseModel{
 	private Long id;
 	private String proClassNum;
 	private String proClassName;
+	
+	private Integer flag;
+	
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 	public Long getId() {
 		return id;
 	}

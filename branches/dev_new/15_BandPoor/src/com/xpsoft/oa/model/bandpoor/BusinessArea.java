@@ -6,6 +6,15 @@ public class BusinessArea extends BaseModel{
 	private Long id;
 	private String areaName;
 	private String areaDesc;
+	
+    private Integer flag;
+	
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 	public Long getId() {
 		return id;
 	}

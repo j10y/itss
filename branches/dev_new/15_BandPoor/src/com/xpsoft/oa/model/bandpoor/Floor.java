@@ -8,6 +8,15 @@ public class Floor extends BaseModel{
 	private String floorName;
 	
 	private String floorDesc;
+	
+	private Integer flag;
+	
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 
 	public Long getId() {
 		return id;

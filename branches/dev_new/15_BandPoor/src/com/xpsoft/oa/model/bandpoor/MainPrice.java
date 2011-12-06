@@ -8,6 +8,15 @@ public class MainPrice extends BaseModel{
 	private String priceName;
 	
 	private String priceDesc;
+	
+	private Integer flag;
+	
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 
 	public Long getId() {
 		return id;
