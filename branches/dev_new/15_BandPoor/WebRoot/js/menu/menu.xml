@@ -169,6 +169,27 @@
 			    <url>/system/multiDelDictionary.do</url>
 			</Function>
 		</Item>
+		
+		<Item id="ResourceView" iconCls="menu-flow" text="资源管理">
+			<Function id="_ResourceQuery" text="查看资源" iconCls="menu-list">
+			   <url>/system/listResource.do</url>
+			</Function>
+			<Function id="_ResourceAdd" text="添加" iconCls="menu-add">
+			   <url>/system/listResource.do</url>
+			   <url>/system/saveResource.do</url>
+			   <url>/system/itemsResource.do</url>
+			</Function>
+			<Function id="_ResourceEdit" text="编辑" iconCls="btn-edit">
+			    <url>/system/listResource.do</url>
+			    <url>/system/saveResource.do</url>
+			    <url>/system/itemsResource.do</url>
+			    <url>/system/getResource.do</url>
+			</Function>
+			<Function id="_ResourceDel" text="删除" iconCls="menu-del">
+			    <url>/system/listResource.do</url>
+			    <url>/system/multiDelResource.do</url>
+			</Function>
+		</Item>
 		<!--
 		<Item id="SystemLogView" text="系统日志"/>
 		-->
