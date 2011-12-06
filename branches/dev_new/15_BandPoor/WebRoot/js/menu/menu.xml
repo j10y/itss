@@ -297,7 +297,7 @@
 			</Item>
 			<Item id="ProClassView" text="品类管理" iconCls="menu-flowNew" >
 			</Item>
-			<Item id="BandStyeView" text="品牌风格管理" iconCls="menu-flowNew" >
+			<Item id="BandStyleView" text="品牌风格管理" iconCls="menu-flowNew" >
 			</Item>
 			<Item id="BusinessAreaView" text="商圈管理" iconCls="menu-flowNew" >
 			</Item>
