@@ -1,16 +1,23 @@
 package com.xpsoft.oa.action.system;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.system.AppFunction;
+import com.xpsoft.oa.model.system.FunUrl;
 import com.xpsoft.oa.service.system.AppFunctionService;
+import com.xpsoft.oa.service.system.FunUrlService;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 public class AppFunctionAction extends BaseAction {
 
@@ -72,16 +79,14 @@ public class AppFunctionAction extends BaseAction {
 		
 	}
 	public String multiDel() {
-		/* 74 */String[] ids = getRequest().getParameterValues("ids");
-		/* 75 */if (ids != null) {
-			/* 76 */for (String id : ids) {
-				/* 77 */this.appFunctionService.remove(new Long(id));
+		String[] ids = getRequest().getParameterValues("ids");
+		  if (ids != null) {
+			 for (String id : ids) {
+				this.appFunctionService.remove(new Long(id));
 			}
 		}
-
-		/* 81 */this.jsonString = "{success:true}";
-
-		/* 83 */return "success";
+		this.jsonString = "{success:true}";
+		return "success";
 	}
 
 	public String get() {
@@ -104,17 +109,12 @@ public class AppFunctionAction extends BaseAction {
 
 	public String save() {
 		String data = getRequest().getParameter("funUrls");
-		String cccc = getRequest().getParameter("cccc");
-		System.out.println("======="+data);
-		/* 106 */this.appFunctionService.save(this.appFunction);
-		/* 107 */setJsonString("{success:true}");
-		/* 108 */return "success";
+		String[] funUrls = data.split(",");
+		this.appFunctionService.save(this.appFunction);
+		if(this.appFunction.getFunctionId()!=null){
+			this.appFunctionService.updateFunUrl(funUrls,this.appFunction.getFunctionId());
+		}
+		setJsonString("{success:true}");
+		return "success";
 	}
 }
-
-/*
- * Location:
- * C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6
- * -joffice\webapps\joffice1.3.1\WEB-INF\classes\ Qualified Name:
- * com.xpsoft.oa.action.system.AppFunctionAction JD-Core Version: 0.6.0
- */
