@@ -52,4 +52,6 @@
 	<bean id="documentDao" class="com.xpsoft.oa.dao.document.impl.DocumentDaoImpl" parent="baseDao"/>
 	<bean id="docPrivilegeDao" class="com.xpsoft.oa.dao.document.impl.DocPrivilegeDaoImpl" parent="baseDao"/>
 	
+	<bean id="bandDao" class="com.xpsoft.oa.dao.bandpoor.impl.BandDaoImpl" parent="baseDao"/>
+	
 </beans>

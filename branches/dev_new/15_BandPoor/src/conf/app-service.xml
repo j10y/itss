@@ -209,4 +209,8 @@
    	 <bean id="docPrivilegeService" class="com.xpsoft.oa.service.document.impl.DocPrivilegeServiceImpl">
    	 	<constructor-arg index="0" ref="docPrivilegeDao"/>
    	 </bean>
+   	 
+   	 <bean id="bandService" class="com.xpsoft.oa.service.bandpoor.impl.BandServiceImpl">
+   	 	<constructor-arg index="0" ref="bandDao"/>
+   	 </bean>
 </beans>

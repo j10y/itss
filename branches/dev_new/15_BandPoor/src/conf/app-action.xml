@@ -51,4 +51,6 @@
  <bean id="IndexDisplayAction" class="com.xpsoft.oa.action.system.IndexDisplayAction" scope="prototype"/>
  <bean id="SystemLogAction" class="com.xpsoft.oa.action.system.SystemLogAction" scope="prototype"/>
   <bean id="AppTipsAction" class="com.xpsoft.oa.action.info.AppTipsAction" scope="prototype"/>
+  
+  <bean id="BandAction" class="com.xpsoft.oa.action.bandpoor.BandAction" scope="prototype"/>
 </beans>
