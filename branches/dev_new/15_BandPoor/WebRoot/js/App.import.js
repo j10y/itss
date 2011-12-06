@@ -117,8 +117,11 @@ App.importJs = {
 	MyProcessRunView : [ __ctxPath + "/js/flow/MyProcessRunView.js",
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
 	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
+	
 	BandView : [__ctxPath + "/js/bandpoor/BandView.js",
 	        __ctxPath + "/js/bandpoor/BandForm.js"],
 	ProClassView : [__ctxPath + "/js/bandpoor/ProClassView.js",
 	        __ctxPath + "/js/bandpoor/ProClassForm.js"]
+	BusinessAreaView : [__ctxPath + "/js/bandpoor/BusinessAreaView.js",
+	        __ctxPath + "/js/bandpoor/BusinessAreaForm.js"]       
 };
