@@ -5,12 +5,13 @@
 /*     */ import com.xpsoft.core.command.QueryFilter;
 /*     */ import com.xpsoft.core.web.action.BaseAction;
 /*     */ import com.xpsoft.core.web.paging.PagingBean;
+import com.xpsoft.oa.model.system.AppFunction;
 /*     */ import com.xpsoft.oa.model.system.FunUrl;
 /*     */ import com.xpsoft.oa.service.system.FunUrlService;
 /*     */ import java.lang.reflect.Type;
 /*     */ import java.util.List;
 /*     */ import javax.annotation.Resource;
-/*     */ import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 /*     */ 
 /*     */ public class FunUrlAction extends BaseAction
 /*     */ {
@@ -47,8 +48,9 @@
 /*  56 */     StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
 /*  57 */       .append(filter.getPagingBean().getTotalItems()).append(",result:");
 /*     */ 
-/*  59 */     Gson gson = new Gson();
-/*  60 */     buff.append(gson.toJson(list, type));
+/*  59 */    // Gson gson = new Gson();
+/*  60 */     //buff.append(gson.toJson(list, type));
+toJson(list,buff);
 /*  61 */     buff.append("}");
 /*     */ 
 /*  63 */     this.jsonString = buff.toString();
@@ -56,6 +58,22 @@
 /*  65 */     return "success";
 /*     */   }
 /*     */ 
+public static void  toJson(List<FunUrl> list,StringBuffer sb){
+	sb.append("[");
+	for(FunUrl f:list){
+		sb.append("{")
+				.append("'urlId':'" + f.getUrlId() + "',")
+				.append("'functionId':'" + f.getFunctionId() + "',")
+				.append("'urlPath':'" + f.getUrlPath() + "'},");
+	}
+	if(list.size() > 0) {
+		sb.deleteCharAt(sb.length() - 1);
+	}
+	sb.append("]");
+	
+}
+
+
 /*     */   public String multiDel()
 /*     */   {
 /*  73 */     String[] ids = getRequest().getParameterValues("ids");

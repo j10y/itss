@@ -1,17 +1,16 @@
 package com.xpsoft.oa.action.system;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.system.AppFunction;
 import com.xpsoft.oa.service.system.AppFunctionService;
-import java.lang.reflect.Type;
-import java.util.List;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 public class AppFunctionAction extends BaseAction {
 
@@ -48,9 +47,9 @@ public class AppFunctionAction extends BaseAction {
 		/* 58 */.append(filter.getPagingBean().getTotalItems()).append(
 				",result:");
 
-		/* 60 */Gson gson = new GsonBuilder()
-				.excludeFieldsWithoutExposeAnnotation().create();
-		/* 61 */buff.append(gson.toJson(list, type));
+		/* 60 */Gson gson = new Gson();
+		/* 61 *///buff.append(gson.toJson(list, type));
+		toJson(list,buff);
 		/* 62 */buff.append("}");
 
 		/* 64 */this.jsonString = buff.toString();
@@ -58,6 +57,20 @@ public class AppFunctionAction extends BaseAction {
 		/* 66 */return "success";
 	}
 
+	public static void  toJson(List<AppFunction> list,StringBuffer sb){
+		sb.append("[");
+		for(AppFunction f:list){
+			sb.append("{")
+					.append("'functionId':'" + f.getFunctionId() + "',")
+					.append("'funKey':'" + f.getFunKey() + "',")
+					.append("'funName':'" + f.getFunName() + "'},");
+		}
+		if(list.size() > 0) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		sb.append("]");
+		
+	}
 	public String multiDel() {
 		/* 74 */String[] ids = getRequest().getParameterValues("ids");
 		/* 75 */if (ids != null) {
@@ -78,7 +91,11 @@ public class AppFunctionAction extends BaseAction {
 		/* 93 */Gson gson = new Gson();
 
 		/* 95 */StringBuffer sb = new StringBuffer("{success:true,data:");
-		/* 96 */sb.append(gson.toJson(appFunction));
+		/* 96 *///sb.append(gson.toJson(appFunction));
+		       sb.append("{'functionId':'" + appFunction.getFunctionId() + "',")
+		       			.append("'funKey':'" + appFunction.getFunKey() + "',")
+		       			.append("'funName':'" + appFunction.getFunName() + "'}");
+		       
 		/* 97 */sb.append("}");
 		/* 98 */setJsonString(sb.toString());
 
@@ -86,6 +103,9 @@ public class AppFunctionAction extends BaseAction {
 	}
 
 	public String save() {
+		String data = getRequest().getParameter("funUrls");
+		String cccc = getRequest().getParameter("cccc");
+		System.out.println("======="+data);
 		/* 106 */this.appFunctionService.save(this.appFunction);
 		/* 107 */setJsonString("{success:true}");
 		/* 108 */return "success";
