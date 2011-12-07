@@ -85,6 +85,26 @@ public class BusinessAreaAction extends BaseAction{
 		return "success";
 	}
 	
+	public String combo() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<BusinessArea> list = this.businessAreaService.getAll(filter);
+		StringBuffer buff = new StringBuffer("[");
+		for(BusinessArea ba : list) {
+			buff.append("[" +
+					"'" + ba.getId() + "'," +
+					"'" + ba.getAreaName() + "'" +
+					"],");
+		}
+		if(list.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
+	
 	
 	public Long getId() {
 		return id;
