@@ -31,62 +31,32 @@ BusinessAreaForm = Ext.extend(Ext.Window, {
 			defaultType : "textfield",
 			items : [
 				{
-					name : "band.id",
-					id : "bandId",
+					name : "businessArea.id",
+					id : "businessAreaId",
 					xtype : "hidden",
-					value : this.bandId == null ? "" : this.bandId
+					value : this.businessAreaId == null ? "" : this.businessAreaId
 				}, {
-					fieldLabel : "中文名称",
-					name : "band.bandChName",
-					id : "bandChName",
+					fieldLabel : "商圈名称",
+					name : "businessArea.areaName",
+					id : "areaName",
 					allowBlank : false,
-					blankText : "中文名称不能为空！"
+					blankText : "商圈名称不能为空！"
 				}, {
-					fieldLabel : "英文名称",
-					name : "band.bandEnName",
-					id : "bandEnName",
+					fieldLabel : "商圈描述",
+					name : "businessArea.areaDesc",
+					id : "areaDesc",
 					allowBlank : false,
-					blankText : "英文名称不能为空！"
-				}, {
-					fieldLabel : "类型",
-					hiddenName : "band.bandStatus",
-					id : "bandStatusName",
-					xtype : "combo",
-					value : "0",
-					rawValue : "常规品牌",
-					editable : false,
-					triggerAction : "all",
-					store : [
-						[
-							"0",
-							"常规品牌"
-						], [
-							"1",
-							"非常规品牌"
-						]
-					]
-				}, {
-					fieldLabel : "描述",
-					name : "band.bandDesc",
-					id : "bandDesc",
-					xtype : "textarea"
+					blankText : "商圈描述不能为空！"
 				}
 			]
 		});
-		if(this.bandId != null && this.bandId != "undefined") {
+		if(this.businessAreaId != null && this.businessAreaId != "undefined") {
 			this.formPanel.getForm().load({
 				deferredRender : false,
-				url : __ctxPath + "/bandpoor/getBusinessArea.do?id=" + this.bandId,
+				url : __ctxPath + "/bandpoor/getBusinessArea.do?id=" + this.businessAreaId,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
-					if(e.data.bandStatus == "0") {
-						Ext.getCmp("bandStatusName").setValue(e.data.bandStatus);
-						Ext.getCmp("bandStatusName").setRawValue("常规品牌");
-					} else if(e.data.bandStatus == "1") {
-						Ext.getCmp("bandStatusName").setValue(e.data.bandStatus);
-						Ext.getCmp("bandStatusName").setRawValue("非常规品牌");
-					}
 				},
 				failure : function() {
 					

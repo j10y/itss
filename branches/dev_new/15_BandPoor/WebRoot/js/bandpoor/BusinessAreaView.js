@@ -45,7 +45,7 @@ BusinessAreaView = Ext.extend(Ext.Panel, {
 					text : "查询条件：名称"
 				}, {
 					fieldLabel : "名称",
-					name : "Q_bandChName_S_LK",
+					name : "Q_areaName_S_LK",
 					xtype : "textfield",
 					allowBlank : false,
 					blankText : "名称不能为空！"
@@ -135,12 +135,12 @@ BusinessAreaView = Ext.extend(Ext.Panel, {
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-add",
 			text : "添加商圈",
-			handler : this.addBand
+			handler : this.addBusinessArea
 		}));
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-del",
 			text : "删除商圈",
-			handler : this.delBand
+			handler : this.delBusinessArea
 		}));
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "BusinessAreaGrid",
@@ -173,8 +173,8 @@ BusinessAreaView = Ext.extend(Ext.Panel, {
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
 				if(isGranted("_BusinessAreaEdit")) {
-					new BandForm({
-						bandId : e.data.id
+					new BusinessAreaForm({
+						businessAreaId : e.data.id
 					}).show();
 				}
 			});
@@ -193,10 +193,10 @@ BusinessAreaView = Ext.extend(Ext.Panel, {
 			});
 		}
 	},
-	addBand : function() {
+	addBusinessArea : function() {
 		new BusinessAreaForm().show();
 	},
-	delBand : function() {
+	delBusinessArea : function() {
 		var e = Ext.getCmp("BusinessAreaGrid");
 		var c = e.getSelectionModel().getSelections();
 		if(c.length == 0) {
@@ -209,18 +209,18 @@ BusinessAreaView = Ext.extend(Ext.Panel, {
 		}
 		BusinessAreaView.remove(f);
 	},
-	editBand : function(a) {
+	editBusinessArea : function(a) {
 		new BusinessAreaForm({
-			bandId : a.data.id
+			businessAreaId : a.data.id
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
 			case "btn-del":
-				this.delBand();
+				this.delBusinessArea();
 				break ;
 			case "btn-edit":
-				this.editBand(a);
+				this.editBusinessArea(a);
 				break ;
 			default:
 				break ;
