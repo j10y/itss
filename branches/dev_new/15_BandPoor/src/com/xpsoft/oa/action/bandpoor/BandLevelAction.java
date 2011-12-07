@@ -13,28 +13,28 @@ import flexjson.JSONSerializer;
 
 public class BandLevelAction extends BaseAction{
 	@Resource
-	private BandLevelService businessAreaService;
-	private BandLevel businessArea;
+	private BandLevelService bandLevelService;
+	private BandLevel bandLevel;
 	public BandLevelService getBandLevelService() {
-		return businessAreaService;
+		return bandLevelService;
 	}
 
-	public void setBandLevelService(BandLevelService businessAreaService) {
-		this.businessAreaService = businessAreaService;
+	public void setBandLevelService(BandLevelService bandLevelService) {
+		this.bandLevelService = bandLevelService;
 	}
 
 	public BandLevel getBandLevel() {
-		return businessArea;
+		return bandLevel;
 	}
 
-	public void setBandLevel(BandLevel businessArea) {
-		this.businessArea = businessArea;
+	public void setBandLevel(BandLevel bandLevel) {
+		this.bandLevel = bandLevel;
 	}
 	private Long id;
 	
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
-		List<BandLevel> list = this.businessAreaService.getAll(filter);
+		List<BandLevel> list = this.bandLevelService.getAll(filter);
 		
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
 				.append(filter.getPagingBean().getTotalItems()).append(",result:");
@@ -47,11 +47,11 @@ public class BandLevelAction extends BaseAction{
 	}
 	
 	public String get() {
-		this.businessArea = this.businessAreaService.get(this.id);
+		this.bandLevel = this.bandLevelService.get(this.id);
 		
 		JSONSerializer json = new JSONSerializer();
 		StringBuffer buff = new StringBuffer("{success:true,data:");
-		buff.append(json.exclude(new String[] {}).serialize(this.businessArea));
+		buff.append(json.exclude(new String[] {}).serialize(this.bandLevel));
 		buff.append("}");
 		this.jsonString = buff.toString();
 		
@@ -59,8 +59,8 @@ public class BandLevelAction extends BaseAction{
 	}
 	
 	public String save() {
-		this.businessArea.setFlag(BandLevel.CREATE);
-		this.businessAreaService.save(this.businessArea);
+		this.bandLevel.setFlag(BandLevel.CREATE);
+		this.bandLevelService.save(this.bandLevel);
 		this.jsonString = "{success:true}";
 		
 		return "success";
@@ -71,9 +71,9 @@ public class BandLevelAction extends BaseAction{
 		try {
 			if(ids != null) {
 				for(String id : ids) {
-					BandLevel b = this.businessAreaService.get(Long.parseLong(id));
+					BandLevel b = this.bandLevelService.get(Long.parseLong(id));
 					b.setFlag(BandLevel.DELETE);//置为已删除状态
-					this.businessAreaService.save(b);
+					this.bandLevelService.save(b);
 				}
 			}
 			this.jsonString = "{success:true}";
@@ -87,7 +87,7 @@ public class BandLevelAction extends BaseAction{
 	
 	public String combo() {
 		QueryFilter filter = new QueryFilter(this.getRequest());
-		List<BandLevel> list = this.businessAreaService.getAll(filter);
+		List<BandLevel> list = this.bandLevelService.getAll(filter);
 		StringBuffer buff = new StringBuffer("[");
 		for(BandLevel ba : list) {
 			buff.append("[" +
