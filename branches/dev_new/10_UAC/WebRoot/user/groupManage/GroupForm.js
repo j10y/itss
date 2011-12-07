@@ -28,12 +28,7 @@ GroupForm = Ext.extend(Ext.Window, {
 				anchor : "95%,95%"
 			},
 			defaultType : "textfield",
-			items : [
-				{
-					name : "rdn",
-					id : "rdn",
-					hidden : true
-				}, {
+			items : [ {
 					name : "cn",
 					id : "cn",
 					fieldLabel : "cn",
@@ -69,6 +64,10 @@ GroupForm = Ext.extend(Ext.Window, {
 							"锁定"
 						]
 					]
+				}, {
+					name : "rdn",
+					id : "rdn",
+					hidden : true
 				}
 			]
 		});

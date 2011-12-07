@@ -11,7 +11,7 @@ PostForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 300,
+			height : 250,
 			width : 400,
 			title : "添加/修改职务信息",
 			buttonAlign : "center",
