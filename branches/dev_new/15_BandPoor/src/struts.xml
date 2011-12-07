@@ -168,9 +168,6 @@
 		<action name="*BandStyle" class="BandStyleAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>		
-		<action name="*Band" class="BandAction" method="{1}">
-			<result>${successResultValue}</result>
-		</action>
 		<action name="*ScoreManage" class="ScoreManageAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
