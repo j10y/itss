@@ -129,5 +129,7 @@ App.importJs = {
 	ScoreManageView: [ __ctxPath + "/js/bandpoor/ScoreManageView.js",
 			__ctxPath + "/js/bandpoor/ScoreManageForm.js" ],
 	FloorView : [__ctxPath + "/js/bandpoor/FloorView.js",
-	        __ctxPath + "/js/bandpoor/FloorForm.js"]
+	        __ctxPath + "/js/bandpoor/FloorForm.js"],
+	MainPriceView : [__ctxPath + "/js/bandpoor/MainPriceView.js",
+	        __ctxPath + "/js/bandpoor/MainPriceForm.js"]
 };
