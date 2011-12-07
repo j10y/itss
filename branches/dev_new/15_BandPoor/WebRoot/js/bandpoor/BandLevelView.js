@@ -7,7 +7,7 @@ BandLevelView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		BandLevelView.superclass.constructor.call(this, {
 			id : "BandLevelView",
-			title : "商圈列表",
+			title : "可应用品牌池分类",
 			region : "center",
 			layout : "border",
 			items : [
@@ -45,7 +45,7 @@ BandLevelView = Ext.extend(Ext.Panel, {
 					text : "查询条件：名称"
 				}, {
 					fieldLabel : "名称",
-					name : "Q_areaName_S_LK",
+					name : "Q_levelName_S_LK",
 					xtype : "textfield",
 					allowBlank : false,
 					blankText : "名称不能为空！"
@@ -57,7 +57,7 @@ BandLevelView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/bandpoor/listBusinessArea.do?Q_flag_N_EQ=1",
+			url : __ctxPath + "/bandpoor/listBandLevel.do?Q_flag_N_EQ=1",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -67,8 +67,8 @@ BandLevelView = Ext.extend(Ext.Panel, {
 					name : "id",
 					type : "int"
 				},
-				"areaName",
-				"areaDesc",
+				"levelName",
+				"levelDesc",
 				"flag"
 			]
 		});
@@ -80,14 +80,14 @@ BandLevelView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_BusinessAreaEdit")) {
+		if(isGranted("_BandLevelEdit")) {
 			b.push({
 				iconCls : "btn-edit",
 				qtip : "编辑",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-		if(isGranted("_BusinessAreaDel")) {
+		if(isGranted("_BandLevelDel")) {
 			b.push({
 				iconCls : "btn-del",
 				qtip : "删除",
@@ -109,11 +109,11 @@ BandLevelView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "商圈名称",
-					dataIndex : "areaName"
+					header : "分类名称",
+					dataIndex : "levelName"
 				}, {
-					header : "商圈描述",
-					dataIndex : "areaDesc"
+					header : "分类描述",
+					dataIndex : "levelDesc"
 				}, {
 					header : "状态",
 					dataIndex : "flag",
@@ -134,16 +134,16 @@ BandLevelView = Ext.extend(Ext.Panel, {
 		});
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-add",
-			text : "添加商圈",
-			handler : this.addBusinessArea
+			text : "添加品牌池分类",
+			handler : this.addBandLevel
 		}));
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-del",
-			text : "删除商圈",
-			handler : this.delBusinessArea
+			text : "删除品牌池分类",
+			handler : this.delBandLevel
 		}));
 		this.gridPanel = new Ext.grid.GridPanel({
-			id : "BusinessAreaGrid",
+			id : "BandLevelGrid",
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
@@ -172,9 +172,9 @@ BandLevelView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_BusinessAreaEdit")) {
-					new BusinessAreaForm({
-						businessAreaId : e.data.id
+				if(isGranted("_BandLevelEdit")) {
+					new BandLevelForm({
+						bandLevelId : e.data.id
 					}).show();
 				}
 			});
@@ -185,7 +185,7 @@ BandLevelView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/bandpoor/listBusinessArea.do?Q_flag_N_EQ=1",
+				url : __ctxPath + "/bandpoor/listBandLevel.do?Q_flag_N_EQ=1",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
@@ -193,11 +193,11 @@ BandLevelView = Ext.extend(Ext.Panel, {
 			});
 		}
 	},
-	addBusinessArea : function() {
-		new BusinessAreaForm().show();
+	addBandLevel : function() {
+		new BandLevelForm().show();
 	},
-	delBusinessArea : function() {
-		var e = Ext.getCmp("BusinessAreaGrid");
+	delBandLevel : function() {
+		var e = Ext.getCmp("BandLevelGrid");
 		var c = e.getSelectionModel().getSelections();
 		if(c.length == 0) {
 			Ext.ux.Toast.msg("提示信息", "请选择要删除的记录！");
@@ -209,18 +209,18 @@ BandLevelView = Ext.extend(Ext.Panel, {
 		}
 		BandLevelView.remove(f);
 	},
-	editBusinessArea : function(a) {
-		new BusinessAreaForm({
-			businessAreaId : a.data.id
+	editBandLevel : function(a) {
+		new BandLevelForm({
+			bandLevelId : a.data.id
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
 			case "btn-del":
-				this.delBusinessArea();
+				this.delBandLevel();
 				break ;
 			case "btn-edit":
-				this.editBusinessArea(a);
+				this.editBandLevel(a);
 				break ;
 			default:
 				break ;
@@ -228,11 +228,11 @@ BandLevelView = Ext.extend(Ext.Panel, {
 	}
 });
 BandLevelView.remove = function(b) {
-	var a = Ext.getCmp("BusinessAreaGrid");
+	var a = Ext.getCmp("BandLevelGrid");
 	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
 		if(c == "yes") {
 			Ext.Ajax.request({
-				url : __ctxPath + "/bandpoor/multiDelBusinessArea.do",
+				url : __ctxPath + "/bandpoor/multiDelBandLevel.do",
 				params : {
 					ids : b
 				},

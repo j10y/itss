@@ -6,12 +6,12 @@ BandLevelForm = Ext.extend(Ext.Window, {
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		BusinessAreaForm.superclass.constructor.call(this, {
-			id : "BusinessAreaFormWin",
+		BandLevelForm.superclass.constructor.call(this, {
+			id : "BandLevelFormWin",
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 240,
+			height : 180,
 			width : 350,
 			title : "商圈详细信息",
 			buttonAlign : "center",
@@ -23,37 +23,36 @@ BandLevelForm = Ext.extend(Ext.Window, {
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/bandpoor/saveBusinessArea.do",
-			id : "BusinessAreaForm",
+			url : __ctxPath + "/bandpoor/saveBandLevel.do",
+			id : "BandLevelForm",
 			defaults : {
 				anchor : "95%,95%"
 			},
 			defaultType : "textfield",
 			items : [
 				{
-					name : "businessArea.id",
-					id : "businessAreaId",
+					name : "bandLevel.id",
+					id : "bandLevelId",
 					xtype : "hidden",
-					value : this.businessAreaId == null ? "" : this.businessAreaId
+					value : this.bandLevelId == null ? "" : this.bandLevelId
 				}, {
-					fieldLabel : "商圈名称",
-					name : "businessArea.areaName",
-					id : "areaName",
+					fieldLabel : "品牌池名称",
+					name : "bandLevel.levelName",
+					id : "levelName",
 					allowBlank : false,
-					blankText : "商圈名称不能为空！"
+					blankText : "品牌池名称不能为空！"
 				}, {
-					fieldLabel : "商圈描述",
-					name : "businessArea.areaDesc",
-					id : "areaDesc",
-					allowBlank : false,
-					blankText : "商圈描述不能为空！"
+					fieldLabel : "品牌池描述",
+					name : "bandLevel.levelDesc",
+					id : "levelDesc",
+					xtype:"textarea"
 				}
 			]
 		});
-		if(this.businessAreaId != null && this.businessAreaId != "undefined") {
+		if(this.bandLevelId != null && this.bandLevelId != "undefined") {
 			this.formPanel.getForm().load({
 				deferredRender : false,
-				url : __ctxPath + "/bandpoor/getBusinessArea.do?id=" + this.businessAreaId,
+				url : __ctxPath + "/bandpoor/getBandLevel.do?id=" + this.bandLevelId,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
@@ -85,7 +84,7 @@ BandLevelForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在提交数据……",
 				success : function() {
 					Ext.ux.Toast.msg("提示信息","保存成功！");
-					Ext.getCmp("BusinessAreaView").gridPanel.store.reload({
+					Ext.getCmp("BandLevelView").gridPanel.store.reload({
 						params : {
 							start : 0,
 							limit : 25
