@@ -57,5 +57,6 @@
   <bean id="BandStyleAction" class="com.xpsoft.oa.action.bandpoor.BandStyleAction" scope="prototype"/>
   <bean id="ScoreManageAction" class="com.xpsoft.oa.action.bandpoor.ScoreManageAction" scope="prototype"/>
   <bean id="BusinessAreaAction" class="com.xpsoft.oa.action.bandpoor.BusinessAreaAction" scope="prototype"/>
-  <bean id="FloorAction" class="com.xpsoft.oa.action.bandpoor.FloorAction" scope="prototype"/>  
+  <bean id="FloorAction" class="com.xpsoft.oa.action.bandpoor.FloorAction" scope="prototype"/>
+  <bean id="MainPriceAction" class="com.xpsoft.oa.action.bandpoor.MainPriceAction" scope="prototype"/>  
 </beans>
