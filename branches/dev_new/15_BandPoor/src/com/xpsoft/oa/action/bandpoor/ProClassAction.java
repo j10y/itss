@@ -44,15 +44,6 @@ public class ProClassAction extends BaseAction {
 	}
 	
 	public String save() {
-		/*
-		this.proClass = new ProClass();
-		if(this.getRequest().getParameter("proClass.id") != null && !"".equals(this.getRequest().getParameter("proClass.id"))) {
-			this.proClass.setId(Long.parseLong(this.getRequest().getParameter("proClass.id")));
-		}
-		this.proClass.setProClassNum(this.getRequest().getParameter("proClass.proClassNum"));
-		this.proClass.setProClassName(this.getRequest().getParameter("proClass.proClassName"));
-		this.proClass.setFlag(1);
-		*/
 		this.proClass.setFlag(ProClass.CREATE);
 		this.proClassService.save(this.proClass);
 		this.jsonString = "{success:true}";
