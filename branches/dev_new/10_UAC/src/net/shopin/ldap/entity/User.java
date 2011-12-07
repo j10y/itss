@@ -22,7 +22,7 @@ public class User  implements Serializable {
 	private String mobile;//手机号码
 	private String facsimileTelephoneNumber;//传真号码
 	private String userType;//1员工employees,2客户customers,3供应商suppliers,4特殊用户specialuser
-	private byte [] photo;//仅支持jpeg格式
+	private byte [] photo;//仅支持jpeg格式jpegPhoto
 	
 	private String deptName;//部门名称，为了展示方便
 	
