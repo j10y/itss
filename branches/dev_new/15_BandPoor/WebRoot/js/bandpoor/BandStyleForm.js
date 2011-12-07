@@ -48,7 +48,7 @@ BandStyleForm = Ext.extend(Ext.Window, {
 					allowBlank : false,
 					blankText : "名称不能为空！"
 				}, {
-					hiddenName : "proClass.id",
+					hiddenName : "bandStyle.proClassId.id",
 					id : "styleProClassName",
 					xtype : "combo",
 					fieldLabel : "所属品类",
@@ -56,6 +56,7 @@ BandStyleForm = Ext.extend(Ext.Window, {
 					mode : "local",
 					valueField : "id",
 					displayField : "name",
+					allowBlank : false,
 					store : new Ext.data.SimpleStore({
 						url : __ctxPath + "/bandpoor/comboProClass.do",
 						fields : ["id", "name"],
@@ -86,7 +87,9 @@ BandStyleForm = Ext.extend(Ext.Window, {
 				url : __ctxPath + "/bandpoor/getBandStyle.do?id=" + this.bandStyleId,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
-					
+					var e = Ext.util.JSON.decode(d.response.responseText);
+					Ext.getCmp("styleProClassName").setValue(e.data.proClassId.id);
+					Ext.getCmp("styleProClassName").setRawValue(e.data.proClassId.proClassName);
 				},
 				failure : function() {
 					
