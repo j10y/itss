@@ -219,4 +219,7 @@
    	 <bean id="bandStyleService" class="com.xpsoft.oa.service.bandpoor.impl.BandStyleServiceImpl">
    	 	<constructor-arg index="0" ref="bandStyleDao"/>
    	 </bean>
+   	 <bean id="scoreManageService" class="com.xpsoft.oa.service.bandpoor.impl.ScoreManageServiceImpl">
+   	 	<constructor-arg index="0" ref="scoreManageDao"/>
+   	 </bean>
 </beans>
