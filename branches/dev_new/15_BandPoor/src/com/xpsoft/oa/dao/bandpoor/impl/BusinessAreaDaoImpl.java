@@ -1,10 +1,11 @@
 package com.xpsoft.oa.dao.bandpoor.impl;
 
 import com.xpsoft.core.dao.impl.BaseDaoImpl;
-import com.xpsoft.oa.dao.bandpoor.BandDao;
+import com.xpsoft.oa.dao.bandpoor.BusinessAreaDao;
 import com.xpsoft.oa.model.bandpoor.Band;
+import com.xpsoft.oa.model.bandpoor.BusinessArea;
 
-public class BusinessAreaDaoImpl extends BaseDaoImpl<Band> implements BandDao{
+public class BusinessAreaDaoImpl extends BaseDaoImpl<BusinessArea> implements BusinessAreaDao{
 	public BusinessAreaDaoImpl() {
 		super(Band.class);
 	}
