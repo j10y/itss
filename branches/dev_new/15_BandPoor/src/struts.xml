@@ -180,6 +180,9 @@
 		<action name="*MainPrice" class="MainPriceAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*SaleStore" class="SaleStoreAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	
 </struts>
