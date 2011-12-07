@@ -6,9 +6,7 @@ import javax.annotation.Resource;
 
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
-import com.xpsoft.oa.model.bandpoor.BandStyle;
 import com.xpsoft.oa.model.bandpoor.BusinessArea;
-import com.xpsoft.oa.service.bandpoor.BandStyleService;
 import com.xpsoft.oa.service.bandpoor.BusinessAreaService;
 
 import flexjson.JSONSerializer;
@@ -61,7 +59,7 @@ public class BusinessAreaAction extends BaseAction{
 	}
 	
 	public String save() {
-		this.businessArea.setFlag(BandStyle.CREATE);
+		this.businessArea.setFlag(BusinessArea.CREATE);
 		this.businessAreaService.save(this.businessArea);
 		this.jsonString = "{success:true}";
 		
