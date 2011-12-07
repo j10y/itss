@@ -192,7 +192,7 @@ BandStyleView = Ext.extend(Ext.Panel, {
 	addBandStyle : function() {
 		new BandStyleForm().show();
 	},
-	delProClass : function() {
+	delBandStyle : function() {
 		var e = Ext.getCmp("BandStyleGrid");
 		var c = e.getSelectionModel().getSelections();
 		if(c.length == 0) {
