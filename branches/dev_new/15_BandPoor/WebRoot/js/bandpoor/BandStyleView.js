@@ -69,7 +69,11 @@ BandStyleView = Ext.extend(Ext.Panel, {
 				},
 				"styleNum",
 				"styleName",
-				"styleDesc"
+				"styleDesc",
+				{
+					name : "proClassName",
+					mapping : "proClassId.proClassName"
+				}
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -114,6 +118,9 @@ BandStyleView = Ext.extend(Ext.Panel, {
 				}, {
 					header : "名称",
 					dataIndex : "styleName"
+				}, {
+					header : "所属商圈",
+					dataIndex : "proClassName"
 				},
 				this.rowActions
 			],
