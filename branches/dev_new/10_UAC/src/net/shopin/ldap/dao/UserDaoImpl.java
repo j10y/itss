@@ -88,7 +88,7 @@ public class UserDaoImpl implements UserDao {
 		context.setAttributeValue("mobile", user.getMobile()!=null && !"".equals(user.getMobile()) ? user.getMobile() : null);
 		context.setAttributeValue("mail", user.getMail()!=null && !"".equals(user.getMail()) ? user.getMail() : null);
 		context.setAttributeValue("facsimileTelephoneNumber", user.getFacsimileTelephoneNumber()!=null && !"".equals(user.getFacsimileTelephoneNumber()) ? user.getFacsimileTelephoneNumber() : null);
-		//context.setAttributeValue("photo", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
+		context.setAttributeValue("jpegPhoto", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
 		//只有photo非空的时候才覆盖
 		//if(user.getPhoto()!=null && user.getPhoto().length>0) context.setAttributeValue("photo", user.getPhoto());
 		
@@ -228,7 +228,7 @@ public class UserDaoImpl implements UserDao {
 			
 			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
 			user.setUserType(userType);
-			user.setPhoto((byte[])context.getObjectAttribute("photo"));
+			user.setPhoto((byte[])context.getObjectAttribute("jpegPhoto"));
 			
 			user.setO(context.getStringAttribute("o"));
 			user.setStatus(StringUtils.isNotEmpty(context.getStringAttribute("status")) ? Integer.valueOf(Integer.valueOf(context.getStringAttribute("status"))) : 0);
