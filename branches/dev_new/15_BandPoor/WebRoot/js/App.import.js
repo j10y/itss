@@ -131,5 +131,8 @@ App.importJs = {
 	FloorView : [__ctxPath + "/js/bandpoor/FloorView.js",
 	        __ctxPath + "/js/bandpoor/FloorForm.js"],
 	MainPriceView : [__ctxPath + "/js/bandpoor/MainPriceView.js",
-	        __ctxPath + "/js/bandpoor/MainPriceForm.js"]
+	        __ctxPath + "/js/bandpoor/MainPriceForm.js"],
+	SaleStoreView : 
+		[__ctxPath + "/js/bandpoor/SaleStoreView.js",
+	        __ctxPath + "/js/bandpoor/SaleStoreForm.js"]
 };
