@@ -60,6 +60,5 @@
   <bean id="FloorAction" class="com.xpsoft.oa.action.bandpoor.FloorAction" scope="prototype"/>
   <bean id="MainPriceAction" class="com.xpsoft.oa.action.bandpoor.MainPriceAction" scope="prototype"/>
   <bean id="SaleStoreAction" class="com.xpsoft.oa.action.bandpoor.SaleStoreAction" scope="prototype"/>
-  
-    
+  <bean id="BandChannelAction" class="com.xpsoft.oa.action.bandpoor.BandChannelAction" scope="prototype"/>
 </beans>
