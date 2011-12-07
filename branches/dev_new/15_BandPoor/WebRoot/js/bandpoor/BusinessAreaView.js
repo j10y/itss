@@ -7,7 +7,7 @@ BandView = Ext.extend(Ext.Panel, {
 		this.initComponents();
 		BusinessAreaView.superclass.constructor.call(this, {
 			id : "BusinessAreaView",
-			title : "品牌列表",
+			title : "商圈列表",
 			region : "center",
 			layout : "border",
 			items : [
@@ -57,7 +57,7 @@ BandView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/bandpoor/listBand.do?Q_flag_N_EQ=1",
+			url : __ctxPath + "/bandpoor/listBusinessArea.do?Q_flag_N_EQ=1",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -67,9 +67,9 @@ BandView = Ext.extend(Ext.Panel, {
 					name : "id",
 					type : "int"
 				},
-				"bandChName",
-				"bandEnName",
-				"bandStatus"
+				"areaName",
+				"areaDesc",
+				"flag"
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -80,14 +80,14 @@ BandView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_BandEdit")) {
+		if(isGranted("_BusinessAreaEdit")) {
 			b.push({
 				iconCls : "btn-edit",
 				qtip : "编辑",
 				style : "margin:0 3px 0 3px"
 			});
 		}
-		if(isGranted("_BandDel")) {
+		if(isGranted("_BusinessAreaDel")) {
 			b.push({
 				iconCls : "btn-del",
 				qtip : "删除",
@@ -109,22 +109,15 @@ BandView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "中文名称",
-					dataIndex : "bandChName"
+					header : "商圈名称",
+					dataIndex : "areaName"
 				}, {
-					header : "英文名称",
-					dataIndex : "bandEnName"
+					header : "商圈描述",
+					dataIndex : "areaDesc"
 				}, {
-					header : "类型",
-					dataIndex : "bandStatus",
-					renderer : function(d) {
-						if(d == '0') {
-							return "常规品牌";
-						}
-						if(d == '1') {
-							return "非常规品牌";
-						}
-					}
+					header : "状态",
+					dataIndex : "flag",
+					hidden : true
 				},
 				this.rowActions
 			],
@@ -141,16 +134,16 @@ BandView = Ext.extend(Ext.Panel, {
 		});
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-add",
-			text : "添加品牌",
+			text : "添加商圈",
 			handler : this.addBand
 		}));
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-del",
-			text : "删除品牌",
+			text : "删除商圈",
 			handler : this.delBand
 		}));
 		this.gridPanel = new Ext.grid.GridPanel({
-			id : "BandGrid",
+			id : "BusinessAreaGrid",
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
@@ -179,7 +172,7 @@ BandView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_BandEdit")) {
+				if(isGranted("_BusinessAreaEdit")) {
 					new BandForm({
 						bandId : e.data.id
 					}).show();
@@ -192,7 +185,7 @@ BandView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/bandpoor/listBand.do?Q_flag_N_EQ=1",
+				url : __ctxPath + "/bandpoor/listBusinessArea.do?Q_flag_N_EQ=1",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
@@ -201,10 +194,10 @@ BandView = Ext.extend(Ext.Panel, {
 		}
 	},
 	addBand : function() {
-		new BandForm().show();
+		new BusinessAreaForm().show();
 	},
 	delBand : function() {
-		var e = Ext.getCmp("BandGrid");
+		var e = Ext.getCmp("BusinessAreaGrid");
 		var c = e.getSelectionModel().getSelections();
 		if(c.length == 0) {
 			Ext.ux.Toast.msg("提示信息", "请选择要删除的记录！");
@@ -217,7 +210,7 @@ BandView = Ext.extend(Ext.Panel, {
 		BusinessAreaView.remove(f);
 	},
 	editBand : function(a) {
-		new BandForm({
+		new BusinessAreaForm({
 			bandId : a.data.id
 		}).show();
 	},
@@ -235,11 +228,11 @@ BandView = Ext.extend(Ext.Panel, {
 	}
 });
 BusinessAreaView.remove = function(b) {
-	var a = Ext.getCmp("BandGrid");
+	var a = Ext.getCmp("BusinessAreaGrid");
 	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
 		if(c == "yes") {
 			Ext.Ajax.request({
-				url : __ctxPath + "/bandpoor/multiDelBand.do",
+				url : __ctxPath + "/bandpoor/multiDelBusinessArea.do",
 				params : {
 					ids : b
 				},

@@ -13,7 +13,7 @@ BusinessAreaForm = Ext.extend(Ext.Window, {
 			modal : true,
 			height : 240,
 			width : 350,
-			title : "品牌详细信息",
+			title : "商圈详细信息",
 			buttonAlign : "center",
 			buttons : this.buttons
 		});
@@ -23,7 +23,7 @@ BusinessAreaForm = Ext.extend(Ext.Window, {
 			layout : "form",
 			bodyStyle : "padding:10px 10px 10px 10px",
 			border : false,
-			url : __ctxPath + "/bandpoor/saveBand.do",
+			url : __ctxPath + "/bandpoor/saveBusinessArea.do",
 			id : "BusinessAreaForm",
 			defaults : {
 				anchor : "95%,95%"
@@ -76,7 +76,7 @@ BusinessAreaForm = Ext.extend(Ext.Window, {
 		if(this.bandId != null && this.bandId != "undefined") {
 			this.formPanel.getForm().load({
 				deferredRender : false,
-				url : __ctxPath + "/bandpoor/getBand.do?id=" + this.bandId,
+				url : __ctxPath + "/bandpoor/getBusinessArea.do?id=" + this.bandId,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
@@ -115,7 +115,7 @@ BusinessAreaForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在提交数据……",
 				success : function() {
 					Ext.ux.Toast.msg("提示信息","保存成功！");
-					Ext.getCmp("BandView").gridPanel.store.reload({
+					Ext.getCmp("BusinessAreaView").gridPanel.store.reload({
 						params : {
 							start : 0,
 							limit : 25
