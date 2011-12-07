@@ -133,5 +133,7 @@ App.importJs = {
 	MainPriceView : [__ctxPath + "/js/bandpoor/MainPriceView.js",
 	        __ctxPath + "/js/bandpoor/MainPriceForm.js"],
 	BandChannelView : [__ctxPath + "/js/bandpoor/BandChannelView.js",
-	        __ctxPath + "/js/bandpoor/BandChannelForm.js"]
+	        __ctxPath + "/js/bandpoor/BandChannelForm.js"],
+	BandLevelView : [__ctxPath + "/js/bandpoor/BandLevelView.js",
+	        __ctxPath + "/js/bandpoor/BandLevelForm.js"]
 };
