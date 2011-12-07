@@ -11,7 +11,7 @@ BusinessAreaForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 240,
+			height : 180,
 			width : 350,
 			title : "商圈详细信息",
 			buttonAlign : "center",
@@ -45,8 +45,7 @@ BusinessAreaForm = Ext.extend(Ext.Window, {
 					fieldLabel : "商圈描述",
 					name : "businessArea.areaDesc",
 					id : "areaDesc",
-					allowBlank : false,
-					blankText : "商圈描述不能为空！"
+					xtype : "textarea"
 				}
 			]
 		});
