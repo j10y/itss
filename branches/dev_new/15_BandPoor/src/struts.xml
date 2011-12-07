@@ -186,6 +186,9 @@
 		<action name="*BandChannel" class="BandChannelAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*BandLevel" class="BandLevelAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	
 </struts>
