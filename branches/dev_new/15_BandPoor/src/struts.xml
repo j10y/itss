@@ -183,6 +183,9 @@
 		<action name="*SaleStore" class="SaleStoreAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*BandChannel" class="BandChannelAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	
 </struts>
