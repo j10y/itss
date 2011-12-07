@@ -106,7 +106,7 @@
     Ext.onReady(function(){
 	   Ext.QuickTips.init();
 	   Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); 
-	   com.dc.ui.IndexPage.init('${systemAdmin}', webContext, '');
+	   com.dc.ui.IndexPage.init(isSuperAdmin, webContext, '');
     });
 	</script>
 </head>

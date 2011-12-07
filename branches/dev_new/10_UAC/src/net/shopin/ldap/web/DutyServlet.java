@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.shopin.ldap.dao.DutyDao;
-import net.shopin.ldap.dao.GroupDao;
 import net.shopin.ldap.entity.Duty;
-import net.shopin.ldap.entity.UserGroup;
 import net.shopin.util.SpringContextUtils;
 
+import org.springframework.ldap.NameAlreadyBoundException;
 import org.springframework.ldap.samples.utils.LdapTreeBuilder;
 
 
@@ -88,9 +87,12 @@ public class DutyServlet extends HttpServlet {
 				}
 				json.append("]");
 			}
+		} catch(NameAlreadyBoundException e) {
+			e.printStackTrace();
+			json = new StringBuffer("{success:false,msg:'输入的职务信息的cn已经存在！'}");
 		} catch(Exception e) {
 			e.printStackTrace();
-			json = new StringBuffer("{success:false}");
+			json = new StringBuffer("{success:false,msg:'服务器端异常，请联系管理员！'}");
 		}
 		try {
 			resp.setContentType("text/html;charset=utf-8");

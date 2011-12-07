@@ -119,12 +119,7 @@ UserForm = Ext.extend(Ext.Window, {
 							defaults : {
 								anchor : "95%,95%"
 							},
-							items : [
-								{
-									name : "dn",
-									id : "dn",
-									hidden : "true"
-								}, {
+							items : [ {
 									name : "uid",
 									id : "uid",
 									fieldLabel : "用户账号",
@@ -262,6 +257,10 @@ UserForm = Ext.extend(Ext.Window, {
 									name : "departmentNumber",
 									id : "departmentNumber",
 									hidden : true
+								}, {
+									name : "dn",
+									id : "dn",
+									hidden : "true"
 								}
 							]
 						}, {

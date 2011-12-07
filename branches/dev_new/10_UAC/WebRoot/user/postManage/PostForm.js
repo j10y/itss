@@ -111,7 +111,7 @@ PostForm = Ext.extend(Ext.Window, {
 					url : webContext + "/duty?methodCall=modify",
 					method : "post",
 					waitMsg : "正在提交数据……",
-					success : function(c, d) {
+					success : function(form, action) {
 						a.close();
 						Ext.getCmp("PostPanel").getStore().reload();
 						Ext.MessageBox.show({
@@ -121,10 +121,10 @@ PostForm = Ext.extend(Ext.Window, {
 							icon : Ext.MessageBox.INFO
 						});
 					},
-					failure : function(c, d) {
+					failure : function(form, action) {
 						Ext.MessageBox.show({
 							title : "操作信息",
-							msg : "保存失败，请联系管理员！",
+							msg : action.result.msg,
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.ERROR
 						});
@@ -137,7 +137,7 @@ PostForm = Ext.extend(Ext.Window, {
 					url : webContext + "/duty?methodCall=add",
 					method : "post",
 					waitMsg : "正在提交数据……",
-					success : function(c, d) {
+					success : function(form, action) {
 						a.close();
 						Ext.getCmp("PostPanel").getStore().reload();
 						Ext.MessageBox.show({
@@ -147,10 +147,10 @@ PostForm = Ext.extend(Ext.Window, {
 							icon : Ext.MessageBox.INFO
 						});
 					},
-					failure : function(c, d) {
+					failure : function(form, action) {
 						Ext.MessageBox.show({
 							title : "操作信息",
-							msg : "保存失败，请联系管理员！",
+							msg : action.result.msg,
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.ERROR
 						});

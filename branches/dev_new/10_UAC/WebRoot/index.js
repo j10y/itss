@@ -40,8 +40,8 @@ com.dc.ui.IndexPage = {
 			html:'请联系信息化系统部运维中心'
 		});
 		menu.push(sysMenu);	
-		menu.push(helpInfo);	
-		if(currentUser=='admin'){
+		menu.push(helpInfo);
+		if(isAdmin){
 			//显示按钮
 		    Ext.getCmp("btnUserSelect").setVisible(true);
 		    Ext.getCmp("btnUserAdd").setVisible(true);
@@ -54,15 +54,14 @@ com.dc.ui.IndexPage = {
 		        region:'center',
 		        enableTabScroll:true,
 		        defaults: {autoScroll:true},
-		        items:[/*{
-		        	title:'首页',
-	 				layout:'anchor',
+		        items:[{
+		        	title:'关于',
+	 				layout:'fit',
 					iconCls : 'tabs',
-		            items:[]
-		        },
-		        userPanel,
-		        deptPanel,
-		        userImpPanel*/],
+					items : {
+						html : '<IFRAME src="' + webContext + '/deskTop.jsp" width="100%" height="100%" frameborder="0"></IFRAME>'
+					}
+		        }],
 		        plugins: new Ext.ux.TabCloseMenu()
 		    });
 		}else{		
