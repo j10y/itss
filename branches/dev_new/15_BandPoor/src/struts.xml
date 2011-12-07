@@ -177,6 +177,9 @@
 		<action name="*Floor" class="FloorAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*MainPrice" class="MainPriceAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	
 </struts>
