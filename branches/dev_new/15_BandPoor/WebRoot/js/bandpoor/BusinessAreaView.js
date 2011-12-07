@@ -1,4 +1,4 @@
-BandView = Ext.extend(Ext.Panel, {
+BusinessAreaView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		if(a == null) {
 			a = {};
