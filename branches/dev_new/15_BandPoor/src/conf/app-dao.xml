@@ -56,4 +56,10 @@
 	<bean id="proClassDao" class="com.xpsoft.oa.dao.bandpoor.impl.ProClassDaoImpl" parent="baseDao"/>
 	<bean id="bandStyleDao" class="com.xpsoft.oa.dao.bandpoor.impl.BandStyleDaoImpl" parent="baseDao"/>
 	<bean id="scoreManageDao" class="com.xpsoft.oa.dao.bandpoor.impl.ScoreManageDaoImpl" parent="baseDao"/>
+	<bean id="bandChannelDao" class="com.xpsoft.oa.dao.bandpoor.impl.BandChannelDaoImpl" parent="baseDao"/>
+	<bean id="bandLevelDao" class="com.xpsoft.oa.dao.bandpoor.impl.BandLevelDaoImpl" parent="baseDao"/>
+	<bean id="businessAreaDao" class="com.xpsoft.oa.dao.bandpoor.impl.BusinessAreaDaoImpl" parent="baseDao"/>
+	<bean id="floorDao" class="com.xpsoft.oa.dao.bandpoor.impl.FloorDaoImpl" parent="baseDao"/>
+	<bean id="mainPriceDao" class="com.xpsoft.oa.dao.bandpoor.impl.MainPriceDaoImpl" parent="baseDao"/>
+	<bean id="saleStoreDao" class="com.xpsoft.oa.dao.bandpoor.impl.SaleStoreDaoImpl" parent="baseDao"/>
 </beans>

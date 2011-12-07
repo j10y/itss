@@ -222,4 +222,22 @@
    	 <bean id="scoreManageService" class="com.xpsoft.oa.service.bandpoor.impl.ScoreManageServiceImpl">
    	 	<constructor-arg index="0" ref="scoreManageDao"/>
    	 </bean>
+   	 <bean id="bandChannelService" class="com.xpsoft.oa.service.bandpoor.impl.BandChannelServiceImpl">
+   	 	<constructor-arg index="0" ref="bandChannelDao"/>
+   	 </bean>
+   	 <bean id="bandLevelService" class="com.xpsoft.oa.service.bandpoor.impl.BandLevelServiceImpl">
+   	 	<constructor-arg index="0" ref="bandLevelDao"/>
+   	 </bean>
+   	 <bean id="businessAreaService" class="com.xpsoft.oa.service.bandpoor.impl.BusinessAreaServiceImpl">
+   	 	<constructor-arg index="0" ref="businessAreaDao"/>
+   	 </bean>
+   	 <bean id="floorService" class="com.xpsoft.oa.service.bandpoor.impl.FloorServiceImpl">
+   	 	<constructor-arg index="0" ref="floorDao"/>
+   	 </bean>
+   	 <bean id="mainPriceService" class="com.xpsoft.oa.service.bandpoor.impl.MainPriceServiceImpl">
+   	 	<constructor-arg index="0" ref="mainPriceDao"/>
+   	 </bean>
+   	 <bean id="saleStoreService" class="com.xpsoft.oa.service.bandpoor.impl.SaleStoreServiceImpl">
+   	 	<constructor-arg index="0" ref="saleStoreDao"/>
+   	 </bean>
 </beans>
