@@ -95,7 +95,7 @@ BandChannelForm = Ext.extend(Ext.Window, {
 				failure : function(c, d) {
 					Ext.MessageBox.show({
 						title : "操作信息",
-						msg : d.result.msg,
+						msg : d.msg,
 						buttons : Ext.MessageBox.OK,
 						icon : Ext.MessageBox.ERROR
 					});
