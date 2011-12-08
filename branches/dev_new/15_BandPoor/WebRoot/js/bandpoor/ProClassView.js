@@ -46,9 +46,7 @@ ProClassView = Ext.extend(Ext.Panel, {
 				}, {
 					fieldLabel : "名称",
 					name : "Q_proClassName_S_LK",
-					xtype : "textfield",
-					allowBlank : false,
-					blankText : "名称不能为空！"
+					xtype : "textfield"
 				}, {
 					xtype : "button",
 					text : "查询",

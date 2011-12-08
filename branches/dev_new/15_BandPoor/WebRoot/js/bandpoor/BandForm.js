@@ -38,15 +38,11 @@ BandForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "中文名称",
 					name : "band.bandChName",
-					id : "bandChName",
-					allowBlank : false,
-					blankText : "中文名称不能为空！"
+					id : "bandChName"
 				}, {
 					fieldLabel : "英文名称",
 					name : "band.bandEnName",
-					id : "bandEnName",
-					allowBlank : false,
-					blankText : "英文名称不能为空！"
+					id : "bandEnName"
 				}, {
 					fieldLabel : "类型",
 					hiddenName : "band.bandStatus",
@@ -109,6 +105,17 @@ BandForm = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	save : function(a, b) {
+		var chName = Ext.getCmp("bandChName").getValue();
+		var enName = Ext.getCmp("bandEnName").getValue();
+		if(chName == "" && enName == "") {
+			Ext.MessageBox.show({
+				title : "操作信息",
+				msg : "中文名称或英文名称至少需要填写一项！",
+				buttons : Ext.MessageBox.OK,
+				icon : Ext.MessageBox.ERROR
+			});
+			return ;
+		}
 		if(a.getForm().isValid()) {
 			a.getForm().submit({
 				method : "post",
