@@ -119,7 +119,7 @@ BandStyleView = Ext.extend(Ext.Panel, {
 					header : "名称",
 					dataIndex : "styleName"
 				}, {
-					header : "所属商圈",
+					header : "所属品类",
 					dataIndex : "proClassName"
 				},
 				this.rowActions
