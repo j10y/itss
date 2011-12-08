@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -53,6 +55,27 @@ public class BandAction extends BaseAction {
 		this.band.setBandDesc(this.getRequest().getParameter("band.bandDesc"));
 		this.band.setBandStatus(Integer.parseInt(this.getRequest().getParameter("band.bandStatus")));
 		this.band.setFlag(Band.CREATE);
+		//判断唯一性
+		boolean flag = true;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.band.getId() == null ? "0" : this.band.getId().toString());
+		if(this.band.getBandChName() != null && !"".equals(this.band.getBandChName())) {
+			map.put("Q_bandChName_S_EQ", this.band.getBandChName());
+			flag = this.bandService.validateUnique(map);
+			if(!flag) {
+				this.jsonString = "{success:false,msg:'中文名称已存在，请核实！'}";
+				return "success";
+			}
+			map.remove("Q_bandChName_S_EQ");
+		}
+		if(this.band.getBandEnName() != null && !"".equals(this.band.getBandEnName())) {
+			map.put("Q_bandEnName_S_EQ", this.band.getBandEnName());
+			flag = this.bandService.validateUnique(map);
+			if(!flag) {
+				this.jsonString = "{success:false,msg:'英文名称已存在，请核实！'}";
+				return "success";
+			}
+		}
 		this.bandService.save(this.band);
 		this.jsonString = "{success:true}";
 		
