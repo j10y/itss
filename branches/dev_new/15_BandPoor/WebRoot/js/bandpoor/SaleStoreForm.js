@@ -70,7 +70,8 @@ SaleStoreForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "商场评分",
 					name : "saleStore.storeScore",
-					id : "storeScore"
+					id : "storeScore",
+					xtype:"numberfield"
 				},
 				{
 					fieldLabel : "商场描述",
