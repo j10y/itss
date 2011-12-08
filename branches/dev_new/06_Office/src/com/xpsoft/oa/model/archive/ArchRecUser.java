@@ -17,6 +17,14 @@ public class ArchRecUser extends BaseModel {
 	protected String leaderFullname;//分管领导名字
 	protected Long deptUserId;//部门负责人
 	protected String deptFullname;//部门负责人名字
+	
+	//因为分局的发文增加的逻辑
+	protected Long officeHeaderUserId;//办公室主任
+	protected String officeHeaderFullname;//编公式主任
+	protected Long numberUserId;//编号录入人员
+	protected String numberFullname;//编号录入人员名字
+	protected Long stampUserId;//盖章人员
+	protected String stampFullname;//盖章人员名字
 
 	public Long getLeaderUserId() {
 		return leaderUserId;
@@ -110,6 +118,54 @@ public class ArchRecUser extends BaseModel {
 	public void setDeptFullname(String deptFullname) {
 		this.deptFullname = deptFullname;
 	}
+	
+	public Long getOfficeHeaderUserId() {
+		return officeHeaderUserId;
+	}
+
+	public void setOfficeHeaderUserId(Long officeHeaderUserId) {
+		this.officeHeaderUserId = officeHeaderUserId;
+	}
+
+	public String getOfficeHeaderFullname() {
+		return officeHeaderFullname;
+	}
+
+	public void setOfficeHeaderFullname(String officeHeaderFullname) {
+		this.officeHeaderFullname = officeHeaderFullname;
+	}
+
+	public Long getNumberUserId() {
+		return numberUserId;
+	}
+
+	public void setNumberUserId(Long numberUserId) {
+		this.numberUserId = numberUserId;
+	}
+
+	public String getNumberFullname() {
+		return numberFullname;
+	}
+
+	public void setNumberFullname(String numberFullname) {
+		this.numberFullname = numberFullname;
+	}
+
+	public Long getStampUserId() {
+		return stampUserId;
+	}
+
+	public void setStampUserId(Long stampUserId) {
+		this.stampUserId = stampUserId;
+	}
+
+	public String getStampFullname() {
+		return stampFullname;
+	}
+
+	public void setStampFullname(String stampFullname) {
+		this.stampFullname = stampFullname;
+	}
 
 	public boolean equals(Object object) {
 		/* 140 */if (!(object instanceof ArchRecUser)) {
@@ -123,8 +179,14 @@ public class ArchRecUser extends BaseModel {
 		/* 149 */.append(this.depName, rhs.depName)
 		/* 147 */.append(this.leaderUserId, rhs.leaderUserId)
 		/* 149 */.append(this.leaderFullname, rhs.leaderFullname)
+		/* 149 */.append(this.numberUserId, rhs.numberUserId)
+		/* 149 */.append(this.numberFullname, rhs.numberFullname)
 		/* 147 */.append(this.deptUserId, rhs.deptUserId)
 		/* 149 */.append(this.deptFullname, rhs.deptFullname)
+		/* 149 */.append(this.officeHeaderUserId, rhs.officeHeaderUserId)
+		/* 149 */.append(this.officeHeaderFullname, rhs.officeHeaderFullname)
+		/* 149 */.append(this.stampUserId, rhs.stampUserId)
+		/* 149 */.append(this.stampFullname, rhs.stampFullname)
 		/* 150 */.isEquals();
 	}
 
@@ -138,6 +200,12 @@ public class ArchRecUser extends BaseModel {
 		/* 162 */.append(this.leaderFullname)
 		/* 162 */.append(this.deptUserId)
 		/* 162 */.append(this.deptFullname)
+		/* 162 */.append(this.officeHeaderUserId)
+		/* 162 */.append(this.officeHeaderFullname)
+		/* 162 */.append(this.numberUserId)
+		/* 162 */.append(this.numberFullname)
+		/* 162 */.append(this.stampUserId)
+		/* 162 */.append(this.stampFullname)
 		/* 163 */.toHashCode();
 	}
 
@@ -151,6 +219,12 @@ public class ArchRecUser extends BaseModel {
 		/* 175 */.append("leaderFullname", this.leaderFullname)
 		/* 175 */.append("deptUserId", this.deptUserId)
 		/* 175 */.append("deptFullname", this.deptFullname)
+		/* 175 */.append("officeHeaderUserId", this.officeHeaderUserId)
+		/* 175 */.append("officeHeaderFullname", this.officeHeaderFullname)
+		/* 175 */.append("numberUserId", this.numberUserId)
+		/* 175 */.append("numberFullname", this.numberFullname)
+		/* 175 */.append("stampUserId", this.stampUserId)
+		/* 175 */.append("stampFullname", this.stampFullname)
 		/* 176 */.toString();
 	}
 }

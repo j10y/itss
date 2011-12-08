@@ -24,7 +24,7 @@ public class Department extends BaseModel {
 	private String path;
 
 	@Expose
-	private Integer isDist;
+	private Integer isDist;//0否 1分局  2顶层分局
 
 	public Department() {
 	}

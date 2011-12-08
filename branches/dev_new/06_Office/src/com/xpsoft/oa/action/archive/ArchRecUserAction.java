@@ -95,6 +95,12 @@ public class ArchRecUserAction extends BaseAction {
 						+ ar.getFullname() + "'" 
 						+ ",'leaderUserId':'" + ar.getLeaderUserId() + "','leaderFullname':'"
 						+ ar.getLeaderFullname() + "'" 
+						+ ",'officeHeaderUserId':'" + ar.getOfficeHeaderUserId() + "','officeHeaderFullname':'"
+						+ ar.getOfficeHeaderFullname() + "'" 
+						+ ",'numberUserId':'" + ar.getNumberUserId() + "','numberFullname':'"
+						+ ar.getNumberFullname() + "'" 
+						+ ",'stampUserId':'" + ar.getStampUserId() + "','stampFullname':'"
+						+ ar.getStampFullname() + "'" 
 						+ ",'deptUserId':'" + ar.getDeptUserId() + "','deptFullname':'"
 						+ ar.getDeptFullname() + "'" +
 						"}");

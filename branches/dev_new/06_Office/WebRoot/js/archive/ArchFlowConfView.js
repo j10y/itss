@@ -175,11 +175,12 @@ ArchFlowConfView = Ext
 							totalProperty : "totalCounts",
 							remoteSort : true,
 							fields : [ "archRecId", "userId", "fullname","leaderUserId", "leaderFullname","deptUserId", "deptFullname",
-									"depId", "depLevel", "depName" ]
+							           "officeHeaderUserId", "officeHeaderFullname", "numberUserId", "numberFullname", "stampUserId", "stampFullname",
+							           "depId", "depLevel", "depName" ]
 						});
 						this.store.load();
 						var g = new Ext.grid.CheckboxSelectionModel();
-						var f = 0;
+						var f = 0;//当前点击的记录
 						var c = 0;
 						var e = 0;
 						var b = new Ext.form.ComboBox({
@@ -202,6 +203,129 @@ ArchFlowConfView = Ext
 									var m = j.getAt(f);
 									m.set("userId", h.data.id);
 									m.set("fullname", h.data.name);
+								}
+							}
+						});
+						
+						var officeHeaderCombo = new Ext.form.ComboBox({
+							mode : "remote",
+							anchor : "74%",
+							allowBlank : false,
+							//editable : false,
+							valueField : "fullname",
+							displayField : "fullname",
+							triggerAction : "all",
+							resizable : true,
+							store : new Ext.data.JsonStore({
+								url : __ctxPath
+										+ "/system/searchAppUser.do",
+								fields : [ "userId", "fullname" ],
+								root : "result",
+								totalProperty : "totalCounts",
+								remoteSort : true
+							}),
+							listeners : {
+								select : function(l, h, k) {
+									var j = Ext.getCmp("ArchFlowConfGrid")
+											.getStore();
+									var m = j.getAt(f);
+									m.set("officeHeaderUserId", h.data.userId);
+									m.set("officeHeaderFullname", h.data.fullname);
+								},
+								beforequery : function(queryEvent) {
+									var store=queryEvent.combo.store;
+									store.baseParams={
+										"Q_fullname_S_LK":queryEvent.query
+									};
+									store.load({
+										params:{
+											start : 0,
+											limit : 25
+										}
+									});
+									return false;
+								}
+							}
+						});
+						
+						var numberUserCombo = new Ext.form.ComboBox({
+							mode : "remote",
+							anchor : "74%",
+							allowBlank : false,
+							//editable : false,
+							valueField : "fullname",
+							displayField : "fullname",
+							triggerAction : "all",
+							resizable : true,
+							store : new Ext.data.JsonStore({
+								url : __ctxPath
+										+ "/system/searchAppUser.do",
+								fields : [ "userId", "fullname" ],
+								root : "result",
+								totalProperty : "totalCounts",
+								remoteSort : true
+							}),
+							listeners : {
+								select : function(l, h, k) {
+									var j = Ext.getCmp("ArchFlowConfGrid")
+											.getStore();
+									var m = j.getAt(f);
+									m.set("numberUserId", h.data.userId);
+									m.set("numberFullname", h.data.fullname);
+								},
+								beforequery : function(queryEvent) {
+									var store=queryEvent.combo.store;
+									store.baseParams={
+										"Q_fullname_S_LK":queryEvent.query
+									};
+									store.load({
+										params:{
+											start : 0,
+											limit : 25
+										}
+									});
+									return false;
+								}
+							}
+						});
+						
+						var stampUserCombo = new Ext.form.ComboBox({
+							mode : "remote",
+							anchor : "74%",
+							allowBlank : false,
+							//editable : false,
+							valueField : "fullname",
+							displayField : "fullname",
+							triggerAction : "all",
+							resizable : true,
+							store : new Ext.data.JsonStore({
+								url : __ctxPath
+										+ "/system/searchAppUser.do",
+								fields : [ "userId", "fullname" ],
+								root : "result",
+								totalProperty : "totalCounts",
+								remoteSort : true
+							}),
+							listeners : {
+								select : function(l, h, k) {
+									var j = Ext.getCmp("ArchFlowConfGrid")
+											.getStore();
+									var m = j.getAt(f);
+									m.set("stampUserId", h.data.userId);
+									m.set("stampFullname", h.data.fullname);
+								},
+								beforequery : function(queryEvent) {
+									var store=queryEvent.combo.store;
+									store.baseParams={
+										"Q_fullname_S_LK":queryEvent.query
+									};
+									store.load({
+										params:{
+											start : 0,
+											limit : 25
+										}
+									});
+									return false;
 								}
 							}
 						});
@@ -342,6 +466,30 @@ ArchFlowConfView = Ext
 												header : "分管负责人",
 												dataIndex : "leaderFullname",
 												editor : leaderUserCombo
+											}, {
+												header : "办公室主任ID",
+												dataIndex : "officeHeaderUserId",
+												hidden : true
+											}, {
+												header : "办公室主任",
+												dataIndex : "officeHeaderFullname",
+												editor : officeHeaderCombo
+											}, {
+												header : "编号录入员ID",
+												dataIndex : "numberUserId",
+												hidden : true
+											}, {
+												header : "编号录入员",
+												dataIndex : "numberFullname",
+												editor : numberUserCombo
+											}, {
+												header : "盖章ID",
+												dataIndex : "stampUserId",
+												hidden : true
+											}, {
+												header : "盖章人员",
+												dataIndex : "stampFullname",
+												editor : stampUserCombo
 											}],
 									defaults : {
 										sortable : false,

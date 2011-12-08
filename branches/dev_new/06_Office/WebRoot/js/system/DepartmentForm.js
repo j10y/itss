@@ -86,7 +86,7 @@ DepartmentForm = Ext.extend(Ext.Window, {
 				mode : "local",
 				editable : false,
 				triggerAction : "all",
-				store : [ [ "0", "否" ], [ "1", "是" ] ],
+				store : [ [ "0", "否" ], [ "1", "是" ], [ "2", "是，顶层分局" ] ],
 				allowBlank : false
 			} ]
 		});

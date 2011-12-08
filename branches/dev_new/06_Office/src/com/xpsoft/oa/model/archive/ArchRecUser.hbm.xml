@@ -66,6 +66,76 @@
             not-null="true"
             unique="false"
         />
+        
+        <property
+            name="officeHeaderUserId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="officeHeaderUserId"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="officeHeaderFullname"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="officeHeaderFullname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        
+        <property
+            name="numberUserId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="numberUserId"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="numberFullname"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="numberFullname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        
+        <property
+            name="stampUserId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="stampUserId"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="stampFullname"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="stampFullname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        
         <property
             name="deptUserId"
             type="java.lang.Long"

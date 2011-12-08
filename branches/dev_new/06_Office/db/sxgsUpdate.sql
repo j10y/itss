@@ -197,3 +197,11 @@ CREATE TABLE `archives_dist` (
   CONSTRAINT `FK_AVDI_R_ARV` FOREIGN KEY (`archivesId`) REFERENCES `archives` (`archivesId`),
   CONSTRAINT `FK_AVDI_R_DPT` FOREIGN KEY (`depId`) REFERENCES `department` (`depId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--2011-12-08
+ALTER TABLE arch_rec_user add COLUMN officeHeaderUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN officeHeaderFullname varchar(128);
+ALTER TABLE arch_rec_user add COLUMN numberUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN numberFullname varchar(128);
+ALTER TABLE arch_rec_user add COLUMN stampUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN stampFullname varchar(128);
