@@ -1,7 +1,9 @@
 package com.xpsoft.oa.service.bandpoor.impl;
 
+import java.util.List;
 import java.util.Map;
 
+import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.oa.dao.bandpoor.ProClassDao;
 import com.xpsoft.oa.model.bandpoor.ProClass;
@@ -16,7 +18,11 @@ public class ProClassServiceImpl extends BaseServiceImpl<ProClass> implements Pr
 	}
 
 	public boolean validateUnique(Map params) {
-		// TODO Auto-generated method stub
-		return false;
+		QueryFilter filter = new QueryFilter(params);
+		List<ProClass> list = this.getAll(filter);
+		if(list.size() > 0) {
+			return false;
+		}
+		return true;
 	}
 }
