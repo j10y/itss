@@ -12,4 +12,9 @@ public class BandLevelServiceImpl extends BaseServiceImpl<BandLevel> implements 
 		super(dao);
 		this.dao = dao;
 	}
+
+	public boolean validateUnique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

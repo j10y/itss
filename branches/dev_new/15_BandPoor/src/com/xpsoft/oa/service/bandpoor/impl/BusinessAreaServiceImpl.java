@@ -12,4 +12,9 @@ public class BusinessAreaServiceImpl extends BaseServiceImpl<BusinessArea> imple
 		super(dao);
 		this.dao = dao;
 	}
+
+	public boolean validateUnique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -12,4 +12,9 @@ public class SaleStoreServiceImpl extends BaseServiceImpl<SaleStore> implements 
 		super(dao);
 		this.dao = dao;
 	}
+
+	public boolean validateUnique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

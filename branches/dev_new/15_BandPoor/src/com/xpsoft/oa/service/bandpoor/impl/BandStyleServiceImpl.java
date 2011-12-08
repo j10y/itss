@@ -12,4 +12,9 @@ public class BandStyleServiceImpl extends BaseServiceImpl<BandStyle> implements 
 		super(dao);
 		this.dao = dao;
 	}
+
+	public boolean validateUnique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

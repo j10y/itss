@@ -13,4 +13,9 @@ public class BandChannelServiceImpl extends BaseServiceImpl<BandChannel> impleme
 		super(dao);
 		this.dao = dao;
 	}
+
+	public boolean validateUnique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

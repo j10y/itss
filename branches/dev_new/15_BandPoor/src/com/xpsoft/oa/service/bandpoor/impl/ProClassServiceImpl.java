@@ -12,4 +12,9 @@ public class ProClassServiceImpl extends BaseServiceImpl<ProClass> implements Pr
 		super(dao);
 		this.dao = dao;
 	}
+
+	public boolean validateUnique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

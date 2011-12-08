@@ -12,4 +12,9 @@ public class FloorServiceImpl extends BaseServiceImpl<Floor> implements FloorSer
 		super(dao);
 		this.dao = dao;
 	}
+
+	public boolean validateUnique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
