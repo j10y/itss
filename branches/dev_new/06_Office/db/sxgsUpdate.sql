@@ -171,7 +171,11 @@ CREATE TABLE `arch_rec_undertakes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
-
+--in shanxi
+ALTER TABLE arch_rec_user add COLUMN leaderUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN leaderFullname varchar(128);
+ALTER TABLE arch_rec_user add COLUMN deptUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN deptFullname varchar(128);
 
 SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `archives_dist`;
