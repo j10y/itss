@@ -1,5 +1,7 @@
 package com.xpsoft.oa.service.bandpoor.impl;
 
+import java.util.Map;
+
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.oa.dao.bandpoor.BandLevelDao;
 import com.xpsoft.oa.model.bandpoor.BandLevel;
@@ -13,7 +15,7 @@ public class BandLevelServiceImpl extends BaseServiceImpl<BandLevel> implements 
 		this.dao = dao;
 	}
 
-	public boolean validateUnique() {
+	public boolean validateUnique(Map params) {
 		// TODO Auto-generated method stub
 		return false;
 	}

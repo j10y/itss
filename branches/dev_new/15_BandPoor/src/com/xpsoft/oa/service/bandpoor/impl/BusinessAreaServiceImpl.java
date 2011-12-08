@@ -1,5 +1,7 @@
 package com.xpsoft.oa.service.bandpoor.impl;
 
+import java.util.Map;
+
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.oa.dao.bandpoor.BusinessAreaDao;
 import com.xpsoft.oa.model.bandpoor.BusinessArea;
@@ -13,7 +15,7 @@ public class BusinessAreaServiceImpl extends BaseServiceImpl<BusinessArea> imple
 		this.dao = dao;
 	}
 
-	public boolean validateUnique() {
+	public boolean validateUnique(Map params) {
 		// TODO Auto-generated method stub
 		return false;
 	}
