@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -45,6 +47,15 @@ public class BandChannelAction extends BaseAction{
 	}
 	
 	public String save() {
+		//判断唯一性
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.bandChannel.getId() == null ? "0" : this.bandChannel.getId().toString());
+		map.put("Q_channelName_S_EQ", this.bandChannel.getChannelName());
+		boolean flag = this.bandChannelService.validateUnique(map);
+		if(!flag) {
+			this.jsonString = "{success:false,msg:'品牌渠道名称已存在，请核实！'}";
+			return "success";
+		}
 		this.bandChannel.setFlag(Floor.CREATE);
 		this.bandChannelService.save(this.bandChannel);
 		this.jsonString = "{success:true}";

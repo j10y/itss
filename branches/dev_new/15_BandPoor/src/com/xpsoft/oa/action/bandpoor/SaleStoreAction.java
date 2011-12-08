@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -44,6 +46,16 @@ public class SaleStoreAction extends BaseAction{
 	}
 	
 	public String save() {
+		//判断唯一性
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.saleStore.getId() == null ? "0" : this.saleStore.getId().toString());
+		map.put("Q_storeName_S_EQ", this.saleStore.getStoreName());
+		map.put("Q_allowAreaId.id_L_EQ", this.saleStore.getAllowAreaId().getId().toString());
+		boolean flag = this.saleStoreServiece.validateUnique(map);
+		if(!flag) {
+			this.jsonString = "{success:false,msg:'可评分商场名称在该商圈下已存在，请核实！'}";
+			return "success";
+		}
 		this.saleStore.setFlag(SaleStore.CREATE);
 		this.saleStoreServiece.save(this.saleStore);
 		this.jsonString = "{success:true}";

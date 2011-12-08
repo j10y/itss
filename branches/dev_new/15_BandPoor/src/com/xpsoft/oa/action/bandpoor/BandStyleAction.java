@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -45,6 +47,28 @@ public class BandStyleAction extends BaseAction{
 	}
 	
 	public String save() {
+		//判断唯一性
+		boolean flag = true;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.bandStyle.getId() == null ? "0" : this.bandStyle.getId().toString());
+		map.put("Q_proClassId.id_L_EQ", this.bandStyle.getProClassId().getId().toString());
+		if(this.bandStyle.getStyleNum() != null && !"".equals(this.bandStyle.getStyleNum())) {
+			map.put("Q_styleNum_S_EQ", this.bandStyle.getStyleNum());
+			flag = this.bandStyleService.validateUnique(map);
+			if(!flag) {
+				this.jsonString = "{success:false,msg:'品牌风格编号在该品类下已存在，请核实！'}";
+				return "success";
+			}
+			map.remove("Q_styleNum_S_EQ");
+		}
+		if(this.bandStyle.getStyleName() != null && !"".equals(this.bandStyle.getStyleName())) {
+			map.put("Q_styleName_S_EQ", this.bandStyle.getStyleName());
+			flag = this.bandStyleService.validateUnique(map);
+			if(!flag) {
+				this.jsonString = "{success:false,msg:'品牌风格名称在该品类下已存在，请核实！'}";
+				return "success";
+			}
+		}
 		this.bandStyle.setFlag(BandStyle.CREATE);
 		this.bandStyleService.save(this.bandStyle);
 		this.jsonString = "{success:true}";

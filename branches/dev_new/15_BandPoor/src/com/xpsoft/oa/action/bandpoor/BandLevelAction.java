@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -59,6 +61,15 @@ public class BandLevelAction extends BaseAction{
 	}
 	
 	public String save() {
+		//判断唯一性
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEW", this.bandLevel.getId() == null ? "0" : this.bandLevel.getId().toString());
+		map.put("Q_levelName_S_EQ", this.bandLevel.getLevelName());
+		boolean flag = this.bandLevelService.validateUnique(map);
+		if(!flag) {
+			this.jsonString = "{success:false,msg:'可应用品牌池分类名称已存在，请核实！'}";
+			return "success";
+		}
 		this.bandLevel.setFlag(BandLevel.CREATE);
 		this.bandLevelService.save(this.bandLevel);
 		this.jsonString = "{success:true}";

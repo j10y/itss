@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -59,6 +61,15 @@ public class BusinessAreaAction extends BaseAction{
 	}
 	
 	public String save() {
+		//判断唯一性
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.businessArea.getId() == null ? "0" : this.businessArea.getId().toString());
+		map.put("Q_areaName_S_EQ", this.businessArea.getAreaName());
+		boolean flag = this.businessAreaService.validateUnique(map);
+		if(!flag) {
+			this.jsonString = "{success:false,msg:'商圈名称已存在，请核实！'}";
+			return "success";
+		}
 		this.businessArea.setFlag(BusinessArea.CREATE);
 		this.businessAreaService.save(this.businessArea);
 		this.jsonString = "{success:true}";

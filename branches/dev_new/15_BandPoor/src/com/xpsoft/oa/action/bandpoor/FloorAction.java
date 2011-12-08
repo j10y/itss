@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -45,6 +47,15 @@ public class FloorAction extends BaseAction{
 	}
 	
 	public String save() {
+		//判断唯一性
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.floor.getId() == null ? "0" : this.floor.getId().toString());
+		map.put("Q_floorName_S_EQ", this.floor.getFloorName());
+		boolean flag = this.floorService.validateUnique(map);
+		if(!flag) {
+			this.jsonString = "{success:false,msg:'楼层名称已存在，请核实！'}";
+			return "success";
+		}
 		this.floor.setFlag(Floor.CREATE);
 		this.floorService.save(this.floor);
 		this.jsonString = "{success:true}";

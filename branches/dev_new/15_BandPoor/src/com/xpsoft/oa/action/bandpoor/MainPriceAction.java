@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -45,6 +47,15 @@ public class MainPriceAction extends BaseAction{
 	}
 	
 	public String save() {
+		//唯一性判断
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.mainPrice.getId() == null ? "0" : this.mainPrice.getId().toString());
+		map.put("Q_priceName_S_EQ", this.mainPrice.getPriceName());
+		boolean flag = this.mainPriceService.validateUnique(map);
+		if(!flag) {
+			this.jsonString = "{success:false,msg:'主力价格名称已存在，请核实！'}";
+			return "success";
+		}
 		this.mainPrice.setFlag(MainPrice.CREATE);
 		this.mainPriceService.save(this.mainPrice);
 		this.jsonString = "{success:true}";

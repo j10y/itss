@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -44,6 +46,27 @@ public class ProClassAction extends BaseAction {
 	}
 	
 	public String save() {
+		//判断唯一性
+		boolean flag = true;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Q_id_L_NEQ", this.proClass.getId() == null ? "0" : this.proClass.getId().toString());
+		if(this.proClass.getProClassNum() != null && !"".equals(this.proClass.getProClassNum())) {
+			map.put("Q_proClassNum_S_EQ", this.proClass.getProClassNum());
+			flag = this.proClassService.validateUnique(map);
+			if(!flag) {
+				this.jsonString = "{success:false,msg:'品类编号已存在，请核实！'}";
+				return "success";
+			}
+			map.remove("Q_proClassNum_S_EQ");
+		}
+		if(this.proClass.getProClassName() != null && !"".equals(this.proClass.getProClassName())) {
+			map.put("Q_proClassName_S_EQ", this.proClass.getProClassName());
+			flag = this.proClassService.validateUnique(map);
+			if(!flag) {
+				this.jsonString = "{success:false,msg:'品类名称已存在，请核实！'}";
+				return "success";
+			}
+		}
 		this.proClass.setFlag(ProClass.CREATE);
 		this.proClassService.save(this.proClass);
 		this.jsonString = "{success:true}";
