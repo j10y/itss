@@ -25,4 +25,16 @@ public class BandServiceImpl extends BaseServiceImpl<Band> implements BandServic
 		}
 		return true;
 	}
+	
+	public boolean multiSave(List<Band> list) {
+		try {
+			for(Band band : list) {
+				this.save(band);
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
