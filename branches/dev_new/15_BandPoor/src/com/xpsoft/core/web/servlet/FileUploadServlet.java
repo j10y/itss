@@ -126,9 +126,10 @@ public class FileUploadServlet extends HttpServlet {
 						
 						String profix = this.uploadPath.substring(this.uploadPath.lastIndexOf("\\")+1);
 						//modify by guansq for add "/" after "req.getContextPath()" at 2011-11-03 begin
-						relativeFullPath = "http://" + req.getServerName() + ":" + req.getServerPort() + 
-											(req.getContextPath() != null && !"".equals(req.getContextPath()) ? req.getContextPath() + "/" : "/") + 
-											profix + "/" + relativeFullPath;
+						relativeFullPath = 
+//							"http://" + req.getServerName() + ":" + req.getServerPort() + 
+//											(req.getContextPath() != null && !"".equals(req.getContextPath()) ? req.getContextPath() + "/" : "/") + 
+											"/"+profix + "/" + relativeFullPath;
 						//modify by guansq for add "/" after "req.getContextPath()" at 2011-11-03 end
 					}
 				}

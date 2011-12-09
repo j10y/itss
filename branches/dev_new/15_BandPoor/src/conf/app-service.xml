@@ -240,4 +240,12 @@
    	 <bean id="saleStoreService" class="com.xpsoft.oa.service.bandpoor.impl.SaleStoreServiceImpl">
    	 	<constructor-arg index="0" ref="saleStoreDao"/>
    	 </bean>
+   	 
+   	  <bean id="pictureOrdocService" class="com.xpsoft.oa.service.bandpoor.impl.PictureOrdocServiceImpl">
+   	 	<constructor-arg index="0" ref="pictureOrdocDao"/>
+   	 </bean>
+   	 
+   	 <bean id="beElectedBandPoorService" class="com.xpsoft.oa.service.bandpoor.impl.BeElectedBandPoorServiceImpl">
+   	 	<constructor-arg index="0" ref="beElectedBandPoorDao"/>
+   	 </bean>
 </beans>

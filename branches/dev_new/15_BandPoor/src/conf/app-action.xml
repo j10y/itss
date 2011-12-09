@@ -62,5 +62,5 @@
   <bean id="SaleStoreAction" class="com.xpsoft.oa.action.bandpoor.SaleStoreAction" scope="prototype"/>
   <bean id="BandChannelAction" class="com.xpsoft.oa.action.bandpoor.BandChannelAction" scope="prototype"/>
   <bean id="BandLevelAction" class="com.xpsoft.oa.action.bandpoor.BandLevelAction" scope="prototype"/>
-  
+  <bean id="DxcScoreManageAction" class="com.xpsoft.oa.action.bandpoor.DxcScoreManageAction" scope="prototype"/>
 </beans>

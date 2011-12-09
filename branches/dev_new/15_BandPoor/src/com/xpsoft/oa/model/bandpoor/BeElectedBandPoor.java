@@ -1,6 +1,7 @@
 package com.xpsoft.oa.model.bandpoor;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.xpsoft.core.model.BaseModel;
@@ -11,6 +12,10 @@ import com.xpsoft.oa.model.system.AppUser;
  *
  */
 public class BeElectedBandPoor extends BaseModel{
+	public static final Integer TYPE_SCORE = new Integer(1);//可评分
+	public static final Integer TYPE_UNSCORE = new Integer(2);//不可评分
+	public static final Integer STATUS_CREATE = new Integer(1);//新建
+	public static final Integer STATUS_DELETE = new Integer(0);//删除
 	private Long id;
 	
 	private String bandName;
@@ -31,7 +36,7 @@ public class BeElectedBandPoor extends BaseModel{
 	
 	private Integer infoType;
 
-	private Set<InfoPoor> infoPoors;
+	private Set<InfoPoor> infoPoors=new HashSet();
 
 	public Long getId() {
 		return id;

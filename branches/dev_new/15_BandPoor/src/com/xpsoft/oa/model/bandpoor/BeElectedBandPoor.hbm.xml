@@ -78,6 +78,7 @@
 			class="com.xpsoft.oa.model.system.AppUser"
             not-null="false"
 			fetch="select"
+			lazy="false"
 		>	
 		   <column name="createUser" />
 		</many-to-one>
@@ -86,6 +87,7 @@
 			class="com.xpsoft.oa.model.system.AppUser"
             not-null="false"
 			fetch="select"
+			lazy="false"
 		>	
 		   <column name="modifyUser" />
 		</many-to-one>
@@ -99,7 +101,7 @@
             column="infoType"
         />
        
-       <set name="infoPoors" table="bp_Info_BeEleBandPoor" cascade="save-update" inverse="false" lazy="true">
+       <set name="infoPoors" table="bp_Info_BeEleBandPoor" cascade="save-update" inverse="false" lazy="false">
         	<key column="beElectedBPId"/>
         	<many-to-many fetch="join" class="com.xpsoft.oa.model.bandpoor.InfoPoor" column="infoBPId"/>
        </set> 

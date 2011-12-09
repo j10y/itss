@@ -6,6 +6,17 @@ import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 
 public class InfoPoor extends BaseModel{
+	public static final Integer STATUS_CREATE = new Integer(1);//新建
+	public static final Integer STATUS_DELETE = new Integer(0);//删除
+	public static final Integer STATUS_PASS = new Integer(2);//审批通过
+	public static final Integer STATUS_RETURN = new Integer(3);//打回
+	public static final Integer STATUS_MODIFY = new Integer(4);//修改
+	public static final Integer TYPE_SCORE = new Integer(1);//可评分
+	public static final Integer TYPE_UNSCORE = new Integer(2);//不可评分
+	public static final Integer SCOUCE_DIRCOLLECTION = new Integer(1);//定向采集
+	public static final Integer SCOUCE_UNDIRCOLLECTION = new Integer(2);//不定向采集
+	public static final Integer SCOUCE_AUTOCOLLECTION = new Integer(2);//自动采集
+	
 	private Long id;
 	
 	private String bandName;
