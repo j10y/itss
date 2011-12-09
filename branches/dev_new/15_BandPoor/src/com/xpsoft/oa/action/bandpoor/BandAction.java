@@ -124,7 +124,7 @@ public class BandAction extends BaseAction {
 			for(int i = 2; i < row; i++) {
 				Band band1 = new Band();
 				if(StringUtils.isEmpty(sheet.getCell(0, i).getContents()) && StringUtils.isEmpty(sheet.getCell(1, i).getContents())) {
-					this.jsonString = "{success:true,flag:'0',msg:'excel中存在既没有中文名称又没有英文名称的数据，请核实！'}";
+					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据中文名称和英文名称都为空，请核实！'}";
 					return "success";
 				}
 				if(StringUtils.isNotEmpty(sheet.getCell(0, i).getContents())) {
@@ -138,31 +138,11 @@ public class BandAction extends BaseAction {
 				} else if("1".equals(sheet.getCell(2, i).getContents())) {
 					band1.setBandStatus(1);
 				} else {
-					this.jsonString = "{success:true,flag:'0',msg:'excel中存在类型不符合要求的数据，请核实！'}";
+					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据类型不符合要求，请核实！'}";
 					return "success";
 				}
 				band1.setBandDesc(sheet.getCell(3, i).getContents());
 				band1.setFlag(Band.CREATE);
-				list.add(band1);
-			}
-			List<Band> list2 = list;
-			for(int i = 0; i < list.size(); i++) {
-				Band band1 = list.get(i);
-				for(int j = i + 1; j < list2.size(); j ++) {
-					Band band2 = list2.get(j);
-					if(StringUtils.isNotEmpty(band1.getBandChName())) {
-						if(band1.getBandChName().equals(band2.getBandChName())) {
-							this.jsonString = "{success:true,flag:'0',msg:'excel中存在中文名称相同的数据，请核实！'}";
-							return "success";
-						}
-					}
-					if(StringUtils.isNotEmpty(band1.getBandEnName())) {
-						if(band1.getBandEnName().equals(band2.getBandEnName())) {
-							this.jsonString = "{success:true,flag:'0',msg:'excel中存在英文名称相同的数据，请核实！'}";
-							return "success";
-						}
-					}
-				}
 				boolean flag = true;
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("Q_id_L_NEQ", "0");
@@ -170,7 +150,7 @@ public class BandAction extends BaseAction {
 					map.put("Q_bandChName_S_EQ", band1.getBandChName());
 					flag = this.bandService.validateUnique(map);
 					if(!flag) {
-						this.jsonString = "{failure:true,flag:'0',msg:'中文名称【" + band1.getBandChName() + "】在数据库中已存在，请核实！'}";
+						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据中文名称【" + band1.getBandChName() + "】在数据库中已存在，请核实！'}";
 						return "success";
 					}
 					map.remove("Q_bandChName_S_EQ");
@@ -179,10 +159,11 @@ public class BandAction extends BaseAction {
 					map.put("Q_bandEnName_S_EQ", band1.getBandEnName());
 					flag = this.bandService.validateUnique(map);
 					if(!flag) {
-						this.jsonString = "{success:true,flag:'0',msg:'英文名称【" + band1.getBandEnName() + "】在数据库中已存在，请核实！'}";
+						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据英文名称【" + band1.getBandEnName() + "】在数据库中已存在，请核实！'}";
 						return "success";
 					}
 				}
+				list.add(band1);
 			}
 			boolean result = this.bandService.multiSave(list);
 			if(result) {
