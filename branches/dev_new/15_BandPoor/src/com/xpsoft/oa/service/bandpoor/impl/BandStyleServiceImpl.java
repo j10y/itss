@@ -25,4 +25,16 @@ public class BandStyleServiceImpl extends BaseServiceImpl<BandStyle> implements 
 		}
 		return true;
 	}
+	
+	public boolean multiSave(List<BandStyle> list) {
+		try {
+			for(BandStyle bs : list) {
+				this.save(bs);
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

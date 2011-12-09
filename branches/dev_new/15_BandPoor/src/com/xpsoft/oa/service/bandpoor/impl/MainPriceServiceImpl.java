@@ -6,6 +6,7 @@ import java.util.Map;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.oa.dao.bandpoor.MainPriceDao;
+import com.xpsoft.oa.model.bandpoor.Floor;
 import com.xpsoft.oa.model.bandpoor.MainPrice;
 import com.xpsoft.oa.service.bandpoor.MainPriceService;
 
@@ -24,5 +25,17 @@ public class MainPriceServiceImpl extends BaseServiceImpl<MainPrice> implements 
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean multiSave(List<MainPrice> list) {
+		try {
+			for(MainPrice mp : list) {
+				this.save(mp);
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

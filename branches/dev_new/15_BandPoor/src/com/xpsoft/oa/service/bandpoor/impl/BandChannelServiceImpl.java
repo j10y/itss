@@ -25,4 +25,16 @@ public class BandChannelServiceImpl extends BaseServiceImpl<BandChannel> impleme
 		}
 		return true;
 	}
+	
+	public boolean multiSave(List<BandChannel> list) {
+		try {
+			for(BandChannel bc : list) {
+				this.save(bc);
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

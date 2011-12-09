@@ -25,4 +25,16 @@ public class ProClassServiceImpl extends BaseServiceImpl<ProClass> implements Pr
 		}
 		return true;
 	}
+	
+	public boolean multiSave(List<ProClass> list) {
+		try {
+			for(ProClass pc : list) {
+				this.save(pc);
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
