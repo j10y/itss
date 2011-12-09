@@ -135,6 +135,16 @@ BandChannelView = Ext.extend(Ext.Panel, {
 			text : "删除品牌渠道",
 			handler : this.delBandChannel
 		}));
+		this.topbar.add(new Ext.Button({
+			text : "批量导入品牌",
+			handler : this.uploadBandChannel
+		}));
+		this.topbar.add(new Ext.Button({
+			text : "下载品牌渠道数据模板excel文件",
+			handler : function() {
+				window.open(__ctxPath + "/userfiles/dataTemplate/bandChannelTemplate.xls");
+			}
+		}));
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "BandChannelGrid",
 			region : "center",
@@ -206,6 +216,46 @@ BandChannelView = Ext.extend(Ext.Panel, {
 		new BandChannelForm({
 			bandChannelId : a.data.id
 		}).show();
+	},
+	uploadBand : function() {
+		var a = App.createUploadDialog({
+			file_cat : "uploadData",
+			callback : function (c) {
+				for (var b = 0; b < c.length; b++) {
+					Ext.Ajax.request({
+						url : __ctxPath + "/bandpoor/uploadBandChannel.do",
+						params : {
+							filePath : c[b].filepath
+						},
+						success : function(d) {
+							var e = Ext.util.JSON.decode(d.responseText);
+							if(e.flag == "0") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : e.msg,
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							Ext.MessageBox.show({
+								title : "操作信息",
+								msg : "数据导入成功！",
+								buttons : Ext.MessageBox.OK,
+								icon : Ext.MessageBox.INFO
+							});
+							Ext.getCmp("BandChannelView").gridPanel.store.reload({
+								params : {
+									start : 0,
+									limit : 25
+								}
+							});
+						}
+					});
+				}
+			}
+		});
+		a.show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
