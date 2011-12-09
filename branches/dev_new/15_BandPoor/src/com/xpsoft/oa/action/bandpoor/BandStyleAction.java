@@ -1,16 +1,26 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import jxl.Sheet;
+import jxl.Workbook;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.bandpoor.BandStyle;
+import com.xpsoft.oa.model.bandpoor.Floor;
 import com.xpsoft.oa.model.bandpoor.ProClass;
 import com.xpsoft.oa.service.bandpoor.BandStyleService;
+import com.xpsoft.oa.service.bandpoor.ProClassService;
 
 import flexjson.JSONSerializer;
 
@@ -90,6 +100,84 @@ public class BandStyleAction extends BaseAction{
 		} catch(Exception e) {
 			this.jsonString = "{success:false}";
 			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	public String upload() {
+		ProClassService proClassService = (ProClassService)AppUtil.getBean("proClassService");
+		Map<String, String> queryMap = new HashMap<String, String>();
+		queryMap.put("Q_flag_N_EQ", ProClass.CREATE.toString());
+		QueryFilter filter = new QueryFilter(queryMap);
+		List<ProClass> pcList = proClassService.getAll(filter);
+		Map<String, ProClass> pcMap = new HashMap<String, ProClass>();
+		for(ProClass pc : pcList) {
+			pcMap.put(pc.getProClassNum(), pc);
+		}
+		String filePath = this.getRequest().getParameter("filePath");
+		List<BandStyle> list = new ArrayList<BandStyle>();
+		String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
+		int len = defaultProfix.length();
+		filePath = filePath.substring(filePath.indexOf(defaultProfix));
+		File file = new File(this.getRequest().getRealPath("/") + filePath);
+		try {
+			Workbook book = Workbook.getWorkbook(file);
+			Sheet sheet = book.getSheet(0);
+			int col = sheet.getColumns();
+			int row = sheet.getRows();
+			for(int i = 1; i < row; i++) {
+				BandStyle bs = new BandStyle();
+				if(StringUtils.isEmpty(sheet.getCell(0, i).getContents())) {
+					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据编号为空，请核实！'}";
+					return "success";
+				}
+				if(StringUtils.isEmpty(sheet.getCell(1, i).getContents())) {
+					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据名称为空，请核实！'}";
+					return "success";
+				}
+				if(!queryMap.containsKey(sheet.getCell(2, i).getContents())) {
+					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据所属品类不存在，请核实！'}";
+					return "success";
+				}
+				bs.setStyleNum(sheet.getCell(0, i).getContents());
+				bs.setStyleName(sheet.getCell(1, i).getContents());
+				bs.setProClassId(pcMap.get(sheet.getCell(2, i).getContents()));
+				bs.setStyleDesc(sheet.getCell(3, i).getContents());
+				bs.setFlag(BandStyle.CREATE);
+				boolean flag = true;
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("Q_id_L_NEQ", "0");
+				if(StringUtils.isNotEmpty(bs.getStyleNum())) {
+					map.put("Q_styleNum_S_EQ", bs.getStyleNum());
+					flag = this.bandStyleService.validateUnique(map);
+					if(!flag) {
+						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据编号【" + bs.getStyleNum() + "】在数据库中已存在，请核实！'}";
+						return "success";
+					}
+					map.remove("Q_styleNum_S_EQ");
+				}
+				if(StringUtils.isNotEmpty(bs.getStyleName())) {
+					map.put("Q_styleName_S_EQ", bs.getStyleName());
+					flag = this.bandStyleService.validateUnique(map);
+					if(!flag) {
+						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据名称【" + bs.getStyleNum() + "】在数据库中已存在，请核实！'}";
+						return "success";
+					}
+				}
+				list.add(bs);
+			}
+			boolean result = this.bandStyleService.multiSave(list);
+			if(result) {
+				this.jsonString = "{success:true,flag:'1'}";
+			} else {
+				this.jsonString = "{success:true,flag:'0',msg:'导入失败，请核实文件和数据！'}";
+				return "success";
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			this.jsonString = "{success:true,flag:'0',msg:'导入失败，请核实文件和数据！'}";
+			return "success";
 		}
 		
 		return "success";
