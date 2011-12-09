@@ -832,7 +832,7 @@ span.opAttachFile {
 	margin: 5px 5px 5px 5px;
 	font-size: 12px;
 	color: #03386C;
-	background-color: green;
+	background-color: gray;
 }
 
 .table-info th {
@@ -841,7 +841,7 @@ span.opAttachFile {
 
 .table-info th,.table-info td {
 	background-color: white;
-	height: 28px;
+	height: 20px;
 	padding: 2px 2px 2px 4px;
 }
 

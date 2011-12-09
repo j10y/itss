@@ -275,7 +275,7 @@
 			</Item>
 			<Item id="DXCScoreManage" text="可评分待选池评分" iconCls="menu-flowNew" >
 			</Item>
-			<Item id="DXCScoreManage" text="可评分应用池管理" iconCls="menu-flowNew" >
+			<Item id="YYCScoreManage" text="可评分应用池管理" iconCls="menu-flowNew" >
 			</Item>
 			<Item id="BXCScoreManage" text="可评分备选池查看" iconCls="menu-flowNew" >
 			</Item>
@@ -289,7 +289,7 @@
 			</Item>
 			<Item id="DXCUnScoreManage" text="不可评分待选池考核" iconCls="menu-flowNew" >
 			</Item>
-			<Item id="DXCUnScoreManage" text="不可评分品牌池管理" iconCls="menu-flowNew" >
+			<Item id="PPCUnScoreManage" text="不可评分品牌池管理" iconCls="menu-flowNew" >
 			</Item>
 		</Items>
 		<Items id="PoorDictionary" text="相关类型管理" iconCls="menu-flowWait" >

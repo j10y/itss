@@ -137,5 +137,8 @@ App.importJs = {
 	BandLevelView : [__ctxPath + "/js/bandpoor/BandLevelView.js",
 	        __ctxPath + "/js/bandpoor/BandLevelForm.js"],
 	SaleStoreView : [__ctxPath + "/js/bandpoor/SaleStoreView.js",
-	        __ctxPath + "/js/bandpoor/SaleStoreForm.js"]
+	        __ctxPath + "/js/bandpoor/SaleStoreForm.js"],
+	ApplyScoreManage:[__ctxPath + "/js/bandpoor/ApplyScoreManage.js"],
+	DXCScoreManage:[__ctxPath + "/js/bandpoor/DXCScoreManage.js",
+	__ctxPath + "/ext3/ux/RowExpander.js"]
 };

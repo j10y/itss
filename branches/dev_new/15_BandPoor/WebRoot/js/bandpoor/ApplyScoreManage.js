@@ -1,4 +1,4 @@
-ScoreManageView = Ext.extend(Ext.Panel, {
+ApplyScoreManage = Ext.extend(Ext.Panel, {
 		searchPanel : null,
 		gridPanel : null,
 		store : null,
@@ -6,8 +6,8 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 		constructor : function (a) {
 			Ext.applyIf(this, a);
 			this.initUIComponents();
-			ScoreManageView.superclass.constructor.call(this, {
-				id : "ScoreManageView",
+			ApplyScoreManage.superclass.constructor.call(this, {
+				id : "ApplyScoreManage",
 				iconCls : "menu-dictionary",
 				title : "可评分品牌池",
 				region : "center",
@@ -26,7 +26,7 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 						padding : "5",
 						align : "middle"
 					},
-					id : "ScoreManageSearchForm",
+					id : "ApplyScoreManageSearchForm",
 					defaults : {
 						xtype : "label",
 						style : "padding:0px 5px 0px 5px;"
@@ -36,7 +36,7 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 						}, {
 							text : "品牌"
 						}, {
-							id : "ScoreManageSearchFormBandName",
+							id : "ApplyScoreManageSearchFormBandName",
 							width : 120,
 							name : "Q_bandName_S_LK",
 							maxHeight : 200,
@@ -56,7 +56,7 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 							}),
 							listeners : {
 								focus : function (e) {
-									var d = Ext.getCmp("ScoreManageSearchFormBandName").getStore();
+									var d = Ext.getCmp("ApplyScoreManageSearchFormBandName").getStore();
 									if (d.getCount() <= 0) {
 										Ext.Ajax.request({
 											url : __ctxPath + "/bandpoor/getBandsScoreManage.do",
@@ -69,11 +69,106 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 									}
 								}
 							}
+						}, {
+							text : "品类"
+						}, {
+							id : "ApplyScoreManageSearchFormProClass",
+							width : 120,
+							name : "Q_proClassName_S_LK",
+							maxHeight : 200,
+							xtype : "combo",
+							mode : "local",
+							editable : true,
+							triggerAction : "all",
+							valueField : "fromproClassId",
+							displayField : "fromproClassName",
+							store : new Ext.data.SimpleStore(
+							{
+								url : __ctxPath
+										+ "/bandpoor/getProClassScoreManage.do",
+								fields : [
+										"fromproClassId",
+										"fromproClassName"]
+							}),
+							listeners : {
+								focus : function (e) {
+									var d = Ext.getCmp("ApplyScoreManageSearchFormProClass").getStore();
+									if (d.getCount() <= 0) {
+										Ext.Ajax.request({
+											url : __ctxPath + "/bandpoor/getProClassScoreManage.do",
+											method : "post",
+											success : function (g) {
+												var f = Ext.util.JSON.decode(g.responseText);
+												d.loadData(f);
+											}
+										});
+									}
+								}
+							}
+						}, {
+							text : "品牌风格"
+						}, {
+							id : "ApplyScoreManageSearchFormBandStyle",
+							width : 120,
+							name : "Q_bandStyleName_S_LK",
+							maxHeight : 200,
+							xtype : "combo",
+							mode : "local",
+							editable : true,
+							triggerAction : "all",
+							valueField : "fromBandStyleId",
+							displayField : "fromBandStyleName",
+							store : new Ext.data.SimpleStore(
+							{
+								url : __ctxPath
+										+ "/bandpoor/getBandStyleScoreManage.do",
+								fields : [
+										"fromBandStyleId",
+										"fromBandStyleName"]
+							}),
+							listeners : {
+								focus : function (b) {
+									var a = Ext.getCmp("ApplyScoreManageSearchFormProClass").getValue();
+									if (a != null
+										 && a != ""
+										 && a != "undefined") {
+										Ext.getCmp("ApplyScoreManageSearchFormBandStyle").getStore().reload({
+											params : {
+												proClassId : a
+											}
+										});
+									} else {
+										Ext.ux.Toast
+										.msg(
+											"操作信息",
+											"请先选择相应的品类！");
+									}
+								}
+							}
+						},{
+							text : "品牌风格"
+						},{
+							width:120,
+							name : "ApplyScoreManageSearchFormStatus",
+							id : "ApplyScoreManageSearchFormStatus",
+							xtype : "combo",
+							triggerAction : "all",
+							store : [["","全部"],["1","新建"],["2","审批通过"],["3","打回"],["4","修改"]],
+							listeners : {
+									select:function(e,c,d){
+										var formStatus=Ext.getCmp("ApplyScoreManageSearchFormStatus").getValue();
+										Ext.getCmp("Q_infoStatus_N_EQ").setValue(formStatus);
+									}
+							}
 						},{
 							xtype : "button",
 							text : "查询",
 							iconCls : "search",
 							handler : this.search.createCallback(this)
+						},{
+							name : "Q_infoStatus_N_EQ",
+							id : "Q_infoStatus_N_EQ",
+							xtype : "hidden",
 						}
 					]
 				});
@@ -99,26 +194,7 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 					limit : 25
 				}
 			});
-			var b = [];
-			if (isGranted("_ScoreManageDel")) {
-				b.push({
-					iconCls : "btn-del",
-					qtip : "删除",
-					style : "margin:0 3px 0 3px"
-				});
-			}
-			if (isGranted("_ScoreManageEdit")) {
-				b.push({
-					iconCls : "btn-edit",
-					qtip : "编辑",
-					style : "margin:0 3px 0 3px"
-				});
-			}
-			this.rowActions = new Ext.ux.grid.RowActions({
-					header : "管理",
-					width : 80,
-					actions : b
-				});
+			
 			var c = new Ext.grid.CheckboxSelectionModel();
 			var a = new Ext.grid.ColumnModel({
 					columns : [c, new Ext.grid.RowNumberer(), {
@@ -174,7 +250,7 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 									return "修改";
 								}
 							}
-						}, this.rowActions],
+						}],
 					defaults : {
 						sortable : true,
 						menuDisabled : false,
@@ -182,29 +258,29 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 					}
 				});
 			this.topbar = new Ext.Toolbar({
-					id : "ScoreManageFootBar",
+					id : "ApplyScoreManageFootBar",
 					height : 30,
 					bodyStyle : "text-align:left",
 					items : []
 				});
-			if (isGranted("_ScoreManageAdd")) {
+			if (isGranted("_ApplyScoreManagePass")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-add",
-						text : "添加",
-						handler : this.createRecord,
+						text : "审批通过",
+						handler : this.passRecords,
 						scope : this
 					}));
 			}
-			if (isGranted("_ScoreManageDel")) {
+			if (isGranted("_ApplyScoreManageUnPass")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-del",
-						text : "删除",
-						handler : this.delRecords,
+						text : "打回",
+						handler : this.unPassRecords,
 						scope : this
 					}));
 			}
 			this.gridPanel = new Ext.grid.GridPanel({
-					id : "ScoreManageGrid",
+					id : "ApplyScoreManageGrid",
 					region : "center",
 					tbar : this.topbar,
 					store : this.store,
@@ -228,14 +304,6 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 						emptyMsg : "当前没有记录"
 					})
 				});
-			this.gridPanel.addListener("rowdblclick", function (f, d, g) {
-				f.getSelectionModel().each(function (e) {
-					if (isGranted("_ScoreManageEdit")) {
-						ScoreManageView.edit(e.data.id);
-					}
-				});
-			});
-			this.rowActions.on("action", this.onRowAction, this);
 		},
 		search : function (a) {
 			if (a.searchPanel.getForm().isValid()) {
@@ -249,21 +317,19 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 				});
 			}
 		},
-		createRecord : function () {
-			new ScoreManageForm().show();
-		},
-		delByIds : function (a) {
-			Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function (b) {
+		optionByIds : function (a,status) {
+			Ext.Msg.confirm("信息确认", "您确认处理所选记录吗？", function (b) {
 				if (b == "yes") {
 					Ext.Ajax.request({
-						url : __ctxPath + "/bandpoor/multiDelScoreManage.do",
+						url : __ctxPath + "/bandpoor/applyRecordScoreManage.do",
 						params : {
-							ids : a
+							ids : a,
+							status:status
 						},
 						method : "POST",
 						success : function (c, d) {
-							Ext.ux.Toast.msg("信息提示", "成功删除所选记录！");
-							Ext.getCmp("ScoreManageGrid").getStore().reload();
+							Ext.ux.Toast.msg("信息提示", "成功操作所选记录！");
+							Ext.getCmp("ApplyScoreManageGrid").getStore().reload();
 						},
 						failure : function (c, d) {
 							Ext.ux.Toast.msg("操作信息", "操作出错，请联系管理员！");
@@ -272,34 +338,44 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 				}
 			});
 		},
-		delRecords : function () {
-			var c = Ext.getCmp("ScoreManageGrid");
+		passRecords : function () {
+			var c = Ext.getCmp("ApplyScoreManageGrid");
 			var a = c.getSelectionModel().getSelections();
 			if (a.length == 0) {
-				Ext.ux.Toast.msg("信息", "请选择要删除的记录！");
+				Ext.ux.Toast.msg("信息", "请选择要审批通过的记录！");
 				return;
 			}
 			var d = Array();
 			for (var b = 0; b < a.length; b++) {
 				d.push(a[b].data.id);
+				if(a[b].data.infoStatus==2){
+					Ext.ux.Toast.msg("信息", "审批通过的记录无需再次审批！");
+					return;
+				}else if(a[b].data.infoStatus==3){
+					Ext.ux.Toast.msg("信息", "其中有打回的记录不能再次审批！");
+					return;
+				}
 			}
-			this.delByIds(d);
+			this.optionByIds(d,"2");
 		},
-		editRecord : function (a) {
-			new ScoreManageForm({
-				id : a.data.id
-			}).show();
-		},
-		onRowAction : function (c, a, d, e, b) {
-			switch (d) {
-			case "btn-del":
-				this.delByIds(a.data.id);
-				break;
-			case "btn-edit":
-				this.editRecord(a);
-				break;
-			default:
-				break;
+		unPassRecords : function () {
+			var c = Ext.getCmp("ApplyScoreManageGrid");
+			var a = c.getSelectionModel().getSelections();
+			if (a.length == 0) {
+				Ext.ux.Toast.msg("信息", "请选择要打回的记录！");
+				return;
 			}
+			var d = Array();
+			for (var b = 0; b < a.length; b++) {
+				d.push(a[b].data.id);
+				if(a[b].data.infoStatus==2){
+					Ext.ux.Toast.msg("信息", "审批通过的记录不能打回！");
+					return;
+				}else if(a[b].data.infoStatus==3){
+					Ext.ux.Toast.msg("信息", "打回的记录无需再次打回！");
+					return;
+				}
+			}
+			this.optionByIds(d,"3");
 		}
 	});
