@@ -103,7 +103,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 								    width : 300,
 								    name:'handleOpinion',
 								    id:'handleOpinion',
-								    allowBlank:false
+								    allowBlank:true
 								},{
 								    xtype:'hidden',
 								    name:'status',

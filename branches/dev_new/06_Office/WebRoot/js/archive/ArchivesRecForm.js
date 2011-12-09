@@ -62,10 +62,12 @@ ArchivesRecForm = Ext
 									}, [ {
 										name : "ArchivesRecForm.archivesId",
 										mapping : "archivesId"
-									}, {
+									},
+									/* {
 										name : "ArchivesRecForm.depId",
 										mapping : "depId"
-									}, {
+									}, */
+									{
 										name : "ArchivesRecForm.status",
 										mapping : "status"
 									}, {
@@ -254,12 +256,12 @@ ArchivesRecForm = Ext
 																					id : "ArchivesRecForm.depSignNo"//,
 																					//allowBlank : false
 																				},
-//																				{
-//																					fieldLabel : "发文机关或部门",
-//																					name : "archives.issueDep",
-//																					id : "ArchivesRecForm.issueDep"
-//																				},
 																				{
+																					fieldLabel : "发文机关或部门",
+																					name : "archives.issueDep",
+																					id : "ArchivesRecForm.issueDep"
+																				},
+																				/*{
 																					xtype : "container",
 																					layout : "column",
 																					style : "padding-left:0px;margin-left:0px;",
@@ -278,9 +280,9 @@ ArchivesRecForm = Ext
 																						name : "archives.issueDep",
 																						id : "ArchivesRecForm.issueDep",
 																						xtype : "textfield",
-																						width : "70%"/*,
+																						width : "70%",
 																						allowBlank : false,
-																						readOnly : true*/
+																						readOnly : true
 																					},
 																					{
 																						name : "archives.depId",
@@ -299,7 +301,7 @@ ArchivesRecForm = Ext
 																											true).show();
 																						}
 																					} ]
-																				},
+																				},*/
 																				{
 																					fieldLabel : "文件标题",
 																					name : "archives.subject",

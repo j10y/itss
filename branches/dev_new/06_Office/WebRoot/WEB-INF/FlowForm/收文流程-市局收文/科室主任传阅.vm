@@ -100,7 +100,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 							items : [{
 									xtype : 'label',
 									style : 'padding-left:0px',
-									text : '反馈意见',
+									text : '部门意见',
 									width : 101
 								},{
 								    xtype:'textarea',

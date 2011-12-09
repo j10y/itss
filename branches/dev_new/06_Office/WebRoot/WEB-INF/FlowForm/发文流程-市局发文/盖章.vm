@@ -72,23 +72,12 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 		if (formPanel.getForm().isValid()) {
 				formPanel.getForm().submit({
 					method:'post',
-					success : function(fp,action){},
-					failure : function(fp,action){
-						Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
-					}
-				});
-				Ext.Ajax.request({
-					url : __ctxPath
-							+ "/archive/getArchives.do?archivesId="+ ${archives_archivesId},
-					success : function(h, j) {
-						var result = Ext.decode(h.responseText);
-						var issuerId = result.data[0].issuerId;
-
+					success : function(fp,action){
 						formPanel.getForm().submit({
 							url:__ctxPath+ "/flow/nextProcessActivity.do",
 							method:'post',
 							waitMsg:'正在提交处理，请稍等',
-							params:{taskId:taskId,signalName:signalName,activityName:activityName,flowAssignId:issuerId},
+							params:{taskId:taskId,signalName:signalName,activityName:activityName},
 							success : function(fp, action) {
 								Ext.ux.Toast.msg('操作信息','成功保存！');
 								AppUtil.removeTab('ProcessForm'+taskId);
@@ -106,7 +95,9 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 								Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
 							}
 						});
-						
+					},
+					failure : function(fp,action){
+						Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
 					}
 				});
 		}

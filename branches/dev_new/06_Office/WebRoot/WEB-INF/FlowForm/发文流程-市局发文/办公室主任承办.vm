@@ -64,45 +64,67 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 	onSave : function(formPanel,panel,signalName,activityName) {
 		
 		if (formPanel.getForm().isValid()) {
-			formPanel.getForm().submit({
-						method : 'POST',
-						waitMsg : '正在提交数据...',
-						success : function(fp, action) {
-							Ext.ux.Toast.msg('操作信息', '成功保存信息！');
-							Ext.getCmp('attendId').setValue(action.result.attendId);	
-									formPanel.getForm().submit({
-										url:__ctxPath+ "/flow/nextProcessActivity.do",
-										method:'post',
-										waitMsg:'正在提交处理，请稍等',
-										params:{taskId:taskId,signalName:signalName,activityName:activityName},
-										success : function(fp, action) {
-											Ext.ux.Toast.msg('操作信息','成功保存！');
-											AppUtil.removeTab('ProcessForm'+taskId);
-											var myTaskView=Ext.getCmp("MyTaskGrid");
-											var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
-											if(appHomeTaskGrid!=null){
-												appHomeTaskGrid.getStore().reload();
+		
+			Ext.Ajax.request({
+				url : __ctxPath
+						+ "/archive/getByCurrentUserArchRecUser.do",
+				success : function(h, j) {
+					var k = Ext.util.JSON.decode(h.responseText).data;
+					var flowAssignId = k.numberUserId;
+					if(flowAssignId&&flowAssignId!=""){
+						formPanel.getForm().submit({
+							method : 'POST',
+							waitMsg : '正在提交数据...',
+							success : function(fp, action) {
+								Ext.ux.Toast.msg('操作信息', '成功保存信息！');
+								Ext.getCmp('attendId').setValue(action.result.attendId);	
+										formPanel.getForm().submit({
+											url:__ctxPath+ "/flow/nextProcessActivity.do",
+											method:'post',
+											waitMsg:'正在提交处理，请稍等',
+											params:{taskId : taskId, signalName : signalName, activityName : activityName, flowAssignId : flowAssignId},
+											success : function(fp, action) {
+												Ext.ux.Toast.msg('操作信息','成功保存！');
+												AppUtil.removeTab('ProcessForm'+taskId);
+												var myTaskView=Ext.getCmp("MyTaskGrid");
+												var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+												if(appHomeTaskGrid!=null){
+													appHomeTaskGrid.getStore().reload();
+												}
+												if(myTaskView!=null){
+													//AppUtil.activateTab(myTaskView);
+													myTaskView.getStore().reload();
+												}
+											},
+											failure : function(fp, action) {
+												Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
 											}
-											if(myTaskView!=null){
-												//AppUtil.activateTab(myTaskView);
-												myTaskView.getStore().reload();
-											}
-										},
-										failure : function(fp, action) {
-											Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
-										}
-							});
-							// TODO
-						},
-						failure : function(fp, action) {
-							Ext.MessageBox.show({
-										title : '操作信息',
-										msg : '信息保存出错，请联系管理员！',
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-						}
-					});
+								});
+								// TODO
+							},
+							failure : function(fp, action) {
+								Ext.MessageBox.show({
+											title : '操作信息',
+											msg : '信息保存出错，请联系管理员！',
+											buttons : Ext.MessageBox.OK,
+											icon : Ext.MessageBox.ERROR
+										});
+							}
+						});
+					}else{
+						Ext.MessageBox.show({
+							title : '操作信息',
+							msg : '请设置编号录入人员信息！',
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.ERROR
+						});
+					}
+				},
+				failure : function(h, j){
+					Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+				}
+			});
+		
 		}
 	},
 	/**

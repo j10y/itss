@@ -118,10 +118,9 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 						style : 'padding-left:0px',
 						html : "<center><font color='red'>市局人员默认已全部选择</font></center>"
 					},{
-				
-					xtype : 'container',
-					layout : 'column',
-					items : [{
+						xtype : 'container',
+						layout : 'column',
+						items : [{
 						xtype : 'label',
 						style : 'padding-left:0px',
 						text : '分局分发人员:',
