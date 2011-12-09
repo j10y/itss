@@ -481,23 +481,30 @@ public class ArchivesAction extends BaseAction {
 		//分局
 		String distUserIds = getRequest().getParameter("distUserIds");
 		if(StringUtils.isNotEmpty(distUserIds)){
-			if(distUserIds.equalsIgnoreCase("isALL__")){
-				QueryFilter distFilter = new QueryFilter(new HashMap());
-				distFilter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED.toString());
-				distFilter.addFilter("Q_department.isDist_N_EQ", "1");
-				List<AppUser> distDeptUsers = appUserService.getAll(distFilter);//分局
-				for (int i = 0; i < distDeptUsers.size(); i++) {
-					ArchivesDist archivesDist = new ArchivesDist();
-					archivesDist.setSubject(this.archives.getSubject());
-					archivesDist.setDepartment(distDeptUsers.get(i).getDepartment());
-					archivesDist.setArchives(this.archives);
-					archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
-					archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
-					archivesDist.setSignUserID(distDeptUsers.get(i).getUserId());
-					archivesDist.setSignFullname(distDeptUsers.get(i).getFullname());
-					distIds.append(distDeptUsers.get(i).getUserId()).append(",");
-					this.archivesDistService.save(archivesDist);
-				}
+			if(distUserIds.equalsIgnoreCase("isALL__")){//1，（市局发文）分局全部人员，2，（一般发文）得指定是哪个分局
+				if(this.archives.getArchivesType().getTypeName().equals(AppUtil.getPropertity("app.cityBureauArchivesTypeName"))){//市局发文
+					QueryFilter distFilter = new QueryFilter(new HashMap());
+					distFilter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED.toString());
+					distFilter.addFilter("Q_department.isDist_N_EQ", "1");
+					List<AppUser> distDeptUsers = appUserService.getAll(distFilter);//分局
+					for (int i = 0; i < distDeptUsers.size(); i++) {
+						ArchivesDist archivesDist = new ArchivesDist();
+						archivesDist.setSubject(this.archives.getSubject());
+						archivesDist.setDepartment(distDeptUsers.get(i).getDepartment());
+						archivesDist.setArchives(this.archives);
+						archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+						archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+						archivesDist.setSignUserID(distDeptUsers.get(i).getUserId());
+						archivesDist.setSignFullname(distDeptUsers.get(i).getFullname());
+						distIds.append(distDeptUsers.get(i).getUserId()).append(",");
+						this.archivesDistService.save(archivesDist);
+					}
+				}else if(this.archives.getArchivesType().getTypeName().equals(AppUtil.getPropertity("app.distArchivesTypeName"))){//一般发文（分局发文）
+					//组织架构如何设置与小李确认即可
+					
+					
+				}//请示报告
+				
 			}else{
 				String [] distUsers = distUserIds.split("[,]");
 				for(int i=0; i<distUsers.length; i++){
@@ -544,6 +551,7 @@ public class ArchivesAction extends BaseAction {
 		}
 		
 		this.archivesService.save(this.archives);
+		this.jsonString = "{success:true}";
 		return "success";
 	}
 
