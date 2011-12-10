@@ -814,14 +814,35 @@ public class FlowServiceImpl implements FlowService {
 			if(checkboxvalue!=null&&checkboxvalue.length()>0){
 				this.parmap.put("signUserIds", checkboxvalue);
 			}else{
-				Archives archives1 = ((Archives) archivesService.get(Long.parseLong(id)));
-				Long userid=archives1.getIssuerId();
-				AppUser appUser =appUserService.get(userid);
-				Long departid=appUser.getDepartment().getDepId();
-				ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(departid);
+				Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+				ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(deptId);
 				if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
 					this.parmap.put("flowAssignId", archRecUser.getLeaderUserId());
 				}
+			}
+		}else if((processName.equals("发文流程-市局发文")&&activityName.equals("分管或局领导签发"))){
+			Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(deptId);
+			if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
+				this.parmap.put("flowAssignId", archRecUser.getOfficeHeaderUserId());
+			}else{
+				this.parmap.put("flowAssignId",ContextUtil.getCurrentUser().getId());
+			}
+		}else if((processName.equals("发文流程-市局发文")&&activityName.equals("办公室主任承办"))){
+			Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(deptId);
+			if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
+				this.parmap.put("flowAssignId", archRecUser.getNumberUserId());
+			}else{
+				this.parmap.put("flowAssignId",ContextUtil.getCurrentUser().getId());
+			}
+		}else if((processName.equals("发文流程-市局发文")&&activityName.equals("编号录入"))){
+			Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(deptId);
+			if(archRecUser!=null&&archRecUser.getLeaderUserId()!=null){
+				this.parmap.put("flowAssignId", archRecUser.getStampUserId());
+			}else{
+				this.parmap.put("flowAssignId",ContextUtil.getCurrentUser().getId());
 			}
 		}
 		else if(processName.equals("收文流程-市局收文")&&activityName.equals("办公室主任批阅")){
@@ -974,24 +995,27 @@ public class FlowServiceImpl implements FlowService {
 							//发文分发，1市局所有人 2分局指定人
 							//市局部门的的isDist=0
 							//distUserIds为分局指定人的ids
-							QueryFilter filter = new QueryFilter(new HashMap());
-							filter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED.toString());
-							filter.addFilter("Q_department.isDist_N_EQ", "0");
-							List<AppUser> mainDeptUsers = appUserService.getAll(filter);//市局
-							
-							StringBuffer distIds = new StringBuffer();						
-							//市局
-							for (int i = 0; i < mainDeptUsers.size(); i++) {
-								ArchivesDist archivesDist = new ArchivesDist();
-								archivesDist.setSubject(archives.getSubject());
-								archivesDist.setDepartment(mainDeptUsers.get(i).getDepartment());
-								archivesDist.setArchives(archives);
-								archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
-								archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
-								archivesDist.setSignUserID(mainDeptUsers.get(i).getUserId());
-								archivesDist.setSignFullname(mainDeptUsers.get(i).getFullname());
-								distIds.append(mainDeptUsers.get(i).getUserId()).append(",");
-								archivesDistService.save(archivesDist);
+							Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+							Department dept =departmentService.get(deptId);
+							StringBuffer distIds = new StringBuffer();	//发送分发人信息
+							if(dept.getIsDist()==0){//如果分发人不是市局的，就不需要分发市局的，只选择分局的分发
+								QueryFilter filter = new QueryFilter(new HashMap());
+								filter.addFilter("Q_delFlag_SN_EQ", Constants.FLAG_UNDELETED.toString());
+								filter.addFilter("Q_department.isDist_N_EQ", "0");
+								List<AppUser> mainDeptUsers = appUserService.getAll(filter);//市局
+								//市局
+								for (int i = 0; i < mainDeptUsers.size(); i++) {
+									ArchivesDist archivesDist = new ArchivesDist();
+									archivesDist.setSubject(archives.getSubject());
+									archivesDist.setDepartment(mainDeptUsers.get(i).getDepartment());
+									archivesDist.setArchives(archives);
+									archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+									archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+									archivesDist.setSignUserID(mainDeptUsers.get(i).getUserId());
+									archivesDist.setSignFullname(mainDeptUsers.get(i).getFullname());
+									distIds.append(mainDeptUsers.get(i).getUserId()).append(",");
+									archivesDistService.save(archivesDist);
+								}
 							}
 							//分局
 							if(fjry!=null&&fjry.length()>0){
@@ -1383,11 +1407,22 @@ public class FlowServiceImpl implements FlowService {
 	}
 	//分管领导
 	public String findFgld(String userId,String passwd) {
-		// TODO Auto-generated method stub
+		filter(userId, passwd);
+		DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
-		String sql = "select app_user.* from user_role,app_role,app_user "
-			+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
-		sql += "and app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+")";
+		Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+		Department pep=this.findDepartmentByDeptId(deptId);
+		String sql="";
+		if(pep.getIsDist()==0||pep.getIsDist()==null){
+			sql = "select app_user.* from user_role,app_role,app_user "
+				+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
+			sql += "and app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+")";
+		}else{
+			while(pep!=null&&pep.getIsDist()==1){//如果是分局，又不是顶层的话，找到顶层
+				pep=this.findDepartmentByDeptId(pep.getParentId());
+			}
+			sql="select app_user.* from app_user where depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
+		}
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
 		//+"/"+ap.get("username")
@@ -1400,11 +1435,22 @@ public class FlowServiceImpl implements FlowService {
 		json+="]}";
 		return json;
 	}
-	//
+	//分局分发人员
 	public String findFfry(String userId,String passwd) {
-		// TODO Auto-generated method stub
+		filter(userId, passwd);
+		DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
-		String sql = "select app_user.* from department,app_user where app_user.depId=department.depId and department.isDist=1 and app_user.userId>0";
+		Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+		Department pep=this.findDepartmentByDeptId(deptId);
+		String sql="";
+		if(pep.getIsDist()==0||pep.getIsDist()==null){
+			 sql = "select app_user.* from department,app_user where app_user.depId=department.depId and department.isDist!=0 and app_user.userId>0";
+		}else{
+			while(pep!=null&&pep.getIsDist()==1){//如果是分局，又不是顶层的话，找到顶层
+				pep=this.findDepartmentByDeptId(pep.getParentId());
+			}
+			sql="select app_user.* from app_user where depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
+		}
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
 		//+"/"+ap.get("username")
@@ -1419,10 +1465,22 @@ public class FlowServiceImpl implements FlowService {
 	}
 	//局领导
 	public String findJld(String userId,String passwd){
+		filter(userId, passwd);
+		DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
-		String sql = "select app_user.* from app_role,app_user,user_role "
-			+ "where  user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
-		sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+"))";
+		Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+		Department pep=this.findDepartmentByDeptId(deptId);
+		String sql="";
+		if(pep.getIsDist()==0||pep.getIsDist()==null){
+			sql= "select app_user.* from app_role,app_user,user_role "
+				+ "where  user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
+			sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+"))";
+		}else{
+			while(pep!=null&&pep.getIsDist()==1){//如果是分局，又不是顶层的话，找到顶层
+				pep=this.findDepartmentByDeptId(pep.getParentId());
+			}
+			sql="select app_user.* from app_user where depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
+		}
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
 		//+"/"+ap.get("username")
@@ -1452,5 +1510,9 @@ public class FlowServiceImpl implements FlowService {
 			json+="]}";
 		}
 		return json;
+	}
+	public Department findDepartmentByDeptId(Long depid){
+		DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
+		return departmentService.get(depid);
 	}
 }
