@@ -26,7 +26,50 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 					},
 					width : '95%',
 					height : 500,
-					buttons :  [
+					buttons :  [new Ext.Button({
+									iconCls:'btn-transition',
+									text : '拒绝',
+									handler : function(){
+										Ext.getCmp("signUserNames").allowBlank = true;
+										if (Ext.getCmp("ArchivesCheckFlowForm").getForm().isValid()) {
+											Ext.getCmp("ArchivesCheckFlowForm").getForm().submit({
+									            url:__ctxPath+ "/archive/modStatusArchives.do",
+												method:'post',
+												params:{status:0},
+												success : function(fp, action) {
+													Ext.ux.Toast.msg('操作信息','成功保存！');
+												    Ext.getCmp("ArchivesCheckFlowForm").getForm().submit({
+											            url:__ctxPath+ "/flow/nextProcessActivity.do",
+														method:'post',
+														params:{taskId:Ext.getCmp("ArchivesCheckFlowView").taskId, signalName:'to结束1', activityName:'科室负责人核稿', destName:'结束1'},
+														success : function(fp, action) {
+															Ext.ux.Toast.msg('操作信息','成功保存！');
+														    AppUtil.removeTab('ProcessForm'+Ext.getCmp("ArchivesCheckFlowView").taskId);
+															var myTaskView=Ext.getCmp("MyTaskGrid");
+															var appHomeTaskGrid=Ext.getCmp("appHomeTaskGrid");
+															if(appHomeTaskGrid!=null){
+																appHomeTaskGrid.getStore().reload();
+															}
+															Ext.getCmp("signUserNames").allowBlank = false;
+															if(myTaskView!=null){
+																//AppUtil.activateTab(taskView);
+																myTaskView.getStore().reload();
+															}
+														},
+														failure : function(fp, action) {
+															Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+															Ext.getCmp("signUserNames").allowBlank = false;
+														}
+											    	});
+												},
+												failure : function(fp, action) {
+													Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+													Ext.getCmp("signUserNames").allowBlank = false;
+												}
+									    	});
+										}
+									}
+								}),
 								#set ($count=0)
 								#foreach ($v in $nextTrans)
 									#if($count>0)
@@ -129,6 +172,7 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 			columnWidth : 1,
 			layout : 'form',
 			autoHeight : true,
+			id : 'ArchivesCheckFlowForm',
 			style : 'padding:6px 6px 16px 5%',
 			url : __ctxPath + '/archive/saveArchivesAttend.do',
 			//id : 'ArchivesForm',
@@ -144,6 +188,10 @@ ArchivesCheckFlowView = Ext.extend(Ext.Panel, {
 						name : 'archivesAttend.attendType',
 						xtype : 'hidden',
 						value : 2 //审核人
+					},{
+						name : 'archivesId',
+						xtype : 'hidden',
+						value : '${archives_archivesId}'
 					},{
 						fieldLabel : '所属公文ID',
 						name : 'archives.archivesId',
