@@ -455,7 +455,7 @@ public class ArchivesAction extends BaseAction {
 		this.archivesService.save(this.archives);
 		
 		
-		//发文分发，1市局所有人 2分局指定人
+		//发文分发，1市局所有人（市局发文） 2分局指定人
 		//市局部门的的isDist=0
 		//distUserIds为分局指定人的ids
 		QueryFilter filter = new QueryFilter(new HashMap());
@@ -465,19 +465,24 @@ public class ArchivesAction extends BaseAction {
 		
 		StringBuffer distIds = new StringBuffer();
 		
-		//市局
-		for (int i = 0; i < mainDeptUsers.size(); i++) {
-			ArchivesDist archivesDist = new ArchivesDist();
-			archivesDist.setSubject(this.archives.getSubject());
-			archivesDist.setDepartment(mainDeptUsers.get(i).getDepartment());
-			archivesDist.setArchives(this.archives);
-			archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
-			archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
-			archivesDist.setSignUserID(mainDeptUsers.get(i).getUserId());
-			archivesDist.setSignFullname(mainDeptUsers.get(i).getFullname());
-			distIds.append(mainDeptUsers.get(i).getUserId()).append(",");
-			this.archivesDistService.save(archivesDist);
+		//只有市局发文才会默认分发到市局
+		if (StringUtils.isNotEmpty(depIds)
+				&& this.archives.getArchivesType().getTypeName()
+						.equals(AppUtil.getPropertity("app.cityBureauArchivesTypeName"))) {
+			for (int i = 0; i < mainDeptUsers.size(); i++) {
+				ArchivesDist archivesDist = new ArchivesDist();
+				archivesDist.setSubject(this.archives.getSubject());
+				archivesDist.setDepartment(mainDeptUsers.get(i).getDepartment());
+				archivesDist.setArchives(this.archives);
+				archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+				archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+				archivesDist.setSignUserID(mainDeptUsers.get(i).getUserId());
+				archivesDist.setSignFullname(mainDeptUsers.get(i).getFullname());
+				distIds.append(mainDeptUsers.get(i).getUserId()).append(",");
+				this.archivesDistService.save(archivesDist);
+			}
 		}
+		
 		//分局
 		String distUserIds = getRequest().getParameter("distUserIds");
 		if(StringUtils.isNotEmpty(distUserIds)){
@@ -501,8 +506,24 @@ public class ArchivesAction extends BaseAction {
 					}
 				}else if(this.archives.getArchivesType().getTypeName().equals(AppUtil.getPropertity("app.distArchivesTypeName"))){//一般发文（分局发文）
 					//组织架构如何设置与小李确认即可
-					
-					
+					Department department = ContextUtil.getCurrentUser().getDepartment();
+					//根据某个部门获取其分局顶层后获取下面的所有子部门			
+					List<Department> deptList = departmentService.findDistTreeById(department.getDepId());
+					for(Department dept : deptList){
+						List<AppUser> distDeptUsers = appUserService.findByDepId(dept.getDepId());//分局
+						for (int i = 0; i < distDeptUsers.size(); i++) {
+							ArchivesDist archivesDist = new ArchivesDist();
+							archivesDist.setSubject(this.archives.getSubject());
+							archivesDist.setDepartment(distDeptUsers.get(i).getDepartment());
+							archivesDist.setArchives(this.archives);
+							archivesDist.setIsMain(ArchivesDist.RECEIVE_MAIN);
+							archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
+							archivesDist.setSignUserID(distDeptUsers.get(i).getUserId());
+							archivesDist.setSignFullname(distDeptUsers.get(i).getFullname());
+							distIds.append(distDeptUsers.get(i).getUserId()).append(",");
+							this.archivesDistService.save(archivesDist);
+						}
+					}
 				}//请示报告
 				
 			}else{
