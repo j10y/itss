@@ -1,17 +1,17 @@
-DXCScoreManage = Ext.extend(Ext.Panel, {
+YYCScoreManage = Ext.extend(Ext.Panel, {
 		constructor : function (a) {
 			if (a == null) {
 				a = {};
 			}
 			Ext.apply(this, a);
 			this.initComponents();
-			DXCScoreManage.superclass.constructor.call(this, {
-				id : "DXCScoreManage",
-				title : "待选池评分管理",
+			YYCScoreManage.superclass.constructor.call(this, {
+				id : "YYCScoreManage",
+				title : "应用池管理",
 				region : "center",
 				iconCls : "menu-personal-salary",
 				layout : "border",
-				items : [this.searchPanel, this.gridPanel]
+				items : [this.YYCSearchPanel, this.gridPanel]
 			});
 		},
 		typeId : null,
@@ -20,7 +20,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 		store : null,
 		topbar : null,
 		initComponents : function () {
-			this.searchPanel = new Ext.FormPanel({
+			this.YYCSearchPanel = new Ext.FormPanel({
 					region : "north",
 					frame : false,
 					border : false,
@@ -44,7 +44,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 						}, {
 							text : "品牌"
 						}, {
-							id : "ScoreManageSearchFormBandName",
+							id : "YYCSearchFormBandName",
 							width : 120,
 							name : "Q_bandName_S_LK",
 							maxHeight : 200,
@@ -64,7 +64,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							}),
 							listeners : {
 								focus : function (e) {
-									var d = Ext.getCmp("ScoreManageSearchFormBandName").getStore();
+									var d = Ext.getCmp("YYCSearchFormBandName").getStore();
 									if (d.getCount() <= 0) {
 										Ext.Ajax.request({
 											url : __ctxPath + "/bandpoor/getBandsScoreManage.do",
@@ -78,15 +78,44 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 								}
 							}
 						}, {
+							text : "采集年份"
+						}, {
+							name : "Q_year_N_EQ",
+							id : "beElectedBandPoor.year",
+							xtype : "combo",
+							triggerAction : "all",
+							allowBlank : false,
+							store : ["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]
+							
+						}, {
+							text : "采集频率"
+						}, {
+							name : "beElectedBandPoor.poorVersionName",
+							id : "beElectedBandPoor.poorVersionName",
+							xtype : "combo",
+							triggerAction : "all",
+							allowBlank : false,
+							store : [["1","一次采集(6月-10)"],["2","二次采集(11月-次年5月)"]],
+							listeners : {
+									select:function(e,c,d){
+										var poorVersion=Ext.getCmp("beElectedBandPoor.poorVersionName").getValue();
+										Ext.getCmp("beElectedBandPoor.poorVersion").setValue(poorVersion);
+									}
+							}
+						},{
 							xtype : "button",
 							text : "查询",
 							iconCls : "search",
 							handler : this.search.createCallback(this)
+						},{
+							name : "Q_poorVersion_N_EQ",
+							id : "beElectedBandPoor.poorVersion",
+							xtype : "hidden"
 						}
 					]
 				});
 			this.store = new Ext.data.JsonStore({
-					url : __ctxPath + "/bandpoor/listDxcScore.do",
+					url : __ctxPath + "/bandpoor/scoreListPpcScore.do",
 					root : "result",
 					baseParams : {
 					},
@@ -95,7 +124,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 					fields : [{
 							name : "id",
 							type : "int"
-						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore"]
+						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","year","poorVersion"]
 				});
 			this.store.setDefaultSort("id", "desc");
 			this.store.load({
@@ -129,6 +158,21 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							header : "品牌实际得分",
 							width : 60,
 							dataIndex : "bandrealScore"
+						}, {
+							header : "年度",
+							width : 60,
+							dataIndex : "year"
+						}, {
+							header : "频率",
+							width : 60,
+							dataIndex : "poorVersion",
+							renderer : function (e) {
+								if(e==1){
+									return  "一次采集(6月-10)";
+								}else{
+									return  "二次采集(11月-次年5月)";
+								}
+							}
 						}, {
 							header : "状态",
 							width : 60,
@@ -170,50 +214,26 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 						width : 100
 					}
 				});
-			this.dxctopbar = new Ext.Toolbar({
-					id : "DXCScoreManagFootBar",
+			this.topbar = new Ext.Toolbar({
+					id : "YYCScoreManagFootBar",
 					height : 30,
 					bodyStyle : "text-align:left",
 					items : []
 				});
-			if (isGranted("_DXCScoreManageSet")) {
-				this.dxctopbar.add(new Ext.Button({
+			if (isGranted("_YYCScoreManageSet")) {
+				this.topbar.add(new Ext.Button({
 						iconCls : "btn-setting",
 						text : "指定分值设定",
 						handler : this.setScore,
 						scope : this
 					}));
 			}
-			if (isGranted("_DXCScoreManageAllSet")) {
-				this.dxctopbar.add(new Ext.Button({
-						iconCls : "btn-setting",
-						text : "全部设定",
-						handler : this.setAllScore,
-						scope : this
-					}));
-			}
-			if (isGranted("_DXCScoreManageCountScore")) {
-				this.dxctopbar.add(new Ext.Button({
-						iconCls : "btn-pred",
-						text : "分值计算",
-						handler : this.countScoreValue,
-						scope : this
-					}));
-			}
-			if (isGranted("_DXCScoreManageDel")) {
-				this.dxctopbar.add(new Ext.Button({
-						iconCls : "btn-del",
-						text : "删除",
-						handler : this.delRecords,
-						scope : this
-					}));
-			}		
 			this.gridPanel = new Ext.grid.GridPanel({
-					id : "DXCScoreManageGrid",
+					id : "YYCScoreManageGrid",
 					region : "center",
 					stripeRows : true,
 					plugins : d,
-					tbar : this.dxctopbar,
+					tbar : this.topbar,
 					store : this.store,
 					trackMouseOver : true,
 					disableSelection : false,
@@ -236,10 +256,9 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 				});
 		},
 		search : function (a) {
-			if (a.searchPanel.getForm().isValid()) {
-				a.searchPanel.getForm().submit({
+				a.YYCSearchPanel.getForm().submit({
 					waitMsg : "正在提交查询",
-					url : __ctxPath + "/bandpoor/listDxcScore.do",
+					url : __ctxPath + "/bandpoor/scoreListPpcScore.do",
 					params : {
 						"Q_infoType_N_EQ" : 1
 					},
@@ -248,9 +267,8 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 						a.gridPanel.getStore().loadData(b);
 					}
 				});
-			}
 		},setScore : function () {
-				var c = Ext.getCmp("DXCScoreManageGrid");
+				var c = Ext.getCmp("YYCScoreManageGrid");
 				var a = c.getSelectionModel().getSelections();
 				if (a.length == 0) {
 					Ext.ux.Toast.msg("信息", "请选择要设定考核分数的记录！");
@@ -261,43 +279,6 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 					d.push(a[b].data.id);
 				}
 				this.saveScoreValue("2",d);
-		},
-		setAllScore : function () {
-			//1 为全部设定 2为部分设定
-				this.saveScoreValue("1","");
-		},
-		delRecords : function () {
-			var c = Ext.getCmp("DXCScoreManageGrid");
-			var a = c.getSelectionModel().getSelections();
-			if (a.length == 0) {
-				Ext.ux.Toast.msg("信息", "请选择要删除的记录！");
-				return;
-			}
-			var d = Array();
-			for (var b = 0; b < a.length; b++) {
-				d.push(a[b].data.id);
-			}
-			this.delByIds(d);
-		},
-		delByIds : function (a) {
-			Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function (b) {
-				if (b == "yes") {
-					Ext.Ajax.request({
-						url : __ctxPath + "/bandpoor/multiDelDxcScore.do",
-						params : {
-							ids : a
-						},
-						method : "POST",
-						success : function (c, d) {
-							Ext.ux.Toast.msg("信息提示", "成功删除所选记录！");
-							Ext.getCmp("DXCScoreManageGrid").getStore().reload();
-						},
-						failure : function (c, d) {
-							Ext.ux.Toast.msg("操作信息", "操作出错，请联系管理员！");
-						}
-					});
-				}
-			});
 		},
 		saveScoreValue:function(a,b){
 		//a 全部审定或选择设定 b 选择设定的ids
@@ -350,7 +331,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 									url : __ctxPath + "/bandpoor/saveScoreValueDxcScore.do?bandScoreValue="+bandScoreValue+"&settype="+a+"&ids="+b,
 									success : function (c, d) {
 											Ext.getCmp("setScoreWin").close();
-											Ext.getCmp("DXCScoreManageGrid").getStore().reload();
+											Ext.getCmp("YYCScoreManageGrid").getStore().reload();
 											Ext.ux.Toast.msg("信息", "设定成功！");
 									},
 									failure : function(c, d) {
@@ -369,102 +350,6 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							iconCls : "btn-cancel",
 							handler : function(a){
 								Ext.getCmp("setScoreWin").close();
-							}
-						}]
-				});
-				win.show();
-		},
-		countScoreValue:function(){
-		//a 全部审定或选择设定 b 选择设定的ids
-		var acountFormPanel = new Ext.FormPanel({
-					layout : "form",
-					url : __ctxPath + "/bandpoor/countScoreValueDxcScore.do",
-					bodyStyle : "padding:10px 10px 10px 10px",
-					border : false,
-					id : "acountBandScoreValueForm",
-					defaults : {
-						anchor : "98%,98%"
-					},
-					defaultType : "textfield",
-					items : [{
-						fieldLabel : "采集年份",
-						name : "beElectedBandPoor.year",
-						id : "beElectedBandPoor.year",
-						xtype : "combo",
-						triggerAction : "all",
-						allowBlank : false,
-						store : ["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]
-						
-					},{
-						name : "beElectedBandPoor.poorVersion",
-						id : "beElectedBandPoor.poorVersion",
-						xtype : "hidden"
-					},{
-						fieldLabel : "采集频率",
-						name : "beElectedBandPoor.poorVersionName",
-						id : "beElectedBandPoor.poorVersionName",
-						xtype : "combo",
-						triggerAction : "all",
-						allowBlank : false,
-						store : [["1","一次采集(6月-10)"],["2","二次采集(11月-次年5月)"]],
-						listeners : {
-								select:function(e,c,d){
-									var poorVersion=Ext.getCmp("beElectedBandPoor.poorVersionName").getValue();
-									Ext.getCmp("beElectedBandPoor.poorVersion").setValue(poorVersion);
-								}
-						}
-					}]
-				});
-				var win = new Ext.Window({
-					id : 'countScoreWin',
-					title : '计算品牌考核分',
-					width : 300,
-					height : 150,
-					layout : "fit",
-					iconCls : "menu-JobSalaryRelation",
-					modal : true,
-					maximizable : true,
-					items : acountFormPanel,
-					buttonAlign : "center",
-					buttons : [
-						{
-							text : "设定",
-							iconCls : "btn-save",
-							handler : function(){
-								var a = Ext.getCmp("acountBandScoreValueForm");
-								if (a.getForm().isValid()) {
-									a.getForm().submit({
-										method : "post",
-										waitMsg : "正在提交数据...",
-										success : function (b, c) {
-											Ext.ux.Toast.msg("操作信息", "成功保存信息！");
-											Ext.getCmp("DXCScoreManageGrid").getStore().reload();
-											Ext.getCmp("countScoreWin").close();
-										},
-										failure : function (b, c) {
-											Ext.MessageBox.show({
-												title : "操作信息",
-												msg : c.result.msg,
-												buttons : Ext.MessageBox.OK,
-												icon : "ext-mb-error"
-											});
-											Ext.getCmp("countScoreWin").close();
-										}
-									});
-								} else {
-									Ext.MessageBox.show({
-										title : "操作信息",
-										msg : "红线框的为必填字段！",
-										buttons : Ext.MessageBox.OK,
-										icon : "ext-mb-error"
-									});
-								}
-							}
-						}, {
-							text : "取消",
-							iconCls : "btn-cancel",
-							handler : function(a){
-								Ext.getCmp("countScoreWin").close();
 							}
 						}]
 				});

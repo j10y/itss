@@ -140,5 +140,9 @@ App.importJs = {
 	        __ctxPath + "/js/bandpoor/SaleStoreForm.js"],
 	ApplyScoreManage:[__ctxPath + "/js/bandpoor/ApplyScoreManage.js"],
 	DXCScoreManage:[__ctxPath + "/js/bandpoor/DXCScoreManage.js",
+	__ctxPath + "/ext3/ux/RowExpander.js"],
+	YYCScoreManage:[__ctxPath + "/js/bandpoor/YYCScoreManage.js",
+	__ctxPath + "/ext3/ux/RowExpander.js"],
+	BXCScoreManage:[__ctxPath + "/js/bandpoor/BXCScoreManage.js",
 	__ctxPath + "/ext3/ux/RowExpander.js"]
 };

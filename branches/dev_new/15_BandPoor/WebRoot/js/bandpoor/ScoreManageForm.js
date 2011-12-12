@@ -515,7 +515,7 @@ ScoreManageForm = Ext.extend(Ext.Window, {
 								failure : function (b, c) {
 									Ext.MessageBox.show({
 										title : "操作信息",
-										msg : "信息保存出错，请联系管理员！",
+										msg : c.result.msg,
 										buttons : Ext.MessageBox.OK,
 										icon : "ext-mb-error"
 									});
