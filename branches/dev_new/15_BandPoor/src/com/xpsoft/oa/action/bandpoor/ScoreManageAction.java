@@ -170,6 +170,18 @@ public class ScoreManageAction extends BaseAction{
 	}
 	public String save(){
 		HttpServletRequest request=getRequest();
+		Map valmap = new HashMap();
+		valmap.put("Q_id_L_NEQ", infoPoor.getId()!=null?infoPoor.getId()+"":"0");
+		valmap.put("Q_infoType_N_EQ", InfoPoor.TYPE_SCORE+"");
+		valmap.put("Q_saleStoreid.id_L_EQ", infoPoor.getSaleStoreid().getId()+"");
+		valmap.put("Q_bandId.id_L_EQ", infoPoor.getBandId().getId()+"");
+		valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
+		QueryFilter valfilter = new QueryFilter(valmap);
+		List vallist=scoreManageService.getAll(valfilter);
+		if(vallist.size()>0){
+			this.jsonString = "{success:false,msg:'同一商场同一品牌已存在！'}";
+			return "success";
+		}
 		if(infoPoor.getId()==null){
 			infoPoor.setCreatDate(new Date());
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
@@ -223,7 +235,7 @@ public class ScoreManageAction extends BaseAction{
 				}
 			}
 		}
-		
+		this.jsonString = "{success:true}";
 		return "success";
 	}
 	public String get(){
@@ -394,6 +406,7 @@ public class ScoreManageAction extends BaseAction{
 				if(status.equals(InfoPoor.STATUS_PASS+"")){
 					Map map = new HashMap();
 					map.put("Q_bandId.id_L_EQ",  ip.getBandId().getId()+"");
+					map.put("Q_status_N_NEQ",  BeElectedBandPoor.STATUS_DELETE+"");
 					QueryFilter filter = new QueryFilter(map);
 					List beElectedBandPoorlist=beElectedBandPoorService.getAll(filter);
 					if(beElectedBandPoorlist==null||beElectedBandPoorlist.size()==0){

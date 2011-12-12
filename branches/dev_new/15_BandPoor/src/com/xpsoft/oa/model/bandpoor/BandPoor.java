@@ -12,6 +12,13 @@ import com.xpsoft.oa.model.system.AppUser;
  *
  */
 public class BandPoor extends BaseModel{
+	public static final Integer TYPE_SCORE = new Integer(1);//可评分
+	public static final Integer TYPE_UNSCORE = new Integer(2);//不可评分
+	public static final Integer BANDSTATUS_YYC = new Integer(1);//应用池
+	public static final Integer BANDSTATUS_BXC = new Integer(2);//备选池
+	public static final Integer STATUS_DELETE = new Integer(0);//删除
+	public static final Integer STATUS_CREATE = new Integer(1);//新建
+	
 	private Long id;
 	
 	private String bandName;

@@ -248,4 +248,8 @@
    	 <bean id="beElectedBandPoorService" class="com.xpsoft.oa.service.bandpoor.impl.BeElectedBandPoorServiceImpl">
    	 	<constructor-arg index="0" ref="beElectedBandPoorDao"/>
    	 </bean>
+   	 
+   	  <bean id="bandPoorService" class="com.xpsoft.oa.service.bandpoor.impl.BandPoorServiceImpl">
+   	 	<constructor-arg index="0" ref="bandPoorDao"/>
+   	 </bean>
 </beans>

@@ -18,4 +18,7 @@ public class BaseServiceImpl<T> extends GenericServiceImpl<T, Long> implements
 	public boolean removeDatabySql(String sql){
 		return dao.removeDatabySql(sql); 
 	}
+	public boolean updateDatabySql(String sql){
+		return dao.updateDatabySql(sql); 
+	}
 }

@@ -62,6 +62,7 @@
 			class="com.xpsoft.oa.model.bandpoor.SaleStore"
             not-null="false"
 			fetch="select"
+			lazy="false"
 		>	
 			<column name="saleStoreid" />
 		</many-to-one>

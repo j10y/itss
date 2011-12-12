@@ -36,4 +36,15 @@ public abstract class BaseDaoImpl<T> extends GenericDaoImpl<T, Long> implements 
 		}
 		 return true;
 	 } 
+	 
+	 public boolean updateDatabySql(String sql){
+		 try {
+			this.jdbcTemplate.update(sql);
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			 return false;
+		}
+		 return true;
+	 } 
 }

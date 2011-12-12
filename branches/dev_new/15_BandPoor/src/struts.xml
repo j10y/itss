@@ -192,6 +192,10 @@
 		<action name="*DxcScore" class="DxcScoreManageAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*PpcScore" class="PpcScoreManageAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		
 	</package>
 	
 </struts>

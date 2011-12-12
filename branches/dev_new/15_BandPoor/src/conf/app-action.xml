@@ -63,4 +63,5 @@
   <bean id="BandChannelAction" class="com.xpsoft.oa.action.bandpoor.BandChannelAction" scope="prototype"/>
   <bean id="BandLevelAction" class="com.xpsoft.oa.action.bandpoor.BandLevelAction" scope="prototype"/>
   <bean id="DxcScoreManageAction" class="com.xpsoft.oa.action.bandpoor.DxcScoreManageAction" scope="prototype"/>
+  <bean id="PpcScoreManageAction" class="com.xpsoft.oa.action.bandpoor.PbcScoreManageAction" scope="prototype"/>
 </beans>
