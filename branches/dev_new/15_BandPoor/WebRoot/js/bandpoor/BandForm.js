@@ -48,10 +48,11 @@ BandForm = Ext.extend(Ext.Window, {
 					hiddenName : "band.bandStatus",
 					id : "bandStatusName",
 					xtype : "combo",
-					value : "0",
+					value : this.bandStatus ? this.bandStatus : "0",
 					rawValue : "常规品牌",
 					editable : false,
 					triggerAction : "all",
+					readOnly : this.lockBandStatus ? true : false,
 					store : [
 						[
 							"0",
@@ -122,12 +123,14 @@ BandForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在提交数据……",
 				success : function() {
 					Ext.ux.Toast.msg("提示信息","保存成功！");
-					Ext.getCmp("BandView").gridPanel.store.reload({
-						params : {
-							start : 0,
-							limit : 25
-						}
-					});
+					if(Ext.getCmp("BandView")){
+						Ext.getCmp("BandView").gridPanel.store.reload({
+							params : {
+								start : 0,
+								limit : 25
+							}
+						});
+					}					
 					b.close();
 				},
 				failure : function(c, d) {
