@@ -144,11 +144,13 @@ App.importJs = {
 	YYCScoreManage:[__ctxPath + "/js/bandpoor/YYCScoreManage.js",
 	__ctxPath + "/ext3/ux/RowExpander.js"],
 	BXCScoreManage:[__ctxPath + "/js/bandpoor/BXCScoreManage.js",
-	__ctxPath + "/ext3/ux/RowExpander.js"],
+	__ctxPath + "/ext3/ux/RowExpander.js"],  		
 	ModifyScoreManageView: [ __ctxPath + "/js/bandpoor/ModifyScoreManageView.js",
 			__ctxPath + "/js/bandpoor/ModifyScoreManageForm.js" ],
 	UnScoreManageView: [ __ctxPath + "/js/bandpoor/UnScoreManageView.js",
 	       			__ctxPath + "/js/bandpoor/UnScoreManageForm.js",
 	       			__ctxPath + "/js/bandpoor/BandForm.js"],
-	ApplyUnScoreManage:[__ctxPath + "/js/bandpoor/ApplyUnScoreManage.js"]
+	ApplyUnScoreManage:[__ctxPath + "/js/bandpoor/ApplyUnScoreManage.js"],
+	AutoCollectionInfoView:[ __ctxPath + "/js/bandpoor/AutoCollectionInfoView.js",
+	__ctxPath + "/ext3/ux/RowExpander.js"]
 };
