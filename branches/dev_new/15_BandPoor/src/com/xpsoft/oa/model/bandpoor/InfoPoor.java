@@ -13,6 +13,7 @@ public class InfoPoor extends BaseModel{
 	public static final Integer STATUS_MODIFY = new Integer(4);//修改
 	public static final Integer TYPE_SCORE = new Integer(1);//可评分
 	public static final Integer TYPE_UNSCORE = new Integer(2);//不可评分
+	public static final Integer TYPE_UNKNOWN = new Integer(3);//未知
 	public static final Integer SCOUCE_DIRCOLLECTION = new Integer(1);//定向采集
 	public static final Integer SCOUCE_UNDIRCOLLECTION = new Integer(2);//不定向采集
 	public static final Integer SCOUCE_AUTOCOLLECTION = new Integer(2);//自动采集
