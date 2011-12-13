@@ -54,6 +54,13 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 					buttonAlign : 'center',
 					items : [this.detailPanel,this.formPanel]
 				});
+		var jsArr=[__ctxPath+'/js/archive/ArchivesDraftWin.js',
+				           __ctxPath+'/js/archive/ArchivesDocForm.js',
+				           __ctxPath+'/js/archive/ArchivesDocHistoryWin.js',
+				           __ctxPath+'/js/archive/ArchiveTypeTempView.js',
+				           __ctxPath+'/js/archive/ArchTemplateView.js',
+				           __ctxPath+'/js/archive/ArchTemplateSelector.js'];
+		$ImportSimpleJs(jsArr,null);
 	},
 	/**
 	 * 保存公文的方法,传入公文状态作为参数
