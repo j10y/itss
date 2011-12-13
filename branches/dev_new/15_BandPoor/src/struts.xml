@@ -171,6 +171,9 @@
 		<action name="*ScoreManage" class="ScoreManageAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*ScoreManageUn" class="UnScoreManageAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 		<action name="*BusinessArea" class="BusinessAreaAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
