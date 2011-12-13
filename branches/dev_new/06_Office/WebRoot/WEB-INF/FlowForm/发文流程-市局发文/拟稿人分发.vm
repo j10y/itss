@@ -116,7 +116,7 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 						value : '${archives_archivesId}'
 					},{
 						style : 'padding-left:0px',
-						html : "<center><font color='red'>市局人员默认已全部选择</font></center>"
+						html : "<center><font color='red'>市局人员默认已全部选择（仅限市局发文）</font></center>"
 					},{
 						xtype : 'container',
 						layout : 'column',
