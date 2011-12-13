@@ -101,7 +101,7 @@ public class PbcScoreManageAction extends BaseAction{
 			buff.append("',poorVersion:'");
 			buff.append(bandPoor.getPoorVersion());
 			buff.append("',bandlevel:'");
-			buff.append(bandPoor.getBandLevel().getLevelName());
+			buff.append(bandPoor.getBandLevel()!=null?bandPoor.getBandLevel().getLevelName():"");
 			buff.append("',content:'")
 			.append(content)
 			.append("'},");

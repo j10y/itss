@@ -102,8 +102,8 @@ public class ModifyScoreManageAction extends BaseAction{
 	 */
 	public String applyRecordForModify(){
 		String[] ids = getRequest().getParameterValues("ids");
-		String year=getRequest().getParameter("year");
-		String poorVersion=getRequest().getParameter("poorVersion");
+		String year=getRequest().getParameter("modfiyInfoPoor.year");
+		String poorVersion=getRequest().getParameter("modfiyInfoPoor.poorVersion");
 		if (ids != null) {
 			for (String id : ids) {
 				this.applyRecord(Long.parseLong(id), InfoPoor.STATUS_CREATE,year,poorVersion);

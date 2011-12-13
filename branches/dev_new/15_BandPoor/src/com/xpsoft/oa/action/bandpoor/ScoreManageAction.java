@@ -132,7 +132,8 @@ public class ScoreManageAction extends BaseAction{
 	}
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
-		filter.addFilter("Q_infoStatus_N_NEQ", "0");
+		filter.addFilter("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
+		filter.addFilter("Q_infoType_N_EQ", InfoPoor.TYPE_SCORE+"");
 		List<InfoPoor> list = this.scoreManageService.getAll(filter);
 
 		Type type = new TypeToken<List<InfoPoor>>() {
@@ -258,6 +259,24 @@ public class ScoreManageAction extends BaseAction{
 	}
 	
 	public String getBands(){
+		Map map = new HashMap();
+		map.put("Q_flag_N_EQ",  Band.CREATE+"");
+		map.put("Q_bandStatus_N_EQ", "0");
+		QueryFilter filter = new QueryFilter(map);
+		List<Band> list=bandService.getAll(filter);
+		StringBuffer sb = new StringBuffer("[");
+	       for (Band band : list) {
+	         sb.append("['").append(band.getId()).append("','").append(band.getBandChName()+"/"+band.getBandEnName()).append("'],");
+	       }
+	       if (list.size() > 0) {
+	         sb.deleteCharAt(sb.length() - 1);
+	       }
+	      sb.append("]");
+	      setJsonString(sb.toString());
+		return "success";
+	}	
+	
+	public String getAllBands(){
 		Map map = new HashMap();
 		map.put("Q_flag_N_EQ",  Band.CREATE+"");
 		QueryFilter filter = new QueryFilter(map);
@@ -438,60 +457,23 @@ public class ScoreManageAction extends BaseAction{
 		this.jsonString = "{success:true}";
 		return "success";
 	}
-	public BusinessAreaService getBusinessAreaService() {
-		return businessAreaService;
-	}
+	public String autoColList() {
+		QueryFilter filter = new QueryFilter(getRequest());
+		filter.addFilter("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
+		filter.addFilter("Q_infoType_N_EQ", InfoPoor.TYPE_UNKNOWN+"");
+		List<InfoPoor> list = this.scoreManageService.getAll(filter);
 
-	public void setBusinessAreaService(BusinessAreaService businessAreaService) {
-		this.businessAreaService = businessAreaService;
+		Type type = new TypeToken<List<InfoPoor>>() {
+		}
+		.getType();
+		StringBuffer buff = new StringBuffer(
+				"{success:true,'totalCounts':")
+		.append(filter.getPagingBean().getTotalItems()).append(
+				",result:");
+		Gson gson = new Gson();
+		buff.append(gson.toJson(list, type));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		return "success";
 	}
-
-	public FileAttachService getFileAttachService() {
-		return fileAttachService;
-	}
-
-	public void setFileAttachService(FileAttachService fileAttachService) {
-		this.fileAttachService = fileAttachService;
-	}
-
-	public PictureOrdocService getPictureOrdocService() {
-		return pictureOrdocService;
-	}
-
-	public void setPictureOrdocService(PictureOrdocService pictureOrdocService) {
-		this.pictureOrdocService = pictureOrdocService;
-	}
-
-	public SaleStoreService getSaleStoreServiece() {
-		return saleStoreServiece;
-	}
-
-	public void setSaleStoreServiece(SaleStoreService saleStoreServiece) {
-		this.saleStoreServiece = saleStoreServiece;
-	}
-
-	public BandChannelService getBandChannelService() {
-		return bandChannelService;
-	}
-
-	public void setBandChannelService(BandChannelService bandChannelService) {
-		this.bandChannelService = bandChannelService;
-	}
-
-	public MainPriceService getMainPriceService() {
-		return mainPriceService;
-	}
-
-	public void setMainPriceService(MainPriceService mainPriceService) {
-		this.mainPriceService = mainPriceService;
-	}
-
-	public BeElectedBandPoorService getBeElectedBandPoorService() {
-		return beElectedBandPoorService;
-	}
-
-	public void setBeElectedBandPoorService(
-			BeElectedBandPoorService beElectedBandPoorService) {
-		this.beElectedBandPoorService = beElectedBandPoorService;
-	}	
 }
