@@ -198,7 +198,7 @@ ModifyScoreManageView = Ext.extend(Ext.Panel, {
 			if (isGranted("_ModifyScoreManageDel")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-del",
-						text : "删除",
+						text : "删除信息并同步品牌池",
 						handler : this.delRecords,
 						scope : this
 					}));
@@ -206,7 +206,7 @@ ModifyScoreManageView = Ext.extend(Ext.Panel, {
 			if (isGranted("_ModifyScoreManagePass")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-add",
-						text : "审批通过",
+						text : "审核并进入品牌池",
 						handler : this.passRecords,
 						scope : this
 					}));
@@ -261,7 +261,7 @@ ModifyScoreManageView = Ext.extend(Ext.Panel, {
 			new ModifyScoreManageForm().show();
 		},
 		delByIds : function (a) {
-			Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function (b) {
+			Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？此处删除将同时删除品牌池中最近品牌信息！", function (b) {
 				if (b == "yes") {
 					Ext.Ajax.request({
 						url : __ctxPath + "/bandpoor/multiDelModifyScore.do",
@@ -293,25 +293,113 @@ ModifyScoreManageView = Ext.extend(Ext.Panel, {
 			}
 			this.delByIds(d);
 		},
-		passRecords : function () {
-			var c = Ext.getCmp("ApplyScoreManageGrid");
-			var a = c.getSelectionModel().getSelections();
-			if (a.length == 0) {
-				Ext.ux.Toast.msg("信息", "请选择要审批通过的记录！");
-				return;
-			}
-			var d = Array();
-			for (var b = 0; b < a.length; b++) {
-				d.push(a[b].data.id);
-				if(a[b].data.infoStatus==2){
-					Ext.ux.Toast.msg("信息", "审批通过的记录无需再次审批！");
-					return;
-				}else if(a[b].data.infoStatus==3){
-					Ext.ux.Toast.msg("信息", "其中有打回的记录不能再次审批！");
-					return;
-				}
-			}
-			this.optionByIds(d,"2");
+		passRecords:function(){
+		var c = Ext.getCmp("ModifyScoreManageGrid");
+		var ids = c.getSelectionModel().getSelections();
+		if (ids.length == 0) {
+			Ext.ux.Toast.msg("信息", "请选择要审批通过的记录！");
+			return;
+		}
+		var d = Array();
+		for (var i = 0; i < ids.length; i++) {
+			d.push(ids[i].data.id);
+		}
+		var modifyCountFormPanel = new Ext.FormPanel({
+					layout : "form",
+					url : __ctxPath + "/bandpoor/applyRecordForModifyModifyScore.do",
+					bodyStyle : "padding:10px 10px 10px 10px",
+					border : false,
+					id : "modifyCountFormPanelForm",
+					defaults : {
+						anchor : "98%,98%"
+					},
+					defaultType : "textfield",
+					items : [{
+						fieldLabel : "采集年份",
+						name : "modfiyInfoPoor.year",
+						id : "modfiyInfoPoor.year",
+						xtype : "combo",
+						triggerAction : "all",
+						allowBlank : false,
+						store : ["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]
+						
+					},{
+						name : "modfiyInfoPoor.poorVersion",
+						id : "modfiyInfoPoor.poorVersion",
+						xtype : "hidden"
+					},{
+						fieldLabel : "采集频率",
+						name : "modfiyInfoPoor.poorVersionName",
+						id : "modfiyInfoPoor.poorVersionName",
+						xtype : "combo",
+						triggerAction : "all",
+						allowBlank : false,
+						store : [["1","一次采集(6月-10)"],["2","二次采集(11月-次年5月)"]],
+						listeners : {
+								select:function(e,c,d){
+									var poorVersion=Ext.getCmp("modfiyInfoPoor.poorVersionName").getValue();
+									Ext.getCmp("modfiyInfoPoor.poorVersion").setValue(poorVersion);
+								}
+						}
+					}]
+				});
+				var win = new Ext.Window({
+					id : 'modfiyInfoPoorWin',
+					title : '审核并进入品牌池',
+					width : 300,
+					height : 150,
+					layout : "fit",
+					iconCls : "menu-JobSalaryRelation",
+					modal : true,
+					maximizable : true,
+					items : modifyCountFormPanel,
+					buttonAlign : "center",
+					buttons : [
+						{
+							text : "设定",
+							iconCls : "btn-save",
+							handler : function(){
+								var a = Ext.getCmp("modifyCountFormPanelForm");
+								if (a.getForm().isValid()) {
+									a.getForm().submit({
+										method : "post",
+										params : {
+											ids : d 
+										},
+										waitMsg : "正在提交数据...",
+										success : function (b, c) {
+											Ext.ux.Toast.msg("操作信息", "成功保存信息！");
+											Ext.getCmp("ModifyScoreManageGrid").getStore().reload();
+											Ext.getCmp("modfiyInfoPoorWin").close();
+										},
+										failure : function (b, c) {
+											Ext.MessageBox.show({
+												title : "操作信息",
+												msg : c.result.msg,
+												buttons : Ext.MessageBox.OK,
+												icon : "ext-mb-error"
+											});
+											Ext.getCmp("modfiyInfoPoorWin").close();
+										}
+									});
+								} else {
+									Ext.MessageBox.show({
+										title : "操作信息",
+										msg : "红线框的为必填字段！",
+										buttons : Ext.MessageBox.OK,
+										icon : "ext-mb-error"
+									});
+								}
+							}
+						}, {
+							text : "取消",
+							iconCls : "btn-cancel",
+							handler : function(a){
+								Ext.getCmp("modfiyInfoPoorWin").close();
+							}
+						}]
+				});
+				win.show();
 		},
 		editRecord : function (a) {
 			new ModifyScoreManageForm({

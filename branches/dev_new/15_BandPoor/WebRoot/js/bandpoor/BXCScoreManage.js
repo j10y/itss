@@ -81,7 +81,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 							text : "采集年份"
 						}, {
 							name : "Q_year_N_EQ",
-							id : "beElectedBandPoor.year",
+							id : "bxBandPoor.year",
 							xtype : "combo",
 							triggerAction : "all",
 							store : ["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]
@@ -89,15 +89,15 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 						}, {
 							text : "采集频率"
 						}, {
-							name : "beElectedBandPoor.poorVersionName",
-							id : "beElectedBandPoor.poorVersionName",
+							name : "bxBandPoor.poorVersionName",
+							id : "bxBandPoor.poorVersionName",
 							xtype : "combo",
 							triggerAction : "all",
 							store : [["1","一次采集(6月-10)"],["2","二次采集(11月-次年5月)"]],
 							listeners : {
 									select:function(e,c,d){
-										var poorVersion=Ext.getCmp("beElectedBandPoor.poorVersionName").getValue();
-										Ext.getCmp("beElectedBandPoor.poorVersion").setValue(poorVersion);
+										var poorVersion=Ext.getCmp("bxBandPoor.poorVersionName").getValue();
+										Ext.getCmp("bxBandPoor.poorVersion").setValue(poorVersion);
 									}
 							}
 						}, {
@@ -107,7 +107,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 							handler : this.search.createCallback(this)
 						},{
 							name : "Q_poorVersion_N_EQ",
-							id : "beElectedBandPoor.poorVersion",
+							id : "bxBandPoor.poorVersion",
 							xtype : "hidden"
 						}
 					]
