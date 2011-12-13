@@ -1,7 +1,9 @@
 package com.xpsoft.oa.action.bandpoor;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -9,13 +11,22 @@ import javax.annotation.Resource;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.bandpoor.BandLevel;
 import com.xpsoft.oa.model.bandpoor.BandPoor;
+import com.xpsoft.oa.model.bandpoor.Floor;
 import com.xpsoft.oa.model.bandpoor.InfoPoor;
+import com.xpsoft.oa.model.bandpoor.SaleStore;
+import com.xpsoft.oa.service.bandpoor.BandLevelService;
 import com.xpsoft.oa.service.bandpoor.BandPoorService;
+
+import flexjson.JSONSerializer;
 
 public class PbcScoreManageAction extends BaseAction{
 	@Resource
 	BandPoorService bandPoorService;
+	
+	@Resource
+	private BandLevelService bandLevelService;
 	
 	public String scoreList(){
 		QueryFilter filter = new QueryFilter(getRequest());
@@ -89,6 +100,8 @@ public class PbcScoreManageAction extends BaseAction{
 			buff.append(bandPoor.getYear());
 			buff.append("',poorVersion:'");
 			buff.append(bandPoor.getPoorVersion());
+			buff.append("',bandlevel:'");
+			buff.append(bandPoor.getBandLevel().getLevelName());
 			buff.append("',content:'")
 			.append(content)
 			.append("'},");
@@ -181,6 +194,38 @@ public class PbcScoreManageAction extends BaseAction{
 		}
 		buff.append("]}");
 		this.jsonString = buff.toString();
+		return "success";
+	}
+	
+	public String getLevel(){
+		Map map = new HashMap();
+		map.put("Q_flag_N_EQ",  BandLevel.CREATE+"");
+		QueryFilter filter = new QueryFilter(map);
+		List<BandLevel> list = this.bandLevelService.getAll(filter);
+		StringBuffer sb = new StringBuffer("[");
+	       for (BandLevel bandLevel : list) {
+	         sb.append("['").append(bandLevel.getId()).append("','").append(bandLevel.getLevelName()).append("'],");
+	       }
+	       if (list.size() > 0) {
+	         sb.deleteCharAt(sb.length() - 1);
+	       }
+	      sb.append("]");
+	      setJsonString(sb.toString());
+		return "success";
+	}
+	public String saveLevel(){
+		String bandLevelId=getRequest().getParameter("bandPoor.bandLevelId");
+		String[] ids = getRequest().getParameter("ids").split(",");
+		BandLevel bl=new BandLevel();
+		bl.setId(Long.parseLong(bandLevelId));
+		if (ids != null) {
+			for (String id : ids) {
+				BandPoor bandPoor=bandPoorService.get(Long.parseLong(id));
+				bandPoor.setBandLevel(bl);
+				bandPoorService.save(bandPoor);
+			}
+		}
+		this.jsonString = "{success:true}";
 		return "success";
 	}
 }

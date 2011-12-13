@@ -44,7 +44,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 						}, {
 							text : "品牌"
 						}, {
-							id : "ScoreManageSearchFormBandName",
+							id : "BXCSearchFormBandName",
 							width : 120,
 							name : "Q_bandName_S_LK",
 							maxHeight : 200,
@@ -52,19 +52,19 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 							mode : "local",
 							editable : true,
 							triggerAction : "all",
-							valueField : "fromBandId",
-							displayField : "fromBandName",
+							valueField : "BXCBandId",
+							displayField : "BXCBandName",
 							store : new Ext.data.SimpleStore(
 							{
 								url : __ctxPath
 										+ "/bandpoor/getBandsScoreManage.do",
 								fields : [
-										"fromBandId",
-										"fromBandName"]
+										"BXCBandId",
+										"BXCBandName"]
 							}),
 							listeners : {
 								focus : function (e) {
-									var d = Ext.getCmp("ScoreManageSearchFormBandName").getStore();
+									var d = Ext.getCmp("BXCSearchFormBandName").getStore();
 									if (d.getCount() <= 0) {
 										Ext.Ajax.request({
 											url : __ctxPath + "/bandpoor/getBandsScoreManage.do",
@@ -78,10 +78,37 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 								}
 							}
 						}, {
+							text : "采集年份"
+						}, {
+							name : "Q_year_N_EQ",
+							id : "beElectedBandPoor.year",
+							xtype : "combo",
+							triggerAction : "all",
+							store : ["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]
+							
+						}, {
+							text : "采集频率"
+						}, {
+							name : "beElectedBandPoor.poorVersionName",
+							id : "beElectedBandPoor.poorVersionName",
+							xtype : "combo",
+							triggerAction : "all",
+							store : [["1","一次采集(6月-10)"],["2","二次采集(11月-次年5月)"]],
+							listeners : {
+									select:function(e,c,d){
+										var poorVersion=Ext.getCmp("beElectedBandPoor.poorVersionName").getValue();
+										Ext.getCmp("beElectedBandPoor.poorVersion").setValue(poorVersion);
+									}
+							}
+						}, {
 							xtype : "button",
 							text : "查询",
 							iconCls : "search",
 							handler : this.search.createCallback(this)
+						},{
+							name : "Q_poorVersion_N_EQ",
+							id : "beElectedBandPoor.poorVersion",
+							xtype : "hidden"
 						}
 					]
 				});
@@ -148,6 +175,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 							header : "状态",
 							width : 60,
 							dataIndex : "status",
+							hidden : true,
 							renderer : function (e) {
 								if(e==1){
 									return  "新建";

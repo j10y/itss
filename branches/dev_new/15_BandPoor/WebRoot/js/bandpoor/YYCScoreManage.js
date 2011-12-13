@@ -52,15 +52,15 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							mode : "local",
 							editable : true,
 							triggerAction : "all",
-							valueField : "fromBandId",
-							displayField : "fromBandName",
+							valueField : "YYCBandId",
+							displayField : "YYCBandName",
 							store : new Ext.data.SimpleStore(
 							{
 								url : __ctxPath
 										+ "/bandpoor/getBandsScoreManage.do",
 								fields : [
-										"fromBandId",
-										"fromBandName"]
+										"YYCBandId",
+										"YYCBandName"]
 							}),
 							listeners : {
 								focus : function (e) {
@@ -81,25 +81,23 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							text : "采集年份"
 						}, {
 							name : "Q_year_N_EQ",
-							id : "beElectedBandPoor.year",
+							id : "bandPoor.year",
 							xtype : "combo",
 							triggerAction : "all",
-							allowBlank : false,
 							store : ["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]
 							
 						}, {
 							text : "采集频率"
 						}, {
-							name : "beElectedBandPoor.poorVersionName",
-							id : "beElectedBandPoor.poorVersionName",
+							name : "bandPoor.poorVersionName",
+							id : "bandPoor.poorVersionName",
 							xtype : "combo",
 							triggerAction : "all",
-							allowBlank : false,
 							store : [["1","一次采集(6月-10)"],["2","二次采集(11月-次年5月)"]],
 							listeners : {
 									select:function(e,c,d){
-										var poorVersion=Ext.getCmp("beElectedBandPoor.poorVersionName").getValue();
-										Ext.getCmp("beElectedBandPoor.poorVersion").setValue(poorVersion);
+										var poorVersion=Ext.getCmp("bandPoor.poorVersionName").getValue();
+										Ext.getCmp("bandPoor.poorVersion").setValue(poorVersion);
 									}
 							}
 						},{
@@ -109,7 +107,7 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							handler : this.search.createCallback(this)
 						},{
 							name : "Q_poorVersion_N_EQ",
-							id : "beElectedBandPoor.poorVersion",
+							id : "bandPoor.poorVersion",
 							xtype : "hidden"
 						}
 					]
@@ -124,7 +122,7 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 					fields : [{
 							name : "id",
 							type : "int"
-						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","year","poorVersion"]
+						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","year","poorVersion","bandlevel"]
 				});
 			this.store.setDefaultSort("id", "desc");
 			this.store.load({
@@ -174,9 +172,14 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 								}
 							}
 						}, {
+							header : "品牌等级（分类）",
+							width : 60,
+							dataIndex : "bandlevel"
+						}, {
 							header : "状态",
 							width : 60,
 							dataIndex : "status",
+							hidden : true,
 							renderer : function (e) {
 								if(e==1){
 									return  "新建";
@@ -223,8 +226,8 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 			if (isGranted("_YYCScoreManageSet")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-setting",
-						text : "指定分值设定",
-						handler : this.setScore,
+						text : "设定品牌等级",
+						handler : this.setLevel,
 						scope : this
 					}));
 			}
@@ -267,41 +270,77 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 						a.gridPanel.getStore().loadData(b);
 					}
 				});
-		},setScore : function () {
+		},setLevel : function () {
 				var c = Ext.getCmp("YYCScoreManageGrid");
 				var a = c.getSelectionModel().getSelections();
 				if (a.length == 0) {
-					Ext.ux.Toast.msg("信息", "请选择要设定考核分数的记录！");
+					Ext.ux.Toast.msg("信息", "请选择要设定品牌等级的记录！");
 					return;
 				}
 				var d = Array();
 				for (var b = 0; b < a.length; b++) {
 					d.push(a[b].data.id);
 				}
-				this.saveScoreValue("2",d);
+				this.saveLevelValue(d);
 		},
-		saveScoreValue:function(a,b){
-		//a 全部审定或选择设定 b 选择设定的ids
+		saveLevelValue:function(b){
+		// b 选择设定的ids
 		var formPanel = new Ext.FormPanel({
 					layout : "form",
 					bodyStyle : "padding:10px 10px 10px 10px",
 					border : false,
-					id : "bandScoreValueForm",
+					id : "bandLevelValueForm",
 					defaults : {
 						anchor : "98%,98%"
 					},
 					defaultType : "textfield",
 					items : [{
-					fieldLabel : "品牌考核分",
-					name : "bandScoreValue",
-					id : "bandScoreValue",
-					allowBlank : false,
-					blankText : "品牌考核分不能为空！"
-					}]
+							fieldLabel : "等级",
+							name : "bandPoor.bandLevelValue",
+							id : "bandPoor.bandLevelValue",
+							maxHeight : 200,
+							xtype : "combo",
+							mode : "local",
+							editable : true,
+							allowBlank : false,
+							triggerAction : "all",
+							valueField : "frombandLevelId",
+							displayField : "frombandLevelName",
+							store : new Ext.data.SimpleStore({
+								url : __ctxPath
+								 + "/bandpoor/getLevelPpcScore.do",
+								fields : [
+									"frombandLevelId",
+									"frombandLevelName"]
+							}),
+							listeners : {
+								focus : function (b) {
+									var a = Ext.getCmp("bandPoor.bandLevelValue").getStore();
+									if (a.getCount() <= 0) {
+										Ext.Ajax.request({
+											url : __ctxPath + "/bandpoor/getLevelPpcScore.do",
+											method : "post",
+											success : function (d) {
+												var c = Ext.util.JSON.decode(d.responseText);
+												a.loadData(c);
+											}
+										});
+									}
+								},
+								select:function(e,c,d){
+									var levelId=Ext.getCmp("bandPoor.bandLevelValue").getValue();
+									Ext.getCmp("bandPoor.bandLevelId").setValue(levelId);
+								}
+							}
+						}, {
+							name : "bandPoor.bandLevelId",
+							id : "bandPoor.bandLevelId",
+							xtype : "hidden"
+						}]
 				});
 				var win = new Ext.Window({
-					id : 'setScoreWin',
-					title : '设定品牌考核分',
+					id : 'setLevelWin',
+					title : '设定品牌等级',
 					width : 300,
 					height : 150,
 					layout : "fit",
@@ -315,22 +354,22 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							text : "设定",
 							iconCls : "btn-save",
 							handler : function(){
-								var bandScoreValue=Ext.getCmp("bandScoreValue").getValue();
-								if(bandScoreValue.length==0){
+								var bandLevelValue=Ext.getCmp("bandPoor.bandLevelValue").getValue();
+								if(bandLevelValue.length==0){
 									Ext.MessageBox
 												.show({
 													title : "操作信息",
-													msg : "考核分数不能为空！",
+													msg : "品牌等级不能为空！",
 													buttons : Ext.MessageBox.OK,
 													icon : Ext.MessageBox.ERROR
 												});
 												return;
 								}
-								Ext.getCmp("bandScoreValueForm").getForm().submit({
+								Ext.getCmp("bandLevelValueForm").getForm().submit({
 									waitMsg : "正在设定数据...",
-									url : __ctxPath + "/bandpoor/saveScoreValueDxcScore.do?bandScoreValue="+bandScoreValue+"&settype="+a+"&ids="+b,
+									url : __ctxPath + "/bandpoor/saveLevelPpcScore.do?ids="+b,
 									success : function (c, d) {
-											Ext.getCmp("setScoreWin").close();
+											Ext.getCmp("setLevelWin").close();
 											Ext.getCmp("YYCScoreManageGrid").getStore().reload();
 											Ext.ux.Toast.msg("信息", "设定成功！");
 									},
@@ -349,7 +388,7 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							text : "取消",
 							iconCls : "btn-cancel",
 							handler : function(a){
-								Ext.getCmp("setScoreWin").close();
+								Ext.getCmp("setLevelWin").close();
 							}
 						}]
 				});

@@ -52,15 +52,15 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							mode : "local",
 							editable : true,
 							triggerAction : "all",
-							valueField : "fromBandId",
-							displayField : "fromBandName",
+							valueField : "DXCBandId",
+							displayField : "DXCBandName",
 							store : new Ext.data.SimpleStore(
 							{
 								url : __ctxPath
 										+ "/bandpoor/getBandsScoreManage.do",
 								fields : [
-										"fromBandId",
-										"fromBandName"]
+										"DXCBandId",
+										"DXCBandName"]
 							}),
 							listeners : {
 								focus : function (e) {
@@ -133,6 +133,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							header : "状态",
 							width : 60,
 							dataIndex : "status",
+							hidden : true,
 							renderer : function (e) {
 								if(e==1){
 									return  "新建";

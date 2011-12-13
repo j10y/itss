@@ -144,5 +144,7 @@ App.importJs = {
 	YYCScoreManage:[__ctxPath + "/js/bandpoor/YYCScoreManage.js",
 	__ctxPath + "/ext3/ux/RowExpander.js"],
 	BXCScoreManage:[__ctxPath + "/js/bandpoor/BXCScoreManage.js",
-	__ctxPath + "/ext3/ux/RowExpander.js"]
+	__ctxPath + "/ext3/ux/RowExpander.js"],  		
+	ModifyScoreManageView: [ __ctxPath + "/js/bandpoor/ModifyScoreManageView.js",
+			__ctxPath + "/js/bandpoor/ModifyScoreManageForm.js" ]
 };

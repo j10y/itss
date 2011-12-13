@@ -196,6 +196,10 @@
 			<result>${successResultValue}</result>
 		</action>
 		
+		<action name="*ModifyScore" class="ModifyScoreManageAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		
 	</package>
 	
 </struts>

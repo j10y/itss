@@ -279,7 +279,7 @@
 			</Item>
 			<Item id="BXCScoreManage" text="可评分备选池查看" iconCls="menu-flowNew" >
 			</Item>
-			<Item id="ModifyScoreManage" text="可评分信息修正" iconCls="menu-flowNew" >
+			<Item id="ModifyScoreManageView" text="可评分信息修正" iconCls="menu-flowNew" >
 			</Item>
 		</Items>
 		<Items id="UnScoreManage" text="可评分管理" iconCls="menu-flowWait" >
