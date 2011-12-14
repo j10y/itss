@@ -337,6 +337,10 @@
 			</Item>
 			<Item id="FloorView" text="楼层管理" iconCls="menu-flowNew" >
 			</Item>
+			<Item id="BpShopinBandView" text="品牌关联管理" iconCls="menu-flowNew" >
+			</Item>
+			<Item id="BpShopinPorClassView" text="品类关联管理" iconCls="menu-flowNew" >
+			</Item>
 		</Items>
 		<Items id="AutoCollectionInfoManage" text="自动采集信息管理" iconCls="menu-flowWait" >
 			<Item id="AutoCollectionInfoView" text="自动采集信息管理" iconCls="menu-flowNew" >
