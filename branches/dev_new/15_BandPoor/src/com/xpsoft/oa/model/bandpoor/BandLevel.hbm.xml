@@ -37,7 +37,22 @@
             access="property"
             column="levelDesc"
         />
-        
+         <property
+            name="startValue"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="startValue"
+        />
+        <property
+            name="endValue"
+            type="java.lang.Double"
+            update="true"
+            insert="true"
+            access="property"
+            column="endValue"
+        />
          <property
             name="flag"
             type="java.lang.Integer"
