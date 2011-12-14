@@ -140,6 +140,16 @@ BusinessAreaView = Ext.extend(Ext.Panel, {
 			text : "删除商圈",
 			handler : this.delBusinessArea
 		}));
+		this.topbar.add(new Ext.Button({
+			text : "批量导入商圈",
+			handler : this.uploadBusinessArea
+		}));
+		this.topbar.add(new Ext.Button({
+			text : "下载商圈数据模板excel文件",
+			handler : function() {
+				window.open(__ctxPath + "/userfiles/dataTemplate/businessAreaTemplate.xls");
+			}
+		}));
 		this.gridPanel = new Ext.grid.GridPanel({
 			id : "BusinessAreaGrid",
 			region : "center",
@@ -211,6 +221,46 @@ BusinessAreaView = Ext.extend(Ext.Panel, {
 		new BusinessAreaForm({
 			businessAreaId : a.data.id
 		}).show();
+	},
+	uploadBusinessArea : function() {
+		var a = App.createUploadDialog({
+			file_cat : "uploadData",
+			callback : function (c) {
+				for (var b = 0; b < c.length; b++) {
+					Ext.Ajax.request({
+						url : __ctxPath + "/bandpoor/uploadBusinessArea.do",
+						params : {
+							filePath : c[b].filepath
+						},
+						success : function(d) {
+							var e = Ext.util.JSON.decode(d.responseText);
+							if(e.flag == "0") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : e.msg,
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							Ext.MessageBox.show({
+								title : "操作信息",
+								msg : "数据导入成功！",
+								buttons : Ext.MessageBox.OK,
+								icon : Ext.MessageBox.INFO
+							});
+							Ext.getCmp("BusinessAreaView").gridPanel.store.reload({
+								params : {
+									start : 0,
+									limit : 25
+								}
+							});
+						}
+					});
+				}
+			}
+		});
+		a.show();
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
