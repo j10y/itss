@@ -94,7 +94,19 @@ NoticeNewsPanelView = Ext.extend(Ext.ux.Portlet, {
 				Ext.getCmp("NoticeNewsPanelView").getUpdater().update(
 						__ctxPath + "/info/displayNoticeNew.do");
 			}
-		} ];
+		} ,
+		{
+			id : "close",
+			handler : function(c, b, a) {
+				Ext.Msg.confirm("提示信息", "确认删除此模块吧？",
+						function(d) {
+							if (d == "yes") {
+								a.ownerCt.remove(a,
+										true);
+							}
+						});
+			}
+		}];
 	}
 });
 MessagePanelView = Ext.extend(Ext.ux.Portlet, {
