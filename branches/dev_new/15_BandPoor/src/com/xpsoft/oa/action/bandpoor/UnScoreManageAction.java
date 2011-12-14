@@ -132,8 +132,9 @@ public class UnScoreManageAction extends BaseAction{
 	}
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
-		filter.addFilter("Q_infoStatus_N_NEQ", "0");
-		filter.addFilter("Q_infoType_N_EQ", "2");
+		filter.addFilter("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE.toString());
+		filter.addFilter("Q_infoStatus_N_NEQ", InfoPoor.STATUS_PASS.toString());
+		filter.addFilter("Q_infoType_N_EQ", InfoPoor.TYPE_UNSCORE.toString());
 		List<InfoPoor> list = this.scoreManageService.getAll(filter);
 
 		Type type = new TypeToken<List<InfoPoor>>() {
@@ -176,7 +177,7 @@ public class UnScoreManageAction extends BaseAction{
 		valmap.put("Q_infoType_N_EQ", InfoPoor.TYPE_UNSCORE+"");
 		valmap.put("Q_saleStoreid.id_L_EQ", infoPoor.getSaleStoreid().getId()+"");
 		valmap.put("Q_bandId.id_L_EQ", infoPoor.getBandId().getId()+"");
-		valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
+		valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_CREATE+"");
 		QueryFilter valfilter = new QueryFilter(valmap);
 		List vallist=scoreManageService.getAll(valfilter);
 		if(vallist.size()>0){
