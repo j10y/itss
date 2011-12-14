@@ -205,7 +205,7 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 							header : "品牌名称",
 							dataIndex : "bandName"
 						},  {
-							header : "主力品类",
+							header : "品类归属",
 							dataIndex : "proClassName"
 						}, {
 							header : "产地",

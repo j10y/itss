@@ -129,7 +129,7 @@ UnScoreManageView = Ext.extend(Ext.Panel, {
 							header : "品牌名称",
 							dataIndex : "bandName"
 						},  {
-							header : "主力品类",
+							header : "品类归属",
 							dataIndex : "proClassName"
 						}, {
 							header : "产地",
@@ -218,7 +218,9 @@ UnScoreManageView = Ext.extend(Ext.Panel, {
 			this.gridPanel.addListener("rowdblclick", function (f, d, g) {
 				f.getSelectionModel().each(function (e) {
 					if (isGranted("_UnScoreManageEdit")) {
-						UnScoreManageView.edit(e.data.id);
+						new UnScoreManageForm({
+							id : e.data.id
+						}).show();
 					}
 				});
 			});
