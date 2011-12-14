@@ -136,7 +136,7 @@ FloorView = Ext.extend(Ext.Panel, {
 			handler : this.delFloor
 		}));
 		this.topbar.add(new Ext.Button({
-			text : "批量导入品牌",
+			text : "批量导入楼层",
 			handler : this.uploadFloor
 		}));
 		this.topbar.add(new Ext.Button({
@@ -217,7 +217,7 @@ FloorView = Ext.extend(Ext.Panel, {
 			floorId : a.data.id
 		}).show();
 	},
-	uploadBand : function() {
+	uploadFloor : function() {
 		var a = App.createUploadDialog({
 			file_cat : "uploadData",
 			callback : function (c) {

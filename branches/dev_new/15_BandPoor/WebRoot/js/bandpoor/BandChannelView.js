@@ -136,7 +136,7 @@ BandChannelView = Ext.extend(Ext.Panel, {
 			handler : this.delBandChannel
 		}));
 		this.topbar.add(new Ext.Button({
-			text : "批量导入品牌",
+			text : "批量导入品牌渠道",
 			handler : this.uploadBandChannel
 		}));
 		this.topbar.add(new Ext.Button({
@@ -217,7 +217,7 @@ BandChannelView = Ext.extend(Ext.Panel, {
 			bandChannelId : a.data.id
 		}).show();
 	},
-	uploadBand : function() {
+	uploadBandChannel : function() {
 		var a = App.createUploadDialog({
 			file_cat : "uploadData",
 			callback : function (c) {

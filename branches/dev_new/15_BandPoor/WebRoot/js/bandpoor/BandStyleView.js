@@ -144,7 +144,7 @@ BandStyleView = Ext.extend(Ext.Panel, {
 			handler : this.delBandStyle
 		}));
 		this.topbar.add(new Ext.Button({
-			text : "批量导入品牌",
+			text : "批量导入品牌风格",
 			handler : this.uploadBandStyle
 		}));
 		this.topbar.add(new Ext.Button({
@@ -225,7 +225,7 @@ BandStyleView = Ext.extend(Ext.Panel, {
 			bandStyleId : a.data.id
 		}).show();
 	},
-	uploadBand : function() {
+	uploadBandStyle : function() {
 		var a = App.createUploadDialog({
 			file_cat : "uploadData",
 			callback : function (c) {

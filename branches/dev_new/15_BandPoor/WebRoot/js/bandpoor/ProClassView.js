@@ -140,10 +140,6 @@ ProClassView = Ext.extend(Ext.Panel, {
 			handler : this.uploadProClass
 		}));
 		this.topbar.add(new Ext.Button({
-			text : "批量导入品牌",
-			handler : this.uploadProClass
-		}));
-		this.topbar.add(new Ext.Button({
 			text : "下载品类数据模板excel文件",
 			handler : function() {
 				window.open(__ctxPath + "/userfiles/dataTemplate/proClassTemplate.xls");

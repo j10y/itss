@@ -136,7 +136,7 @@ MainPriceView = Ext.extend(Ext.Panel, {
 			handler : this.delMainPrice
 		}));
 		this.topbar.add(new Ext.Button({
-			text : "批量导入品牌",
+			text : "批量导入主力价格",
 			handler : this.uploadMainPrice
 		}));
 		this.topbar.add(new Ext.Button({
@@ -217,7 +217,7 @@ MainPriceView = Ext.extend(Ext.Panel, {
 			mainPriceId : a.data.id
 		}).show();
 	},
-	uploadBand : function() {
+	uploadMainPrice : function() {
 		var a = App.createUploadDialog({
 			file_cat : "uploadData",
 			callback : function (c) {
