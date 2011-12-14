@@ -20,7 +20,7 @@ OfficeReadForm = Ext.extend(Ext.Panel, {
 							items : [this.displayPanel,this.formPanel],
 							modal : true,
 							height : 400,
-							width : 600,
+							width : 800,
 //							autoScroll:true,
 							maximizable : true,
 							buttonAlign : 'center',

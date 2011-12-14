@@ -454,6 +454,7 @@ public class ArchivesAction extends BaseAction {
 		}
 		this.archivesService.save(this.archives);
 		
+		Date current = new Date();
 		
 		//发文分发，1市局所有人（市局发文） 2分局指定人
 		//市局部门的的isDist=0
@@ -478,6 +479,7 @@ public class ArchivesAction extends BaseAction {
 				archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
 				archivesDist.setSignUserID(mainDeptUsers.get(i).getUserId());
 				archivesDist.setSignFullname(mainDeptUsers.get(i).getFullname());
+				archivesDist.setSignTime(current);
 				distIds.append(mainDeptUsers.get(i).getUserId()).append(",");
 				this.archivesDistService.save(archivesDist);
 			}
@@ -501,6 +503,7 @@ public class ArchivesAction extends BaseAction {
 						archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
 						archivesDist.setSignUserID(distDeptUsers.get(i).getUserId());
 						archivesDist.setSignFullname(distDeptUsers.get(i).getFullname());
+						archivesDist.setSignTime(current);
 						distIds.append(distDeptUsers.get(i).getUserId()).append(",");
 						this.archivesDistService.save(archivesDist);
 					}
@@ -520,6 +523,7 @@ public class ArchivesAction extends BaseAction {
 							archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
 							archivesDist.setSignUserID(distDeptUsers.get(i).getUserId());
 							archivesDist.setSignFullname(distDeptUsers.get(i).getFullname());
+							archivesDist.setSignTime(current);
 							distIds.append(distDeptUsers.get(i).getUserId()).append(",");
 							this.archivesDistService.save(archivesDist);
 						}
@@ -538,6 +542,7 @@ public class ArchivesAction extends BaseAction {
 					archivesDist.setStatus(ArchivesDist.STATUS_UNSIGNED);
 					archivesDist.setSignUserID(user.getUserId());
 					archivesDist.setSignFullname(user.getFullname());
+					archivesDist.setSignTime(current);
 					distIds.append(user.getUserId()).append(",");
 					this.archivesDistService.save(archivesDist);
 				}

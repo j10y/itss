@@ -19,7 +19,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 					items : [this.displayPanel,this.formPanel],
 					modal : true,
 					height : 380,
-					width : 600,
+					width : 800,
 					maximizable : true,
 					buttonAlign : 'center',
 					buttons : this.buttons

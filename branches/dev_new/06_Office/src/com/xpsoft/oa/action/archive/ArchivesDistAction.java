@@ -9,6 +9,7 @@ import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.model.archive.ArchivesDist;
 import com.xpsoft.oa.service.archive.ArchivesDistService;
 
@@ -56,6 +57,18 @@ public class ArchivesDistAction extends BaseAction {
 		/* 72 */this.jsonString = buff.toString();
 
 		/* 74 */return "success";
+	}
+	
+	public String display() {
+		PagingBean pb = new PagingBean(0, 8);
+		QueryFilter filter = new QueryFilter(getRequest());
+		filter.addFilter("Q_signUserID_L_EQ", ContextUtil
+			.getCurrentUserId().toString());
+		filter.addFilter("Q_status_SN_EQ", "0");
+		List list = this.ArchivesDistService.getAll(filter);
+
+		getRequest().setAttribute("distList", list);
+		return "display";
 	}
 
 	public String multiDel() {

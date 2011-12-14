@@ -25,7 +25,7 @@ ArchivesProofFlowView = Ext.extend(Ext.Panel, {
 						autoScroll : true
 					},
 					width : '95%',
-					height : 500,
+					height : 700,
 					buttons :  [
 								#set ($count=0)
 								#foreach ($v in $nextTrans)

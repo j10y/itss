@@ -253,6 +253,7 @@ ArchivesDistView.detail = function(archivesId,archDistId) {
 			archDistId : archDistId												
 		},
 		success : function() {
+			Ext.getCmp("ArchivesDistView").gridPanel.store.reload();
 		}
 	});
 	Ext.getCmp("ArchivesDistView").gridPanel.store.reload();

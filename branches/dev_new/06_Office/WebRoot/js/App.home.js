@@ -72,6 +72,45 @@ NewsPanelView = Ext.extend(Ext.ux.Portlet, {
 		} ];
 	}
 });
+
+DistArchivesPanelView = Ext.extend(Ext.ux.Portlet, {
+	tools : null,
+	constructor : function(a) {
+		Ext.applyIf(this, a);
+		this.initTool();
+		DistArchivesPanelView.superclass.constructor.call(this, {
+			id : "DistArchivesPanelView",
+			title : "待阅公文",
+			iconCls : "menu-archive-handout",
+			tools : this.tools,
+			autoLoad : {
+				url : __ctxPath + "/archive/displayArchivesDist.do"
+			}
+		});
+	},
+	initTool : function() {
+		this.tools = [ {
+			id : "refresh",
+			handler : function() {
+				Ext.getCmp("DistArchivesPanelView").getUpdater().update(
+						__ctxPath + "/archive/displayArchivesDist.do");
+			}
+		} ,
+		{
+			id : "close",
+			handler : function(c, b, a) {
+				Ext.Msg.confirm("提示信息", "确认删除此模块吧？",
+						function(d) {
+							if (d == "yes") {
+								a.ownerCt.remove(a,
+										true);
+							}
+						});
+			}
+		}];
+	}
+});
+
 NoticeNewsPanelView = Ext.extend(Ext.ux.Portlet, {
 	tools : null,
 	constructor : function(a) {
@@ -570,7 +609,7 @@ PanelSelectorWin = Ext.extend(Ext.Window, {
 			id : "PanelSelectorWin",
 			title : "选择显示模块",
 			layout : "fit",
-			height : 220,
+			height : 225,
 			width : 300,
 			modal : true,
 			defaults : {
@@ -625,6 +664,12 @@ PanelSelectorWin = Ext.extend(Ext.Window, {
 					hideLabel : true,
 					id : "NoticePanelViewCheckBox",
 					name : "NoticePanelView"
+				} , {
+					xtype : "checkbox",
+					boxLabel : "待阅公文",
+					hideLabel : true,
+					id : "DistArchivesPanelViewCheckBox",
+					name : "DistArchivesPanelView"
 				} ]
 			}, {
 				layout : "form",
@@ -702,7 +747,8 @@ PanelSelectorWin = Ext.extend(Ext.Window, {
 								"CalendarPlanPanelView", "DepPlanPanelView",
 								"MyPlanPanelView", "DeskNewsPanelView",
 								"NoticeScollPanelView", "MyDocumentPanelView",
-								"MyMailPanelView", "NoticeNewsPanelView"];
+								"MyMailPanelView", "NoticeNewsPanelView", 
+								"DistArchivesPanelView"];
 						for ( var v = 0; v < array.length; v++) {
 							var check = Ext.getCmp(array[v] + "CheckBox");
 							if (check != null) {
