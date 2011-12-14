@@ -25,4 +25,16 @@ public class SaleStoreServiceImpl extends BaseServiceImpl<SaleStore> implements 
 		}
 		return true;
 	}
+	
+	public boolean multiSave(List<SaleStore> list) {
+		try {
+			for(SaleStore bs : list) {
+				this.save(bs);
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
