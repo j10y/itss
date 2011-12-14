@@ -62,6 +62,10 @@
 	<bean id="floorDao" class="com.xpsoft.oa.dao.bandpoor.impl.FloorDaoImpl" parent="baseDao"/>
 	<bean id="mainPriceDao" class="com.xpsoft.oa.dao.bandpoor.impl.MainPriceDaoImpl" parent="baseDao"/>
 	<bean id="saleStoreDao" class="com.xpsoft.oa.dao.bandpoor.impl.SaleStoreDaoImpl" parent="baseDao"/>
+	<bean id="bpShopinBandDao" class="com.xpsoft.oa.dao.bandpoor.impl.BpShopinBandDaoImpl" parent="baseDao"/>
+	<bean id="bpShopinPorClassDao" class="com.xpsoft.oa.dao.bandpoor.impl.BpShopinPorClassDaoImpl" parent="baseDao"/>
+	<bean id="shopinBandDao" class="com.xpsoft.oa.dao.bandpoor.impl.ShopinBandDaoImpl" parent="baseDao"/>
+	<bean id="shopinProClassDao" class="com.xpsoft.oa.dao.bandpoor.impl.ShopinProClassDaoImpl" parent="baseDao"/>
 	
 	<bean id="pictureOrdocDao" class="com.xpsoft.oa.dao.bandpoor.impl.PictureOrdocDaoImpl" parent="baseDao"/>
 	<bean id="beElectedBandPoorDao" class="com.xpsoft.oa.dao.bandpoor.impl.BeElectedBandPoorDaoImpl" parent="baseDao"/>

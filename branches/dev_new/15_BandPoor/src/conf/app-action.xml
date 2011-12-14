@@ -66,5 +66,9 @@
   <bean id="DxcScoreManageAction" class="com.xpsoft.oa.action.bandpoor.DxcScoreManageAction" scope="prototype"/>
   <bean id="PpcScoreManageAction" class="com.xpsoft.oa.action.bandpoor.PbcScoreManageAction" scope="prototype"/>
   <bean id="ModifyScoreManageAction" class="com.xpsoft.oa.action.bandpoor.ModifyScoreManageAction" scope="prototype"/>
+  <bean id="BpShopinBandAction" class="com.xpsoft.oa.action.bandpoor.BpShopinBandAction" scope="prototype"/>
+  <bean id="BpShopinPorClassAction" class="com.xpsoft.oa.action.bandpoor.BpShopinPorClassAction" scope="prototype"/>
+  <bean id="ShopinBandAction" class="com.xpsoft.oa.action.bandpoor.ShopinBandAction" scope="prototype"/>
+  <bean id="ShopinProClassAction" class="com.xpsoft.oa.action.bandpoor.ShopinProClassAction" scope="prototype"/>
   
 </beans>

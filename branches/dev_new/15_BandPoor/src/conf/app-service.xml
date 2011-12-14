@@ -240,6 +240,18 @@
    	 <bean id="saleStoreService" class="com.xpsoft.oa.service.bandpoor.impl.SaleStoreServiceImpl">
    	 	<constructor-arg index="0" ref="saleStoreDao"/>
    	 </bean>
+   	 <bean id="bpShopinBandService" class="com.xpsoft.oa.service.bandpoor.impl.BpShopinBandServiceImpl">
+   	 	<constructor-arg index="0" ref="bpShopinBandDao"/>
+   	 </bean>
+   	 <bean id="bpShopinPorClassService" class="com.xpsoft.oa.service.bandpoor.impl.BpShopinPorClassServiceImpl">
+   	 	<constructor-arg index="0" ref="bpShopinPorClassDao"/>
+   	 </bean>
+   	 <bean id="shopinBandService" class="com.xpsoft.oa.service.bandpoor.impl.ShopinBandServiceImpl">
+   	 	<constructor-arg index="0" ref="shopinBandDao"/>
+   	 </bean>
+   	 <bean id="shopinProClassService" class="com.xpsoft.oa.service.bandpoor.impl.ShopinProClassServiceImpl">
+   	 	<constructor-arg index="0" ref="shopinProClassDao"/>
+   	 </bean>
    	 
    	  <bean id="pictureOrdocService" class="com.xpsoft.oa.service.bandpoor.impl.PictureOrdocServiceImpl">
    	 	<constructor-arg index="0" ref="pictureOrdocDao"/>
