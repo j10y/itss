@@ -8,7 +8,21 @@ public class BandLevel extends BaseModel{
 	private Long id;
 	private String levelName;
 	private String levelDesc;
+	private Double startValue;
+	public Double getStartValue() {
+		return startValue;
+	}
+	public void setStartValue(Double startValue) {
+		this.startValue = startValue;
+	}
+	private Double endValue;
 	
+	public Double getEndValue() {
+		return endValue;
+	}
+	public void setEndValue(Double endValue) {
+		this.endValue = endValue;
+	}
 	private Integer flag;
 	
 	public Integer getFlag() {
