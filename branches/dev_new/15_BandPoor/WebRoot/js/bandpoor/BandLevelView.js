@@ -67,6 +67,8 @@ BandLevelView = Ext.extend(Ext.Panel, {
 				},
 				"levelName",
 				"levelDesc",
+				"startValue",
+				"endValue",
 				"flag"
 			]
 		});
@@ -112,7 +114,13 @@ BandLevelView = Ext.extend(Ext.Panel, {
 				}, {
 					header : "分类描述",
 					dataIndex : "levelDesc"
+				},  {
+					header : "分数下限",
+					dataIndex : "startValue"
 				}, {
+					header : "分数上限",
+					dataIndex : "endValue"
+				},{
 					header : "状态",
 					dataIndex : "flag",
 					hidden : true

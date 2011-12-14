@@ -42,6 +42,21 @@ BandLevelForm = Ext.extend(Ext.Window, {
 					allowBlank : false,
 					blankText : "品牌池名称不能为空！"
 				}, {
+					fieldLabel : "分数下限",
+					xtype:"numberfield",
+					name : "bandLevel.startValue",
+					id : "startValue",
+					allowBlank : false,
+					blankText : "分数下限不能为空！"
+				}, {
+					fieldLabel : "分数上限",
+					xtype:"numberfield",
+					name : "bandLevel.endValue",
+					id : "endValue",
+					allowBlank : false,
+					blankText : "分数上限不能为空！"
+				},  
+				{
 					fieldLabel : "品牌池描述",
 					name : "bandLevel.levelDesc",
 					id : "levelDesc",
@@ -79,6 +94,17 @@ BandLevelForm = Ext.extend(Ext.Window, {
 	},
 	save : function(a, b) {
 		if(a.getForm().isValid()) {
+		   var ev = Ext.getCmp("endValue").getValue();
+		   var sv = Ext.getCmp("startValue").getValue();
+		   if(ev<sv){
+		   	Ext.MessageBox.show({
+						title : "操作信息",
+						msg : "分数上限小于下限",
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+					return ;
+		   }
 			a.getForm().submit({
 				method : "post",
 				waitMsg : "正在提交数据……",
