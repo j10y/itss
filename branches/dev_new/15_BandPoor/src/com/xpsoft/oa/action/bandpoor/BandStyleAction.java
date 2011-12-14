@@ -136,8 +136,8 @@ public class BandStyleAction extends BaseAction{
 					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据名称为空，请核实！'}";
 					return "success";
 				}
-				if(!queryMap.containsKey(sheet.getCell(2, i).getContents())) {
-					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据所属品类不存在，请核实！'}";
+				if(!pcMap.containsKey(sheet.getCell(2, i).getContents().toString())) {
+					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据所属品类编号【" + sheet.getCell(2, i).getContents() + "】不存在，请核实！'}";
 					return "success";
 				}
 				bs.setStyleNum(sheet.getCell(0, i).getContents());
