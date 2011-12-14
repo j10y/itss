@@ -109,6 +109,29 @@ public class BandAction extends BaseAction {
 		return "success";
 	}
 	
+	public String combo() {
+		String bandName = this.getRequest().getParameter("bandName");
+		String sql = "select id, bandChName, bandEnName from bp_band ";
+		sql += (bandName == null || "".equals(bandName)) ? "" : " where bandChName like '%" + bandName + 
+				"%' or bandEnName like '%" + bandName + "%'"; 
+		List<Map<String, Object>> list = this.bandService.findDataList(sql);
+		StringBuffer buff = new StringBuffer("[");
+		for(Map<String, Object> map : list) {
+			String bandId = map.get("id").toString();
+			String bandChName = map.get("bandChName") == null ? "" : map.get("bandChName").toString();
+			String bandEnName = map.get("bandEnName") == null ? "" : map.get("bandEnName").toString();
+			buff.append("[" + 
+					"'" + bandId + "'," + 
+					"'" + bandChName + "/" + bandEnName + "'],");
+		}
+        if (list.size() > 0) {
+        	buff.deleteCharAt(buff.length() - 1);
+        }
+        buff.append("]");
+        setJsonString(buff.toString());
+		return "success";
+	}
+	
 	public String upload() {
 		String filePath = this.getRequest().getParameter("filePath");
 		List<Band> list = new ArrayList<Band>();
