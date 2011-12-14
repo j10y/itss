@@ -6,6 +6,7 @@ import java.util.Map;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.service.impl.BaseServiceImpl;
 import com.xpsoft.oa.dao.bandpoor.BusinessAreaDao;
+import com.xpsoft.oa.model.bandpoor.Band;
 import com.xpsoft.oa.model.bandpoor.BusinessArea;
 import com.xpsoft.oa.service.bandpoor.BusinessAreaService;
 
@@ -24,5 +25,16 @@ public class BusinessAreaServiceImpl extends BaseServiceImpl<BusinessArea> imple
 			return false;
 		}
 		return true;
+	}
+	public boolean multiSave(List<BusinessArea> list) {
+		try {
+			for(BusinessArea ba : list) {
+				this.save(ba);
+			}
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
