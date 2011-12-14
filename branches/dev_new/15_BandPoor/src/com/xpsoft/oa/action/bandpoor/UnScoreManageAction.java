@@ -177,12 +177,15 @@ public class UnScoreManageAction extends BaseAction{
 		valmap.put("Q_infoType_N_EQ", InfoPoor.TYPE_UNSCORE+"");
 		valmap.put("Q_saleStoreid.id_L_EQ", infoPoor.getSaleStoreid().getId()+"");
 		valmap.put("Q_bandId.id_L_EQ", infoPoor.getBandId().getId()+"");
-		valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_CREATE+"");
+		valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
 		QueryFilter valfilter = new QueryFilter(valmap);
 		List vallist=scoreManageService.getAll(valfilter);
 		if(vallist.size()>0){
 			this.jsonString = "{success:false,msg:'同一商场同一品牌已存在！'}";
 			return "success";
+		}
+		if(infoPoor.getSaleStoreid()!=null&&infoPoor.getSaleStoreid().getId()==null){
+			infoPoor.setSaleStoreid(null);
 		}
 		if(infoPoor.getId()==null){
 			infoPoor.setCreatDate(new Date());
@@ -369,6 +372,7 @@ public class UnScoreManageAction extends BaseAction{
 		QueryFilter filter = new QueryFilter(map);
 		List<SaleStore> list=saleStoreServiece.getAll(filter);
 		StringBuffer sb = new StringBuffer("[");
+		sb.append("['").append("").append("','").append("其他").append("'],");
        for (SaleStore saleStore : list) {
          sb.append("['").append(saleStore.getId()).append("','").append(saleStore.getStoreName()).append("'],");
        }
@@ -406,32 +410,17 @@ public class UnScoreManageAction extends BaseAction{
 			for (String id : ids) {
 				InfoPoor ip=scoreManageService.get(new Long(id));
 				if(status.equals(InfoPoor.STATUS_PASS+"")){
-					Map map = new HashMap();
-					map.put("Q_bandId.id_L_EQ",  ip.getBandId().getId()+"");
-					map.put("Q_status_N_NEQ",  BeElectedBandPoor.STATUS_DELETE+"");
-					QueryFilter filter = new QueryFilter(map);
-					List beElectedBandPoorlist=beElectedBandPoorService.getAll(filter);
-					if(beElectedBandPoorlist==null||beElectedBandPoorlist.size()==0){
-						BeElectedBandPoor beElectedBandPoor=new BeElectedBandPoor();
-						beElectedBandPoor.setBandId(ip.getBandId());
-						beElectedBandPoor.setBandName(ip.getBandName());
-						beElectedBandPoor.setCreatDate(new Date());
-						beElectedBandPoor.setCreateUser(ContextUtil.getCurrentUser());
-						beElectedBandPoor.setInfoType(BeElectedBandPoor.TYPE_SCORE);
-						beElectedBandPoor.setStatus(BeElectedBandPoor.STATUS_CREATE);
-						Set<InfoPoor> ips=beElectedBandPoor.getInfoPoors();
-						ips.add(ip);
-						beElectedBandPoor.setInfoPoors(ips);
-						beElectedBandPoorService.save(beElectedBandPoor);
-					}else{
-						BeElectedBandPoor beElectedBandPoor=(BeElectedBandPoor) beElectedBandPoorlist.get(0);
-						Set<InfoPoor> ips=beElectedBandPoor.getInfoPoors();
-						ips.add(ip);
-						beElectedBandPoor.setInfoPoors(ips);
-						beElectedBandPoor.setModifyDate(new Date());
-						beElectedBandPoor.setModifyUser(ContextUtil.getCurrentUser());
-						beElectedBandPoorService.save(beElectedBandPoor);
-					}
+					BeElectedBandPoor beElectedBandPoor=new BeElectedBandPoor();
+					beElectedBandPoor.setBandId(ip.getBandId());
+					beElectedBandPoor.setBandName(ip.getBandName());
+					beElectedBandPoor.setCreatDate(new Date());
+					beElectedBandPoor.setCreateUser(ContextUtil.getCurrentUser());
+					beElectedBandPoor.setInfoType(BeElectedBandPoor.TYPE_UNSCORE);
+					beElectedBandPoor.setStatus(BeElectedBandPoor.STATUS_CREATE);
+					Set<InfoPoor> ips=beElectedBandPoor.getInfoPoors();
+					ips.add(ip);
+					beElectedBandPoor.setInfoPoors(ips);
+					beElectedBandPoorService.save(beElectedBandPoor);
 				}
 				ip.setInfoStatus(Integer.parseInt(status));
 				scoreManageService.save(ip);

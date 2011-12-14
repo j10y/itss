@@ -386,6 +386,7 @@ public class ScoreManageAction extends BaseAction{
 		QueryFilter filter = new QueryFilter(map);
 		List<SaleStore> list=saleStoreServiece.getAll(filter);
 		StringBuffer sb = new StringBuffer("[");
+		sb.append("['").append("").append("','").append("其他").append("'],");
        for (SaleStore saleStore : list) {
          sb.append("['").append(saleStore.getId()).append("','").append(saleStore.getStoreName()).append("'],");
        }

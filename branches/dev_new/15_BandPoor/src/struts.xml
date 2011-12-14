@@ -215,7 +215,9 @@
 		<action name="*ShopinPC" class="ShopinProClassAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
-		
+		<action name="*AutoCollenction" class="AutoCollenctionInfoAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	
 </struts>
