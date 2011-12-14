@@ -203,6 +203,19 @@
 			<result>${successResultValue}</result>
 		</action>
 		
+		<action name="*BpShopinBD" class="BpShopinBandAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*BpShopinPC" class="BpShopinPorClassAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*ShopinBD" class="ShopinBandAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		<action name="*ShopinPC" class="ShopinProClassAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
+		
 	</package>
 	
 </struts>
