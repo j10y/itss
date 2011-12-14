@@ -183,7 +183,7 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 						fields : [{
 								name : "id",
 								type : "int"
-							}, "bandName", "floorNumName", "proClassName","bandStyleName","mainPriceName","saleStoreName","bandBusinessAreaName","bandDesc","infoStatus"]
+							}, "bandName", "proClassName", "companyAddress", "bandChannelName", "bandDesc", "companyNature", "infoStatus"]
 					}),
 					remoteSort : true
 				});
@@ -204,35 +204,22 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 						}, {
 							header : "品牌名称",
 							dataIndex : "bandName"
-						}, {
-							header : "楼层",
-							dataIndex : "floorNumName"
-						}, {
-							header : "品类",
+						},  {
+							header : "主力品类",
 							dataIndex : "proClassName"
 						}, {
-							header : "品牌风格",
-							dataIndex : "bandStyleName"
+							header : "产地",
+							dataIndex : "companyAddress"
 						}, {
-							header : "主力价格",
-							dataIndex : "mainPriceName"
-						},{
-							header : "销售场所",
-							dataIndex : "saleStoreName"
-						},{
-							header : "商圈",
-							dataIndex : "bandBusinessAreaName"
-						},{
-							header : "备注",
-							dataIndex : "bandDesc",
-							renderer : function (d) {
-								if (d == null || d == "" || d == "undefined") {
-									return "无";
-								} else {
-									return d;
-								}
-							}
-						},{
+							header : "销售渠道",
+							dataIndex : "bandChannelName"
+						}, {
+							header : "品牌介绍",
+							dataIndex : "bandDesc"
+						}, {
+							header : "公司性质",
+							dataIndex : "companyNature"
+						},  {
 							header : "状态",
 							dataIndex : "infoStatus",
 							renderer : function (d) {
