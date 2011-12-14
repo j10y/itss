@@ -152,5 +152,9 @@ App.importJs = {
 	       			__ctxPath + "/js/bandpoor/BandForm.js"],
 	ApplyUnScoreManage:[__ctxPath + "/js/bandpoor/ApplyUnScoreManage.js"],
 	AutoCollectionInfoView:[ __ctxPath + "/js/bandpoor/AutoCollectionInfoView.js",
-	__ctxPath + "/ext3/ux/RowExpander.js"]
+	__ctxPath + "/ext3/ux/RowExpander.js"],
+	BpShopinBandView : [__ctxPath + "/js/bandpoor/BpShopinBandView.js",
+	       __ctxPath + "/js/bandpoor/BpShopinBandForm.js"],
+	BpShopinPorClassView : [__ctxPath + "/js/bandpoor/BpShopinPorClassView.js",
+	       __ctxPath + "/js/bandpoor/BpShopinPorClassForm.js"]
 };
