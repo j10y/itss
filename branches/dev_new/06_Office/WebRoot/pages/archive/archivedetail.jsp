@@ -91,5 +91,16 @@
     </td>
   </tr>
   -->
+  <tr>
+     <th width="15%">领导意见</th>
+     <td colspan="5">
+       <ul>
+       <c:forEach var="leader" items="${arch.leaders}">
+           <li>${leader.leaderOpinion}&nbsp;&nbsp; ${leader.leaderName}&nbsp;&nbsp;<fmt:formatDate
+			value="${leader.createtime}" pattern="yyy-MM-dd HH:mm:ss" /></li>
+       </c:forEach>
+       </ul>
+    </td>
+  </tr>
 </table>
 
