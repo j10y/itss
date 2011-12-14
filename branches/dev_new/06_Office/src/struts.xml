@@ -315,6 +315,7 @@
 		</action>
 		<action name="*ArchivesDist" class="ArchivesDistAction" method="{1}">
 			<result>${successResultValue}</result>
+			<result name="display">/pages/indexpages/distListPage.jsp</result>
 		</action>
 		<action name="*ArchivesDoc" class="ArchivesDocAction" method="{1}">
 			<result>${successResultValue}</result>
