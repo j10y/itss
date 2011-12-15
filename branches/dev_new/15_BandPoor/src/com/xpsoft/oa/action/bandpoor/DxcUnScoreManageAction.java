@@ -31,11 +31,11 @@ public class DxcUnScoreManageAction extends BaseAction{
 	BandPoorService bandPoorService;
 	
 	public String list() {
-		String bandId = this.getRequest().getParameter("bandId") == null ? "" : this.getRequest().getParameter("bandId");
+		String bandName = this.getRequest().getParameter("bandName") == null ? "" : this.getRequest().getParameter("bandName");
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		String sql1 = "select count(*) as total from bp_beelectedbandpoor where " +
 				"bp_beelectedbandpoor.status <> 0 and bp_beelectedbandpoor.infoType = 2";
-		sql1 += "".equals(bandId) ? "" : " and bp_beelectedbandpoor.bandId = " + bandId;
+		sql1 += "".equals(bandName) ? "" : " and bp_beelectedbandpoor.bandName like '%" + bandName + "%'";
 		List<Map<String, Object>> mapList1 = this.bandPoorService.findDataList(sql1);
 		String total = mapList1.get(0).get("total").toString();
 		String sql2 = "select bp_beelectedbandpoor.id as id, bp_beelectedbandpoor.bandName as bandName, " +
@@ -44,15 +44,14 @@ public class DxcUnScoreManageAction extends BaseAction{
 				"bp_saleassessment.bandRankValue as bandRankValue, bp_saleassessment.selBandRankValue as selBandRankValue, " +
 				"bp_saleassessment.status as status, bp_infopoor.saleStoreName as saleStoreName, " +
 				"bp_infopoor.saleSroteDesc as saleStoreDesc, bp_infopoor.mainPriceName as mainPriceName, " +
-				"bp_infopoor.proClassName as proClassName, bp_infopoor.bandStyleName as bandStyleName, " +
-				"bp_infopoor.bandBusinessAreaName as bandBusinessAreaName from " +
+				"bp_infopoor.proClassName as proClassName from " +
 				"app_user, bp_info_beelebandpoor, bp_infopoor, bp_beelectedbandpoor left join " +
 				"bp_saleassessment on bp_beelectedbandpoor.id = bp_saleassessment.beElectedBPId where " +
 				"bp_beelectedbandpoor.status <> 0 and bp_beelectedbandpoor.infoType = 2 and " +
 				"bp_beelectedbandpoor.createUser = app_user.userId and " +
 				"bp_beelectedbandpoor.id = bp_info_beelebandpoor.beElectedBPId and " +
 				"bp_info_beelebandpoor.infoBPId = bp_infopoor.id";
-		sql2 += "".equals(bandId) ? "" : " and bp_beelectedbandpoor.bandId = " + bandId;
+		sql2 += "".equals(bandName) ? "" : " and bp_beelectedbandpoor.bandName like '%" + bandName + "%'";
 		sql2 += " limit " + filter.getPagingBean().getFirstResult() + ", " + filter.getPagingBean().getPageSize();
 		List<Map<String, Object>> mapList2 = this.bandPoorService.findDataList(sql2);
 		
@@ -63,9 +62,7 @@ public class DxcUnScoreManageAction extends BaseAction{
 			content.append("<tr >");
 			content.append("<th>销售场所</th>");
 			content.append("<th>销售场所描述</th>");
-			content.append("<th>商圈</th>");
 			content.append("<th>品类</th>");
-			content.append("<th>风格</th>");
 			content.append("<th>主力价格</th>");
 			content.append("</tr>");
 			content.append("<tr>");
@@ -76,13 +73,7 @@ public class DxcUnScoreManageAction extends BaseAction{
 			content.append(map.get("saleStoreDesc"));
 			content.append("</td>");
 			content.append("<td>");
-			content.append(map.get("bandBusinessAreaName"));
-			content.append("</td>");
-			content.append("<td>");
 			content.append(map.get("proClassName"));
-			content.append("</td>");
-			content.append("<td>");
-			content.append(map.get("bandStyleName"));
 			content.append("</td>");
 			content.append("<td>");
 			content.append(map.get("mainPriceName"));

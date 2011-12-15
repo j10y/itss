@@ -214,28 +214,30 @@ public class PbcScoreManageAction extends BaseAction{
 	}
 	
 	public String unScorelist() {
-		String bandId = this.getRequest().getParameter("bandId") == null ? "" : this.getRequest().getParameter("bandId");
+		String bandName = this.getRequest().getParameter("bandName") == null ? "" : this.getRequest().getParameter("bandName");
+		String bandPoorStatus = this.getRequest().getParameter("bandPoorStatus") == null ? "" : this.getRequest().getParameter("bandPoorStatus");
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		String sql1 = "select count(*) as total from bp_bandpoor where " +
 				"bp_bandpoor.status <> 0 and bp_bandpoor.infoType = 2";
-		sql1 += "".equals(bandId) ? "" : " and bp_bandpoor.bandId = " + bandId;
+		sql1 += "".equals(bandName) ? "" : " and bp_bandpoor.bandName like '%" + bandName + "%'";
+		sql1 += "".equals(bandPoorStatus) ? "" : " and bp_bandpoor.bandPoorStatus = " + bandPoorStatus;
 		List<Map<String, Object>> mapList1 = this.bandPoorService.findDataList(sql1);
 		String total = mapList1.get(0).get("total").toString();
-		String sql2 = "select bp_bandpoor.id as id, bp_bandpoor.bandName as bandName, " +
+		String sql2 = "select bp_bandpoor.id as id, bp_bandpoor.bandName as bandName, bp_bandpoor.bandPoorStatus as bandPoorStatus, " +
 				"bp_bandpoor.creatDate as createDate, app_user.fullname as createUser, " +
 				"bp_saleassessmentforbp.targetValue as targetValue, bp_saleassessmentforbp.requireValue as requireValue, " +
 				"bp_saleassessmentforbp.bandRankValue as bandRankValue, bp_saleassessmentforbp.selBandRankValue as selBandRankValue, " +
 				"bp_saleassessmentforbp.status as status, bp_infopoor.saleStoreName as saleStoreName, " +
 				"bp_infopoor.saleSroteDesc as saleStoreDesc, bp_infopoor.mainPriceName as mainPriceName, " +
-				"bp_infopoor.proClassName as proClassName, bp_infopoor.bandStyleName as bandStyleName, " +
-				"bp_infopoor.bandBusinessAreaName as bandBusinessAreaName from " +
+				"bp_infopoor.proClassName as proClassName from " +
 				"app_user, bp_info_bandpoor, bp_infopoor, bp_bandpoor left join " +
 				"bp_saleassessmentforbp on bp_bandpoor.id = bp_saleassessmentforbp.BPId where " +
 				"bp_bandpoor.status <> 0 and bp_bandpoor.infoType = 2 and " +
 				"bp_bandpoor.createUser = app_user.userId and " +
 				"bp_bandpoor.id = bp_info_bandpoor.bandPoorId and " +
 				"bp_info_bandpoor.infoBPId = bp_infopoor.id";
-		sql2 += "".equals(bandId) ? "" : " and bp_bandpoor.bandId = " + bandId;
+		sql2 += "".equals(bandName) ? "" : " and bp_bandpoor.bandName like '%" + bandName + "%'";
+		sql2 += "".equals(bandPoorStatus) ? "" : " and bp_bandpoor.bandPoorStatus = " + bandPoorStatus;
 		sql2 += " limit " + filter.getPagingBean().getFirstResult() + ", " + filter.getPagingBean().getPageSize();
 		List<Map<String, Object>> mapList2 = this.bandPoorService.findDataList(sql2);
 		
@@ -246,9 +248,7 @@ public class PbcScoreManageAction extends BaseAction{
 			content.append("<tr >");
 			content.append("<th>销售场所</th>");
 			content.append("<th>销售场所描述</th>");
-			content.append("<th>商圈</th>");
 			content.append("<th>品类</th>");
-			content.append("<th>风格</th>");
 			content.append("<th>主力价格</th>");
 			content.append("</tr>");
 			content.append("<tr>");
@@ -259,13 +259,7 @@ public class PbcScoreManageAction extends BaseAction{
 			content.append(map.get("saleStoreDesc"));
 			content.append("</td>");
 			content.append("<td>");
-			content.append(map.get("bandBusinessAreaName"));
-			content.append("</td>");
-			content.append("<td>");
 			content.append(map.get("proClassName"));
-			content.append("</td>");
-			content.append("<td>");
-			content.append(map.get("bandStyleName"));
 			content.append("</td>");
 			content.append("<td>");
 			content.append(map.get("mainPriceName"));
@@ -274,6 +268,7 @@ public class PbcScoreManageAction extends BaseAction{
 			content.append("</table>");
 			buff.append("{'id':'" + map.get("id").toString() + "'")
 					.append(",'bandName':'" + map.get("bandName").toString() + "'")
+					.append(",'bandPoorStatus':'" + map.get("bandPoorStatus") + "'")
 					.append(",'targetValue':'" + (map.get("targetValue") == null ? "" : map.get("targetValue").toString()) + "'")
 					.append(",'requireValue':'" + (map.get("requireValue") == null ? "" : map.get("requireValue")) + "'")
 					.append(",'bandRankValue':'" + (map.get("bandRankValue") == null ? "" : map.get("bandRankValue")) + "'")
