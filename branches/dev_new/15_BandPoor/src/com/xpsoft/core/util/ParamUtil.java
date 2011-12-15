@@ -25,6 +25,8 @@
 /* 29 */         value = new BigDecimal(paramValue);
 /* 30 */       } else if ("FT".equals(type)) {
 /* 31 */         value = new Float(paramValue);
+/* 32 */       } else if ("DB".equals(type)) {
+/* 31 */         value = new Double(paramValue);
 /* 32 */       } else if ("SN".equals(type)) {
 /* 33 */         value = new Short(paramValue);
 /* 34 */       } else if ("D".equals(type)) {

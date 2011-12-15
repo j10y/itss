@@ -15,10 +15,12 @@ import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.bandpoor.BandLevel;
 import com.xpsoft.oa.model.bandpoor.BandPoor;
 import com.xpsoft.oa.model.bandpoor.BeElectedBandPoor;
 import com.xpsoft.oa.model.bandpoor.InfoPoor;
 import com.xpsoft.oa.model.bandpoor.PictureOrdoc;
+import com.xpsoft.oa.service.bandpoor.BandLevelService;
 import com.xpsoft.oa.service.bandpoor.BandPoorService;
 import com.xpsoft.oa.service.bandpoor.BeElectedBandPoorService;
 
@@ -28,7 +30,8 @@ public class DxcScoreManageAction extends BaseAction{
 	@Resource
 	BandPoorService bandPoorService;
 	
-	
+	@Resource
+	private BandLevelService bandLevelService;
 	
 	public String list(){
 		QueryFilter filter = new QueryFilter(getRequest());
@@ -174,6 +177,16 @@ public class DxcScoreManageAction extends BaseAction{
 				}
 				bp.setInfoPoors(bandpoors);
 				bp.setBandRealScore(scoreall);
+				
+				Map levelmap=new HashMap();
+				QueryFilter levelfilter = new QueryFilter(levelmap);
+				levelfilter.addFilter("Q_startValue_DB_LE", scoreall+"");
+				levelfilter.addFilter("Q_endValue_DB_GT", scoreall+"");
+				List<BandLevel> levellist=bandLevelService.getAll(levelfilter);
+				if(levellist.size()>0){
+					BandLevel bandLevel=levellist.get(0);
+					bp.setBandLevel(bandLevel);
+				}
 				if(scoreall>=bbp.getBandScore()){
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_YYC);
 				}else{
@@ -197,6 +210,15 @@ public class DxcScoreManageAction extends BaseAction{
 				}
 				bp.setInfoPoors(bandpoors);
 				bp.setBandRealScore(scoreall);
+				Map levelmap=new HashMap();
+				QueryFilter levelfilter = new QueryFilter(levelmap);
+				levelfilter.addFilter("Q_startValue_DB_LE", scoreall+"");
+				levelfilter.addFilter("Q_endValue_DB_GT", scoreall+"");
+				List<BandLevel> levellist=bandLevelService.getAll(levelfilter);
+				if(levellist.size()>0){
+					BandLevel bandLevel=levellist.get(0);
+					bp.setBandLevel(bandLevel);
+				}
 				if(scoreall>=bbp.getBandScore()){
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_YYC);
 				}else{

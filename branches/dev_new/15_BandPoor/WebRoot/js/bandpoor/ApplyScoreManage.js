@@ -146,7 +146,7 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 								}
 							}
 						},{
-							text : "品牌风格"
+							text : "信息状态"
 						},{
 							width:120,
 							name : "ApplyScoreManageSearchFormStatus",
