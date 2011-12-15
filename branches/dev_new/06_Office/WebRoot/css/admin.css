@@ -1654,6 +1654,39 @@ li .right {
 	height: 16px;
 }
 
+.distList {
+	border: 0 dashed #c7e3fa;
+	width: 100%;
+}
+
+.distList tr {
+	border: 0 dashed #c7e3fa;
+}
+
+.distList tr td {
+	height: 28px;
+	border: none;
+	border-buttom: 1px dashed #c7e3fa;
+	border-top: 1px dashed #c7e3fa;
+	color: red;
+}
+
+.distList tr td a {
+	text-decoration: none;
+	overflow: hidden;
+	color: blue;
+}
+
+.distList tr td a:hover {
+	color: #25e3fa;
+}
+
+.distList tr td img {
+	border: 0;
+	width: 16px;
+	height: 16px;
+}
+
 .moreDiv {
 	width: 100%;
 }
