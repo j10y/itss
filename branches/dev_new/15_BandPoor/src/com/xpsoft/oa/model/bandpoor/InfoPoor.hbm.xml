@@ -297,6 +297,24 @@
 		>	
 		   <column name="creatUser" />
 		</many-to-one>
+		
+		<property
+            name="mainPriceStart"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="mainPriceStart"
+        />
+        
+        <property
+            name="mainPriceEnd"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="mainPriceEnd"
+        />
         
     </class>
 </hibernate-mapping>

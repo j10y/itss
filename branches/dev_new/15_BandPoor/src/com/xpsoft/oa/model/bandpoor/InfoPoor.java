@@ -81,6 +81,10 @@ public class InfoPoor extends BaseModel{
 	private Date creatDate;
 	
 	private AppUser creatUser;
+	
+	private Long mainPriceStart;//主力价格起始值
+	
+	private Long mainPriceEnd;//主力价格终止值
 
 	public Long getId() {
 		return id;
@@ -582,6 +586,22 @@ public class InfoPoor extends BaseModel{
 		} else if (!webSite.equals(other.webSite))
 			return false;
 		return true;
+	}
+
+	public Long getMainPriceStart() {
+		return mainPriceStart;
+	}
+
+	public void setMainPriceStart(Long mainPriceStart) {
+		this.mainPriceStart = mainPriceStart;
+	}
+
+	public Long getMainPriceEnd() {
+		return mainPriceEnd;
+	}
+
+	public void setMainPriceEnd(Long mainPriceEnd) {
+		this.mainPriceEnd = mainPriceEnd;
 	}
 
 	
