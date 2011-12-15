@@ -6,6 +6,10 @@ import com.xpsoft.core.model.BaseModel;
 import com.xpsoft.oa.model.system.AppUser;
 
 public class SaleAssessmentForBP extends BaseModel{
+	public final static Integer DELETE = new Integer(0);//删除
+	public final static Integer CREATE = new Integer(1);//新建
+	public final static Integer PASS = new Integer(2);//达成通过
+	public final static Integer UNPASS = new Integer(3);//未达成
 	
 	private Long id;
 	private BandPoor bpId;
@@ -14,6 +18,8 @@ public class SaleAssessmentForBP extends BaseModel{
 	private Integer status;
 	private Date createDate;
 	private AppUser createUser;
+	private Integer bandRankValue;
+	private Integer selBandRankValue;
 	public Long getId() {
 		return id;
 	}
@@ -118,6 +124,18 @@ public class SaleAssessmentForBP extends BaseModel{
 		} else if (!targetValue.equals(other.targetValue))
 			return false;
 		return true;
+	}
+	public Integer getBandRankValue() {
+		return bandRankValue;
+	}
+	public void setBandRankValue(Integer bandRankValue) {
+		this.bandRankValue = bandRankValue;
+	}
+	public Integer getSelBandRankValue() {
+		return selBandRankValue;
+	}
+	public void setSelBandRankValue(Integer selBandRankValue) {
+		this.selBandRankValue = selBandRankValue;
 	}
 	
 }

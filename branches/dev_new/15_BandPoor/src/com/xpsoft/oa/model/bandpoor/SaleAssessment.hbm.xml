@@ -65,6 +65,24 @@
             column="createDate"
         />
         
+        <property
+            name="bandRankValue"
+            type="integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="bandRankValue"
+        />
+        
+        <property
+            name="selBandRankValue"
+            type="integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="selBandRankValue"
+        />
+        
         <many-to-one
 			name="createUser"
 			class="com.xpsoft.oa.model.system.AppUser"
