@@ -34,7 +34,7 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 					defaultType : "textfield",
 					items : [{
 							name : "infoPoor.id",
-							id : "infoPoor.id",
+							id : "infoPoorModify.id",
 							xtype : "hidden",
 							value : this.id == null ? "" : this.id
 						}, {
@@ -53,54 +53,68 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 											style : "padding-left:0px;",
 											items : [{
 													name : "infoPoor.bandId.id",
-													id : "infoPoor.bandId",
+													id : "infoPoorModify.bandId",
 													xtype : "hidden"
 												}, {
-													fieldLabel : "品牌名称",
-													name : "infoPoor.bandName",
-													id : "infoPoor.bandName",
-													maxHeight : 200,
-													xtype : "combo",
-													mode : "local",
-													editable : true,
-													allowBlank : false,
-													triggerAction : "all",
-													valueField : "fromBandId",
-													displayField : "fromBandName",
-													store : new Ext.data.SimpleStore({
-														url : __ctxPath
-														 + "/bandpoor/getBandsScoreManage.do",
-														fields : [
-															"fromBandId",
-															"fromBandName"]
-													}),
-													listeners : {
-														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.bandName").getStore();
-															if (a.getCount() <= 0) {
+													xtype : 'container',
+													layout : 'hbox',
+													style : "margin-bottom:5px",
+													items:[{
+															xtype : 'label',
+															text : '品牌名称:',
+															width : 85
+														},{
+														fieldLabel : "品牌名称",
+														name : "infoPoor.bandName",
+														id : "infoPoorModify.bandName",
+														maxHeight : 200,
+														xtype : "combo",
+														mode : "local",
+														editable : true,
+														allowBlank : false,
+														triggerAction : "all",
+														valueField : "fromBandId",
+														displayField : "fromBandName",
+														store : new Ext.data.SimpleStore({
+															url : __ctxPath
+															 + "/bandpoor/getAllBandsScoreManage.do",
+															fields : [
+																"fromBandId",
+																"fromBandName"]
+														}),
+														listeners : {
+															focus : function (b) {
+																var a = Ext.getCmp("infoPoorModify.bandName").getStore();
 																Ext.Ajax.request({
-																	url : __ctxPath + "/bandpoor/getBandsScoreManage.do",
+																	url : __ctxPath + "/bandpoor/getAllBandsScoreManage.do",
 																	method : "post",
 																	success : function (d) {
 																		var c = Ext.util.JSON.decode(d.responseText);
 																		a.loadData(c);
 																	}
 																});
+															},
+															select:function(e,c,d){
+																var bandId=Ext.getCmp("infoPoorModify.bandName").getValue();
+																Ext.getCmp("infoPoorModify.bandId").setValue(bandId);
 															}
-														},
-														select:function(e,c,d){
-															var bandId=Ext.getCmp("infoPoor.bandName").getValue();
-															Ext.getCmp("infoPoor.bandId").setValue(bandId);
 														}
-													}
+													}, {
+														xtype:'button',
+														text : '添加',
+														handler : function(){
+															new BandForm({bandStatus:0,lockBandStatus:true}).show();
+														}
+													}]
+													
 												}, {
 													name : "infoPoor.floorNumId.id",
-													id : "infoPoor.floorNumId",
+													id : "infoPoorModify.floorNumId",
 													xtype : "hidden"
 												}, {
 													fieldLabel : "楼层",
 													name : "infoPoor.floorNumName",
-													id : "infoPoor.floorNumName",
+													id : "infoPoorModify.floorNumName",
 													maxHeight : 200,
 													xtype : "combo",
 													mode : "local",
@@ -118,7 +132,7 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 													}),
 													listeners : {
 														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.floorNumName").getStore();
+															var a = Ext.getCmp("infoPoorModify.floorNumName").getStore();
 															if (a.getCount() <= 0) {
 																Ext.Ajax.request({
 																	url : __ctxPath + "/bandpoor/getFloorScoreManage.do",
@@ -131,60 +145,47 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 															}
 														},
 														select:function(e,c,d){
-															var floorNumId=Ext.getCmp("infoPoor.floorNumName").getValue();
-															Ext.getCmp("infoPoor.floorNumId").setValue(floorNumId);
+															var floorNumId=Ext.getCmp("infoPoorModify.floorNumName").getValue();
+															Ext.getCmp("infoPoorModify.floorNumId").setValue(floorNumId);
 														}
 													}
 												}, {
-													name : "infoPoor.mainPriceId.id",
-													id : "infoPoor.mainPriceId",
-													xtype : "hidden"
-												}, {
-													fieldLabel : "主力价格带",
-													name : "infoPoor.mainPriceName",
-													id : "infoPoor.mainPriceName",
-													maxHeight : 200,
-													xtype : "combo",
-													mode : "local",
-													editable : true,
-													allowBlank : false,
-													triggerAction : "all",
-													valueField : "mainPriceId",
-													displayField : "mainPriceName",
-													store : new Ext.data.SimpleStore({
-														url : __ctxPath
-														 + "/bandpoor/getMainPriceScoreManage.do",
-														fields : [
-															"mainPriceId",
-															"mainPriceName"]
-													}),
-													listeners : {
-														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.mainPriceName").getStore();
-															if (a.getCount() <= 0) {
-																Ext.Ajax.request({
-																	url : __ctxPath + "/bandpoor/getMainPriceScoreManage.do",
-																	method : "post",
-																	success : function (d) {
-																		var c = Ext.util.JSON.decode(d.responseText);
-																		a.loadData(c);
-																	}
-																});
-															}
-														},
-														select:function(e,c,d){
-															var mainPriceId=Ext.getCmp("infoPoor.mainPriceName").getValue();
-															Ext.getCmp("infoPoor.mainPriceId").setValue(mainPriceId);
+													xtype : "container",
+													layout : 'hbox',
+													style : "margin-bottom:5px",
+													items : [
+														{
+															xtype : "label",
+															text : "主力价格段：",
+															width : 85
+														}, {
+															name : "infoPoor.mainPriceStart",
+															id : "infoPoorModify.mainPriceStart",
+															xtype : "numberfield",
+															width : 60
+														}, {
+															xtype : "label",
+															text : "~",
+															width : 10
+														}, {
+															name : "infoPoor.mainPriceEnd",
+															id : "infoPoorModify.mainPriceEnd",
+															xtype : "numberfield",
+															width : 60
+														}, {
+															xtype : "label",
+															text : "元",
+															width : 10
 														}
-													}
+													]
 												}, {
 													name : "infoPoor.saleStoreid.id",
-													id : "infoPoor.saleStoreid",
+													id : "infoPoorModify.saleStoreid",
 													xtype : "hidden"
 												}, {
 													fieldLabel : "销售场所",
 													name : "infoPoor.saleStoreName",
-													id : "infoPoor.saleStoreName",
+													id : "infoPoorModify.saleStoreName",
 													maxHeight : 200,
 													xtype : "combo",
 													mode : "local",
@@ -202,7 +203,7 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 													}),
 													listeners : {
 														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.saleStoreName").getStore();
+															var a = Ext.getCmp("infoPoorModify.saleStoreName").getStore();
 															if (a.getCount() <= 0) {
 																Ext.Ajax.request({
 																	url : __ctxPath + "/bandpoor/getSaleStoreScoreManage.do",
@@ -215,18 +216,18 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 															}
 														},
 														select:function(e,c,d){
-															var saleStoreid=Ext.getCmp("infoPoor.saleStoreName").getValue();
-															Ext.getCmp("infoPoor.saleStoreid").setValue(saleStoreid);
+															var saleStoreid=Ext.getCmp("infoPoorModify.saleStoreName").getValue();
+															Ext.getCmp("infoPoorModify.saleStoreid").setValue(saleStoreid);
 														}
 													}
 												}, {
 													name : "infoPoor.bandBusinessAreaId.id",
-													id : "infoPoor.bandBusinessAreaId",
+													id : "infoPoorModify.bandBusinessAreaId",
 													xtype : "hidden"
 												}, {
 													fieldLabel : "商圈",
 													name : "infoPoor.bandBusinessAreaName",
-													id : "infoPoor.bandBusinessAreaName",
+													id : "infoPoorModify.bandBusinessAreaName",
 													maxHeight : 200,
 													xtype : "combo",
 													mode : "local",
@@ -244,11 +245,11 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 													}),
 													listeners : {
 														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.saleStoreName").getValue();
+															var a = Ext.getCmp("infoPoorModify.saleStoreName").getValue();
 															if (a != null
 																 && a != ""
 																 && a != "undefined") {
-																Ext.getCmp("infoPoor.bandBusinessAreaName").getStore().reload({
+																Ext.getCmp("infoPoorModify.bandBusinessAreaName").getStore().reload({
 																	params : {
 																		saleStoreid : a
 																	}
@@ -261,8 +262,8 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 															}
 														},
 														select:function(e,c,d){
-															var bandBusinessAreaId=Ext.getCmp("infoPoor.bandBusinessAreaName").getValue();
-															Ext.getCmp("infoPoor.bandBusinessAreaId").setValue(bandBusinessAreaId);
+															var bandBusinessAreaId=Ext.getCmp("infoPoorModify.bandBusinessAreaName").getValue();
+															Ext.getCmp("infoPoorModify.bandBusinessAreaId").setValue(bandBusinessAreaId);
 														}
 													}
 												}
@@ -274,12 +275,12 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 											style : "padding-left:0px;",
 											items : [{
 													name : "infoPoor.proClassId.id",
-													id : "infoPoor.proClassId",
+													id : "infoPoorModify.proClassId",
 													xtype : "hidden"
 												}, {
 													fieldLabel : "主力品类",
 													name : "infoPoor.proClassName",
-													id : "infoPoor.proClassName",
+													id : "infoPoorModify.proClassName",
 													maxHeight : 200,
 													xtype : "combo",
 													mode : "local",
@@ -297,7 +298,7 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 													}),
 													listeners : {
 														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.proClassName").getStore();
+															var a = Ext.getCmp("infoPoorModify.proClassName").getStore();
 															if (a.getCount() <= 0) {
 																Ext.Ajax.request({
 																	url : __ctxPath + "/bandpoor/getProClassScoreManage.do",
@@ -310,18 +311,18 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 															}
 														},
 														select:function(e,c,d){
-															var proClassId=Ext.getCmp("infoPoor.proClassName").getValue();
-															Ext.getCmp("infoPoor.proClassId").setValue(proClassId);
+															var proClassId=Ext.getCmp("infoPoorModify.proClassName").getValue();
+															Ext.getCmp("infoPoorModify.proClassId").setValue(proClassId);
 														}
 													}
 												}, {
 													name : "infoPoor.bandStyleId.id",
-													id : "infoPoor.bandStyleId",
+													id : "infoPoorModify.bandStyleId",
 													xtype : "hidden"
 												}, {
 													fieldLabel : "品牌风格",
 													name : "infoPoor.bandStyleName",
-													id : "infoPoor.bandStyleName",
+													id : "infoPoorModify.bandStyleName",
 													maxHeight : 200,
 													xtype : "combo",
 													mode : "local",
@@ -339,11 +340,11 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 													}),
 													listeners : {
 														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.proClassName").getValue();
+															var a = Ext.getCmp("infoPoorModify.proClassName").getValue();
 															if (a != null
 																 && a != ""
 																 && a != "undefined") {
-																Ext.getCmp("infoPoor.bandStyleName").getStore().reload({
+																Ext.getCmp("infoPoorModify.bandStyleName").getStore().reload({
 																	params : {
 																		proClassId : a
 																	}
@@ -356,18 +357,18 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 															}
 														},
 														select:function(e,c,d){
-															var bandStyleId=Ext.getCmp("infoPoor.bandStyleName").getValue();
-															Ext.getCmp("infoPoor.bandStyleId").setValue(bandStyleId);
+															var bandStyleId=Ext.getCmp("infoPoorModify.bandStyleName").getValue();
+															Ext.getCmp("infoPoorModify.bandStyleId").setValue(bandStyleId);
 														}
 													}
 												}, {
 													name : "infoPoor.bandChannelID.id",
-													id : "infoPoor.bandChannelID",
+													id : "infoPoorModify.bandChannelID",
 													xtype : "hidden"
 												}, {
 													fieldLabel : "销售渠道",
 													name : "infoPoor.bandChannelName",
-													id : "infoPoor.bandChannelName",
+													id : "infoPoorModify.bandChannelName",
 													maxHeight : 200,
 													xtype : "combo",
 													mode : "local",
@@ -385,7 +386,7 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 													}),
 													listeners : {
 														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.bandChannelName").getStore();
+															var a = Ext.getCmp("infoPoorModify.bandChannelName").getStore();
 															if (a.getCount() <= 0) {
 																Ext.Ajax.request({
 																	url : __ctxPath + "/bandpoor/getChannelScoreManage.do",
@@ -398,8 +399,8 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 															}
 														},
 														select:function(e,c,d){
-															var bandChannelID=Ext.getCmp("infoPoor.bandChannelName").getValue();
-															Ext.getCmp("infoPoor.bandChannelID").setValue(bandChannelID);
+															var bandChannelID=Ext.getCmp("infoPoorModify.bandChannelName").getValue();
+															Ext.getCmp("infoPoorModify.bandChannelID").setValue(bandChannelID);
 														}
 													}
 												}, {
@@ -407,10 +408,10 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 													width : 170,
 													name : "infoPoor.webSite",
 													xtype : "textfield",
-													id : "infoPoor.webSite"
+													id : "infoPoorModify.webSite"
 												},{
 													name : "infoPoor.picuurepathid",
-													id : "infoPoor.picuurepathid",
+													id : "infoPoorModify.picuurepathid",
 													xtype : "hidden"
 												}, {
 													width : 170,
@@ -422,7 +423,7 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 														var e = App.createUploadDialog({
 																file_cat : "system/company",
 																callback : function (g) {
-																	var d = Ext.getCmp("infoPoor.picuurepathid");	
+																	var d = Ext.getCmp("infoPoorModify.picuurepathid");	
 																	for (var e = 0; e < g.length; e++) {
 																		if (d.getValue() != "") {
 																			d.setValue(d.getValue() + ",");
@@ -460,28 +461,30 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 					waitMsg : "正在载入数据...",
 					success : function (a, b) {
 					var d = Ext.util.JSON.decode(b.response.responseText).data[0];
-					Ext.getCmp("infoPoor.id").setValue(d.id);
-					Ext.getCmp("infoPoor.bandId").setValue(d.bandId.id);
-					Ext.getCmp("infoPoor.bandName").setValue(d.bandName);
-					Ext.getCmp("infoPoor.floorNumId").setValue(d.floorNumId.id);
-					Ext.getCmp("infoPoor.floorNumName").setValue(d.floorNumName);
-					Ext.getCmp("infoPoor.mainPriceId").setValue(d.mainPriceId.id);
-					Ext.getCmp("infoPoor.mainPriceName").setValue(d.mainPriceName);
-					Ext.getCmp("infoPoor.saleStoreid").setValue(d.saleStoreid.id);
-					Ext.getCmp("infoPoor.saleStoreName").setValue(d.saleStoreName);
-					Ext.getCmp("infoPoor.bandBusinessAreaId").setValue(d.bandBusinessAreaId.id);
-					Ext.getCmp("infoPoor.bandBusinessAreaName").setValue(d.bandBusinessAreaName);
-					Ext.getCmp("infoPoor.proClassId").setValue(d.proClassId.id);
-					Ext.getCmp("infoPoor.proClassName").setValue(d.proClassName);
-					Ext.getCmp("infoPoor.bandStyleId").setValue(d.bandStyleId.id);
-					Ext.getCmp("infoPoor.bandStyleName").setValue(d.bandStyleName);
-					Ext.getCmp("infoPoor.bandChannelID").setValue(d.bandChannelID.id);
-					Ext.getCmp("infoPoor.bandChannelName").setValue(d.bandChannelName);
-					Ext.getCmp("infoPoor.webSite").setValue(d.webSite);
+					Ext.getCmp("infoPoorModify.id").setValue(d.id);
+					Ext.getCmp("infoPoorModify.bandId").setValue(d.bandId.id);
+					Ext.getCmp("infoPoorModify.bandName").setValue(d.bandName);
+					Ext.getCmp("infoPoorModify.floorNumId").setValue(d.floorNumId.id);
+					Ext.getCmp("infoPoorModify.floorNumName").setValue(d.floorNumName);
+					//Ext.getCmp("infoPoorModify.mainPriceId").setValue(d.mainPriceId.id);
+					//Ext.getCmp("infoPoorModify.mainPriceName").setValue(d.mainPriceName);
+					Ext.getCmp("infoPoorModify.mainPriceStart").setValue(d.mainPriceStart);
+					Ext.getCmp("infoPoorModify.mainPriceEnd").setValue(d.mainPriceEnd);
+					Ext.getCmp("infoPoorModify.saleStoreid").setValue(d.saleStoreid.id);
+					Ext.getCmp("infoPoorModify.saleStoreName").setValue(d.saleStoreName);
+					Ext.getCmp("infoPoorModify.bandBusinessAreaId").setValue(d.bandBusinessAreaId.id);
+					Ext.getCmp("infoPoorModify.bandBusinessAreaName").setValue(d.bandBusinessAreaName);
+					Ext.getCmp("infoPoorModify.proClassId").setValue(d.proClassId.id);
+					Ext.getCmp("infoPoorModify.proClassName").setValue(d.proClassName);
+					Ext.getCmp("infoPoorModify.bandStyleId").setValue(d.bandStyleId.id);
+					Ext.getCmp("infoPoorModify.bandStyleName").setValue(d.bandStyleName);
+					Ext.getCmp("infoPoorModify.bandChannelID").setValue(d.bandChannelID.id);
+					Ext.getCmp("infoPoorModify.bandChannelName").setValue(d.bandChannelName);
+					Ext.getCmp("infoPoorModify.webSite").setValue(d.webSite);
 					
 					
 					var p = Ext.util.JSON.decode(b.response.responseText).picture;
-					var d = Ext.getCmp("infoPoor.picuurepathid");	
+					var d = Ext.getCmp("infoPoorModify.picuurepathid");	
 						for(var i=0;i<p.length;i++){
 						if (d.getValue() != "") {
 							d.setValue(d.getValue() + ",");
@@ -551,7 +554,7 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 	});
 ModifyScoreManageForm.removeFile = function (e, a) {
 	
-	var b = Ext.getCmp("infoPoor.picuurepathid");
+	var b = Ext.getCmp("infoPoorModify.picuurepathid");
 	var d = b.getValue();
 	if (d.indexOf(",") < 0) {
 	b.setValue("");

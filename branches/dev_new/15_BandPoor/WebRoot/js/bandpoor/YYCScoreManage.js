@@ -122,7 +122,7 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 					fields : [{
 							name : "id",
 							type : "int"
-						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","year","poorVersion","bandlevel"]
+						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","year","poorVersion","bandlevel","mainprice"]
 				});
 			this.store.setDefaultSort("id", "desc");
 			this.store.load({
@@ -175,6 +175,10 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							header : "品牌等级（分类）",
 							width : 60,
 							dataIndex : "bandlevel"
+						},{
+							header : "主力价格段",
+							width : 60,
+							dataIndex : "mainprice"
 						}, {
 							header : "状态",
 							width : 60,

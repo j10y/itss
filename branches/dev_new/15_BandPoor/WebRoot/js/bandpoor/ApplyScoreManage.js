@@ -183,7 +183,7 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 						fields : [{
 								name : "id",
 								type : "int"
-							}, "bandName", "floorNumName", "proClassName","bandStyleName","mainPriceName","saleStoreName","bandBusinessAreaName","bandDesc","infoStatus"]
+							}, "bandName", "floorNumName", "proClassName","bandStyleName","mainPriceName","saleStoreName","bandBusinessAreaName","bandDesc","infoStatus","infoSource"]
 					}),
 					remoteSort : true
 				});
@@ -248,6 +248,20 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 									return "打回";
 								} else if(d==4){
 									return "修改";
+								}
+							}
+						},{
+							header : "来源",
+							dataIndex : "infoSource",
+							renderer : function (d) {
+								if (d == null || d == "" || d == "undefined") {
+									return "无";
+								} else if(d==1){
+									return "导入";
+								} else if(d==2){
+									return "录入";
+								} else if(d==3){
+									return "自动采集";
 								}
 							}
 						}],

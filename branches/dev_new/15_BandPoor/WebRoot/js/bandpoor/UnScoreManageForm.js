@@ -86,7 +86,6 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 														listeners : {
 															focus : function (b) {
 																var a = Ext.getCmp("infoPoorForm.bandName").getStore();
-																if (a.getCount() <= 0) {
 																	Ext.Ajax.request({
 																		url : __ctxPath + "/bandpoor/getBandsScoreManageUn.do",
 																		method : "post",
@@ -95,7 +94,6 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 																			a.loadData(c);
 																		}
 																	});
-																}
 															},
 															select:function(e,c,d){
 																var bandId=Ext.getCmp("infoPoorForm.bandName").getValue();

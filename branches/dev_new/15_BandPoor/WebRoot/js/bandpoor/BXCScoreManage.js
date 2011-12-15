@@ -122,7 +122,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 					fields : [{
 							name : "id",
 							type : "int"
-						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","year","poorVersion"]
+						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","year","poorVersion","mainprice"]
 				});
 			this.store.setDefaultSort("id", "desc");
 			this.store.load({
@@ -194,6 +194,10 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 									return  "不可评分";
 								}
 							}
+						}, {
+							header : "主力价格段",
+							width : 60,
+							dataIndex : "mainprice"
 						}, {
 							header : "创建日期",
 							width : 60,

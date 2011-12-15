@@ -56,43 +56,57 @@ ScoreManageForm = Ext.extend(Ext.Window, {
 													id : "infoPoor.bandId",
 													xtype : "hidden"
 												}, {
-													fieldLabel : "品牌名称",
-													name : "infoPoor.bandName",
-													id : "infoPoor.bandName",
-													maxHeight : 200,
-													xtype : "combo",
-													mode : "local",
-													editable : true,
-													allowBlank : false,
-													triggerAction : "all",
-													valueField : "fromBandId",
-													displayField : "fromBandName",
-													store : new Ext.data.SimpleStore({
-														url : __ctxPath
-														 + "/bandpoor/getBandsScoreManage.do",
-														fields : [
-															"fromBandId",
-															"fromBandName"]
-													}),
-													listeners : {
-														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.bandName").getStore();
-															if (a.getCount() <= 0) {
+													xtype : 'container',
+													layout : 'hbox',
+													style : "margin-bottom:5px",
+													items:[{
+															xtype : 'label',
+															text : '品牌名称:',
+															width : 85
+														},{
+														fieldLabel : "品牌名称",
+														name : "infoPoor.bandName",
+														id : "infoPoor.bandName",
+														maxHeight : 200,
+														xtype : "combo",
+														mode : "local",
+														editable : true,
+														allowBlank : false,
+														triggerAction : "all",
+														valueField : "fromBandId",
+														displayField : "fromBandName",
+														store : new Ext.data.SimpleStore({
+															url : __ctxPath
+															 + "/bandpoor/getAllBandsScoreManage.do",
+															fields : [
+																"fromBandId",
+																"fromBandName"]
+														}),
+														listeners : {
+															focus : function (b) {
+																var a = Ext.getCmp("infoPoor.bandName").getStore();
 																Ext.Ajax.request({
-																	url : __ctxPath + "/bandpoor/getBandsScoreManage.do",
+																	url : __ctxPath + "/bandpoor/getAllBandsScoreManage.do",
 																	method : "post",
 																	success : function (d) {
 																		var c = Ext.util.JSON.decode(d.responseText);
 																		a.loadData(c);
 																	}
 																});
+															},
+															select:function(e,c,d){
+																var bandId=Ext.getCmp("infoPoor.bandName").getValue();
+																Ext.getCmp("infoPoor.bandId").setValue(bandId);
 															}
-														},
-														select:function(e,c,d){
-															var bandId=Ext.getCmp("infoPoor.bandName").getValue();
-															Ext.getCmp("infoPoor.bandId").setValue(bandId);
 														}
-													}
+													}, {
+														xtype:'button',
+														text : '添加',
+														handler : function(){
+															new BandForm({bandStatus:0,lockBandStatus:true}).show();
+														}
+													}]
+													
 												}, {
 													name : "infoPoor.floorNumId.id",
 													id : "infoPoor.floorNumId",
@@ -136,47 +150,34 @@ ScoreManageForm = Ext.extend(Ext.Window, {
 														}
 													}
 												}, {
-													name : "infoPoor.mainPriceId.id",
-													id : "infoPoor.mainPriceId",
-													xtype : "hidden"
-												}, {
-													fieldLabel : "主力价格带",
-													name : "infoPoor.mainPriceName",
-													id : "infoPoor.mainPriceName",
-													maxHeight : 200,
-													xtype : "combo",
-													mode : "local",
-													editable : true,
-													allowBlank : false,
-													triggerAction : "all",
-													valueField : "mainPriceId",
-													displayField : "mainPriceName",
-													store : new Ext.data.SimpleStore({
-														url : __ctxPath
-														 + "/bandpoor/getMainPriceScoreManage.do",
-														fields : [
-															"mainPriceId",
-															"mainPriceName"]
-													}),
-													listeners : {
-														focus : function (b) {
-															var a = Ext.getCmp("infoPoor.mainPriceName").getStore();
-															if (a.getCount() <= 0) {
-																Ext.Ajax.request({
-																	url : __ctxPath + "/bandpoor/getMainPriceScoreManage.do",
-																	method : "post",
-																	success : function (d) {
-																		var c = Ext.util.JSON.decode(d.responseText);
-																		a.loadData(c);
-																	}
-																});
-															}
-														},
-														select:function(e,c,d){
-															var mainPriceId=Ext.getCmp("infoPoor.mainPriceName").getValue();
-															Ext.getCmp("infoPoor.mainPriceId").setValue(mainPriceId);
+													xtype : "container",
+													layout : 'hbox',
+													style : "margin-bottom:5px",
+													items : [
+														{
+															xtype : "label",
+															text : "主力价格段：",
+															width : 85
+														}, {
+															name : "infoPoor.mainPriceStart",
+															id : "infoPoor.mainPriceStart",
+															xtype : "numberfield",
+															width : 60
+														}, {
+															xtype : "label",
+															text : "~",
+															width : 10
+														}, {
+															name : "infoPoor.mainPriceEnd",
+															id : "infoPoor.mainPriceEnd",
+															xtype : "numberfield",
+															width : 60
+														}, {
+															xtype : "label",
+															text : "元",
+															width : 10
 														}
-													}
+													]
 												}, {
 													name : "infoPoor.saleStoreid.id",
 													id : "infoPoor.saleStoreid",
@@ -465,8 +466,11 @@ ScoreManageForm = Ext.extend(Ext.Window, {
 					Ext.getCmp("infoPoor.bandName").setValue(d.bandName);
 					Ext.getCmp("infoPoor.floorNumId").setValue(d.floorNumId.id);
 					Ext.getCmp("infoPoor.floorNumName").setValue(d.floorNumName);
-					Ext.getCmp("infoPoor.mainPriceId").setValue(d.mainPriceId.id);
-					Ext.getCmp("infoPoor.mainPriceName").setValue(d.mainPriceName);
+					//Ext.getCmp("infoPoor.mainPriceId").setValue(d.mainPriceId.id);
+					//Ext.getCmp("infoPoor.mainPriceName").setValue(d.mainPriceName);
+					Ext.getCmp("infoPoor.mainPriceStart").setValue(d.mainPriceStart);
+					Ext.getCmp("infoPoor.mainPriceEnd").setValue(d.mainPriceEnd);
+					
 					Ext.getCmp("infoPoor.saleStoreid").setValue(d.saleStoreid.id);
 					Ext.getCmp("infoPoor.saleStoreName").setValue(d.saleStoreName);
 					Ext.getCmp("infoPoor.bandBusinessAreaId").setValue(d.bandBusinessAreaId.id);
