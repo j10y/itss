@@ -46,7 +46,7 @@ PPCUnScoreManage = Ext.extend(Ext.Panel, {
 					}, {
 						id : "UnScorePBCManageSearchFormBandId",
 						width : 120,
-						hiddenName : "bandId",
+						name : "bandName",
 						maxHeight : 200,
 						xtype : "combo",
 						mode : "local",
@@ -78,6 +78,24 @@ PPCUnScoreManage = Ext.extend(Ext.Panel, {
 							}
 						}
 					}, {
+						text : "品牌池状态"
+					}, {
+						width : 120,
+						hiddenName : "bandPoorStatus",
+						xtype : "combo",
+						mode : "local",
+						editable : "false",
+						triggerAction : "all",
+						store : [
+							[
+								"1",
+								"进行池"
+							], [
+								"2",
+								"待选池"
+							]
+						]
+					}, {
 						xtype : "button",
 						text : "查询",
 						iconCls : "search",
@@ -98,6 +116,7 @@ PPCUnScoreManage = Ext.extend(Ext.Panel, {
 						type : "int"
 					}, 
 					"bandName",
+					"bandPoorStatus",
 					"targetValue",
 					"requireValue",
 					"bandRankValue",
@@ -157,6 +176,18 @@ PPCUnScoreManage = Ext.extend(Ext.Panel, {
 							}
 							if(e == "3") {
 								return "未达成";
+							}
+						}
+					}, {
+						header : "品牌池状态",
+						width : 60,
+						dataIndex : "bandPoorStatus",
+						renderer : function(d) {
+							if(d == "1") {
+								return "进行池";
+							}
+							if(d == "2") {
+								return "备选池";
 							}
 						}
 					}, {

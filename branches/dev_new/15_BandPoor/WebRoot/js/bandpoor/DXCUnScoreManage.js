@@ -46,7 +46,7 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 					}, {
 						id : "UnScoreManageSearchFormBandId",
 						width : 120,
-						hiddenName : "bandId",
+						name : "bandName",
 						maxHeight : 200,
 						xtype : "combo",
 						mode : "local",
