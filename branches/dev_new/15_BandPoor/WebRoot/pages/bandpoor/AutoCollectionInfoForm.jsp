@@ -45,6 +45,10 @@
     	<link href="<%=request.getContextPath()%>/css/desktop.css" rel="stylesheet" type="text/css" />	
     	<script type="text/javascript" src="<%=request.getContextPath()%>/js/ScrollText.js"></script>
     	<script type="text/javascript" src="<%=request.getContextPath()%>/ext3/ext-basex.js"></script>
+    	<style type="text/css">
+		.table-info td { padding:5px; line-height:24px; font-size:12px;}
+		.table-info table td  { border-bottom:1px solid #e0e0e0;}
+		</style>
     	<script type="text/javascript">
     		Ext.onReady(function(){
     			var panel = new Ext.Panel({
@@ -60,6 +64,7 @@
 							name : "infoPoor.bandName",
 							id : "infoPoor.bandName",
 							maxHeight : 200,
+							width:200,
 							xtype : "combo",
 							mode : "local",
 							editable : false,
@@ -95,6 +100,7 @@
 							name : "infoPoor.proClassName",
 							id : "infoPoor.proClassName",
 							maxHeight : 200,
+							width:200,
 							xtype : "combo",
 							mode : "local",
 							editable : true,
@@ -131,6 +137,7 @@
 						name : "infoPoor.saleStoreName",
 						id : "infoPoor.saleStoreName",
 						maxHeight : 200,
+						width:200,
 						xtype : "combo",
 						mode : "local",
 						editable : true,
@@ -167,6 +174,7 @@
 						name : "infoPoor.bandChannelName",
 						id : "infoPoor.bandChannelName",
 						maxHeight : 200,
+						width:200,
 						xtype : "combo",
 						mode : "local",
 						editable : true,
@@ -339,8 +347,10 @@
 </head>
 <body>
   <body>
-    <table align="center" class="table-info" width="700">
-         <tr ><td align="center" colspan="4">自动采集页面</td></tr>
+  <table align="center" class="table-info" border="0" cellpadding="0" cellspacing="0" width="950">
+         <tr ><td align="left" colspan="4" style="font-size:14px; font-weight:bold; color:#f15930;border-bottom:1px solid #f15930; ">自动采集页面</td></tr>
+         <tr><td style="padding:30px 125px;">
+     	<table border="0" cellpadding="0" cellspacing="0" width="700">
          <tr >
            <td >品牌名称</td>
            <td>
@@ -355,11 +365,11 @@
          <tr >
            <td>主力商品</td>
            <td>
-           <input type="text" id="mainProductName" style="width:160px;height:18px"/>
+           <input type="text" id="mainProductName" style="width:200px;height:18px"/>
            </td>
            <td>官网</td>
            <td>
-           <input type="text" id="webSite" style="width:160px;height:18px"/>
+           <input type="text" id="webSite" style="width:200px;height:18px"/>
            </td>
          </tr>
          <tr >
@@ -370,7 +380,7 @@
            </td>
            <td>联系人</td>
            <td>
-           <input type="text" id="contactUser" style="width:160px;height:18px"/>
+           <input type="text" id="contactUser" style="width:200px;height:18px"/>
            </td>
          </tr>
          <tr >
@@ -381,7 +391,7 @@
            </td>
            <td>销售场所描述</td>
            <td>
-           <input type="text" id="saleSroteDesc" style="width:160px;height:18px"/>
+           <input type="text" id="saleSroteDesc" style="width:200px;height:18px"/>
            </td>
          </tr>
          <tr >
@@ -392,23 +402,23 @@
            </td>
            <td>联系方式</td>
            <td>
-           <input type="text" id="contactPhone" style="width:160px;height:18px"/>
+           <input type="text" id="contactPhone" style="width:200px;height:18px"/>
            </td>
          </tr>
          <tr >
            <td>产地</td>
            <td>
-           <input type="text"  id="companyAddress" style="width:160px;height:18px"/>
+           <input type="text"  id="companyAddress" style="width:200px;height:18px"/>
            </td>
            <td>公司性质</td>
            <td>
-           <input type="text" id="companyNature" style="width:160px;height:18px"/>
+           <input type="text" id="companyNature" style="width:200px;height:18px"/>
            </td>
          </tr>
          <tr >
            <td>产品线</td>
            <td>
-           <input type="text" id="productLine" style="width:160px;height:18px"/>
+           <input type="text" id="productLine" style="width:200px;height:18px"/>
            </td>
            <td></td>
            <td></td>
@@ -436,6 +446,7 @@
           <input type="button" name="保存" value="提交" onclick="saveInfo()"/>
            </td>
          </tr>
+     </table></td></tr> 
     </table>
   </body>
 </html>
