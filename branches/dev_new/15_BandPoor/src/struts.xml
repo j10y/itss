@@ -218,6 +218,9 @@
 		<action name="*AutoCollenction" class="AutoCollenctionInfoAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*DxcUnScore" class="DxcUnScoreManageAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	
 </struts>
