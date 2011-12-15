@@ -71,5 +71,6 @@
   <bean id="ShopinBandAction" class="com.xpsoft.oa.action.bandpoor.ShopinBandAction" scope="prototype"/>
   <bean id="ShopinProClassAction" class="com.xpsoft.oa.action.bandpoor.ShopinProClassAction" scope="prototype"/>
   <bean id="AutoCollenctionInfoAction" class="com.xpsoft.oa.action.bandpoor.AutoCollenctionInfoAction" scope="prototype"/>
+  <bean id="DxcUnScoreManageAction" class="com.xpsoft.oa.action.bandpoor.DxcUnScoreManageAction" scope="prototype"/>
   
 </beans>

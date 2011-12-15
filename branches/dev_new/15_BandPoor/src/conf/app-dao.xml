@@ -70,6 +70,8 @@
 	<bean id="pictureOrdocDao" class="com.xpsoft.oa.dao.bandpoor.impl.PictureOrdocDaoImpl" parent="baseDao"/>
 	<bean id="beElectedBandPoorDao" class="com.xpsoft.oa.dao.bandpoor.impl.BeElectedBandPoorDaoImpl" parent="baseDao"/>
 	<bean id="bandPoorDao" class="com.xpsoft.oa.dao.bandpoor.impl.BandPoorDaoImpl" parent="baseDao"/>
+	<bean id="saleAssessmentDao" class="com.xpsoft.oa.dao.bandpoor.impl.SaleAssessmentDaoImpl" parent="baseDao"/>
+	<bean id="saleAssessmentForBPDao" class="com.xpsoft.oa.dao.bandpoor.impl.SaleAssessmentForBPDaoImpl" parent="baseDao"/>
 	
 	
 </beans>

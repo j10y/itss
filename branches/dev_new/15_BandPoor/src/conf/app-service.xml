@@ -264,4 +264,10 @@
    	  <bean id="bandPoorService" class="com.xpsoft.oa.service.bandpoor.impl.BandPoorServiceImpl">
    	 	<constructor-arg index="0" ref="bandPoorDao"/>
    	 </bean>
+   	 <bean id="saleAssessmentService" class="com.xpsoft.oa.service.bandpoor.impl.SaleAssessmentServiceImpl">
+   	 	<constructor-arg index="0" ref="saleAssessmentDao"/>
+   	 </bean>
+   	 <bean id="saleAssessmentForBPService" class="com.xpsoft.oa.service.bandpoor.impl.SaleAssessmentForBPServiceImpl">
+   	 	<constructor-arg index="0" ref="saleAssessmentForBPDao"/>
+   	 </bean>
 </beans>
