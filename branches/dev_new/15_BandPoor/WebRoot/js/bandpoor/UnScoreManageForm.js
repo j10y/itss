@@ -8,7 +8,7 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 				id : "UnScoreManageFormWin",
 				iconCls : "menu-ScoreManage",
 				items : this.formPanel,
-				title : "可评分品牌信息录入",
+				title : "不可评分品牌信息录入",
 				width : 680,
 				border : false,
 				height : 500,
@@ -58,6 +58,7 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 												}, {
 													xtype : 'container',
 													layout : 'hbox',
+													style : "margin-bottom:5px",
 													items:[{
 															xtype : 'label',
 															text : '品牌名称:',
@@ -116,48 +117,30 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 													width : 170,
 													allowBlank : false
 												}, {
-													name : "infoPoor.mainPriceId.id",
-													id : "infoPoorForm.mainPriceId",
-													xtype : "hidden"
-												}, {
-													fieldLabel : "主力价格带",
-													name : "infoPoor.mainPriceName",
-													id : "infoPoorForm.mainPriceName",
-													maxHeight : 200,
-													xtype : "combo",
-													mode : "local",
-													editable : true,
-													allowBlank : false,
-													triggerAction : "all",
-													valueField : "mainPriceId",
-													displayField : "mainPriceName",
-													store : new Ext.data.SimpleStore({
-														url : __ctxPath
-														 + "/bandpoor/getMainPriceScoreManageUn.do",
-														fields : [
-															"mainPriceId",
-															"mainPriceName"]
-													}),
-													listeners : {
-														focus : function (b) {
-															var a = Ext.getCmp("infoPoorForm.mainPriceName").getStore();
-															if (a.getCount() <= 0) {
-																Ext.Ajax.request({
-																	url : __ctxPath + "/bandpoor/getMainPriceScoreManageUn.do",
-																	method : "post",
-																	success : function (d) {
-																		var c = Ext.util.JSON.decode(d.responseText);
-																		a.loadData(c);
-																	}
-																});
-															}
-														},
-														select:function(e,c,d){
-															var mainPriceId=Ext.getCmp("infoPoorForm.mainPriceName").getValue();
-															Ext.getCmp("infoPoorForm.mainPriceId").setValue(mainPriceId);
+													xtype : "container",
+													layout : 'hbox',
+													style : "margin-bottom:5px",
+													items : [
+														{
+															xtype : "label",
+															text : "主力价格段：",
+															width : 85
+														}, {
+															name : "infoPoor.mainPriceStart",
+															id : "infoPoorForm.mainPriceStart",
+															xtype : "numberfield",
+															width : 80
+														}, {
+															xtype : "label",
+															text : "~",
+															width : 10
+														}, {
+															name : "infoPoor.mainPriceEnd",
+															id : "infoPoorForm.mainPriceEnd",
+															xtype : "numberfield",
+															width : 80
 														}
-													},
-													width : 170
+													]
 												}, {
 													name : "infoPoor.saleStoreid.id",
 													id : "infoPoorForm.saleStoreid",
@@ -407,9 +390,9 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 					Ext.getCmp("infoPoorForm.id").setValue(d.id);
 					Ext.getCmp("infoPoorForm.bandId").setValue(d.bandId.id);
 					Ext.getCmp("infoPoorForm.bandName").setValue(d.bandName);
+					Ext.getCmp("infoPoorForm.mainPriceStart").setValue(d.mainPriceStart);
+					Ext.getCmp("infoPoorForm.mainPriceEnd").setValue(d.mainPriceEnd);
 					Ext.getCmp("infoPoorForm.mainProductName").setValue(d.mainProductName);
-					Ext.getCmp("infoPoorForm.mainPriceId").setValue(d.mainPriceId.id);
-					Ext.getCmp("infoPoorForm.mainPriceName").setValue(d.mainPriceName);
 					Ext.getCmp("infoPoorForm.bandChannelID").setValue(d.bandChannelID.id);
 					Ext.getCmp("infoPoorForm.bandChannelName").setValue(d.bandChannelName);
 					Ext.getCmp("infoPoorForm.companyAddress").setValue(d.companyAddress);
@@ -457,6 +440,17 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 					handler : function () {
 						var a = Ext.getCmp("UnScoreManageForm");
 						if (a.getForm().isValid()) {
+							var minValue = Ext.getCmp("infoPoorForm.mainPriceStart").getValue();
+							var maxValue = Ext.getCmp("infoPoorForm.mainPriceEnd").getValue();
+							if(minValue >= maxValue) {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "主力价格段信息填写有误，请核实！",
+									buttons : Ext.MessageBox.OK,
+									icon : "ext-mb-error"
+								});
+								return ;
+							}
 							a.getForm().submit({
 								method : "post",
 								waitMsg : "正在提交数据...",
