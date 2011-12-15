@@ -1,6 +1,9 @@
 package com.xpsoft.oa.action.bandpoor;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +13,14 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -263,7 +271,9 @@ public class ScoreManageAction extends BaseAction{
 	public String getBands(){
 		Map map = new HashMap();
 		map.put("Q_flag_N_EQ",  Band.CREATE+"");
-		map.put("Q_bandStatus_N_EQ", "0");
+		//map.put("Q_bandStatus_N_EQ", "0");
+		map.put("sort", "bandChName");
+		map.put("dir", "asc");
 		QueryFilter filter = new QueryFilter(map);
 		List<Band> list=bandService.getAll(filter);
 		StringBuffer sb = new StringBuffer("[");
@@ -281,6 +291,8 @@ public class ScoreManageAction extends BaseAction{
 	public String getAllBands(){
 		Map map = new HashMap();
 		map.put("Q_flag_N_EQ",  Band.CREATE+"");
+		map.put("sort", "bandChName");
+		map.put("dir", "asc");
 		QueryFilter filter = new QueryFilter(map);
 		List<Band> list=bandService.getAll(filter);
 		StringBuffer sb = new StringBuffer("[");
@@ -477,6 +489,134 @@ public class ScoreManageAction extends BaseAction{
 		buff.append(gson.toJson(list, type));
 		buff.append("}");
 		this.jsonString = buff.toString();
+		return "success";
+	}
+	public String upload(){
+		String filePath = this.getRequest().getParameter("filePath");
+		List<InfoPoor> list = new ArrayList<InfoPoor>();
+		String defaultProfix = String.valueOf(AppUtil.getSysConfig().get("file.upload.default.perfix"));
+		int len = defaultProfix.length();
+		filePath = filePath.substring(filePath.indexOf(defaultProfix));
+		File file = new File(this.getRequest().getRealPath("/") + filePath);
+		Workbook book;
+		try {
+			book = Workbook.getWorkbook(file);
+			Sheet sheet = book.getSheet(0);
+			int row = sheet.getRows();
+			String saleStoreName=sheet.getCell(1, 0).getContents();
+			String checkUser=sheet.getCell(4, 0).getContents();
+			String checkDate=sheet.getCell(6, 0).getContents();
+			QueryFilter storefilter = new QueryFilter(getRequest());
+			storefilter.addFilter("Q_storeName_S_EQ", saleStoreName);
+			List storelist=saleStoreServiece.getAll(storefilter);
+			SaleStore saleStoreId=null;
+			if(storelist.size()>0){
+				saleStoreId=(SaleStore) storelist.get(0);
+			}else{
+				this.jsonString = "{success:true,flag:'0',msg:'excel中商场名称在已有商场名称中不存在，请核实！'}";
+				return "success";
+			}
+			for(int i = 3; i < row; i++){
+				InfoPoor ifpoor=new InfoPoor();
+				ifpoor.setSaleStoreid(saleStoreId);
+				ifpoor.setSaleStoreName(saleStoreName);
+				ifpoor.setBandBusinessAreaId(saleStoreId.getAllowAreaId());
+				ifpoor.setBandBusinessAreaName(saleStoreId.getAllowAreaId().getAreaName());
+				String index=sheet.getCell(0, i).getContents();
+				String zhName=sheet.getCell(1, i).getContents();
+				String enName=sheet.getCell(2, i).getContents();
+				QueryFilter bandfilter = new QueryFilter(getRequest());
+				bandfilter.addFilter("Q_bandChName_S_EQ", zhName);
+				bandfilter.addFilter("Q_bandEnName_S_EQ", enName);
+				List bandlist=bandService.getAll(bandfilter);
+				if(bandlist.size()>0){
+					Band bandId=(Band) bandlist.get(0);
+					ifpoor.setBandId(bandId);
+					ifpoor.setBandName(bandId.getBandChName()+"/"+bandId.getBandEnName());
+				}else{
+					this.jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中英文品牌在已有品牌不存在，请核实！'}";
+					return "success";
+				}
+
+				Map valmap = new HashMap();
+				valmap.put("Q_infoType_N_EQ", InfoPoor.TYPE_SCORE+"");
+				valmap.put("Q_saleStoreid.id_L_EQ", ifpoor.getSaleStoreid().getId()+"");
+				valmap.put("Q_bandId.id_L_EQ", ifpoor.getBandId().getId()+"");
+				valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
+				QueryFilter valfilter = new QueryFilter(valmap);
+				List vallist=scoreManageService.getAll(valfilter);
+				if(vallist.size()>0){
+					ifpoor=(InfoPoor) vallist.get(0);
+				}
+				String floorNum=sheet.getCell(3, i).getContents();
+				QueryFilter floorfilter = new QueryFilter(getRequest());
+				floorfilter.addFilter("Q_floorName_S_EQ", floorNum);
+				List floorlist=floorService.getAll(floorfilter);
+				if(floorlist.size()>0){
+					Floor floorNumId=(Floor) floorlist.get(0);
+					ifpoor.setFloorNumId(floorNumId);
+					ifpoor.setFloorNumName(floorNum);
+				}else{
+					this.jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中楼层在已有楼层不存在，请核实！'}";
+					return "success";
+				}
+				String proClassName=sheet.getCell(4, i).getContents();
+				QueryFilter proClassfilter = new QueryFilter(getRequest());
+				proClassfilter.addFilter("Q_proClassNum_S_EQ", proClassName);
+				List proClasslist=proClassService.getAll(proClassfilter);
+				if(proClasslist.size()>0){
+					ProClass proClassId=(ProClass) proClasslist.get(0);
+					ifpoor.setProClassId(proClassId);
+					ifpoor.setProClassName(proClassId.getProClassName());
+				}else{
+					this.jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中品类在已有品类中不存在，请核实！'}";
+					return "success";
+				}
+				
+				String mainStyleName=sheet.getCell(5, i).getContents();
+				
+				QueryFilter mainStylefilter = new QueryFilter(getRequest());
+				mainStylefilter.addFilter("Q_styleNum_S_EQ", mainStyleName);
+				mainStylefilter.addFilter("Q_proClassId.id_L_EQ", ifpoor.getProClassId().getId()+"");
+				List mainStylelist=bandStyleService.getAll(mainStylefilter);
+				if(mainStylelist.size()>0){
+					BandStyle bandStyleId=(BandStyle) mainStylelist.get(0);
+					ifpoor.setBandStyleId(bandStyleId);
+					ifpoor.setBandStyleName(bandStyleId.getStyleName());
+				}else{
+					this.jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中品牌风格在已有品牌风格中不存在，请核实！'}";
+					return "success";
+				}
+				String mainPriceName=sheet.getCell(6, i).getContents();
+				String[] prices=mainPriceName.split("-");
+				if(prices.length!=2){
+					this.jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中主力价格带填写不符合要求，请核实！'}";
+					return "success";
+				}
+				ifpoor.setMainPriceStart(Long.parseLong(prices[0]));
+				ifpoor.setMainPriceEnd(Long.parseLong(prices[1]));
+				ifpoor.setMainPriceName(mainPriceName);
+				String bandDesc=sheet.getCell(7, i).getContents();
+				ifpoor.setBandDesc(bandDesc);
+				ifpoor.setBandChannelName("实体店");
+				BandChannel bandChannelID=new BandChannel();
+				bandChannelID.setId(1l);
+				ifpoor.setBandChannelID(bandChannelID);
+				list.add(ifpoor);
+			}
+			scoreManageService.saveInfoPoor(list);
+		} catch (BiffException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			this.jsonString = "{success:true,flag:'0',msg:'excel导入出错，请核实！'}";
+			return "success";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			this.jsonString = "{success:true,flag:'0',msg:'excel中导入出错，请核实！'}";
+			return "success";
+		}
+		this.jsonString = "{success:true,flag:'1'}";
 		return "success";
 	}
 }

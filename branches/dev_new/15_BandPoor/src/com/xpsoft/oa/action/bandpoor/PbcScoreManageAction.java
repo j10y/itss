@@ -121,7 +121,8 @@ public class PbcScoreManageAction extends BaseAction{
 		this.jsonString = buff.toString();
 		return "success";
 	}
-	public String unScoreList(){
+	//备选池
+	public String bxcScoreList(){
 		QueryFilter filter = new QueryFilter(getRequest());
 		filter.addFilter("Q_status_N_NEQ", BandPoor.STATUS_DELETE+"");
 		filter.addFilter("Q_infoType_N_EQ", BandPoor.TYPE_SCORE+"");

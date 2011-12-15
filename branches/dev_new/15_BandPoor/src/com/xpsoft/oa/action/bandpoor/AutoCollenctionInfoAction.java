@@ -67,8 +67,8 @@ public class AutoCollenctionInfoAction extends BaseAction{
 		String mainProductName=request.getParameter("mainProductName");
 		
 		String webSite=request.getParameter("webSite");
-		String mainPriceId=request.getParameter("mainPriceId");
-		String mainPriceName=request.getParameter("mainPriceName");
+		String mainPriceStart=request.getParameter("mainPriceStart");
+		String mainPriceEnd=request.getParameter("mainPriceEnd");
 		
 		String contactUser=request.getParameter("contactUser");
 		String saleStoreId=request.getParameter("saleStoreId");
@@ -97,12 +97,9 @@ public class AutoCollenctionInfoAction extends BaseAction{
 		infoPoor.setProClassName(proClassName);
 		infoPoor.setMainProductName(mainProductName);
 		infoPoor.setWebSite(webSite);
-		if(mainPriceId!=null&&mainPriceId.length()>0){
-			MainPrice mainPrice=new MainPrice();
-			mainPrice.setId(Long.parseLong(mainPriceId));
-			infoPoor.setMainPriceId(mainPrice);
-		}
-		infoPoor.setMainPriceName(mainPriceName);
+		infoPoor.setMainPriceStart(Long.parseLong(mainPriceStart));
+		infoPoor.setMainPriceEnd(Long.parseLong(mainPriceEnd));
+		infoPoor.setMainPriceName(mainPriceStart+""+mainPriceEnd);
 		infoPoor.setContactUser(contactUser);
 		infoPoor.setContactPhone(contactPhone);
 		if(saleStoreId!=null&&saleStoreId.length()>0){

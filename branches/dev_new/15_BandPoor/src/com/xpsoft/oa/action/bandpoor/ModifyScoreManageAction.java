@@ -19,6 +19,7 @@ import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.bandpoor.Band;
 import com.xpsoft.oa.model.bandpoor.BandChannel;
+import com.xpsoft.oa.model.bandpoor.BandLevel;
 import com.xpsoft.oa.model.bandpoor.BandPoor;
 import com.xpsoft.oa.model.bandpoor.BandStyle;
 import com.xpsoft.oa.model.bandpoor.BeElectedBandPoor;
@@ -31,6 +32,7 @@ import com.xpsoft.oa.model.bandpoor.ProClass;
 import com.xpsoft.oa.model.bandpoor.SaleStore;
 import com.xpsoft.oa.model.system.FileAttach;
 import com.xpsoft.oa.service.bandpoor.BandChannelService;
+import com.xpsoft.oa.service.bandpoor.BandLevelService;
 import com.xpsoft.oa.service.bandpoor.BandPoorService;
 import com.xpsoft.oa.service.bandpoor.BandService;
 import com.xpsoft.oa.service.bandpoor.BandStyleService;
@@ -67,6 +69,8 @@ public class ModifyScoreManageAction extends BaseAction{
 	@Resource
 	private BeElectedBandPoorService beElectedBandPoorService;
 	
+	@Resource
+	private BandLevelService bandLevelService;
 	
 	private InfoPoor infoPoor;
 	public InfoPoor getInfoPoor() {
@@ -192,6 +196,16 @@ public class ModifyScoreManageAction extends BaseAction{
 				}
 				bp.setInfoPoors(bandpoors);
 				bp.setBandRealScore(scoreall);
+				
+				Map levelmap=new HashMap();
+				QueryFilter levelfilter = new QueryFilter(levelmap);
+				levelfilter.addFilter("Q_startValue_DB_LE", scoreall+"");
+				levelfilter.addFilter("Q_endValue_DB_GT", scoreall+"");
+				List<BandLevel> levellist=bandLevelService.getAll(levelfilter);
+				if(levellist.size()>0){
+					BandLevel bandLevel=levellist.get(0);
+					bp.setBandLevel(bandLevel);
+				}
 				if(scoreall>=bbp.getBandScore()){
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_YYC);
 				}else{
@@ -215,6 +229,15 @@ public class ModifyScoreManageAction extends BaseAction{
 				}
 				bp.setInfoPoors(bandpoors);
 				bp.setBandRealScore(scoreall);
+				Map levelmap=new HashMap();
+				QueryFilter levelfilter = new QueryFilter(levelmap);
+				levelfilter.addFilter("Q_startValue_DB_LE", scoreall+"");
+				levelfilter.addFilter("Q_endValue_DB_GT", scoreall+"");
+				List<BandLevel> levellist=bandLevelService.getAll(levelfilter);
+				if(levellist.size()>0){
+					BandLevel bandLevel=levellist.get(0);
+					bp.setBandLevel(bandLevel);
+				}
 				if(scoreall>=bbp.getBandScore()){
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_YYC);
 				}else{
@@ -248,6 +271,15 @@ public class ModifyScoreManageAction extends BaseAction{
 				}
 				bp.setInfoPoors(bandips);
 				bp.setBandRealScore(scoreall);
+				Map levelmap=new HashMap();
+				QueryFilter levelfilter = new QueryFilter(levelmap);
+				levelfilter.addFilter("Q_startValue_DB_LE", scoreall+"");
+				levelfilter.addFilter("Q_endValue_DB_GT", scoreall+"");
+				List<BandLevel> levellist=bandLevelService.getAll(levelfilter);
+				if(levellist.size()>0){
+					BandLevel bandLevel=levellist.get(0);
+					bp.setBandLevel(bandLevel);
+				}
 				if(scoreall>=bp.getBandScore()){
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_YYC);
 				}else{
