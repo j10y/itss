@@ -158,5 +158,9 @@ App.importJs = {
 	BpShopinBandView : [__ctxPath + "/js/bandpoor/BpShopinBandView.js",
 	       __ctxPath + "/js/bandpoor/BpShopinBandForm.js"],
 	BpShopinPorClassView : [__ctxPath + "/js/bandpoor/BpShopinPorClassView.js",
-	       __ctxPath + "/js/bandpoor/BpShopinPorClassForm.js"]
+	       __ctxPath + "/js/bandpoor/BpShopinPorClassForm.js"],
+	DXCUnScoreManage : [__ctxPath + "/js/bandpoor/DXCUnScoreManage.js",
+	       __ctxPath + "/ext3/ux/RowExpander.js"],
+	PPCUnScoreManage : [__ctxPath + "/js/bandpoor/PPCUnScoreManage.js",
+	       __ctxPath + "/ext3/ux/RowExpander.js"]
 };
