@@ -199,6 +199,11 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 											   name:'archiveId',
 											   value:'${archives_archivesId}'
 											},{
+												xtype:'hidden',
+											    width : 300,
+											    name :'handleOpinion',
+											    value : '归档'
+											},{
 											fieldLabel : '0=初始化状态',
 											name : 'isPass',
 											xtype:'hidden',
@@ -333,6 +338,7 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 														status:7															
 													},
 													success : function(b, c) {
+														//
 														Ext.getCmp("filedForm").getForm().submit({
 															method : 'POST',
 															waitMsg : '正在提交数据...',
