@@ -172,18 +172,6 @@ public class UnScoreManageAction extends BaseAction{
 	}
 	public String save(){
 		HttpServletRequest request=getRequest();
-		Map valmap = new HashMap();
-		valmap.put("Q_id_L_NEQ", infoPoor.getId()!=null?infoPoor.getId()+"":"0");
-		valmap.put("Q_infoType_N_EQ", InfoPoor.TYPE_UNSCORE+"");
-		valmap.put("Q_saleStoreid.id_L_EQ", infoPoor.getSaleStoreid().getId()+"");
-		valmap.put("Q_bandId.id_L_EQ", infoPoor.getBandId().getId()+"");
-		valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
-		QueryFilter valfilter = new QueryFilter(valmap);
-		List vallist=scoreManageService.getAll(valfilter);
-		if(vallist.size()>0){
-			this.jsonString = "{success:false,msg:'同一商场同一品牌已存在！'}";
-			return "success";
-		}
 		if(infoPoor.getSaleStoreid()!=null&&infoPoor.getSaleStoreid().getId()==null){
 			infoPoor.setSaleStoreid(null);
 		}
@@ -192,7 +180,7 @@ public class UnScoreManageAction extends BaseAction{
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
 			infoPoor.setInfoStatus(InfoPoor.STATUS_CREATE);
 			infoPoor.setInfoType(InfoPoor.TYPE_UNSCORE);
-			infoPoor.setInfoSource(InfoPoor.SCOUCE_DIRCOLLECTION);
+			infoPoor.setInfoSource(InfoPoor.SCOUCE_UNDIRCOLLECTION);
 			infoPoor=scoreManageService.save(infoPoor);
 			String fileids=request.getParameter("infoPoor.picuurepathid");
 			if(fileids!=null&&fileids.length()>0){
@@ -215,7 +203,7 @@ public class UnScoreManageAction extends BaseAction{
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
 			infoPoor.setInfoStatus(InfoPoor.STATUS_MODIFY);
 			infoPoor.setInfoType(InfoPoor.TYPE_UNSCORE);
-			infoPoor.setInfoSource(InfoPoor.SCOUCE_DIRCOLLECTION);
+			infoPoor.setInfoSource(InfoPoor.SCOUCE_UNDIRCOLLECTION);
 			infoPoor=scoreManageService.save(infoPoor);
 			String fileids=request.getParameter("infoPoor.picuurepathid");
 			Map map = new HashMap();

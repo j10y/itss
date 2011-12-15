@@ -139,7 +139,7 @@ public class AutoCollenctionInfoAction extends BaseAction{
 			infoPoor.setCreatDate(new Date());
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
 			infoPoor.setInfoStatus(InfoPoor.STATUS_CREATE);
-			infoPoor.setInfoSource(InfoPoor.SCOUCE_UNDIRCOLLECTION);
+			infoPoor.setInfoSource(InfoPoor.SCOUCE_AUTOCOLLECTION);
 			if(infoPoor.getBandId()!=null&&infoPoor.getSaleStoreid()!=null&&vallist.size()==0){
 				infoPoor.setInfoType(InfoPoor.TYPE_SCORE);
 			}else if(infoPoor.getBandId()!=null&&infoPoor.getSaleStoreName().equals("其他")){

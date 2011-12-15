@@ -183,12 +183,14 @@ public class ScoreManageAction extends BaseAction{
 			this.jsonString = "{success:false,msg:'同一商场同一品牌已存在！'}";
 			return "success";
 		}
+		infoPoor.setMainPriceId(null);
+		infoPoor.setMainPriceName(infoPoor.getMainPriceStart()+"~"+infoPoor.getMainPriceEnd());
 		if(infoPoor.getId()==null){
 			infoPoor.setCreatDate(new Date());
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
 			infoPoor.setInfoStatus(InfoPoor.STATUS_CREATE);
 			infoPoor.setInfoType(InfoPoor.TYPE_SCORE);
-			infoPoor.setInfoSource(InfoPoor.SCOUCE_DIRCOLLECTION);
+			infoPoor.setInfoSource(InfoPoor.SCOUCE_UNDIRCOLLECTION);
 			infoPoor=scoreManageService.save(infoPoor);
 			String fileids=request.getParameter("infoPoor.picuurepathid");
 			if(fileids!=null&&fileids.length()>0){
@@ -211,7 +213,7 @@ public class ScoreManageAction extends BaseAction{
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
 			infoPoor.setInfoStatus(InfoPoor.STATUS_MODIFY);
 			infoPoor.setInfoType(InfoPoor.TYPE_SCORE);
-			infoPoor.setInfoSource(InfoPoor.SCOUCE_DIRCOLLECTION);
+			infoPoor.setInfoSource(InfoPoor.SCOUCE_UNDIRCOLLECTION);
 			infoPoor=scoreManageService.save(infoPoor);
 			String fileids=request.getParameter("infoPoor.picuurepathid");
 			Map map = new HashMap();

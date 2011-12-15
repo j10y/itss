@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.bandpoor;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,7 +43,8 @@ public class DxcScoreManageAction extends BaseAction{
 		Type type = new TypeToken<List<BeElectedBandPoor>>() {
 		}
 		.getType();
-		
+		DecimalFormat myformat = new DecimalFormat();
+		myformat.applyPattern("###.00");
 		StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':").append(filter.getPagingBean().getTotalItems()).append(
 				",result:[");;
@@ -76,6 +78,8 @@ public class DxcScoreManageAction extends BaseAction{
 			content.append("</tr>");
 			int i=0;
 			Double scoreall=0d;
+			Long startprice=0l;
+			Long endprice=0l;
 			for(InfoPoor infopoor:infopoors){
 				i++;
 				content.append("<tr>");
@@ -99,10 +103,14 @@ public class DxcScoreManageAction extends BaseAction{
 				content.append("</td>");
 				content.append("</tr>");
 				scoreall+=infopoor.getSaleStoreid().getStoreScore()!=null?infopoor.getSaleStoreid().getStoreScore():0;
+				startprice+=infopoor.getMainPriceStart()!=null?infopoor.getMainPriceStart():0;
+				endprice+=infopoor.getMainPriceEnd()!=null?infopoor.getMainPriceEnd():0;
 			}
 			content.append("</table>");
 			buff.append("',bandrealScore:'");
 			buff.append(scoreall);
+			buff.append("',mainprice:'");
+			buff.append(myformat.format(startprice/i)+"~"+myformat.format(endprice/i));
 			buff.append("',content:'")
 			.append(content)
 			.append("'},");
@@ -187,7 +195,7 @@ public class DxcScoreManageAction extends BaseAction{
 					BandLevel bandLevel=levellist.get(0);
 					bp.setBandLevel(bandLevel);
 				}
-				if(scoreall>=bbp.getBandScore()){
+				if(bbp.getBandScore()!=null&&scoreall>=bbp.getBandScore()){
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_YYC);
 				}else{
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_BXC);
@@ -219,7 +227,7 @@ public class DxcScoreManageAction extends BaseAction{
 					BandLevel bandLevel=levellist.get(0);
 					bp.setBandLevel(bandLevel);
 				}
-				if(scoreall>=bbp.getBandScore()){
+				if(bbp.getBandScore()!=null&&scoreall>=bbp.getBandScore()){
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_YYC);
 				}else{
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_BXC);

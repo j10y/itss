@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.bandpoor;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,8 @@ public class PbcScoreManageAction extends BaseAction{
 		Type type = new TypeToken<List<BandPoor>>() {
 		}
 		.getType();
-		
+		DecimalFormat myformat = new DecimalFormat();
+		myformat.applyPattern("###.00");
 		StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':").append(filter.getPagingBean().getTotalItems()).append(
 				",result:[");;
@@ -69,6 +71,8 @@ public class PbcScoreManageAction extends BaseAction{
 			content.append("<th>风格</th>");
 			content.append("<th>主力价格</th>");
 			content.append("</tr>");
+			Long startprice=0l;
+			Long endprice=0l;
 			int i=0;
 			for(InfoPoor infopoor:infopoors){
 				i++;
@@ -92,6 +96,8 @@ public class PbcScoreManageAction extends BaseAction{
 				content.append(infopoor.getMainPriceName());
 				content.append("</td>");
 				content.append("</tr>");
+				startprice+=infopoor.getMainPriceStart()!=null?infopoor.getMainPriceStart():0;
+				endprice+=infopoor.getMainPriceEnd()!=null?infopoor.getMainPriceEnd():0;
 			}
 			content.append("</table>");
 			buff.append("',bandrealScore:'");
@@ -100,6 +106,8 @@ public class PbcScoreManageAction extends BaseAction{
 			buff.append(bandPoor.getYear());
 			buff.append("',poorVersion:'");
 			buff.append(bandPoor.getPoorVersion());
+			buff.append("',mainprice:'");
+			buff.append(myformat.format(startprice/i)+"~"+myformat.format(endprice/i));
 			buff.append("',bandlevel:'");
 			buff.append(bandPoor.getBandLevel()!=null?bandPoor.getBandLevel().getLevelName():"");
 			buff.append("',content:'")
@@ -122,7 +130,8 @@ public class PbcScoreManageAction extends BaseAction{
 		Type type = new TypeToken<List<BandPoor>>() {
 		}
 		.getType();
-		
+		DecimalFormat myformat = new DecimalFormat();
+		myformat.applyPattern("###.00");
 		StringBuffer buff = new StringBuffer(
 				"{success:true,'totalCounts':").append(filter.getPagingBean().getTotalItems()).append(
 				",result:[");;
@@ -155,6 +164,8 @@ public class PbcScoreManageAction extends BaseAction{
 			content.append("<th>主力价格</th>");
 			content.append("</tr>");
 			int i=0;
+			Long startprice=0l;
+			Long endprice=0l;
 			for(InfoPoor infopoor:infopoors){
 				i++;
 				content.append("<tr>");
@@ -177,6 +188,8 @@ public class PbcScoreManageAction extends BaseAction{
 				content.append(infopoor.getMainPriceName());
 				content.append("</td>");
 				content.append("</tr>");
+				startprice+=infopoor.getMainPriceStart()!=null?infopoor.getMainPriceStart():0;
+				endprice+=infopoor.getMainPriceEnd()!=null?infopoor.getMainPriceEnd():0;
 			}
 			content.append("</table>");
 			buff.append("',bandrealScore:'");
@@ -185,6 +198,8 @@ public class PbcScoreManageAction extends BaseAction{
 			buff.append(bandPoor.getYear());
 			buff.append("',poorVersion:'");
 			buff.append(bandPoor.getPoorVersion());
+			buff.append("',mainprice:'");
+			buff.append(myformat.format(startprice/i)+"~"+myformat.format(endprice/i));
 			buff.append("',content:'")
 			.append(content)
 			.append("'},");
