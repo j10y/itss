@@ -69,6 +69,82 @@ AutoCollectionInfoView = Ext.extend(Ext.Panel, {
 									}
 								}
 							}
+						}, {
+							text : "品类"
+						}, {
+							id : "AutoCollectionSearchFormProClass",
+							width : 120,
+							name : "Q_proClassName_S_LK",
+							maxHeight : 200,
+							xtype : "combo",
+							mode : "local",
+							editable : true,
+							triggerAction : "all",
+							valueField : "fromproClassId",
+							displayField : "fromproClassName",
+							store : new Ext.data.SimpleStore(
+							{
+								url : __ctxPath
+										+ "/bandpoor/getProClassScoreManage.do",
+								fields : [
+										"fromproClassId",
+										"fromproClassName"]
+							}),
+							listeners : {
+								focus : function (e) {
+									var d = Ext.getCmp("AutoCollectionSearchFormProClass").getStore();
+									if (d.getCount() <= 0) {
+										Ext.Ajax.request({
+											url : __ctxPath + "/bandpoor/getProClassScoreManage.do",
+											method : "post",
+											success : function (g) {
+												var f = Ext.util.JSON.decode(g.responseText);
+												d.loadData(f);
+											}
+										});
+									}
+								}
+							}
+						}, {
+							text : "品牌风格"
+						}, {
+							id : "AutoCollectionSearchFormBandStyle",
+							width : 120,
+							name : "Q_bandStyleName_S_LK",
+							maxHeight : 200,
+							xtype : "combo",
+							mode : "local",
+							editable : true,
+							triggerAction : "all",
+							valueField : "fromBandStyleId",
+							displayField : "fromBandStyleName",
+							store : new Ext.data.SimpleStore(
+							{
+								url : __ctxPath
+										+ "/bandpoor/getBandStyleScoreManage.do",
+								fields : [
+										"fromBandStyleId",
+										"fromBandStyleName"]
+							}),
+							listeners : {
+								focus : function (b) {
+									var a = Ext.getCmp("AutoCollectionSearchFormProClass").getValue();
+									if (a != null
+										 && a != ""
+										 && a != "undefined") {
+										Ext.getCmp("AutoCollectionSearchFormBandStyle").getStore().reload({
+											params : {
+												proClassId : a
+											}
+										});
+									} else {
+										Ext.ux.Toast
+										.msg(
+											"操作信息",
+											"请先选择相应的品类！");
+									}
+								}
+							}
 						},{
 							xtype : "button",
 							text : "查询",
@@ -88,7 +164,7 @@ AutoCollectionInfoView = Ext.extend(Ext.Panel, {
 						fields : [{
 								name : "id",
 								type : "int"
-							},"proClassName","mainPriceName","saleStoreName","saleSroteDesc","contactUser","contactPhone","bandDesc","companyNature","companyAddress","productLine","infoStatus"]
+							},"bandName","proClassName","mainPriceName","saleStoreName","saleSroteDesc","contactUser","contactPhone","bandDesc","companyNature","companyAddress","productLine","infoStatus"]
 					}),
 					remoteSort : true
 				});
@@ -108,6 +184,9 @@ AutoCollectionInfoView = Ext.extend(Ext.Panel, {
 							header : "id",
 							dataIndex : "id",
 							hidden : true
+						}, {
+							header : "品牌名称",
+							dataIndex : "bandName"
 						}, {
 							header : "品类",
 							dataIndex : "proClassName"
@@ -166,6 +245,7 @@ AutoCollectionInfoView = Ext.extend(Ext.Panel, {
 					bodyStyle : "text-align:left",
 					items : []
 				});
+				/*
 			if (isGranted("_AutoCollectionExport")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-add",
@@ -173,7 +253,7 @@ AutoCollectionInfoView = Ext.extend(Ext.Panel, {
 						handler : this.createRecord,
 						scope : this
 					}));
-			}
+			}*/
 			if (isGranted("_AutoCollectionDel")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-del",

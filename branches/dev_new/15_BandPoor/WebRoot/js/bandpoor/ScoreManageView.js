@@ -203,6 +203,13 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 						scope : this
 					}));
 			}
+			if (isGranted("_ScoreManageImport")) {
+				this.topbar.add(new Ext.Button({
+					text : "批量导入品牌信息",
+					handler : this.uploadBandInfo,
+				}));
+			}
+			
 			this.gridPanel = new Ext.grid.GridPanel({
 					id : "ScoreManageGrid",
 					region : "center",
@@ -289,6 +296,41 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 			new ScoreManageForm({
 				id : a.data.id
 			}).show();
+		},
+		uploadBandInfo : function() {
+			var a = App.createUploadDialog({
+				file_cat : "uploadData",
+				callback : function (c) {
+					for (var b = 0; b < c.length; b++) {
+						Ext.Ajax.request({
+							url : __ctxPath + "/bandpoor/uploadScoreManage.do",
+							params : {
+								filePath : c[b].filepath
+							},
+							success : function(d) {
+								var e = Ext.util.JSON.decode(d.responseText);
+								if(e.flag == "0") {
+									Ext.MessageBox.show({
+										title : "操作信息",
+										msg : e.msg,
+										buttons : Ext.MessageBox.OK,
+										icon : Ext.MessageBox.ERROR
+									});
+									return ;
+								}
+								Ext.getCmp("ScoreManageGrid").getStore().reload();
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "数据导入成功！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.INFO
+								});
+							}
+						});
+					}
+				}
+			});
+			a.show();
 		},
 		onRowAction : function (c, a, d, e, b) {
 			switch (d) {

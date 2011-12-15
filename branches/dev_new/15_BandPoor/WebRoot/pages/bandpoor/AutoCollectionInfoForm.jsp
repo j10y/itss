@@ -126,41 +126,6 @@
 							}
 						}
 				);
-				new Ext.form.ComboBox({
-						name : "infoPoor.mainPriceName",
-						id : "infoPoor.mainPriceName",
-						maxHeight : 200,
-						xtype : "combo",
-						mode : "local",
-						editable : true,
-						triggerAction : "all",
-						valueField : "mainPriceId",
-						displayField : "mainPriceName",
-						renderTo : "selectMainPrice",
-						store : new Ext.data.SimpleStore({
-							url : __ctxPath
-							 + "/bandpoor/getMainPriceScoreManage.do",
-							fields : [
-								"mainPriceId",
-								"mainPriceName"]
-						}),
-						listeners : {
-							focus : function (b) {
-								var a = Ext.getCmp("infoPoor.mainPriceName").getStore();
-								if (a.getCount() <= 0) {
-									Ext.Ajax.request({
-										url : __ctxPath + "/bandpoor/getMainPriceScoreManage.do",
-										method : "post",
-										success : function (d) {
-											var c = Ext.util.JSON.decode(d.responseText);
-											a.loadData(c);
-										}
-									});
-								}
-							}
-						}
-					}
-				);	
 				
 				new Ext.form.ComboBox({
 						name : "infoPoor.saleStoreName",
@@ -278,8 +243,8 @@
     			
     			var webSite=document.getElementById("webSite").value;
     			
-    			var mainPriceId=Ext.getCmp("infoPoor.mainPriceName").getValue();
-    			var mainPriceName=Ext.getCmp("infoPoor.mainPriceName").getRawValue();
+    			//var mainPriceId=Ext.getCmp("infoPoor.mainPriceName").getValue();
+    			//var mainPriceName=Ext.getCmp("infoPoor.mainPriceName").getRawValue();
     			
     			var contactUser=document.getElementById("contactUser").value;
     			
@@ -303,6 +268,10 @@
     			
     			var picuurepathid=document.getElementById("infoPoor.picuurepathid").value;
     			
+    			var mainPriceStart=document.getElementById("mainPriceStart").value;
+    			
+    			var mainPriceEnd=document.getElementById("mainPriceEnd").value;
+    			
     			if(proClassId==null||proClassId.length==0){
     				alert("品类归属不能为空，为必填项！");
     				return;
@@ -311,7 +280,7 @@
     				alert("主力商品不能为空，为必填项！");
     				return;
     			}
-    			if(mainPriceId==null||mainPriceId.length==0){
+    			if(mainPriceStart==null||mainPriceStart.length==0||mainPriceEnd==null||mainPriceEnd.length==0){
     				alert("主力价格不能为空，为必填项！");
     				return;
     			}
@@ -350,7 +319,7 @@
     			var url=__ctxPath+"/bandpoor/saveAutoCollenction.do";
 			    var params={bandId:bandId,bandName:bandName,proClassId:proClassId,
 			    proClassName:proClassName,mainProductName:mainProductName,
-			    webSite:webSite,mainPriceId:mainPriceId,mainPriceName:mainPriceName,
+			    webSite:webSite,mainPriceStart:mainPriceStart,mainPriceEnd:mainPriceEnd,
 			    contactUser:contactUser,saleStoreId:saleStoreId,saleStoreName:saleStoreName,
 			    saleSroteDesc:saleSroteDesc,bandChannelId:bandChannelId,bandChannelName:bandChannelName,
 			    contactPhone:contactPhone,companyAddress:companyAddress,companyNature:companyNature,
@@ -396,8 +365,8 @@
          <tr >
            <td>主力价格带</td>
            <td>
-           
-            <div id="selectMainPrice"></div>
+           <table>
+           <tr><td><input type="text" id="mainPriceStart" style="width:50px;height:18px"/></td><td>~</td><td><input type="text" id="mainPriceEnd" style="width:50px;height:18px"/></td><td>元</td></tr></table>
            </td>
            <td>联系人</td>
            <td>

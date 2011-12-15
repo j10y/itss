@@ -44,7 +44,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 						}, {
 							text : "品牌"
 						}, {
-							id : "ScoreManageSearchFormBandName",
+							id : "DxcScoreManageSearchFormBandName",
 							width : 120,
 							name : "Q_bandName_S_LK",
 							maxHeight : 200,
@@ -64,7 +64,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							}),
 							listeners : {
 								focus : function (e) {
-									var d = Ext.getCmp("ScoreManageSearchFormBandName").getStore();
+									var d = Ext.getCmp("DxcScoreManageSearchFormBandName").getStore();
 									if (d.getCount() <= 0) {
 										Ext.Ajax.request({
 											url : __ctxPath + "/bandpoor/getBandsScoreManage.do",

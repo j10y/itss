@@ -113,7 +113,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 					]
 				});
 			this.store = new Ext.data.JsonStore({
-					url : __ctxPath + "/bandpoor/unScoreListPpcScore.do",
+					url : __ctxPath + "/bandpoor/bxcScoreListPpcScore.do",
 					root : "result",
 					baseParams : {
 					},
@@ -254,7 +254,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 			if (a.searchPanel.getForm().isValid()) {
 				a.searchPanel.getForm().submit({
 					waitMsg : "正在提交查询",
-					url : __ctxPath + "/bandpoor/unScoreListPpcScore.do",
+					url : __ctxPath + "/bandpoor/bxcScoreListPpcScore.do",
 					params : {
 						"Q_infoType_N_EQ" : 1
 					},

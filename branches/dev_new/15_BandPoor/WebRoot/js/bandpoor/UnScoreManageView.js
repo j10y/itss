@@ -26,7 +26,7 @@ UnScoreManageView = Ext.extend(Ext.Panel, {
 						padding : "5",
 						align : "middle"
 					},
-					id : "ScoreManageSearchForm",
+					id : "UnScoreManageSearchForm",
 					defaults : {
 						xtype : "label",
 						style : "padding:0px 5px 0px 5px;"
@@ -36,7 +36,7 @@ UnScoreManageView = Ext.extend(Ext.Panel, {
 						}, {
 							text : "品牌"
 						}, {
-							id : "ScoreManageSearchFormBandName",
+							id : "UnScoreManageSearchFormBandName",
 							width : 120,
 							name : "Q_bandName_S_LK",
 							maxHeight : 200,
@@ -56,7 +56,7 @@ UnScoreManageView = Ext.extend(Ext.Panel, {
 							}),
 							listeners : {
 								focus : function (e) {
-									var d = Ext.getCmp("ScoreManageSearchFormBandName").getStore();
+									var d = Ext.getCmp("UnScoreManageSearchFormBandName").getStore();
 									if (d.getCount() <= 0) {
 										Ext.Ajax.request({
 											url : __ctxPath + "/bandpoor/getBandsScoreManageUn.do",
