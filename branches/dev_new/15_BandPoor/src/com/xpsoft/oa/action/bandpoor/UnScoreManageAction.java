@@ -175,6 +175,7 @@ public class UnScoreManageAction extends BaseAction{
 		if(infoPoor.getSaleStoreid()!=null&&infoPoor.getSaleStoreid().getId()==null){
 			infoPoor.setSaleStoreid(null);
 		}
+		infoPoor.setMainPriceName(infoPoor.getMainPriceStart()+"~"+infoPoor.getMainPriceEnd());
 		if(infoPoor.getId()==null){
 			infoPoor.setCreatDate(new Date());
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
