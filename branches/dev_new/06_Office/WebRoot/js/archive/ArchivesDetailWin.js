@@ -23,6 +23,24 @@ ArchivesDetailWin = Ext.extend(Ext.Window, {
 			} ],
 			items : [ this.panel ]
 		});
+
+		if(this.isDist){
+			Ext.Ajax.request({
+				url : __ctxPath
+						+ "/archive/viewArchivesDist.do",
+				params : {
+					archDistId : this.archivesId												
+				},
+				success : function() {
+					try{						
+						if(Ext.getCmp("ArchivesDistView")) Ext.getCmp("ArchivesDistView").gridPanel.store.reload();
+						if(Ext.getCmp("DistArchivesPanelView")) Ext.getCmp("DistArchivesPanelView").refresh();						
+					}catch(e){
+						
+					}
+				}
+			});
+		}
 	},
 	closePanel : function() {
 		this.close();

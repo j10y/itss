@@ -9,11 +9,11 @@
 		<tr>
 			<td width="26"><img
 				src="<%=request.getContextPath()%>/images/menus/flow/task.png" /></td>
-			<td>
-			<!-- 
-			<td><a href="#" >${dist.subject}</a></td>
-			 -->
-			<td width="80" nowrap="nowrap"><a>${dist.subject}</a></td>
+			<td><a href="#"
+				onclick="App.MyDesktopClickWin('ArchivesDetailWin', {archivesId:${dist.archives.archivesId}, isDist:true})">${dist.archives.archivesNo}</a></td>
+			<td width="80" nowrap="nowrap">
+				<font color='red'>${dist.subject}</font>
+			</td>
 			<td width="80" nowrap="nowrap"><a><fmt:formatDate
 				value="${dist.signTime}" pattern="yyyy-MM-dd" /></a></td>
 		</tr>

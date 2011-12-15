@@ -107,6 +107,15 @@ App.MyDesktopClickTopTab = function(id, params, precall, callback) {
 		tabs.activate(tabItem);
 	}
 };
+App.MyDesktopClickWin = function(id, params, precall, callback) {
+	if (precall != null) {
+		precall.call(this);
+	}
+	$ImportJs(id, function(view) {
+		Ext.apply(view,{closable:true});
+		view.show();
+	}, params);
+};
 App.clickNode = function(a) {
 	if (a.id == null || a.id == "" || a.id.indexOf("xnode") != -1) {
 		return;

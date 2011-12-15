@@ -310,6 +310,8 @@ App.importJs = {
 			__ctxPath + "/js/archive/ArchivesDocForm.js",
 			__ctxPath + "/js/archive/ArchivesDetailWin.js",
 			__ctxPath + "/js/archive/ArchivesDocHistoryWin.js" ],
+	ArchivesDetailWin : [
+ 			__ctxPath + "/js/archive/ArchivesDetailWin.js"],
 	ArchivesIssueSearch : [ __ctxPath + "/js/archive/ArchivesIssueSearch.js",
 			__ctxPath + "/js/archive/ArchivesDetailWin.js" ],
 	ArchivesIssueProof : [ __ctxPath + "/js/archive/ArchivesIssueProof.js",

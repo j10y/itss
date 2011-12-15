@@ -242,21 +242,8 @@ ArchivesDistView = Ext
 				});
 ArchivesDistView.detail = function(archivesId,archDistId) {
 	new ArchivesDetailWin( {
-		archivesId : archivesId
+		archivesId : archivesId, isDist:true
 	}).show();
-	//修改状态，重新load
-	
-	Ext.Ajax.request({
-		url : __ctxPath
-				+ "/archive/viewArchivesDist.do",
-		params : {
-			archDistId : archDistId												
-		},
-		success : function() {
-			Ext.getCmp("ArchivesDistView").gridPanel.store.reload();
-		}
-	});
-	Ext.getCmp("ArchivesDistView").gridPanel.store.reload();
 	
 };
 ArchivesDistView.attach = function(d, a) {
