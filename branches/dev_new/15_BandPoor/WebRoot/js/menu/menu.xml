@@ -312,10 +312,24 @@
 		</Items>
 		<Items id="UnScoreManage" text="不可评分管理" iconCls="menu-kpfgl" >
 			<Item id="UnScoreManageView" text="不可评分信息管理" iconCls="menu-bkpfxxgl" >
+				<Function id="_UnScoreManageAdd" text="添加" iconCls="menu-list">
+				</Function>
+				<Function id="_UnScoreManageEdit" text="编辑" iconCls="menu-list">
+				</Function>
+				<Function id="_UnScoreManageDel" text="删除" iconCls="menu-list">
+				</Function>
 			</Item>
 			<Item id="ApplyUnScoreManage" text="不可评分信息审核" iconCls="menu-bkpfxxsh" >
+				<Function id="_ApplyUnScoreManagePass" text="审批通过" iconCls="menu-list">
+				</Function>
+				<Function id="_ApplyUnScoreManageUnPass" text="打回" iconCls="menu-list">
+				</Function>
 			</Item>
 			<Item id="DXCUnScoreManage" text="不可评分待选池考核" iconCls="menu-kpfdxcpf" >
+				<Function id="_DXCUnScoreManageCheck" text="考核" iconCls="menu-list">
+				</Function>
+				<Function id="_DXCUnScoreManageDel" text="删除" iconCls="menu-list">
+				</Function>
 			</Item>
 			<Item id="PPCUnScoreManage" text="不可评分品牌池管理" iconCls="menu-bkpfppcgl" >
 			</Item>
