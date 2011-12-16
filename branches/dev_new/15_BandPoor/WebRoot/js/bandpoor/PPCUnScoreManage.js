@@ -89,10 +89,10 @@ PPCUnScoreManage = Ext.extend(Ext.Panel, {
 						store : [
 							[
 								"1",
-								"进行池"
+								"可应用池"
 							], [
 								"2",
-								"待选池"
+								"备选池"
 							]
 						]
 					}, {
@@ -184,7 +184,7 @@ PPCUnScoreManage = Ext.extend(Ext.Panel, {
 						dataIndex : "bandPoorStatus",
 						renderer : function(d) {
 							if(d == "1") {
-								return "进行池";
+								return "可应用池";
 							}
 							if(d == "2") {
 								return "备选池";
