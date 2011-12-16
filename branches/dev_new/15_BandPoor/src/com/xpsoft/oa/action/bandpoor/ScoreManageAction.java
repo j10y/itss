@@ -193,6 +193,10 @@ public class ScoreManageAction extends BaseAction{
 		}
 		infoPoor.setMainPriceId(null);
 		infoPoor.setMainPriceName(infoPoor.getMainPriceStart()+"~"+infoPoor.getMainPriceEnd());
+		infoPoor.setBandChannelName(AppUtil.getPropertity("bandChannelName"));
+		BandChannel bandChannelID=new BandChannel();
+		bandChannelID.setId(Long.parseLong(AppUtil.getPropertity("bandChannelId")));
+		infoPoor.setBandChannelID(bandChannelID);
 		if(infoPoor.getId()==null){
 			infoPoor.setCreatDate(new Date());
 			infoPoor.setCreatUser(ContextUtil.getCurrentUser());
@@ -600,9 +604,9 @@ public class ScoreManageAction extends BaseAction{
 				ifpoor.setMainPriceName(mainPriceName);
 				String bandDesc=sheet.getCell(7, i).getContents();
 				ifpoor.setBandDesc(bandDesc);
-				ifpoor.setBandChannelName("实体店");
+				ifpoor.setBandChannelName(AppUtil.getPropertity("bandChannelName"));
 				BandChannel bandChannelID=new BandChannel();
-				bandChannelID.setId(1l);
+				bandChannelID.setId(Long.parseLong(AppUtil.getPropertity("bandChannelId")));
 				ifpoor.setBandChannelID(bandChannelID);
 				list.add(ifpoor);
 			}
