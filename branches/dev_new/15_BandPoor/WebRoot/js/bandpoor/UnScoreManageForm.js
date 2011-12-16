@@ -127,7 +127,7 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 															name : "infoPoor.mainPriceStart",
 															id : "infoPoorForm.mainPriceStart",
 															xtype : "numberfield",
-															width : 80
+															width : 73
 														}, {
 															xtype : "label",
 															text : "~",
@@ -136,7 +136,11 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 															name : "infoPoor.mainPriceEnd",
 															id : "infoPoorForm.mainPriceEnd",
 															xtype : "numberfield",
-															width : 80
+															width : 73
+														}, {
+															xtype : "label",
+															text : "元",
+															width : 14
 														}
 													]
 												}, {
