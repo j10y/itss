@@ -99,7 +99,7 @@ public class AutoCollenctionInfoAction extends BaseAction{
 		infoPoor.setWebSite(webSite);
 		infoPoor.setMainPriceStart(Long.parseLong(mainPriceStart));
 		infoPoor.setMainPriceEnd(Long.parseLong(mainPriceEnd));
-		infoPoor.setMainPriceName(mainPriceStart+""+mainPriceEnd);
+		infoPoor.setMainPriceName(mainPriceStart+"~"+mainPriceEnd);
 		infoPoor.setContactUser(contactUser);
 		infoPoor.setContactPhone(contactPhone);
 		if(saleStoreId!=null&&saleStoreId.length()>0){
@@ -139,10 +139,13 @@ public class AutoCollenctionInfoAction extends BaseAction{
 			infoPoor.setInfoSource(InfoPoor.SCOUCE_AUTOCOLLECTION);
 			if(infoPoor.getBandId()!=null&&infoPoor.getSaleStoreid()!=null&&vallist.size()==0){
 				infoPoor.setInfoType(InfoPoor.TYPE_SCORE);
+				System.out.println("------------------进入可评分------------------------");
 			}else if(infoPoor.getBandId()!=null&&infoPoor.getSaleStoreName().equals("其他")){
 				infoPoor.setInfoType(InfoPoor.TYPE_UNSCORE);
+				System.out.println("------------------进入不可评分------------------");
 			}else{
 				infoPoor.setInfoType(InfoPoor.TYPE_UNKNOWN);
+				System.out.println("------------------进入自动采集------------------");
 			}
 			infoPoor=scoreManageService.save(infoPoor);
 			if(picuurepathid!=null&&picuurepathid.length()>0){
