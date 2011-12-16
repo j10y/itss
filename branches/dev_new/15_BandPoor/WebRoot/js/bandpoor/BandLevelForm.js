@@ -11,7 +11,7 @@ BandLevelForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 180,
+			height : 235,
 			width : 350,
 			title : "商圈详细信息",
 			buttonAlign : "center",

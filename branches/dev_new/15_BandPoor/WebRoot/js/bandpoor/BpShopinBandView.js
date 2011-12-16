@@ -90,20 +90,16 @@ BpShopinBandView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		if(isGranted("_BpShopinBandEdit")) {
-			b.push({
-				iconCls : "btn-edit",
-				qtip : "编辑",
-				style : "margin:0 3px 0 3px"
-			});
-		}
-		if(isGranted("_BpShopinBandDel")) {
-			b.push({
-				iconCls : "btn-del",
-				qtip : "删除",
-				style : "margin:0 3px 0 3px"
-			});
-		}
+		b.push({
+			iconCls : "btn-edit",
+			qtip : "编辑",
+			style : "margin:0 3px 0 3px"
+		});
+		b.push({
+			iconCls : "btn-del",
+			qtip : "删除",
+			style : "margin:0 3px 0 3px"
+		});
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -181,11 +177,9 @@ BpShopinBandView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				if(isGranted("_BpShopinBandEdit")) {
-					new BpShopinBandForm({
-						bpShopinBandId : e.data.id
-					}).show();
-				}
+				new BpShopinBandForm({
+					bpShopinBandId : e.data.id
+				}).show();
 			});
 		});
 		this.rowActions.on("action", this.onRowAction, this);
