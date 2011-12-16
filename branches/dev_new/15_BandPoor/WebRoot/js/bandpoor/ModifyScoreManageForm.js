@@ -500,6 +500,9 @@ ModifyScoreManageForm = Ext.extend(Ext.Window, {
 						Ext.ux.Toast.msg("编辑", "载入失败");
 					}
 				});
+			}else{
+					Ext.getCmp("infoPoorModify.bandChannelID").setValue(1);
+					Ext.getCmp("infoPoorModify.bandChannelName").setValue("实体店");
 			}
 			this.buttons = [{
 					text : "保存",

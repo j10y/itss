@@ -209,7 +209,12 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 					handler : this.uploadBandInfo,
 				}));
 			}
-			
+			this.topbar.add(new Ext.Button({
+				text : "下载品牌信息数据模板excel文件",
+				handler : function() {
+					window.open(__ctxPath + "/userfiles/dataTemplate/infopool.xls");
+				}
+			}));
 			this.gridPanel = new Ext.grid.GridPanel({
 					id : "ScoreManageGrid",
 					region : "center",
