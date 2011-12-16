@@ -293,9 +293,23 @@
     				alert("主力价格不能为空，为必填项！");
     				return;
     			}
+    			if(isNaN(mainPriceStart) || isNaN(mainPriceEnd)) {
+    				alert("主力价格必须为数字！");
+    				return;
+    			}
+    			if(mainPriceStart >= mainPriceEnd) {
+    				alert("主力价格必须从小到大，例如：1~10！");
+    				return;
+    			}
     			if(companyNature==null||companyNature.length==0){
     				alert("公司性质不能为空，为必填项！");
     				return;
+    			}
+    			if(contactPhone != null && contactPhone.length > 0) {
+    				if(!checkPhoneAndMobile(contactPhone)) {
+    					alert("对不起，您输入的联系方式有误，如果是固定电话区号和电话号码之间请用-分割！");
+    					return;
+    				}
     			}
     			if(companyAddress==null||companyAddress.length==0){
     				alert("产地不能为空，为必填项！");
@@ -343,6 +357,56 @@
 						alert("保存成功");
 						}
 					})
+    		}
+    		//验证电话号码
+    		function checkPhone(phone)    
+    		{    
+	    		if (phone==""){    
+		    		alert("电话号码不能为空！");     
+		    		return false;    
+	    		}    
+	    		if (phone != ""){     
+	    		var p1 = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;    
+	    		var me = false;    
+	    		if (p1.test(phone)) me=true;    
+	    		if (!me){       
+		    		return false;    
+	    		}    
+	    		}   
+	    		return true;    
+    		}
+    		//验证手机号码
+    		function checkMobile(mobile)    
+    		{      
+	    		if (mobile != ""){       
+		    		var reg0 = /^13\d{5,9}$/;    
+		    		var reg1 = /^153\d{4,8}$/;    
+		    		var reg2 = /^159\d{4,8}$/;    
+		    		var reg3 = /^0\d{10,11}$/;  
+		    		var reg4 = /^150\d{4,8}$/; 
+		    		var reg5 = /^158\d{4,8}$/; 
+		    		var reg6 = /^15\d{5,9}$/;  
+		    		var my = false;    
+		    		if (reg0.test(mobile))my=true;    
+		    		if (reg1.test(mobile))my=true;    
+		    		if (reg2.test(mobile))my=true;    
+		    		if (reg3.test(mobile))my=true;  
+		    		if (reg4.test(mobile))my=true;    
+		    		if (reg5.test(mobile))my=true;    
+		    		if (reg6.test(mobile))my=true;    
+		    		if (!my){  
+			    		return false;    
+		    		}    
+		    		return true;    
+	    		}    
+    		}  
+			//验证联系方式（包括电话号码和手机号码）
+    		function checkPhoneAndMobile(phone)    
+    		{     
+	    		if (checkMobile(phone)||checkPhone(phone)){  
+	    			return true;    
+	    		} 
+	    		return false;   
     		}
     	</script>
 </head>
