@@ -129,15 +129,16 @@
 		}
 		
 		BODY {
-			BORDER-TOP-WIDTH: 0px;
-			BORDER-LEFT-WIDTH: 0px;
-			BORDER-BOTTOM-WIDTH: 0px;
-			MARGIN: 0px auto 0 auto;
-			FONT-SIZE: 12px;
-			FONT-FAMILY: 宋体;
-			BACKGROUND-COLOR: #fff;
-			BORDER-RIGHT-WIDTH: 0px;
+			border-top-width: 0px;
+			border-left-width: 0px;
+			border-bottom-width: 0px;
+			margin: 0px auto 0 auto;
+			font-size: 12px;
+			font-family: 宋体;
+			background-color: #fff;
+			border-right-width: 0px;
 			color: #000000;
+			background-color:#154d88;
 		}
 		
 		a:link {
@@ -195,8 +196,7 @@
 </SCRIPT>
 	<BODY>
 		<CENTER>
-		<TABLE cellspacing="0" cellpadding="0" width="990" align="center"
-			border="0">
+		<TABLE style="background-color:#ffffff;" cellspacing="0" cellpadding="0" width="990" align="center" border="0" >
 			<TBODY>
 				<TR>
 					<TD width="574" height="134">
