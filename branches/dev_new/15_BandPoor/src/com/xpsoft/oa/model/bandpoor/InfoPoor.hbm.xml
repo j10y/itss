@@ -315,6 +315,21 @@
             access="property"
             column="mainPriceEnd"
         />
-        
+        <property
+            name="checkUser"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="checkUser"
+        />
+        <property
+            name="checkDate"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="checkDate"
+        />
     </class>
 </hibernate-mapping>

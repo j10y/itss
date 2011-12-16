@@ -548,6 +548,8 @@ public class ScoreManageAction extends BaseAction{
 				if(vallist.size()>0){
 					ifpoor=(InfoPoor) vallist.get(0);
 				}
+				ifpoor.setCheckUser(checkUser);
+				ifpoor.setCheckDate(checkDate);
 				String floorNum=sheet.getCell(3, i).getContents();
 				QueryFilter floorfilter = new QueryFilter(getRequest());
 				floorfilter.addFilter("Q_floorName_S_EQ", floorNum);

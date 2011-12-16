@@ -85,6 +85,12 @@ public class InfoPoor extends BaseModel{
 	private Long mainPriceStart;//主力价格起始值
 	
 	private Long mainPriceEnd;//主力价格终止值
+	
+	private String checkUser;//采集人
+	
+	private String checkDate;//采集时间
+	
+	
 
 	public Long getId() {
 		return id;
@@ -602,6 +608,22 @@ public class InfoPoor extends BaseModel{
 
 	public void setMainPriceEnd(Long mainPriceEnd) {
 		this.mainPriceEnd = mainPriceEnd;
+	}
+
+	public String getCheckUser() {
+		return checkUser;
+	}
+
+	public void setCheckUser(String checkUser) {
+		this.checkUser = checkUser;
+	}
+
+	public String getCheckDate() {
+		return checkDate;
+	}
+
+	public void setCheckDate(String checkDate) {
+		this.checkDate = checkDate;
 	}
 
 	
