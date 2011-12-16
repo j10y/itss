@@ -158,6 +158,7 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 													triggerAction : "all",
 													valueField : "saleStoreid",
 													displayField : "saleStoreName",
+													readOnly :true,
 													store : new Ext.data.SimpleStore({
 														url : __ctxPath
 														 + "/bandpoor/getSaleStoreScoreManageUn.do",
@@ -166,7 +167,8 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 															"saleStoreName"]
 													}),
 													listeners : {
-														focus : function (b) {
+														/*focus : function (b) {
+														
 															var a = Ext.getCmp("infoPoorForm.saleStoreName").getStore();
 															if (a.getCount() <= 0) {
 																Ext.Ajax.request({
@@ -189,7 +191,7 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 																Ext.getCmp("infoPoorForm.saleSroteDesc").allowBlank = true;
 															}
 															Ext.getCmp("infoPoorForm.saleStoreid").setValue(saleStoreid);
-														}
+														}*/
 													},
 													width : 170
 												}, {
@@ -411,7 +413,7 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 					Ext.getCmp("infoPoorForm.contactPhone").setValue(d.contactPhone);
 					Ext.getCmp("infoPoorForm.companyNature").setValue(d.companyNature);
 					
-					Ext.getCmp("infoPoorForm.saleStoreid").setValue(d.saleStoreid.id);
+					//Ext.getCmp("infoPoorForm.saleStoreid").setValue(d.saleStoreid.id);
 					Ext.getCmp("infoPoorForm.saleStoreName").setValue(d.saleStoreName);
 					if(d.saleStoreName&&d.saleStoreName=="其他"){
 						Ext.getCmp("infoPoorForm.saleSroteDesc").allowBlank = false;
@@ -435,6 +437,9 @@ UnScoreManageForm = Ext.extend(Ext.Window, {
 						Ext.ux.Toast.msg("编辑", "载入失败");
 					}
 				});
+			}else{
+				Ext.getCmp("infoPoorForm.saleStoreName").setValue("其他");
+				Ext.getCmp("infoPoorForm.saleStoreid").setValue("");
 			}
 			this.buttons = [{
 					text : "保存",
