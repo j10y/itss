@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +33,7 @@ import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.web.paging.PagingBean;
 import com.xpsoft.oa.action.flow.FlowRunInfo;
 import com.xpsoft.oa.action.flow.ProcessActivityAssistant;
+import com.xpsoft.oa.dao.flow.ProcessFormDao;
 import com.xpsoft.oa.model.archive.ArchDispatch;
 import com.xpsoft.oa.model.archive.ArchRecFiledType;
 import com.xpsoft.oa.model.archive.ArchRecType;
@@ -76,6 +78,8 @@ import com.xpsoft.oa.service.system.DepartmentService;
 import com.xpsoft.webservice.service.flow.FlowService;
 
 public class FlowServiceImpl implements FlowService {
+	private ProcessFormDao processFormDao=(ProcessFormDao) AppUtil.getBean("processFormDao");
+	
 	private String activityName;
 	private String taskId;
 	private Map parmap = new HashMap();
@@ -756,11 +760,16 @@ public class FlowServiceImpl implements FlowService {
 		ProcessRunService processRunService = (ProcessRunService) AppUtil
 				.getBean("processRunService");
 		if(ispass!=null&&ispass.length()>0&&ispass.equals("false")){
+			this.parmap.put("activityName", activityName);
+			this.parmap.put("taskId", taskId);
+			this.parmap.put("signalName", signalName);
+			FlowRunInfo flowRunInfo = getFlowRunInfo();
 			ProcessInstance pi=jbpmService.getProcessInstanceByTaskId(taskId);
 			ProcessRun processRun = processRunService.getByTaskId(this.taskId.toString());
 			processRun.setRunStatus(ProcessRun.RUN_STATUS_FINISHED);
 	        processRun.setPiId(null);
 	        processRunService.save(processRun);
+	        this.saveForm(processRun, flowRunInfo,"打回");
 			jbpmService.endProcessInstance(pi.getId());
 			if (processName.equals("请假-短") || processName.equals("请假-中")
 					|| processName.equals("请假-长")) {
@@ -1204,7 +1213,7 @@ public class FlowServiceImpl implements FlowService {
 					leaderReadService.save(leaderRead);
 					this.parmap.put("leaderOpinion", commentDesc);
 				}else if (activityName.equals("指定传阅人")){
-					//三个按钮 审批0（nextuser）  直接归档1（gdlx）  分管领导审批2（nextuser）  然后  类型的话放
+					//三个按钮 审批1（nextuser）  直接归档2（gdlx）  分管领导审批3（nextuser）  然后  类型的话放
 					Archives archives = ((Archives) archivesService.get(Long
 							.parseLong(id)));
 					if(btType.equals("1")){//审批
@@ -1246,12 +1255,15 @@ public class FlowServiceImpl implements FlowService {
 						archDispatch.setIsRead(ArchDispatch.HAVE_READ);
 						archDispatch.setReadFeedback(commentDesc);
 						archDispatchService.save(archDispatch);
+						this.parmap.put("handleOpinion", commentDesc);
+						FlowRunInfo flowRunInfo = getFlowRunInfo();
 						ProcessInstance pi=jbpmService.getProcessInstanceByTaskId(taskId);
 						ProcessRun processRun = processRunService.getByTaskId(this.taskId.toString());
 						processRun.setRunStatus(ProcessRun.RUN_STATUS_FINISHED);
 				        processRun.setPiId(null);
 				        processRunService.save(processRun);
 						jbpmService.endProcessInstance(pi.getId());
+						this.saveForm(processRun, flowRunInfo,"承办归档");
 						return "{success:true}";
 //						this.parmap.put("handleOpinion", commentDesc);
 //						this.parmap.put("destName", "承办归档");
@@ -1413,7 +1425,7 @@ public class FlowServiceImpl implements FlowService {
 		Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
 		Department pep=this.findDepartmentByDeptId(deptId);
 		String sql="";
-		if(pep.getIsDist()==0||pep.getIsDist()==null){
+		if(pep.getIsDist()==null||pep.getIsDist()==0){
 			sql = "select app_user.* from user_role,app_role,app_user "
 				+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
 			sql += "and app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+")";
@@ -1443,7 +1455,7 @@ public class FlowServiceImpl implements FlowService {
 		Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
 		Department pep=this.findDepartmentByDeptId(deptId);
 		String sql="";
-		if(pep.getIsDist()==0||pep.getIsDist()==null){
+		if(pep.getIsDist()==null||pep.getIsDist()==0){
 			 sql = "select app_user.* from department,app_user where app_user.depId=department.depId and department.isDist!=0 and app_user.userId>0";
 		}else{
 			while(pep!=null&&pep.getIsDist()==1){//如果是分局，又不是顶层的话，找到顶层
@@ -1471,7 +1483,7 @@ public class FlowServiceImpl implements FlowService {
 		Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
 		Department pep=this.findDepartmentByDeptId(deptId);
 		String sql="";
-		if(pep.getIsDist()==0||pep.getIsDist()==null){
+		if(pep.getIsDist()==null||pep.getIsDist()==0){
 			sql= "select app_user.* from app_role,app_user,user_role "
 				+ "where  user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
 			sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+"))";
@@ -1514,5 +1526,40 @@ public class FlowServiceImpl implements FlowService {
 	public Department findDepartmentByDeptId(Long depid){
 		DepartmentService departmentService=(DepartmentService) AppUtil.getBean("departmentService");
 		return departmentService.get(depid);
+	}
+	
+	public void saveForm(ProcessRun processRun,FlowRunInfo flowRunInfo,String statusName){
+		//form保存
+		Integer maxSn = Integer.valueOf(this.processFormDao
+				.getActvityExeTimes(processRun.getRunId(),
+						flowRunInfo.getActivityName()).intValue());
+		ProcessForm processForm = new ProcessForm();
+		processForm.setActivityName(flowRunInfo.getActivityName());
+		processForm.setSn(Integer.valueOf(maxSn.intValue() + 1));
+		AppUser curUser = ContextUtil.getCurrentUser();
+		processForm.setCreatorId(curUser.getUserId());
+		processForm.setCreatorName(curUser.getFullname());
+		processForm.setProcessRun(processRun);
+		Iterator it = flowRunInfo.getParamFields().keySet().iterator();
+		while (it.hasNext()) {
+			String key = (String) it.next();
+			ParamField paramField = (ParamField) flowRunInfo
+					.getParamFields().get(key);
+			FormData fd = new FormData(paramField);
+			fd.setProcessForm(processForm);
+			processForm.getFormDatas().add(fd);
+		}
+		ParamField paramField =new ParamField();
+		paramField.setName("status");
+		paramField.setLabel("状态");
+		paramField.setType("varchar");
+		paramField.setValue(statusName);
+		paramField.setIsShowed(Short.parseShort("1"));
+		paramField.setLength(100);
+		FormData fd = new FormData(paramField);
+		fd.setProcessForm(processForm);
+		processForm.getFormDatas().add(fd);
+		ProcessFormService processFormService=(ProcessFormService) AppUtil.getBean("processFormService");
+		processFormService.save(processForm);
 	}
 }
