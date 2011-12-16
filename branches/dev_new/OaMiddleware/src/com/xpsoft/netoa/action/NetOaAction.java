@@ -48,6 +48,7 @@ public class NetOaAction extends BaseAction{
 				jo.put("success", (new Boolean(ck.get("success")).booleanValue()));
 				jo.put("fn", ck.get("fn"));
 				jo.put("url", ck.get("url"));
+				jo.put("updateLog", ck.get("log"));
 			}else{
 				jo.put("success", false);
 			}

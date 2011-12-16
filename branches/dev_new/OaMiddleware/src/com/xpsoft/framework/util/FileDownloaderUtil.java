@@ -222,6 +222,7 @@ public class FileDownloaderUtil {
 				result.put("success", "true");
 				result.put("fn", fileName);
 				result.put("url", httpUrl);
+				result.put("log", info.get("log"));
 			}
 		}else{
 			result.put("success", "false");
@@ -252,6 +253,7 @@ public class FileDownloaderUtil {
 			 info.put("version", sd.getVersion());
 			 info.put("fn", sd.getFileName());
 			 info.put("url", HttpUtil.htmlEncode(sd.getUrl()));
+			 info.put("log", sd.getDesc());
 			 
 			return info;
 		} catch (Exception e) {
