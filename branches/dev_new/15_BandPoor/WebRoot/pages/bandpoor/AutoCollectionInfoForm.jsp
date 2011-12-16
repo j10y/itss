@@ -46,6 +46,7 @@
     	<script type="text/javascript" src="<%=request.getContextPath()%>/js/ScrollText.js"></script>
     	<script type="text/javascript" src="<%=request.getContextPath()%>/ext3/ext-basex.js"></script>
     	<style type="text/css">
+    	body {width:960px;margin:0 auto;}
 		.table-info td { padding:5px; line-height:24px; font-size:12px;}
 		.table-info table td  { border-bottom:1px solid #e0e0e0;}
 		</style>
