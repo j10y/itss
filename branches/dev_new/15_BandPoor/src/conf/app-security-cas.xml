@@ -24,6 +24,7 @@
         <sec:intercept-url pattern="/500*" filters="none"/> 
         <sec:intercept-url pattern="/ext3/**" filters="none"/>
         <sec:intercept-url pattern="/fckeditor/**" filters="none"/>  
+        <sec:intercept-url pattern="/file-upload*" filters="none"/> 
         
         <sec:intercept-url pattern="/*" access="ROLE_PUBLIC" />
         <!-- 
@@ -125,7 +126,6 @@
 		<property name="publicUrls">
 			<set>
 				<value>/panelTreeMenu.do</value>
-				<value>/file-upload</value>
 				<value>/index.jsp</value>
 				<value>/info/detailInMessage.do</value>
 				<value>/info/sendShortMessage.do</value>
