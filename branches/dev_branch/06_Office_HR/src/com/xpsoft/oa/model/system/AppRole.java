@@ -5,11 +5,13 @@
 /*     */ import java.util.HashSet;
 /*     */ import java.util.Set;
 /*     */ import org.jbpm.api.identity.Group;
-/*     */ import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthority;
 /*     */ 
 /*     */ public class AppRole extends BaseModel
 /*     */   implements GrantedAuthority, Group
 /*     */ {
+			public static String ROLE_ADMIN = "ROLE_ADMIN";
+			
 /*  20 */   public static String ROLE_PUBLIC = "ROLE_PUBLIC";
 /*     */ 
 /*  22 */   public static String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
@@ -119,8 +121,3 @@
 /* 133 */     this.functions = functions;
 /*     */   }
 /*     */ }
-
-/* Location:           C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6-joffice\webapps\joffice1.3.1\WEB-INF\classes\
- * Qualified Name:     com.xpsoft.oa.model.system.AppRole
- * JD-Core Version:    0.6.0
- */
