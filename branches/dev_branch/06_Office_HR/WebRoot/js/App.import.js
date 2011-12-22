@@ -59,6 +59,8 @@ App.importJs = {
 			__ctxPath + "/ext3/ux/ItemSelector.js",
 			__ctxPath + "/ext3/ux/MultiSelect.js",
 			__ctxPath + "/js/system/ResetPasswordForm.js" ],
+	ResourceView : [ __ctxPath + "/js/system/ResourceView.js",
+			__ctxPath + "/js/system/ResourceForm.js" ],		
 	ProfileForm : [ __ctxPath + "/js/system/ProfileForm.js",
 			__ctxPath + "/js/system/ResetPasswordForm.js" ],
 	NewsView : [ __ctxPath + "/js/info/NewsView.js",
