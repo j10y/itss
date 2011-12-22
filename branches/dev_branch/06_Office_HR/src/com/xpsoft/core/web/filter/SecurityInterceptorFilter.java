@@ -1,6 +1,8 @@
 package com.xpsoft.core.web.filter;
 
 import com.xpsoft.core.security.SecurityDataSource;
+import com.xpsoft.oa.model.system.AppRole;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
@@ -67,14 +69,31 @@ public class SecurityInterceptorFilter extends OncePerRequestFilter {
 	}
 
 	private boolean isUrlGrantedRight(String url, Authentication auth) {
-		for (GrantedAuthority ga : auth.getAuthorities()) {
-			Set urlSet = (Set) this.roleUrlsMap.get(ga.getAuthority());
-
-			if ((urlSet != null) && (urlSet.contains(url))) {
-				return true;
+//		for (GrantedAuthority ga : auth.getAuthorities()) {
+//			Set urlSet = (Set) this.roleUrlsMap.get(ga.getAuthority());
+//
+//			if ((urlSet != null) && (urlSet.contains(url))) {
+//				return true;
+//			}
+//		}
+//		return false;
+//		if("/".equals(url)){
+//	    	return false;
+//	    } 
+		//系统所有的资源
+		Set urlForAdmin = this.roleUrlsMap.get(AppRole.ROLE_ADMIN);
+		if(urlForAdmin != null && urlForAdmin.contains(url)){
+			//1.已授权的资源
+			for (GrantedAuthority ga : auth.getAuthorities()) {
+				 //roleUrlsMapClone.remove(ga.getAuthority());
+				 Set urlSet = (Set) this.roleUrlsMap.get(ga.getAuthority());
+				 if ((urlSet != null) && (urlSet.contains(url))) {
+					return true;
+				 }
 			}
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	public void loadDataSource() {
