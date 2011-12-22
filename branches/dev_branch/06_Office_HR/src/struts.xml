@@ -58,6 +58,12 @@
 	    <action name="*Dictionary" class="DictionaryAction" method="{1}">
 	        <result>${successResultValue}</result>
 	    </action>
+	    <action name="*AppFunction" class="AppFunctionAction" method="{1}">
+	        <result>${successResultValue}</result>
+	    </action>
+	    <action name="*FunUrl" class="FunUrlAction" method="{1}">
+	        <result>${successResultValue}</result>
+	    </action>
 	    <action name="*IndexDisplay" class="IndexDisplayAction" method="{1}">
 	         <result>${successResultValue}</result>
 	    </action>
