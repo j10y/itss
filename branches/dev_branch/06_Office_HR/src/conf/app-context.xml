@@ -12,6 +12,7 @@
    <import resource="app-jbpm.xml"/>
    <import resource="app-scheduling.xml"/>
    <!--
+   <import resource="app-security-cas.xml"/>
    <import resource="app-compass.xml"/>
    -->
 </beans>
