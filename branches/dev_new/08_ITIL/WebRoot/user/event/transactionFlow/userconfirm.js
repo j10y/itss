@@ -212,6 +212,10 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							var data = Ext.decode(responseText);
 							isExist = data.success;
 							if(!isExist){//未填写调查问卷
+								Ext.Msg.alert("提示", "请您耐心填写反馈调查，谢谢！");
+								Ext.getCmp('btn_confirm').enable();
+			  					Ext.getCmp('btn_back').enable();
+								return;//强制前天满意度调查
 								Ext.MessageBox.confirm('请确认', '未完成反馈调查，是否继续？',function(button, text){
 									if(button == 'no'){
 										Ext.getCmp('btn_confirm').enable();
