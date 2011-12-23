@@ -689,4 +689,20 @@
 	<bean id="hrPostAssessmentService" class="com.xpsoft.oa.service.hrm.impl.HrPostAssessmentServiceImpl">
 		<constructor-arg index="0" ref="hrPostAssessmentDao"/>
 	</bean>
+	
+	<bean id="mrbsAreaService" class="com.xpsoft.oa.service.system.impl.MrbsAreaServiceImpl">
+		<constructor-arg index="0" ref="mrbsAreaDao"/>
+	</bean>
+	<bean id="mrbsRepeatService" class="com.xpsoft.oa.service.system.impl.MrbsRepeatServiceImpl">
+		<constructor-arg index="0" ref="mrbsRepeatDao"/>
+	</bean>
+	<bean id="mrbsRoomService" class="com.xpsoft.oa.service.system.impl.MrbsRoomServiceImpl">
+		<constructor-arg index="0" ref="mrbsRoomDao"/>
+	</bean>
+	<bean id="mrbsScheduleService" class="com.xpsoft.oa.service.system.impl.MrbsScheduleServiceImpl">
+		<constructor-arg index="0" ref="mrbsScheduleDao"/>
+	</bean>
+	<bean id="mrbsScheduleUserService" class="com.xpsoft.oa.service.system.impl.MrbsScheduleUserServiceImpl">
+		<constructor-arg index="0" ref="mrbsScheduleUserDao"/>
+	</bean>
 </beans>
