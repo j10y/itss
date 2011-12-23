@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 
@@ -99,9 +100,11 @@ public class TrainPlanServiceImpl extends BaseDao implements TrainPlanService{
 	public List<QuestOption> findQuestOption(Quest quest) {
 		// TODO Auto-generated method stub
 //		this.findBy(QuestOption.class, "quest", quest);
-//		Criteria c = super.getCriteria(QuestOption.class);
-//		c.add(Restrictions.eq("quest", quest));
-		return this.findBy(QuestOption.class, "quest", quest);
+		Criteria c = super.getCriteria(QuestOption.class);
+		c.add(Restrictions.eq("quest", quest));
+		c.addOrder(Order.asc("answerNo"));
+		return c.list();
+		//return this.findBy(QuestOption.class, "quest", quest);
 	}
 
 	public List<Quest> findQuest(Survey survey) {
