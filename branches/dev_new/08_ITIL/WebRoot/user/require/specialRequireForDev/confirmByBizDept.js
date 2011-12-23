@@ -6,7 +6,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 	foredit : true,
 	width : 1050,
 	frame : true,
-	buttonAlign : 'center',	
+	buttonAlign : 'center',
 	autoScroll : true,
 	defaults : {
 		bodyStyle : 'padding:4px'
@@ -17,76 +17,52 @@ PageTemplates = Ext.extend(Ext.Panel, {
 	
 	//保存并提交方法
 	saveAndSubmit : function() {
-		if(!Ext.getCmp('panel_SpecialRequireDevConfirm_m_Input').form.isValid()){
+		if(!Ext.getCmp('panel_SpecialRequireDevConfirm_Input').form.isValid()){
 			Ext.MessageBox.alert("提示","页面中带红色波浪线的为必填项,请填写完整。谢谢您合作！");	
 			return false;
 		}
-		if(Ext.getCmp('SpecialRequirement$deliveryTeamCombo').getValue()==""){
-			Ext.MessageBox.alert("提示","您必须选择交付团队！");	
-			return false;
-		}
-		if(Ext.getCmp('SpecialRequirement$mainEngineerCombo').getValue()==""){
-			Ext.MessageBox.alert("提示","您必须选择交付经理！");	
-			return false;
-		}
-		var formParam = Ext.encode(getFormParam('panel_SpecialRequireDevConfirm_m_Input'));
+		var formParam = Ext.encode(getFormParam('panel_SpecialRequireDevConfirm_Input'));
 		var taskId = this.taskId;
 		Ext.Ajax.request({
-			url : webContext + '/SRAction_saveSpecialRequire.action',
+			url : webContext+ '/SRAction_saveSpecialRequire.action',
 			params : {info : formParam},
+			
 			success : function(response, options) {
-				var tempOfficerId = Ext.util.JSON.decode(response.responseText).serviceProviderInOfficer;//交付线负责人
-				var tempEngineerId = Ext.util.JSON.decode(response.responseText).mainEngineer;//交付经理
-				var tempServiceManageId = Ext.util.JSON.decode(response.responseText).serviceManager;//服务总监
-				var tempUrl = "";
-				if (tempEngineerId != "0") {
-					tempUrl = webContext
-							+ '/extjs/workflow?method=getData&taskId=' + taskId
-//							+ '&users=makeInfoByEngineer:' + tempEngineerId
-//							+ '$executeByEngineer:' + tempEngineerId
-//							+ '$issueByEngineer:' + tempEngineerId
-//							+ '$selectEngineer:' + tempOfficerId;
-							+ '&users=submitImplementation:' + tempEngineerId
-							+ '$implementation:' + tempEngineerId;
-							if(tempServiceManageId != ""){
-								tempUrl += '$confirmByServiceManager:' + tempServiceManageId;
-							}	
-				} else {
-					tempUrl = webContext
-							+ '/extjs/workflow?method=getData&taskId=' + taskId
-							+ '&users=selectEngineer:' + tempOfficerId;
+				var appManager = Ext.getCmp('SpecialRequirement$appManagerCombo').getValue();
+				if(appManager!=""){
+					Ext.Ajax.request({
+						url : webContext + '/extjs/workflow?method=getData&taskId=' + taskId
+								+ '&users=confirmByAppManager:' + appManager,
+						method : 'post',
+						success : function(response, options) {
+							window.parent.auditContentWin.specialAudit();
+						},
+						failure : function(response, options) {
+							alert("指派业务审批人出现异常");
+						}
+					});
+				}else{
+					window.parent.auditContentWin.specialAudit();
 				}
-				Ext.Ajax.request({
-					url : tempUrl,
-					method : 'post',
-					success : function(response, options) {
-						window.parent.auditContentWin.specialAudit();
-					},
-					failure : function(response, options) {
-						alert("指派节点审批人失败！");
-					}
-				})
-			},
+				},
 			failure : function(response, options) {
 				Ext.MessageBox.alert("保存失败");
 			}
 		}, this);
 	},
 	
-	getTabpanel : function(tab,tabTitle){
-		this.tabPanel = new Ext.TabPanel({           
+	getTabpanel : function(tab, tabTitle) {
+		this.tabPanel = new Ext.TabPanel({
 			xtype : 'tabpanel',
 			activeTab : 0,
-            enableTabScroll:true, 
-            title:tabTitle,
+			enableTabScroll : true,
+			title : tabTitle,
 			deferredRender : false,
 			frame : true,
 			plain : true,
-            border : false, 
-            //tabPosition:'bottom',
+			border : false,
 			baseCls : 'x-plain',// 是否设置和背景色同步
 			width : 900,
-			//bodyBorder : true,
 			defaults : {
 				autoHeight : true,
 				bodyStyle : 'padding:2px'
@@ -96,17 +72,17 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		return this.tabPanel;
 
 	},
-	getPanel : function(appa,panelTitle) {
+	getPanel : function(appa, panelTitle) {
 		this.Panel = new Ext.Panel({
 			id : "Pages",
 			height : 'auto',
 			align : 'center',
-			title:panelTitle,
+			title : panelTitle,
 			border : false,
-            defaults : {
-                 bodyStyle : 'padding:5px'
-            },
-			width :'auto',
+			defaults : {
+				bodyStyle : 'padding:5px'
+			},
+			width : 'auto',
 			frame : true,
 			autoScroll : true,
 			layoutConfig : {
@@ -116,35 +92,42 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		});
 		return this.Panel;
 
-	}, 
-	
-	
- getFormpanel_SpecialRequireDevConfirm_m_Input: function() {
-      var da = new DataAction();
-		  var data = null;
-			// 判断是新增还是修改
-			var biddata = "";
-			
-			  var buttonUtil = new ButtonUtil();
-			  this.getFormButtons = buttonUtil.getButtonForPanel("panel_SpecialRequireDevConfirm_m_Input",this);
-			if (this.dataId != '0') {
-				data = da.getPanelElementsForEdit("devsr_m_confirmByTechnicManager", "panel_SpecialRequireDevConfirm_m_Input", this.dataId);// 这是要随时变得
-			} else {
-				data = da.getPanelElementsForAdd("panel_SpecialRequireDevConfirm_m_Input");
-			}
-			for (i = 0; i < data.length; i++) {
+	},
+
+	getFormpanel_SpecialRequireDevConfirm_Input : function() {
+		var da = new DataAction();
+		var data = null;
+		// 判断是新增还是修改
+		var biddata = "";
+
+		var buttonUtil = new ButtonUtil();
+		this.getFormButtons = buttonUtil.getButtonForPanel(
+				"panel_SpecialRequireDevConfirm_Input", this);
+		if (this.dataId != '0') {
+			data = da.getPanelElementsForEdit("devsr_confirmByIT",
+					"panel_SpecialRequireDevConfirm_Input", this.dataId);// 这是要随时变得
+		} else {
+			data = da.getPanelElementsForAdd("panel_SpecialRequireDevConfirm_Input");
+		}
+		for (i = 0; i < data.length; i++) {
 			var idStr = data[i].id;
+			//add by awen for changge fieldLable on 2011-06-08 begin
+			if (idStr=='SpecialRequirement$confirmUserCombo') {
+				data[i].fieldLabel = '部门审批人';
+				data[i].readOnly = true;				
+				data[i].hideTrigger = true;					
+			}
+			//add by awen for changge fieldLable on 2011-06-08 end
 			if(idStr=='SpecialRequirement$applyNum'|| idStr=='SpecialRequirement$applyUserCombo'
 				||idStr=='SpecialRequirement$applyDate'|| idStr=='SpecialRequirement$tel'
 				||idStr=='SpecialRequirement$mobilePhone'|| idStr=='SpecialRequirement$finishDate'
-				||idStr=='SpecialRequirement$flatCombo'|| idStr=='SpecialRequirement$confirmUserCombo'
-				||idStr=='SpecialRequirement$oldApplyCombo'){
+				||idStr=='SpecialRequirement$flatCombo'|| idStr=='SpecialRequirement$confirmUserCombo'){
 				data[i].readOnly = true;
 				data[i].hideTrigger = true;
 			}
 			if(idStr=='SpecialRequirement$appConfigItemCombo'){
 				data[i].store = new Ext.data.JsonStore({
-					url:webContext+'/SRAction_getAppConfigItemComboData.action?appTypeId=16',
+					url:webContext+'/SRAction_getAppConfigItemComboData.action?appTypeId=16',//选择应用软件
 					fields:['id','name'],
 					listeners:{
 						beforeload : function(store, opt){
@@ -212,7 +195,7 @@ PageTemplates = Ext.extend(Ext.Panel, {
 						}});
 					}});
 			}
-		if (data[i].id == 'SpecialRequirement$deliveryTeamCombo') {
+			if (data[i].id == 'SpecialRequirement$deliveryTeamCombo') {
 			
 						data[i] = new Ext.form.ComboBox({
 							xtype:"combo",
@@ -354,46 +337,46 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			}
 		}
 		biddata = da.split(data);
-		if(this.getFormButtons.length!=0){
-		this.formpanel_SpecialRequireDevConfirm_m_Input= new Ext.form.FormPanel({
-			id : 'panel_SpecialRequireDevConfirm_m_Input',
-			layout : 'table',
-			height : 'auto',
-			width : 800,
-			frame : true,
-			collapsible : true,
-			defaults : {
-				bodyStyle : 'padding:4px'
-			},
-			layoutConfig : {
-				columns : 4
-			},
-			title : "开发类需求审批面板",
-			items : biddata,
-			buttons : this.getFormButtons
-		});
-		}else{
-			this.formpanel_SpecialRequireDevConfirm_m_Input= new Ext.form.FormPanel({
-			id : 'panel_SpecialRequireDevConfirm_m_Input',
-			layout : 'table',
-			height : 'auto',
-			width : 800,
-			frame : true,
-			collapsible : true,
-			defaults : {
-				bodyStyle : 'padding:4px'
-			},
-			layoutConfig : {
-				columns : 4
-			},
-			title : "开发类需求审批面板",
-			items : biddata
+		if (this.getFormButtons.length != 0) {
+			this.formpanel_SpecialRequireDevConfirm_Input = new Ext.form.FormPanel({
+				id : 'panel_SpecialRequireDevConfirm_Input',
+				layout : 'table',
+				height : 'auto',
+				width : 800,
+				frame : true,
+				collapsible : true,
+				defaults : {
+					bodyStyle : 'padding:4px'
+				},
+				layoutConfig : {
+					columns : 4
+				},
+				title : "开发类需求审批面板",
+				items : biddata,
+				buttons : this.getFormButtons
+			});
+		} else {
+			this.formpanel_SpecialRequireDevConfirm_Input = new Ext.form.FormPanel({
+				id : 'panel_SpecialRequireDevConfirm_Input',
+				layout : 'table',
+				height : 'auto',
+				width : 800,
+				frame : true,
+				collapsible : true,
+				defaults : {
+					bodyStyle : 'padding:4px'
+				},
+				layoutConfig : {
+					columns : 4
+				},
+				title : "开发类需求审批面板",
+				items : biddata
 			});
 		}
-		return this.formpanel_SpecialRequireDevConfirm_m_Input;
+		return this.formpanel_SpecialRequireDevConfirm_Input;
 	},
-  items : this.items,
-  buttons : this.buttons,
+	items : this.items,
+	buttons : this.buttons,
 	/*
 	 * clientvalidation 初始化
 	 */
@@ -414,21 +397,21 @@ PageTemplates = Ext.extend(Ext.Panel, {
 		this.formname = formname;
 		var gridname = new Array();
 		this.gridname = gridname;
-		this.model = "devsr_m_confirmByTechnicManager";
+		this.model = "devsr_confirmByIT";
 		var buttonUtil = new ButtonUtil();
-		this.mybuttons = buttonUtil.getButtonForModel(
-				"devsr_m_confirmByTechnicManager", this);
+		this.mybuttons = buttonUtil
+				.getButtonForModel("devsr_confirmByIT", this);
 		this.buttons = new Array();
-		if(this.readOnly!='1'){
-		 	this.buttons = this.mybuttons;
+		if (this.readOnly != "1") {
+			this.buttons = this.mybuttons;
 		}
-
-		this.getFormpanel_SpecialRequireDevConfirm_m_Input();
-		this.pa.push(this.formpanel_SpecialRequireDevConfirm_m_Input);
-		this.formname.push("panel_SpecialRequireDevConfirm_m_Input");
-		temp.push(this.formpanel_SpecialRequireDevConfirm_m_Input);
+		this.getFormpanel_SpecialRequireDevConfirm_Input();
+		this.pa.push(this.formpanel_SpecialRequireDevConfirm_Input);
+		this.formname.push("panel_SpecialRequireDevConfirm_Input");
+		temp.push(this.formpanel_SpecialRequireDevConfirm_Input);
 		temp.push(histroyForm);
 		items.push(this.getTabpanel(temp));
+		items.push(this.buttons);
 		this.items = items;
 		this.on("saveAndSubmit", this.saveAndSubmit, this);
 		PageTemplates.superclass.initComponent.call(this);

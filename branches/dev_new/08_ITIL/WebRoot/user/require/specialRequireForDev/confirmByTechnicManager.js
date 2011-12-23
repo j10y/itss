@@ -22,10 +22,14 @@ PageTemplates = Ext.extend(Ext.Panel, {
 			return false;
 		}
 		//remove  by awen  on 2011-06-05 begin
-//		if(Ext.getCmp('SpecialRequirement$deliveryTeamCombo').getValue()==""){
-//			Ext.MessageBox.alert("提示","您必须选择交付团队！");	
-//			return false;
-//		}
+		if(Ext.getCmp('SpecialRequirement$deliveryTeamCombo').getValue()==""){
+			Ext.MessageBox.alert("提示","您必须选择交付团队！");	
+			return false;
+		}
+		if(Ext.getCmp('SpecialRequirement$mainEngineerCombo').getValue()==""){
+			Ext.MessageBox.alert("提示","您必须选择交付经理！");	
+			return false;
+		}
 		//remove  by awen  on 2011-06-05 end
 		var formParam = Ext.encode(getFormParam('panel_SpecialRequireDevConfirm_Input'));
 		var taskId = this.taskId;
@@ -58,8 +62,8 @@ PageTemplates = Ext.extend(Ext.Panel, {
 							}		
 				}
 				//add by awen for remove dynamic assign auditPerson on 2011-06-05 begin
-				tempUrl = webContext
-				+ '/extjs/workflow?method=getData&taskId=' + taskId;
+//				tempUrl = webContext
+//				+ '/extjs/workflow?method=getData&taskId=' + taskId;
 				//add by awen for remove dynamic assign auditPerson on 2011-06-05 end
 				Ext.Ajax.request({
 					url : tempUrl,
