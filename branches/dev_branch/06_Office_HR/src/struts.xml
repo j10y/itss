@@ -70,6 +70,9 @@
 	    <action name="*SystemLog" class="SystemLogAction" method="{1}">
 	        <result>${successResultValue}</result>
 	    </action>
+	    <action name="*MrbsArea" class="MrbsAreaAction" method="{1}">
+	        <result>${successResultValue}</result>
+	    </action>
 	</package>	
 	<package name="communicate" extends="struts-default" namespace="/communicate">
 	    <action name="*PhoneGroup" class="PhoneGroupAction" method="{1}">
