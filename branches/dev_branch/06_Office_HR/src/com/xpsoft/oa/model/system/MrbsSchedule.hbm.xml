@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xpsoft.oa.model.system">
+	<class name="MrbsSchedule" table="mrbs_schedule">
+		<id name="id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="startTime" column="start_time" type="java.util.Date"/>
+		<property name="endTime" column="end_time" type="java.util.Date"/>
+		<many-to-one name="room" column="room_id" class="com.xpsoft.oa.model.system.MrbsRoom"/>
+		<many-to-one name="createBy" column="create_by" class="com.xpsoft.oa.model.system.AppUser"/>
+		<property name="preside" column="preside" type="java.lang.String"/>
+		<many-to-one name="repeat" column="repeat" class="com.xpsoft.oa.model.system.MrbsRepeat"/>
+		<property name="description" column="description" type="java.lang.String"/>
+		<property name="allday" column="allday" type="java.lang.Integer"/>
+		<property name="repeatWeekDay" column="repeat_week_day" type="java.lang.Integer"/>
+		<property name="weekSpan" column="week_span" type="java.lang.Integer"/>
+		<property name="repeatDay" column="repeat_day" type="java.lang.Integer"/>
+		<property name="ordermanEmail" column="orderman_email" type="java.lang.String"/>
+		<property name="projector" column="projector" type="java.lang.Integer"/>
+		<property name="conferenceCall" column="conference_call" type="java.lang.Integer"/>
+		<property name="num" column="num" type="java.lang.Integer"/>
+		<property name="createDate" column="create_date" type="java.util.Date"/>
+		<property name="modifyDate" column="modify_date" type="java.util.Date"/>
+		<many-to-one name="modifyBy" column="modify_by" class="com.xpsoft.oa.model.system.AppUser"/>
+	</class>
+</hibernate-mapping>

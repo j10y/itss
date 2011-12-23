@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xpsoft.oa.model.system">
+	<class name="MrbsRoom" table="mrbs_room">
+		<id name="id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<many-to-one name="area" column="area_id" class="com.xpsoft.oa.model.system.MrbsArea"/>
+		<property name="roomName" column="room_name" type="java.lang.String"/>
+		<property name="description" column="description" type="java.lang.String"/>
+		<property name="capacity" column="capacity" type="java.lang.Integer"/>
+		<property name="roomAdminEmail" column="room_admin_email" type="java.lang.String"/>
+		<property name="status" column="status" type="java.lang.String"/>
+		<property name="sortIndex" column="sortIndex" type="java.lang.String"/>
+		<property name="virtualMap" column="virtualMap" type="java.lang.String"/>
+	</class>
+</hibernate-mapping>
