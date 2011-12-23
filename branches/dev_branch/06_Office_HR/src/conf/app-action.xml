@@ -337,4 +337,5 @@
 <!-- end:  Generated for Package shop From Template: app-action.xml.beansvm -->
   <bean id="HrPostApplyAction" class="com.xpsoft.oa.action.hrm.HrPostApplyAction" scope="prototype"/>
   <bean id="HrPostAssessmentAction" class="com.xpsoft.oa.action.hrm.HrPostAssessmentAction" scope="prototype"/>
+  <bean id="MrbsAreaAction" class="com.xpsoft.oa.action.system.MrbsAreaAction" scope="prototype"/>
 </beans>
