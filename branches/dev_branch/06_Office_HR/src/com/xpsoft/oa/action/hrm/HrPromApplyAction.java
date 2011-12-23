@@ -130,7 +130,7 @@ public class HrPromApplyAction extends BaseAction{
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
 		for(int i = 0; i < mapList.size(); i++) {
 			Date startWorkDate = mapList.get(i).get("startWorkDate") == null ? new Date() : (Date)mapList.get(i).get("startWorkDate");
-			Date accessionTime = (Date)mapList.get(i).get("accessionTime");
+			Date accessionTime = (mapList.get(i).get("accessionTime") == null) ? currentDate : (Date)mapList.get(i).get("accessionTime");
 			Long workYear = (currentDate.getTime() - startWorkDate.getTime()) / 1000 / 60 / 60 / 24 / 365;
 			Long workHereYear = (currentDate.getTime() - accessionTime.getTime()) / 1000 / 60 / 60 / 24 / 365;
 			buff.append("{'userId':'" + mapList.get(i).get("userId"))
@@ -139,7 +139,7 @@ public class HrPromApplyAction extends BaseAction{
 					.append("','nowPositionName':'" + mapList.get(i).get("position"))
 					.append("','depId':'" + mapList.get(i).get("depId"))
 					.append("','depName':'" + mapList.get(i).get("depName"))
-					.append("','accessionTime':'" + sdf.format((Date)mapList.get(i).get("accessionTime")))
+					.append("','accessionTime':'" + ((mapList.get(i).get("accessionTime") == null) ? "" : sdf.format((Date)mapList.get(i).get("accessionTime"))))
 					.append("','workYear':'" + workYear)
 					.append("','workHereYear':'" + workHereYear)
 					.append("'},");
