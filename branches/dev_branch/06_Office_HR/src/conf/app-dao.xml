@@ -357,9 +357,9 @@
 	<bean id="hrPostApplyDao" class="com.xpsoft.oa.dao.hrm.impl.HrPostApplyDaoImpl" parent="baseDao"/>
     <bean id="hrPostAssessmentDao" class="com.xpsoft.oa.dao.hrm.impl.HrPostAssessmentDaoImpl" parent="baseDao"/>
     
-    <bean id="mrbsAreaDao" class="" class="com.xpsoft.oa.dao.system.impl.MrbsAreaDaoImpl" parent="baseDao"/>
-    <bean id="mrbsRepeatDao" class="" class="com.xpsoft.oa.dao.system.impl.MrbsRepeatDaoImpl" parent="baseDao"/>
-    <bean id="mrbsRoomDao" class="" class="com.xpsoft.oa.dao.system.impl.MrbsRoomDaoImpl" parent="baseDao"/>
-    <bean id="mrbsScheduleDao" class="" class="com.xpsoft.oa.dao.system.impl.MrbsScheduleDaoImpl" parent="baseDao"/>
-    <bean id="mrbsScheduleUserDao" class="" class="com.xpsoft.oa.dao.system.impl.MrbsScheduleUserDaoImpl" parent="baseDao"/>
+    <bean id="mrbsAreaDao" class="com.xpsoft.oa.dao.system.impl.MrbsAreaDaoImpl" parent="baseDao"/>
+    <bean id="mrbsRepeatDao"  class="com.xpsoft.oa.dao.system.impl.MrbsRepeatDaoImpl" parent="baseDao"/>
+    <bean id="mrbsRoomDao"  class="com.xpsoft.oa.dao.system.impl.MrbsRoomDaoImpl" parent="baseDao"/>
+    <bean id="mrbsScheduleDao"  class="com.xpsoft.oa.dao.system.impl.MrbsScheduleDaoImpl" parent="baseDao"/>
+    <bean id="mrbsScheduleUserDao"  class="com.xpsoft.oa.dao.system.impl.MrbsScheduleUserDaoImpl" parent="baseDao"/>
 </beans>
