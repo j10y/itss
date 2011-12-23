@@ -483,6 +483,8 @@ App.importJs = {
 	HrPositionAtlasView:[__ctxPath + "/js/hrm/HrPositionAtlasView.js"],
 	EmpProfileHistView : [__ctxPath + "/js/hrm/EmpProfileHistView.js",
 			__ctxPath + "/js/hrm/CheckEmpProfileHistForm.js",
-			__ctxPath + "/js/hrm/CheckEmpProfileForm.js"]
+			__ctxPath + "/js/hrm/CheckEmpProfileForm.js"],
+    MeetingRoomView :[ __ctxPath + "/js/system/MeetingRoomView.js",
+			__ctxPath + "/js/system/MeetingRoomForm.js"]
 				                    
 };
