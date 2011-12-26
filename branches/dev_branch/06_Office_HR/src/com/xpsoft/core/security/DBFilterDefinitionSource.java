@@ -109,7 +109,6 @@ public class DBFilterDefinitionSource implements
 		}
 	}
 
-	@Override
 	public ConfigAttributeDefinition getAttributes(Object filter)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -144,13 +143,11 @@ public class DBFilterDefinitionSource implements
 		 return null;
 	}
 
-	@Override
 	public Collection getConfigAttributeDefinitions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public boolean supports(Class clazz) {
 		// TODO Auto-generated method stub
 		return false;
