@@ -37,7 +37,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 					method : "post",
 					success : function(d) {
 						var e = Ext.util.JSON.decode(d.responseText);
-						Ext.ux.Toast.msg("提示信息", d.responseText);
+						//Ext.ux.Toast.msg("提示信息", d.responseText);
 						for(var i = 0 ;i<e.result.length;i++){
 							var panel1 = new Ext.Panel({
 								id : 'area_'+i,
@@ -88,8 +88,8 @@ MeetingRoomView.searchItems = function(u,t,index,id){
 								height:200,
 	                    		width:380,
 	                    		style:"margin:5px 5px",
-								title:e.result[j].roomName,
-								html:e.result[j].content
+								title:"<b>"+e.result[j].roomName+ "</b>&nbsp;&nbsp;&nbsp;"+e.result[j].room_admin_email,
+								html:e.result[j].content,
 							});
 						}
 						panel.show();
