@@ -339,4 +339,5 @@
   <bean id="HrPostAssessmentAction" class="com.xpsoft.oa.action.hrm.HrPostAssessmentAction" scope="prototype"/>
   <bean id="MrbsAreaAction" class="com.xpsoft.oa.action.system.MrbsAreaAction" scope="prototype"/>
   <bean id="MrbsRoomAction" class="com.xpsoft.oa.action.system.MrbsRoomAction" scope="prototype"/>
+   <bean id="MrbsScheduleAction" class="com.xpsoft.oa.action.system.MrbsScheduleAction" scope="prototype"/>
 </beans>
