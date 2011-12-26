@@ -84,13 +84,29 @@ MeetingRoomView.searchItems = function(u,t,index,id){
 						Ext.ux.Toast.msg("提示信息", d.responseText);
 						var panel = t.areaTabPanel.getComponent('area_'+index);
 						for(var j=0 ; j<e.result.length;j++){
-							panel.add({
+							var topbar = new Array();
+							var roomId = e.result[j].id;
+							var roomName = e.result[j].roomName;
+							var bibao = function(rid, rname) {
+								return function() {
+									new MeetingRoomForm({
+										roomId : rid,
+										roomName : rname
+									}).show();
+								}
+							}
+							topbar.push(new Ext.Button({
+								text : "查看",
+								handler : bibao(roomId, roomName)
+							}));
+							var rPanel = new Ext.Panel({
 								height:200,
 	                    		width:380,
 	                    		style:"margin:5px 5px",
 								title:"<b>"+e.result[j].roomName+ "</b>&nbsp;&nbsp;&nbsp;"+e.result[j].room_admin_email,
 								html:e.result[j].content,
 							});
+							panel.add(rPanel);
 						}
 						panel.show();
 					},
