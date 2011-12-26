@@ -105,6 +105,7 @@ MeetingRoomView.searchItems = function(u,t,index,id){
 	                    		style:"margin:5px 5px",
 								title:"<b>"+e.result[j].roomName+ "</b>&nbsp;&nbsp;&nbsp;"+e.result[j].room_admin_email,
 								html:e.result[j].content,
+								tbar : topbar
 							});
 							panel.add(rPanel);
 						}
