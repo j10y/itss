@@ -62,9 +62,9 @@ public class MrbsRoomAction extends BaseAction {
 		QueryFilter filter = new QueryFilter(getRequest());
 		String areaId = getRequest().getParameter("areaId");
 		List<MrbsRoom> list = this.mrbsRoomService.getAll(filter);
-		String sql = "select a.id, a.room_id,b.room_admin_email, a.start_time, a.end_time, a.create_by, a.description from " +
-				"mrbs_schedule a, mrbs_room b where " +
-				"a.room_id = b.id and b.area_id = " + areaId + " and " +
+		String sql = "select a.id, a.room_id,b.room_admin_email, a.start_time, a.end_time, c.fullname as create_by, a.description from " +
+				"mrbs_schedule a, mrbs_room b, app_user c where " +
+				"a.room_id = b.id and b.area_id = " + areaId + " and a.create_by = c.userId and " +
 				"a.start_time > '"  + DateUtil.convertDateToString(new Date())+  "' and " +
 				"a.start_time < '"+DateUtil.convertDateToString(DateUtil.addDays(new Date(),1)) + "' order by a.end_time asc";
 		

@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.system;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,9 +9,12 @@ import javax.annotation.Resource;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.system.MrbsSchedule;
 import com.xpsoft.oa.service.system.MrbsScheduleService;
+
+import flexjson.JSONSerializer;
 
 public class MrbsScheduleAction extends BaseAction {
 
@@ -44,7 +48,7 @@ public class MrbsScheduleAction extends BaseAction {
 	private Long id;
 
 	
-
+	/*
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
 		List<MrbsSchedule> list = this.MrbsScheduleService.getAll(filter);
@@ -63,6 +67,21 @@ public class MrbsScheduleAction extends BaseAction {
 
 		this.jsonString = buff.toString();
 
+		return "success";
+	}*/
+	
+	public String list() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		filter.addFilter("Q_startTime_D_GT", DateUtil.convertDateToString(new Date()));
+		List<MrbsSchedule> list = this.MrbsScheduleService.getAll(filter);
+		
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(",result:");
+		JSONSerializer json = new JSONSerializer();
+		buff.append(json.exclude(new String[] {}).serialize(list));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
 		return "success";
 	}
 
