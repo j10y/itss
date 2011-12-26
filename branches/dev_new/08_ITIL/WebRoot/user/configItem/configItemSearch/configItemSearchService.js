@@ -1,7 +1,7 @@
 PagePanel = Ext.extend(Ext.Panel, {
 	id : "PageTemplates",
+	layout : 'fit',
 	frame : true,
-	layout:'fit',
 	autoScroll : true,
 	defaults : {
 		bodyStyle : 'padding:4px'
@@ -59,7 +59,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                iconCls:'search',
 	                handler:onItemClick
 	            }]
-            }); 
+            });
+            
             var menu2 = new Ext.menu.Menu({
 	        id: 'mainMenu2',
 	        items: [
@@ -68,14 +69,11 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '缺少必要关系的配置项查询',
 	                iconCls:'search',
 	                handler:onItemClick
-	            }
-	            ]
-            });  
-
-
+	            }]
+            });
         function onItemClick(node){
-
-		  var menu = new Ext.menu.Menu({
+        	//---------
+        	var menu = new Ext.menu.Menu({
 	        id: 'mainMenu',
 	        items: [
 	            {
@@ -95,7 +93,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                handler:onItemClick
 	            }]
             });
-            var menu1 = new Ext.menu.Menu({
+             var menu1 = new Ext.menu.Menu({
 	        id: 'mainMenu1',
 	        items: [
 	            	{
@@ -127,7 +125,8 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                iconCls:'search',
 	                handler:onItemClick
 	            }]
-            });     
+            });
+            
             var menu2 = new Ext.menu.Menu({
 	        id: 'mainMenu2',
 	        items: [
@@ -136,13 +135,9 @@ PagePanel = Ext.extend(Ext.Panel, {
 	                text: '缺少必要关系的配置项查询',
 	                iconCls:'search',
 	                handler:onItemClick
-	            }
-	            ]
-            });  
-
-        	//--------
-	       	var tempJsp =webContext+ "/reportJsp/showReport.jsp?raq=/configItem.raq";
-	       	//var menu=this.menu;
+	            }]
+            });
+	       	var tempJsp ="/reportJsp/showReport.jsp?raq=/configItem.raq";
 			if (node.id == "tree01") {
 				tempJsp ="/reportJsp/showReport.jsp?raq=/configItem.raq";
 			} else if (node.id == "tree02") {
@@ -192,6 +187,7 @@ PagePanel = Ext.extend(Ext.Panel, {
 	    }
 		var item = {
 			xtype : "panel",
+			//title : '查询结果',
 			autoScroll : true,
 			id : "menuPanel",// 注意这要和上面的保持一致性
 			tbar: [{                   // <-- Add the action directly to a toolbar
@@ -215,10 +211,14 @@ PagePanel = Ext.extend(Ext.Panel, {
 		};
 
 		var items = new Array();
-		//items.push( this.tree);
 		items.push(item);
 		return items;
 	},
+
+	items : this.items,
+	/*
+	 * clientvalidation 初始化
+	 */
 	initComponent : function() {
 		this.items = this.panelNode();
 		PagePanel.superclass.initComponent.call(this);

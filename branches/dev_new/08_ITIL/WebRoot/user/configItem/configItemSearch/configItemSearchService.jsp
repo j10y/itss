@@ -47,7 +47,7 @@
 	 
 	Ext.BLANK_IMAGE_URL = webContext+'/ext-3.2.1/resources/images/default/s.gif';	 
 	 modLoader.OnStartupCompleted(function() {
-	     var pagePanel = new PagePanel({serviceTypeKeyWord:"${param.key}"});		 
+	     var pagePanel = new PagePanel();		 
 		  new Ext.Viewport({
 		   	 layout:'fit',
 		   	 items:[pagePanel]
