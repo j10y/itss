@@ -74,7 +74,7 @@ public class MrbsRoomAction extends BaseAction {
 					.append("'roomName':'" + f.getRoomName() + "',")
 					.append("'desc':'" + f.getDescription() + "',")
 					.append("'capacity':'" + f.getCapacity() + "',")
-					.append("'adminEmail':'" + f.getRoomAdminEmail() + "'}");
+					.append("'adminEmail':'" + f.getRoomAdminEmail() + "'},");
 		}
 		if(list.size() > 0) {
 			sb.deleteCharAt(sb.length() - 1);
@@ -105,7 +105,7 @@ public class MrbsRoomAction extends BaseAction {
 					.append("'roomName':'" + f.getRoomName() + "',")
 					.append("'desc':'" + f.getDescription() + "',")
 					.append("'capacity':'" + f.getCapacity() + "',")
-					.append("'adminEmail':'" + f.getRoomAdminEmail() + "'}");
+					.append("'adminEmail':'" + f.getRoomAdminEmail() + "'},");
 		       
 		sb.append("}");
 		setJsonString(sb.toString());
