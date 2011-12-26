@@ -12,7 +12,7 @@
 		<many-to-one name="room" column="room_id" class="com.xpsoft.oa.model.system.MrbsRoom"/>
 		<many-to-one name="createBy" column="create_by" class="com.xpsoft.oa.model.system.AppUser"/>
 		<property name="preside" column="preside" type="java.lang.String"/>
-		<many-to-one name="repeat" column="repeat" class="com.xpsoft.oa.model.system.MrbsRepeat"/>
+		<many-to-one name="repeat" column="repeat_id" class="com.xpsoft.oa.model.system.MrbsRepeat"/>
 		<property name="description" column="description" type="java.lang.String"/>
 		<property name="title" column="title" type="java.lang.String"/>
 		<property name="presideEmail" column="preside_email" type="java.lang.String"/>
