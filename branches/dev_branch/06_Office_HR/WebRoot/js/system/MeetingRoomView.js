@@ -1,68 +1,61 @@
 Ext.ns("MeetingRoomView");
-var MeetingRoomView = function() {
-	return new Ext.Panel(
-			{
-				id : "MeetingRoomView",
-				title : "会议室预订",
-				iconCls : "menu-appointment",
-				autoScroll : true,
-				items : [
-						new Ext.TabPanel({
-							activeTab: 0,
-							defaults:{autoHeight: true},
-							items:[
-								new Ext.Panel({
-									title:"来广营办公区",
-									layout:"table",
-									autoLoad: __ctxPath+"/task/listAppointment.do",
-									defaults:{
-										bodyStyle : 'padding:20px;'
-									},
-									layoutConfig:{
-										columns:3
-									},
-									items:[
-											
-				{  
-                    height:200,
-                    width:380,
-					style:"margin:5px 5px",
-                    title:'子面板一',  
-                },  
-                {  
-                	 height:200,
-                    width:380,
-                	style:"margin:5px 5px",
-                    title:'子面板二',  
-                },  
-                {  
-                	 height:200,
-                    width:380,
-                	style:"margin:5px 5px",
-                    title:'子面板二',  
-                },  
-                {  
-                	 height:200,
-                    width:380,
-                	style:"margin:5px 5px",
-                    title:'子面板二',  
-                },  
-                {  
-                	 height:200,
-                    width:380,
-                	style:"margin:5px 5px",
-                    title:'子面板二',  
-                },  
-                {  
-                	 height:200,
-                    width:380,
-                	style:"margin:5px 5px",
-                    title:'子面板二',  
-                }
-										
-									]
-								})
-								]
-						})]
-			});
-};
+MeetingRoomView = Ext.extend(Ext.Panel,{
+	constructor : function(a){
+		if(a == null){
+			a = {};
+		}
+		Ext.apply(this,a);
+		this.initComponents();
+		MeetingRoomView.superclass.constructor.call(this,{
+			id:"MeetingRoomView",
+			title:"预订办公室",
+			region : "center",
+			layout : "border",
+			items:[
+			 	this.areaTabPanel
+			]
+		});
+	},
+	areaTabPanel : null,
+	initComponents : function(){
+		this.areaTabPanel = new Ext.TabPanel({
+			id : "areaTabPanel",
+			region : "center",
+			items:[],
+			listeners : {
+				afterrender:function(){
+					Ext.Ajax.request({
+					url : __ctxPath + "/system/listMrbsArea.do",
+					params : {
+						name : 'kanglei'
+					},
+					method : "post",
+					success : function(d) {
+						//var e = Ext.util.JSON.decode(d.responseText);
+						Ext.ux.Toast.msg("提示信息", "成功删除所选记录！");
+						var panel1 = new Ext.Panel({
+							title : "来逛", 
+							width : 100,
+							height: 100
+						});
+						
+						Ext.getCmp("MeetingRoomView").areaTabPanel.items.push(panel1);
+						
+						alert(Ext.getCmp("MeetingRoomView").areaTabPanel.items.length);
+					},
+					failure : function() {
+						Ext.MessageBox.show({
+							title : "操作信息",
+							msg : "删除失败，请联系管理员！",
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.ERROR
+						});
+					}
+				});
+				}
+			}
+		});
+	}
+
+	
+});
