@@ -17,6 +17,30 @@ public class MrbsAreaAction extends BaseAction {
 	@Resource
 	private MrbsAreaService mrbsAreaService;
 	private MrbsArea mrbsArea;
+	public MrbsAreaService getMrbsAreaService() {
+		return mrbsAreaService;
+	}
+
+	public void setMrbsAreaService(MrbsAreaService mrbsAreaService) {
+		this.mrbsAreaService = mrbsAreaService;
+	}
+
+	public MrbsArea getMrbsArea() {
+		return mrbsArea;
+	}
+
+	public void setMrbsArea(MrbsArea mrbsArea) {
+		this.mrbsArea = mrbsArea;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	private Long id;
 
 	
