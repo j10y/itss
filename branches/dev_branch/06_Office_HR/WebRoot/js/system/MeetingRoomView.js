@@ -54,7 +54,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 							});
 							
 							Ext.getCmp('areaTabPanel').add(panel1);
-						    MeetingRoomView.searchItems("/system/listMrbsRoom.do",a,i);
+						    MeetingRoomView.searchItems("/system/listMrbsRoom.do",a,i,e.result[i].id);
 						}
 					},
 					failure : function() {
@@ -71,20 +71,27 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 });
 
 
-MeetingRoomView.searchItems = function(u,t,index){
+MeetingRoomView.searchItems = function(u,t,index,id){
 
 		Ext.Ajax.request({
 					url : __ctxPath + u,
 					params : {
+						areaId:id
 					},
 					method : "post",
 					success : function(d) {
 						var e = Ext.util.JSON.decode(d.responseText);
 						Ext.ux.Toast.msg("提示信息", d.responseText);
 						var panel = t.areaTabPanel.getComponent('area_'+index);
-						panel.add({
-							title:"DD"
-						});
+						for(var j=0 ; j<e.result.length;j++){
+							panel.add({
+								height:200,
+	                    		width:380,
+	                    		style:"margin:5px 5px",
+								title:e.result[j].roomName,
+								html:e.result[j].content
+							});
+						}
 						panel.show();
 					},
 					failure : function() {
