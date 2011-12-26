@@ -1,5 +1,6 @@
 package com.xpsoft.oa.action.system;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,7 @@ public class MrbsRoomAction extends BaseAction {
 		QueryFilter filter = new QueryFilter(getRequest());
 		String areaId = getRequest().getParameter("areaId");
 		List<MrbsRoom> list = this.mrbsRoomService.getAll(filter);
-		String sql = "select a.id, a.room_id, a.start_time, a.end_time, a.create_by, a.description from " +
+		String sql = "select a.id, a.room_id,b.room_admin_email, a.start_time, a.end_time, a.create_by, a.description from " +
 				"mrbs_schedule a, mrbs_room b where " +
 				"a.room_id = b.id and b.area_id = " + areaId + " and " +
 				"a.start_time > '"  + DateUtil.convertDateToString(new Date())+  "' and " +
@@ -69,21 +70,40 @@ public class MrbsRoomAction extends BaseAction {
 		
 		List<Map> list_s = this.mrbsRoomService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
+		int mf = 0;
 		for(MrbsRoom room : list) {
+			mf++;
 			buff.append("{'id':'" + room.getId() + "',")
-					.append("'roomName':'" + room.getRoomName() + "',");
-			String content = "<div>";
+					.append("'roomName':'" + room.getRoomName() + "',")
+					.append("'room_admin_email':'"+ room.getRoomAdminEmail()+"',");
+			StringBuffer content = new StringBuffer("<div id=\"cc\">");
 			Date endTime = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
 			for(int i = 0; i < list_s.size(); i++){
 				Map m = list_s.get(i);
 				if(room.getId().toString().equals(m.get("room_id").toString())) {
-					content += m.get("start_time") + "<br/>";
-					endTime = new Date(m.get("end_time").toString());
+					Date d_ = (Date)m.get("start_time");
+					Date d= DateUtil.parseDate(sdf.format(d_));
+					
+					Date d_1 = (Date)m.get("end_time");
+					Date dd= DateUtil.parseDate(sdf.format(d_1));
+					
+					String hstart = (d.getHours()>9)?d.getHours()+"":"0"+d.getHours();
+					String hend = (dd.getHours()>9)?dd.getHours()+"":"0"+dd.getHours();
+					
+					content.append(d.getDate()+"日"+hstart+":00-"+hend+":00").append("&nbsp;&nbsp;&nbsp;"+m.get("create_by")).append("<br/><br/>");
+					endTime = d_1;
 					list_s.remove(i);
 				};
 			}
-			Date lastTime = new Date();
-			content += "</div>";
+			String h = (endTime.getHours()>9)?endTime.getHours()+"":"0"+endTime.getHours();
+			int flag  = 0;
+			if(endTime.getHours()<20){
+				content.append(endTime.getDate()+"日"+h+":00-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\" name=\"预订\" value=\"预订\"/>");
+				flag = 1;
+			}
+			content.append("</div>");
+			buff.append("'flag':'"+flag+"',");
 			buff.append("'content':'" + content + "'},");
 		}
 		if(list.size() > 0) {
