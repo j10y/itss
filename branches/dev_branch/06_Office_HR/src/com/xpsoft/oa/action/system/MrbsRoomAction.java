@@ -1,21 +1,33 @@
 package com.xpsoft.oa.action.system;
 
-import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.system.MrbsRoom;
 import com.xpsoft.oa.service.system.MrbsRoomService;
+import com.xpsoft.oa.service.system.MrbsScheduleService;
 
 public class MrbsRoomAction extends BaseAction {
 
 	@Resource
 	private MrbsRoomService mrbsRoomService;
+	@Resource
+	private MrbsScheduleService mrbsScheduleService;
+	public MrbsScheduleService getMrbsScheduleService() {
+		return mrbsScheduleService;
+	}
+
+	public void setMrbsScheduleService(MrbsScheduleService mrbsScheduleService) {
+		this.mrbsScheduleService = mrbsScheduleService;
+	}
+
 	private MrbsRoom mrbsArea;
 	public MrbsRoomService getMrbsRoomService() {
 		return mrbsRoomService;
@@ -47,19 +59,37 @@ public class MrbsRoomAction extends BaseAction {
 
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
+		String areaId = getRequest().getParameter("areaId");
 		List<MrbsRoom> list = this.mrbsRoomService.getAll(filter);
-
-		Type type = new TypeToken<List<MrbsRoom>>() {
+		String sql = "select a.id, a.room_id, a.start_time, a.end_time, a.create_by, a.description from " +
+				"mrbs_schedule a, mrbs_room b where " +
+				"a.room_id = b.id and b.area_id = " + areaId + " and " +
+				"a.start_time > '"  + DateUtil.convertDateToString(new Date())+  "' and " +
+				"a.start_time < '"+DateUtil.convertDateToString(DateUtil.addDays(new Date(),1)) + "' order by a.end_time asc";
+		
+		List<Map> list_s = this.mrbsRoomService.findDataList(sql);
+		StringBuffer buff = new StringBuffer("{success:true,result:[");
+		for(MrbsRoom room : list) {
+			buff.append("{'id':'" + room.getId() + "',")
+					.append("'roomName':'" + room.getRoomName() + "',");
+			String content = "<div>";
+			Date endTime = new Date();
+			for(int i = 0; i < list_s.size(); i++){
+				Map m = list_s.get(i);
+				if(room.getId().toString().equals(m.get("room_id").toString())) {
+					content += m.get("start_time") + "<br/>";
+					endTime = new Date(m.get("end_time").toString());
+					list_s.remove(i);
+				};
+			}
+			Date lastTime = new Date();
+			content += "</div>";
+			buff.append("'content':'" + content + "'},");
 		}
-		.getType();
-		StringBuffer buff = new StringBuffer(
-				"{success:true,'totalCounts':")
-		.append(filter.getPagingBean().getTotalItems()).append(
-				",result:");
-
-		Gson gson = new Gson();
-		toJson(list,buff);
-		buff.append("}");
+		if(list.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]}");
 
 		this.jsonString = buff.toString();
 
