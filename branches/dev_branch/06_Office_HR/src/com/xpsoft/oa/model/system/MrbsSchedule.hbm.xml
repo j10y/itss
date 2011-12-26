@@ -14,11 +14,8 @@
 		<property name="preside" column="preside" type="java.lang.String"/>
 		<many-to-one name="repeat" column="repeat" class="com.xpsoft.oa.model.system.MrbsRepeat"/>
 		<property name="description" column="description" type="java.lang.String"/>
-		<property name="allday" column="allday" type="java.lang.Integer"/>
-		<property name="repeatWeekDay" column="repeat_week_day" type="java.lang.Integer"/>
-		<property name="weekSpan" column="week_span" type="java.lang.Integer"/>
-		<property name="repeatDay" column="repeat_day" type="java.lang.Integer"/>
-		<property name="ordermanEmail" column="orderman_email" type="java.lang.String"/>
+		<property name="title" column="title" type="java.lang.String"/>
+		<property name="presideEmail" column="preside_email" type="java.lang.String"/>
 		<property name="projector" column="projector" type="java.lang.Integer"/>
 		<property name="conferenceCall" column="conference_call" type="java.lang.Integer"/>
 		<property name="num" column="num" type="java.lang.Integer"/>
