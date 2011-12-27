@@ -1,6 +1,8 @@
 package com.xpsoft.oa.service.system.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +19,15 @@ public class MrbsScheduleServiceImpl extends BaseServiceImpl<MrbsSchedule> imple
 		this.dao = dao;
 	}
 	
-	public List<MrbsSchedule> validate(String startTime, String endTime, Long roomId) {
+	public List<MrbsSchedule> validate(Date startTime, Date endTime, Long roomId) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String startTimeString = sdf.format(startTime);
+		String endTimeString = sdf.format(endTime);
 		String sql = "select id from mrbs_schedule where " +
 				"room_id = " + roomId + " and " +
-				"((start_time >= '" + startTime + "' and end_time < '" + endTime + "') or " +
-				"(end_time > '" + startTime + "' and end_time <= '" + endTime + "') or " +
-				"(start_time <= '" + startTime + "' and end_time >= '" + endTime + "')) " +
+				"((start_time >= '" + startTimeString + "' and end_time < '" + endTimeString + "') or " +
+				"(end_time > '" + startTimeString + "' and end_time <= '" + endTimeString + "') or " +
+				"(start_time <= '" + startTimeString + "' and end_time >= '" + endTimeString + "')) " +
 				"order by start_time asc";
 		List<Map<String, Object>> mapList = this.findDataList(sql);
 		List<MrbsSchedule> resultList = new ArrayList<MrbsSchedule>();
