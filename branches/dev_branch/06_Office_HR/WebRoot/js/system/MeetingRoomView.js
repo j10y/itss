@@ -17,10 +17,35 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 	},
 	areaTabPanel : null,
 	initComponents : function(a){
+		var tabbar = new Ext.Toolbar({
+			items : [
+				"->",
+				{
+					xtype : "datefield",
+					minValue : new Date()
+				}, {
+					xtype : "label",
+					html : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				}, {
+					xtype : "button",
+					text : "查询",
+					handler : function() {
+						new MeetingRoomSearchForm().show();
+					}
+				}, {
+					xtype : "button",
+					text : "帮助"
+				}, {
+					xtype : "label",
+					html : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				}
+			]
+		});
 		this.areaTabPanel = new Ext.TabPanel({
 			id : "areaTabPanel",
 			activeTab: 0,
 			region : "center",
+			tbar : tabbar,
 			items:[]
 		});
 		this.search(a);
