@@ -363,7 +363,24 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									items:[{
 										defaultType: 'radio',
 										border:false,
-										items:[{boxLabel:'当天',name:'mrbsRepeat.repOpt',inputValue:'0',checked:true}]
+										items:[{
+											boxLabel:'当天',
+											name:'mrbsRepeat.repOpt',
+											inputValue:'0',
+											checked:true,
+											listeners : {
+															check : function() {
+																if(this.checked) {
+																	Ext.getCmp("endDate").hide();
+																	Ext.getCmp("allday").hide();
+																	Ext.getCmp("repeatWeekDay").hide();
+																	Ext.getCmp("weekSpan").hide();
+																} else {
+																	
+																}
+															}
+														}
+										}]
 									}]
 								},{
 									columnWidth:.25,
@@ -380,8 +397,11 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 															check : function() {
 																if(this.checked) {
 																	Ext.getCmp("endDate").show();
+																	Ext.getCmp("allday").show();
+																	Ext.getCmp("repeatWeekDay").hide();
+																	Ext.getCmp("weekSpan").hide();
 																} else {
-																	Ext.getCmp("endDate").hide();
+																	
 																}
 															}
 														}
@@ -401,11 +421,12 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 											listeners : {
 															check : function() {
 																if(this.checked) {
-																	//Ext.getCmp("endDate").show();
+																	Ext.getCmp("endDate").show();
+																	Ext.getCmp("allday").show();
 																	Ext.getCmp("repeatWeekDay").show();
+																	Ext.getCmp("weekSpan").hide();
 																} else {
-//																	//Ext.getCmp("endDate").hide();
-																	Ext.getCmp("repeatWeekDay").hide();
+																	
 																}
 															}
 														}
@@ -425,9 +446,12 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 											listeners : {
 															check : function() {
 																if(this.checked) {
+																	Ext.getCmp("endDate").show();
+																	Ext.getCmp("allday").show();
+																	Ext.getCmp("repeatWeekDay").show();
 																	Ext.getCmp("weekSpan").show();
 																} else {
-																	Ext.getCmp("weekSpan").hide();
+																	
 																}
 															}
 														}}]
