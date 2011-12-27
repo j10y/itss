@@ -1,10 +1,14 @@
 package com.xpsoft.oa.action.system;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import org.springframework.beans.BeanUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,6 +16,7 @@ import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.system.MrbsSchedule;
+import com.xpsoft.oa.model.system.MrbsScheduleExtend;
 import com.xpsoft.oa.service.system.MrbsScheduleService;
 
 import flexjson.JSONSerializer;
@@ -71,14 +76,29 @@ public class MrbsScheduleAction extends BaseAction {
 	}*/
 	
 	public String list() {
+		SimpleDateFormat sdfForDate = new SimpleDateFormat("MM月dd日");
+		SimpleDateFormat sdfHour = new SimpleDateFormat("HH:mm");
+		
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		filter.addFilter("Q_startTime_D_GT", DateUtil.convertDateToString(new Date()));
-		List<MrbsSchedule> list = this.MrbsScheduleService.getAll(filter);
-		
+		List<MrbsSchedule> oldList = this.MrbsScheduleService.getAll(filter);
+		List<MrbsScheduleExtend> newList = new ArrayList<MrbsScheduleExtend>();
+		for(MrbsSchedule ms : oldList) {
+			MrbsScheduleExtend mse = new MrbsScheduleExtend();
+			BeanUtils.copyProperties(ms, mse);
+			mse.setDate(sdfForDate.format(ms.getStartTime()));
+			mse.setStartHour(sdfHour.format(ms.getStartTime()));
+			mse.setEndHour(sdfHour.format(ms.getEndTime()));
+			mse.setWeek(DateUtil.getDays(ms.getStartTime()));
+			newList.add(mse);
+			System.out.println(mse.getStartHour());
+			System.out.println(mse.getEndHour());
+		}
+		oldList = null;
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
 				.append(filter.getPagingBean().getTotalItems()).append(",result:");
 		JSONSerializer json = new JSONSerializer();
-		buff.append(json.exclude(new String[] {}).serialize(list));
+		buff.append(json.exclude(new String[] {}).serialize(newList));
 		buff.append("}");
 		this.jsonString = buff.toString();
 		
