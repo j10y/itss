@@ -340,4 +340,5 @@
   <bean id="MrbsAreaAction" class="com.xpsoft.oa.action.system.MrbsAreaAction" scope="prototype"/>
   <bean id="MrbsRoomAction" class="com.xpsoft.oa.action.system.MrbsRoomAction" scope="prototype"/>
    <bean id="MrbsScheduleAction" class="com.xpsoft.oa.action.system.MrbsScheduleAction" scope="prototype"/>
+   <bean id="MrbsRepeatAction" class="com.xpsoft.oa.action.system.MrbsRepeatAction" scope="prototype"/>
 </beans>
