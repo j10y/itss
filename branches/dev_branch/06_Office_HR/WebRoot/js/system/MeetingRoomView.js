@@ -108,7 +108,7 @@ MeetingRoomView.searchItems = function(u,t,index,id){
 					method : "post",
 					success : function(d) {
 						var e = Ext.util.JSON.decode(d.responseText);
-						Ext.ux.Toast.msg("提示信息", d.responseText);
+						//Ext.ux.Toast.msg("提示信息", d.responseText);
 						var panel = t.areaTabPanel.getComponent('area_'+index);
 						for(var j=0 ; j<e.result.length;j++){
 							var topbar = new Array();
