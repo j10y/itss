@@ -13,7 +13,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			id : "MeetingRoomFormWin",
 			layout : "border",
 			width : 800,
-			height : 640,
+			height : 450,
 			modal : true,
 			items : [
 				this.tabPanel
@@ -90,7 +90,6 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			store : this.store,
 			autoWidth : true,
 			autoHeight : true,
-			autoScroll:true,
 			stripeRows : true,
 			closeable : true,
 			trackMouseOver : true,
@@ -116,6 +115,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 		this.tabPanel = new Ext.TabPanel({
 			id : "MeetingRoomTabPanel",
 			region : "center",
+			autoScroll:true,
 			activeTab : 0,
 			items : [
 				this.gridPanel,
