@@ -147,7 +147,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					name : 'mrbsRepeat.orderman',
 					id 	:'orderman',
 					fieldLabel : '会议组织者',
-					value :'',
+					value : curUserInfo.fullname,
+					readOnly : true,
 					allowBlank:false
 				},{
 					name : 'mrbsRepeat.description',

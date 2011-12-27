@@ -63,18 +63,28 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 					width : 130,
 					xtype : "datefield",
 					name : "startDate",
-					format : "Y/m/d",
-					minValue : new Date(),
 					id : "startDate",
-					allowBlank : false
+					format : "Y-m-d",
+					value : new Date(),
+					minValue : new Date().format("Y-m-d"),
+					id : "startDate",
+					allowBlank : false,
+					listeners : {
+						select : function() {
+							Ext.getCmp("endDate").setValue(Ext.getCmp("startDate").getValue());
+							Ext.getCmp("endDate").minValue = Ext.getCmp("startDate").getValue();
+						}
+					}
 				}, {
 					fieldLabel : "结束日期",
 					labelStyle : "width:150px;text-align:right;",
 					width : 130,
 					xtype : "datefield",
 					name : "endDate",
-					format : "Y/m/d",
-					minValue : new Date(),
+					id : "endDate",
+					format : "Y-m-d",
+					value : new Date(),
+					minValue : new Date().format("Y-m-d"),
 					id : "endDate",
 					allowBlank : false
 				}, {

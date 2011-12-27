@@ -22,7 +22,9 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 				"->",
 				{
 					xtype : "datefield",
-					minValue : new Date()
+					format : "Y-m-d",
+					value : new Date(),
+					minValue : new Date().format("Y-m-d")
 				}, {
 					xtype : "label",
 					html : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
