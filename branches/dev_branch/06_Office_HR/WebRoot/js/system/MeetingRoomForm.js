@@ -116,7 +116,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			id : "MeetingRoomTabPanel",
 			region : "center",
 			autoScroll:true,
-			activeTab : 0,
+			activeTab : this.activeId,
 			items : [
 				this.gridPanel,
 				this.formPanel
