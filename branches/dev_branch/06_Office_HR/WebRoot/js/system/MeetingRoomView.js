@@ -91,7 +91,8 @@ MeetingRoomView.searchItems = function(u,t,index,id){
 								return function() {
 									new MeetingRoomForm({
 										roomId : rid,
-										roomName : rname
+										roomName : rname,
+										activeId : 0
 									}).show();
 								}
 							}
@@ -124,3 +125,11 @@ MeetingRoomView.searchItems = function(u,t,index,id){
 	
 	
 };
+
+var orderFun = function(rid,rname){
+
+	new MeetingRoomForm({roomId : rid,
+						roomName : rname,
+						activeId:1
+}).show();
+}
