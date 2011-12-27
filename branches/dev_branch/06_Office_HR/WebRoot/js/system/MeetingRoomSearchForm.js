@@ -40,15 +40,19 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 					xtype : "numberfield",
 					labelStyle : "width:150px;text-align:right;margin-top:10px;",
 					name : "attendNum",
-					id : "attendNum"
+					id : "attendNum",
+					value : "2",
+					allowBlank : false
 				}, {
 					fieldLabel : "会议用时（单位：小时）",
 					labelStyle : "width:150px;text-align:right;",
 					name : "meetingTime",
 					id : "meetingTime",
+					width : 130,
 					xtype : "combo",
 					editable : false,
 					triggerAction : "all",
+					allowBlank : false,
 					store : [
 						["0.5","0.5"], ["1","1"], ["1.5","1.5"], ["2","2"], ["2.5","2.5"], ["3","3"], ["3.5","3.5"], ["4","4"], 
 						["4.5","4.5"], ["5","5"], ["5.5","5.5"], ["6","6"], ["6.5","6.5"], ["7","7"], ["7.5","7.5"], ["8","8"] 
@@ -59,16 +63,20 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 					width : 130,
 					xtype : "datefield",
 					name : "startDate",
+					format : "Y/m/d",
 					minValue : new Date(),
-					id : "startDate"
+					id : "startDate",
+					allowBlank : false
 				}, {
 					fieldLabel : "结束日期",
 					labelStyle : "width:150px;text-align:right;",
 					width : 130,
 					xtype : "datefield",
 					name : "endDate",
+					format : "Y/m/d",
 					minValue : new Date(),
-					id : "endDate"
+					id : "endDate",
+					allowBlank : false
 				}, {
 					fieldLabel : "预定区域",
 					labelStyle : "width:150px;text-align:right;",
