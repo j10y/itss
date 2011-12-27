@@ -80,7 +80,38 @@ import org.apache.commons.logging.LogFactory;
 			public static Date addDays(Date date, int days) {
 		        return add(date, days, Calendar.DATE);
 		    }
-
+			
+			public static String getDays(Date date) {
+				String returnValue = "XXX";
+				switch(date.getDay()) {
+					case 0:
+						returnValue = "星期日";
+						break;
+					case 1:
+						returnValue = "星期一";
+						break;
+					case 2:
+						returnValue = "星期二";
+						break;
+					case 3:
+						returnValue = "星期三";
+						break;
+					case 4:
+						returnValue = "星期四";
+						break;
+					case 5:
+						returnValue = "星期五";
+						break;
+					case 6:
+						returnValue = "星期六";
+						break;
+					default:
+						returnValue = "星期?";
+						break;
+				}
+				
+				return returnValue;
+			}
 
 		    public static Date addMonths(Date date, int months) {
 		        return add(date, months, Calendar.MONTH);
