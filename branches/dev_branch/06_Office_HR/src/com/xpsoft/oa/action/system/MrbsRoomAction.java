@@ -99,7 +99,7 @@ public class MrbsRoomAction extends BaseAction {
 			String h = (endTime.getHours()>9)?endTime.getHours()+"":"0"+endTime.getHours();
 			int flag  = 0;
 			if(endTime.getHours()<20){
-				content.append(endTime.getDate()+"日"+h+":00-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\" name=\"预订\" value=\"预订\"/>");
+				content.append(endTime.getDate()+"日"+h+":00-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>");
 				flag = 1;
 			}
 			content.append("</div>");
