@@ -173,6 +173,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									id 	:'num',
 									fieldLabel : '与会人数',
 									width: 250,
+									readOnly:true,
 									xtype : 'numberfield',
 									value :'',
 									allowBlank:false
@@ -195,28 +196,41 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					},{
 						layout:'column',
 						border : false,
+						fieldLabel:'与会人员名单',
 						items:[{
-								columnWidth:0.5,
+								columnWidth:0.9,
 								layout : 'form',
 								border : false,
 								items :[{
-									name : 'attendList',
-									id 	:'attendList',
-									fieldLabel : '与会人员名单',
-									width: 250,
-									xtype : 'textarea',
-									value :'',
-									allowBlank:false
-								}]
-							},{
-								columnWidth:0.5,
-								layout: 'form',
-								border : false,
-								items:[{
-									emptyText:'请在此查询..',
-									name:'selectAttend',
-									id : 'selectAttend',
-									xtype:'combo'
+									layout:'column',
+									border:false,
+									items:[{
+										name : 'attendList',
+										id 	:'attendList',
+										width: 250,
+										xtype : 'textarea',
+										readOnly:true,
+										value :'',
+										allowBlank:false
+									},{
+										xtype : "button",
+										text:'选择人员',
+										iconCls : "btn-mail_recipient",
+										name:'selectAttend',
+										id : 'selectAttend',
+										handler : function() {
+												UserSelector.getView(function(d, c) {
+													Ext.getCmp("attendList").setValue(c);
+													Ext.getCmp("attendIdList").setValue(d);
+													Ext.getCmp('num').setValue(d.split(',').length);
+												}, false).show();
+										}
+									},{
+										xtype : "hidden",
+										name : "attendIdList",
+										id : "attendIdList"
+									}]
+									
 								}]
 							}
 							]
@@ -230,7 +244,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					 anchor:"46%",
 					disableDays:[0,6],
 					value:new Date(),
-					allowBlank:false
+					allowBlank:false,
+					minValue:new Date().format("Y-m-d")
 				},{
 					xtype:'container',
 					layout:'form',
