@@ -32,9 +32,11 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					name : "id",
 					type : "int"
 				},
+				"date",
+				"week",
+				"startHour",
+				"endHour",
 				"roomName",
-				"startTime",
-				"endTime",
 				{
 					name : "createUser",
 					mapping : "createBy.fullname"
@@ -57,11 +59,17 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					dataIndex : "id",
 					hidden : true
 				}, {
+					header : "日期",
+					dataIndex : "date"
+				}, {
+					header : "星期",
+					dataIndex : "week"
+				}, {
 					header : "开始",
-					dataIndxe : "startTime"
+					dataIndex : "startHour"
 				}, {
 					header : "结束",
-					dataIndxe : "endTime"
+					dataIndex : "endHour"
 				}, {
 					header : "预订者",
 					dataIndxe : "createUser"
@@ -82,6 +90,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			store : this.store,
 			autoWidth : true,
 			autoHeight : true,
+			autoScroll:true,
 			stripeRows : true,
 			closeable : true,
 			trackMouseOver : true,
