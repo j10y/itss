@@ -79,6 +79,9 @@
 	    <action name="*MrbsSchedule" class="MrbsScheduleAction" method="{1}">
 	        <result>${successResultValue}</result>
 	    </action>
+	    <action name="*MrbsRepeat" class="MrbsRepeatAction" method="{1}">
+	        <result>${successResultValue}</result>
+	    </action>
 	</package>	
 	<package name="communicate" extends="struts-default" namespace="/communicate">
 	    <action name="*PhoneGroup" class="PhoneGroupAction" method="{1}">
