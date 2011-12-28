@@ -20,7 +20,7 @@ public class MrbsScheduleServiceImpl extends BaseServiceImpl<MrbsSchedule> imple
 	}
 	
 	public List<MrbsSchedule> validate(Date startTime, Date endTime, Long roomId) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String startTimeString = sdf.format(startTime);
 		String endTimeString = sdf.format(endTime);
 		String sql = "select id from mrbs_schedule where " +
