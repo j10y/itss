@@ -72,7 +72,13 @@ public class MrbsScheduleAction extends BaseAction {
 
 		return "success";
 	}*/
-	
+	public String save(){
+		this.MrbsScheduleService.save(this.mrbsSchedule);
+		StringBuffer buff = new StringBuffer();
+		buff.append("{success:true,result:''}");
+		this.jsonString = buff.toString();
+		return "success";
+	}
 	public String list() {
 		SimpleDateFormat sdfForDate = new SimpleDateFormat("MM月dd日");
 		SimpleDateFormat sdfHour = new SimpleDateFormat("HH:mm");
