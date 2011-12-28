@@ -21,10 +21,18 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 			items : [
 				"->",
 				{
+					id : "selectDate",
 					xtype : "datefield",
 					format : "Y-m-d",
 					value : new Date(),
-					minValue : new Date().format("Y-m-d")
+					minValue : new Date().format("Y-m-d"),
+					listeners : {
+						select : function() {
+							//alert(Ext.getCmp("selectDate").getValue());
+							Ext.getCmp("areaTabPanel").removeAll();
+							Ext.getCmp("MeetingRoomView").search(Ext.getCmp("MeetingRoomView"), Ext.getCmp("selectDate").getValue().format('Y-m-d'));
+						}
+					}
 				}, {
 					xtype : "label",
 					html : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
@@ -50,13 +58,13 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 			tbar : tabbar,
 			items:[]
 		});
-		this.search(a);
+		this.search(a, new Date().format("Y-m-d"));
 	},
 	search2 : function(a){
 		
 	
 	},
-	search : function(a){
+	search : function(a, b){
 		Ext.Ajax.request({
 					url : __ctxPath + "/system/listMrbsArea.do",
 					params : {
@@ -81,7 +89,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 							});
 							
 							Ext.getCmp('areaTabPanel').add(panel1);
-						    MeetingRoomView.searchItems("/system/listMrbsRoom.do",a,i,e.result[i].id);
+						    MeetingRoomView.searchItems("/system/listMrbsRoom.do?searchDate=" + b,a,i,e.result[i].id);
 						}
 					},
 					failure : function() {
