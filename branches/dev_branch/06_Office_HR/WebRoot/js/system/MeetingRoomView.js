@@ -151,17 +151,18 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
  * 
  * searchForm:当使用 查询空闲办公室时使用的参数，第一次加载 和 点击 日历的查询 不使用此参数
  */
-MeetingRoomView.searchItems = function(u,t,index,id,searchForm){
+MeetingRoomView.searchItems = function(u,t,index,id,itemArray){
 		Ext.Ajax.request({
 					url : __ctxPath + u,
 					params : {
 						areaId:id,
-						attendNum:(searchForm)?searchForm.get('attendNum').getValue():"",
-						meetingTime:(searchForm)?searchForm.get('meetingTime').getValue():"",
-						startDate:(searchForm)?searchForm.get('startDate').getValue():"",
-						endDate:(searchForm)?searchForm.get('endDate').getValue():"",
-						referTime:(searchForm)?searchForm.get('referTime').getValue():"",
-						meetingHour:(searchForm)?searchForm.get('meetingHour').getValue():""
+						attendNum:(itemArray) ? itemArray[0] : "",
+						meetingTime:(itemArray) ? itemArray[1] : "",
+						startDate:(itemArray) ? itemArray[2].format('Y-m-d') : "",
+						endDate:(itemArray) ? itemArray[3].format('Y-m-d') : "",
+						referTime:(itemArray) ? itemArray[4] : "",
+						meetingHour:(itemArray) ? itemArray[5] : "",
+						meetingMin:(itemArray) ? itemArray[6] : ""
 					},
 					method : "post",
 					success : function(d) {

@@ -50,6 +50,7 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 					id : "meetingTime",
 					width : 130,
 					xtype : "combo",
+					value : "1",
 					editable : false,
 					triggerAction : "all",
 					allowBlank : false,
@@ -225,8 +226,16 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 	},
 	search : function(b, a) {
 		if(b.getForm().isValid()) {
+			var array = new Array();
+			array.push(Ext.getCmp("attendNum").getValue());
+			array.push(Ext.getCmp("meetingTime").getValue());
+			array.push(Ext.getCmp("startDate").getValue());
+			array.push(Ext.getCmp("endDate").getValue());
+			array.push(Ext.getCmp("referTime").getValue());
+			array.push(Ext.getCmp("meetingHour").getValue());
+			array.push(Ext.getCmp("meetingMin").getValue());
 			Ext.getCmp("areaTabPanel").removeAll();
-			Ext.getCmp("MeetingRoomView").search_free(Ext.getCmp("areaTabPanel"), b);
+			Ext.getCmp("MeetingRoomView").search_free(Ext.getCmp("MeetingRoomView"), array);
 			a.close();
 		}
 	},
