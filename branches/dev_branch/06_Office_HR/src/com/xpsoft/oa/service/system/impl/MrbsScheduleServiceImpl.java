@@ -34,6 +34,7 @@ public class MrbsScheduleServiceImpl extends BaseServiceImpl<MrbsSchedule> imple
 		for(Map<String, Object> map : mapList) {
 			MrbsSchedule msNew = new MrbsSchedule();
 			msNew.setId(Long.parseLong(map.get("id").toString()));
+			resultList.add(msNew);
 		}
 		return resultList;
 	}
