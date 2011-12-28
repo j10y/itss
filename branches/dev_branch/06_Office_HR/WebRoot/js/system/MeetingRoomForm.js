@@ -31,7 +31,11 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			}
 		});
 	},
+	rightDate : null,
 	initComponents : function() {
+		var date = new Date();
+		date.setDate(date.getDate()+2);
+		this.rightDate = date;
 		this.store = new Ext.data.JsonStore({
 			url : __ctxPath + "/system/listMrbsSchedule.do?Q_room.id_L_EQ=" + this.roomId,
 			totalProperty : "totalCounts",
@@ -190,7 +194,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									hideLabels:true,
 									value : '1',
 									border: false,
-									items:[{boxLabel:'投影仪'}]
+									items:[{boxLabel:'投影仪',name:'mrbsRepeat.projector',inputValue:'1'}]
 								}]
 							}
 							]
@@ -223,7 +227,12 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 												UserSelector.getView(function(d, c) {
 													Ext.getCmp("attendList").setValue(c);
 													Ext.getCmp("attendIdList").setValue(d);
-													Ext.getCmp('num').setValue(d.split(',').length);
+													if(d){
+														if(d.trim() != ""){
+															Ext.getCmp('num').setValue(d.split(',').length);
+														}
+													}
+													
 												}, false).show();
 										}
 									},{
@@ -244,9 +253,11 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					format: 'Y-m-d',
 					 anchor:"46%",
 					disableDays:[0,6],
-					value:new Date(),
+					
 					allowBlank:false,
-					minValue:new Date().format("Y-m-d")
+					//minValue:new Date().format("Y-m-d"),
+					minValue:this.rightDate
+					
 				},{
 					xtype:'container',
 					layout:'form',
@@ -500,8 +511,10 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 								format: 'Y-m-d',
 								anchor:"46%",
 								disableDays:[0,6],
-								value:new Date(),
-								allowBlank:false
+								allowBlank:false,
+								minValue:this.rightDate
+								
+								
 							}]
 						}]
 					}]
@@ -543,7 +556,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 							items:[{
 								defaultType:'radio',
 								border:false,
-								items:[{boxLabel:'否',name:'mrbsRepeat.allday',inputValue:'0'}]
+								items:[{boxLabel:'否',name:'mrbsRepeat.allday',inputValue:'0',check:true}]
 							}]
 						}]
 					}]
@@ -636,7 +649,6 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 							items:[{
 								xtype:'combo',
 								name:'mrbsRepeat.weekSpan',
-								allowBlank:false,
 								store:new Ext.data.SimpleStore({
 									fields:['value','text'],
 									data:[['1','1'],['2','2'],['3','3'],['4','4'],['5','5']]
@@ -644,7 +656,11 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 								displayField:'text',
 								valueField:'value',
 								mode:'local',
-								emptyText:'请选择..'
+								listeners:{
+									afterrender:function(){
+										this.value = 1;
+									}
+								}
 							}]
 						}]
 						
@@ -677,6 +693,9 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 	save : function(b, a) {
 		if(b.getForm().isValid()) {
 		   //validate
+		  // Ext.getCmp('startDate');
+		   //Ext.ux.Toast.msg(Ext.getCmp('startDate').getValue()+"="+Ext.getCmp('endDate').getValue())
+		   return false;
 			b.getForm().submit({
 				method : "post",
 				waitMsg : "正在提交数据……",
