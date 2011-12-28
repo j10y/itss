@@ -494,22 +494,24 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 						layout:'column',
 						border:false,
 						items:[{
-							columnWidth:.2,
+							columnWidth:.15,
 							layout:'form',
 							border:false,
 							items:[{
 								xtype:'label',
-								text:'结束日期'
+								text:'结束日期:'
 							}]
 						},{
-							columnWidth:.8,
+							columnWidth:.85,
 							layout:'form',
 							border:false,
+							bodyStyle:"padding:0px;",
 							items:[{
+								hideLabel:true,
+								width:246,
 								name:'mrbsRepeat.endDate',
 								xtype:'datefield',
 								format: 'Y-m-d',
-								anchor:"46%",
 								disableDays:[0,6],
 								allowBlank:false,
 								minValue:this.rightDate
@@ -524,23 +526,26 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					xtype:'container',
 					layout:'form',
 					border:false,
+					defaults: {
+						bodyStyle:'margin-top:10px'
+					},
 					anchor:"39%",
 					items:[{
 						layout:'column',
 						border:false,
 						items:[
 						{
-							columnWidth:.33,
+							columnWidth:.36,
 							layout:'form',
 							border:false,
 							items:[{
 								xtype:'label',
 								border:false,
-								text:'全天'
+								text:'全天:'
 							}]
 							
 						},{
-							columnWidth:.33,
+							columnWidth:.31,
 							layout:'form',
 							border:false,
 							items:[{
@@ -564,65 +569,74 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					id : 'repeatWeekDay',
 					xtype:'container',
 					layout:'form',
+					defaults: {
+						bodyStyle:'margin-top:10px'
+					},
 					border:false,
 					anchor:"77%",
 					items:[{
 						layout:'column',
 						border:false,
 						items:[{
-							columnWidth:.1,
+							columnWidth:.18,
 							layout:'form',
 							border:false,
 							items:[{
 								xtype:'label',
 								border:false,
-								text:'星期几'
+								text:'星期几:'
 							}]
 							
 						},{
-							columnWidth:.1,
+							columnWidth:.22,
 							layout:'form',
 							border:false,
 							items:[{
 								defaultType:'radio',
+								hideLabel:true,
 								border:false,
 								items:[{boxLabel:'星期一',name:'mrbsRepeat.repeatWeekDay',inputValue:'1'}]
 							}]
 							
 						},{
-							columnWidth:.2,
+							columnWidth:.15,
 							layout:'form',
 							border:false,
 							items:[{
 								defaultType:'radio',
 								border:false,
+								hideLabel:true,
 								items:[{boxLabel:'星期二',name:'mrbsRepeat.repeatWeekDay',inputValue:'2'}]
 							}]
 						},{
-							columnWidth:.2,
+							columnWidth:.15,
 							layout:'form',
 							border:false,
 							items:[{
 								defaultType:'radio',
 								border:false,
+								hideLabel:true,
 								items:[{boxLabel:'星期三',name:'mrbsRepeat.repeatWeekDay',inputValue:'3'}]
 							}]
 						},{
-							columnWidth:.2,
+							columnWidth:.15,
 							layout:'form',
 							border:false,
 							items:[{
 								defaultType:'radio',
 								border:false,
+								hideLabel:true,
 								items:[{boxLabel:'星期四',name:'mrbsRepeat.repeatWeekDay',inputValue:'4'}]
 							}]
 						},{
-							columnWidth:.2,
+							columnWidth:.15,
 							layout:'form',
 							border:false,
 							items:[{
+								width:200,
 								defaultType:'radio',
 								border:false,
+								hideLabel:true,
 								items:[{boxLabel:'星期五',name:'mrbsRepeat.repeatWeekDay',inputValue:'5'}]
 							}]
 						}]
@@ -631,22 +645,26 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					id:'weekSpan',
 					xtype:'container',
 					layout:'form',
+					defaults: {
+						bodyStyle:'margin-top:10px'
+					},
 					items:[{
 						layout:'column',
 						border:false,
 						items:[{
-							columnWidth:.1,
+							columnWidth:.15,
 							layout:'form',
 							border:false,
 							items:[{
 								xtype:'label',
-								text:'隔周'
+								text:'隔周:'
 							}]
 						},{
-							columnWidth:.9,
+							columnWidth:.85,
 							layout:'form',
 							border:false,
 							items:[{
+								hideLabel:true,
 								xtype:'combo',
 								name:'mrbsRepeat.weekSpan',
 								store:new Ext.data.SimpleStore({
