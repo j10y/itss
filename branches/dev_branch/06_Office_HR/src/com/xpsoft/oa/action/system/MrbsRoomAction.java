@@ -1,7 +1,10 @@
 package com.xpsoft.oa.action.system;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +82,7 @@ public class MrbsRoomAction extends BaseAction {
 					.append("'room_admin_email':'"+ room.getRoomAdminEmail()+"',");
 			StringBuffer content = new StringBuffer("<div>");
 			Date endTime = DateUtil.parseDate(searchDate);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			for(int i = 0; i < list_s.size(); i++){
 				Map m = list_s.get(i);
 				if(room.getId().toString().equals(m.get("room_id").toString())) {
@@ -90,9 +93,11 @@ public class MrbsRoomAction extends BaseAction {
 					Date dd= DateUtil.parseDate(sdf.format(d_1));
 					
 					String hstart = (d.getHours()>9)?d.getHours()+"":"0"+d.getHours();
+					String mstart = (d.getMinutes()>9)?d.getMinutes()+"":"0"+d.getMinutes();
 					String hend = (dd.getHours()>9)?dd.getHours()+"":"0"+dd.getHours();
+					String mend = (dd.getMinutes()>9)?dd.getMinutes()+"":"0"+dd.getMinutes();
 					
-					content.append(d.getDate()+"日"+hstart+":00-"+hend+":00").append("&nbsp;&nbsp;&nbsp;"+m.get("create_by")).append("<br/><br/>");
+					content.append(d.getDate()+"日"+hstart+":" + mstart + "-"+hend+":" + mend).append("&nbsp;&nbsp;&nbsp;"+m.get("create_by")).append("<br/><br/>");
 					endTime = d_1;
 					list_s.remove(i);
 				};
@@ -101,7 +106,7 @@ public class MrbsRoomAction extends BaseAction {
 			h = "00".equals(h) ? "08" : h;
 			int flag  = 0;
 			if(endTime.getHours()<20){
-				content.append(endTime.getDate()+"日"+h+":00-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  onclick=\"orderFun("+room.getId()+",\\'"+room.getRoomName()+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>");
+				content.append(endTime.getDate()+"日"+h+":00-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  onclick=\"orderFun("+room.getId()+",\\'"+room.getRoomName()+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
 				flag = 1;
 			}
 			content.append("</div>");
@@ -115,6 +120,118 @@ public class MrbsRoomAction extends BaseAction {
 
 		this.jsonString = buff.toString();
 
+		return "success";
+	}
+	
+	public String listResult() {
+		//获取参数
+		String attendNum = this.getRequest().getParameter("attendNum");
+		String meetingTime = this.getRequest().getParameter("meetingTime");
+		Long meetingTimeLong = Long.parseLong(meetingTime) * 60 * 60 * 1000;
+		Date startDate = DateUtil.parseDate(this.getRequest().getParameter("startDate"));
+		Date endDate = DateUtil.parseDate(this.getRequest().getParameter("endDate"));
+		Long areaId = Long.parseLong(this.getRequest().getParameter("areaId"));
+		boolean referTime = "1".equals(this.getRequest().getParameter("referTime")) ? true : false;
+		String meetingHour = this.getRequest().getParameter("meetingHour");
+		String meetingMin = this.getRequest().getParameter("meetingMin");
+		
+		//取到会议室列表
+		String roomSql = "select id, room_name, room_admin_email from mrbs_room where area_id = " + areaId.toString() + " and capacity >= " + attendNum;
+		List<Map<String, Object>> roomIdList = this.mrbsRoomService.findDataList(roomSql);
+		
+		Map<String, List<Map<String, Object>>> allRoomMap = new HashMap<String,List<Map<String,Object>>>();
+		//循环对每个会议室生成数据
+		for(int i = 0; i < roomIdList.size(); i++) {
+			String roomId = roomIdList.get(i).get("id").toString();
+			//循环查询每天会议室预定情况
+			Calendar c_start = Calendar.getInstance();
+			c_start.setTime(startDate);
+			int startDateOfYear = c_start.get(Calendar.DAY_OF_YEAR);
+			Calendar c_end = Calendar.getInstance();
+			c_end.setTime(endDate);
+			int endDateOfYear = c_end.get(Calendar.DAY_OF_YEAR);
+			List<Map<String, Object>> roomUnMeetingList = new ArrayList<Map<String,Object>>();
+			for(int j = 0; j < endDateOfYear - startDateOfYear + 1; j++) {
+				Calendar startc = Calendar.getInstance();
+				startc.setTime(startDate);
+				startc.add(Calendar.DAY_OF_YEAR, j);
+				
+				Calendar endc = Calendar.getInstance();
+				endc.setTime(startDate);
+				endc.add(Calendar.DAY_OF_YEAR, j + 1);
+				String roomMeetingSql = "select id, start_time, end_time from mrbs_schedule where room_id = " + roomId + " and " +
+						"start_time >= '" + DateUtil.convertDateToString(startc.getTime()) + "' and " +
+						"end_time < '" + DateUtil.convertDateToString(endc.getTime()) + "'";
+				List<Map<String, Object>> roomMeetingList = this.mrbsRoomService.findDataList(roomMeetingSql);
+				String startHour = DateUtil.convertDateToString(startc.getTime()) + " 08:00:00";
+				String endHour = DateUtil.convertDateToString(startc.getTime()) + " 20:00:00";
+				if(roomMeetingList.size() == 0) {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("startTime", DateUtil.parseDate(startHour));
+					map.put("endTime", DateUtil.parseDate(endHour));
+					roomUnMeetingList.add(map);
+				} else {
+					Date firstTime = (Date)roomMeetingList.get(0).get("start_time");
+					Date lastTime = (Date)roomMeetingList.get(roomMeetingList.size() - 1).get("end_time");
+					if(firstTime.getTime() - DateUtil.parseDate(startHour).getTime() >= meetingTimeLong) {
+						Map<String, Object> startMap = new HashMap<String, Object>();
+						startMap.put("startTime", DateUtil.parseDate(startHour));
+						startMap.put("endTime", firstTime);
+						roomUnMeetingList.add(startMap);
+					}
+					for(int k = 0; k < roomMeetingList.size() - 1; k++) {
+						Date prevTime = (Date)roomMeetingList.get(k).get("end_time");
+						Date nextTime = (Date)roomMeetingList.get(k + 1).get("start_time");
+						if(nextTime.getTime() - prevTime.getTime() >= meetingTimeLong) {
+							Map<String, Object> inMap = new HashMap<String, Object>();
+							inMap.put("startTime", prevTime);
+							inMap.put("endTime", nextTime);
+							roomUnMeetingList.add(inMap);
+						}
+					}
+					if(DateUtil.parseDate(endHour).getTime() - lastTime.getTime() >= meetingTimeLong) {
+						Map<String, Object> endMap = new HashMap<String, Object>();
+						endMap.put("startTime", lastTime);
+						endMap.put("endTime", DateUtil.parseDate(endHour));
+						roomUnMeetingList.add(endMap);
+					}
+				}
+			}
+			if(roomUnMeetingList.size() > 0) {
+				allRoomMap.put(roomId, roomUnMeetingList);
+			}
+		}
+		
+		//将返回数据拼装成JSON
+		StringBuffer buff = new StringBuffer("{success:true,result:[");
+		for(int i = 0; i < roomIdList.size(); i++) {
+			String roomId = roomIdList.get(i).get("id").toString();
+			String roomName = roomIdList.get(i).get("room_name").toString();
+			String roomAdminEmail = roomIdList.get(i).get("room_admin_email").toString();
+			if(allRoomMap.containsKey(roomId)) {
+				buff.append("{'id':'" + roomId + "',")
+						.append("'roomName':'" + roomName + "',")
+						.append("'room_admin_email':'" + roomAdminEmail + "',");
+				StringBuffer content = new StringBuffer("<div>");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				List<Map<String, Object>> list = allRoomMap.get(roomId);
+				for(int j = 0; j < list.size(); j++) {
+					content.append(list.get(j).get("startTime") + "-" + list.get(j).get("endTime"))
+							.append("&nbsp;&nbsp;&nbsp;")
+							.append("空闲，<input type=\"button\"  onclick=\"orderFun("+roomId+",\\'"+roomName+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
+				}
+				content.append("</div>");
+				buff.append("'flag':'1',");
+				buff.append("'content':'" + content + "'},");
+			}
+		}
+		if(roomIdList.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]}");
+
+		this.jsonString = buff.toString();
+		
 		return "success";
 	}
 
