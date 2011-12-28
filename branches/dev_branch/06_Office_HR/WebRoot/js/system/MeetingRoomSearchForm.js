@@ -224,7 +224,11 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 		];
 	},
 	search : function(b, a) {
-		
+		if(b.getForm().isValid()) {
+			Ext.getCmp("areaTabPanel").removeAll();
+			Ext.getCmp("MeetingRoomView").search_free(Ext.getCmp("areaTabPanel"), b);
+			a.close();
+		}
 	},
 	cancel : function(a) {
 		a.close();

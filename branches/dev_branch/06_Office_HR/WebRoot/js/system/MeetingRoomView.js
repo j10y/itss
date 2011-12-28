@@ -152,7 +152,6 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
  * searchForm:当使用 查询空闲办公室时使用的参数，第一次加载 和 点击 日历的查询 不使用此参数
  */
 MeetingRoomView.searchItems = function(u,t,index,id,searchForm){
-
 		Ext.Ajax.request({
 					url : __ctxPath + u,
 					params : {
