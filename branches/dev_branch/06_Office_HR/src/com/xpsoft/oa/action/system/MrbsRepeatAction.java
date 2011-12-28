@@ -1,6 +1,8 @@
 package com.xpsoft.oa.action.system;
 
 import java.lang.reflect.Type;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,11 +10,25 @@ import javax.annotation.Resource;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.ContextUtil;
+import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.MrbsRepeat;
+import com.xpsoft.oa.model.system.MrbsSchedule;
 import com.xpsoft.oa.service.system.MrbsRepeatService;
+import com.xpsoft.oa.service.system.MrbsScheduleService;
 
 public class MrbsRepeatAction extends BaseAction {
+	@Resource
+	private MrbsScheduleService mrbsScheduleService;
+	public MrbsScheduleService getMrbsScheduleService() {
+		return mrbsScheduleService;
+	}
+
+	public void setMrbsScheduleService(MrbsScheduleService mrbsScheduleService) {
+		this.mrbsScheduleService = mrbsScheduleService;
+	}
 
 	@Resource
 	private MrbsRepeatService mrbsRepeatService;
@@ -70,12 +86,173 @@ public class MrbsRepeatAction extends BaseAction {
 	public String save() {
 		QueryFilter filter = new QueryFilter(getRequest());
 		//List<MrbsRepeat> list = this.mrbsRepeatService.getAll(filter);
+		String start_date = DateUtil.convertDateToString(this.mrbsRepeat.getStartDate()) + " " + this.mrbsRepeat.getStartHour() + ":" + this.mrbsRepeat.getStartMini() + ":00";
+		this.mrbsRepeat.setStartDate(DateUtil.parseDate(start_date));
+		//当 预订为 “当天” 时，结束日期 与 开始日期相同
+		if(this.mrbsRepeat.getRepOpt() == 0){
+			this.mrbsRepeat.setEndDate(this.mrbsRepeat.getStartDate());
+		}
+		String end_date = DateUtil.convertDateToString(this.mrbsRepeat.getEndDate()) + " " + this.mrbsRepeat.getEndHour() + ":" + this.mrbsRepeat.getEndMini() + ":00";
+		this.mrbsRepeat.setEndDate(DateUtil.parseDate(end_date));
+		
+		//保存预订申请
 		this.mrbsRepeatService.save(this.mrbsRepeat);
-
+		
+		//拆分预订
+		SaveToSchedule(this.mrbsRepeat);
 		this.jsonString = "{success:true}";
-
 		return "success";
 	}
+	
+	
+	/**
+	 * 申请原始记录保存在mrbs_Repeat 表
+	 * 
+	 * 详情：mrbs_Schedule表
+	 * @param peat
+	 * @return
+	 */
+	private String SaveToSchedule(MrbsRepeat peat){
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		int repeat_opt = this.mrbsRepeat.getRepOpt();
+		Date d  = new Date();
+		Date startDate = peat.getStartDate();
+		Date endDate = peat.getEndDate();
+		switch(repeat_opt){
+			case 0:{
+				List<MrbsSchedule> list = this.mrbsScheduleService.validate(peat.getStartDate(), peat.getEndDate(), peat.getRoom().getId());
+				if(list!=null && list.size()<1){
+					MrbsSchedule ms = new MrbsSchedule();
+					ms.setModifyBy(currentUser);
+					ms.setCreateBy(currentUser);
+					ms.setCreateDate(d);
+					ms.setModifyDate(d);
+					ms.setStartTime(peat.getStartDate());
+					ms.setEndTime(peat.getEndDate());
+					ms.setProjector(peat.getProjector());
+					ms.setDescription(peat.getDescription());
+					ms.setNum(peat.getNum());
+					ms.setPreside(currentUser.getFullname());
+					ms.setPresideEmail(currentUser.getEmail());
+					ms.setRoom(peat.getRoom());
+					this.mrbsScheduleService.save(ms);
+					//System.out.println(ms.getId());
+				}
+				 
+			}break;
+			case 1:{
+				Calendar c_start = Calendar.getInstance();
+				c_start.setTime(startDate);
+				int startdayofyear = c_start.get(Calendar.DAY_OF_YEAR);
+				Calendar c_end = Calendar.getInstance();
+				c_end.setTime(endDate);
+				int enddayofyear = c_end.get(Calendar.DAY_OF_YEAR);
+				
+				for(int i=0;i<=enddayofyear-startdayofyear;i++){
+					//从startDate开始，以后每天都预订，时间天+1
+					Calendar startc = Calendar.getInstance();
+					startc.setTime(startDate);
+					startc.add(Calendar.DAY_OF_YEAR, i);
+					
+					//endDate 时间天同步+1
+					Calendar endc = Calendar.getInstance();
+					endc.setTime(endDate);
+					endc.add(Calendar.DAY_OF_YEAR, i);
+					
+					MrbsSchedule ms = new MrbsSchedule();
+					ms.setModifyBy(currentUser);
+					ms.setCreateBy(currentUser);
+					ms.setCreateDate(d);
+					ms.setModifyDate(d);
+					ms.setStartTime(startc.getTime());
+					ms.setEndTime(endc.getTime());
+					ms.setProjector(peat.getProjector());
+					ms.setDescription(peat.getDescription());
+					ms.setNum(peat.getNum());
+					ms.setPreside(currentUser.getFullname());
+					ms.setPresideEmail(currentUser.getEmail());
+					ms.setRoom(peat.getRoom());
+					this.mrbsScheduleService.save(ms);
+					//System.out.println(ms.getId());
+				};
+				
+			}break;
+			case 2:{
+				Calendar c_start = Calendar.getInstance();
+				Calendar c_end = Calendar.getInstance();
+				c_start.setTime(startDate);
+				c_end.setTime(endDate);
+				//预订每周 的第几天
+				int dayOfWeek_selected = peat.getRepeatWeekDay()+1;
+				while(c_end.after(c_start)){
+					if(c_start.get(Calendar.DAY_OF_WEEK)== dayOfWeek_selected){
+						MrbsSchedule ms = new MrbsSchedule();
+						ms.setModifyBy(currentUser);
+						ms.setCreateBy(currentUser);
+						ms.setCreateDate(d);
+						ms.setModifyDate(d);
+						ms.setStartTime(c_start.getTime());
+						// endDate
+						String end_date_str = DateUtil.convertDateToString(c_start.getTime()) + " " + peat.getEndHour() + ":" + peat.getEndMini() + ":00";
+						ms.setEndTime(DateUtil.parseDate(end_date_str));
+						ms.setProjector(peat.getProjector());
+						ms.setDescription(peat.getDescription());
+						ms.setNum(peat.getNum());
+						ms.setPreside(currentUser.getFullname());
+						ms.setPresideEmail(currentUser.getEmail());
+						ms.setRoom(peat.getRoom());
+						this.mrbsScheduleService.save(ms);
+					}
+					c_start.add(Calendar.DAY_OF_YEAR, 1);
+				};
+				
+			}break;
+			case 3:{
+				// 预订一周的第几天
+				int dayOfWeek_selected = peat.getRepeatWeekDay()+1;
+				// 隔几周
+				int week_span = peat.getWeekSpan();
+				
+				Calendar c_start = Calendar.getInstance();
+				Calendar c_end = Calendar.getInstance();
+				c_start.setTime(startDate);
+				c_end.setTime(endDate);
+				
+				// 找出第一次会议时间，以后 时间+2×7
+				for(int i =0 ;i<=7;i++){
+					if(c_start.get(Calendar.DAY_OF_WEEK) == dayOfWeek_selected){
+						break;
+					}
+					c_start.add(Calendar.DAY_OF_YEAR, 1);
+				}
+				
+				while(c_end.after(c_start)){
+					MrbsSchedule ms = new MrbsSchedule();
+					ms.setModifyBy(currentUser);
+					ms.setCreateBy(currentUser);
+					ms.setCreateDate(d);
+					ms.setModifyDate(d);
+					ms.setStartTime(c_start.getTime());
+					// endDate
+					String end_date_str = DateUtil.convertDateToString(c_start.getTime()) + " " + peat.getEndHour() + ":" + peat.getEndMini() + ":00";
+					ms.setEndTime(DateUtil.parseDate(end_date_str));
+					ms.setProjector(peat.getProjector());
+					ms.setDescription(peat.getDescription());
+					ms.setNum(peat.getNum());
+					ms.setPreside(currentUser.getFullname());
+					ms.setPresideEmail(currentUser.getEmail());
+					ms.setRoom(peat.getRoom());
+					this.mrbsScheduleService.save(ms);
+					c_start.add(Calendar.DAY_OF_YEAR, 7*week_span);
+				}
+				
+				
+			}break;
+		}
+		
+		return "";
+	}
+	
 
 	public static void  toJson(List<MrbsRepeat> list,StringBuffer sb){
 		sb.append("[");

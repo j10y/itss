@@ -66,7 +66,7 @@ public class MrbsRoomAction extends BaseAction {
 				"mrbs_schedule a, mrbs_room b, app_user c where " +
 				"a.room_id = b.id and b.area_id = " + areaId + " and a.create_by = c.userId and " +
 				"a.start_time > '"  + DateUtil.convertDateToString(new Date())+  "' and " +
-				"a.start_time < '"+DateUtil.convertDateToString(DateUtil.addDays(new Date(),1)) + "' order by a.end_time asc";
+				"a.start_time < '"+DateUtil.convertDateToString(DateUtil.addDays(new Date(),1)) + "' order by a.end_time asc limit 3";
 		
 		List<Map> list_s = this.mrbsRoomService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
@@ -76,7 +76,7 @@ public class MrbsRoomAction extends BaseAction {
 			buff.append("{'id':'" + room.getId() + "',")
 					.append("'roomName':'" + room.getRoomName() + "',")
 					.append("'room_admin_email':'"+ room.getRoomAdminEmail()+"',");
-			StringBuffer content = new StringBuffer("<div id=\"cc\">");
+			StringBuffer content = new StringBuffer("<div>");
 			Date endTime = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
 			for(int i = 0; i < list_s.size(); i++){
