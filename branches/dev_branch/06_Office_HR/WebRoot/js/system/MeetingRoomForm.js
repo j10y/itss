@@ -710,10 +710,6 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 	},
 	save : function(b, a) {
 		if(b.getForm().isValid()) {
-		   //validate
-		  // Ext.getCmp('startDate');
-		   //Ext.ux.Toast.msg(Ext.getCmp('startDate').getValue()+"="+Ext.getCmp('endDate').getValue())
-		   return false;
 			b.getForm().submit({
 				method : "post",
 				waitMsg : "正在提交数据……",
