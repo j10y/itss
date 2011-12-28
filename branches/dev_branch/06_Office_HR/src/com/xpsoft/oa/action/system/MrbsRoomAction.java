@@ -61,12 +61,13 @@ public class MrbsRoomAction extends BaseAction {
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
 		String areaId = getRequest().getParameter("areaId");
+		String searchDate = (getRequest().getParameter("searchDate") == null || "".equals(getRequest().getParameter("searchDate"))) ? DateUtil.convertDateToString(new Date()) : getRequest().getParameter("searchDate");
 		List<MrbsRoom> list = this.mrbsRoomService.getAll(filter);
 		String sql = "select a.id, a.room_id,b.room_admin_email, a.start_time, a.end_time, c.fullname as create_by, a.description from " +
 				"mrbs_schedule a, mrbs_room b, app_user c where " +
 				"a.room_id = b.id and b.area_id = " + areaId + " and a.create_by = c.userId and " +
-				"a.start_time > '"  + DateUtil.convertDateToString(new Date())+  "' and " +
-				"a.start_time < '"+DateUtil.convertDateToString(DateUtil.addDays(new Date(),1)) + "' order by a.end_time asc limit 3";
+				"a.start_time > '"  +searchDate +  "' and " +
+				"a.start_time < '"+ DateUtil.convertDateToString(DateUtil.addDays(DateUtil.parseDate(searchDate),1)) + "' order by a.end_time asc limit 3";
 		
 		List<Map> list_s = this.mrbsRoomService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
@@ -77,7 +78,7 @@ public class MrbsRoomAction extends BaseAction {
 					.append("'roomName':'" + room.getRoomName() + "',")
 					.append("'room_admin_email':'"+ room.getRoomAdminEmail()+"',");
 			StringBuffer content = new StringBuffer("<div>");
-			Date endTime = new Date();
+			Date endTime = DateUtil.parseDate(searchDate);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
 			for(int i = 0; i < list_s.size(); i++){
 				Map m = list_s.get(i);
@@ -97,6 +98,7 @@ public class MrbsRoomAction extends BaseAction {
 				};
 			}
 			String h = (endTime.getHours()>9)?endTime.getHours()+"":"0"+endTime.getHours();
+			h = "00".equals(h) ? "08" : h;
 			int flag  = 0;
 			if(endTime.getHours()<20){
 				content.append(endTime.getDate()+"日"+h+":00-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  onclick=\"orderFun("+room.getId()+",\\'"+room.getRoomName()+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>");
