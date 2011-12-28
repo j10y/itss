@@ -85,7 +85,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 							});
 							
 							Ext.getCmp('areaTabPanel').add(panel1);
-						    MeetingRoomView.searchItems("/system/listMrbsRoom.do?",a,i,e.result[i].id,searchForm);
+						    MeetingRoomView.searchItems("/system/listResultMrbsRoom.do?",a,i,e.result[i].id,searchForm);
 						}
 					},
 					failure : function() {
