@@ -60,8 +60,43 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 		});
 		this.search(a, new Date().format("Y-m-d"));
 	},
-	search2 : function(a){
-		
+	search_free : function(a,searchForm){
+		Ext.Ajax.request({
+					url : __ctxPath + "/system/listMrbsArea.do",
+					params : {
+					},
+					method : "post",
+					success : function(d) {
+						var e = Ext.util.JSON.decode(d.responseText);
+						//Ext.ux.Toast.msg("提示信息", d.responseText);
+						for(var i = 0 ;i<e.result.length;i++){
+							var panel1 = new Ext.Panel({
+								id : 'area_'+i,
+								title : e.result[i].areaName,
+								autoDestroy: true,
+								layout:"table",
+								defaults:{
+										bodyStyle : 'padding:20px;'
+								},
+								layoutConfig:{
+										columns:3
+									},
+								items:[]
+							});
+							
+							Ext.getCmp('areaTabPanel').add(panel1);
+						    MeetingRoomView.searchItems("/system/listMrbsRoom.do?",a,i,e.result[i].id,searchForm);
+						}
+					},
+					failure : function() {
+						Ext.MessageBox.show({
+							title : "操作信息",
+							msg : "删除失败，请联系管理员！",
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.ERROR
+						});
+					}
+				});
 	
 	},
 	search : function(a, b){
@@ -105,13 +140,29 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 	
 });
 
-
-MeetingRoomView.searchItems = function(u,t,index,id){
+/**
+ * 
+ * @param {Object} u
+ * @param {Object} t
+ * @param {Object} index
+ * @param {Object} id
+ * @param {Object} searchForm
+ * @return {TypeName} 
+ * 
+ * searchForm:当使用 查询空闲办公室时使用的参数，第一次加载 和 点击 日历的查询 不使用此参数
+ */
+MeetingRoomView.searchItems = function(u,t,index,id,searchForm){
 
 		Ext.Ajax.request({
 					url : __ctxPath + u,
 					params : {
-						areaId:id
+						areaId:id,
+						attendNum:(searchForm)?searchForm.get('attendNum').getValue():"",
+						meetingTime:(searchForm)?searchForm.get('meetingTime').getValue():"",
+						startDate:(searchForm)?searchForm.get('startDate').getValue():"",
+						endDate:(searchForm)?searchForm.get('endDate').getValue():"",
+						referTime:(searchForm)?searchForm.get('referTime').getValue():"",
+						meetingHour:(searchForm)?searchForm.get('meetingHour').getValue():""
 					},
 					method : "post",
 					success : function(d) {
