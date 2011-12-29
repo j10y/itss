@@ -29,6 +29,13 @@ public class MrbsRepeat extends BaseModel{
 	private Date modifyDate;
 	private AppUser modifyBy;
 	
+	public MrbsRepeat(Long id) {
+		super();
+		this.id = id;
+	}
+	public MrbsRepeat() {
+		super();
+	}
 	public Long getId() {
 		return id;
 	}

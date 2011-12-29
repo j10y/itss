@@ -23,6 +23,12 @@ public class MrbsSchedule extends BaseModel{
 	private Date modifyDate;
 	private AppUser modifyBy;
 	
+	public MrbsSchedule(Long id){
+		this.id = id;
+	}
+	public MrbsSchedule(){
+	}
+	
 	public Long getId() {
 		return id;
 	}

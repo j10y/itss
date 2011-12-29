@@ -3,6 +3,13 @@ package com.xpsoft.oa.model.system;
 import com.xpsoft.core.model.BaseModel;
 
 public class MrbsRoom extends BaseModel{
+	public MrbsRoom() {
+		super();
+	}
+	public MrbsRoom(Long id) {
+		super();
+		this.id = id;
+	}
 	private Long id;
 	private MrbsArea area;
 	private String roomName;
