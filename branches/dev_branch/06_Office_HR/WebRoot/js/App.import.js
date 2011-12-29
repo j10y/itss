@@ -486,6 +486,11 @@ App.importJs = {
 			__ctxPath + "/js/hrm/CheckEmpProfileForm.js"],
     MeetingRoomView :[ __ctxPath + "/js/system/MeetingRoomView.js",
 			__ctxPath + "/js/system/MeetingRoomForm.js",
-			__ctxPath + "/js/system/MeetingRoomSearchForm.js"]
-				                    
+			__ctxPath + "/js/system/MeetingRoomSearchForm.js"],
+	AreaView :[ __ctxPath + "/js/system/AreaView.js",
+			__ctxPath + "/js/system/AreaForm.js"
+	],
+	RoomView :[ __ctxPath + "/js/system/RoomView.js",
+			__ctxPath + "/js/system/RoomForm.js"
+	]			                    
 };
