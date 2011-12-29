@@ -189,6 +189,7 @@ MeetingRoomView.searchItems = function(u,t,index,id,itemArray){
 							var rPanel = new Ext.Panel({
 								height:200,
 	                    		width:380,
+	                    		autoScroll:true,
 	                    		style:"margin:5px 5px",
 								title:"<b>"+e.result[j].roomName+ "</b>&nbsp;&nbsp;&nbsp;"+e.result[j].room_admin_email,
 								html:e.result[j].content,
