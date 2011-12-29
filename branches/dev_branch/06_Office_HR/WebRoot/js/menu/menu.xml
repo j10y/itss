@@ -13,7 +13,26 @@
 		<Item id="CalendarPlanView" iconCls="menu-cal-plan-view" text="我的日程" />
 		<Item id="PersonalWorkPlanView" iconCls="menu-myplan" text="我的计划" />
 		<Item id="AppointmentView" iconCls="menu-appointment" text="我的约会" />
-		<Item id="MeetingRoomView" iconCls="menu-meetingroom" text="办公室预订" />
+		<Item id="MeetingRoomView" iconCls="menu-meetingroom" text="办公室预订" >
+				<Function id="_SelectEveryDayCalendar" text="任意时间预订" iconCls="menu-list">
+			         <url>/system/.do</url>
+			    </Function>
+			    <Function id="_SelectEveryDay" text="预订每天" iconCls="menu-list">
+			         <url>/system/.do</url>
+			    </Function>
+			    <Function id="_SelectEveryWeek" text="预订每周" iconCls="menu-list">
+			         <url>/system/.do</url>
+			    </Function>
+			     <Function id="_SelectSpanWeek" text="隔周预订" iconCls="menu-list">
+			         <url>/system/.do</url>
+			    </Function>
+			    <Function id="_EditOrderRoom" text="修改预订" iconCls="menu-list">
+			         <url>/system/.do</url>
+			    </Function>
+			    <Function id="_DeleteOrderRoom" text="删除预订" iconCls="menu-list">
+			         <url>/system/.do</url>
+			    </Function>
+		</Item>
 		<Item id="PersonalSalaryView" text="个人薪酬统计" iconCls="menu-personal-salary" isPublic="false"/>
 	</Items>
 	
