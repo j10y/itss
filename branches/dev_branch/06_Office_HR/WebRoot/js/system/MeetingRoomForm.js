@@ -32,10 +32,22 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 		});
 	},
 	rightDate : null,
+	maxDate : null,
+	emptyText:"",
 	initComponents : function() {
 		var date = new Date();
-		date.setDate(date.getDate()+2);
+		if(isGranted("_SelectEveryDayCalendar")){
+			date.setDate(date.getDate()-1);
+		}else{
+			date.setDate(date.getDate()+2);
+			// max
+			var date_max = new Date();
+			date_max.setDate(date_max.getDate()+7);
+			this.maxDate  = date_max;
+			this.emptyText = "您只能预订两天以后的会议!";
+		}
 		this.rightDate = date;
+		
 		this.store = new Ext.data.JsonStore({
 			url : __ctxPath + "/system/listMrbsSchedule.do?Q_room.id_L_EQ=" + this.roomId,
 			totalProperty : "totalCounts",
@@ -66,6 +78,18 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				limit : 25
 			}
 		});
+		var b = new Array();
+		b.push({
+			iconCls : "btn-del",
+			qtip : "删除",
+			style : "margin:0 3px 0 3px"
+		});
+		this.rowActions = new Ext.ux.grid.RowActions({
+			header : "管理",
+			width : 80,
+			actions : b
+		});
+		
 		var a = new Ext.grid.ColumnModel({
 			columns : [
 				new Ext.grid.RowNumberer(),
@@ -91,7 +115,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				}, {
 					header : "会议主题",
 					dataIndex : "description"
-				}
+				},
+				this.rowActions
 			],
 			defaults : {
 				sortable : true,
@@ -110,6 +135,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			trackMouseOver : true,
 			disableSelection : false,
 			loadMask : true,
+			plugins : this.rowActions,
 			cm : a,
 			viewConfig : {
 				forceFit : true,
@@ -124,7 +150,71 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				emptyMsg : "当前没有记录"
 			})
 		});
+		if(isGranted('_DeleteOrderRoom')){
+			this.rowActions.on("action", this.onRowAction, this);
+		}
+		if(isGranted('_EditOrderRoom')){
+			this.gridPanel.addListener("rowdblclick", function(grid, index, event) {
+				grid.getSelectionModel().each(function(item) {
+					//this.tabPanel.activate(this.formPanel);
+					//alert(item.data.id);return;
+					Ext.getCmp('MeetingRoomTabPanel').activate(Ext.getCmp('orderFormPanel'));
+					Ext.getCmp('orderFormPanel').getForm().load({
+						deferredRender : false,
+						url : __ctxPath + "/system/getMrbsSchedule.do?id=" + item.data.id,
+						waitMsg : "正在载入数据……",
+						success : function(f, d) {
+							var e = Ext.util.JSON.decode(d.response.responseText);
+							//alert(d.response.responseText);
+							//去掉 重复预订 选项
+							Ext.getCmp('repeat_order').hide();
+							//去掉 每天 选项
+							//Ext.getCmp('hasEveryDay').removeAll();
+							//去掉 每周 选项
+							//Ext.getCmp('hasEveryWeek').removeAll();
+							//去掉 隔N周 选项
+							//Ext.getCmp('hasSpanWeek').removeAll();
+							// 更改 预订 面板 title
+							Ext.getCmp('orderFormPanel').setTitle("修改预订");
+							// 更改 提交 按钮
+							Ext.getCmp('submit_btn').setText('保存');
+							//<--更改 提交 按钮 事件
+							Ext.getCmp('submit_btn').setHandler(function(){
+										Ext.getCmp('orderFormPanel').getForm().submit({
+											url : __ctxPath+"/system/saveMrbsSchedule.do",
+											params: {
+	       										 mrbsSchedule_id : '1234'
+	    									},
+											method : "post",
+											waitMsg : "正在提交数据……",
+											success : function() {
+												Ext.ux.Toast.msg("提示信息","保存成功！");
+												Ext.getCmp('MeetingRoomFormWin').close();
+												Ext.getCmp('areaTabPanel').removeAll();
+												Ext.getCmp('MeetingRoomView').search(Ext.getCmp('MeetingRoomView'),new Date().format("Y-m-d"));
+											},
+											failure : function(c, d) {
+												Ext.MessageBox.show({
+													title : "操作信息",
+													msg : d.result.msg,
+													buttons : Ext.MessageBox.OK,
+													icon : Ext.MessageBox.ERROR
+												});
+												return ;
+											}
+										});
+							});//-->
+							
+						},
+						failure : function() {
+							
+						}
+				});
+				});
+			});
+		}
 		this.formPanel = new Ext.FormPanel({
+			id:'orderFormPanel',
 			title : "预订",
 			layout : "form",
 			url:__ctxPath+"/system/saveMrbsRepeat.do",
@@ -134,7 +224,16 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			defaults : {
 				anchor : "95%,95%"
 			},
-			items : [
+			items : [{
+					name : 'repeat_id',
+					  id : 'repeatId',
+					xtype : 'hidden'
+				},
+				{
+					name : 'schedule_id',
+					  id : 'scheduleId',
+					xtype : 'hidden'
+				},
 				{
 					name : 'mrbsRepeat.room.id',
 					  id : 'roomId',
@@ -253,10 +352,13 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					format: 'Y-m-d',
 					 anchor:"46%",
 					disableDays:[0,6],
-					
+					//value : new Date().format("Y-m-d"),
 					allowBlank:false,
 					//minValue:new Date().format("Y-m-d"),
-					minValue:this.rightDate
+					minValue:this.rightDate,
+					maxValue:this.maxDate,
+					emptyText:this.emptyText
+					
 					
 				},{
 					xtype:'container',
@@ -272,13 +374,16 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									layout:'form',
 									border:false,
 									items:[{
-										xtype: 'textfield',
+										xtype: 'numberfield',
 										name:'mrbsRepeat.startHour',
 										hideLabel : true,
 										width:50,
 										border:false,
 										value:'09',
-										allowBlank:false
+										allowBlank:false,
+										minValue:8,
+										maxValue:20
+										
 									}]
 								},{
 									columnWidth:.25,
@@ -296,12 +401,14 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									border:false,
 									items:[{
 										name:'mrbsRepeat.startMini',
-										xtype: 'textfield',
+										xtype: 'numberfield',
 										hideLabel : true,
 										width:50,
 										border:false,
 										value:'00',
-										allowBlank:false
+										allowBlank:false,
+										minValue:0,
+										maxValue:59
 									}]
 								},{
 									columnWidth:.25,
@@ -331,12 +438,14 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									border:false,
 									items:[{
 										name:'mrbsRepeat.endHour',
-										xtype: 'textfield',
+										xtype: 'numberfield',
 										hideLabel : true,
 										width:50,
 										border:false,
 										value:'20',
-										allowBlank:false
+										allowBlank:false,
+										minValue:8,
+										maxValue:20
 									}]
 								},{
 									columnWidth:.25,
@@ -354,12 +463,14 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									border:false,
 									items:[{
 										name:'mrbsRepeat.endMini',
-										xtype: 'textfield',
+										xtype: 'numberfield',
 										hideLabel : true,
 										width:50,
 										border:false,
 										value:'00',
-										allowBlank:false
+										allowBlank:false,
+										minValue:0,
+										maxValue:59
 									}]
 								},{
 									columnWidth:.25,
@@ -376,6 +487,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					
 				},{
 					xtype:'container',
+					id:'repeat_order',
 					layout:'form',
 					anchor:"64%",
 					border:false,
@@ -414,74 +526,30 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									layout:'form',
 									border:false,
 									items:[{
+										id : 'hasEveryDay',
 										defaultType: 'radio',
 										border:false,
-										items:[{
-											boxLabel:'每天',
-											name:'mrbsRepeat.repOpt',
-											inputValue:'1',
-											listeners : {
-															check : function() {
-																if(this.checked) {
-																	Ext.getCmp("endDate").show();
-																	Ext.getCmp("allday").show();
-																	Ext.getCmp("repeatWeekDay").hide();
-																	Ext.getCmp("weekSpan").hide();
-																} else {
-																	
-																}
-															}
-														}
-										}]
+										items:[]
 									}]
 								},{
 									columnWidth:.25,
 									layout:'form',
 									border:false,
 									items:[{
+										id : 'hasEveryWeek',
 										defaultType: 'radio',
 										border:false,
-										items:[{
-											boxLabel:'每周',
-											name:'mrbsRepeat.repOpt',
-											inputValue:'2',
-											listeners : {
-															check : function() {
-																if(this.checked) {
-																	Ext.getCmp("endDate").show();
-																	Ext.getCmp("allday").show();
-																	Ext.getCmp("repeatWeekDay").show();
-																	Ext.getCmp("weekSpan").hide();
-																} else {
-																	
-																}
-															}
-														}
-										}]
+										items:[]
 									}]
 								},{
 									columnWidth:.25,
 									layout:'form',
 									border:false,
 									items:[{
+										id : 'hasSpanWeek',
 										defaultType: 'radio',
 										border:false,
-										items:[{
-											boxLabel:'隔N周',
-											name:'mrbsRepeat.repOpt',
-											inputValue:'3',
-											listeners : {
-															check : function() {
-																if(this.checked) {
-																	Ext.getCmp("endDate").show();
-																	Ext.getCmp("allday").show();
-																	Ext.getCmp("repeatWeekDay").show();
-																	Ext.getCmp("weekSpan").show();
-																} else {
-																	
-																}
-															}
-														}}]
+										items:[]
 									}]
 								}]
 					}]
@@ -513,8 +581,10 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 								xtype:'datefield',
 								format: 'Y-m-d',
 								disableDays:[0,6],
-								allowBlank:false,
-								minValue:this.rightDate
+								allowBlank:true,
+								minValue:this.rightDate,
+								//value:new Date(),
+								emptyText:this.emptyText
 								
 								
 							}]
@@ -561,7 +631,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 							items:[{
 								defaultType:'radio',
 								border:false,
-								items:[{boxLabel:'否',name:'mrbsRepeat.allday',inputValue:'0',check:true}]
+								items:[{boxLabel:'否',name:'mrbsRepeat.allday',inputValue:'0',checked:true}]
 							}]
 						}]
 					}]
@@ -595,7 +665,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 								defaultType:'radio',
 								hideLabel:true,
 								border:false,
-								items:[{boxLabel:'星期一',name:'mrbsRepeat.repeatWeekDay',inputValue:'1'}]
+								items:[{boxLabel:'星期一',name:'mrbsRepeat.repeatWeekDay',inputValue:'1',checked:true}]
 							}]
 							
 						},{
@@ -689,6 +759,70 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				}
 			]
 		});
+		
+		//1. if the current user has the permission of '_SelectEveryDay' ,show it 
+		if(isGranted('_SelectEveryDay')){
+			Ext.getCmp('hasEveryDay').add({
+											boxLabel:'每天',
+											name:'mrbsRepeat.repOpt',
+											inputValue:'1',
+											listeners : {
+															check : function() {
+																if(this.checked) {
+																	Ext.getCmp("endDate").show();
+																	Ext.getCmp("allday").show();
+																	Ext.getCmp("repeatWeekDay").hide();
+																	Ext.getCmp("weekSpan").hide();
+																} else {
+																	
+																}
+															}
+														}
+										});
+		}
+		
+		//2.if the current user has the permission of '_SelectEveryWeek' ,show it
+		if(isGranted('_SelectEveryWeek')){
+			Ext.getCmp('hasEveryWeek').add({
+											boxLabel:'每周',
+											name:'mrbsRepeat.repOpt',
+											inputValue:'2',
+											listeners : {
+															check : function() {
+																if(this.checked) {
+																	Ext.getCmp("endDate").show();
+																	Ext.getCmp("allday").show();
+																	Ext.getCmp("repeatWeekDay").show();
+																	Ext.getCmp("weekSpan").hide();
+																} else {
+																	
+																}
+															}
+														}
+										});
+		}
+		
+		// 3.if the current user has the permission of '_SelectSpanWeek' ,show it
+		if(isGranted('_SelectSpanWeek')){
+			Ext.getCmp('hasSpanWeek').add({
+											boxLabel:'隔N周',
+											name:'mrbsRepeat.repOpt',
+											inputValue:'3',
+											listeners : {
+															check : function() {
+																if(this.checked) {
+																	Ext.getCmp("endDate").show();
+																	Ext.getCmp("allday").show();
+																	Ext.getCmp("repeatWeekDay").show();
+																	Ext.getCmp("weekSpan").show();
+																} else {
+																	
+																}
+															}
+														}});
+		}
+		
+		
 		this.tabPanel = new Ext.TabPanel({
 			id : "MeetingRoomTabPanel",
 			region : "center",
@@ -700,6 +834,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			]
 		});
 		this.buttons = [{
+				id : 'submit_btn',
 				text : "提交",
 				handler : this.save.createCallback(this.formPanel, this)
 			}, {
@@ -708,7 +843,37 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			}
 		];
 	},
+	onRowAction :function(c, a, d, e, b) {
+			//alert(a.data.id);
+		Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
+		if(c == "yes") {
+			Ext.Ajax.request({
+				url : __ctxPath + "/system/deleteMrbsSchedule.do?id="+a.data.id,
+				params : {
+				},
+				method : "post",
+				success : function(ddd) {
+					var ee = Ext.util.JSON.decode(ddd.responseText);
+					Ext.ux.Toast.msg("提示信息", "成功删除所选记录！");
+					Ext.getCmp('MeetingRoomGrid').getStore().reload();
+					Ext.getCmp('areaTabPanel').removeAll();
+					Ext.getCmp('MeetingRoomView').search(Ext.getCmp('MeetingRoomView'),new Date().format("Y-m-d"));
+					
+				},
+				failure : function() {
+					Ext.MessageBox.show({
+						title : "操作信息",
+						msg : "删除失败，请联系管理员！",
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+				}
+			});
+		}
+	});
+	},
 	save : function(b, a) {
+		//alert(curUserInfo.rights);return false;
 		if(b.getForm().isValid()) {
 			b.getForm().submit({
 				method : "post",
@@ -716,6 +881,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				success : function() {
 					Ext.ux.Toast.msg("提示信息","保存成功！");
 					a.close();
+					Ext.getCmp('areaTabPanel').removeAll();
+					Ext.getCmp('MeetingRoomView').search(Ext.getCmp('MeetingRoomView'),new Date().format("Y-m-d"));
 				},
 				failure : function(c, d) {
 					Ext.MessageBox.show({
