@@ -86,7 +86,9 @@ public class MrbsAreaAction extends BaseAction {
 		String[] ids = getRequest().getParameterValues("ids");
 		  if (ids != null) {
 			 for (String id : ids) {
-				this.mrbsAreaService.remove(new Long(id));
+				MrbsArea ma =  this.mrbsAreaService.get(new Long(id));
+				ma.setFlag(MrbsArea.DELETED);
+				this.mrbsAreaService.save(ma);
 			}
 		}
 		this.jsonString = "{success:true}";
@@ -113,14 +115,29 @@ public class MrbsAreaAction extends BaseAction {
 		return "success";
 	}
 
-	/*public String save() {
-		String data = getRequest().getParameter("funUrls");
-		String[] funUrls = data.split(",");
+	public String save() {
 		this.mrbsAreaService.save(this.mrbsArea);
-		if(this.mrbsArea.getId()!=null){
-			this.mrbsAreaService.updateFunUrl(funUrls,this.mrbsArea.getId());
-		}
 		setJsonString("{success:true}");
 		return "success";
-	}*/
+	}
+	
+	
+	public String combo() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<MrbsArea> list = this.mrbsAreaService.getAll(filter);
+		StringBuffer buff = new StringBuffer("[");
+		for(MrbsArea pc : list) {
+			buff.append("[" +
+					"'" + pc.getId() + "'," +
+					"'" + pc.getAreaName()+ "'" +
+					"],");
+		}
+		if(list.size() > 0) {
+			buff.deleteCharAt(buff.length() - 1);
+		}
+		buff.append("]");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
 }

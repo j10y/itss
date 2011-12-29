@@ -1,5 +1,6 @@
 package com.xpsoft.oa.action.system;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +12,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -32,7 +34,7 @@ public class MrbsRoomAction extends BaseAction {
 		this.mrbsScheduleService = mrbsScheduleService;
 	}
 
-	private MrbsRoom mrbsArea;
+	private MrbsRoom mrbsRoom;
 	public MrbsRoomService getMrbsRoomService() {
 		return mrbsRoomService;
 	}
@@ -42,11 +44,11 @@ public class MrbsRoomAction extends BaseAction {
 	}
 
 	public MrbsRoom getMrbsRoom() {
-		return mrbsArea;
+		return mrbsRoom;
 	}
 
-	public void setMrbsRoom(MrbsRoom mrbsArea) {
-		this.mrbsArea = mrbsArea;
+	public void setMrbsRoom(MrbsRoom mrbsRoom) {
+		this.mrbsRoom = mrbsRoom;
 	}
 
 	public Long getId() {
@@ -59,16 +61,36 @@ public class MrbsRoomAction extends BaseAction {
 
 	private Long id;
 
-	
+	public String listInit(){
+		QueryFilter filter = new QueryFilter(getRequest());
+		List<MrbsRoom> list = this.mrbsRoomService.getAll(filter);
+
+		Type type = new TypeToken<List<MrbsRoom>>() {
+		}
+		.getType();
+		StringBuffer buff = new StringBuffer(
+				"{success:true,'totalCounts':")
+		.append(filter.getPagingBean().getTotalItems()).append(
+				",result:");
+
+		Gson gson = new Gson();
+		toJson(list,buff);
+		buff.append("}");
+
+		this.jsonString = buff.toString();
+
+		return "success";
+	}
 
 	public String list() {
 		QueryFilter filter = new QueryFilter(getRequest());
+		List<MrbsRoom> list = this.mrbsRoomService.getAll(filter);
+		//list.get(0).getArea().getId()
 		String areaId = getRequest().getParameter("areaId");
 		String searchDate = (getRequest().getParameter("searchDate") == null || "".equals(getRequest().getParameter("searchDate"))) ? DateUtil.convertDateToString(new Date()) : getRequest().getParameter("searchDate");
-		List<MrbsRoom> list = this.mrbsRoomService.getAll(filter);
 		String sql = "select a.id, a.room_id,b.room_admin_email, a.start_time, a.end_time, c.fullname as create_by, a.description from " +
 				"mrbs_schedule a, mrbs_room b, app_user c where " +
-				"a.room_id = b.id and b.area_id = " + areaId + " and a.create_by = c.userId and " +
+				"a.room_id = b.id and b.area_id = " + areaId + " and a.create_by = c.userId and  b.flag=1  and  " +
 				"a.start_time > '"  +searchDate +  "' and " +
 				"a.start_time < '"+ DateUtil.convertDateToString(DateUtil.addDays(DateUtil.parseDate(searchDate),1)) + "' order by a.end_time asc ";
 		
@@ -137,7 +159,7 @@ public class MrbsRoomAction extends BaseAction {
 		String meetingMin = this.getRequest().getParameter("meetingMin");
 		
 		//取到会议室列表
-		String roomSql = "select id, room_name, room_admin_email from mrbs_room where area_id = " + areaId.toString() + " and capacity >= " + attendNum;
+		String roomSql = "select id, room_name, room_admin_email from mrbs_room where area_id = " + areaId.toString() + " and capacity >= " + attendNum + " and flag = 1";
 		List<Map<String, Object>> roomIdList = this.mrbsRoomService.findDataList(roomSql);
 		
 		Map<String, List<Map<String, Object>>> allRoomMap = new HashMap<String,List<Map<String,Object>>>();
@@ -244,11 +266,13 @@ public class MrbsRoomAction extends BaseAction {
 		sb.append("[");
 		for(MrbsRoom f:list){
 			sb.append("{")
-					.append("'id':'" + f.getId() + "',")
-					.append("'roomName':'" + f.getRoomName() + "',")
-					.append("'desc':'" + f.getDescription() + "',")
-					.append("'capacity':'" + f.getCapacity() + "',")
-					.append("'adminEmail':'" + f.getRoomAdminEmail() + "'},");
+			.append("'id':'" + f.getId() + "',")
+			.append("'roomName':'" + f.getRoomName() + "',")
+			.append("'areaName':'" + f.getArea().getAreaName() + "',")
+			.append("'areaId':'" + f.getArea().getId() + "',")
+			.append("'desc':'" + f.getDescription() + "',")
+			.append("'capacity':'" + f.getCapacity() + "',")
+			.append("'adminEmail':'" + f.getRoomAdminEmail() + "'},");
 		}
 		if(list.size() > 0) {
 			sb.deleteCharAt(sb.length() - 1);
@@ -260,7 +284,9 @@ public class MrbsRoomAction extends BaseAction {
 		String[] ids = getRequest().getParameterValues("ids");
 		  if (ids != null) {
 			 for (String id : ids) {
-				this.mrbsRoomService.remove(new Long(id));
+				MrbsRoom mr = this.mrbsRoomService.get(new Long(id));
+				mr.setFlag(0);
+				this.mrbsRoomService.save(mr);
 			}
 		}
 		this.jsonString = "{success:true}";
@@ -277,9 +303,11 @@ public class MrbsRoomAction extends BaseAction {
 		       sb.append("{")
 		       		.append("'id':'" + f.getId() + "',")
 					.append("'roomName':'" + f.getRoomName() + "',")
+					.append("'areaName':'" + f.getArea().getAreaName() + "',")
+					.append("'areaId':'" + f.getArea().getId() + "',")
 					.append("'desc':'" + f.getDescription() + "',")
 					.append("'capacity':'" + f.getCapacity() + "',")
-					.append("'adminEmail':'" + f.getRoomAdminEmail() + "'},");
+					.append("'roomAdminEmail':'" + f.getRoomAdminEmail() + "'},");
 		       
 		sb.append("}");
 		setJsonString(sb.toString());
@@ -287,14 +315,12 @@ public class MrbsRoomAction extends BaseAction {
 		return "success";
 	}
 
-	/*public String save() {
-		String data = getRequest().getParameter("funUrls");
-		String[] funUrls = data.split(",");
-		this.mrbsRoomService.save(this.mrbsArea);
-		if(this.mrbsArea.getId()!=null){
-			this.mrbsRoomService.updateFunUrl(funUrls,this.mrbsArea.getId());
-		}
+	public String save() {
+		this.mrbsRoom.setFlag(1);
+		this.mrbsRoomService.save(this.mrbsRoom);
 		setJsonString("{success:true}");
 		return "success";
-	}*/
+	}
+	
+	
 }

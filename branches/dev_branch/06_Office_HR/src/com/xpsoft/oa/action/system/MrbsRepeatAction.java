@@ -1,15 +1,19 @@
 package com.xpsoft.oa.action.system;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.engine.AsynMeetingMailSendProcess;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -17,11 +21,23 @@ import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.MrbsRepeat;
 import com.xpsoft.oa.model.system.MrbsSchedule;
 import com.xpsoft.oa.model.system.MrbsScheduleUser;
+import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.oa.service.system.MrbsRepeatService;
 import com.xpsoft.oa.service.system.MrbsScheduleService;
 import com.xpsoft.oa.service.system.MrbsScheduleUserService;
 
 public class MrbsRepeatAction extends BaseAction {
+	
+	@Resource
+	private AppUserService appUserService;
+	public AppUserService getAppUserService() {
+		return appUserService;
+	}
+
+	public void setAppUserService(AppUserService appUserService) {
+		this.appUserService = appUserService;
+	}
+
 	@Resource
 	private MrbsScheduleUserService mrbsScheduleUserService;
 	public MrbsScheduleUserService getMrbsScheduleUserService() {
@@ -136,6 +152,37 @@ public class MrbsRepeatAction extends BaseAction {
 		return "success";
 	}
 	
+	
+	private List<AppUser> getAssignUserEmail(String assignIds) {
+		String[] userIds = assignIds.split(",");
+		List<AppUser> mailList = new ArrayList<AppUser>();
+		if(userIds.length > 0){
+			for (String id : userIds) {
+				mailList.add(((AppUser) this.appUserService.get(Long.parseLong(id))));
+			}
+		}else{
+			mailList.add(((AppUser) this.appUserService.get(Long.parseLong(assignIds))));
+		}
+
+		return mailList;
+	}
+	/**
+	 * 
+	 */
+	private void sendEmailForMeeting(MrbsSchedule ms,String attendIdListStr){
+		List<AppUser> mailList = new ArrayList<AppUser>();
+		mailList = getAssignUserEmail(attendIdListStr);
+		
+		Map model = new HashMap();
+		model.put("startTime", DateUtil.formatDateTimeToString(ms.getStartTime(),"yyyy-MM-dd hh:mm"));
+		model.put("roomName", ms.getRoom().getRoomName());
+		model.put("description", ms.getDescription());
+		model.put("presideEmail", ms.getPresideEmail());
+		
+		AsynMeetingMailSendProcess amsp = new AsynMeetingMailSendProcess(mailList, null, attendIdListStr,model);
+		Thread td = new Thread(amsp);
+		td.start();
+	}
 	/**
 	 * 保存 与会人员名单
 	 * @return
@@ -150,8 +197,11 @@ public class MrbsRepeatAction extends BaseAction {
 					msu.setConferee(new AppUser(Long.valueOf(ids[i])));
 					msu.setSchedule(ms);
 					this.mrbsScheduleUserService.save(msu);
+					
 				}
 			}
+			//发送邮件
+			sendEmailForMeeting(ms,attendIdListStr);
 		}
 		return "";
 	}
