@@ -8,6 +8,6 @@
 			<generator class="native"/>
 		</id>
 		<many-to-one name="schedule" column="scheduleid" class="com.xpsoft.oa.model.system.MrbsSchedule"/>
-		<many-to-one name="conferee" column="userid" class="com.xpsoft.oa.model.system.AppUser"/>
+		<many-to-one name="conferee" column="userid" class="com.xpsoft.oa.model.system.AppUser" lazy="false"/>
 	</class>
 </hibernate-mapping>

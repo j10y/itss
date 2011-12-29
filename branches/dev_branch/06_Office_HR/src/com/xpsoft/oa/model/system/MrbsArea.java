@@ -3,17 +3,20 @@ package com.xpsoft.oa.model.system;
 import com.xpsoft.core.model.BaseModel;
 
 public class MrbsArea extends BaseModel{
+	public static final Integer DELETED  = 0;//
+	public static final Integer CREATED  = 0;//
+	
 	private Long id;
 	private String areaName;
 	private String linkman;
 	private String descn;
 	private String shortdescn;
 	
-	private String flag;
-	public String getFlag() {
+	private Integer flag = 1;//1 normal 0 delted
+	public Integer getFlag() {
 		return flag;
 	}
-	public void setFlag(String flag) {
+	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
 	public Long getId() {
