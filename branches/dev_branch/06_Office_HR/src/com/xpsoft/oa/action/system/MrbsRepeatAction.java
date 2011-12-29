@@ -16,10 +16,23 @@ import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.MrbsRepeat;
 import com.xpsoft.oa.model.system.MrbsSchedule;
+import com.xpsoft.oa.model.system.MrbsScheduleUser;
 import com.xpsoft.oa.service.system.MrbsRepeatService;
 import com.xpsoft.oa.service.system.MrbsScheduleService;
+import com.xpsoft.oa.service.system.MrbsScheduleUserService;
 
 public class MrbsRepeatAction extends BaseAction {
+	@Resource
+	private MrbsScheduleUserService mrbsScheduleUserService;
+	public MrbsScheduleUserService getMrbsScheduleUserService() {
+		return mrbsScheduleUserService;
+	}
+
+	public void setMrbsScheduleUserService(
+			MrbsScheduleUserService mrbsScheduleUserService) {
+		this.mrbsScheduleUserService = mrbsScheduleUserService;
+	}
+
 	@Resource
 	private MrbsScheduleService mrbsScheduleService;
 	public MrbsScheduleService getMrbsScheduleService() {
@@ -86,25 +99,62 @@ public class MrbsRepeatAction extends BaseAction {
 	public String save() {
 		QueryFilter filter = new QueryFilter(getRequest());
 		//List<MrbsRepeat> list = this.mrbsRepeatService.getAll(filter);
+		
+		String attendIdListStr = getRequest().getParameter("attendIdList"); 
 		String start_date = DateUtil.convertDateToString(this.mrbsRepeat.getStartDate()) + " " + this.mrbsRepeat.getStartHour() + ":" + this.mrbsRepeat.getStartMini() + ":00";
 		this.mrbsRepeat.setStartDate(DateUtil.parseDate(start_date));
 		//当 预订为 “当天” 时，结束日期 与 开始日期相同
 		if(this.mrbsRepeat.getRepOpt() == 0){
 			this.mrbsRepeat.setEndDate(this.mrbsRepeat.getStartDate());
 		}
+		
+		
 		String end_date = DateUtil.convertDateToString(this.mrbsRepeat.getEndDate()) + " " + this.mrbsRepeat.getEndHour() + ":" + this.mrbsRepeat.getEndMini() + ":00";
 		this.mrbsRepeat.setEndDate(DateUtil.parseDate(end_date));
 		
 		//保存预订申请
 		this.mrbsRepeatService.save(this.mrbsRepeat);
-		
 		//拆分预订
-		SaveToSchedule(this.mrbsRepeat);
-		this.jsonString = "{success:true}";
+		List<MrbsSchedule> list = SaveToSchedule(this.mrbsRepeat,attendIdListStr);
+		if(list == null || list.size() <1){
+			this.jsonString = "{success:true}";
+		}else{
+			StringBuffer sb = new StringBuffer();
+			MrbsSchedule m = list.get(0);
+			sb.append("此会议 在").append(DateUtil.convertDateToString(m.getStartTime())+" "+
+					((m.getStartTime().getHours()<10)?"0"+m.getStartTime().getHours():m.getStartTime().getHours())+":"+
+					((m.getStartTime().getMinutes()<10)?"0"+m.getStartTime().getMinutes():m.getStartTime().getMinutes())+" - "+
+					//DateUtil.convertDateToString(m.getEndTime())+" "+
+					(m.getEndTime().getHours()<10?"0"+m.getEndTime().getHours():m.getEndTime().getHours())+":"+
+					(m.getEndTime().getMinutes()<10?"0"+m.getEndTime().getMinutes():m.getEndTime().getMinutes())+" 时间段已经被【")
+					.append(m.getPreside()).append("】预订");
+			
+			
+			this.jsonString = "{success:false,msg:'"+sb.toString()+"'}";
+		}
+		
 		return "success";
 	}
 	
-	
+	/**
+	 * 保存 与会人员名单
+	 * @return
+	 */
+	private String saveScheduleAttender(MrbsSchedule ms,String attendIdListStr){
+		if(attendIdListStr != null && attendIdListStr.length()>0){
+			String[] ids = attendIdListStr.split(",");
+			System.out.println(attendIdListStr);
+			if(ids != null && ids.length >0){
+				for(int i = 0 ;i<ids.length;i++){
+					MrbsScheduleUser msu = new MrbsScheduleUser();
+					msu.setConferee(new AppUser(Long.valueOf(ids[i])));
+					msu.setSchedule(ms);
+					this.mrbsScheduleUserService.save(msu);
+				}
+			}
+		}
+		return "";
+	}
 	/**
 	 * 申请原始记录保存在mrbs_Repeat 表
 	 * 
@@ -112,7 +162,9 @@ public class MrbsRepeatAction extends BaseAction {
 	 * @param peat
 	 * @return
 	 */
-	private String SaveToSchedule(MrbsRepeat peat){
+	private List<MrbsSchedule> SaveToSchedule(MrbsRepeat peat,String attendIdListStr){
+		List<MrbsSchedule> list = null;
+		
 		AppUser currentUser = ContextUtil.getCurrentUser();
 		int repeat_opt = this.mrbsRepeat.getRepOpt();
 		Date d  = new Date();
@@ -120,9 +172,12 @@ public class MrbsRepeatAction extends BaseAction {
 		Date endDate = peat.getEndDate();
 		switch(repeat_opt){
 			case 0:{
-				List<MrbsSchedule> list = this.mrbsScheduleService.validate(peat.getStartDate(), peat.getEndDate(), peat.getRoom().getId());
-				if(list!=null && list.size()<1){
+				list = this.mrbsScheduleService.validate(peat.getStartDate(), peat.getEndDate(), peat.getRoom().getId());
+				if(list != null && list.size()>0){
+					return list;
+				}else{
 					MrbsSchedule ms = new MrbsSchedule();
+					ms.setRepeat(peat);
 					ms.setModifyBy(currentUser);
 					ms.setCreateBy(currentUser);
 					ms.setCreateDate(d);
@@ -136,6 +191,7 @@ public class MrbsRepeatAction extends BaseAction {
 					ms.setPresideEmail(currentUser.getEmail());
 					ms.setRoom(peat.getRoom());
 					this.mrbsScheduleService.save(ms);
+					saveScheduleAttender(ms,attendIdListStr);
 					//System.out.println(ms.getId());
 				}
 				 
@@ -154,26 +210,34 @@ public class MrbsRepeatAction extends BaseAction {
 					startc.setTime(startDate);
 					startc.add(Calendar.DAY_OF_YEAR, i);
 					
-					//endDate 时间天同步+1
+					//endDate 时间与 startDate 是同一天，但 时 和 分不同
+					
+					
 					Calendar endc = Calendar.getInstance();
 					endc.setTime(endDate);
-					endc.add(Calendar.DAY_OF_YEAR, i);
-					
-					MrbsSchedule ms = new MrbsSchedule();
-					ms.setModifyBy(currentUser);
-					ms.setCreateBy(currentUser);
-					ms.setCreateDate(d);
-					ms.setModifyDate(d);
-					ms.setStartTime(startc.getTime());
-					ms.setEndTime(endc.getTime());
-					ms.setProjector(peat.getProjector());
-					ms.setDescription(peat.getDescription());
-					ms.setNum(peat.getNum());
-					ms.setPreside(currentUser.getFullname());
-					ms.setPresideEmail(currentUser.getEmail());
-					ms.setRoom(peat.getRoom());
-					this.mrbsScheduleService.save(ms);
-					//System.out.println(ms.getId());
+					endc.add(Calendar.DAY_OF_YEAR, startdayofyear-enddayofyear+i);
+					list = this.mrbsScheduleService.validate(startc.getTime(), endc.getTime(), peat.getRoom().getId());
+					if(list != null && list.size()>0){
+						return list;
+					}else{
+						MrbsSchedule ms = new MrbsSchedule();
+						ms.setRepeat(peat);
+						ms.setModifyBy(currentUser);
+						ms.setCreateBy(currentUser);
+						ms.setCreateDate(d);
+						ms.setModifyDate(d);
+						ms.setStartTime(startc.getTime());
+						ms.setEndTime(endc.getTime());
+						ms.setProjector(peat.getProjector());
+						ms.setDescription(peat.getDescription());
+						ms.setNum(peat.getNum());
+						ms.setPreside(currentUser.getFullname());
+						ms.setPresideEmail(currentUser.getEmail());
+						ms.setRoom(peat.getRoom());
+						this.mrbsScheduleService.save(ms);
+						saveScheduleAttender(ms,attendIdListStr);
+						//System.out.println(ms.getId());
+					}
 				};
 				
 			}break;
@@ -187,6 +251,7 @@ public class MrbsRepeatAction extends BaseAction {
 				while(c_end.after(c_start)){
 					if(c_start.get(Calendar.DAY_OF_WEEK)== dayOfWeek_selected){
 						MrbsSchedule ms = new MrbsSchedule();
+						ms.setRepeat(peat);
 						ms.setModifyBy(currentUser);
 						ms.setCreateBy(currentUser);
 						ms.setCreateDate(d);
@@ -201,7 +266,14 @@ public class MrbsRepeatAction extends BaseAction {
 						ms.setPreside(currentUser.getFullname());
 						ms.setPresideEmail(currentUser.getEmail());
 						ms.setRoom(peat.getRoom());
-						this.mrbsScheduleService.save(ms);
+						
+						list = this.mrbsScheduleService.validate(ms.getStartTime(),ms.getEndTime(), peat.getRoom().getId());
+						if(list != null && list.size()>0){
+							return list;
+						}else{
+							this.mrbsScheduleService.save(ms);
+							saveScheduleAttender(ms,attendIdListStr);
+						}
 					}
 					c_start.add(Calendar.DAY_OF_YEAR, 1);
 				};
@@ -228,6 +300,7 @@ public class MrbsRepeatAction extends BaseAction {
 				
 				while(c_end.after(c_start)){
 					MrbsSchedule ms = new MrbsSchedule();
+					ms.setRepeat(peat);
 					ms.setModifyBy(currentUser);
 					ms.setCreateBy(currentUser);
 					ms.setCreateDate(d);
@@ -242,7 +315,14 @@ public class MrbsRepeatAction extends BaseAction {
 					ms.setPreside(currentUser.getFullname());
 					ms.setPresideEmail(currentUser.getEmail());
 					ms.setRoom(peat.getRoom());
-					this.mrbsScheduleService.save(ms);
+					
+					list = this.mrbsScheduleService.validate(ms.getStartTime(),ms.getEndTime(), peat.getRoom().getId());
+					if(list != null && list.size()>0){
+						return list;
+					}else{
+						this.mrbsScheduleService.save(ms);
+						saveScheduleAttender(ms,attendIdListStr);
+					}
 					c_start.add(Calendar.DAY_OF_YEAR, 7*week_span);
 				}
 				
@@ -250,7 +330,7 @@ public class MrbsRepeatAction extends BaseAction {
 			}break;
 		}
 		
-		return "";
+		return list;
 	}
 	
 
