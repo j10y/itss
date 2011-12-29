@@ -53,17 +53,25 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 		});
 		this.areaTabPanel = new Ext.TabPanel({
 			id : "areaTabPanel",
-			activeTab: 0,
 			region : "center",
 			tbar : tabbar,
-			items:[]
+			avtiveTab : 0,
+			items:[],
+			listeners : {
+				afterrender : function() {
+					Ext.getCmp("MeetingRoomView").search(a, new Date().format("Y-m-d"));
+				}
+			}
 		});
-		this.search(a, new Date().format("Y-m-d"));
+		//this.areaTabPanel.activate(Ext.getCmp("area_0"));
+		//Ext.getCmp("areaTabPanel").scrollToTab(Ext.getCmp("area_0"),true);
+//		/alert(Ext.getCmp("areaTabPanel").getActiveTab());
 	},
 	search_free : function(a,searchForm){
 		Ext.Ajax.request({
-					url : __ctxPath + "/system/listMrbsArea.do",
+					url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
 					params : {
+						Q_flag_N_EQ : 1
 					},
 					method : "post",
 					success : function(d) {
@@ -83,7 +91,6 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 									},
 								items:[]
 							});
-							
 							Ext.getCmp('areaTabPanel').add(panel1);
 						    MeetingRoomView.searchItems("/system/listResultMrbsRoom.do?",a,i,e.result[i].id,searchForm);
 						}
@@ -101,7 +108,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 	},
 	search : function(a, b){
 		Ext.Ajax.request({
-					url : __ctxPath + "/system/listMrbsArea.do",
+					url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
 					params : {
 					},
 					method : "post",
@@ -124,7 +131,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 							});
 							
 							Ext.getCmp('areaTabPanel').add(panel1);
-						    MeetingRoomView.searchItems("/system/listMrbsRoom.do?searchDate=" + b,a,i,e.result[i].id);
+						    MeetingRoomView.searchItems("/system/listMrbsRoom.do?Q_flag_N_EQ=1&searchDate=" + b,a,i,e.result[i].id);
 						}
 					},
 					failure : function() {
@@ -155,6 +162,7 @@ MeetingRoomView.searchItems = function(u,t,index,id,itemArray){
 		Ext.Ajax.request({
 					url : __ctxPath + u,
 					params : {
+						"Q_area.id_L_EQ":id,
 						areaId:id,
 						attendNum:(itemArray) ? itemArray[0] : "",
 						meetingTime:(itemArray) ? itemArray[1] : "",

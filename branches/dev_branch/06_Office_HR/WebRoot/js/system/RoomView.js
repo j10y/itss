@@ -1,13 +1,13 @@
-AreaView = Ext.extend(Ext.Panel, {
+RoomView = Ext.extend(Ext.Panel, {
 	constructor : function(a) {
 		if(a == null) {
 			a = {};
 		}
 		Ext.apply(this, a);
 		this.initComponents();
-		AreaView.superclass.constructor.call(this, {
-			id : "AreaView",
-			title : "区域列表",
+		RoomView.superclass.constructor.call(this, {
+			id : "RoomView",
+			title : "会议室列表",
 			region : "center",
 			layout : "border",
 			items : [
@@ -42,10 +42,10 @@ AreaView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：区域名称"
+					text : "查询条件：会议室名称"
 				}, {
-					fieldLabel : "区域名称",
-					name : "Q_areaName_S_LK",
+					fieldLabel : "会议室名称",
+					name : "Q_roomName_S_LK",
 					xtype : "textfield"
 				}, {
 					xtype : "button",
@@ -55,7 +55,7 @@ AreaView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
+			url : __ctxPath + "/system/listInitMrbsRoom.do?Q_flag_N_EQ=1",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -66,9 +66,10 @@ AreaView = Ext.extend(Ext.Panel, {
 					type : "int"
 				},
 				"areaName",
-				"linkman",
-				"descn",
-				"shortdescn"
+				"roomName",
+				"description",
+				"capacity",
+				"adminEmail"
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -104,17 +105,21 @@ AreaView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
-					header : "区域名称",
-					dataIndex : "areaName"
-				}, {
-					header : "区域备注",
-					dataIndex : "linkman"
+					header : "会议室名称",
+					dataIndex : "roomName"
 				}, {
 					header : "描述",
-					dataIndex : "descn",
+					dataIndex : "description",
+					hidden:true
+				}, {
+					header : "容纳人数",
+					dataIndex : "capacity"
 				},{
 					header : "简述",
-					dataIndex : "shortdescn",
+					dataIndex : "adminEmail"
+				},{
+					header:"所在区域",
+					dataIndex : "areaName"
 				},
 				this.rowActions
 			],
@@ -131,16 +136,16 @@ AreaView = Ext.extend(Ext.Panel, {
 		});
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-add",
-			text : "添加区域",
+			text : "添加会议室",
 			handler : this.addBand
 		}));
 		this.topbar.add(new Ext.Button({
 			iconCls : "btn-del",
-			text : "删除区域",
+			text : "删除会议室",
 			handler : this.delBand
 		}));
 		this.gridPanel = new Ext.grid.GridPanel({
-			id : "AreaGrid",
+			id : "RoomGrid",
 			region : "center",
 			autoWidth : true,
 			autoHeight : true,
@@ -169,8 +174,8 @@ AreaView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				new AreaForm({
-					mrbsAreaId : e.data.id
+				new RoomForm({
+					mrbsRoomId : e.data.id
 				}).show();
 			});
 		});
@@ -180,7 +185,7 @@ AreaView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
+				url : __ctxPath + "/system/listInitMrbsRoom.do?Q_flag_N_EQ=1",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
@@ -189,10 +194,10 @@ AreaView = Ext.extend(Ext.Panel, {
 		}
 	},
 	addBand : function() {
-		new AreaForm().show();
+		new RoomForm().show();
 	},
 	delBand : function() {
-		var e = Ext.getCmp("AreaGrid");
+		var e = Ext.getCmp("RoomGrid");
 		var c = e.getSelectionModel().getSelections();
 		if(c.length == 0) {
 			Ext.ux.Toast.msg("提示信息", "请选择要删除的记录！");
@@ -202,11 +207,11 @@ AreaView = Ext.extend(Ext.Panel, {
 		for(var d = 0; d < c.length; d++) {
 			f.push(c[d].data.id);
 		}
-		AreaView.remove(f);
+		RoomView.remove(f);
 	},
 	editBand : function(a) {
-		new AreaForm({
-			bandId : a.data.id
+		new RoomForm({
+			mrbsRoomId : a.data.id
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
@@ -222,12 +227,12 @@ AreaView = Ext.extend(Ext.Panel, {
 		}
 	}
 });
-AreaView.remove = function(b) {
-	var a = Ext.getCmp("AreaGrid");
+RoomView.remove = function(b) {
+	var a = Ext.getCmp("RoomGrid");
 	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
 		if(c == "yes") {
 			Ext.Ajax.request({
-				url : __ctxPath + "/system/multiDelMrbsArea.do",
+				url : __ctxPath + "/system/multiDelMrbsRoom.do",
 				params : {
 					ids : b
 				},
