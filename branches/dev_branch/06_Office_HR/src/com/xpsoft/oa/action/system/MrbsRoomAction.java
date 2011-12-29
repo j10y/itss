@@ -70,7 +70,7 @@ public class MrbsRoomAction extends BaseAction {
 				"mrbs_schedule a, mrbs_room b, app_user c where " +
 				"a.room_id = b.id and b.area_id = " + areaId + " and a.create_by = c.userId and " +
 				"a.start_time > '"  +searchDate +  "' and " +
-				"a.start_time < '"+ DateUtil.convertDateToString(DateUtil.addDays(DateUtil.parseDate(searchDate),1)) + "' order by a.end_time asc limit 3";
+				"a.start_time < '"+ DateUtil.convertDateToString(DateUtil.addDays(DateUtil.parseDate(searchDate),1)) + "' order by a.end_time asc ";
 		
 		List<Map> list_s = this.mrbsRoomService.findDataList(sql);
 		StringBuffer buff = new StringBuffer("{success:true,result:[");
@@ -213,10 +213,14 @@ public class MrbsRoomAction extends BaseAction {
 						.append("'roomName':'" + roomName + "',")
 						.append("'room_admin_email':'" + roomAdminEmail + "',");
 				StringBuffer content = new StringBuffer("<div>");
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+				
 				List<Map<String, Object>> list = allRoomMap.get(roomId);
 				for(int j = 0; j < list.size(); j++) {
-					content.append(list.get(j).get("startTime") + "-" + list.get(j).get("endTime"))
+					Date end_date = (Date)list.get(j).get("endTime");
+					String end_hour = (end_date.getHours()<10)?"0"+end_date.getHours():end_date.getHours()+"";
+					String end_mini = (end_date.getMinutes()<10)?"0"+end_date.getMinutes():end_date.getMinutes()+"";
+					content.append(sdf.format((Date)list.get(j).get("startTime")) + "-" + end_hour+":"+end_mini)
 							.append("&nbsp;&nbsp;&nbsp;")
 							.append("空闲，<input type=\"button\"  onclick=\"orderFun("+roomId+",\\'"+roomName+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
 				}
