@@ -12,4 +12,8 @@ public class MrbsScheduleUserServiceImpl extends BaseServiceImpl<MrbsScheduleUse
 		super(dao);
 		this.dao = dao;
 	}
+
+	public void removeByScheduleId(Long scheduleId) {
+		this.dao.removeDatabySql("Delete from mrbs_schedule_user where scheduleid="+scheduleId);
+	}
 }

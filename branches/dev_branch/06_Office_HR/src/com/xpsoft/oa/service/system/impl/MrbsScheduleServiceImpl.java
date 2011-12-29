@@ -23,7 +23,7 @@ public class MrbsScheduleServiceImpl extends BaseServiceImpl<MrbsSchedule> imple
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String startTimeString = sdf.format(startTime);
 		String endTimeString = sdf.format(endTime);
-		String sql = "select id from mrbs_schedule where " +
+		String sql = "select id,start_time,end_time,preside from mrbs_schedule where " +
 				"room_id = " + roomId + " and " +
 				"((start_time >= '" + startTimeString + "' and end_time < '" + endTimeString + "') or " +
 				"(end_time > '" + startTimeString + "' and end_time <= '" + endTimeString + "') or " +
@@ -34,6 +34,9 @@ public class MrbsScheduleServiceImpl extends BaseServiceImpl<MrbsSchedule> imple
 		for(Map<String, Object> map : mapList) {
 			MrbsSchedule msNew = new MrbsSchedule();
 			msNew.setId(Long.parseLong(map.get("id").toString()));
+			msNew.setStartTime((Date)map.get("start_time"));
+			msNew.setEndTime((Date)map.get("end_time"));
+			msNew.setPreside((String)map.get("preside"));
 			resultList.add(msNew);
 		}
 		return resultList;
