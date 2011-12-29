@@ -56,6 +56,14 @@ import org.apache.commons.logging.LogFactory;
 /*    */ 
 /* 58 */     return sdf.format(date);
 /*    */   }
+			
+			
+			public static String formatDateTimeToString(Date date,String pattern)
+			/*    */   {
+			/* 56 */     SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			/*    */ 
+			/* 58 */     return sdf.format(date);
+			/*    */   }
 			public static final String convertDateToString(Date aDate) {
 		        return getDateTime("yyyy-MM-dd", aDate);
 		    }
