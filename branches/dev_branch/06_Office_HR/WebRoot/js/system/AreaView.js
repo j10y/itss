@@ -55,7 +55,7 @@ AreaView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/system/listMrbsArea.do",
+			url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -180,7 +180,7 @@ AreaView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/bandpoor/listBand.do?Q_flag_N_EQ=1",
+				url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
@@ -227,7 +227,7 @@ AreaView.remove = function(b) {
 	Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
 		if(c == "yes") {
 			Ext.Ajax.request({
-				url : __ctxPath + "/bandpoor/multiDelBand.do",
+				url : __ctxPath + "/system/multiDelMrbsArea.do",
 				params : {
 					ids : b
 				},
