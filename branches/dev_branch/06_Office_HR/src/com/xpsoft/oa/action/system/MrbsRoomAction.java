@@ -103,10 +103,11 @@ public class MrbsRoomAction extends BaseAction {
 				};
 			}
 			String h = (endTime.getHours()>9)?endTime.getHours()+"":"0"+endTime.getHours();
+			String m = (endTime.getMinutes()>9)?endTime.getMinutes()+"":"0"+endTime.getMinutes();
 			h = "00".equals(h) ? "08" : h;
 			int flag  = 0;
 			if(endTime.getHours()<20){
-				content.append(endTime.getDate()+"日"+h+":00-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  onclick=\"orderFun("+room.getId()+",\\'"+room.getRoomName()+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
+				content.append(endTime.getDate()+"日"+h+":"+m+"-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  onclick=\"orderFun("+room.getId()+",\\'"+room.getRoomName()+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
 				flag = 1;
 			}
 			content.append("</div>");
