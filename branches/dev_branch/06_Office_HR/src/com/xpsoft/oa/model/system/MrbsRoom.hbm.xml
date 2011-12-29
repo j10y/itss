@@ -15,5 +15,6 @@
 		<property name="status" column="status" type="java.lang.String"/>
 		<property name="sortIndex" column="sortIndex" type="java.lang.String"/>
 		<property name="virtualMap" column="virtualMap" type="java.lang.String"/>
+		<property name="flag" column="flag" type="java.lang.Integer"/>
 	</class>
 </hibernate-mapping>

@@ -9,6 +9,13 @@ public class MrbsArea extends BaseModel{
 	private String descn;
 	private String shortdescn;
 	
+	private String flag;
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 	public Long getId() {
 		return id;
 	}

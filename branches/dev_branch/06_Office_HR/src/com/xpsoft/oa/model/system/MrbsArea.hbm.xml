@@ -11,5 +11,6 @@
 		<property name="linkman" column="linkman" type="java.lang.String"/>
 		<property name="descn" column="descn" type="java.lang.String"/>
 		<property name="shortdescn" column="shortdescn" type="java.lang.String"/>
+		<property name="flag" column="flag" type="java.lang.Integer"/>
 	</class>
 </hibernate-mapping>

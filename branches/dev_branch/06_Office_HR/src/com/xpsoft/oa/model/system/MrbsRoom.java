@@ -19,7 +19,13 @@ public class MrbsRoom extends BaseModel{
 	private String status;
 	private String sortIndex;
 	private String virtualMap;
-	
+	private String flag;
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 	public Long getId() {
 		return id;
 	}
