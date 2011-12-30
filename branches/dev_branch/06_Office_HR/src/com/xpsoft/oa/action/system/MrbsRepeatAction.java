@@ -123,7 +123,12 @@ public class MrbsRepeatAction extends BaseAction {
 		if(this.mrbsRepeat.getRepOpt() == 0){
 			this.mrbsRepeat.setEndDate(this.mrbsRepeat.getStartDate());
 		}
-		
+		//判断 开始时间 >= 结束时间
+		if(Integer.valueOf(this.mrbsRepeat.getStartHour())*60+Integer.valueOf(this.mrbsRepeat.getStartMini())>=
+			Integer.valueOf(this.mrbsRepeat.getEndHour())*60+Integer.valueOf(this.mrbsRepeat.getEndMini())){
+			this.jsonString ="{success:false,msg:'开始时间  不能大于 结束时间！'}";
+			return "success";
+		}
 		
 		String end_date = DateUtil.convertDateToString(this.mrbsRepeat.getEndDate()) + " " + this.mrbsRepeat.getEndHour() + ":" + this.mrbsRepeat.getEndMini() + ":00";
 		this.mrbsRepeat.setEndDate(DateUtil.parseDate(end_date));
