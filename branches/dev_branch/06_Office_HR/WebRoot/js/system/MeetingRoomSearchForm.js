@@ -162,10 +162,11 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 											xtype : "combo",
 											hideLabel : true,
 											editable : false,
+											value : "08",
 											width : 70,
 											triggerAction : "all",
 											store : [
-												 ["8","8"], ["9","9"], ["10","10"], ["11","11"], ["12","12"], ["13","13"], ["14","14"], 
+												 ["08","08"], ["09","09"], ["10","10"], ["11","11"], ["12","12"], ["13","13"], ["14","14"], 
 												 ["15","15"], ["16","16"], ["17","17"], ["18","18"], ["19","19"], ["20","20"]
 											]
 										}
@@ -191,6 +192,7 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 											xtype : "combo",
 											hideLabel : true,
 											editable : false,
+											value : "00",
 											width : 70,
 											triggerAction : "all",
 											store : [
@@ -232,7 +234,7 @@ MeetingRoomSearchForm = Ext.extend(Ext.Window, {
 			array.push(Ext.getCmp("meetingTime").getValue());
 			array.push(Ext.getCmp("startDate").getValue());
 			array.push(Ext.getCmp("endDate").getValue());
-			array.push(Ext.getCmp("referTime").getValue());
+			array.push(Ext.getCmp("referTime").getValue().inputValue);
 			array.push(Ext.getCmp("meetingHour").getValue());
 			array.push(Ext.getCmp("meetingMin").getValue());
 			Ext.getCmp("areaTabPanel").removeAll();
