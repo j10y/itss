@@ -109,19 +109,74 @@
                     </div>
               	</div>
               	
- 				<div class="fcnav2">
-                	<h2>
-                		最新相册
+              	 <!--员工介绍-->
+
+                <div class="fcnav2">
+                	<h2>员工介绍
                 		<span>
-                			[@cms_channel_list parentId=channel.id]
+                			[@cms_channel_list parentId=109]
                 			[#list tag_list as c]
                 			<a href="${c.url}" target="_blank">${c.name!}</a>
                 			[/#list]
     						[/@cms_channel_list]
+    						[@cms_channel id='109'] [#if tag_bean??]
+							<a href="${tag_bean.url}" class="more">更多&raquo;</a> [/#if]
+							[/@cms_channel]
+                		</span>
+                	</h2>
+
+                    <div class="ifclist">
+
+                    	<ul>
+							[@cms_content_list count='4' titLen='12' orderBy='7' channelOption='1' channelId=109]
+						  	[#list tag_list as ctt]
+								
+														  		
+								<li>
+						  			<a href="${ctt.url}" class="ygjs">
+						  				<img border="0" alt="" src="${ctt.typeImg!site.defImg}" alt="${ctt.tit?html}" width="200" height="150" />
+						  			</a>
+						  			<p>
+
+                                	<a href="${ctt.url}" target="_blank">${ctt.tit?html}</a>
+
+                                    <br />
+
+                                    <span style="font-size:12px;">来自：${ctt.attr.dept?html}</span>
+
+                                    <br />
+
+                                    <span style="font-size:12px;">上榜理由：${ctt.attr.remark?html}</span>
+
+                                	</p>
+						  		</li>
+						  	[/#list]
+						  	[/@cms_content_list]
+
+                        <div class="clr"></div>
+
+                    </div>
+
+                </div>
+                
+ 				<div class="fcnav2">
+                	<h2>
+                		最新相册
+                		<span>
+                			[@cms_channel_list parentId=113]
+                			[#list tag_list as c]
+                			[#if c.id != 109]
+                			<a href="${c.url}" target="_blank">${c.name!}</a>
+                			[/#if]
+                			[/#list]
+    						[/@cms_channel_list]
+    						[@cms_channel id='113'] [#if tag_bean??]
+							<a href="${tag_bean.url}" class="more">更多&raquo;</a> [/#if]
+							[/@cms_channel]
                 		</span>
                 	</h2>
                 	<div class="ifclist">
-							[@cms_content_page typeId='8' orderBy='4'  sysPage='1' pageClass='pagination' styleList='1-4' tpl='2' count='8' titLen='15' channelId=71 channelOption='1' /]
+							[@cms_content_page typeId='8' orderBy='4'  sysPage='1' pageClass='pagination' styleList='1-4' tpl='2' count='8' titLen='15' channelId='113' channelOption='1' /]
 					 </div>
                 </div>
             </div>
