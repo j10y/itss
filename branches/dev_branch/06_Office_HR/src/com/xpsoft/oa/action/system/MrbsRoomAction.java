@@ -150,7 +150,7 @@ public class MrbsRoomAction extends BaseAction {
 		//获取参数
 		String attendNum = this.getRequest().getParameter("attendNum");
 		String meetingTime = this.getRequest().getParameter("meetingTime");
-		Long meetingTimeLong = Long.parseLong(meetingTime) * 60 * 60 * 1000;
+		Long meetingTimeLong = (long) (Float.parseFloat(meetingTime) * 60 * 60 * 1000);
 		Date startDate = DateUtil.parseDate(this.getRequest().getParameter("startDate"));
 		Date endDate = DateUtil.parseDate(this.getRequest().getParameter("endDate"));
 		Long areaId = Long.parseLong(this.getRequest().getParameter("areaId"));

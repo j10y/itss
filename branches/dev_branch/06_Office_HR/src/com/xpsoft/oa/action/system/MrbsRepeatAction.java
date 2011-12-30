@@ -129,6 +129,7 @@ public class MrbsRepeatAction extends BaseAction {
 		this.mrbsRepeat.setEndDate(DateUtil.parseDate(end_date));
 		
 		//保存预订申请
+		this.mrbsRepeat.setCreateBy(ContextUtil.getCurrentUser());
 		this.mrbsRepeatService.save(this.mrbsRepeat);
 		//拆分预订
 		List<MrbsSchedule> list = SaveToSchedule(this.mrbsRepeat,attendIdListStr);
