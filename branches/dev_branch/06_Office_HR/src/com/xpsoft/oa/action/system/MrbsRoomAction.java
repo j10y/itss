@@ -157,6 +157,8 @@ public class MrbsRoomAction extends BaseAction {
 		boolean referTime = "1".equals(this.getRequest().getParameter("referTime")) ? true : false;
 		String meetingHour = this.getRequest().getParameter("meetingHour");
 		String meetingMin = this.getRequest().getParameter("meetingMin");
+		Long referStartTime = Long.MAX_VALUE;
+		Long referEndTime = new Long(0);
 		
 		//取到会议室列表
 		String roomSql = "select id, room_name, room_admin_email from mrbs_room where area_id = " + areaId.toString() + " and capacity >= " + attendNum + " and flag = 1";
@@ -169,12 +171,13 @@ public class MrbsRoomAction extends BaseAction {
 			//循环查询每天会议室预定情况
 			Calendar c_start = Calendar.getInstance();
 			c_start.setTime(startDate);
-			int startDateOfYear = c_start.get(Calendar.DAY_OF_YEAR);
+			Long startDateLong = c_start.getTime().getTime();
 			Calendar c_end = Calendar.getInstance();
 			c_end.setTime(endDate);
-			int endDateOfYear = c_end.get(Calendar.DAY_OF_YEAR);
+			Long endDateLong = c_end.getTime().getTime();
+			Long dateNum = (endDateLong - startDateLong) / (1000 * 60 * 60 * 24) + 1;
 			List<Map<String, Object>> roomUnMeetingList = new ArrayList<Map<String,Object>>();
-			for(int j = 0; j < endDateOfYear - startDateOfYear + 1; j++) {
+			for(int j = 0; j < dateNum; j++) {
 				Calendar startc = Calendar.getInstance();
 				startc.setTime(startDate);
 				startc.add(Calendar.DAY_OF_YEAR, j);
@@ -188,6 +191,10 @@ public class MrbsRoomAction extends BaseAction {
 				List<Map<String, Object>> roomMeetingList = this.mrbsRoomService.findDataList(roomMeetingSql);
 				String startHour = DateUtil.convertDateToString(startc.getTime()) + " 08:00:00";
 				String endHour = DateUtil.convertDateToString(startc.getTime()) + " 20:00:00";
+				if(referTime) {
+					referStartTime = DateUtil.parseDate(DateUtil.convertDateToString(startc.getTime()) + " " + meetingHour + ":" + meetingMin + ":00").getTime();
+					referEndTime = new Date(referStartTime + meetingTimeLong).getTime();
+				}
 				if(roomMeetingList.size() == 0) {
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("startTime", DateUtil.parseDate(startHour));
@@ -196,7 +203,9 @@ public class MrbsRoomAction extends BaseAction {
 				} else {
 					Date firstTime = (Date)roomMeetingList.get(0).get("start_time");
 					Date lastTime = (Date)roomMeetingList.get(roomMeetingList.size() - 1).get("end_time");
-					if(firstTime.getTime() - DateUtil.parseDate(startHour).getTime() >= meetingTimeLong) {
+					if(firstTime.getTime() - DateUtil.parseDate(startHour).getTime() >= meetingTimeLong && 
+							DateUtil.parseDate(startHour).getTime() <= referStartTime && 
+							firstTime.getTime() >= referEndTime) {
 						Map<String, Object> startMap = new HashMap<String, Object>();
 						startMap.put("startTime", DateUtil.parseDate(startHour));
 						startMap.put("endTime", firstTime);
@@ -205,14 +214,18 @@ public class MrbsRoomAction extends BaseAction {
 					for(int k = 0; k < roomMeetingList.size() - 1; k++) {
 						Date prevTime = (Date)roomMeetingList.get(k).get("end_time");
 						Date nextTime = (Date)roomMeetingList.get(k + 1).get("start_time");
-						if(nextTime.getTime() - prevTime.getTime() >= meetingTimeLong) {
+						if(nextTime.getTime() - prevTime.getTime() >= meetingTimeLong && 
+								prevTime.getTime() <= referStartTime && 
+								nextTime.getTime() >= referEndTime) {
 							Map<String, Object> inMap = new HashMap<String, Object>();
 							inMap.put("startTime", prevTime);
 							inMap.put("endTime", nextTime);
 							roomUnMeetingList.add(inMap);
 						}
 					}
-					if(DateUtil.parseDate(endHour).getTime() - lastTime.getTime() >= meetingTimeLong) {
+					if(DateUtil.parseDate(endHour).getTime() - lastTime.getTime() >= meetingTimeLong && 
+							lastTime.getTime() <= referStartTime && 
+							DateUtil.parseDate(endHour).getTime() >= referEndTime) {
 						Map<String, Object> endMap = new HashMap<String, Object>();
 						endMap.put("startTime", lastTime);
 						endMap.put("endTime", DateUtil.parseDate(endHour));
