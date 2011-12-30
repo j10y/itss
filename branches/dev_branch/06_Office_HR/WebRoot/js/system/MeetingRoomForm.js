@@ -79,11 +79,13 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			}
 		});
 		var b = new Array();
-		b.push({
-			iconCls : "btn-del",
-			qtip : "删除",
-			style : "margin:0 3px 0 3px"
-		});
+		if(isGranted('_DeleteOrderRoom')){
+			b.push({
+				iconCls : "btn-del",
+				qtip : "删除",
+				style : "margin:0 3px 0 3px"
+			});
+		}
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -150,9 +152,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				emptyMsg : "当前没有记录"
 			})
 		});
-		if(isGranted('_DeleteOrderRoom')){
-			this.rowActions.on("action", this.onRowAction, this);
-		}
+		this.rowActions.on("action", this.onRowAction, this);
 		if(isGranted('_EditOrderRoom')){
 			this.gridPanel.addListener("rowdblclick", function(grid, index, event) {
 				grid.getSelectionModel().each(function(item) {
@@ -352,7 +352,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					format: 'Y-m-d',
 					 anchor:"46%",
 					disableDays:[0,6],
-					//value : new Date().format("Y-m-d"),
+					value : (this.start_date)?this.start_date:"",
 					allowBlank:false,
 					//minValue:new Date().format("Y-m-d"),
 					minValue:this.rightDate,
@@ -374,15 +374,18 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									layout:'form',
 									border:false,
 									items:[{
-										xtype: 'numberfield',
+										xtype: 'combo',
 										name:'mrbsRepeat.startHour',
 										hideLabel : true,
 										width:50,
 										border:false,
-										value:'09',
+										value:(this.start_hour)?this.start_hour:"08",
 										allowBlank:false,
-										minValue:8,
-										maxValue:20
+										triggerAction : "all",
+										store : [
+												 ["08","08"], ["09","09"],["10","10"], ["11","11"],["12","12"], ["13","13"],["14","14"], ["15","15"],
+												 ["16","16"], ["17","17"],["18","18"], ["19","19"],["20","20"]
+											]
 										
 									}]
 								},{
@@ -401,14 +404,18 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									border:false,
 									items:[{
 										name:'mrbsRepeat.startMini',
-										xtype: 'numberfield',
+										xtype: 'combo',
 										hideLabel : true,
 										width:50,
 										border:false,
-										value:'00',
+										value:(this.start_mini)?this.start_mini:"00",
 										allowBlank:false,
-										minValue:0,
-										maxValue:59
+										triggerAction : "all",
+										store : [
+												 ["00","00"], ["05","05"],["10","10"], ["15","15"],["20","20"], ["25","25"],["30","30"], ["35","35"],
+												 ["40","40"], ["45","45"],["50","50"], ["55","55"]
+											]
+										
 									}]
 								},{
 									columnWidth:.25,
@@ -438,14 +445,17 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									border:false,
 									items:[{
 										name:'mrbsRepeat.endHour',
-										xtype: 'numberfield',
+										xtype: 'combo',
 										hideLabel : true,
 										width:50,
 										border:false,
-										value:'20',
+										value:(this.end_hour)?this.end_hour:"20",
 										allowBlank:false,
-										minValue:8,
-										maxValue:20
+										triggerAction : "all",
+										store : [
+												 ["08","08"], ["09","09"],["10","10"], ["11","11"],["12","12"], ["13","13"],["14","14"], ["15","15"],
+												 ["16","16"], ["17","17"],["18","18"], ["19","19"],["20","20"]
+											]
 									}]
 								},{
 									columnWidth:.25,
@@ -463,14 +473,17 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									border:false,
 									items:[{
 										name:'mrbsRepeat.endMini',
-										xtype: 'numberfield',
+										xtype: 'combo',
 										hideLabel : true,
 										width:50,
 										border:false,
-										value:'00',
+										value:(this.end_mini)?this.end_mini:"00",
 										allowBlank:false,
-										minValue:0,
-										maxValue:59
+										triggerAction : "all",
+										store : [
+												 ["00","00"], ["05","05"],["10","10"], ["15","15"],["20","20"], ["25","25"],["30","30"], ["35","35"],
+												 ["40","40"], ["45","45"],["50","50"], ["55","55"]
+											]
 									}]
 								},{
 									columnWidth:.25,

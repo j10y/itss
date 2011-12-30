@@ -216,10 +216,15 @@ MeetingRoomView.searchItems = function(u,t,index,id,itemArray){
 	
 };
 
-var orderFun = function(rid,rname){
+var orderFun = function(rid,rname,start_hour,start_mini,end_hour,end_mini,start_date){
 
 	new MeetingRoomForm({roomId : rid,
 						roomName : rname,
-						activeId:1
+						activeId:1,
+						start_hour:start_hour,
+						start_mini:start_mini,
+						end_hour:end_hour,
+						end_mini:end_mini,
+						start_date:start_date
 }).show();
 }
