@@ -56,6 +56,7 @@ RoomForm = Ext.extend(Ext.Window, {
 					hiddenName:"mrbsRoom.area.id",
 					id : "areaName",
 					xtype : "combo",
+					allowBlank : false,
 					triggerAction : "all",
 					mode : "local",
 					valueField : "id",
