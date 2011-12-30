@@ -27,6 +27,7 @@ import net.shopin.ldap.ws.client.SystemWSImpl;
 import net.shopin.ldap.ws.client.SystemWSImplService;
 
 import org.apache.commons.dbcp.BasicDataSourceFactory;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -396,7 +397,7 @@ public class SynDataRunnable implements Runnable {
 					if (sd.getTableinfo().getUser().getBelongdept() != null
 							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
 									.getBelongdept())) {
-						arg[itemn++] = item.getDepartmentNumber();
+						arg[itemn++] = StringUtils.isNumeric(item.getDepartmentNumber()) ? item.getDepartmentNumber() : 1101 ;
 					}
 					if (sd.getTableinfo().getUser().getBelongName() != null
 							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
@@ -414,6 +415,7 @@ public class SynDataRunnable implements Runnable {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
+					System.out.println(item.getDisplayName());
 					notIn.add(item);
 				}
 			}
@@ -452,7 +454,7 @@ public class SynDataRunnable implements Runnable {
 					if (sd.getTableinfo().getUser().getBelongdept() != null
 							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
 									.getBelongdept())) {
-						arg[itemn++] = item.getDepartmentNumber();
+						arg[itemn++] = StringUtils.isNumeric(item.getDepartmentNumber()) ? item.getDepartmentNumber() : 1001;
 					}
 					if (sd.getTableinfo().getUser().getBelongName() != null
 							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
@@ -463,7 +465,7 @@ public class SynDataRunnable implements Runnable {
 						arg[itemn++] = sd.getTableinfo().getUser().getPassWord().getDefaultValue();
 					}
 					
-					logger.info("Insert User:" + item.getCn() + "/" + uid);
+					logger.info("Insert User:" + item.getDisplayName() + "/" + uid);
 					jt.update(insert, arg);
 				}
 			}
