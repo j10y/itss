@@ -60,7 +60,6 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 		});
 		this.search(a, new Date().format("Y-m-d"));
 	},
-	active_panel:null,
 	search_free : function(a,searchForm){
 		Ext.Ajax.request({
 					url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
