@@ -56,17 +56,11 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 			region : "center",
 			tbar : tabbar,
 			avtiveTab : 0,
-			items:[],
-			listeners : {
-				afterrender : function() {
-					Ext.getCmp("MeetingRoomView").search(a, new Date().format("Y-m-d"));
-				}
-			}
+			items:[]
 		});
-		//this.areaTabPanel.activate(Ext.getCmp("area_0"));
-		//Ext.getCmp("areaTabPanel").scrollToTab(Ext.getCmp("area_0"),true);
-//		/alert(Ext.getCmp("areaTabPanel").getActiveTab());
+		this.search(a, new Date().format("Y-m-d"));
 	},
+	active_panel:null,
 	search_free : function(a,searchForm){
 		Ext.Ajax.request({
 					url : __ctxPath + "/system/listMrbsArea.do?Q_flag_N_EQ=1",
@@ -129,9 +123,8 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 									},
 								items:[]
 							});
-							
+							MeetingRoomView.searchItems("/system/listMrbsRoom.do?Q_flag_N_EQ=1&searchDate=" + b,a,i,e.result[i].id);
 							Ext.getCmp('areaTabPanel').add(panel1);
-						    MeetingRoomView.searchItems("/system/listMrbsRoom.do?Q_flag_N_EQ=1&searchDate=" + b,a,i,e.result[i].id);
 						}
 					},
 					failure : function() {
@@ -205,7 +198,10 @@ MeetingRoomView.searchItems = function(u,t,index,id,itemArray){
 							});
 							panel.add(rPanel);
 						}
-						panel.show();
+						//panel.show();
+						if(index ==0){
+							Ext.getCmp('areaTabPanel').activate(panel);
+						}
 					},
 					failure : function() {
 						Ext.MessageBox.show({
