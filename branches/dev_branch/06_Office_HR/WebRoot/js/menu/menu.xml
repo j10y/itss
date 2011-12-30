@@ -13,7 +13,7 @@
 		<Item id="CalendarPlanView" iconCls="menu-cal-plan-view" text="我的日程" />
 		<Item id="PersonalWorkPlanView" iconCls="menu-myplan" text="我的计划" />
 		<Item id="AppointmentView" iconCls="menu-appointment" text="我的约会" />
-		<Item id="MeetingRoomView" iconCls="menu-meetingroom" text="会议室预订" >
+		<Item id="MeetingRoomView" iconCls="menu-myplan" text="会议室预订" >
 				<Function id="_SelectEveryDayCalendar" text="任意时间预订" iconCls="menu-list">
 			         <url>/system/.do</url>
 			    </Function>
@@ -528,8 +528,8 @@
 			</Function>
 		</Item>
 		<Items id="MeetingRoomManger" text="会议室管理" iconCls="menu-flow" isPublic="false">
-			<Item id="AreaView" text="区域" iconCls="menu-meetingroom"/>
-			<Item id="RoomView" text="会议室" iconCls="menu-meetingroom"/>
+			<Item id="AreaView" text="区域" iconCls="menu-news"/>
+			<Item id="RoomView" text="会议室" iconCls="menu-info"/>
 		</Items>
 		<!--
 		<Item id="SystemLogView" text="系统日志"/>
