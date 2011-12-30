@@ -508,3 +508,15 @@ a.comview { background:url(images/comview.gif) no-repeat;}
 
 
 .pagination{height:30px; line-height:30px;; text-align:center; clear:both; margin-top:10px;}
+
+/*ÐÂÔ±¹¤*/
+.ygjs img { border:1px solid #d0d0d0;}
+
+.ygjsinfo { width:640px; margin:0 auto; margin-top:30px;}
+.ygjsimg { width:320px; float:left; padding:1px;  border:1px solid #d8e1e6}
+.ygjsi1 { width:300px; float:right;}
+.ygjsi1 table { border:1px solid #d8e1e6}
+.ygjsi1 td { padding:4px 12px;}
+.ygjsi1 .tname { background:#d8e1e6;}
+.ygjsi1 .tcont { border-bottom:1px solid #d8e1e6}
+.tjly { background:url(images/thly.jpg) left center no-repeat; padding-left:100px; line-height:30px;}
