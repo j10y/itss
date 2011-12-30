@@ -89,7 +89,9 @@
                         		[@cms_content_list channelId=71 typeId='8' count='9' titLen='10' channelOption='1']
 									[#list tag_list as a]
 							        	<ul>
+							        	<a href="${a.url}" target="_blank">
 							        	<img src="${a.typeImg!site.defImg}" alt="${a.title}"  width="480" height="360" />
+							        	</a>
 							        	<p>${a.title}</p>
 							        	</ul>
 									[/#list]
@@ -98,7 +100,7 @@
                             <dt>
                             	[@cms_content_list channelId=71 typeId='8' count='9' titLen='10' channelOption='1']
 									[#list tag_list as a]
-							        	<a>
+							        	<a href="${a.url}" target="_blank">
 							        	<img src="${a.typeImg!site.defImg}" alt="${a.title}" width="120" height="90" />
 							        	<p>${a.title}</p>
 							        	</a>
