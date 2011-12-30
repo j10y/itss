@@ -25,6 +25,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 					xtype : "datefield",
 					format : "Y-m-d",
 					value : new Date(),
+					editable : false,
 					minValue : new Date().format("Y-m-d"),
 					listeners : {
 						select : function() {
@@ -42,9 +43,6 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 					handler : function() {
 						new MeetingRoomSearchForm().show();
 					}
-				}, {
-					xtype : "button",
-					text : "帮助"
 				}, {
 					xtype : "label",
 					html : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
