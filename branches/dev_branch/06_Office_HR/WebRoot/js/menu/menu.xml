@@ -14,22 +14,22 @@
 		<Item id="PersonalWorkPlanView" iconCls="menu-myplan" text="我的计划" />
 		<Item id="AppointmentView" iconCls="menu-appointment" text="我的约会" />
 		<Item id="MeetingRoomView" iconCls="menu-myplan" text="会议室预订" >
-				<Function id="_SelectEveryDayCalendar" text="任意时间预订" iconCls="menu-list">
+				<Function id="_SelectEveryDayCalendar" text="任意时间预订" iconCls="menu-add">
 			         <url>/system/.do</url>
 			    </Function>
-			    <Function id="_SelectEveryDay" text="预订每天" iconCls="menu-list">
+			    <Function id="_SelectEveryDay" text="预订每天" iconCls="menu-add">
 			         <url>/system/.do</url>
 			    </Function>
-			    <Function id="_SelectEveryWeek" text="预订每周" iconCls="menu-list">
+			    <Function id="_SelectEveryWeek" text="预订每周" iconCls="menu-add">
 			         <url>/system/.do</url>
 			    </Function>
-			     <Function id="_SelectSpanWeek" text="隔周预订" iconCls="menu-list">
+			     <Function id="_SelectSpanWeek" text="隔周预订" iconCls="menu-add">
 			         <url>/system/.do</url>
 			    </Function>
-			    <Function id="_EditOrderRoom" text="修改预订" iconCls="menu-list">
+			    <Function id="_EditOrderRoom" text="修改预订" iconCls="btn-edit">
 			         <url>/system/.do</url>
 			    </Function>
-			    <Function id="_DeleteOrderRoom" text="删除预订" iconCls="menu-list">
+			    <Function id="_DeleteOrderRoom" text="删除预订" iconCls="menu-del">
 			         <url>/system/.do</url>
 			    </Function>
 		</Item>
