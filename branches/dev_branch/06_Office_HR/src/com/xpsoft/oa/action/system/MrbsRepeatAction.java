@@ -122,6 +122,11 @@ public class MrbsRepeatAction extends BaseAction {
 		//当 预订为 “当天” 时，结束日期 与 开始日期相同
 		if(this.mrbsRepeat.getRepOpt() == 0){
 			this.mrbsRepeat.setEndDate(this.mrbsRepeat.getStartDate());
+		}else{
+			if(this.mrbsRepeat.getEndDate()==null){
+				this.jsonString ="{success:false,msg:'结束时间不能为空！'}";
+				return "success";
+			}
 		}
 		//判断 开始时间 >= 结束时间
 		if(Integer.valueOf(this.mrbsRepeat.getStartHour())*60+Integer.valueOf(this.mrbsRepeat.getStartMini())>=
