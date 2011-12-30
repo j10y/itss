@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeanUtils;
 
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.engine.AsynMeetingMailSendProcess;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.DateUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -22,6 +23,7 @@ import com.xpsoft.oa.model.system.MrbsRoom;
 import com.xpsoft.oa.model.system.MrbsSchedule;
 import com.xpsoft.oa.model.system.MrbsScheduleExtend;
 import com.xpsoft.oa.model.system.MrbsScheduleUser;
+import com.xpsoft.oa.service.system.AppUserService;
 import com.xpsoft.oa.service.system.MrbsScheduleService;
 import com.xpsoft.oa.service.system.MrbsScheduleUserService;
 
@@ -118,9 +120,13 @@ public class MrbsScheduleAction extends BaseAction {
 		this.mrbsSchedule.setRepeat(new MrbsRepeat(Long.valueOf(request.getParameter("repeat_id"))));
 		this.mrbsSchedule.setPresideEmail(ContextUtil.getCurrentUser().getEmail());
 		this.mrbsSchedule.setRoom(new MrbsRoom(Long.valueOf(request.getParameter("mrbsRepeat.room.id"))));
+		this.mrbsSchedule.getRoom().setRoomName(request.getParameter("mrbsRepeat.room.roomName"));
 		if(this.mrbsSchedule.getEndTime().after(this.mrbsSchedule.getStartTime())){
 			this.MrbsScheduleService.save(this.mrbsSchedule);
+			// 重新保存 参会人员 名单
 			saveScheduleAttender(this.mrbsSchedule,request.getParameter("attendIdList"));
+			// 修改会议预订后 ，重新发邮件
+			sendEmailForMeeting(this.mrbsSchedule,request.getParameter("attendIdList"));
 			this.jsonString ="{success:true,result:''}";
 		}else{
 			this.jsonString ="{success:false,msg:'开始时间  不能大于 结束时间！'}";
@@ -243,6 +249,7 @@ public class MrbsScheduleAction extends BaseAction {
 		       		//select name from Appuser
 					.append("'mrbsRepeat.orderman':'" +f.getPreside() + "',")
 					.append("'repeat_id':'" +f.getRepeat().getId() + "',")
+					.append("'presideEmail':'" +f.getPresideEmail() + "',")
 					.append("'conferenceCall':'"+f.getConferenceCall()+"'},");
 		       
 		sb.append("}");
@@ -251,14 +258,44 @@ public class MrbsScheduleAction extends BaseAction {
 		return "success";
 	}
 
-	/*public String save() {
-		String data = getRequest().getParameter("funUrls");
-		String[] funUrls = data.split(",");
-		this.MrbsScheduleService.save(this.mrbsSchedule);
-		if(this.mrbsSchedule.getId()!=null){
-			this.MrbsScheduleService.updateFunUrl(funUrls,this.mrbsSchedule.getId());
+	private List<AppUser> getAssignUserEmail(String assignIds) {
+		String[] userIds = assignIds.split(",");
+		List<AppUser> mailList = new ArrayList<AppUser>();
+		if(userIds.length > 0){
+			for (String id : userIds) {
+				mailList.add(((AppUser) this.appUserService.get(Long.parseLong(id))));
+			}
+		}else{
+			mailList.add(((AppUser) this.appUserService.get(Long.parseLong(assignIds))));
 		}
-		setJsonString("{success:true}");
-		return "success";
-	}*/
+
+		return mailList;
+	}
+	/**
+	 * 
+	 */
+	private void sendEmailForMeeting(MrbsSchedule ms,String attendIdListStr){
+		List<AppUser> mailList = new ArrayList<AppUser>();
+		mailList = getAssignUserEmail(attendIdListStr);
+		
+		Map model = new HashMap();
+		model.put("startTime", DateUtil.formatDateTimeToString(ms.getStartTime(),"yyyy-MM-dd hh:mm"));
+		model.put("roomName", ms.getRoom().getRoomName());
+		model.put("description", ms.getDescription());
+		model.put("presideEmail", ms.getPresideEmail());
+		
+		AsynMeetingMailSendProcess amsp = new AsynMeetingMailSendProcess(mailList, null, attendIdListStr,model);
+		Thread td = new Thread(amsp);
+		td.start();
+	}
+	@Resource
+	private AppUserService appUserService;
+	public AppUserService getAppUserService() {
+		return appUserService;
+	}
+
+	public void setAppUserService(AppUserService appUserService) {
+		this.appUserService = appUserService;
+	}
+	
 }
