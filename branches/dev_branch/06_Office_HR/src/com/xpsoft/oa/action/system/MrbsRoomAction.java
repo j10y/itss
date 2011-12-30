@@ -129,7 +129,7 @@ public class MrbsRoomAction extends BaseAction {
 			h = "00".equals(h) ? "08" : h;
 			int flag  = 0;
 			if(endTime.getHours()<20){
-				content.append(endTime.getDate()+"日"+h+":"+m+"-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  onclick=\"orderFun("+room.getId()+",\\'"+room.getRoomName()+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
+				content.append(endTime.getDate()+"日"+h+":"+m+"-"+"20:00").append("&nbsp;&nbsp;&nbsp;").append("空闲，<input type=\"button\"  onclick=\"orderFun("+room.getId()+",\\'"+room.getRoomName()+"\\',\\'"+h+"\\',\\'"+m+"\\',\\'"+20+"\\',\\'00\\',\\'"+DateUtil.convertDateToString(endTime)+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
 				flag = 1;
 			}
 			content.append("</div>");
@@ -253,12 +253,15 @@ public class MrbsRoomAction extends BaseAction {
 				
 				List<Map<String, Object>> list = allRoomMap.get(roomId);
 				for(int j = 0; j < list.size(); j++) {
+					Date start_date = (Date)list.get(j).get("startTime");
+					String start_hour = (start_date.getHours()<10)?"0"+start_date.getHours():start_date.getHours()+"";
+					String start_mini = (start_date.getMinutes()<10)?"0"+start_date.getMinutes():start_date.getMinutes()+"";
 					Date end_date = (Date)list.get(j).get("endTime");
 					String end_hour = (end_date.getHours()<10)?"0"+end_date.getHours():end_date.getHours()+"";
 					String end_mini = (end_date.getMinutes()<10)?"0"+end_date.getMinutes():end_date.getMinutes()+"";
-					content.append(sdf.format((Date)list.get(j).get("startTime")) + "-" + end_hour+":"+end_mini)
+					content.append(sdf.format(start_date) + "-" + end_hour+":"+end_mini)
 							.append("&nbsp;&nbsp;&nbsp;")
-							.append("空闲，<input type=\"button\"  onclick=\"orderFun("+roomId+",\\'"+roomName+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
+							.append("空闲，<input type=\"button\"  onclick=\"orderFun("+roomId+",\\'"+roomName+"\\',\\'"+start_hour+"\\',\\'"+start_mini+"\\',\\'"+end_hour+"\\',\\'"+end_mini+"\\',\\'"+DateUtil.convertDateToString(start_date)+"\\')\" style=\"width:60px\" name=\"预&nbsp;&nbsp;订\" value=\"预&nbsp;订\"/>").append("<br/><br/>");
 				}
 				content.append("</div>");
 				buff.append("'flag':'1',");
