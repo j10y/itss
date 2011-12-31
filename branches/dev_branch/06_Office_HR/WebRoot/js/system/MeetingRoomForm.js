@@ -68,7 +68,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					name : "createUser",
 					mapping : "createBy.fullname"
 				},
-				"description"
+				"description",
+				"conferenceCall"
 			]
 		});
 		this.store.setDefaultSort("startTime", "asc");
@@ -117,6 +118,14 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				}, {
 					header : "会议主题",
 					dataIndex : "description"
+				},{
+					header : "是否需总裁办参与",
+					dataIndex : "conferenceCall",
+					renderer : function(d) {
+						if(d == 1) {
+							return "是";
+						}
+					}
 				},
 				this.rowActions
 			],
@@ -283,7 +292,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									allowBlank:false
 								}]
 							},{
-								columnWidth:0.5,
+								columnWidth:0.2,
 								layout: 'form',
 								border : false,
 								items: [{
@@ -294,6 +303,19 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									value : '1',
 									border: false,
 									items:[{boxLabel:'投影仪',name:'mrbsRepeat.projector',inputValue:'1'}]
+								}]
+							},{
+								columnWidth:0.3,
+								layout: 'form',
+								border : false,
+								items: [{
+									name : 'mrbsRepeat.conferenceCall',
+									id : 'conferenceCall',
+									defaultType: 'checkbox',
+									hideLabels:true,
+									value : '1',
+									border: false,
+									items:[{boxLabel:'是否由总裁办协助做会议记录',name:'mrbsRepeat.conferenceCall',inputValue:'1'}]
 								}]
 							}
 							]
