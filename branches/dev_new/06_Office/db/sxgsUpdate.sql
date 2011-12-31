@@ -48,10 +48,6 @@ CREATE TABLE `notice_news` (
   CONSTRAINT `FK_NNS_R_NNT` FOREIGN KEY (`typeId`) REFERENCES `notice_news_type` (`typeId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='通知（新）';
 
--- ----------------------------
--- Records of notice_news
--- ----------------------------
-INSERT INTO notice_news VALUES ('1', '1', 'info/noticeNews/201107/43d7fa4b20a94cd2b82544770e981cd2.jpg', '测试新闻', '超级管理员', '2011-07-27 11:49:29', '0', '6', '超级管理员', '<p>你好啊，美女<a href=\"http:///userfiles/file/%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E7%9A%84%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8%E7%A0%94%E7%A9%B6.pdf\">/userfiles/file/%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E7%9A%84%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8%E7%A0%94%E7%A9%B6.pdf</a></p>', '2011-07-27 11:58:54', '1', '1');
 
 -- ----------------------------
 -- Table structure for `notice_news_comment`
