@@ -122,6 +122,7 @@ public class MrbsRoomAction extends BaseAction {
 					content.append(d.getDate()+"日"+hstart+":" + mstart + "-"+hend+":" + mend).append("&nbsp;&nbsp;&nbsp;"+m.get("create_by")).append("<br/><br/>");
 					endTime = d_1;
 					list_s.remove(i);
+					i = i - 1;
 				};
 			}
 			String h = (endTime.getHours()>9)?endTime.getHours()+"":"0"+endTime.getHours();
