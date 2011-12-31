@@ -58,6 +58,7 @@ xsi:schemaLocation="http://syndata.shopin.cn Syndata.xsd">
 			<fax></fax>
 			<position></position>
 			<passWord isSyn="false" columnName="" defaultValue="" />
+			<deleteFlag columnName="" columnType="int" flagValue="" />
 		</user>
 	</tableinfo>
 </SynData>

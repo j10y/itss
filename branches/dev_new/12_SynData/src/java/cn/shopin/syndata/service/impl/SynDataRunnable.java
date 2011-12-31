@@ -35,6 +35,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import cn.shopin.syndata.entity.CustomizeSQL;
 import cn.shopin.syndata.entity.ObjectFactory;
 import cn.shopin.syndata.entity.SynData;
+import cn.shopin.syndata.entity.TableInfo;
 import cn.shopin.syndata.utils.PropertiesUtil;
 
 /**
@@ -362,6 +363,9 @@ public class SynDataRunnable implements Runnable {
 			insert += values + " )";
 
 			List<net.shopin.ldap.ws.client.User> notIn = new ArrayList<net.shopin.ldap.ws.client.User>();
+			//add by jack for 增加离职用户处理部分 at 2011-12-31 begin
+			String leaveEmp = "";
+			//add by jack for 增加离职用户处理部分 at 2011-12-31 end
 			for (net.shopin.ldap.ws.client.User item : ldapUser) {
 				try {
 					String uid = item.getUid();
@@ -408,69 +412,107 @@ public class SynDataRunnable implements Runnable {
 						arg[itemn++] = sd.getTableinfo().getUser().getPassWord().getDefaultValue();
 					}
 					
-					logger.info("Update User:" + item.getCn() + "/" + uid);
+					//add by jack for 增加离职用户处理部分 at 2011-12-31 begin
 					int updatenum = jt.update(update, arg);
 					if(updatenum == 0){
 						notIn.add(item);
+					}else{
+						logger.info("Update User:" + item.getCn() + "/" + uid);
+						leaveEmp += "'" + uid + "',";
 					}
+					//add by jack for 增加离职用户处理部分 at 2011-12-31 end
 				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.println(item.getDisplayName());
+					logger.error("Update User:" + item.getDisplayName() + "/" + item.getUid() + "has failed!!");
 					notIn.add(item);
 				}
 			}
 			if (notIn.size() != 0) {
 				for (net.shopin.ldap.ws.client.User item : notIn) {
-					String uid = item.getUid();
-					Object[] arg = new Object[paraNum];
-					int itemn = 3;
-					arg[0] = uid;
-					arg[1] = item.getDisplayName();
-					arg[2] = item.getMail();
-					
-					if (sd.getTableinfo().getUser().getMobile() != null
-							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
-									.getMobile())) {
-						arg[itemn++] = item.getMobile();
+					try{
+						String uid = item.getUid();
+						Object[] arg = new Object[paraNum];
+						int itemn = 3;
+						arg[0] = uid;
+						arg[1] = item.getDisplayName();
+						arg[2] = item.getMail();
+						
+						if (sd.getTableinfo().getUser().getMobile() != null
+								&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
+										.getMobile())) {
+							arg[itemn++] = item.getMobile();
+						}
+	
+						if (sd.getTableinfo().getUser().getPhone() != null
+								&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
+										.getPhone())) {
+							arg[itemn++] = item.getTelephoneNumber();
+						}
+	
+						if (sd.getTableinfo().getUser().getFax() != null
+								&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
+										.getFax())) {
+							arg[itemn++] = item.getFacsimileTelephoneNumber();
+						}
+	
+						if (sd.getTableinfo().getUser().getPosition() != null
+								&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
+										.getPosition())) {
+							arg[itemn++] = item.getTitle();
+						}
+						if (sd.getTableinfo().getUser().getBelongdept() != null
+								&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
+										.getBelongdept())) {
+							arg[itemn++] = StringUtils.isNumeric(item.getDepartmentNumber()) ? item.getDepartmentNumber() : 1001;
+						}
+						if (sd.getTableinfo().getUser().getBelongName() != null
+								&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
+										.getBelongName())) {
+							arg[itemn++] = item.getDeptName();
+						}
+						if(sd.getTableinfo().getUser().getPassWord().isIsSyn()){
+							arg[itemn++] = sd.getTableinfo().getUser().getPassWord().getDefaultValue();
+						}
+						
+						//add by jack for 增加离职用户处理部分 at 2011-12-31 begin
+						int insertnum = jt.update(insert, arg);
+						if(insertnum != 0){
+							logger.info("Insert User:" + item.getDisplayName() + "/" + uid);
+							leaveEmp += "'" + uid + "',";
+						}else{
+							logger.error("Insert User:" + item.getDisplayName() + "/" + item.getUid() + "has failed!!");
+						}
+						//add by jack for 增加离职用户处理部分 at 2011-12-31 end
+					}catch(Exception e){
+						e.printStackTrace();
+						logger.error("Insert User:" + item.getDisplayName() + "/" + item.getUid() + "has failed!!");
 					}
-
-					if (sd.getTableinfo().getUser().getPhone() != null
-							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
-									.getPhone())) {
-						arg[itemn++] = item.getTelephoneNumber();
-					}
-
-					if (sd.getTableinfo().getUser().getFax() != null
-							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
-									.getFax())) {
-						arg[itemn++] = item.getFacsimileTelephoneNumber();
-					}
-
-					if (sd.getTableinfo().getUser().getPosition() != null
-							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
-									.getPosition())) {
-						arg[itemn++] = item.getTitle();
-					}
-					if (sd.getTableinfo().getUser().getBelongdept() != null
-							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
-									.getBelongdept())) {
-						arg[itemn++] = StringUtils.isNumeric(item.getDepartmentNumber()) ? item.getDepartmentNumber() : 1001;
-					}
-					if (sd.getTableinfo().getUser().getBelongName() != null
-							&& !"".equalsIgnoreCase(sd.getTableinfo().getUser()
-									.getBelongName())) {
-						arg[itemn++] = item.getDeptName();
-					}
-					if(sd.getTableinfo().getUser().getPassWord().isIsSyn()){
-						arg[itemn++] = sd.getTableinfo().getUser().getPassWord().getDefaultValue();
-					}
-					
-					logger.info("Insert User:" + item.getDisplayName() + "/" + uid);
-					jt.update(insert, arg);
 				}
 			}
-			
 			doCustomizeSQL(sd.getTableinfo().getUser().getCustomizeSQL(), jt);
+			//add by jack for 增加离职用户处理部分 at 2011-12-31 begin
+			if(sd.getTableinfo().getUser().getDeleteFlag() != null){
+				try{
+					StringBuilder sb = new StringBuilder();
+					leaveEmp = leaveEmp.substring(0, leaveEmp.length()-1);
+					
+					sb.append("update " + sd.getTableinfo().getUser().getTablename() + " set ");
+					sb.append(sd.getTableinfo().getUser().getDeleteFlag().getColumnName() + " = " + sd.getTableinfo().getUser().getDeleteFlag().getFlagValue() + " ");
+					sb.append("where " + sd.getTableinfo().getUser().getUid() + " not in ( " + leaveEmp + " ) ");
+					
+					String sql  = sb.toString();
+					int leaveNum = jt.update(sql);
+					if(leaveNum != 0){
+						logger.info("Leave User Disabled Successed, Leave Person Number: " + leaveNum);
+					}else{
+						logger.info("No Person has leaved!");
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+					logger.error("Leave User set Flag is Failed, UID is : " + leaveEmp);
+				}
+			}
+			//add by jack for 增加离职用户处理部分 at 2011-12-31 end
 		}
 
 		logger.info("End User SynData..............");
@@ -487,10 +529,16 @@ public class SynDataRunnable implements Runnable {
 		if(csql !=  null){
 			logger.info("Start deal Customize SQL...................");
 			long no = 1;
-			for(String item : csql.getValue()){
-				logger.info("No." + no++ + ": " + item);
-				jt.update(item);
+			try{
+				for(String item : csql.getValue()){
+					logger.info("No." + no++ + ": " + item);
+					jt.update(item);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				logger.error("No." + no++ + " has deal failed!!");
 			}
+			
 			logger.info("End deal Customize SQL...................");
 		}
 	}

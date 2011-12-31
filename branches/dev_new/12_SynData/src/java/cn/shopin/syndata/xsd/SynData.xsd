@@ -53,6 +53,7 @@
 			<element name="fax" type="string" />
 			<element name="position" type="string" />
 			<element name="passWord" type="tns:passWord" />
+			<element name="deleteFlag" type="tns:deleteFlag" />
 			<element name="customizeSQL" type="tns:customizeSQL" minOccurs="0"/>
 		</sequence>
 		<attribute name="isSyn" type="boolean" default="false"/>
@@ -63,6 +64,12 @@
 		<attribute name="isSyn" type="boolean" default="false" />
 		<attribute name="columnName" type="string" />
 		<attribute name="defaultValue" type="string" />
+	</complexType>
+	
+	<complexType name="deleteFlag">
+		<attribute name="columnName" type="string" />
+		<attribute name="columnType" type="string" />
+		<attribute name="flagValue" type="string" />
 	</complexType>
 
 	<complexType name="customizeSQL">
