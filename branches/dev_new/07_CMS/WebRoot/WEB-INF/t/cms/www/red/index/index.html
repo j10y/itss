@@ -394,6 +394,7 @@
                     				</table>
                     			</td>
                     			<td>
+                    				[#if wc.nextDay?if_exists]
                     				<table border=0 height="153" width="123">
                     					<tr>
                     						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">明日(${wc.nextDay.day_of_week})</td>
@@ -414,6 +415,9 @@
                     						</td>
                     					</tr>
                     				</table>
+                    				[#else]
+                    					&nbsp;
+                    				[/#if]
                     			</td>
                     		</tr>
                     	</table>
