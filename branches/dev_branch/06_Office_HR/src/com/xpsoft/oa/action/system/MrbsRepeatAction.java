@@ -178,7 +178,6 @@ public class MrbsRepeatAction extends BaseAction {
 		return mailList;
 	}
 	/**
-	 * 
 	 */
 	private void sendEmailForMeeting(MrbsSchedule ms,String attendIdListStr){
 		List<AppUser> mailList = new ArrayList<AppUser>();
@@ -251,6 +250,7 @@ public class MrbsRepeatAction extends BaseAction {
 					ms.setPreside(currentUser.getFullname());
 					ms.setPresideEmail(currentUser.getEmail());
 					ms.setRoom(peat.getRoom());
+					ms.setConferenceCall(peat.getConferenceCall());
 					this.mrbsScheduleService.save(ms);
 					saveScheduleAttender(ms,attendIdListStr);
 					//System.out.println(ms.getId());
@@ -295,6 +295,7 @@ public class MrbsRepeatAction extends BaseAction {
 						ms.setPreside(currentUser.getFullname());
 						ms.setPresideEmail(currentUser.getEmail());
 						ms.setRoom(peat.getRoom());
+						ms.setConferenceCall(peat.getConferenceCall());
 						this.mrbsScheduleService.save(ms);
 						saveScheduleAttender(ms,attendIdListStr);
 						//System.out.println(ms.getId());
@@ -327,7 +328,7 @@ public class MrbsRepeatAction extends BaseAction {
 						ms.setPreside(currentUser.getFullname());
 						ms.setPresideEmail(currentUser.getEmail());
 						ms.setRoom(peat.getRoom());
-						
+						ms.setConferenceCall(peat.getConferenceCall());
 						list = this.mrbsScheduleService.validate(ms.getStartTime(),ms.getEndTime(), peat.getRoom().getId());
 						if(list != null && list.size()>0){
 							return list;
@@ -376,7 +377,7 @@ public class MrbsRepeatAction extends BaseAction {
 					ms.setPreside(currentUser.getFullname());
 					ms.setPresideEmail(currentUser.getEmail());
 					ms.setRoom(peat.getRoom());
-					
+					ms.setConferenceCall(peat.getConferenceCall());
 					list = this.mrbsScheduleService.validate(ms.getStartTime(),ms.getEndTime(), peat.getRoom().getId());
 					if(list != null && list.size()>0){
 						return list;
