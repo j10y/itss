@@ -19,6 +19,10 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 	initComponents : function(a){
 		var tabbar = new Ext.Toolbar({
 			items : [
+				{
+					id:'areaDescription',
+					xtype:'label'
+				},
 				"->",
 				{
 					id : "selectDate",
@@ -54,7 +58,12 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 			region : "center",
 			tbar : tabbar,
 			avtiveTab : 0,
-			items:[]
+			items:[],
+			listeners : {
+				tabchange : function() {
+					Ext.getCmp("areaDescription").setText(Ext.getCmp('areaTabPanel').getActiveTab().areaDesc);
+				}
+			}
 		});
 		this.search(a, new Date().format("Y-m-d"));
 	},
@@ -71,6 +80,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 						for(var i = 0 ;i<e.result.length;i++){
 							var panel1 = new Ext.Panel({
 								id : 'area_'+i,
+								areaDesc : e.result[i].linkman,
 								title : e.result[i].areaName,
 								autoDestroy: true,
 								layout:"table",
@@ -109,6 +119,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 						for(var i = 0 ;i<e.result.length;i++){
 							var panel1 = new Ext.Panel({
 								id : 'area_'+i,
+								areaDesc : e.result[i].linkman,
 								title : e.result[i].areaName,
 								autoDestroy: true,
 								layout:"table",
@@ -148,7 +159,7 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
  * 
  * searchForm:当使用 查询空闲办公室时使用的参数，第一次加载 和 点击 日历的查询 不使用此参数
  */
-MeetingRoomView.searchItems = function(u,t,index,id,itemArray){
+MeetingRoomView.searchItems = function(u,t,index,id,itemArray,areaDesc){
 		Ext.Ajax.request({
 					url : __ctxPath + u,
 					params : {
