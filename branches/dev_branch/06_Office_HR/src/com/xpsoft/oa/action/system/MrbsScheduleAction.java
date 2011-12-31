@@ -42,14 +42,14 @@ public class MrbsScheduleAction extends BaseAction {
 	}
 
 	@Resource
-	private MrbsScheduleService MrbsScheduleService;
+	private MrbsScheduleService mrbsScheduleService;
 	private MrbsSchedule mrbsSchedule;
 	public MrbsScheduleService getMrbsScheduleService() {
-		return MrbsScheduleService;
+		return mrbsScheduleService;
 	}
 
-	public void setMrbsScheduleService(MrbsScheduleService MrbsScheduleService) {
-		this.MrbsScheduleService = MrbsScheduleService;
+	public void setMrbsScheduleService(MrbsScheduleService mrbsScheduleService) {
+		this.mrbsScheduleService = mrbsScheduleService;
 	}
 
 	public MrbsSchedule getMrbsSchedule() {
@@ -71,8 +71,8 @@ public class MrbsScheduleAction extends BaseAction {
 	private Long id;
 
 	public String delete(){
-		this.MrbsScheduleService.remove(this.id);
 		this.mrbsScheduleUserService.removeByScheduleId(this.id);
+		this.mrbsScheduleService.remove(this.id);
 		this.jsonString ="{success:true,result:''}";
 		return "success";
 	}
@@ -121,13 +121,40 @@ public class MrbsScheduleAction extends BaseAction {
 		this.mrbsSchedule.setPresideEmail(ContextUtil.getCurrentUser().getEmail());
 		this.mrbsSchedule.setRoom(new MrbsRoom(Long.valueOf(request.getParameter("mrbsRepeat.room.id"))));
 		this.mrbsSchedule.getRoom().setRoomName(request.getParameter("mrbsRepeat.room.roomName"));
+		this.mrbsSchedule.setConferenceCall(request.getParameter("mrbsRepeat.conferenceCall")==null?null:Integer.valueOf(request.getParameter("mrbsRepeat.conferenceCall")));
 		if(this.mrbsSchedule.getEndTime().after(this.mrbsSchedule.getStartTime())){
-			this.MrbsScheduleService.save(this.mrbsSchedule);
-			// 重新保存 参会人员 名单
-			saveScheduleAttender(this.mrbsSchedule,request.getParameter("attendIdList"));
-			// 修改会议预订后 ，重新发邮件
-			sendEmailForMeeting(this.mrbsSchedule,request.getParameter("attendIdList"));
-			this.jsonString ="{success:true,result:''}";
+			//验证是否已经有人预订
+			List<MrbsSchedule> list = this.mrbsScheduleService.validate(this.mrbsSchedule.getStartTime(), this.mrbsSchedule.getEndTime(), Long.valueOf(request.getParameter("mrbsRepeat.room.id")));
+			if(list != null && list.size()>0){
+				if(list.size() == 1){
+					if(this.mrbsSchedule.getId().longValue() == list.get(0).getId().longValue()){
+						this.mrbsScheduleService.save(this.mrbsSchedule);
+						// 重新保存 参会人员 名单
+						saveScheduleAttender(this.mrbsSchedule,request.getParameter("attendIdList"));
+						// 修改会议预订后 ，重新发邮件
+						sendEmailForMeeting(this.mrbsSchedule,request.getParameter("attendIdList"));
+						this.jsonString ="{success:true,result:''}";
+					}
+				}else{
+					StringBuffer sb = new StringBuffer();
+					MrbsSchedule m = list.get(0);
+					sb.append("此会议 在").append(DateUtil.convertDateToString(m.getStartTime())+" "+
+							((m.getStartTime().getHours()<10)?"0"+m.getStartTime().getHours():m.getStartTime().getHours())+":"+
+							((m.getStartTime().getMinutes()<10)?"0"+m.getStartTime().getMinutes():m.getStartTime().getMinutes())+" - "+
+							//DateUtil.convertDateToString(m.getEndTime())+" "+
+							(m.getEndTime().getHours()<10?"0"+m.getEndTime().getHours():m.getEndTime().getHours())+":"+
+							(m.getEndTime().getMinutes()<10?"0"+m.getEndTime().getMinutes():m.getEndTime().getMinutes())+" 时间段已经被【")
+							.append(m.getPreside()).append("】预订");
+					this.jsonString = "{success:false,msg:'"+sb.toString()+"'}";
+				}
+			}else{
+				this.mrbsScheduleService.save(this.mrbsSchedule);
+				// 重新保存 参会人员 名单
+				saveScheduleAttender(this.mrbsSchedule,request.getParameter("attendIdList"));
+				// 修改会议预订后 ，重新发邮件
+				sendEmailForMeeting(this.mrbsSchedule,request.getParameter("attendIdList"));
+				this.jsonString ="{success:true,result:''}";
+			}
 		}else{
 			this.jsonString ="{success:false,msg:'开始时间  不能大于 结束时间！'}";
 		}
@@ -155,7 +182,7 @@ public class MrbsScheduleAction extends BaseAction {
 		
 		QueryFilter filter = new QueryFilter(this.getRequest());
 		filter.addFilter("Q_startTime_D_GT", DateUtil.convertDateToString(new Date()));
-		List<MrbsSchedule> oldList = this.MrbsScheduleService.getAll(filter);
+		List<MrbsSchedule> oldList = this.mrbsScheduleService.getAll(filter);
 		List<MrbsScheduleExtend> newList = new ArrayList<MrbsScheduleExtend>();
 		for(MrbsSchedule ms : oldList) {
 			MrbsScheduleExtend mse = new MrbsScheduleExtend();
@@ -165,8 +192,6 @@ public class MrbsScheduleAction extends BaseAction {
 			mse.setEndHour(sdfHour.format(ms.getEndTime()));
 			mse.setWeek(DateUtil.getDays(ms.getStartTime()));
 			newList.add(mse);
-			System.out.println(mse.getStartHour());
-			System.out.println(mse.getEndHour());
 		}
 		oldList = null;
 		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
@@ -199,7 +224,7 @@ public class MrbsScheduleAction extends BaseAction {
 		String[] ids = getRequest().getParameterValues("ids");
 		  if (ids != null) {
 			 for (String id : ids) {
-				this.MrbsScheduleService.remove(new Long(id));
+				this.mrbsScheduleService.remove(new Long(id));
 			}
 		}
 		this.jsonString = "{success:true}";
@@ -207,7 +232,7 @@ public class MrbsScheduleAction extends BaseAction {
 	}
 
 	public String get() {
-		MrbsSchedule f = (MrbsSchedule) this.MrbsScheduleService
+		MrbsSchedule f = (MrbsSchedule) this.mrbsScheduleService
 				.get(this.id);
 		Map params = new HashMap();
 		params.put("Q_schedule.id_L_EQ", this.id.toString());
@@ -250,7 +275,7 @@ public class MrbsScheduleAction extends BaseAction {
 					.append("'mrbsRepeat.orderman':'" +f.getPreside() + "',")
 					.append("'repeat_id':'" +f.getRepeat().getId() + "',")
 					.append("'presideEmail':'" +f.getPresideEmail() + "',")
-					.append("'conferenceCall':'"+f.getConferenceCall()+"'},");
+					.append("'mrbsRepeat.conferenceCall':'"+f.getConferenceCall()+"'},");
 		       
 		sb.append("}");
 		setJsonString(sb.toString());
@@ -258,6 +283,7 @@ public class MrbsScheduleAction extends BaseAction {
 		return "success";
 	}
 
+	
 	private List<AppUser> getAssignUserEmail(String assignIds) {
 		String[] userIds = assignIds.split(",");
 		List<AppUser> mailList = new ArrayList<AppUser>();
