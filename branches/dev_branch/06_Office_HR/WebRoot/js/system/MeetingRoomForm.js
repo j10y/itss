@@ -289,7 +289,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									readOnly:true,
 									xtype : 'numberfield',
 									value :'',
-									allowBlank:false
+									allowBlank:false,
+									emptyText:'此项不用手动填写！'
 								}]
 							},{
 								columnWidth:0.2,
@@ -337,7 +338,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 										xtype : 'textarea',
 										readOnly:true,
 										value :'',
-										allowBlank:false
+										allowBlank:false,
+										emptyText:''
 									},{
 										xtype : "button",
 										text:'选择人员',
@@ -353,9 +355,12 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 															Ext.getCmp('num').setValue(d.split(',').length);
 														}
 													}
-													
 												}, false).show();
 										}
+									},{
+										xtype:'tbtext',
+										html:'<br/>&nbsp;&nbsp;<font color="red"><b>* 当 “选择人员” 完成时将自动填写 “与会人数”</b></font>'
+										
 									},{
 										xtype : "hidden",
 										name : "attendIdList",
