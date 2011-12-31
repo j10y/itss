@@ -105,10 +105,6 @@ public class AsynMeetingMailSendProcess implements Runnable {
 	 */
 	public void run() {
 		MailEngine me = (MailEngine)AppUtil.getBean("mailEngine");
-		me.setFrom("kanglei@shopin.cn");
-		//String templateLocation = this.htmlMsgContentVMPath;
-		//Map model = new HashMap();
-		
 		if(this.tos.size() > 0){
 			String[] tosl = new String[tos.size()];
 			String userNames = "";
@@ -117,16 +113,9 @@ public class AsynMeetingMailSendProcess implements Runnable {
 				tosl[i++] = item.getEmail();
 				userNames += item.getFullname() + ",";
 			}
-//			userNames = userNames.substring(0, userNames.length() -1);
-			//model.put("toUserName", userNames);
-//			model.put("approveUrl", (String)AppUtil.getSysConfig().get("process.sendmail.apporvUrl"));
-//			model.put("approveUrlName", (String)AppUtil.getSysConfig().get("process.sendmail.apporvUrlName"));
-//			model.put("signature", (String)AppUtil.getSysConfig().get("displayName"));
-//			model.put("replyTo", (String)AppUtil.getSysConfig().get("replyTo"));
-			
 			String pageHtml = VelocityEngineUtils.mergeTemplateIntoString(this.velocityEngine, this.htmlMsgContentVMPath,model);
 			me.sendMimeMessage((String)this.model.get("presideEmail"), tosl, cc, null, "会议通知", pageHtml, null, null, true);
-			//System.out.println("会议通知："+tosl+ "content:"+pageHtml);
+			System.out.println("预订会议室通知："+tosl+ "content:"+pageHtml);
 		}
 	}
 
