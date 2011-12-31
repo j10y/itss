@@ -114,8 +114,9 @@ public class AsynMeetingMailSendProcess implements Runnable {
 				userNames += item.getFullname() + ",";
 			}
 			String pageHtml = VelocityEngineUtils.mergeTemplateIntoString(this.velocityEngine, this.htmlMsgContentVMPath,model);
+			System.out.println("预订会议室通知:---");
 			me.sendMimeMessage((String)this.model.get("presideEmail"), tosl, cc, null, "会议通知", pageHtml, null, null, true);
-			System.out.println("预订会议室通知："+tosl+ "content:"+pageHtml);
+			System.out.println("预订会议室通知:["+userNames+ "content:"+model.get("description").toString()+" room:"+model.get("roomName").toString()+"]");
 		}
 	}
 
