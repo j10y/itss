@@ -191,14 +191,23 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 	 */
 	save : function(formPanel, panel,signalName,activityName) {
 		if (formPanel.getForm().isValid()) {
-            formPanel.getForm().submit({
-								method : 'POST',
-								waitMsg : '正在提交数据...',
-								success : function(fp, action) {			
+		
+			Ext.Ajax.request({
+				url : __ctxPath
+						+ "/archive/getByCurrentUserArchRecUser.do",
+				success : function(h, j) {
+					var k = Ext.util.JSON.decode(h.responseText).data;
+					var flowAssignId = k.signUserId;
+					if(flowAssignId&&flowAssignId!=""){
+					
+						formPanel.getForm().submit({
+							method : 'POST',
+							waitMsg : '正在提交数据...',
+							success : function(fp, action) {			
 								formPanel.getForm().submit({
 							            url:__ctxPath+ "/flow/nextProcessActivity.do",
 										method:'post',
-										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName},
+										params:{taskId:panel.taskId,signalName:signalName,activityName:activityName, flowAssignId:flowAssignId},
 										success : function(fp, action) {
 											Ext.ux.Toast.msg('操作信息','成功保存！');
 										    AppUtil.removeTab('ProcessForm'+panel.taskId);
@@ -216,16 +225,33 @@ ArchDistributeForm = Ext.extend(Ext.Panel, {
 											Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
 										}
 							    });
-		    },failure : function(fp, action) {
-									Ext.MessageBox.show({
-												title : '操作信息',
-												msg : '信息保存出错，请联系管理员！',
-												buttons : Ext.MessageBox.OK,
-												icon : Ext.MessageBox.ERROR
-											});
-									window.close();
-								}
-							});
+					    	},
+						    failure : function(fp, action) {
+								Ext.MessageBox.show({
+											title : '操作信息',
+											msg : '信息保存出错，请联系管理员！',
+											buttons : Ext.MessageBox.OK,
+											icon : Ext.MessageBox.ERROR
+										});
+								window.close();
+							}
+						});
+						
+					}else{
+						Ext.MessageBox.show({
+							title : '操作信息',
+							msg : '请设置指定传阅人信息！',
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.ERROR
+						});
+					}
+				},
+				failure : function(h, j){
+					Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+				}
+			});
+		
+			
 		}
 	}// end of save
 

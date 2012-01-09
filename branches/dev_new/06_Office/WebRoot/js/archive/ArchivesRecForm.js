@@ -694,6 +694,32 @@ ArchivesRecForm = Ext
 														.getStore()
 														.reload();
 											}
+											var flowAssignId = "";
+											
+											Ext.Ajax.request({
+												async: false,//同步
+												url : __ctxPath
+														+ "/archive/getByCurrentUserArchRecUser.do",
+												success : function(h, j) {
+													var k = Ext.util.JSON.decode(h.responseText).data;
+													flowAssignId = k.officeHeaderUserId;
+													if(flowAssignId&&flowAssignId!=""){
+													
+													}else{
+														Ext.MessageBox.show({
+															title : '操作信息',
+															msg : '请设置办公室主任信息！',
+															buttons : Ext.MessageBox.OK,
+															icon : Ext.MessageBox.ERROR
+														});
+													}
+												},
+												failure : function(h, j){
+													Ext.ux.Toast.msg('操作信息','操作出错，请联系管理员！');
+												}
+											});
+											//alert(flowAssignId);
+											//return;
 											a.getForm().submit(
 															{
 																url : __ctxPath
@@ -701,7 +727,8 @@ ArchivesRecForm = Ext
 																waitMsg : "正在提交流程表单信息...",
 																params : {
 																	defId : c.defId,
-																	startFlow : true
+																	startFlow : true,
+																	flowAssignId:flowAssignId
 																},
 																method : "POST",
 																success : function(

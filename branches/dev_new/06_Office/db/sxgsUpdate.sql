@@ -201,3 +201,8 @@ ALTER TABLE arch_rec_user add COLUMN numberUserId bigint(20) ;
 ALTER TABLE arch_rec_user add COLUMN numberFullname varchar(128);
 ALTER TABLE arch_rec_user add COLUMN stampUserId bigint(20) ;
 ALTER TABLE arch_rec_user add COLUMN stampFullname varchar(128);
+
+ALTER TABLE arch_rec_user add COLUMN signUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN signFullname varchar(128);
+ALTER TABLE arch_rec_user add COLUMN secretaryUserId bigint(20) ;
+ALTER TABLE arch_rec_user add COLUMN secretaryFullname varchar(128);

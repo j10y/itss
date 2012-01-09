@@ -25,6 +25,12 @@ public class ArchRecUser extends BaseModel {
 	protected String numberFullname;//编号录入人员名字
 	protected Long stampUserId;//盖章人员
 	protected String stampFullname;//盖章人员名字
+	
+	protected Long signUserId;//指定传阅人员
+	protected String signFullname;//指定传阅人员姓名
+	
+	protected Long secretaryUserId;//局长
+	protected String secretaryFullname;//局长姓名
 
 	public Long getLeaderUserId() {
 		return leaderUserId;
@@ -187,6 +193,10 @@ public class ArchRecUser extends BaseModel {
 		/* 149 */.append(this.officeHeaderFullname, rhs.officeHeaderFullname)
 		/* 149 */.append(this.stampUserId, rhs.stampUserId)
 		/* 149 */.append(this.stampFullname, rhs.stampFullname)
+		/* 149 */.append(this.signUserId, rhs.signUserId)
+		/* 149 */.append(this.signFullname, rhs.signFullname)
+		/* 149 */.append(this.secretaryUserId, rhs.secretaryUserId)
+		/* 149 */.append(this.secretaryFullname, rhs.secretaryFullname)
 		/* 150 */.isEquals();
 	}
 
@@ -206,6 +216,10 @@ public class ArchRecUser extends BaseModel {
 		/* 162 */.append(this.numberFullname)
 		/* 162 */.append(this.stampUserId)
 		/* 162 */.append(this.stampFullname)
+		/* 162 */.append(this.signUserId)
+		/* 162 */.append(this.signFullname)
+		/* 162 */.append(this.secretaryUserId)
+		/* 162 */.append(this.secretaryUserId)
 		/* 163 */.toHashCode();
 	}
 
@@ -225,6 +239,67 @@ public class ArchRecUser extends BaseModel {
 		/* 175 */.append("numberFullname", this.numberFullname)
 		/* 175 */.append("stampUserId", this.stampUserId)
 		/* 175 */.append("stampFullname", this.stampFullname)
+		/* 175 */.append("signUserId", this.signUserId)
+		/* 175 */.append("signFullname", this.signFullname)
+		/* 175 */.append("secretaryUserId", this.secretaryUserId)
+		/* 175 */.append("stampFullname", this.secretaryFullname)
 		/* 176 */.toString();
 	}
+
+	/**
+	 * @return the signUserId
+	 */
+	public Long getSignUserId() {
+		return signUserId;
+	}
+
+	/**
+	 * @param signUserId the signUserId to set
+	 */
+	public void setSignUserId(Long signUserId) {
+		this.signUserId = signUserId;
+	}
+
+	/**
+	 * @return the signFullname
+	 */
+	public String getSignFullname() {
+		return signFullname;
+	}
+
+	/**
+	 * @param signFullname the signFullname to set
+	 */
+	public void setSignFullname(String signFullname) {
+		this.signFullname = signFullname;
+	}
+
+	/**
+	 * @return the secretaryUserId
+	 */
+	public Long getSecretaryUserId() {
+		return secretaryUserId;
+	}
+
+	/**
+	 * @param secretaryUserId the secretaryUserId to set
+	 */
+	public void setSecretaryUserId(Long secretaryUserId) {
+		this.secretaryUserId = secretaryUserId;
+	}
+
+	/**
+	 * @return the secretaryFullname
+	 */
+	public String getSecretaryFullname() {
+		return secretaryFullname;
+	}
+
+	/**
+	 * @param secretaryFullname the secretaryFullname to set
+	 */
+	public void setSecretaryFullname(String secretaryFullname) {
+		this.secretaryFullname = secretaryFullname;
+	}
+	
 }

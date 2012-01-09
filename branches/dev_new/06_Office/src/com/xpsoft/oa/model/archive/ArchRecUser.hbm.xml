@@ -135,6 +135,50 @@
             not-null="true"
             unique="false"
         />
+        <property
+            name="signUserId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="signUserId"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="signFullname"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="signFullname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="secretaryUserId"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="secretaryUserId"
+            length="19"
+            not-null="true"
+            unique="false"
+        />
+        <property
+            name="secretaryFullname"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="secretaryFullname"
+            length="128"
+            not-null="true"
+            unique="false"
+        />
         
         <property
             name="deptUserId"

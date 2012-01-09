@@ -371,6 +371,88 @@ ArchFlowConfView = Ext
 							}
 						});
 						
+						var secretaryUserCombo = new Ext.form.ComboBox({
+							mode : "remote",
+							anchor : "74%",
+							allowBlank : false,
+							//editable : false,
+							valueField : "fullname",
+							displayField : "fullname",
+							triggerAction : "all",
+							resizable : true,
+							store : new Ext.data.JsonStore({
+								url : __ctxPath
+										+ "/system/searchAppUser.do",
+								fields : [ "userId", "fullname" ],
+								root : "result",
+								totalProperty : "totalCounts",
+								remoteSort : true
+							}),
+							listeners : {
+								select : function(l, h, k) {
+									var j = Ext.getCmp("ArchFlowConfGrid")
+											.getStore();
+									var m = j.getAt(f);
+									m.set("secretaryUserId", h.data.userId);
+									m.set("secretaryFullname", h.data.fullname);
+								},
+								beforequery : function(queryEvent) {
+									var store=queryEvent.combo.store;
+									store.baseParams={
+										"Q_fullname_S_LK":queryEvent.query
+									};
+									store.load({
+										params:{
+											start : 0,
+											limit : 25
+										}
+									});
+									return false;
+								}
+							}
+						});
+						
+						var signUserCombo = new Ext.form.ComboBox({
+							mode : "remote",
+							anchor : "74%",
+							allowBlank : false,
+							//editable : false,
+							valueField : "fullname",
+							displayField : "fullname",
+							triggerAction : "all",
+							resizable : true,
+							store : new Ext.data.JsonStore({
+								url : __ctxPath
+										+ "/system/searchAppUser.do",
+								fields : [ "userId", "fullname" ],
+								root : "result",
+								totalProperty : "totalCounts",
+								remoteSort : true
+							}),
+							listeners : {
+								select : function(l, h, k) {
+									var j = Ext.getCmp("ArchFlowConfGrid")
+											.getStore();
+									var m = j.getAt(f);
+									m.set("signUserId", h.data.userId);
+									m.set("signFullname", h.data.fullname);
+								},
+								beforequery : function(queryEvent) {
+									var store=queryEvent.combo.store;
+									store.baseParams={
+										"Q_fullname_S_LK":queryEvent.query
+									};
+									store.load({
+										params:{
+											start : 0,
+											limit : 25
+										}
+									});
+									return false;
+								}
+							}
+						});
+						
 						var deptUserCombo = new Ext.form.ComboBox({
 							mode : "remote",
 							anchor : "74%",
@@ -467,6 +549,14 @@ ArchFlowConfView = Ext
 												dataIndex : "leaderFullname",
 												editor : leaderUserCombo
 											}, {
+												header : "局长ID",
+												dataIndex : "secretaryUserId",
+												hidden : true
+											}, {
+												header : "局长",
+												dataIndex : "secretaryFullname",
+												editor : secretaryUserCombo
+											}, {
 												header : "办公室主任ID",
 												dataIndex : "officeHeaderUserId",
 												hidden : true
@@ -490,6 +580,14 @@ ArchFlowConfView = Ext
 												header : "盖章人员",
 												dataIndex : "stampFullname",
 												editor : stampUserCombo
+											}, {
+												header : "指定传阅人ID",
+												dataIndex : "signUserId",
+												hidden : true
+											}, {
+												header : "指定传阅人",
+												dataIndex : "signFullname",
+												editor : signUserCombo
 											}],
 									defaults : {
 										sortable : false,
