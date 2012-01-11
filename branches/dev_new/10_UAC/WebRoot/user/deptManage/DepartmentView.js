@@ -31,7 +31,7 @@ DepartmentView = Ext.extend(Ext.Panel, {
 		var e;
 		//左侧部门列表
 		var loader = new Ext.tree.TreeLoader({
-			url : webContext + '/menu/loadTree?methodCall=childLevel'
+			url : webContext + '/dept?methodCall=findSubDeptsByParentDN'
 		});
 		loader.on('beforeload', function(treeloader, node) {
 			treeloader.baseParams = {
@@ -124,7 +124,7 @@ DepartmentView = Ext.extend(Ext.Panel, {
 			var n = e.id;
 			new DepartmentForm({
 				isModify:false,
-				parentRDN : n,
+				parentDN : n,
 				parentDeptName : e.text
 			}).show();
 		}
@@ -140,7 +140,7 @@ DepartmentView = Ext.extend(Ext.Panel, {
 			}
 			var n = e.id;
 			new DepartmentForm({
-				deptRDN : n,
+				deptDN : n,
 				isModify : true
 			}).show();
 		}
@@ -160,7 +160,7 @@ DepartmentView = Ext.extend(Ext.Panel, {
 					Ext.Ajax.request({
 						url : __ctxPath + "/dept?methodCall=delete",
 						params : {
-							deptRDN : n
+							deptDN : n
 						},
 						success : function(d) {
 							var e = Ext.util.JSON.decode(d.responseText);
@@ -276,16 +276,16 @@ DepartmentView.clickNode = function(b) {
 		a.url = webContext + "/user";
 		a.baseParams = {
 			methodCall : "getList",
-			deptRDN : b.id
+			deptDN : b.id
 		};
 		a.params = {
 			methodCall : "getList",
-			deptRDN : b.id
+			deptDN : b.id
 		};
 		a.reload({
 			params : {
 				methodCall : "getList",
-				deptRDN : b.id
+				deptDN : b.id
 			}
 		});
 	}

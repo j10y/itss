@@ -32,8 +32,8 @@ DepartmentForm = Ext.extend(Ext.Window, {
 			defaultType : "textfield",
 			items : [
 				{
-					name : "deptRDN",
-					id : "deptRDN",
+					name : "deptDN",
+					id : "deptDN",
 					xtype : "hidden",
 					value : ""
 				}, {
@@ -85,10 +85,10 @@ DepartmentForm = Ext.extend(Ext.Window, {
 				}
 			]
 		});
-		if(this.deptRDN != null && this.deptRDN != "undefined") {
+		if(this.deptDN != null && this.deptDN != "undefined") {
 			this.formPanel.getForm().load({
 				deferredRender : false,
-				url : webContext + "/dept?methodCall=getDetailByDeptRDN&deptRDN=" + this.deptRDN,
+				url : webContext + "/dept?methodCall=getDetailByDeptDN&deptDN=" + this.deptDN,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
@@ -103,8 +103,8 @@ DepartmentForm = Ext.extend(Ext.Window, {
 					Ext.Ajax.request({
 						url : webContext + "/dept",
 						params : {
-							methodCall : "getDetailByDeptRDN",
-							deptRDN : e.data.parentNo
+							methodCall : "getDetailByDeptDN",
+							deptDN : e.data.parentNo
 						},
 						success : function(f) {
 							var g = Ext.util.JSON.decode(f.responseText);
@@ -116,9 +116,9 @@ DepartmentForm = Ext.extend(Ext.Window, {
 					
 				}
 			});
-			Ext.getCmp("deptRDN").setValue(this.deptRDN);
+			Ext.getCmp("deptDN").setValue(this.deptDN);
 		} else {
-			Ext.getCmp("parentNo").setValue(this.parentRDN);
+			Ext.getCmp("parentNo").setValue(this.parentDN);
 			Ext.getCmp("parentName").setValue(this.parentDeptName);
 		}
 		this.buttons = [
