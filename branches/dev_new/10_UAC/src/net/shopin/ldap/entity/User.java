@@ -24,19 +24,19 @@ public class User  implements Serializable {
 	private String userType;//1员工employees,2客户customers,3供应商suppliers,4特殊用户specialuser
 	private byte [] photo;//仅支持jpeg格式jpegPhoto
 	
-	private String deptName;//部门名称，为了展示方便
-	
 	private Integer displayOrder;//排序
 	
 	private Integer status;//状态
 	
-	private String o;//所属部门（dn） organization this object belongs to
+	private String o;//所属部门 名称 organization this object belongs to
 	
 	private String employeeNumber;//员工编号
 	
 	private String employeeType;//员工类型，在编，非在编等
 	
 	private String titleName;//职务
+	
+	private String belongDeptDN;//所在部门的DN
 	
 	public String getGivenName() {
 		return givenName;
@@ -134,37 +134,22 @@ public class User  implements Serializable {
 	}
 	
 	public String getDeptName() {
-		return deptName;
+		return o;
 	}
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}	
 	
-	/**
-	 * @return the description
-	 */
+
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description the description to set
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
+
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
@@ -215,6 +200,14 @@ public class User  implements Serializable {
 
 	public void setTitleName(String titleName) {
 		this.titleName = titleName;
+	}
+
+	public String getBelongDeptDN() {
+		return belongDeptDN;
+	}
+
+	public void setBelongDeptDN(String belongDeptDN) {
+		this.belongDeptDN = belongDeptDN;
 	}
 	
 }

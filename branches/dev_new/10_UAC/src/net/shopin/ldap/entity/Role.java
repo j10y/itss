@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 用户组 对应于LDAP中的groupOfNames
- * 包含memember
+ * 角色 对应于LDAP中的shopin-orgnizationalRole
+ * 包含roleOccupant
  * @author wchao
  *
  */
-public class UserGroup implements Serializable {
+public class Role implements Serializable {
 	private String cn;//可能没用
 	private String dn; //ou=groups,cn=* 英文
 	private String displayName; //用户组名称 必填
 	private String description; //非必填
-	private String [] members; //至少一个
+	private String [] roleOccupant; //至少一个
 	private Integer status;
 	
 	public static final Integer SATAL_NORMAL = Integer.valueOf(0);
@@ -38,11 +38,12 @@ public class UserGroup implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String[] getMembers() {
-		return members;
+	
+	public String[] getRoleOccupant() {
+		return roleOccupant;
 	}
-	public void setMembers(String[] members) {
-		this.members = members;
+	public void setRoleOccupant(String[] roleOccupant) {
+		this.roleOccupant = roleOccupant;
 	}
 	public String getDn() {
 		return dn;
@@ -65,7 +66,7 @@ public class UserGroup implements Serializable {
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result
 				+ ((displayName == null) ? 0 : displayName.hashCode());
-		result = prime * result + ((members == null) ? 0 : members.hashCode());
+		result = prime * result + ((roleOccupant == null) ? 0 : roleOccupant.hashCode());
 		result = prime * result + ((dn == null) ? 0 : dn.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
@@ -78,7 +79,7 @@ public class UserGroup implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserGroup other = (UserGroup) obj;
+		Role other = (Role) obj;
 		if (cn == null) {
 			if (other.cn != null)
 				return false;
@@ -94,10 +95,10 @@ public class UserGroup implements Serializable {
 				return false;
 		} else if (!displayName.equals(other.displayName))
 			return false;
-		if (members == null) {
-			if (other.members != null)
+		if (roleOccupant == null) {
+			if (other.roleOccupant != null)
 				return false;
-		} else if (!members.equals(other.members))
+		} else if (!roleOccupant.equals(other.roleOccupant))
 			return false;
 		if (dn == null) {
 			if (other.dn != null)

@@ -4,7 +4,8 @@
 com.dc.ui.IndexPage = {
 	init : function(isAdmin, webContext, copyRight) {
 		this.buildTools(isAdmin, webContext);
-		var menu = this.buildMenu(webContext);
+		//var menu = this.buildMenu(webContext);
+		var menu = [];
 		var sysMenu = new Ext.tree.TreePanel({
 				id : 'sysMenu',
 				title : '系统菜单',

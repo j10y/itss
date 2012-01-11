@@ -45,6 +45,7 @@ public class LdapTreeServlet extends HttpServlet {
 			for(int i=0; i<list.size(); i++){
 				try {
 					String dnStr = list.get(i).getNode().getDn().toString();
+					System.out.println("---------------" + dnStr);
 					String desc = list.get(i).getNode().getAttributes().get("description").get(0).toString();
 					json.append("{");
 					json.append("id:'" + dnStr + "',");

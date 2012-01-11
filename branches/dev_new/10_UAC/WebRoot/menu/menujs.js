@@ -14,6 +14,16 @@
 	text : '组信息',
 	url : webContext + '/user/groupManage/group.jsp'
 }, {
+	id : 'ou=roles',
+	leaf : true,
+	text : '角色信息',
+	url : webContext + '/user/roleManage/role.jsp'
+}, {
+	id : 'ou=systems',
+	leaf : true,
+	text : '系统信息',
+	url : webContext + '/user/systemManage/system.jsp'
+}, {
 	id : 'ou=duties',
 	leaf : true,
 	text : '职务信息',

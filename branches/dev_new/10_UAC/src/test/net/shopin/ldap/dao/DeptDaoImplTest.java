@@ -41,9 +41,9 @@ public class DeptDaoImplTest {
 	}
 	
 	@Test
-	public void testFindSubDeptsByParentRDN(){
+	public void testFindSubDeptsByParentDN(){
 		List list = null;
-		list = deptDao.findSubDeptsByParentRDN("o=1101,ou=orgnizations");
+		list = deptDao.findSubDeptsByParentDN("o=1101,ou=orgnizations");
 		System.out.println("SIZE : " + list.size());
 	}
 

@@ -51,11 +51,11 @@ public class DutyServlet extends HttpServlet {
 				duty.setStatus((req.getParameter("status") == null || "".equals(req.getParameter("status"))) ? 0 : Integer.parseInt(req.getParameter("status")));
 				dutyDao.update(duty);
 			} else if(methodCall.equalsIgnoreCase("delete")) {//删除
-				String dutyRDN = req.getParameter("dutyRDN");
-				dutyDao.deleteByRDN(dutyRDN);
-			} else if(methodCall.equalsIgnoreCase("getDetailByDutyRDN")) {
-				String dutyRDN = req.getParameter("dutyRDN");
-				Duty duty = dutyDao.findByRDN(dutyRDN);
+				String dutyDN = req.getParameter("dutyDN");
+				dutyDao.deleteByDN(dutyDN);
+			} else if(methodCall.equalsIgnoreCase("getDetailByDutyDN")) {
+				String dutyDN = req.getParameter("dutyDN");
+				Duty duty = dutyDao.findByDN(dutyDN);
 				json = new StringBuffer("{success:true,data:{");
 				json.append("'dn':'" + duty.getDn() + "'")
 					.append(",'cn':'" + duty.getCn() + "'")

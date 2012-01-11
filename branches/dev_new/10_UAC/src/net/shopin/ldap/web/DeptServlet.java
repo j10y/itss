@@ -43,8 +43,8 @@ public class DeptServlet extends HttpServlet {
 				deptDao.create(department);
 				
 			}else if(methodCall.equalsIgnoreCase("delete")){
-				String deptRDN = req.getParameter("deptRDN");
-				deptDao.deleteByRDN(deptRDN);
+				String deptDN = req.getParameter("deptDN");
+				deptDao.deleteByDN(deptDN);
 			}else if(methodCall.equalsIgnoreCase("modify")){
 				Department department = new Department();
 				convertReqToDept(req, department);
@@ -67,9 +67,9 @@ public class DeptServlet extends HttpServlet {
 					json = new StringBuffer(json.substring(0, json.length() - 1));
 				}
 				json = new StringBuffer("{success: true,rowCount:'" + depts.size() + "',data:[" + json + "]}");
-			}else if (methodCall.equalsIgnoreCase("getDetailByDeptRDN")){
-				String deptRDN = req.getParameter("deptRDN");
-				Department dept = deptDao.findByRDN(deptRDN);
+			}else if (methodCall.equalsIgnoreCase("getDetailByDeptDN")){
+				String deptDN = req.getParameter("deptDN");
+				Department dept = deptDao.findByDN(deptDN);
 				json = new StringBuffer("{success:true,data:{");
 				json.append("'deptNo':'" + (StringUtils.isNotEmpty(dept.getDeptNo()) ? dept.getDeptNo() : "") + "'")
 					.append(",'parentNo':'" + (StringUtils.isNotEmpty(dept.getParentNo()) ? dept.getParentNo() : "") + "'")
@@ -79,6 +79,21 @@ public class DeptServlet extends HttpServlet {
 					.append(",'status':'" + (dept.getStatus() != null ? dept.getStatus() : "") + "'")
 					.append(",'erpId':'" + (StringUtils.isNotEmpty(dept.getErpId()) ? dept.getErpId() : "") + "'")
 					.append("}}");
+			}else if (methodCall.equalsIgnoreCase("findSubDeptsByParentDN")){
+				String parentDN = req.getParameter("parentDN");
+				List<Department> deptList = deptDao.findSubDeptsByParentDN(parentDN);
+				json = new StringBuffer("[");
+				for(int i=0; i<deptList.size(); i++){
+					json.append("{");
+					json.append("id:'" + deptList.get(i).getDn() + "',");
+					json.append("text:'" + deptList.get(i).getDeptName() + "'");
+					if(i<(deptList.size()-1)) {
+						json.append("},");
+					}else {
+						json.append("}");
+					}
+				}
+				json.append("]");
 			}
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
@@ -96,7 +111,7 @@ public class DeptServlet extends HttpServlet {
 	}
 	
 	private void convertReqToDept(HttpServletRequest req, Department department){
-		department.setDeptNo(req.getParameter("deptRDN"));
+		department.setDeptNo(req.getParameter("deptDN"));
 		department.setParentNo(req.getParameter("parentNo"));
 		department.setDeptName(req.getParameter("deptName"));
 		department.setDeptDesc(req.getParameter("deptDesc"));

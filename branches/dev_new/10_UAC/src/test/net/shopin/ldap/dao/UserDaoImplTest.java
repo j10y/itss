@@ -22,8 +22,8 @@ public class UserDaoImplTest {
 	}
 	
 	@Test
-	public void testFindByRDN(){
-		User user = userDao.findByRDN("uid=admin,ou=employees,ou=users");
+	public void testFindByDN(){
+		User user = userDao.findByDN("uid=admin,ou=employees,ou=users");
 		System.out.println("---------------------------\n" + user.getDisplayName());
 	}
 	

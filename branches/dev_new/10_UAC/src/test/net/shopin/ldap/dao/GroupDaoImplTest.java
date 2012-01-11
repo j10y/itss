@@ -56,8 +56,8 @@ public class GroupDaoImplTest {
 	}
 	
 	@Test
-	public void testfindByRDN() {		
-		System.out.print(groupDao.findByRDN("cn=TestAdmin,ou=groups"));
+	public void testfindByDN() {		
+		System.out.print(groupDao.findByDN("cn=TestAdmin,ou=groups"));
 	}
 	
 	

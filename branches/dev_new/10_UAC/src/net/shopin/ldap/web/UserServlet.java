@@ -50,7 +50,6 @@ public class UserServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doPost(req, resp);
 	}
 
@@ -58,10 +57,8 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		// TODO Auto-generated method stub
 		String realPath = null;
 		String filePath = null;
-//		byte [] photo = new byte[1024*1024>>>1];//0.5M
 		byte [] photo = null;
 		String methodCall = req.getParameter("methodCall");
 		
@@ -85,14 +82,15 @@ public class UserServlet extends HttpServlet {
 		if(req.getParameter("status") != null && !"".equals(req.getParameter("status"))) {
 			user.setStatus(Integer.parseInt(req.getParameter("status")));
 		}
-		user.setO(req.getParameter("o"));
+		user.setO(req.getParameter("o"));//部门名称
 		user.setEmployeeNumber(req.getParameter("employeeNumber"));
 		user.setEmployeeType(req.getParameter("employeeType"));
 		user.setDepartmentNumber(req.getParameter("departmentNumber"));
 		if(req.getParameter("displayOrder") != null && !"".equals(req.getParameter("displayOrder"))) {
 			user.setDisplayOrder(Integer.parseInt(req.getParameter("displayOrder")));
 		}
-		
+		user.setBelongDeptDN(req.getParameter("belongDeptDN"));
+		user.setTitleName(req.getParameter("titleName"));
 		//add by awen for add photo to user on 2001-05-16 begin
 		try {
 			DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -216,10 +214,8 @@ public class UserServlet extends HttpServlet {
 			//修改cn为uid
 			user.setCn(user.getUid());
 		} catch (FileUploadException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		//add by awen for add photo to user on 2001-05-16 end
@@ -235,11 +231,11 @@ public class UserServlet extends HttpServlet {
 			if(methodCall.equalsIgnoreCase("add")){
 				userDao.create(user);
 				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
-				String[] groupRDNs = req.getParameter("groups").split("___");
+				String[] groupDNs = req.getParameter("groups").split("___");
 				String userDN = "uid=" + user.getUid() + ",ou=employees,ou=users";
-				for(int i = 0; i < groupRDNs.length; i++) {
-					if(StringUtils.isNotEmpty(groupRDNs[i])) {
-						UserGroup ug = groupDao.findByRDN(groupRDNs[i]);
+				for(int i = 0; i < groupDNs.length; i++) {
+					if(StringUtils.isNotEmpty(groupDNs[i])) {
+						UserGroup ug = groupDao.findByDN(groupDNs[i]);
 						if(ug != null) {
 							List<String> list = Arrays.asList(ug.getMembers());
 							List<String> memberList = new ArrayList<String>(list);
@@ -253,15 +249,15 @@ public class UserServlet extends HttpServlet {
 				}
 				//add by guanshiqiang for add the current user into groups on 2011-11-24 end
 			}else if(methodCall.equalsIgnoreCase("delete")){
-				String userRDN = req.getParameter("userRDN");
-				userDao.delete(userRDN);
+				String userDN = req.getParameter("userDN");
+				userDao.delete(userDN);
 			}else if(methodCall.equalsIgnoreCase("modify")){
 				userDao.update(user);
 				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
-				String[] groupRDNs = req.getParameter("groups").split("___");
-				for(int i = 0; i < groupRDNs.length; i++) {
-					if(StringUtils.isNotEmpty(groupRDNs[i])) {
-						UserGroup ug = groupDao.findByRDN(groupRDNs[i]);
+				String[] groupDNs = req.getParameter("groups").split("___");
+				for(int i = 0; i < groupDNs.length; i++) {
+					if(StringUtils.isNotEmpty(groupDNs[i])) {
+						UserGroup ug = groupDao.findByDN(groupDNs[i]);
 						if(ug != null) {
 							List<String> list = Arrays.asList(ug.getMembers());
 							List<String> memberList = new ArrayList<String>(list);
@@ -307,6 +303,8 @@ public class UserServlet extends HttpServlet {
 					.append(",displayOrder:'" + (userDetail.getDisplayOrder() != null ? userDetail.getDisplayOrder() : "") + "'")
 					.append(",employeeNumber:'" + (userDetail.getEmployeeNumber() != null ? userDetail.getEmployeeNumber() : "") + "'")
 					.append(",employeeType:'" + (userDetail.getEmployeeType() != null ? userDetail.getEmployeeType() : "") + "'")
+					.append(",titleName:'" + (userDetail.getTitleName() != null ? userDetail.getTitleName() : "") + "'")
+					.append(",belongDeptDN:'" + userDetail.getBelongDeptDN() + "'")
 					.append("}");
 			}else if(methodCall.equalsIgnoreCase("getDetailByUid")){
 				String uid = req.getParameter("uid");
@@ -335,24 +333,19 @@ public class UserServlet extends HttpServlet {
 					.append(",employeeNumber:'" + (userDetail.getEmployeeNumber() != null ? userDetail.getEmployeeNumber() : "") + "'")
 					.append(",employeeType:'" + (userDetail.getEmployeeType() != null ? userDetail.getEmployeeType() : "") + "'")
 					.append(",departmentNumber:'" + (userDetail.getDepartmentNumber() != null ? userDetail.getDepartmentNumber() : "") + "'")
-					.append(",deptName:'" + (userDetail.getDeptName() != null ? userDetail.getDeptName() : "") + "'")
+					.append(",titleName:'" + (userDetail.getTitleName() != null ? userDetail.getTitleName() : "") + "'")
+					.append(",belongDeptDN:'" + userDetail.getBelongDeptDN() + "'")
 					.append("}}");
-			}else if(methodCall.equalsIgnoreCase("import")){
+			} else if(methodCall.equalsIgnoreCase("import")){
 				String msg = null;
-//				try {
-					//导入人员信息
                 	msg = userDao.importUsersFromFile(realPath);
-//				} catch (Exception e) {
-//					msg = e.getMessage().substring(e.getMessage().lastIndexOf(":")+1);
-//			        e.printStackTrace();
-//				}
 		        json = new StringBuffer("{success:true,msg:'" + msg.trim() + "'}");
 			} else if(methodCall.equalsIgnoreCase("getList")) {
 				List<User> list = new ArrayList<User>();
-				String deptRDN = req.getParameter("deptRDN");
+				String deptDN = req.getParameter("deptDN");
 				String uidName = "账号/姓名".equals(req.getParameter("uidName")) ? "" : req.getParameter("uidName");
 				long maxSize = (req.getParameter("maxSize") == null || "".equals(req.getParameter("maxSize"))) ? 20 : Long.parseLong(req.getParameter("maxSize"));
-				list = userDao.findUserList(deptRDN, uidName, maxSize);
+				list = userDao.findUserList(deptDN, uidName, maxSize);
 				json = new StringBuffer("{success:true,result:[");
 				for(User u : list) {
 					json.append("{'dn':'" + u.getDn() + "',")
@@ -367,12 +360,22 @@ public class UserServlet extends HttpServlet {
 					json = json.deleteCharAt(json.length() - 1);
 				}
 				json.append("]}");
+			} else if(methodCall.equalsIgnoreCase("combo")) {
+				String uidORName = req.getParameter("param");
+				List<User> list = userDao.findUserList(null, uidORName, 20);
+				json = new StringBuffer("[");
+				for(User u : list) {
+					json.append("['" + u.getDn() + "','" + u.getDisplayName() + "'],");
+				}
+				if(list.size() > 0) {
+					json.deleteCharAt(json.length() - 1);
+				}
+				json.append("]");
 			}
 		}catch(NameAlreadyBoundException e){
 			e.printStackTrace();
 			json = new StringBuffer("{success:false,msg:'uid="+user.getUid()+"的用户已经存在'}");
 		}catch (RuntimeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			json = new StringBuffer("{success:false,msg:'服务器端异常'}");
 		}
