@@ -21,14 +21,14 @@ UserForm = Ext.extend(Ext.Window, {
 	},
 	initComponents : function() {
 		var dept = webContext + '/menu/loadTree?methodCall=childLevel';
-		var departments = new TreeSelector("deptName", dept, "所属部门", "o");
+		var departments = new TreeSelector("o", dept, "所属部门", "belongDeptDN");
 		departments.addListener("expand", function() {
-			Ext.getCmp("deptNameTree").addListener("click", function() {
+			Ext.getCmp("oTree").addListener("click", function() {
 				Ext.Ajax.request({
 					url : webContext + "/dept",
 					params : {
-						methodCall : "getDetailByDeptRDN",
-						deptRDN : Ext.getCmp("o").getValue()
+						methodCall : "getDetailByDeptDN",
+						deptDN : Ext.getCmp("belongDeptDN").getValue()
 					},
 					success : function(f) {
 						var g = Ext.util.JSON.decode(f.responseText);
@@ -39,11 +39,11 @@ UserForm = Ext.extend(Ext.Window, {
 		});
 		
 		var k = new Ext.data.Store({
-			url : webContext + "/group?methodCall=findByUserRDN&userRDN=" + this.userRDN,
+			url : webContext + "/group?methodCall=findByUserDN&userDN=" + this.userDN,
 			reader : new Ext.data.JsonReader({
 				root : "result",
 				fields : [
-					"rdn",
+					"dn",
 					"displayName"
 				]
 			}),
@@ -54,8 +54,8 @@ UserForm = Ext.extend(Ext.Window, {
 			columns : [
 				new Ext.grid.RowNumberer(),
 				{
-					header : "rdn",
-					dataIndex : "rdn",
+					header : "dn",
+					dataIndex : "dn",
 					hidden : true
 				}, {
 					header : "名称",
@@ -66,7 +66,7 @@ UserForm = Ext.extend(Ext.Window, {
 					sortable : false,
 					width : 60,
 					renderer : function(r, q, o, u, p) {
-						var t = o.data.rdn;
+						var t = o.data.dn;
 						var s = "";
 						s += '<a href="#" title="删除" onclick="UserForm.del()">删除</a>';
 						return s;
@@ -146,19 +146,19 @@ UserForm = Ext.extend(Ext.Window, {
 									fieldLabel : "显示名字",
 									allowBlank : false
 								}, {
-									name : "o",
-									id : "o",
+									name : "belongDeptDN",
+									id : "belongDeptDN",
 									hidden : "true"
 								},
 								departments,
 								{
-									hiddenName : "title",
-									id : "titleName",
+									hiddenName : "titleName",
+									id : "titleNameCombo",
 									xtype : "combo",
 									fieldLabel : "职务",
 									triggerAction : "all",
 									mode : "local",
-									valueField : "dn",
+									valueField : "title",
 									displayField : "title",
 									store : new Ext.data.SimpleStore({
 										url : webContext + "/duty?methodCall=combo",
@@ -173,6 +173,9 @@ UserForm = Ext.extend(Ext.Window, {
 											};
 											store.load();
 											return false;
+										},
+										select : function(combo, record, index){
+											Ext.getCmp("title").setValue(record.data.dn);
 										}
 									}
 								}, {
@@ -261,6 +264,10 @@ UserForm = Ext.extend(Ext.Window, {
 									name : "dn",
 									id : "dn",
 									hidden : "true"
+								},{
+									name : "title",
+									id : "title",
+									hidden : true
 								}
 							]
 						}, {
@@ -329,11 +336,11 @@ UserForm = Ext.extend(Ext.Window, {
 									fieldLabel : "用户组",
 									triggerAction : "all",
 									mode : "local",
-									valueField : "rdn",
+									valueField : "dn",
 									displayField : "displayName",
 									store : new Ext.data.SimpleStore({
 										url : webContext + "/group?methodCall=combo",
-										fields : ["rdn", "displayName"],
+										fields : ["dn", "displayName"],
 										remoteSort : true
 									}),
 									listeners : {
@@ -359,7 +366,7 @@ UserForm = Ext.extend(Ext.Window, {
 									handler : function() {
 										var f = Ext.getCmp("GroupPanel");
 										for(var i = 0; i < f.getStore().getCount(); i++) {
-											if(f.getStore().getAt(i).data.rdn == Ext.getCmp("groupName").getValue()) {
+											if(f.getStore().getAt(i).data.dn == Ext.getCmp("groupName").getValue()) {
 												Ext.MessageBox.show({
 													title : "操作信息",
 													msg : "您添加了重复的组，请核实！",
@@ -371,7 +378,7 @@ UserForm = Ext.extend(Ext.Window, {
 										}
 										var newRecord = Ext.data.Record.create([
 											{
-												name : "rdn",
+												name : "dn",
 												type : "string"
 											}, {
 												name : "displayName",
@@ -379,7 +386,7 @@ UserForm = Ext.extend(Ext.Window, {
 											}
 										]);
 										var newData = new newRecord({
-											"rdn" : Ext.getCmp("groupName").getValue(),
+											"dn" : Ext.getCmp("groupName").getValue(),
 											"displayName" : Ext.getCmp("groupName").getRawValue()
 										});
 										f.getStore().add(newData);
@@ -424,38 +431,9 @@ UserForm = Ext.extend(Ext.Window, {
 						Ext.getCmp("statusName").setRawValue("注销");
 					}
 					Ext.getCmp("o").setValue(e.data.o);
-					//Ext.getCmp("deptName").setValue(e.data.deptName);
-					//document.getElementById("imgTarget").innerHTML="<IMG onerror='this.src=\""+ webContext +"/images/default.jpg\"' src='"+ webContext +"/images/userphoto/" + e.data.photo +"'></IMG>";
-					Ext.Ajax.request({
-						url : webContext + "/dept",
-						params : {
-							methodCall : "getDetailByDeptRDN",
-							deptRDN : e.data.o
-						},
-						success : function(f) {
-							var g = Ext.util.JSON.decode(f.responseText);
-							if(g.data != null) {
-								Ext.getCmp("deptName").setValue(g.data.deptName);
-							} else {
-								Ext.getCmp("deptName").setValue("");
-							}
-						}
-					});
-					Ext.Ajax.request({
-						url : webContext + "/duty",
-						params : {
-							methodCall : "getDetailByDutyRDN",
-							dutyRDN : e.data.title
-						},
-						success : function(f) {
-							var g = Ext.util.JSON.decode(f.responseText);
-							if(g.data != null) {
-								Ext.getCmp("titleName").setValue(g.data.title);
-							} else {
-								Ext.getCmp("titleName").setValue("");
-							}
-						}
-					});
+					Ext.getCmp("belongDeptDN").setValue(e.data.belongDeptDN);
+					Ext.getCmp("titleNameCombo").setValue(e.data.titleName);
+					Ext.getCmp("titleNameCombo").setRawValue(e.data.titleName);
 				},
 				failure : function() {
 					
@@ -478,7 +456,7 @@ UserForm = Ext.extend(Ext.Window, {
 			var groupsStr = "";
 			var f = Ext.getCmp("GroupPanel");
 			for(var i = 0; i < f.getStore().getCount(); i++) {
-				groupsStr += f.getStore().getAt(i).data.rdn + "___";
+				groupsStr += f.getStore().getAt(i).data.dn + "___";
 			}
 			if(a.isModify) {
 				//修改
@@ -496,10 +474,10 @@ UserForm = Ext.extend(Ext.Window, {
 							icon : Ext.MessageBox.INFO
 						});
 					},
-					failure : function(c, d) {
+					failure : function(form, action) {
 						Ext.MessageBox.show({
 							title : "操作信息",
-							msg : "保存失败，请联系管理员！",
+							msg : action.result.msg,
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.ERROR
 						});
@@ -522,10 +500,10 @@ UserForm = Ext.extend(Ext.Window, {
 							icon : Ext.MessageBox.INFO
 						});
 					},
-					failure : function(c, d) {
+					failure : function(form, action) {
 						Ext.MessageBox.show({
 							title : "操作信息",
-							msg : "保存失败，请联系管理员！",
+							msg : action.result.msg,
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.ERROR
 						});

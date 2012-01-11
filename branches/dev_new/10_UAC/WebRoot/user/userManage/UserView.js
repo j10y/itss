@@ -38,7 +38,7 @@ UserView = Ext.extend(Ext.Panel, {
 	initComponents : function() {
 		//左侧部门列表
 		var loader = new Ext.tree.TreeLoader({
-			url : webContext + '/menu/loadTree?methodCall=childLevel'
+			url : webContext + '/dept?methodCall=findSubDeptsByParentDN'
 		});
 		loader.on('beforeload', function(treeloader, node) {
 			treeloader.baseParams = {
@@ -117,7 +117,7 @@ UserView = Ext.extend(Ext.Panel, {
 					xtype : "textfield",
 					emptyText : "账号/姓名"
 				}, {
-					text : "最大结果数"
+					text : "最大结果数："
 				}, {
 					fieldLabel : "最大结果数",
 					name : "maxSize",
@@ -200,7 +200,7 @@ UserView = Ext.extend(Ext.Panel, {
 						var t = o.data.uid;
 						var s = "";
 						s += '<a href="#" title="删除" onclick="UserView.del(\'' + o.data.dn + '\')">删除</a>';
-						s += '&nbsp;<a href="#" title="修改" onclick="UserView.modify(\'' + t + '\',\'' + o.data.dn + '\')">修改</button>';
+						s += '&nbsp;<a href="#" title="修改" onclick="UserView.modify(\'' + t + '\',\'' + o.data.dn + '\')">修改</a>';
 						return s;
 					}
 				}
@@ -262,7 +262,7 @@ UserView = Ext.extend(Ext.Panel, {
 		}
 		new UserForm({
 			isModify : false,
-			userRDN : ""
+			userDN : ""
 		}).show();
 	}
 });
@@ -273,16 +273,16 @@ UserView.clickNode = function(b) {
 		a.url = webContext + "/user";
 		a.baseParams = {
 			methodCall : "getList",
-			deptRDN : b.id
+			deptDN : b.id
 		};
 		a.params = {
 			methodCall : "getList",
-			deptRDN : b.id
+			deptDN : b.id
 		};
 		a.reload({
 			params : {
 				methodCall : "getList",
-				deptRDN : b.id
+				deptDN : b.id
 			}
 		});
 	}
@@ -302,7 +302,7 @@ UserView.del = function(u) {
 			Ext.Ajax.request({
 				url : webContext + "/user?methodCall=delete",
 				params : {
-					userRDN : u
+					userDN : u
 				},
 				success : function(d) {
 					var e = Ext.util.JSON.decode(d.responseText);
@@ -340,6 +340,6 @@ UserView.modify = function(u, ur) {
 	new UserForm({
 		uid : u,
 		isModify : true,
-		userRDN : ur
+		userDN : ur
 	}).show();
 };
