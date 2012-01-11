@@ -1,23 +1,22 @@
 package net.shopin.ldap.dao;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.naming.Name;
 import javax.naming.directory.SearchControls;
 
+import net.shopin.ldap.entity.User;
 import net.shopin.ldap.entity.UserGroup;
+import net.shopin.util.PropertiesUtil;
+import net.shopin.util.SpringContextUtils;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextAdapter;
-import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
-import org.springframework.ldap.core.support.AbstractContextMapper;
 
 /**
  * @see net.shopin.ldap.dao.GroupDao
@@ -28,9 +27,6 @@ public class GroupDaoImpl implements GroupDao {
 
 	private LdapTemplate ldapTemplate;
 	
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.dao.UserGroupDao#create(net.shopin.ldap.entity.UserGroup)
-	 */
 	public void create(UserGroup userGroup) {
 		// TODO Auto-generated method stub
 		Name dn = buildDn(userGroup);
@@ -39,11 +35,7 @@ public class GroupDaoImpl implements GroupDao {
 		ldapTemplate.bind(dn, context, null);
 	}
 	
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.dao.UserGroupDao#update(net.shopin.ldap.entity.UserGroup)
-	 */
 	public void update(UserGroup userGroup) {
-		// TODO Auto-generated method stub
 		Name dn = buildDn(userGroup);
 		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(dn);
 		mapToContext(userGroup, context);
@@ -51,46 +43,45 @@ public class GroupDaoImpl implements GroupDao {
 	}
 	
 	/* 
-	 * 删除部门，如果部门下存在人员信息需要将其及其子部门下所有人员转移
+	 * 删除用户组，如果用户组下存在人员信息需要将其及其子用户组下所有人员转移
 	 * @see net.shopin.ldap.dao.UserGroupDao#delete(net.shopin.ldap.entity.UserGroup)
 	 */
 	public void remove(UserGroup userGroup) {
 		ldapTemplate.unbind(buildDn(userGroup));
 	}
 	
-	public void deleteByRDN(String deptRDN) {
-		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(deptRDN);
+	public void deleteByDN(String groupDN) {
+		if(groupDN.contains(PropertiesUtil.getProperties("base"))){
+			groupDN = groupDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
+		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(groupDN);
 		context.setAttributeValue("status", UserGroup.SATAL_NOT_NORMAL.toString());
-		ldapTemplate.modifyAttributes(deptRDN, context.getModificationItems());
+		ldapTemplate.modifyAttributes(groupDN, context.getModificationItems());
 	}
 	
 	private Name buildDn(UserGroup userGroup) {
 		return new DistinguishedName("cn=" + userGroup.getCn() + ",ou=groups");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see net.shopin.ldap.dao.UserGroupDao#delete(net.shopin.ldap.entity.UserGroup)
-	 */
-	public UserGroup findByRDN(String deptRDN) {
-
-		return (UserGroup)ldapTemplate.lookup(deptRDN, new GroupContextMapper());
+	public UserGroup findByDN(String groupDN) {
+		if(groupDN.contains(PropertiesUtil.getProperties("base"))){
+			groupDN = groupDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
+		return (UserGroup)ldapTemplate.lookup(groupDN, new GroupContextMapper());
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.dao.UserGroupDao#findSubDeptsByParentNo(java.lang.String)
-	 */
-	public List<UserGroup> findSubGroupsByParentRDN(String parentRDN) {
-		// TODO Auto-generated method stub
-		//return ldapTemplate.listBindings(parentRDN, getContextMapper());
+	public List<UserGroup> findSubGroupsByParentDN(String parentDN) {
+		if(parentDN.contains(PropertiesUtil.getProperties("base"))){
+			parentDN = parentDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
 		SearchControls controls  = new SearchControls();
 		controls.setCountLimit(Integer.MAX_VALUE);
 		controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
 		controls.setReturningObjFlag(true);
 		String filter=null;
 		filter="(&(objectClass=shopin-groupOfNames)(status=0)|(displayName=*))";
-		List<UserGroup> depts = ldapTemplate.search(parentRDN, filter, controls, getContextMapper());
+		List<UserGroup> depts = ldapTemplate.search(parentDN, filter, controls, getContextMapper());
 		return depts;
 	}
 
@@ -103,9 +94,6 @@ public class GroupDaoImpl implements GroupDao {
 		context.setAttributeValues("member", userGroup.getMembers());
 	}
 	
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.dao.UserGroupDao#findDeptsByParam(java.lang.String)
-	 */
 	public List<UserGroup> findGroupsByParam(String param) {
 		// TODO Auto-generated method stub
 		String filter=null;
@@ -119,23 +107,20 @@ public class GroupDaoImpl implements GroupDao {
 		return groups;
 	}
 	
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.dao.UserGroupDao#findDeptsByParam(java.lang.String)
-	 */
-	public List<UserGroup> findGroupsByParam(String param, String userRDN, boolean isRelation) {
+	public List<UserGroup> findGroupsByParam(String param, String userDN, boolean isRelation) {
 		// TODO Auto-generated method stub
 		String filter=null;
 		if(param != null && !param.equals("")){
 			if(isRelation){
-				filter="(&(objectClass=shopin-groupOfNames)&(member=" + userRDN + ")&(status=0)|(cn=*" + param + "*)(displayName=*" + param + "*))";
+				filter="(&(objectClass=shopin-groupOfNames)&(member=" + userDN + ")&(status=0)|(cn=*" + param + "*)(displayName=*" + param + "*))";
 			}else{
-				filter="(&(objectClass=shopin-groupOfNames)!(member=" + userRDN + ")&(status=0)|(cn=*" + param + "*)(displayName=*" + param + "*))";
+				filter="(&(objectClass=shopin-groupOfNames)!(member=" + userDN + ")&(status=0)|(cn=*" + param + "*)(displayName=*" + param + "*))";
 			}			
 		}else{
 			if(isRelation){
-				filter="(&(objectClass=shopin-groupOfNames)&(member=" + userRDN + ")&(status=0)|(cn=*)(displayName=*))";
+				filter="(&(objectClass=shopin-groupOfNames)&(member=" + userDN + ")&(status=0)|(cn=*)(displayName=*))";
 			}else{
-				filter="(&(objectClass=shopin-groupOfNames)!(member=" + userRDN + ")&(status=0)|(cn=*)(displayName=*))";
+				filter="(&(objectClass=shopin-groupOfNames)!(member=" + userDN + ")&(status=0)|(cn=*)(displayName=*))";
 			}
 		}
 		List<UserGroup> groups = ldapTemplate.search("ou=groups", filter, getContextMapper());
@@ -144,7 +129,6 @@ public class GroupDaoImpl implements GroupDao {
 	}
 	
 	public ContextMapper getContextMapper() {
-		// TODO Auto-generated method stub
 		return new GroupContextMapper();
 	}
 	
@@ -154,7 +138,8 @@ public class GroupDaoImpl implements GroupDao {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			UserGroup group = new UserGroup();
-			group.setRdn(context.getDn().toString());
+//			group.setDn(context.getDn().toString());
+			group.setDn(context.getDn().toString() + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""));
 			group.setCn(context.getStringAttribute("cn"));
 			group.setDisplayName(context.getStringAttribute("displayName"));
 			group.setDescription(context.getStringAttribute("description"));
@@ -176,16 +161,16 @@ public class GroupDaoImpl implements GroupDao {
 	
 	/**
 	 * 是否超级管理员
-	 * param userRDN dn(dn+searchBase=fullname)
+	 * param userDN dn(dn+searchBase=fullname)
 	 * @return
 	 */
-	public boolean isSupserAdmin(String userRDN){
-		UserGroup group = this.findByRDN("cn=SuperAdmin,ou=groups");
+	public boolean isSupserAdmin(String userDN){
+		UserGroup group = this.findByDN("cn=GROUP_ADMIN,ou=groups");
 		if(group!=null){
 			String [] members = group.getMembers();
 			if(ArrayUtils.isEmpty(members))return false;
 			for(String member : members){
-				if(userRDN.equals(member.substring(4, member.indexOf(",")))){
+				if(userDN.equals(member.substring(4, member.indexOf(",")))){
 					return true;
 				}
 			}
@@ -193,4 +178,25 @@ public class GroupDaoImpl implements GroupDao {
 		return false;
 	}
 
+	public List<User> listMembers(String groupDN) {
+		
+		if(groupDN.contains(PropertiesUtil.getProperties("base"))){
+			groupDN = groupDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
+		
+		List<User> userList = new ArrayList();
+		UserGroup group = (UserGroup)ldapTemplate.lookup(groupDN, new GroupContextMapper());
+		String [] members = group.getMembers();
+		UserDao userDao = (UserDao) SpringContextUtils.getBean("userDao");
+		if(members!=null){
+			for(String member : members){
+				User user = userDao.findByDN(member.contains(PropertiesUtil.getProperties("base")) ? member.replace(("," + PropertiesUtil.getProperties("base")), "") : member);
+				if(user!=null){
+					userList.add(user);
+				}
+			}
+		}
+		return userList;
+	}
+	
 }

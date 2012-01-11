@@ -33,9 +33,9 @@ public interface UserDao {
 	
 	/**
 	 * 逻辑删除用户
-	 * @param userRDN
+	 * @param userDN
 	 */
-	void delete(String userRDN);
+	void delete(String userDN);
 	
 	/**
 	 * 物理删除用户
@@ -91,11 +91,9 @@ public interface UserDao {
 	
 	/**
 	 * 
-	 * @param userRDN
+	 * @param userDN
 	 * @return
 	 */
-	public User findByRDN(String userRDN);
-
-
+	public User findByDN(String userDN);
 	
 }

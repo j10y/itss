@@ -2,9 +2,10 @@ package net.shopin.ldap.dao;
 
 import java.util.List;
 
-import org.springframework.ldap.core.ContextMapper;
-
+import net.shopin.ldap.entity.User;
 import net.shopin.ldap.entity.UserGroup;
+
+import org.springframework.ldap.core.ContextMapper;
 
 /**
  * 用户组Dao接口
@@ -34,23 +35,23 @@ public interface GroupDao {
 	
 	/**
 	 * 逻辑删除用户组
-	 * @param deptRDN
+	 * @param groupDN
 	 */
-	void deleteByRDN(String deptRDN);
+	void deleteByDN(String groupDN);
 	
 	/**
 	 * 根据用户组编号查询用户组信息
-	 * @param deptRDN
+	 * @param groupDN
 	 * @return
 	 */
-	UserGroup findByRDN(String deptRDN);
+	UserGroup findByDN(String groupDN);
 	
 	/**
 	 * 查询用户组列表，每次展开一级
-	 * @param parentRDN
+	 * @param parentDN
 	 * @return
 	 */
-	List<UserGroup> findSubGroupsByParentRDN(String parentRDN);
+	List<UserGroup> findSubGroupsByParentDN(String parentDN);
 	
 	/**
 	 * 查询用户组列表
@@ -64,11 +65,11 @@ public interface GroupDao {
 	 * 查询用户组列表
 	 * 从用户组名称过滤
 	 * @param parentNo
-	 * @param userRDN
+	 * @param userDN
 	 * @param isRelation
 	 * @return
 	 */	
-	List<UserGroup> findGroupsByParam(String param, String userRDN, boolean isRelation);
+	List<UserGroup> findGroupsByParam(String param, String userDN, boolean isRelation);
 	
 	/**
 	 * 
@@ -79,8 +80,10 @@ public interface GroupDao {
 	
 	/**
 	 * 是否超级管理员
-	 * param userRDN dn(dn+searchBase=fullname)
+	 * param userDN dn(dn+searchBase=fullname)
 	 * @return
 	 */
-	public boolean isSupserAdmin(String userRDN);
+	public boolean isSupserAdmin(String userDN);
+	
+	public List<User> listMembers(String groupDN);
 }

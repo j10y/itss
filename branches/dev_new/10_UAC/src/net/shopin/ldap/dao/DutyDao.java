@@ -34,23 +34,23 @@ public interface DutyDao {
 	
 	/**
 	 * 逻辑删除职务
-	 * @param dutyRDN
+	 * @param dutyDN
 	 */
-	void deleteByRDN(String dutyRDN);
+	void deleteByDN(String dutyDN);
 	
 	/**
 	 * 根据职务编号查询职务信息
-	 * @param dutyRDN
+	 * @param dutyDN
 	 * @return
 	 */
-	Duty findByRDN(String dutyRDN);
+	Duty findByDN(String dutyDN);
 	
 	/**
 	 * 查询职务列表，每次展开一级
-	 * @param parentRDN
+	 * @param parentDN
 	 * @return
 	 */
-	List<Duty> findSubDutysByParentRDN(String parentRDN);
+	List<Duty> findSubDutysByParentDN(String parentDN);
 	
 	/**
 	 * 查询职务列表

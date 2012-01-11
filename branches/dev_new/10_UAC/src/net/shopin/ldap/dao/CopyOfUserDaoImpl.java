@@ -35,11 +35,12 @@ import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 
 /**
- * @see net.shopin.ldap.dao.UserDaoImpl
+ * 备份与20111230
+ * @see net.shopin.ldap.dao.CopyOfUserDaoImpl
  * @author wchao
  *
  */
-public class UserDaoImpl implements UserDao {
+public class CopyOfUserDaoImpl /*implements UserDao*/ {/*
 
 	private LdapTemplate ldapTemplate;	
 	
@@ -47,16 +48,18 @@ public class UserDaoImpl implements UserDao {
 	
 	private DutyDao dutyDao;
 
-	/**
+	*//**
 	 * @see net.shopin.ldap.dao.UserDao#create(User)
 	 * @author wchao
 	 *
-	 */
+	 *//*
 	public void create(User user) {
+		// TODO 查一下是否存在uid=user.getUid()的数据，没有则插入
+		
 		Name dn = buildDn(user);
 		DirContextAdapter context = new DirContextAdapter(dn);
 		mapToContext(user, context);
-		String filter="(&(objectClass=shopin-inetOrgPerson)(uid=" + user.getUid() + "))";
+		String filter="(uid=" + user.getUid() + ")";
 		List result = ldapTemplate.search("ou=users", filter, new UserContextMapper());
 		if(result.size()==0){
 			ldapTemplate.bind(dn, context, null);
@@ -67,14 +70,22 @@ public class UserDaoImpl implements UserDao {
 
 	private void mapToContext(User user, DirContextAdapter context) {
 		
+		//modified by awen for extend openldap's schema on 2011-11-21 begin
+		
+			context.setAttributeValues("objectclass", new String[] { "top", "person","inetOrgPerson","organizationalPerson"});
+		
 		context.setAttributeValues("objectclass", new String[] { "top", "shopin-inetOrgPerson"});
+		//modified by awen for extend openldap's schema on 2011-11-21 modify
+		
 		context.setAttributeValue("uid", user.getUid());
 		context.setAttributeValue("userPassword", user.getPassword()!=null && !"".equals(user.getPassword()) ? user.getPassword() : null);
 		context.setAttributeValue("cn", user.getCn());
 		context.setAttributeValue("sn", user.getSn());
+
 		context.setAttributeValue("displayName", user.getDisplayName());
 		context.setAttributeValue("givenName", user.getGivenName());
 		context.setAttributeValue("description", user.getDescription()!=null && !"".equals(user.getDescription())? user.getDescription():null);
+		
 		context.setAttributeValue("departmentNumber", user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber()) ? user.getDepartmentNumber() : null);
 		context.setAttributeValue("title", user.getTitle()!=null && !"".equals(user.getTitle()) ? user.getTitle() : null);
 		context.setAttributeValue("telephoneNumber", user.getTelephoneNumber()!=null && !"".equals(user.getTelephoneNumber()) ? user.getTelephoneNumber() : null);
@@ -82,14 +93,23 @@ public class UserDaoImpl implements UserDao {
 		context.setAttributeValue("mail", user.getMail()!=null && !"".equals(user.getMail()) ? user.getMail() : null);
 		context.setAttributeValue("facsimileTelephoneNumber", user.getFacsimileTelephoneNumber()!=null && !"".equals(user.getFacsimileTelephoneNumber()) ? user.getFacsimileTelephoneNumber() : null);
 		context.setAttributeValue("jpegPhoto", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
+		//只有photo非空的时候才覆盖
 		if(user.getPhoto()!=null && user.getPhoto().length>0) context.setAttributeValue("jpegPhoto", user.getPhoto());
+		
+		//modified by awen for extend openldap's schema on 2011-11-21 begin
 		context.setAttributeValue("o", user.getO());
 		context.setAttributeValue("status", user.getStatus().toString());
 		context.setAttributeValue("displayOrder", user.getDisplayOrder().toString());
+		//modified by awen for extend openldap's schema on 2011-11-21 begin
 		context.setAttributeValue("titleName", StringUtils.isNotEmpty(user.getTitleName()) ? user.getTitleName() : null);
-
+		context.setAttributeValue("departmentName", StringUtils.isNotEmpty(user.getDeptName()) ? user.getDeptName() : null);
 	}
-
+		
+	*//**
+	 * @see net.shopin.ldap.dao.UserDao#remove(User)
+	 * @author wchao
+	 *
+	 *//*
 	public void remove(User user) {
 		ldapTemplate.unbind(buildDn(user));
 	}
@@ -101,33 +121,63 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	private Name buildDn(User user) {
-		DistinguishedName path = new DistinguishedName(user.getBelongDeptDN());
-		DistinguishedName dn = new DistinguishedName("uid=" + user.getUid());
-		dn.prepend(path);
-		return dn;
+		// TODO Auto-generated method stub
+		String userType = null;
+		if(user.getUserType() != null && !"".equals(user.getUserType())){
+			switch(new Integer(user.getUserType())){
+				case 1 : userType="employees"; break;
+				case 2 : userType="customers"; break;
+				case 3 : userType="suppliers"; break;
+				case 4 : userType="specialuser"; break;
+			}
+		}else{
+			//add by awen for add userType specialuser on 2011-05-18 begin
+			userType = user.getDn().contains("ou=employees") ? "1" : (user.getDn().contains("ou=customers") ? "2" : (user.getDn().contains("ou=suppliers") ? "3" : "4"));
+			//add by awen for add userType specialuser on 2011-05-18 end
+		}
+		return new DistinguishedName("uid=" + user.getUid() + ",ou="+ userType + ",ou=users");
 	}
 	
-	/**
+	*//**
 	 * @see net.shopin.ldap.dao.UserDao#findByPrimaryKey(String, String)
 	 * @author wchao
 	 *
-	 */
+	 *//*
 	public User findByPrimaryKey(String uid, String userType) {
+		// TODO Auto-generated method stub
 		User user = new User();
 		user.setUid(uid);
 		user.setUserType(userType);
 		User result = (User) ldapTemplate.lookup(buildDn(user), getContextMapper());
+		
+		if(result.getDepartmentNumber()!=null && !"".equals(result.getDepartmentNumber())){
+			DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
+			String filter="(ou=" + result.getDepartmentNumber().trim() + ")";
+			List deptNames = ldapTemplate.search("ou=orgnizations", filter, new AttributesMapper(){
+				public Object mapFromAttributes(Attributes attributes)
+						throws NamingException {
+					// TODO Auto-generated method stub
+					return attributes.get("description").get();
+				}
+			});
+			if(deptNames.size()>0){
+				result.setDeptName(deptNames.get(0).toString());
+			}
+		}
+		
 		return result;
 	}
 	
-	/**
+	*//**
 	 * @see net.shopin.ldap.dao.UserDao#findByPrimaryKey(String)
 	 * @author wchao
 	 *
-	 */
+	 *//*
 	public User findByPrimaryKey(String uid) {
+		// TODO Auto-generated method stub
+		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter="(uid=" + uid + ")";
-		List users = ldapTemplate.search(DistinguishedName.EMPTY_PATH, filter, new UserContextMapper());
+		List users = ldapTemplate.search("ou=users", filter, new UserContextMapper());
 		if(users.size()<=0){
 			return null;
 		}else{
@@ -137,6 +187,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	private ContextMapper getContextMapper() {
+		// TODO Auto-generated method stub
 		return new UserContextMapper();
 	}
 	
@@ -144,7 +195,10 @@ public class UserDaoImpl implements UserDao {
 
 		public Object mapFromContext(Object ctx) {
 			DirContextAdapter context = (DirContextAdapter) ctx;
+			DistinguishedName dn = new DistinguishedName(context.getDn());
+			String dnStr = dn.toString();
 			User user = new User();
+			user.setDn(dnStr);
 			user.setUid(context.getStringAttribute("uid"));
 			byte [] bytes = (byte[]) context.getObjectAttribute("userPassword");
 			StringBuffer sb = new StringBuffer();
@@ -164,47 +218,50 @@ public class UserDaoImpl implements UserDao {
 			user.setDisplayName(context.getStringAttribute("displayName"));
 			user.setGivenName(context.getStringAttribute("givenName"));
 			user.setDescription(context.getStringAttribute("description"));
+			
+			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
+			user.setUserType(userType);
 			user.setPhoto((byte[])context.getObjectAttribute("jpegPhoto"));
+			
 			user.setO(context.getStringAttribute("o"));
 			user.setStatus(StringUtils.isNotEmpty(context.getStringAttribute("status")) ? Integer.valueOf(Integer.valueOf(context.getStringAttribute("status"))) : 0);
 			user.setDisplayOrder(StringUtils.isNotEmpty(context.getStringAttribute("displayOrder")) ? Integer.valueOf(Integer.valueOf(context.getStringAttribute("displayOrder"))) : 0);
 			user.setEmployeeNumber(context.getStringAttribute("employeeNumber"));
 			user.setEmployeeType(context.getStringAttribute("employeeType"));
+			user.setDeptName(context.getStringAttribute("departmentName"));
 			user.setTitleName(context.getStringAttribute("titleName"));
-			user.setBelongDeptDN(context.getDn().toString().substring(context.getDn().toString().indexOf(",")+1));
 			return user;
 		}
 	}
 
-	/**
+	*//**
 	 * @see net.shopin.ldap.dao.UserDao#update(User)
 	 * @author wchao
 	 *
-	 */
+	 *//*
 	public void update(User user) {
-		// TODO 如果用户DN改变，即调整部门了
+		// TODO 如果修改用户的用户类型，需要unbind老数据，新bind新数据，图片信息需要保存
+		//首先判断userType是否修改
 		User old = this.findByPrimaryKey(user.getUid());
-		Name dn = buildDn(user);
-		
-		if(!user.getDn().equals(dn.toString() + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""))){//DN改变，需要移动目录
+		if(old.getUserType()==null || !old.getUserType().equals(user.getUserType())){//用户类型改变
 			this.remove(old);
 			if(user.getPhoto()==null||user.getPhoto().length == 0){
 				user.setPhoto(old.getPhoto());//图片
 			}
 			this.create(user);
 			return;
-		}
-		
+		}		
+		Name dn = buildDn(user);
 		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(dn);
 		mapToContext(user, context);
 		ldapTemplate.modifyAttributes(dn, context.getModificationItems());
 	}
 	
-	/**
+	*//**
 	 * @see net.shopin.ldap.dao.UserDao#updateUserButPwd(User, boolean)
 	 * @author wchao
 	 *
-	 */
+	 *//*
 	public void updateUserButPwd(User user, boolean modPwd) {
 		// TODO 如果修改用户的用户类型，需要unbind老数据，新bind新数据，图片信息需要保存
 		//首先判断userType是否修改
@@ -227,6 +284,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public String importUsersFromFile(String filePath) {
+		// TODO Auto-generated method stub
 		List<User> users = new ArrayList();
 		String msg="";
 		try {
@@ -236,7 +294,7 @@ public class UserDaoImpl implements UserDao {
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 			XSSFSheet sheet = workbook.getSheetAt(0);
 
-			Integer rowCount = sheet.getLastRowNum();/* 获取一共存在多少行，poi中的API */
+			Integer rowCount = sheet.getLastRowNum(); 获取一共存在多少行，poi中的API 
 			Integer successCount = 0;
 			Integer falsCount = 0;
 
@@ -374,8 +432,10 @@ public class UserDaoImpl implements UserDao {
 			    }
 			}
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -399,12 +459,12 @@ public class UserDaoImpl implements UserDao {
 		return msg;
 	}
 	
-	/**
+	*//**
 	 * 解释excel中的userType
 	 * //1员工，2客户，3供应商
 	 * @param userTypeDesc
 	 * @return
-	 */
+	 *//*
 	private String userTypeTrans(String userTypeDesc){
 		if(userTypeDesc==null) return "1";
 		
@@ -420,12 +480,12 @@ public class UserDaoImpl implements UserDao {
 		return "1";//默认为员工
 	}
 	
-	/**
+	*//**
 	 * 获取单元格中的内容
 	 * 2007版本以上的
 	 * @param cell
 	 * @return
-	 */
+	 *//*
 	private static Object getXSSFCellString(XSSFCell cell) {
 		Object result = null;
 		if (cell != null) {
@@ -458,11 +518,11 @@ public class UserDaoImpl implements UserDao {
 		return result;
 	}
 	
-	/**
+	*//**
 	 * 获取单元格中的内容
 	 * @param cell
 	 * @return
-	 */
+	 *//*
 	private static Object getCellString(HSSFCell cell) {
 		Object result = null;
 		if (cell != null) {
@@ -497,9 +557,9 @@ public class UserDaoImpl implements UserDao {
 
 	
 	
-	/* 获取用户的uid或cn模糊匹配uidOrName的用户列表
+	 获取用户的uid或cn模糊匹配uidOrName的用户列表
 	 * @see net.shopin.ldap.dao.UserDao#findUserList(java.lang.String)
-	 */
+	 
 	public List<User> findUserList(String uidORName) {
 		String filters = null;
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
@@ -511,12 +571,84 @@ public class UserDaoImpl implements UserDao {
 		}
 		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
 
+		for(User user : users){
+			if(user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber())){
+				String deptFilter="(ou=" + user.getDepartmentNumber().trim() + ")";
+				List deptNames = ldapTemplate.search("ou=orgnizations", deptFilter, new AttributesMapper(){
+					public Object mapFromAttributes(Attributes attributes)
+							throws NamingException {
+						// TODO Auto-generated method stub
+						return attributes.get("description").get();
+					}
+				});
+				if(deptNames.size()>0){
+					user.setDeptName(deptNames.get(0).toString());
+				}
+			}
+		}
 		return users;
 	
 	}
 	
 	public List<User> findUserList(String deptDN, String uidORName) {
 		return this.findUserList(deptDN, uidORName, Integer.MAX_VALUE);
+	}
+	
+	
+	 获取部门DN，用户的uid或cn模糊匹配uidOrName的用户列表
+	 * @see net.shopin.ldap.dao.UserDao#findUserList(java.lang.String, java.lang.String)
+	 
+	public List<User> findUserList(String deptDN, String uidORName, long limit) {
+		String filters = null;
+		List<User> users = new ArrayList();
+		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
+		String filter=null;
+		if(StringUtils.isNotEmpty(uidORName)){
+			if(StringUtils.isNotEmpty(deptDN)){
+				filter="(&(objectClass=shopin-inetOrgPerson)&(o=" + deptDN + ")|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(titleName=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			}else{
+				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(titleName=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			}
+			
+		}else{
+			if(StringUtils.isNotEmpty(deptDN)){
+				filter="(&(o=" + deptDN + ")|(uid=*)(cn=*)(titleName=*)(displayName=*))";
+				filter="(objectClass=shopin-inetOrgPerson)";
+			}else{
+				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(titleName=*)(displayName=*))";
+			}
+		}
+		SearchControls controls  = new SearchControls();
+		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+		controls.setCountLimit(limit);
+		controls.setReturningObjFlag(true);
+		DirContext dirContext = ldapTemplate.getContextSource().getReadOnlyContext();
+		try {
+			NamingEnumeration results = dirContext.search("ou=users", filter, controls);
+			while (results != null && results.hasMoreElements()) {
+
+                SearchResult sr = (SearchResult)results.next();
+                Attributes attributes = sr.getAttributes();
+                User user = convertAttributesToUser((DirContextAdapter)sr.getObject(), attributes);
+                if(user != null)users.add(user);
+                
+			} 
+			//System.out.println("totalResults---------------" + totalResults);
+		} catch (org.springframework.ldap.NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			try {
+				dirContext.close();
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+		return users;
 	}
 	
 	public List<User> findUserList(String deptDN, String uidORName, long limit) {
@@ -526,7 +658,7 @@ public class UserDaoImpl implements UserDao {
 		String filter=null;
 		if(StringUtils.isNotEmpty(uidORName)){
 			if(StringUtils.isNotEmpty(deptDN)){
-				filter="(&(objectClass=shopin-inetOrgPerson)&(belongDeptDN=" + deptDN + ")|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(titleName=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+				filter="(&(objectClass=shopin-inetOrgPerson)&(o=" + deptDN + ")|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(titleName=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 			}else{
 				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(titleName=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 			}
@@ -545,7 +677,7 @@ public class UserDaoImpl implements UserDao {
 		controls.setReturningObjFlag(true);
 		DirContext dirContext = ldapTemplate.getContextSource().getReadOnlyContext();
 		try {
-			NamingEnumeration results = dirContext.search((StringUtils.isNotEmpty(deptDN) ? deptDN : "ou=orgnizations"), filter, controls);
+			NamingEnumeration results = dirContext.search(deptDN, filter, controls);
 			while (results != null && results.hasMoreElements()) {
 
                 SearchResult sr = (SearchResult)results.next();
@@ -582,12 +714,10 @@ public class UserDaoImpl implements UserDao {
 				sb.append("" + (char)bytes[i]);
 			}
 			String dnStr = dirContextAdapter.getDn().toString();
-			
-			user.setDn(dnStr + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""));
-			
 			user.setPassword(sb.toString());
 			user.setCn(attributes.get("cn").get().toString());
 			user.setSn(attributes.get("sn").get().toString());
+			user.setDn(dnStr + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""));
 			if(attributes.get("departmentNumber")!=null)user.setDepartmentNumber(attributes.get("departmentNumber").get().toString());
 			if(attributes.get("title")!=null)user.setTitle(attributes.get("title").get().toString());
 			if(attributes.get("mail")!=null)user.setMail(attributes.get("mail").get().toString());
@@ -597,17 +727,21 @@ public class UserDaoImpl implements UserDao {
 			if(attributes.get("displayName")!=null)user.setDisplayName(attributes.get("displayName").get().toString());
 			if(attributes.get("givenName")!=null)user.setGivenName(attributes.get("givenName").get().toString());
 			if(attributes.get("description")!=null)user.setDescription(attributes.get("description").get().toString());
-			if(attributes.get("o")!=null)user.setO(attributes.get("o").get().toString());//部门名称
+			if(attributes.get("o")!=null)user.setO(attributes.get("o").get().toString());
 			if(attributes.get("status")!=null)user.setStatus(Integer.valueOf(attributes.get("status").get().toString()));
 			if(attributes.get("displayOrder")!=null)user.setDisplayOrder(Integer.valueOf(attributes.get("displayOrder").get().toString()));
 			if(attributes.get("employeeNumber")!=null)user.setEmployeeNumber(attributes.get("employeeNumber").get().toString());
 			if(attributes.get("employeeType")!=null)user.setEmployeeType(attributes.get("employeeType").get().toString());
+						
+			String userType = dnStr.contains("ou=employees") ? "1" :(dnStr.contains("ou=customers") ? "2" : (dnStr.contains("ou=suppliers")? "3" : (dnStr.contains("ou=specialuser") ? "4" : "")));
+			user.setUserType(userType);
 			if(attributes.get("jpegPhoto")!=null)user.setPhoto((byte[])attributes.get("jpegPhoto").get());
+			if(attributes.get("departmentName")!=null)user.setDeptName(attributes.get("departmentName").get().toString());
 			if(attributes.get("titleName")!=null)user.setTitleName(attributes.get("titleName").get().toString());
-			user.setBelongDeptDN(dnStr.substring(dnStr.indexOf(",")+1));
 
 			return user;
 		} catch (NamingException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -621,10 +755,16 @@ public class UserDaoImpl implements UserDao {
 		this.ldapTemplate = ldapTemplate;
 	}
 
+	*//**
+	 * @return the deptDao
+	 *//*
 	public DeptDao getDeptDao() {
 		return deptDao;
 	}
 
+	*//**
+	 * @param deptDao the deptDao to set
+	 *//*
 	public void setDeptDao(DeptDao deptDao) {
 		this.deptDao = deptDao;
 	}
@@ -643,4 +783,4 @@ public class UserDaoImpl implements UserDao {
 	
 	
 	
-}
+*/}

@@ -58,10 +58,10 @@ public class DeptDaoImpl implements DeptDao {
 		ldapTemplate.unbind(buildDn(department));
 	}
 	
-	public void deleteByRDN(String deptRDN) {
-		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(deptRDN);
+	public void deleteByDN(String deptDN) {
+		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(deptDN);
 		context.setAttributeValue("status", Department.SATAL_NOT_NORMAL.toString());
-		ldapTemplate.modifyAttributes(deptRDN, context.getModificationItems());
+		ldapTemplate.modifyAttributes(deptDN, context.getModificationItems());
 	}
 	
 	private Name buildDn(Department department) {
@@ -103,25 +103,24 @@ public class DeptDaoImpl implements DeptDao {
 	 * (non-Javadoc)
 	 * @see net.shopin.ldap.dao.DeptDao#delete(net.shopin.ldap.entity.Department)
 	 */
-	public Department findByRDN(String deptRDN) {
+	public Department findByDN(String deptDN) {
 
-		return (Department)ldapTemplate.lookup(deptRDN, new DeptContextMapper());
+		return (Department)ldapTemplate.lookup(deptDN, new DeptContextMapper());
 		
 	}
 
 	/* (non-Javadoc)
 	 * @see net.shopin.ldap.dao.DeptDao#findSubDeptsByParentNo(java.lang.String)
 	 */
-	public List<Department> findSubDeptsByParentRDN(String parentRDN) {
-		// TODO Auto-generated method stub
-		//return ldapTemplate.listBindings(parentRDN, getContextMapper());
+	public List<Department> findSubDeptsByParentDN(String parentDN) {
 		SearchControls controls  = new SearchControls();
 		controls.setCountLimit(Integer.MAX_VALUE);
 		controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
 		controls.setReturningObjFlag(true);
 		String filter=null;
-		filter="(&(objectClass=shopin-organization)(status=0)|(displayName=*))";
-		List<Department> depts = ldapTemplate.search(parentRDN, filter, controls, getContextMapper());
+		filter="(&(objectClass=shopin-organization)(status=0))";
+		filter="(objectClass=shopin-organization)";
+		List<Department> depts = ldapTemplate.search(parentDN, filter, controls, getContextMapper());
 		return depts;
 	}
 

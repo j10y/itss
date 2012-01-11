@@ -2,9 +2,10 @@ package net.shopin.ldap.dao;
 
 import java.util.List;
 
-import org.springframework.ldap.core.ContextMapper;
-
 import net.shopin.ldap.entity.Department;
+import net.shopin.ldap.entity.User;
+
+import org.springframework.ldap.core.ContextMapper;
 
 /**
  * 部门Dao接口
@@ -35,23 +36,23 @@ public interface DeptDao {
 	
 	/**
 	 * 逻辑删除部门
-	 * @param deptRDN
+	 * @param deptDN
 	 */
-	void deleteByRDN(String deptRDN);
+	void deleteByDN(String deptDN);
 	
 	/**
 	 * 根据部门编号查询部门信息
-	 * @param deptRDN
+	 * @param deptDN
 	 * @return
 	 */
-	Department findByRDN(String deptRDN);
+	Department findByDN(String deptDN);
 	
 	/**
 	 * 查询部门列表，每次展开一级
-	 * @param parentRDN
+	 * @param parentDN
 	 * @return
 	 */
-	List<Department> findSubDeptsByParentRDN(String parentRDN);
+	List<Department> findSubDeptsByParentDN(String parentDN);
 	
 	/**
 	 * 查询部门列表
@@ -66,4 +67,5 @@ public interface DeptDao {
 	 * @return
 	 */
 	ContextMapper getContextMapper();
+	
 }

@@ -6,6 +6,7 @@ import javax.naming.Name;
 import javax.naming.directory.SearchControls;
 
 import net.shopin.ldap.entity.Duty;
+import net.shopin.util.PropertiesUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.core.ContextMapper;
@@ -52,10 +53,13 @@ public class DutyDaoImpl implements DutyDao {
 		ldapTemplate.unbind(buildDn(duty));
 	}
 	
-	public void deleteByRDN(String dutyRDN) {
-		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(dutyRDN);
+	public void deleteByDN(String dutyDN) {
+		if(dutyDN.contains(PropertiesUtil.getProperties("base"))){
+			dutyDN = dutyDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
+		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(dutyDN);
 		context.setAttributeValue("status", Duty.SATAL_NOT_NORMAL.toString());
-		ldapTemplate.modifyAttributes(dutyRDN, context.getModificationItems());
+		ldapTemplate.modifyAttributes(dutyDN, context.getModificationItems());
 	}
 	
 	private Name buildDn(Duty duty) {
@@ -66,25 +70,27 @@ public class DutyDaoImpl implements DutyDao {
 	 * (non-Javadoc)
 	 * @see net.shopin.ldap.dao.DutyDao#delete(net.shopin.ldap.entity.Duty)
 	 */
-	public Duty findByRDN(String dutyRDN) {
-
-		return (Duty)ldapTemplate.lookup(dutyRDN, new DutyContextMapper());
+	public Duty findByDN(String dutyDN) {
+		if(dutyDN.contains(PropertiesUtil.getProperties("base"))){
+			dutyDN = dutyDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
+		return (Duty)ldapTemplate.lookup(dutyDN, new DutyContextMapper());
 		
 	}
 
 	/* (non-Javadoc)
 	 * @see net.shopin.ldap.dao.DutyDao#findSubDeptsByParentNo(java.lang.String)
 	 */
-	public List<Duty> findSubDutysByParentRDN(String parentRDN) {
+	public List<Duty> findSubDutysByParentDN(String parentDN) {
 		// TODO Auto-generated method stub
-		//return ldapTemplate.listBindings(parentRDN, getContextMapper());
+		//return ldapTemplate.listBindings(parentDN, getContextMapper());
 		SearchControls controls  = new SearchControls();
 		controls.setCountLimit(Integer.MAX_VALUE);
 		controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
 		controls.setReturningObjFlag(true);
 		String filter=null;
 		filter="(&(objectClass=shopin-duty)(status=0)|(title=*))";
-		List<Duty> depts = ldapTemplate.search(parentRDN, filter, controls, getContextMapper());
+		List<Duty> depts = ldapTemplate.search(parentDN, filter, controls, getContextMapper());
 		return depts;
 	}
 
@@ -116,7 +122,7 @@ public class DutyDaoImpl implements DutyDao {
 	/* (non-Javadoc)
 	 * @see net.shopin.ldap.dao.DutyDao#findDeptsByParam(java.lang.String)
 	 */
-	public List<Duty> findDutysByParam(String param, String userRDN, boolean isRelation) {
+	public List<Duty> findDutysByParam(String param, String userDN, boolean isRelation) {
 		// TODO Auto-generated method stub
 		String filter=null;
 		if(param != null && !param.equals("")){
@@ -148,7 +154,8 @@ public class DutyDaoImpl implements DutyDao {
 			DirContextAdapter context = (DirContextAdapter) ctx;
 			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			Duty group = new Duty();
-			group.setDn(context.getDn().toString());
+//			group.setDn(context.getDn().toString());
+			group.setDn(context.getDn().toString() + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""));
 			group.setCn(context.getStringAttribute("cn"));
 			group.setTitle(context.getStringAttribute("title"));
 			group.setDescription(context.getStringAttribute("description"));
