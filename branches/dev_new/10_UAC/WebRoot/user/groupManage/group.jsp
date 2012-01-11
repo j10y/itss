@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/user/TreeSelector.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/user/groupManage/GroupView.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/user/groupManage/GroupForm.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/user/groupManage/GroupRelateUserForm.js"></script>
 		<script type="text/javascript">
 			Ext.onReady(function() {
 				var dept = new GroupView();

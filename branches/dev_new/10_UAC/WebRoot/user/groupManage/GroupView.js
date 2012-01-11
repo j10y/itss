@@ -20,7 +20,7 @@ GroupView = Ext.extend(Ext.Panel, {
 			reader : new Ext.data.JsonReader({
 				root : "result",
 				fields : [
-					"rdn",
+					"dn",
 					"cn",
 					"displayName"
 				]
@@ -34,8 +34,8 @@ GroupView = Ext.extend(Ext.Panel, {
 				d,
 				new Ext.grid.RowNumberer(),
 				{
-					header : "rdn",
-					dataIndex : "rdn",
+					header : "dn",
+					dataIndex : "dn",
 					hidden : true
 				}, {
 					header : "cn",
@@ -49,10 +49,11 @@ GroupView = Ext.extend(Ext.Panel, {
 					sortable : false,
 					width : 60,
 					renderer : function(r, q, o, u, p) {
-						var t = o.data.rdn;
+						var t = o.data.dn;
 						var s = "";
-						s += '<a href="#" title="删除" onclick="GroupView.del(\'' + o.data.rdn + '\')">删除</a>';
-						s += '&nbsp;<a href="#" title="修改" onclick="GroupView.modify(\'' + t + '\')">修改</button>';
+						s += '<a href="#" title="删除" onclick="GroupView.del(\'' + o.data.dn + '\')">删除</a>';
+						s += '&nbsp;|&nbsp;<a href="#" title="修改" onclick="GroupView.modify(\'' + t + '\')">修改</a>';
+						s += '&nbsp;|&nbsp;<a href="#" title="关联用户" onclick="GroupView.associatUser(\'' + t + '\')">关联用户</a>';
 						return s;
 					}
 				}
@@ -115,12 +116,12 @@ GroupView.del = function(u) {
 		});
 		return ;
 	}
-	Ext.Msg.confirm("系统提示", "确定要删除该组吗？", function(btn) {
+	Ext.Msg.confirm("系统提示", "确定要删除该用户组吗？", function(btn) {
 		if(btn == "yes") {
 			Ext.Ajax.request({
 				url : webContext + "/group?methodCall=delete",
 				params : {
-					groupRDN : u
+					groupDN : u
 				},
 				success : function(d) {
 					var e = Ext.util.JSON.decode(d.responseText);
@@ -157,6 +158,21 @@ GroupView.modify = function(u) {
 	}
 	new GroupForm({
 		isModify : true,
-		groupRDN : u
+		groupDN : u
+	}).show();
+};
+GroupView.associatUser = function(u) {
+	if(isSuperAdmin != "true") {
+		Ext.MessageBox.show({
+			title : "操作信息",
+			msg : "您不在超级管理员组，没有该权限！",
+			buttons : Ext.MessageBox.OK,
+			icon : Ext.MessageBox.ERROR
+		});
+		return ;
+	}
+	new GroupRelateUserForm({
+		isModify : true,
+		groupDN : u
 	}).show();
 };

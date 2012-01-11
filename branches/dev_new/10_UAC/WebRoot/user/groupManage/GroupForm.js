@@ -33,7 +33,7 @@ GroupForm = Ext.extend(Ext.Window, {
 					id : "cn",
 					fieldLabel : "cn",
 					allowBlank : false,
-					vtype : "alpha"
+					vtype : "generalName"
 				}, {
 					name : "displayName",
 					id : "displayName",
@@ -65,17 +65,17 @@ GroupForm = Ext.extend(Ext.Window, {
 						]
 					]
 				}, {
-					name : "rdn",
-					id : "rdn",
+					name : "dn",
+					id : "dn",
 					hidden : true
 				}
 			]
 		});
-		if(this.groupRDN != null && this.groupRDN != "undefined") {
+		if(this.groupDN != null && this.groupDN != "undefined") {
 			Ext.getCmp("cn").readOnly = true;
 			this.formPanel.getForm().load({
 				deferredRender : false,
-				url : webContext + "/group?methodCall=getDetailByGroupRDN&groupRDN=" + this.groupRDN,
+				url : webContext + "/group?methodCall=getDetailByGroupDN&groupDN=" + this.groupDN,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
