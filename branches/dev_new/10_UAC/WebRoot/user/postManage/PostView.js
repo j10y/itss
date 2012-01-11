@@ -53,7 +53,7 @@ PostView = Ext.extend(Ext.Panel, {
 					renderer : function(r, q, o, u, p) {
 						var s = "";
 						s += '<a href="#" title="删除" onclick="PostView.del(\'' + o.data.dn + '\')">删除</a>';
-						s += '&nbsp;<a href="#" title="修改" onclick="PostView.modify(\'' + o.data.dn + '\')">修改</button>';
+						s += '&nbsp;<a href="#" title="修改" onclick="PostView.modify(\'' + o.data.dn + '\')">修改</a>';
 						return s;
 					}
 				}
@@ -116,12 +116,12 @@ PostView.del = function(u) {
 		});
 		return ;
 	}
-	Ext.Msg.confirm("系统提示", "确定要删除该员工吗？", function(btn) {
+	Ext.Msg.confirm("系统提示", "确定要删除该职位吗？", function(btn) {
 		if(btn == "yes") {
 			Ext.Ajax.request({
 				url : webContext + "/duty?methodCall=delete",
 				params : {
-					dutyRDN : u
+					dutyDN : u
 				},
 				success : function(d) {
 					var e = Ext.util.JSON.decode(d.responseText);
@@ -158,6 +158,6 @@ PostView.modify = function(u) {
 	}
 	new PostForm({
 		isModify : true,
-		dutyRDN : u
+		dutyDN : u
 	}).show();
 };

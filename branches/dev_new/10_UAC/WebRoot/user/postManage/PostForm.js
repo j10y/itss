@@ -31,7 +31,7 @@ PostForm = Ext.extend(Ext.Window, {
 			items : [
 				{
 					name : "dn",
-					id : "postRDN",
+					id : "postDN",
 					xtype : "hidden",
 					value : ""
 				}, {
@@ -72,11 +72,11 @@ PostForm = Ext.extend(Ext.Window, {
 				}
 			]
 		});
-		if(this.dutyRDN != null && this.dutyRDN != "undefined") {
+		if(this.dutyDN != null && this.dutyDN != "undefined") {
 			Ext.getCmp("cn").readOnly = true;
 			this.formPanel.getForm().load({
 				deferredRender : false,
-				url : webContext + "/duty?methodCall=getDetailByDutyRDN&dutyRDN=" + this.dutyRDN,
+				url : webContext + "/duty?methodCall=getDetailByDutyDN&dutyDN=" + this.dutyDN,
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
