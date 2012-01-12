@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>
- * Java class for findUserListByParamResponse complex type.
+ * Java class for findUserListByRoleCNResponse complex type.
  * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * 
  * <pre>
- * &lt;complexType name="findUserListByParamResponse">
+ * &lt;complexType name="findUserListByRoleCNResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "findUserListByParamResponse", propOrder = { "_return" })
-public class FindUserListByParamResponse {
+@XmlType(name = "findUserListByRoleCNResponse", propOrder = { "_return" })
+public class FindUserListByRoleCNResponse {
 
 	@XmlElement(name = "return")
 	protected List<User> _return;

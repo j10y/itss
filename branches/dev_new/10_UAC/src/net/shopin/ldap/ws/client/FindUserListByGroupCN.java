@@ -6,14 +6,14 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>
- * Java class for getUserDetailByUid complex type.
+ * Java class for findUserListByGroupCN complex type.
  * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * 
  * <pre>
- * &lt;complexType name="getUserDetailByUid">
+ * &lt;complexType name="findUserListByGroupCN">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getUserDetailByUid", propOrder = { "arg0" })
-public class GetUserDetailByUid {
+@XmlType(name = "findUserListByGroupCN", propOrder = { "arg0" })
+public class FindUserListByGroupCN {
 
 	protected String arg0;
 

@@ -81,7 +81,7 @@ public class SystemWSImpl implements SystemWS{
 
 	@WebMethod
 	public List<Role> findRoleListBySystemCN(String systemCN) {
-		return systemDao.listMembers("cn=" + systemCN + ",ou=groups");
+		return systemDao.listMembers("cn=" + systemCN + ",ou=systems");
 	}
 	
 }

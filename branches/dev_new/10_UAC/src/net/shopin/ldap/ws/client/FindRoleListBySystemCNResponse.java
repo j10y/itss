@@ -9,18 +9,18 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>
- * Java class for findUserListByParamResponse complex type.
+ * Java class for findRoleListBySystemCNResponse complex type.
  * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * 
  * <pre>
- * &lt;complexType name="findUserListByParamResponse">
+ * &lt;complexType name="findRoleListBySystemCNResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://service.ws.ldap.shopin.net/}user" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://service.ws.ldap.shopin.net/}role" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "findUserListByParamResponse", propOrder = { "_return" })
-public class FindUserListByParamResponse {
+@XmlType(name = "findRoleListBySystemCNResponse", propOrder = { "_return" })
+public class FindRoleListBySystemCNResponse {
 
 	@XmlElement(name = "return")
-	protected List<User> _return;
+	protected List<Role> _return;
 
 	/**
 	 * Gets the value of the return property.
@@ -54,13 +54,13 @@ public class FindUserListByParamResponse {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list {@link User }
+	 * Objects of the following type(s) are allowed in the list {@link Role }
 	 * 
 	 * 
 	 */
-	public List<User> getReturn() {
+	public List<Role> getReturn() {
 		if (_return == null) {
-			_return = new ArrayList<User>();
+			_return = new ArrayList<Role>();
 		}
 		return this._return;
 	}
