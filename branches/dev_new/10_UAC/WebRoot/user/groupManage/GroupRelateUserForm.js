@@ -85,6 +85,7 @@ GroupRelateUserForm = Ext.extend(Ext.Window, {
 						triggerAction : "all",
 						mode : "local",
 						valueField : "dn",
+						emptyText : '请选择用户...',
 						displayField : "displayName",
 						store : new Ext.data.SimpleStore({
 							url : webContext + "/user?methodCall=combo",

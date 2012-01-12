@@ -85,6 +85,7 @@ SystemRelateRoleForm = Ext.extend(Ext.Window, {
 						triggerAction : "all",
 						mode : "local",
 						valueField : "dn",
+						emptyText : '请选择角色...',
 						displayField : "displayName",
 						store : new Ext.data.SimpleStore({
 							url : webContext + "/role?methodCall=combo",
