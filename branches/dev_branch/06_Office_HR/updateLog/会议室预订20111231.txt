@@ -28,3 +28,7 @@ WebRoot/js/system/MeetingRoomForm.js
 更改文件：
 WebRoot/js/system/MeetingRoomForm.js
 com\xpsoft\oa\action\system\MrbsRoomAction.java
+
+4.一般人员可以删除 自己的预订记录
+更改文件：
+WebRoot/js/system/MeetingRoomForm.js
