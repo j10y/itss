@@ -16,7 +16,7 @@ public class User  implements Serializable {
 	private String displayName; //显示名称
 	private String description; //描述信息
 	private String departmentNumber;//部门编号
-	private String title;//职务
+	private String title;//职务名称
 	private String mail;//email
 	private String telephoneNumber;//座机号码
 	private String mobile;//手机号码
@@ -34,9 +34,9 @@ public class User  implements Serializable {
 	
 	private String employeeType;//员工类型，在编，非在编等
 	
-	private String titleName;//职务
-	
 	private String belongDeptDN;//所在部门的DN
+	
+	private String belongTitleDN;//所在职位的DN
 	
 	public String getGivenName() {
 		return givenName;
@@ -194,20 +194,20 @@ public class User  implements Serializable {
 		this.employeeType = employeeType;
 	}
 
-	public String getTitleName() {
-		return titleName;
-	}
-
-	public void setTitleName(String titleName) {
-		this.titleName = titleName;
-	}
-
 	public String getBelongDeptDN() {
 		return belongDeptDN;
 	}
 
 	public void setBelongDeptDN(String belongDeptDN) {
 		this.belongDeptDN = belongDeptDN;
+	}
+
+	public String getBelongTitleDN() {
+		return belongTitleDN;
+	}
+
+	public void setBelongTitleDN(String belongTitleDN) {
+		this.belongTitleDN = belongTitleDN;
 	}
 	
 }

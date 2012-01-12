@@ -90,7 +90,6 @@ public class UserServlet extends HttpServlet {
 			user.setDisplayOrder(Integer.parseInt(req.getParameter("displayOrder")));
 		}
 		user.setBelongDeptDN(req.getParameter("belongDeptDN"));
-		user.setTitleName(req.getParameter("titleName"));
 		//add by awen for add photo to user on 2001-05-16 begin
 		try {
 			DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -303,8 +302,8 @@ public class UserServlet extends HttpServlet {
 					.append(",displayOrder:'" + (userDetail.getDisplayOrder() != null ? userDetail.getDisplayOrder() : "") + "'")
 					.append(",employeeNumber:'" + (userDetail.getEmployeeNumber() != null ? userDetail.getEmployeeNumber() : "") + "'")
 					.append(",employeeType:'" + (userDetail.getEmployeeType() != null ? userDetail.getEmployeeType() : "") + "'")
-					.append(",titleName:'" + (userDetail.getTitleName() != null ? userDetail.getTitleName() : "") + "'")
-					.append(",belongDeptDN:'" + userDetail.getBelongDeptDN() + "'")
+					.append(",belongDeptDN:'" + (userDetail.getBelongDeptDN() != null ? userDetail.getBelongDeptDN() : "") + "'")
+					.append(",belongTitleDN:'" + (userDetail.getBelongTitleDN() != null ? userDetail.getBelongTitleDN() : "") + "'")
 					.append("}");
 			}else if(methodCall.equalsIgnoreCase("getDetailByUid")){
 				String uid = req.getParameter("uid");
@@ -333,8 +332,8 @@ public class UserServlet extends HttpServlet {
 					.append(",employeeNumber:'" + (userDetail.getEmployeeNumber() != null ? userDetail.getEmployeeNumber() : "") + "'")
 					.append(",employeeType:'" + (userDetail.getEmployeeType() != null ? userDetail.getEmployeeType() : "") + "'")
 					.append(",departmentNumber:'" + (userDetail.getDepartmentNumber() != null ? userDetail.getDepartmentNumber() : "") + "'")
-					.append(",titleName:'" + (userDetail.getTitleName() != null ? userDetail.getTitleName() : "") + "'")
-					.append(",belongDeptDN:'" + userDetail.getBelongDeptDN() + "'")
+					.append(",belongDeptDN:'" + (userDetail.getBelongDeptDN() != null ? userDetail.getBelongDeptDN() : "") + "'")
+					.append(",belongTitleDN:'" + (userDetail.getBelongTitleDN() != null ? userDetail.getBelongTitleDN() : "") + "'")
 					.append("}}");
 			} else if(methodCall.equalsIgnoreCase("import")){
 				String msg = null;
@@ -351,7 +350,7 @@ public class UserServlet extends HttpServlet {
 					json.append("{'dn':'" + u.getDn() + "',")
 							.append("'uid':'" + u.getUid() + "',")
 							.append("'displayName':'" + u.getDisplayName() + "',")
-							.append("'title':'" + (u.getTitleName() != null ? u.getTitleName() : "") + "',")
+							.append("'title':'" + (u.getTitle()!= null ? u.getTitle() : "") + "',")
 							.append("'deptName':'" + (u.getDeptName() != null ? u.getDeptName() : "") + "',")
 							.append("'status':'" + (u.getStatus() != null ? u.getStatus() : "") + "',")
 							.append("'userType':'" + u.getUserType() + "'},");

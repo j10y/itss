@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="belongDeptDN" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="belongTitleDN" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="cn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="departmentNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -49,14 +50,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "user", propOrder = { "belongDeptDN", "cn", "departmentNumber",
+@XmlType(name = "user", propOrder = { "belongDeptDN", "belongTitleDN",  "cn", "departmentNumber",
 		"description", "displayName", "displayOrder", "dn", "employeeNumber",
 		"employeeType", "facsimileTelephoneNumber", "givenName", "mail",
 		"mobile", "o", "password", "photo", "sn", "status", "telephoneNumber",
-		"title", "titleName", "uid", "userType" })
+		"title", "uid", "userType" })
 public class User {
 
 	protected String belongDeptDN;
+	protected String belongTitleDN;
 	protected String cn;
 	protected String departmentNumber;
 	protected String description;
@@ -76,7 +78,6 @@ public class User {
 	protected Integer status;
 	protected String telephoneNumber;
 	protected String title;
-	protected String titleName;
 	protected String uid;
 	protected String userType;
 
@@ -99,6 +100,27 @@ public class User {
 	 */
 	public void setBelongDeptDN(String value) {
 		this.belongDeptDN = value;
+	}
+	
+	/**
+	 * Gets the value of the belongTitleDN property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getBelongTitleDN() {
+		return belongTitleDN;
+	}
+
+	/**
+	 * Sets the value of the belongTitleDN property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setBelongTitleDN(String belongTitleDN) {
+		this.belongTitleDN = belongTitleDN;
 	}
 
 	/**
@@ -498,26 +520,7 @@ public class User {
 		this.title = value;
 	}
 
-	/**
-	 * Gets the value of the titleName property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getTitleName() {
-		return titleName;
-	}
 
-	/**
-	 * Sets the value of the titleName property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setTitleName(String value) {
-		this.titleName = value;
-	}
 
 	/**
 	 * Gets the value of the uid property.

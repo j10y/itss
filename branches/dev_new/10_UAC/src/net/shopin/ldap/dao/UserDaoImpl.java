@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	private void mapToContext(User user, DirContextAdapter context) {
-		
+
 		context.setAttributeValues("objectclass", new String[] { "top", "shopin-inetOrgPerson"});
 		context.setAttributeValue("uid", user.getUid());
 		context.setAttributeValue("userPassword", user.getPassword()!=null && !"".equals(user.getPassword()) ? user.getPassword() : null);
@@ -74,20 +74,21 @@ public class UserDaoImpl implements UserDao {
 		context.setAttributeValue("sn", user.getSn());
 		context.setAttributeValue("displayName", user.getDisplayName());
 		context.setAttributeValue("givenName", user.getGivenName());
-		context.setAttributeValue("description", user.getDescription()!=null && !"".equals(user.getDescription())? user.getDescription():null);
-		context.setAttributeValue("departmentNumber", user.getDepartmentNumber()!=null && !"".equals(user.getDepartmentNumber()) ? user.getDepartmentNumber() : null);
-		context.setAttributeValue("title", user.getTitle()!=null && !"".equals(user.getTitle()) ? user.getTitle() : null);
-		context.setAttributeValue("telephoneNumber", user.getTelephoneNumber()!=null && !"".equals(user.getTelephoneNumber()) ? user.getTelephoneNumber() : null);
-		context.setAttributeValue("mobile", user.getMobile()!=null && !"".equals(user.getMobile()) ? user.getMobile() : null);
-		context.setAttributeValue("mail", user.getMail()!=null && !"".equals(user.getMail()) ? user.getMail() : null);
-		context.setAttributeValue("facsimileTelephoneNumber", user.getFacsimileTelephoneNumber()!=null && !"".equals(user.getFacsimileTelephoneNumber()) ? user.getFacsimileTelephoneNumber() : null);
+		context.setAttributeValue("description", StringUtils.isNotEmpty(user.getDescription()) ?  user.getDescription():null);
+		context.setAttributeValue("departmentNumber", StringUtils.isNotEmpty(user.getDepartmentNumber()) ? user.getDepartmentNumber() : null);
+		context.setAttributeValue("belongTitleDN", StringUtils.isNotEmpty(user.getBelongTitleDN()) ? user.getBelongTitleDN() : null);
+		context.setAttributeValue("telephoneNumber", StringUtils.isNotEmpty(user.getTelephoneNumber()) ? user.getTelephoneNumber() : null);
+		context.setAttributeValue("mobile", StringUtils.isNotEmpty(user.getMobile()) ? user.getMobile() : null);
+		context.setAttributeValue("mail", StringUtils.isNotEmpty(user.getMail()) ? user.getMail() : null);
+		context.setAttributeValue("facsimileTelephoneNumber", StringUtils.isNotEmpty(user.getFacsimileTelephoneNumber()) ? user.getFacsimileTelephoneNumber() : null);
 		context.setAttributeValue("jpegPhoto", user.getPhoto()!=null && user.getPhoto().length>0?user.getPhoto():null);
 		if(user.getPhoto()!=null && user.getPhoto().length>0) context.setAttributeValue("jpegPhoto", user.getPhoto());
 		context.setAttributeValue("o", user.getO());
 		context.setAttributeValue("status", user.getStatus().toString());
 		context.setAttributeValue("displayOrder", user.getDisplayOrder().toString());
-		context.setAttributeValue("titleName", StringUtils.isNotEmpty(user.getTitleName()) ? user.getTitleName() : null);
-
+		context.setAttributeValue("title", StringUtils.isNotEmpty(user.getTitle()) ? user.getTitle() : null);
+		context.setAttributeValue("belongTitleDN", StringUtils.isNotEmpty(user.getBelongTitleDN()) ? user.getBelongTitleDN() : null);
+		
 	}
 
 	public void remove(User user) {
@@ -156,7 +157,7 @@ public class UserDaoImpl implements UserDao {
 			user.setCn(context.getStringAttribute("cn"));
 			user.setSn(context.getStringAttribute("sn"));
 			user.setDepartmentNumber(context.getStringAttribute("departmentNumber"));
-			user.setTitle(context.getStringAttribute("title"));
+			user.setBelongTitleDN(context.getStringAttribute("belongTitleDN"));
 			user.setMail(context.getStringAttribute("mail"));
 			user.setTelephoneNumber(context.getStringAttribute("telephoneNumber"));
 			user.setMobile(context.getStringAttribute("mobile"));
@@ -170,7 +171,7 @@ public class UserDaoImpl implements UserDao {
 			user.setDisplayOrder(StringUtils.isNotEmpty(context.getStringAttribute("displayOrder")) ? Integer.valueOf(Integer.valueOf(context.getStringAttribute("displayOrder"))) : 0);
 			user.setEmployeeNumber(context.getStringAttribute("employeeNumber"));
 			user.setEmployeeType(context.getStringAttribute("employeeType"));
-			user.setTitleName(context.getStringAttribute("titleName"));
+			user.setTitle(context.getStringAttribute("title"));
 			user.setBelongDeptDN(context.getDn().toString().substring(context.getDn().toString().indexOf(",")+1));
 			return user;
 		}
@@ -526,17 +527,17 @@ public class UserDaoImpl implements UserDao {
 		String filter=null;
 		if(StringUtils.isNotEmpty(uidORName)){
 			if(StringUtils.isNotEmpty(deptDN)){
-				filter="(&(objectClass=shopin-inetOrgPerson)&(belongDeptDN=" + deptDN + ")|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(titleName=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+				filter="(&(objectClass=shopin-inetOrgPerson)&(belongDeptDN=" + deptDN + ")|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 			}else{
-				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(titleName=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 			}
 			
 		}else{
 			if(StringUtils.isNotEmpty(deptDN)){
-				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(titleName=*)(displayName=*))";
+				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(title=*)(displayName=*))";
 				filter="(objectClass=shopin-inetOrgPerson)";
 			}else{
-				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(titleName=*)(displayName=*))";
+				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(title=*)(displayName=*))";
 			}
 		}
 		SearchControls controls  = new SearchControls();
@@ -603,7 +604,7 @@ public class UserDaoImpl implements UserDao {
 			if(attributes.get("employeeNumber")!=null)user.setEmployeeNumber(attributes.get("employeeNumber").get().toString());
 			if(attributes.get("employeeType")!=null)user.setEmployeeType(attributes.get("employeeType").get().toString());
 			if(attributes.get("jpegPhoto")!=null)user.setPhoto((byte[])attributes.get("jpegPhoto").get());
-			if(attributes.get("titleName")!=null)user.setTitleName(attributes.get("titleName").get().toString());
+			if(attributes.get("belongTitleDN")!=null)user.setBelongTitleDN(attributes.get("belongTitleDN").get().toString());
 			user.setBelongDeptDN(dnStr.substring(dnStr.indexOf(",")+1));
 
 			return user;
