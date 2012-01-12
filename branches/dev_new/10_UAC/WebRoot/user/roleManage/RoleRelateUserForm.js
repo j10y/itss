@@ -107,31 +107,40 @@ RoleRelateUserForm = Ext.extend(Ext.Window, {
 						text : "添加",
 						handler : function() {
 							var f = Ext.getCmp("RoleUserPanel");
-							for(var i = 0; i < f.getStore().getCount(); i++) {
-								if(f.getStore().getAt(i).data.dn == Ext.getCmp("userName").getValue()) {
-									Ext.MessageBox.show({
-										title : "操作信息",
-										msg : "您添加了重复的用户，请核实！",
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-									return ;
+							if(Ext.getCmp("userName").getValue()&&Ext.getCmp("userName").getValue()!=''){
+								for(var i = 0; i < f.getStore().getCount(); i++) {
+									if(f.getStore().getAt(i).data.dn == Ext.getCmp("userName").getValue()) {
+										Ext.MessageBox.show({
+											title : "操作信息",
+											msg : "您添加了重复的用户，请核实！",
+											buttons : Ext.MessageBox.OK,
+											icon : Ext.MessageBox.ERROR
+										});
+										return ;
+									}
 								}
+								var newRecord = Ext.data.Record.create([
+									{
+										name : "dn",
+										type : "string"
+									}, {
+										name : "displayName",
+										type : "string"
+									}
+								]);
+								var newData = new newRecord({
+									"dn" : Ext.getCmp("userName").getValue(),
+									"displayName" : Ext.getCmp("userName").getRawValue()
+								});
+								f.getStore().add(newData);
+							}else{
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "请选择用户！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
 							}
-							var newRecord = Ext.data.Record.create([
-								{
-									name : "dn",
-									type : "string"
-								}, {
-									name : "displayName",
-									type : "string"
-								}
-							]);
-							var newData = new newRecord({
-								"dn" : Ext.getCmp("userName").getValue(),
-								"displayName" : Ext.getCmp("userName").getRawValue()
-							});
-							f.getStore().add(newData);
 						}
 					}
 				]
