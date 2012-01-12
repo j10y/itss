@@ -11,3 +11,15 @@ class
 \com\xpsoft\oa\action\system\MrbsRepeatAction.java
 \com\xpsoft\oa\action\system\MrbsRoomAction.java
 \com\xpsoft\oa\action\system\MrbsScheduleAction.java
+
+
+2012-1-11
+-----------------------
+更改需求：
+1.页面添加"（跨部门会议可申请）"提示
+是否由总裁办协助做会议记录后面加个括号（跨部门会议可申请）
+更改文件：
+WebRoot/js/system/MeetingRoomForm.js
+2.提交预订表单时，添加 一般人员 只能预订两天以后的错误提示
+更改文件：
+WebRoot/js/system/MeetingRoomForm.js
