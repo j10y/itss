@@ -230,7 +230,7 @@ public class UserServlet extends HttpServlet {
 			if(methodCall.equalsIgnoreCase("add")){
 				userDao.create(user);
 				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
-				String[] groupDNs = req.getParameter("groups").split("___");
+				String[] groupDNs = req.getParameter("groups").split("#");
 				String userDN = "uid=" + user.getUid() + ",ou=employees,ou=users";
 				for(int i = 0; i < groupDNs.length; i++) {
 					if(StringUtils.isNotEmpty(groupDNs[i])) {
@@ -253,7 +253,9 @@ public class UserServlet extends HttpServlet {
 			}else if(methodCall.equalsIgnoreCase("modify")){
 				userDao.update(user);
 				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
-				String[] groupDNs = req.getParameter("groups").split("___");
+				String[] groupDNs = req.getParameter("groups").split("#");//用户的最新的关联用户组信息
+				//获取用户之前的关联用户组信息
+				
 				for(int i = 0; i < groupDNs.length; i++) {
 					if(StringUtils.isNotEmpty(groupDNs[i])) {
 						UserGroup ug = groupDao.findByDN(groupDNs[i]);
