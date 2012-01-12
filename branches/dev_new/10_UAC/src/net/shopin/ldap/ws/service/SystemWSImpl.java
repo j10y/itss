@@ -1,14 +1,17 @@
 package net.shopin.ldap.ws.service;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.jws.WebMethod;
 import javax.jws.soap.SOAPBinding;
 
 import net.shopin.ldap.dao.DeptDao;
+import net.shopin.ldap.dao.GroupDao;
+import net.shopin.ldap.dao.RoleDao;
+import net.shopin.ldap.dao.SystemDao;
 import net.shopin.ldap.dao.UserDao;
 import net.shopin.ldap.entity.Department;
+import net.shopin.ldap.entity.Role;
 import net.shopin.ldap.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,60 +33,55 @@ public class SystemWSImpl implements SystemWS{
 	
 	@Autowired
 	DeptDao deptDao;
+	
+	@Autowired
+	GroupDao groupDao;
+	
+	@Autowired
+	RoleDao roleDao;
 
-	/**
-	 * @see net.shopin.ldap.ws.service.SystemWS#findUserList()
-	 */
+	@Autowired
+	SystemDao systemDao;
+	
 	@WebMethod
 	public List<User> findUserList() {
-		// TODO Auto-generated method stub
-
 		return userDao.findUserList("");
 	}
 
-	/**
-	 * @see net.shopin.ldap.ws.service.SystemWS#findUserList(java.lang.String)
-	 */
 	@WebMethod
 	public List<User> findUserListByParam(String uidORName) {
-		// TODO Auto-generated method stub
 		return userDao.findUserList(uidORName);
 	}
 
-	/**
-	 * @see net.shopin.ldap.ws.service.SystemWS#getUserDetailByUid(java.lang.String)
-	 */
 	@WebMethod
 	public User getUserDetailByUid(String uid) {
-		// TODO Auto-generated method stub
 		return userDao.findByPrimaryKey(uid);
 	}
 
-	/**
-	 * @see net.shopin.ldap.ws.service.SystemWS#getDeptList(java.lang.String)
-	 */
 	@WebMethod
 	public List<Department> getDeptList() {
-		// TODO Auto-generated method stub
 		List<Department> depts = deptDao.findDeptsByParam("");
-		Iterator<Department> iterator = depts.iterator();
-		while(iterator.hasNext()){
-			Department dept = iterator.next();
-			if(dept.getDeptNo()!=null&&dept.getDeptNo().length()>4)
-			dept.setParentNo(dept.getDeptNo().substring(0,dept.getDeptNo().length()-2));
-		}
 		return depts;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.ws.service.SystemWS#updateUser(net.shopin.ldap.entity.User)
-	 */
-	@Override
+	@WebMethod
 	public void updateUser(User user) {
-		// TODO Auto-generated method stub
 		 userDao.update(user);
 	}
-	
-	
 
+	@WebMethod
+	public List<User> findUserListByRoleCN(String roleCN) {
+		return roleDao.listMembers("cn=" + roleCN + ",ou=roles");
+	}
+
+	@WebMethod
+	public List<User> findUserListByGroupCN(String groupCN) {
+		return groupDao.listMembers("cn=" + groupCN + ",ou=groups");
+	}
+
+	@WebMethod
+	public List<Role> findRoleListBySystemCN(String systemCN) {
+		return systemDao.listMembers("cn=" + systemCN + ",ou=groups");
+	}
+	
 }

@@ -6,6 +6,7 @@ package net.shopin.ldap.ws.service;
 import java.util.List;
 
 import net.shopin.ldap.entity.Department;
+import net.shopin.ldap.entity.Role;
 import net.shopin.ldap.entity.User;
 
 /**
@@ -47,5 +48,25 @@ public interface SystemWS {
 	 * @return
 	 */
 	void updateUser(User user);
-
+	
+	/**
+	 * 根据角色cn查询用户列表
+	 * @param roleCN
+	 * @return
+	 */
+	List<User> findUserListByRoleCN(String roleCN);
+	
+	/**
+	 * 根据用户组cn查询用户列表
+	 * @param roleCN
+	 * @return
+	 */
+	List<User> findUserListByGroupCN(String groupCN);
+	
+	/**
+	 * 根据系统cn查询角色列表
+	 * @param roleCN
+	 * @return
+	 */
+	List<Role> findRoleListBySystemCN(String systemCN);
 }
