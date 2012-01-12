@@ -119,7 +119,7 @@ public class MrbsRoomAction extends BaseAction {
 					String hend = (dd.getHours()>9)?dd.getHours()+"":"0"+dd.getHours();
 					String mend = (dd.getMinutes()>9)?dd.getMinutes()+"":"0"+dd.getMinutes();
 					
-					content.append(d.getDate()+"日"+hstart+":" + mstart + "-"+hend+":" + mend).append("&nbsp;&nbsp;&nbsp;"+m.get("create_by")).append("<br/><br/>");
+					content.append("<span title=\\'"+m.get("description").toString()+"\\'>").append(d.getDate()+"日"+hstart+":" + mstart + "-"+hend+":" + mend).append("&nbsp;&nbsp;&nbsp;"+m.get("create_by")).append("</span><br/><br/>");
 					endTime = d_1;
 					list_s.remove(i);
 					i = i - 1;
