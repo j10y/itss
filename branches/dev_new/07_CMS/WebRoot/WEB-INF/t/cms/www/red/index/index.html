@@ -95,8 +95,8 @@
                     </form>
                     <div class="cline"></div>
                     <div class="cygn_b">
-                    	<a href="http://172.16.100.26/bmrbs/" target="_blank">预订会议室</a>
-                        <a href="#">提交需求</a>
+                    	<a href="http://172.16.103.190/" target="_blank">预订会议室</a>
+                        <a href="http://172.16.100.26/itil" target="_blank">提交需求</a>
                         <a href="http://172.16.100.26/bbs/" target="_blank">我要留言</a>
                          
                         <a href="${base}/member/album_input.jspx" target="_blank">发布照片</a>
@@ -119,8 +119,8 @@
                     </ul>
                     <div class="cline"></div>
                     <ul class="clist mb0">
-                    	<li><a href="#">我提过的需求</a></li>
-						<li><a href="#">我提过的问题</a></li>
+                    	<li><a href="http://172.16.100.26/itil/user/require/requireSearchList.jsp">我提过的需求</a></li>
+						<li><a href="http://172.16.100.26/itil/user/event/eventReport/MyEvents.jsp">我提过的问题</a></li>
 						<li><a href="http://172.16.103.165/uac/user/userModify.jsp">我的个人信息</a></li>
                         <li><a href="${base}/member/pwd.jspx">修改登录密码</a></li>
                     </ul>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="info">
                     <ul class="clist mb0 mt0">
-                    	<li><a href="#">在线提交项目需求</a></li>
+                    	<li><a href="http://172.16.100.26/itil">在线提交项目需求</a></li>
                     </ul>
                 </div>
             </div>
@@ -360,70 +360,97 @@
                 </div>
                 <div class="info">
                     <div class="sweathershow">
-                    	[@cms_weather cityNameE='beijing' cityNameC='北京' icoPath=res ]
+                    	[@cms_weather_cn cityCode='101010100' icoPath=res ]
                     	[#assign  wc=tag_bean /]
                     	
+                    	[#if wc.fw?size>0]
                     	<table border=0 width="246" height="153">
                     		<tr>
-                    			<td>
-                    				<table border=0 height="153" width="123">
-                    					<tr>
-                    						
-                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
-                    							<strong>今天(${wc.today.day_of_week})</strong>
-                    						</td>
-                    						
-                    					</tr>
-                    					<tr>
-                    						<td align="center" nowrap style="word-break : keep-all; overflow: hidden;">
-                    							<img src="${wc.today.icon}"  height="50" width="50"/>
-                    							&nbsp;
-                    							<img src="${wc.cw.icon}"  height="50" width="50"/>
-                    						</td>
-                    					</tr>
-                    					<tr>
-                    						<td align="center" nowrap style="word-break : keep-all; overflow: hidden;">
-                    							<strong>${wc.today.low} ~ ${wc.today.high}</strong>
-                    						</td>
-                    					</tr>
-                    					<tr>
-                    						<td align="center" nowrap style="word-break : keep-all; overflow: hidden;">
-                    						&nbsp;<strong>${wc.cw.condition}</strong>&nbsp;
-                    						</td>
-                    					</tr>
-                    				</table>
-                    			</td>
-                    			<td>
-                    				[#if wc.nextDay?size>0]
-                    				<table border=0 height="153" width="123">
-                    					<tr>
-                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">明日(${wc.nextDay.day_of_week})</td>
-                    					</tr>
-                    					<tr>
-                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
-                    							<img src="${wc.nextDay.icon}" height="50" width="50" />
-                    						</td>
-                    					</tr>
-                    					<tr>
-                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
-                    							${wc.nextDay.low} ~ ${wc.nextDay.high}
-                    						</td>
-                    					</tr>
-                    					<tr>
-                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
-                    							&nbsp;${wc.nextDay.condition}&nbsp;
-                    						</td>
-                    					</tr>
-                    				</table>
-                    				[#else]
-                    					&nbsp;
-                    				[/#if]
-                    			</td>
+                    			[#list wc.fw as a]
+                    			[#if a_index ==0]
+	                    			<td>
+	                    				<table border=0 height="153" width="123">
+	                    					<tr>
+	                    						
+	                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
+	                    							<strong>今天(${a.day_of_week!'??'})</strong>
+	                    						</td>
+	                    						
+	                    					</tr>
+	                    					<tr>
+	                    						<td align="center" nowrap style="word-break : keep-all; overflow: hidden;">
+	                    							<img src="${a.iconD}"  height="50" width="50"/>
+	                    							<img src="${a.iconN}"  height="50" width="50"/>
+	                    						</td>
+	                    					</tr>
+	                    					<tr>
+	                    						<td align="center" nowrap style="word-break : keep-all; overflow: hidden;">
+	                    							<strong>${a.highTP!'??'} ~ ${a.lowTP!'??'}</strong>
+	                    						</td>
+	                    					</tr>
+	                    					<tr>
+	                    						<td align="center" nowrap style="word-break : keep-all; overflow: hidden;">
+	                    						&nbsp;<strong>${a.weathreAllDay!'??'}</strong>&nbsp;
+	                    						</td>
+	                    					</tr>
+	                    					<tr>
+			                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
+			                    							&nbsp;<strong>${a.wind!'??'}</strong>&nbsp;
+			                    						</td>
+			                    			</tr>
+	                    				</table>
+	                    			</td>
+                    			[#else]
+                    				[#if a_index ==1]
+		                    			<td>
+		                    					<table border=0 height="153" width="123">
+			                    					<tr>
+			                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">明日(${a.day_of_week!'??'})</td>
+			                    					</tr>
+			                    					<tr>
+			                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
+			                    							<img src="${a.iconD}"  height="50" width="50"/>
+			                    							<img src="${a.iconN}"  height="50" width="50"/>
+			                    						</td>
+			                    					</tr>
+			                    					<tr>
+			                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
+			                    							${a.highTP!'??'} ~ ${a.lowTP!'??'}
+			                    						</td>
+			                    					</tr>
+			                    					<tr>
+			                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
+			                    							&nbsp;${a.weathreAllDay!'??'}&nbsp;
+			                    						</td>
+			                    					</tr>
+			                    					<tr>
+			                    						<td align="center"  nowrap style="word-break : keep-all; overflow: hidden;">
+			                    							&nbsp;${a.wind!'??'}&nbsp;
+			                    						</td>
+			                    					</tr>
+			                    				</table>
+		                    			</td>
+		                    		[/#if]
+                    			[/#if]
+                    			[/#list] 
                     		</tr>
+                    		<tr>
+                    			<td><strong>湿度：</strong>${wc.sd!'??'}</td>
+                    			<td align="left">&nbsp;</td>
+                    		</tr>
+                    		<tr>
+                    			<td style="white-space:nowrap">
+                    				<strong>穿衣气象指数：</strong><font color="red">${wc.index!'??'}</font>
+								</td>
+                    			<td align="left" >&nbsp;</td>
+                    		</tr>
+
                     	</table>
-                    	<center>${wc.cw.humidity!}</center>
-                    	<center>${wc.cw.wind_condition!}</center>
-                    	[/@cms_weather]
+                    	<p>${wc.index_d}</p>
+                    	[#else]
+                    		<p>暂无天气信息！</p>
+                    	[/#if]
+                    	[/@cms_weather_cn]
                     </div>
                 </div>
                 <div class="cline"></div>

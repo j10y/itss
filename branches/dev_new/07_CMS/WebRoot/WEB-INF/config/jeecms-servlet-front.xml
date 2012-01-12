@@ -82,6 +82,7 @@
 				<entry key="cms_lucene_list" value-ref="cms_lucene_list"/>
 				<entry key="cms_lucene_page" value-ref="cms_lucene_page"/>
 				<entry key="cms_weather" value-ref="cms_weather"/>
+				<entry key="cms_weather_cn" value-ref="cms_weather_cn"/>
 			</map>
 		</property>
 		<!--
