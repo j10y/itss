@@ -152,8 +152,8 @@ UserForm = Ext.extend(Ext.Window, {
 								},
 								departments,
 								{
-									hiddenName : "titleName",
-									id : "titleNameCombo",
+									hiddenName : "title",
+									id : "titleCombo",
 									xtype : "combo",
 									fieldLabel : "职务",
 									triggerAction : "all",
@@ -175,7 +175,7 @@ UserForm = Ext.extend(Ext.Window, {
 											return false;
 										},
 										select : function(combo, record, index){
-											Ext.getCmp("title").setValue(record.data.dn);
+											Ext.getCmp("belongTitleDN").setValue(record.data.dn);
 										}
 									}
 								}, {
@@ -265,8 +265,8 @@ UserForm = Ext.extend(Ext.Window, {
 									id : "dn",
 									hidden : "true"
 								},{
-									name : "title",
-									id : "title",
+									name : "belongTitleDN",
+									id : "belongTitleDN",
 									hidden : true
 								}
 							]
@@ -365,31 +365,40 @@ UserForm = Ext.extend(Ext.Window, {
 									text : "添加",
 									handler : function() {
 										var f = Ext.getCmp("GroupPanel");
-										for(var i = 0; i < f.getStore().getCount(); i++) {
-											if(f.getStore().getAt(i).data.dn == Ext.getCmp("groupName").getValue()) {
-												Ext.MessageBox.show({
-													title : "操作信息",
-													msg : "您添加了重复的组，请核实！",
-													buttons : Ext.MessageBox.OK,
-													icon : Ext.MessageBox.ERROR
-												});
-												return ;
+										if(Ext.getCmp("groupName").getValue()&&Ext.getCmp("groupName").getValue()!=''){
+											for(var i = 0; i < f.getStore().getCount(); i++) {
+												if(f.getStore().getAt(i).data.dn == Ext.getCmp("groupName").getValue()) {
+													Ext.MessageBox.show({
+														title : "操作信息",
+														msg : "您添加了重复的组，请核实！",
+														buttons : Ext.MessageBox.OK,
+														icon : Ext.MessageBox.ERROR
+													});
+													return ;
+												}
 											}
+											var newRecord = Ext.data.Record.create([
+												{
+													name : "dn",
+													type : "string"
+												}, {
+													name : "displayName",
+													type : "string"
+												}
+											]);
+											var newData = new newRecord({
+												"dn" : Ext.getCmp("groupName").getValue(),
+												"displayName" : Ext.getCmp("groupName").getRawValue()
+											});
+											f.getStore().add(newData);
+										}else{
+											Ext.MessageBox.show({
+												title : "操作信息",
+												msg : "请选择用户组！",
+												buttons : Ext.MessageBox.OK,
+												icon : Ext.MessageBox.ERROR
+											});
 										}
-										var newRecord = Ext.data.Record.create([
-											{
-												name : "dn",
-												type : "string"
-											}, {
-												name : "displayName",
-												type : "string"
-											}
-										]);
-										var newData = new newRecord({
-											"dn" : Ext.getCmp("groupName").getValue(),
-											"displayName" : Ext.getCmp("groupName").getRawValue()
-										});
-										f.getStore().add(newData);
 									}
 								}
 							]
@@ -432,8 +441,8 @@ UserForm = Ext.extend(Ext.Window, {
 					}
 					Ext.getCmp("o").setValue(e.data.o);
 					Ext.getCmp("belongDeptDN").setValue(e.data.belongDeptDN);
-					Ext.getCmp("titleNameCombo").setValue(e.data.titleName);
-					Ext.getCmp("titleNameCombo").setRawValue(e.data.titleName);
+					Ext.getCmp("titleCombo").setValue(e.data.title);
+					Ext.getCmp("titleCombo").setRawValue(e.data.title);
 				},
 				failure : function() {
 					

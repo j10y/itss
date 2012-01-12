@@ -331,7 +331,7 @@ UserView.modify = function(u, ur) {
 	if(isSuperAdmin != "true") {
 		Ext.MessageBox.show({
 			title : "操作信息",
-			msg : "您不在超级管理员组，没有创该限！",
+			msg : "您不在超级管理员组，没有该权限！",
 			buttons : Ext.MessageBox.OK,
 			icon : Ext.MessageBox.ERROR
 		});

@@ -106,32 +106,41 @@ SystemRelateRoleForm = Ext.extend(Ext.Window, {
 						xtype : "button",
 						text : "添加",
 						handler : function() {
-							var f = Ext.getCmp("SystemRolePanel");
-							for(var i = 0; i < f.getStore().getCount(); i++) {
-								if(f.getStore().getAt(i).data.dn == Ext.getCmp("roleName").getValue()) {
-									Ext.MessageBox.show({
-										title : "操作信息",
-										msg : "您添加了重复的角色，请核实！",
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-									return ;
+							if(Ext.getCmp("roleName").getValue()&&Ext.getCmp("roleName").getValue()!=''){
+								var f = Ext.getCmp("SystemRolePanel");
+								for(var i = 0; i < f.getStore().getCount(); i++) {
+									if(f.getStore().getAt(i).data.dn == Ext.getCmp("roleName").getValue()) {
+										Ext.MessageBox.show({
+											title : "操作信息",
+											msg : "您添加了重复的角色，请核实！",
+											buttons : Ext.MessageBox.OK,
+											icon : Ext.MessageBox.ERROR
+										});
+										return ;
+									}
 								}
+								var newRecord = Ext.data.Record.create([
+									{
+										name : "dn",
+										type : "string"
+									}, {
+										name : "displayName",
+										type : "string"
+									}
+								]);
+								var newData = new newRecord({
+									"dn" : Ext.getCmp("roleName").getValue(),
+									"displayName" : Ext.getCmp("roleName").getRawValue()
+								});
+								f.getStore().add(newData);
+							}else{
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "请选择角色！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
 							}
-							var newRecord = Ext.data.Record.create([
-								{
-									name : "dn",
-									type : "string"
-								}, {
-									name : "displayName",
-									type : "string"
-								}
-							]);
-							var newData = new newRecord({
-								"dn" : Ext.getCmp("roleName").getValue(),
-								"displayName" : Ext.getCmp("roleName").getRawValue()
-							});
-							f.getStore().add(newData);
 						}
 					}
 				]

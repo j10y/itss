@@ -92,7 +92,7 @@ public class SystemWSImplService
     	
     	String urlStr = "http://172.16.100.173:8080/uac/services/sysService?wsdl";
     	SystemWSImpl port = SystemWSImplService.getPort(urlStr);
-    	java.util.List<User> users = port.findUserListByGroupCN("GROUP_ADMIN");
+    	/*java.util.List<User> users = port.findUserListByGroupCN("GROUP_ADMIN");
     	users = port.findUserListByRoleCN("ROLE_ADMIN");
     	for(User user : users){
     		System.out.println(user);
@@ -102,9 +102,9 @@ public class SystemWSImplService
     	for(Role role : roles){
     		System.out.println(role);
 	    	System.out.println("----------------------------------");
-    	}
-        /*port.findRoleListBySystemCN("SYSTEM_HR");
-        port.findUserListByRoleCN("ROLE_ADMIN");*/
+    	}*/
+    	//System.out.println(port.getDeptList());
+    	System.out.println(port.getUserDetailByUid("yycwy"));
     }
 
 }
