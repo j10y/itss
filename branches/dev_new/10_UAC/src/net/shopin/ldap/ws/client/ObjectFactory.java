@@ -22,22 +22,30 @@ public class ObjectFactory {
 	private final static QName _FindRoleListBySystemCNResponse_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/",
 			"findRoleListBySystemCNResponse");
+	private final static QName _FindGroupsByUserId_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/", "findGroupsByUserId");
 	private final static QName _FindUserListByGroupCN_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/", "findUserListByGroupCN");
-	private final static QName _FindUserListByGroupCNResponse_QNAME = new QName(
-			"http://service.ws.ldap.shopin.net/",
-			"findUserListByGroupCNResponse");
+	private final static QName _GetDeptList_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/", "getDeptList");
 	private final static QName _FindUserListByRoleCNResponse_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/",
 			"findUserListByRoleCNResponse");
-	private final static QName _GetDeptList_QNAME = new QName(
-			"http://service.ws.ldap.shopin.net/", "getDeptList");
+	private final static QName _FindUserListByGroupCNResponse_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/",
+			"findUserListByGroupCNResponse");
+	private final static QName _FindRolesByUserIdResponse_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/", "findRolesByUserIdResponse");
+	private final static QName _FindGroupsByUserIdResponse_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/", "findGroupsByUserIdResponse");
 	private final static QName _FindUserListResponse_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/", "findUserListResponse");
 	private final static QName _FindUserList_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/", "findUserList");
 	private final static QName _FindUserListByParamResponse_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/", "findUserListByParamResponse");
+	private final static QName _FindSystemsByRoleCNResponse_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/", "findSystemsByRoleCNResponse");
 	private final static QName _GetDeptListResponse_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/", "getDeptListResponse");
 	private final static QName _FindUserListByRoleCN_QNAME = new QName(
@@ -52,6 +60,10 @@ public class ObjectFactory {
 			"http://service.ws.ldap.shopin.net/", "findUserListByParam");
 	private final static QName _UpdateUserResponse_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/", "updateUserResponse");
+	private final static QName _FindRolesByUserId_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/", "findRolesByUserId");
+	private final static QName _FindSystemsByRoleCN_QNAME = new QName(
+			"http://service.ws.ldap.shopin.net/", "findSystemsByRoleCN");
 	private final static QName _FindRoleListBySystemCN_QNAME = new QName(
 			"http://service.ws.ldap.shopin.net/", "findRoleListBySystemCN");
 
@@ -72,11 +84,11 @@ public class ObjectFactory {
 	}
 
 	/**
-	 * Create an instance of {@link User }
+	 * Create an instance of {@link Department }
 	 * 
 	 */
-	public User createUser() {
-		return new User();
+	public Department createDepartment() {
+		return new Department();
 	}
 
 	/**
@@ -88,27 +100,11 @@ public class ObjectFactory {
 	}
 
 	/**
-	 * Create an instance of {@link FindUserListByRoleCN }
+	 * Create an instance of {@link FindSystemsByRoleCNResponse }
 	 * 
 	 */
-	public FindUserListByRoleCN createFindUserListByRoleCN() {
-		return new FindUserListByRoleCN();
-	}
-
-	/**
-	 * Create an instance of {@link UpdateUser }
-	 * 
-	 */
-	public UpdateUser createUpdateUser() {
-		return new UpdateUser();
-	}
-
-	/**
-	 * Create an instance of {@link Role }
-	 * 
-	 */
-	public Role createRole() {
-		return new Role();
+	public FindSystemsByRoleCNResponse createFindSystemsByRoleCNResponse() {
+		return new FindSystemsByRoleCNResponse();
 	}
 
 	/**
@@ -120,83 +116,19 @@ public class ObjectFactory {
 	}
 
 	/**
-	 * Create an instance of {@link FindUserListByGroupCNResponse }
+	 * Create an instance of {@link FindGroupsByUserId }
 	 * 
 	 */
-	public FindUserListByGroupCNResponse createFindUserListByGroupCNResponse() {
-		return new FindUserListByGroupCNResponse();
+	public FindGroupsByUserId createFindGroupsByUserId() {
+		return new FindGroupsByUserId();
 	}
 
 	/**
-	 * Create an instance of {@link GetUserDetailByUidResponse }
+	 * Create an instance of {@link FindRolesByUserId }
 	 * 
 	 */
-	public GetUserDetailByUidResponse createGetUserDetailByUidResponse() {
-		return new GetUserDetailByUidResponse();
-	}
-
-	/**
-	 * Create an instance of {@link GetDeptListResponse }
-	 * 
-	 */
-	public GetDeptListResponse createGetDeptListResponse() {
-		return new GetDeptListResponse();
-	}
-
-	/**
-	 * Create an instance of {@link UpdateUserResponse }
-	 * 
-	 */
-	public UpdateUserResponse createUpdateUserResponse() {
-		return new UpdateUserResponse();
-	}
-
-	/**
-	 * Create an instance of {@link FindUserListByRoleCNResponse }
-	 * 
-	 */
-	public FindUserListByRoleCNResponse createFindUserListByRoleCNResponse() {
-		return new FindUserListByRoleCNResponse();
-	}
-
-	/**
-	 * Create an instance of {@link GetDeptList }
-	 * 
-	 */
-	public GetDeptList createGetDeptList() {
-		return new GetDeptList();
-	}
-
-	/**
-	 * Create an instance of {@link FindUserListByParam }
-	 * 
-	 */
-	public FindUserListByParam createFindUserListByParam() {
-		return new FindUserListByParam();
-	}
-
-	/**
-	 * Create an instance of {@link FindUserList }
-	 * 
-	 */
-	public FindUserList createFindUserList() {
-		return new FindUserList();
-	}
-
-	/**
-	 * Create an instance of {@link FindUserListByParamResponse }
-	 * 
-	 */
-	public FindUserListByParamResponse createFindUserListByParamResponse() {
-		return new FindUserListByParamResponse();
-	}
-
-	/**
-	 * Create an instance of {@link FindUserListResponse }
-	 * 
-	 */
-	public FindUserListResponse createFindUserListResponse() {
-		return new FindUserListResponse();
+	public FindRolesByUserId createFindRolesByUserId() {
+		return new FindRolesByUserId();
 	}
 
 	/**
@@ -208,11 +140,155 @@ public class ObjectFactory {
 	}
 
 	/**
-	 * Create an instance of {@link Department }
+	 * Create an instance of {@link GetDeptList }
 	 * 
 	 */
-	public Department createDepartment() {
-		return new Department();
+	public GetDeptList createGetDeptList() {
+		return new GetDeptList();
+	}
+
+	/**
+	 * Create an instance of {@link GetUserDetailByUidResponse }
+	 * 
+	 */
+	public GetUserDetailByUidResponse createGetUserDetailByUidResponse() {
+		return new GetUserDetailByUidResponse();
+	}
+
+	/**
+	 * Create an instance of {@link UserGroup }
+	 * 
+	 */
+	public UserGroup createUserGroup() {
+		return new UserGroup();
+	}
+
+	/**
+	 * Create an instance of {@link FindUserListResponse }
+	 * 
+	 */
+	public FindUserListResponse createFindUserListResponse() {
+		return new FindUserListResponse();
+	}
+
+	/**
+	 * Create an instance of {@link FindUserListByParamResponse }
+	 * 
+	 */
+	public FindUserListByParamResponse createFindUserListByParamResponse() {
+		return new FindUserListByParamResponse();
+	}
+
+	/**
+	 * Create an instance of {@link GetDeptListResponse }
+	 * 
+	 */
+	public GetDeptListResponse createGetDeptListResponse() {
+		return new GetDeptListResponse();
+	}
+
+	/**
+	 * Create an instance of {@link FindUserList }
+	 * 
+	 */
+	public FindUserList createFindUserList() {
+		return new FindUserList();
+	}
+
+	/**
+	 * Create an instance of {@link FindGroupsByUserIdResponse }
+	 * 
+	 */
+	public FindGroupsByUserIdResponse createFindGroupsByUserIdResponse() {
+		return new FindGroupsByUserIdResponse();
+	}
+
+	/**
+	 * Create an instance of {@link UpdateUserResponse }
+	 * 
+	 */
+	public UpdateUserResponse createUpdateUserResponse() {
+		return new UpdateUserResponse();
+	}
+
+	/**
+	 * Create an instance of {@link FindUserListByRoleCN }
+	 * 
+	 */
+	public FindUserListByRoleCN createFindUserListByRoleCN() {
+		return new FindUserListByRoleCN();
+	}
+
+	/**
+	 * Create an instance of {@link FindSystemsByRoleCN }
+	 * 
+	 */
+	public FindSystemsByRoleCN createFindSystemsByRoleCN() {
+		return new FindSystemsByRoleCN();
+	}
+
+	/**
+	 * Create an instance of {@link Role }
+	 * 
+	 */
+	public Role createRole() {
+		return new Role();
+	}
+
+	/**
+	 * Create an instance of {@link User }
+	 * 
+	 */
+	public User createUser() {
+		return new User();
+	}
+
+	/**
+	 * Create an instance of {@link UpdateUser }
+	 * 
+	 */
+	public UpdateUser createUpdateUser() {
+		return new UpdateUser();
+	}
+
+	/**
+	 * Create an instance of {@link FindRolesByUserIdResponse }
+	 * 
+	 */
+	public FindRolesByUserIdResponse createFindRolesByUserIdResponse() {
+		return new FindRolesByUserIdResponse();
+	}
+
+	/**
+	 * Create an instance of {@link System }
+	 * 
+	 */
+	public System createSystem() {
+		return new System();
+	}
+
+	/**
+	 * Create an instance of {@link FindUserListByGroupCNResponse }
+	 * 
+	 */
+	public FindUserListByGroupCNResponse createFindUserListByGroupCNResponse() {
+		return new FindUserListByGroupCNResponse();
+	}
+
+	/**
+	 * Create an instance of {@link FindUserListByRoleCNResponse }
+	 * 
+	 */
+	public FindUserListByRoleCNResponse createFindUserListByRoleCNResponse() {
+		return new FindUserListByRoleCNResponse();
+	}
+
+	/**
+	 * Create an instance of {@link FindUserListByParam }
+	 * 
+	 */
+	public FindUserListByParam createFindUserListByParam() {
+		return new FindUserListByParam();
 	}
 
 	/**
@@ -230,6 +306,18 @@ public class ObjectFactory {
 
 	/**
 	 * Create an instance of {@link JAXBElement }{@code <}
+	 * {@link FindGroupsByUserId }{@code >}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findGroupsByUserId")
+	public JAXBElement<FindGroupsByUserId> createFindGroupsByUserId(
+			FindGroupsByUserId value) {
+		return new JAXBElement<FindGroupsByUserId>(_FindGroupsByUserId_QNAME,
+				FindGroupsByUserId.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}
 	 * {@link FindUserListByGroupCN }{@code >}
 	 * 
 	 */
@@ -239,6 +327,30 @@ public class ObjectFactory {
 		return new JAXBElement<FindUserListByGroupCN>(
 				_FindUserListByGroupCN_QNAME, FindUserListByGroupCN.class,
 				null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link GetDeptList }
+	 * {@code >}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "getDeptList")
+	public JAXBElement<GetDeptList> createGetDeptList(GetDeptList value) {
+		return new JAXBElement<GetDeptList>(_GetDeptList_QNAME,
+				GetDeptList.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}
+	 * {@link FindUserListByRoleCNResponse }{@code >}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findUserListByRoleCNResponse")
+	public JAXBElement<FindUserListByRoleCNResponse> createFindUserListByRoleCNResponse(
+			FindUserListByRoleCNResponse value) {
+		return new JAXBElement<FindUserListByRoleCNResponse>(
+				_FindUserListByRoleCNResponse_QNAME,
+				FindUserListByRoleCNResponse.class, null, value);
 	}
 
 	/**
@@ -256,26 +368,28 @@ public class ObjectFactory {
 
 	/**
 	 * Create an instance of {@link JAXBElement }{@code <}
-	 * {@link FindUserListByRoleCNResponse }{@code >}
+	 * {@link FindRolesByUserIdResponse }{@code >}
 	 * 
 	 */
-	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findUserListByRoleCNResponse")
-	public JAXBElement<FindUserListByRoleCNResponse> createFindUserListByRoleCNResponse(
-			FindUserListByRoleCNResponse value) {
-		return new JAXBElement<FindUserListByRoleCNResponse>(
-				_FindUserListByRoleCNResponse_QNAME,
-				FindUserListByRoleCNResponse.class, null, value);
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findRolesByUserIdResponse")
+	public JAXBElement<FindRolesByUserIdResponse> createFindRolesByUserIdResponse(
+			FindRolesByUserIdResponse value) {
+		return new JAXBElement<FindRolesByUserIdResponse>(
+				_FindRolesByUserIdResponse_QNAME,
+				FindRolesByUserIdResponse.class, null, value);
 	}
 
 	/**
-	 * Create an instance of {@link JAXBElement }{@code <}{@link GetDeptList }
-	 * {@code >}
+	 * Create an instance of {@link JAXBElement }{@code <}
+	 * {@link FindGroupsByUserIdResponse }{@code >}
 	 * 
 	 */
-	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "getDeptList")
-	public JAXBElement<GetDeptList> createGetDeptList(GetDeptList value) {
-		return new JAXBElement<GetDeptList>(_GetDeptList_QNAME,
-				GetDeptList.class, null, value);
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findGroupsByUserIdResponse")
+	public JAXBElement<FindGroupsByUserIdResponse> createFindGroupsByUserIdResponse(
+			FindGroupsByUserIdResponse value) {
+		return new JAXBElement<FindGroupsByUserIdResponse>(
+				_FindGroupsByUserIdResponse_QNAME,
+				FindGroupsByUserIdResponse.class, null, value);
 	}
 
 	/**
@@ -313,6 +427,19 @@ public class ObjectFactory {
 		return new JAXBElement<FindUserListByParamResponse>(
 				_FindUserListByParamResponse_QNAME,
 				FindUserListByParamResponse.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}
+	 * {@link FindSystemsByRoleCNResponse }{@code >}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findSystemsByRoleCNResponse")
+	public JAXBElement<FindSystemsByRoleCNResponse> createFindSystemsByRoleCNResponse(
+			FindSystemsByRoleCNResponse value) {
+		return new JAXBElement<FindSystemsByRoleCNResponse>(
+				_FindSystemsByRoleCNResponse_QNAME,
+				FindSystemsByRoleCNResponse.class, null, value);
 	}
 
 	/**
@@ -398,6 +525,30 @@ public class ObjectFactory {
 			UpdateUserResponse value) {
 		return new JAXBElement<UpdateUserResponse>(_UpdateUserResponse_QNAME,
 				UpdateUserResponse.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}
+	 * {@link FindRolesByUserId }{@code >}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findRolesByUserId")
+	public JAXBElement<FindRolesByUserId> createFindRolesByUserId(
+			FindRolesByUserId value) {
+		return new JAXBElement<FindRolesByUserId>(_FindRolesByUserId_QNAME,
+				FindRolesByUserId.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}
+	 * {@link FindSystemsByRoleCN }{@code >}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://service.ws.ldap.shopin.net/", name = "findSystemsByRoleCN")
+	public JAXBElement<FindSystemsByRoleCN> createFindSystemsByRoleCN(
+			FindSystemsByRoleCN value) {
+		return new JAXBElement<FindSystemsByRoleCN>(_FindSystemsByRoleCN_QNAME,
+				FindSystemsByRoleCN.class, null, value);
 	}
 
 	/**

@@ -12,8 +12,12 @@ import net.shopin.ldap.dao.SystemDao;
 import net.shopin.ldap.dao.UserDao;
 import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.Role;
+import net.shopin.ldap.entity.System;
 import net.shopin.ldap.entity.User;
+import net.shopin.ldap.entity.UserGroup;
+import net.shopin.util.PropertiesUtil;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -83,5 +87,24 @@ public class SystemWSImpl implements SystemWS{
 	public List<Role> findRoleListBySystemCN(String systemCN) {
 		return systemDao.listMembers("cn=" + systemCN + ",ou=systems");
 	}
+
+	@Override
+	public List<UserGroup> findGroupsByUserId(String userId) {
+		User user = userDao.findByPrimaryKey(userId);
+		return groupDao.findGroupsByUserDN(user.getDn());
+	}
+
+	@Override
+	public List<Role> findRolesByUserId(String userId) {
+		User user = userDao.findByPrimaryKey(userId);
+		return roleDao.findRolesByUserDN(user.getDn());
+	}
+
+	@Override
+	public List<System> findSystemsByRoleCN(String roleCN) {
+		String roleDN = "cn=" + roleCN + ",ou=roles"  + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : "");
+		return systemDao.findSystemsByRoleDN(roleDN);
+	}
+	
 	
 }

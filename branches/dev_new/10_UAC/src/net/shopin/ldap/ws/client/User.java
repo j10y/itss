@@ -38,7 +38,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="telephoneNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="titleName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="uid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="userType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -50,11 +49,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "user", propOrder = { "belongDeptDN", "belongTitleDN",  "cn", "departmentNumber",
-		"description", "displayName", "displayOrder", "dn", "employeeNumber",
-		"employeeType", "facsimileTelephoneNumber", "givenName", "mail",
-		"mobile", "o", "password", "photo", "sn", "status", "telephoneNumber",
-		"title", "uid", "userType" })
+@XmlType(name = "user", propOrder = { "belongDeptDN", "belongTitleDN", "cn",
+		"departmentNumber", "description", "displayName", "displayOrder", "dn",
+		"employeeNumber", "employeeType", "facsimileTelephoneNumber",
+		"givenName", "mail", "mobile", "o", "password", "photo", "sn",
+		"status", "telephoneNumber", "title", "uid", "userType" })
 public class User {
 
 	protected String belongDeptDN;
@@ -101,7 +100,7 @@ public class User {
 	public void setBelongDeptDN(String value) {
 		this.belongDeptDN = value;
 	}
-	
+
 	/**
 	 * Gets the value of the belongTitleDN property.
 	 * 
@@ -119,8 +118,8 @@ public class User {
 	 *            allowed object is {@link String }
 	 * 
 	 */
-	public void setBelongTitleDN(String belongTitleDN) {
-		this.belongTitleDN = belongTitleDN;
+	public void setBelongTitleDN(String value) {
+		this.belongTitleDN = value;
 	}
 
 	/**
@@ -519,8 +518,6 @@ public class User {
 	public void setTitle(String value) {
 		this.title = value;
 	}
-
-
 
 	/**
 	 * Gets the value of the uid property.

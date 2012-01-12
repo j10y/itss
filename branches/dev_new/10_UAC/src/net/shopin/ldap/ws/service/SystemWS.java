@@ -7,7 +7,9 @@ import java.util.List;
 
 import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.Role;
+import net.shopin.ldap.entity.System;
 import net.shopin.ldap.entity.User;
+import net.shopin.ldap.entity.UserGroup;
 
 /**
  * 系统对外提供的WebService接口
@@ -69,4 +71,10 @@ public interface SystemWS {
 	 * @return
 	 */
 	List<Role> findRoleListBySystemCN(String systemCN);
+	
+	List<UserGroup> findGroupsByUserId(String userId);
+	
+	public List<Role> findRolesByUserId(String userId);
+	
+	public List<System> findSystemsByRoleCN(String roleCN);
 }

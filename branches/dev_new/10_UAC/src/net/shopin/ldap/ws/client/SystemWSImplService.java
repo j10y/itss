@@ -3,7 +3,9 @@ package net.shopin.ldap.ws.client;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
@@ -101,10 +103,14 @@ public class SystemWSImplService
     	java.util.List<Role> roles = port.findRoleListBySystemCN("SYSTEM_HR");
     	for(Role role : roles){
     		System.out.println(role);
-	    	System.out.println("----------------------------------");
+	    	System.out. println("----------------------------------");
     	}*/
     	//System.out.println(port.getDeptList());
-    	System.out.println(port.getUserDetailByUid("yycwy"));
+    	//java.lang.System.out.println(port.getUserDetailByUid("yycwy"));
+    	List<System> systems = port.findSystemsByRoleCN("ROLE_ADMIN");
+    	for(System system : systems){
+    		java.lang.System.out.println("-------------" + system.getDisplayName() + "/" + system.getCn() + "-------------");
+    	}
     }
 
 }

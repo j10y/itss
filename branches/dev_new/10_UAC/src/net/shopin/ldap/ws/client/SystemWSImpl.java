@@ -106,4 +106,40 @@ public interface SystemWSImpl {
 	public List<Role> findRoleListBySystemCN(
 			@WebParam(name = "arg0", targetNamespace = "") String arg0);
 
+	/**
+	 * 
+	 * @param arg0
+	 * @return returns java.util.List<net.shopin.ldap.ws.client.UserGroup>
+	 */
+	@WebMethod
+	@WebResult(targetNamespace = "")
+	@RequestWrapper(localName = "findGroupsByUserId", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindGroupsByUserId")
+	@ResponseWrapper(localName = "findGroupsByUserIdResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindGroupsByUserIdResponse")
+	public List<UserGroup> findGroupsByUserId(
+			@WebParam(name = "arg0", targetNamespace = "") String arg0);
+
+	/**
+	 * 
+	 * @param arg0
+	 * @return returns java.util.List<net.shopin.ldap.ws.client.Role>
+	 */
+	@WebMethod
+	@WebResult(targetNamespace = "")
+	@RequestWrapper(localName = "findRolesByUserId", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindRolesByUserId")
+	@ResponseWrapper(localName = "findRolesByUserIdResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindRolesByUserIdResponse")
+	public List<Role> findRolesByUserId(
+			@WebParam(name = "arg0", targetNamespace = "") String arg0);
+
+	/**
+	 * 
+	 * @param arg0
+	 * @return returns java.util.List<net.shopin.ldap.ws.client.System>
+	 */
+	@WebMethod
+	@WebResult(targetNamespace = "")
+	@RequestWrapper(localName = "findSystemsByRoleCN", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindSystemsByRoleCN")
+	@ResponseWrapper(localName = "findSystemsByRoleCNResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.FindSystemsByRoleCNResponse")
+	public List<System> findSystemsByRoleCN(
+			@WebParam(name = "arg0", targetNamespace = "") String arg0);
+
 }
