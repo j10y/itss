@@ -33,7 +33,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/extEngine/RowExpander.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/treegrid/TreeGrid.js"></script>
 		 -->
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/TabCloseMenu.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/ext-3.2.1/ux/TabCloseMenu.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/multisel/Multiselect.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/multisel/DDView.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/PageButton.js"></script>
