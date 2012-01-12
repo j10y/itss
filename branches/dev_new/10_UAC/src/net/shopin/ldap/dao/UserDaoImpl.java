@@ -96,6 +96,9 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	public void delete(String userDN) {
+		if(userDN.contains(PropertiesUtil.getProperties("base"))){
+			userDN = userDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
 		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(userDN);
 		context.setAttributeValue("status", "3");
 		ldapTemplate.modifyAttributes(userDN, context.getModificationItems());
@@ -526,19 +529,10 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(StringUtils.isNotEmpty(uidORName)){
-			if(StringUtils.isNotEmpty(deptDN)){
-				filter="(&(objectClass=shopin-inetOrgPerson)&(belongDeptDN=" + deptDN + ")|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
-			}else{
-				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
-			}
+			filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
 			
 		}else{
-			if(StringUtils.isNotEmpty(deptDN)){
-				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(title=*)(displayName=*))";
-				filter="(objectClass=shopin-inetOrgPerson)";
-			}else{
-				filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(title=*)(displayName=*))";
-			}
+			filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(title=*)(displayName=*))";
 		}
 		SearchControls controls  = new SearchControls();
 		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
@@ -631,6 +625,9 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public User findByDN(String userDN) {
+		if(userDN.contains(PropertiesUtil.getProperties("base"))){
+			userDN = userDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
 		return (User)ldapTemplate.lookup(userDN, new UserContextMapper());
 	}
 
