@@ -69,7 +69,11 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					mapping : "createBy.fullname"
 				},
 				"description",
-				"conferenceCall"
+				"conferenceCall",
+				{
+					name : "createUserId",
+					mapping : "createBy.userId"
+				}
 			]
 		});
 		this.store.setDefaultSort("startTime", "asc");
@@ -80,13 +84,11 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			}
 		});
 		var b = new Array();
-		if(isGranted('_DeleteOrderRoom')){
-			b.push({
-				iconCls : "btn-del",
-				qtip : "删除",
-				style : "margin:0 3px 0 3px"
-			});
-		}
+		b.push({
+			iconCls : "btn-del",
+			qtip : "删除",
+			style : "margin:0 3px 0 3px"
+		});
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,
@@ -99,6 +101,10 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				{
 					header : "id",
 					dataIndex : "id",
+					hidden : true
+				}, {
+					header : "createUserId",
+					dataIndex : "createUserId",
 					hidden : true
 				}, {
 					header : "日期",
@@ -114,7 +120,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					dataIndex : "endHour"
 				}, {
 					header : "预订者",
-					dataIndxe : "createUser"
+					dataIndex : "createUser"
 				}, {
 					header : "会议主题",
 					dataIndex : "description"
@@ -237,6 +243,12 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					name : 'repeat_id',
 					  id : 'repeatId',
 					xtype : 'hidden'
+				},
+				{
+					  id : 'note',
+					xtype : 'label',
+					hidden : isGranted("_SelectEveryDayCalendar") ? true : false,
+					html:'<font color="red"><b>* 您只能预订两天以后的会议室！</b></font><br/><br/>'
 				},
 				{
 					name : 'schedule_id',
@@ -884,7 +896,18 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 		];
 	},
 	onRowAction :function(c, a, d, e, b) {
-			//alert(a.data.id);
+//			/alert(a.data.createUserId);
+		if(!isGranted('_DeleteOrderRoom')){
+			if(curUserInfo.userId != a.data.createUserId){
+				Ext.MessageBox.show({
+						title : "操作信息",
+						msg : "您只能删除自己的预订记录！",
+						buttons : Ext.MessageBox.OK,
+						icon : Ext.MessageBox.ERROR
+					});
+				return ;
+			}
+		}
 		Ext.Msg.confirm("信息确认", "您确认要删除所选记录吗？", function(c) {
 		if(c == "yes") {
 			Ext.Ajax.request({
@@ -959,5 +982,3 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 		a.close();
 	}
 });
-
-
