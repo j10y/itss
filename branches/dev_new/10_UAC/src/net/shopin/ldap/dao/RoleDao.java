@@ -6,6 +6,7 @@ import org.springframework.ldap.core.ContextMapper;
 
 import net.shopin.ldap.entity.Role;
 import net.shopin.ldap.entity.User;
+import net.shopin.ldap.entity.UserGroup;
 
 /**
  * 角色Dao接口
@@ -78,4 +79,6 @@ public interface RoleDao {
 	ContextMapper getContextMapper();
 	
 	public List<User> listMembers(String rolepDN);
+	
+	public List<Role> findRolesByUserDN(String userDN);
 }

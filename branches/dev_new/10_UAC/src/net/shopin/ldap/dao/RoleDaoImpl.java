@@ -219,4 +219,12 @@ public class RoleDaoImpl implements RoleDao {
 		return userList;
 	}
 
+	@Override
+	public List<Role> findRolesByUserDN(String userDN) {
+		String filter=null;
+		filter="(&(objectClass=shopin-organizationalRole)(roleOccupant=" + userDN + "))";
+		List<Role> roles = ldapTemplate.search("ou=roles", filter, getContextMapper());
+		return roles;
+	}
+
 }

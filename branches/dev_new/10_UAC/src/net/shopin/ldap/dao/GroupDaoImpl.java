@@ -198,5 +198,13 @@ public class GroupDaoImpl implements GroupDao {
 		}
 		return userList;
 	}
+
+	public List<UserGroup> findGroupsByUserDN(String userDN) {
+		String filter=null;
+		filter="(&(objectClass=shopin-groupOfNames)(member=" + userDN + "))";
+		List<UserGroup> groups = ldapTemplate.search("ou=groups", filter, getContextMapper());
+		return groups;
+	}
+	
 	
 }

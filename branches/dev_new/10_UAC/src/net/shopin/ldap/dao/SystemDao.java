@@ -68,4 +68,6 @@ public interface SystemDao {
 	ContextMapper getContextMapper();
 	
 	public List<Role> listMembers(String rolepDN);
+	
+	public List<System> findSystemsByRoleDN(String roleDN);
 }

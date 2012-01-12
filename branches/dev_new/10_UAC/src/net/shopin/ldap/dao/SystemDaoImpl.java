@@ -184,6 +184,12 @@ public class SystemDaoImpl implements SystemDao {
 		}
 		return roleList;
 	}
-	
 
+	public List<System> findSystemsByRoleDN(String roleDN) {
+		String filter=null;
+		filter="(&(objectClass=shopin-system)(systemOccupant=" + roleDN + "))";
+		List<System> Systems = ldapTemplate.search("ou=systems", filter, getContextMapper());
+		return Systems;
+	}
+	
 }

@@ -86,4 +86,6 @@ public interface GroupDao {
 	public boolean isSupserAdmin(String userDN);
 	
 	public List<User> listMembers(String groupDN);
+	
+	public List<UserGroup> findGroupsByUserDN(String userDN);
 }
