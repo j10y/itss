@@ -86,9 +86,24 @@ public interface SystemWS {
 	 */
 	List<Role> findRoleListBySystemCN(String systemCN);
 	
+	/**
+	 * 根据用户ID查询其关联的用户组列表
+	 * @param userId
+	 * @return
+	 */
 	List<UserGroup> findGroupsByUserId(String userId);
 	
+	/**
+	 * 根据用户ID查询其关联的角色列表
+	 * @param userId
+	 * @return
+	 */
 	public List<Role> findRolesByUserId(String userId);
 	
+	/**
+	 * 根据角色CN查询其关联的系统列表
+	 * @param roleCN
+	 * @return
+	 */
 	public List<System> findSystemsByRoleCN(String roleCN);
 }
