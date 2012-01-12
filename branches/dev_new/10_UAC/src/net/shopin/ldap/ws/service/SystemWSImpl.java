@@ -67,10 +67,21 @@ public class SystemWSImpl implements SystemWS{
 		List<Department> depts = deptDao.findDeptsByParam("");
 		return depts;
 	}
+	
+	@WebMethod
+	public void createUser(User user) {
+		 userDao.create(user);
+	}
 
 	@WebMethod
 	public void updateUser(User user) {
 		 userDao.update(user);
+	}
+	
+	@WebMethod
+	public void deleteUserByUserId(String userId) {
+		User user = userDao.findByPrimaryKey(userId);
+		userDao.delete(user.getDn());
 	}
 
 	@WebMethod
@@ -88,19 +99,19 @@ public class SystemWSImpl implements SystemWS{
 		return systemDao.listMembers("cn=" + systemCN + ",ou=systems");
 	}
 
-	@Override
+	@WebMethod
 	public List<UserGroup> findGroupsByUserId(String userId) {
 		User user = userDao.findByPrimaryKey(userId);
 		return groupDao.findGroupsByUserDN(user.getDn());
 	}
 
-	@Override
+	@WebMethod
 	public List<Role> findRolesByUserId(String userId) {
 		User user = userDao.findByPrimaryKey(userId);
 		return roleDao.findRolesByUserDN(user.getDn());
 	}
 
-	@Override
+	@WebMethod
 	public List<System> findSystemsByRoleCN(String roleCN) {
 		String roleDN = "cn=" + roleCN + ",ou=roles"  + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : "");
 		return systemDao.findSystemsByRoleDN(roleDN);

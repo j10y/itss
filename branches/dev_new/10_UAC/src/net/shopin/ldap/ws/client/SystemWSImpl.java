@@ -18,6 +18,16 @@ public interface SystemWSImpl {
 
 	/**
 	 * 
+	 * @param arg0
+	 */
+	@WebMethod
+	@RequestWrapper(localName = "createUser", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.CreateUser")
+	@ResponseWrapper(localName = "createUserResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.CreateUserResponse")
+	public void createUser(
+			@WebParam(name = "arg0", targetNamespace = "") User arg0);
+
+	/**
+	 * 
 	 * @return returns java.util.List<net.shopin.ldap.ws.client.User>
 	 */
 	@WebMethod
@@ -69,6 +79,16 @@ public interface SystemWSImpl {
 	@ResponseWrapper(localName = "updateUserResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.UpdateUserResponse")
 	public void updateUser(
 			@WebParam(name = "arg0", targetNamespace = "") User arg0);
+
+	/**
+	 * 
+	 * @param arg0
+	 */
+	@WebMethod
+	@RequestWrapper(localName = "deleteUserByUserId", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.DeleteUserByUserId")
+	@ResponseWrapper(localName = "deleteUserByUserIdResponse", targetNamespace = "http://service.ws.ldap.shopin.net/", className = "net.shopin.ldap.ws.client.DeleteUserByUserIdResponse")
+	public void deleteUserByUserId(
+			@WebParam(name = "arg0", targetNamespace = "") String arg0);
 
 	/**
 	 * 

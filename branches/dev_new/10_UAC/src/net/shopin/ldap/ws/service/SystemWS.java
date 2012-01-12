@@ -45,11 +45,25 @@ public interface SystemWS {
 	List<Department> getDeptList();
 	
 	/**
+	 * 新建用户信息
+	 * @param user
+	 * @return
+	 */
+	void createUser(User user);
+	
+	/**
 	 * 修改用户信息
 	 * @param user
 	 * @return
 	 */
 	void updateUser(User user);
+	
+	/**
+	 * 删除用户信息（逻辑）
+	 * @param user
+	 * @return
+	 */
+	void deleteUserByUserId(String userId);
 	
 	/**
 	 * 根据角色cn查询用户列表
