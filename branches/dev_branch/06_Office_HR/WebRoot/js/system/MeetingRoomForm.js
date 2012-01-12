@@ -293,7 +293,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									emptyText:'此项不用手动填写！'
 								}]
 							},{
-								columnWidth:0.2,
+								columnWidth:0.1,
 								layout: 'form',
 								border : false,
 								items: [{
@@ -306,7 +306,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									items:[{boxLabel:'投影仪',name:'mrbsRepeat.projector',inputValue:'1'}]
 								}]
 							},{
-								columnWidth:0.3,
+								columnWidth:0.4,
 								layout: 'form',
 								border : false,
 								items: [{
@@ -316,7 +316,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 									hideLabels:true,
 									value : '1',
 									border: false,
-									items:[{boxLabel:'是否由总裁办协助做会议记录',name:'mrbsRepeat.conferenceCall',inputValue:'1'}]
+									items:[{boxLabel:'是否由总裁办协助做会议记录(跨部门会议可申请)',name:'mrbsRepeat.conferenceCall',inputValue:'1'}]
 								}]
 							}
 							]
@@ -913,7 +913,26 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 	});
 	},
 	save : function(b, a) {
-		//alert(curUserInfo.rights);return false;
+		//一般人员只能预订2天以后的
+		if(!isGranted("_SelectEveryDayCalendar")){
+			var today = new Date();
+			var now = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+			var select_day  = Ext.getCmp('startDate').getValue();
+			var time_s = new Number(select_day.getTime());
+			var time_t = new Number(now.getTime());
+			var sub = (time_s.valueOf()- time_t.valueOf())/(1000*60*60*24);
+			if(sub <=2){
+				today.setDate(today.getDate()+3);
+				var error_day = today.format("Y-m-d日");
+				Ext.MessageBox.show({
+							title : "操作信息",
+							msg : "您只能预订两天以后的，您可以从"+error_day+"重新预订！",
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.ERROR
+						});
+				return false;
+			}
+		}
 		if(b.getForm().isValid()) {
 			b.getForm().submit({
 				method : "post",
