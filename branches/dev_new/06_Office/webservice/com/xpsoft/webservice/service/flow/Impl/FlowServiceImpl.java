@@ -836,6 +836,7 @@ public class FlowServiceImpl implements FlowService {
 				this.parmap.put("flowAssignId", archRecUser.getOfficeHeaderUserId());
 			}else{
 				this.parmap.put("flowAssignId",ContextUtil.getCurrentUser().getId());
+				System.out.println(processName+activityName+"审批中由于获取不到人，因此取改登录人");
 			}
 		}else if((processName.equals("发文流程-市局发文")&&activityName.equals("办公室主任承办"))){
 			Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
@@ -844,6 +845,7 @@ public class FlowServiceImpl implements FlowService {
 				this.parmap.put("flowAssignId", archRecUser.getNumberUserId());
 			}else{
 				this.parmap.put("flowAssignId",ContextUtil.getCurrentUser().getId());
+				System.out.println(processName+activityName+"审批中由于获取不到人，因此取改登录人");
 			}
 		}else if((processName.equals("发文流程-市局发文")&&activityName.equals("编号录入"))){
 			Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
@@ -852,10 +854,20 @@ public class FlowServiceImpl implements FlowService {
 				this.parmap.put("flowAssignId", archRecUser.getStampUserId());
 			}else{
 				this.parmap.put("flowAssignId",ContextUtil.getCurrentUser().getId());
+				System.out.println(processName+activityName+"审批中由于获取不到人，因此取改登录人");
 			}
 		}
 		else if(processName.equals("收文流程-市局收文")&&activityName.equals("办公室主任批阅")){
 			this.parmap.put("signUserIds", checkboxvalue);
+		}else if(processName.equals("收文流程-市局收文")&&activityName.equals("分管或主管领导批示")){
+			Long deptId = ContextUtil.getCurrentUser().getDepartment().getDepId();
+			ArchRecUser archRecUser = (ArchRecUser) archRecUserService.getByDepId(deptId);
+			if(archRecUser!=null&&archRecUser.getSignUserId()!=null){
+				this.parmap.put("flowAssignId", archRecUser.getSignUserId());
+			}else{
+				this.parmap.put("flowAssignId",ContextUtil.getCurrentUser().getId());
+				System.out.println(processName+activityName+"审批中由于获取不到人，因此取改登录人");
+			}
 		}
 		else if(processName.equals("请假-中")&&activityName.equals("部门负责人审批")){
 			ErrandsRegister errandsRegister = ((ErrandsRegister) errandsRegisterService.get(Long.parseLong(id)));
@@ -1508,13 +1520,14 @@ public class FlowServiceImpl implements FlowService {
 	public String findPersonDatas(String userId,String passwd,String type){
 		AppUserService userService=(AppUserService) AppUtil.getBean("appUserService");
 		String json="";
+//		收文流程-指定传阅人中选择传阅人
 		if(type.equals("deptmanage")){
-			String sql="select deptUserId,deptFullname from arch_rec_user";
+			String sql="select deptUserId,deptFullname,depName from arch_rec_user";
 			List<Map> list = userService.findDataList(sql);
 			json="{\"success\":true,data:[";
 			//+"/"+ap.get("username")
 			for(Map ap:list){
-				json+="{id:\""+ap.get("deptUserId")+"\",name:\""+ap.get("deptFullname")+"\"},";
+				json+="{id:\""+ap.get("deptUserId")+"\",name:\""+ap.get("depName")+"/"+ap.get("deptFullname")+"\"},";
 			}
 			if(list.size()>0){
 				json=json.substring(0,json.length()-1);
