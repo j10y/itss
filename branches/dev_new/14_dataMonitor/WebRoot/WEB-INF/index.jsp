@@ -70,7 +70,7 @@
 		</div> 
 		<div align="reight">
 		欢迎${usermap['realname']}登录该系统
-		<a href="login_toLogout.action">退出</a> 
+		<a href="http://172.16.103.165:8090/cas3/logout?service=http://www.shopin.net">退出</a> 
 		<c:if test="${usermap['username'] eq 'admin'}">
 		<a href="manage_toAdminManage.action">进入后台管理系统</a>
 		</c:if>
