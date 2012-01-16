@@ -1,0 +1,5 @@
+时间：2012-1-16
+功能：User状态：1=激活 0=禁用（离职），只查询状态 ！= 0 的User
+
+更新文件：
+com/xpsoft/oa/dao/system/impl/AppUserDaoImpl.java
