@@ -147,12 +147,14 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 		List list = new ArrayList();
 		String hql = new String();
 		if ("0.".equals(path)) {
-			hql = "from AppUser vo2 where vo2.delFlag = ?";
+			hql = "from AppUser vo2 where vo2.delFlag = ? and status != 0";//Added by kanglei, 只查询激活的用户
 			list.add(Constants.FLAG_UNDELETED);
+			list.add(0);
 		} else {
-			hql = "select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department and vo1.path like ? and vo2.delFlag = ?";
+			hql = "select vo2 from Department vo1,AppUser vo2 where vo1=vo2.department and vo1.path like ? and vo2.delFlag = ? and status != ?";//Added by kanglei, 只查询激活的用户
 			list.add(path + "%");
 			list.add(Constants.FLAG_UNDELETED);
+			list.add(0);
 		}
 		return findByHql(hql, list.toArray(), pb);
 	}
