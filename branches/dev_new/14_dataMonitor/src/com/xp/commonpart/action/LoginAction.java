@@ -86,6 +86,53 @@ public class LoginAction {
 		request.getSession().setAttribute("usermap", usermap);
 		return "sucess";
 	}
+	public String toLoginForUserName(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		String flag="true";
+		String username=request.getParameter("login_username");
+		Map sysconfigmap=null;
+		if(request.getSession().getAttribute("sysconfigmap")!=null){
+			sysconfigmap=(Map) request.getSession().getAttribute("sysconfigmap");
+		}else{
+			String configsql="select * from sys_sec_pagconfig";
+			List list=selectDataService.getData(configsql);
+			if(list!=null&&list.size()>0){
+				sysconfigmap=(Map) list.get(0);
+				request.getSession().setAttribute("sysconfigmap", sysconfigmap);
+			}
+		}
+		Map usermap=null;
+		if(request.getSession().getAttribute("usermap")!=null){
+			usermap=(Map) request.getSession().getAttribute("usermap");
+		}else{
+			if(username!=null&&username.length()>0){
+				try {
+					
+					String sql="select * from sys_sec_userinfo where username='"+username+"'";
+					List list=selectDataService.getData(sql);
+					if(list!=null&&list.size()>0){
+						usermap=(Map) list.get(0);
+					}else{
+						flag="false";
+						request.setAttribute("error", "没有权限访问该系统，请联系系统管理员申请该权限！");
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				flag="false";
+			}
+			
+		}
+		if(flag.equals("false")){
+			return "nologin";
+		}
+		//usermap.put("username","tongjp");
+		request.getSession().setAttribute("userid", usermap.get("id"));
+		request.getSession().setAttribute("usermap", usermap);
+		return "sucess";
+	}
 	public String getMenuList(){
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();

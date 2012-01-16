@@ -148,9 +148,9 @@ public class BaseServiceImpl implements BaseService {
 		sysTemUserLog.setOperateDate(new Date());
 		sysTemUserLog.setOperateIP(request.getRemoteAddr());
 		String userName = "anonymity";
-		if(request.getSession().getAttribute("userMap")!=null){
-			Map userMap=(Map) request.getSession().getAttribute("userMap");
-			userName=userMap.get("USERISN").toString();
+		if(request.getSession().getAttribute("usermap")!=null){
+			Map userMap=(Map) request.getSession().getAttribute("usermap");
+			userName=userMap.get("username")+"";
 		}
 		sysTemUserLog.setOperateUserName(userName);
 		sysTemUserLog.setOperateDetail(operateDetail);
