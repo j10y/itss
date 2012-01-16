@@ -8,6 +8,7 @@
 		    <result name="sucess">/WEB-INF/index.jsp</result>
 		    <result name="fault">/WEB-INF/login.jsp</result>
 		    <result name="login">/WEB-INF/login.jsp</result>
+		    <result name="nologin">/WEB-INF/nologin.jsp</result>
 		</action>
 	</package>
 	
