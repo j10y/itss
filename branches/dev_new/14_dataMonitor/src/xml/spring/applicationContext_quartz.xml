@@ -26,7 +26,8 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref local="defJobTrigger" />
+			<!--  
+				<ref local="defJobTrigger" />-->
 			</list>
 		</property>
 	</bean>
