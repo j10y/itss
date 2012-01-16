@@ -19,7 +19,8 @@ DepartmentForm = Ext.extend(Ext.Window, {
 		});
 	},
 	initComponents : function() {
-		var dept = webContext + '/menu/loadTree?methodCall=childLevel';
+//		var dept = webContext + '/menu/loadTree?methodCall=childLevel';
+		var dept = webContext + '/dept?methodCall=findSubDeptsByParentDN';
 		var departments = new TreeSelector("parentName", dept, "父部门", "parentNo");
 		this.formPanel = new Ext.FormPanel({
 			layout : "form",

@@ -230,7 +230,7 @@ public class UserServlet extends HttpServlet {
 			if(methodCall.equalsIgnoreCase("add")){
 				userDao.create(user);
 				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
-				String[] groupDNs = req.getParameter("groups").split("#");
+				String[] groupDNs = req.getParameter("groups").split("__");
 				String userDN = "uid=" + user.getUid() + ",ou=employees,ou=users";
 				for(int i = 0; i < groupDNs.length; i++) {
 					if(StringUtils.isNotEmpty(groupDNs[i])) {
@@ -251,26 +251,7 @@ public class UserServlet extends HttpServlet {
 				String userDN = req.getParameter("userDN");
 				userDao.delete(userDN);
 			}else if(methodCall.equalsIgnoreCase("modify")){
-				userDao.update(user);
-				//add by guanshiqiang for add the current user into groups on 2011-11-24 begin
-				String[] groupDNs = req.getParameter("groups").split("#");//用户的最新的关联用户组信息
-				//获取用户之前的关联用户组信息
-				
-				for(int i = 0; i < groupDNs.length; i++) {
-					if(StringUtils.isNotEmpty(groupDNs[i])) {
-						UserGroup ug = groupDao.findByDN(groupDNs[i]);
-						if(ug != null) {
-							List<String> list = Arrays.asList(ug.getMembers());
-							List<String> memberList = new ArrayList<String>(list);
-							if(!memberList.contains(user.getDn())) {//该用户组不包含当前用户，则加入
-								memberList.add(user.getDn());
-								ug.setMembers(memberList.toArray(new String[memberList.size()]));
-								groupDao.update(ug);
-							}
-						}
-					}
-				}
-				//add by guanshiqiang for add the current user into groups on 2011-11-24 end
+				modifyUser(req, user);
 			}else if(methodCall.equalsIgnoreCase("getDetail")){
 				String uid = null;
 				String userType = "1";//员工
@@ -388,6 +369,67 @@ public class UserServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void modifyUser(HttpServletRequest req, User user) {
+		userDao.update(user);
+		
+		String[] groupDNs = req.getParameter("groups").split("__");//用户的最新的关联用户组信息
+		
+		//获取用户之前的关联用户组信息
+		List<UserGroup> groups = groupDao.findGroupsByUserDN(user.getDn());
+		
+		List<String> newRealateDNs = new ArrayList();
+		for(String groupDN : groupDNs){
+			boolean has = false;
+			for(UserGroup group : groups){
+				if(groupDN.equals(group.getDn())){
+					has = true;
+				}
+			}
+			if(!has){
+				newRealateDNs.add(groupDN);
+			}
+		}
+		for(String groupDN : newRealateDNs) {
+			UserGroup userGroup = groupDao.findByDN(groupDN);
+			if(userGroup != null) {
+				List<String> list = Arrays.asList(userGroup.getMembers());
+				List<String> memberList = new ArrayList<String>(list);
+				if(!memberList.contains(user.getDn())) {//该用户组不包含当前用户，则加入
+					memberList.add(user.getDn());
+					userGroup.setMembers(memberList.toArray(new String[memberList.size()]));
+					groupDao.update(userGroup);
+				}
+			}
+		}
+		
+		List<String> delRealateDNs = new ArrayList();
+		for(UserGroup group : groups){
+			boolean has = false;
+			for(String groupDN : groupDNs){
+				if(groupDN.equals(group.getDn())){
+					has = true;
+				}
+			}
+			if(!has){
+				delRealateDNs.add(group.getDn());
+			}
+		}
+		
+		for(String groupDN : delRealateDNs) {
+			UserGroup userGroup = groupDao.findByDN(groupDN);
+			if(userGroup != null) {
+				List<String> list = Arrays.asList(userGroup.getMembers());
+				List<String> memberList = new ArrayList<String>(list);
+				if(memberList.contains(user.getDn())) {//该用户组不包含当前用户，则加入
+					memberList.remove(user.getDn());
+					userGroup.setMembers(memberList.toArray(new String[memberList.size()]));
+					groupDao.update(userGroup);
+				}
+			}
+		}
+
 	}
 
 }

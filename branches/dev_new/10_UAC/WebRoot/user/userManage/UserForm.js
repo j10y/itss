@@ -22,7 +22,8 @@ UserForm = Ext.extend(Ext.Window, {
 		});
 	},
 	initComponents : function() {
-		var dept = webContext + '/menu/loadTree?methodCall=childLevel';
+		//var dept = webContext + '/menu/loadTree?methodCall=childLevel';
+		var dept = webContext + '/dept?methodCall=findSubDeptsByParentDN';
 		var departments = new TreeSelector("o", dept, "所属部门", "belongDeptDN");
 		departments.addListener("expand", function() {
 			Ext.getCmp("oTree").addListener("click", function() {
@@ -535,7 +536,10 @@ UserForm = Ext.extend(Ext.Window, {
 			var groupsStr = "";
 			var f = Ext.getCmp("GroupPanel");
 			for(var i = 0; i < f.getStore().getCount(); i++) {
-				groupsStr += f.getStore().getAt(i).data.dn + "#";
+				groupsStr += f.getStore().getAt(i).data.dn;
+				if(i < f.getStore().getCount()-1){
+					groupsStr += "__";
+				}
 			}
 			if(a.isModify) {
 				//修改
