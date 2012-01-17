@@ -105,7 +105,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	private Name buildDn(User user) {
-		DistinguishedName path = new DistinguishedName(user.getBelongDeptDN());
+		DistinguishedName path = new DistinguishedName(user.getBelongDeptDN().contains(PropertiesUtil.getProperties("base")) ? (user.getBelongDeptDN().replace(("," + PropertiesUtil.getProperties("base")), "")) : user.getBelongDeptDN());
 		DistinguishedName dn = new DistinguishedName("uid=" + user.getUid());
 		dn.prepend(path);
 		return dn;
@@ -190,7 +190,7 @@ public class UserDaoImpl implements UserDao {
 		User old = this.findByPrimaryKey(user.getUid());
 		Name dn = buildDn(user);
 		
-		if(!user.getDn().equals(dn.toString() + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""))){//DN改变，需要移动目录
+		if(StringUtils.isNotEmpty(user.getDn())&& !user.getDn().equals(dn.toString() + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""))){//DN改变，需要移动目录
 			this.remove(old);
 			if(user.getPhoto()==null||user.getPhoto().length == 0){
 				user.setPhoto(old.getPhoto());//图片

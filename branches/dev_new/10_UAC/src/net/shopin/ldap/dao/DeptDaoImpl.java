@@ -10,6 +10,7 @@ import javax.naming.directory.SearchControls;
 
 import net.shopin.ldap.entity.Department;
 import net.shopin.ldap.entity.User;
+import net.shopin.util.PropertiesUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ldap.core.ContextMapper;
@@ -59,6 +60,9 @@ public class DeptDaoImpl implements DeptDao {
 	}
 	
 	public void deleteByDN(String deptDN) {
+		if(deptDN.contains(PropertiesUtil.getProperties("base"))){
+			deptDN = deptDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
 		DirContextAdapter context = (DirContextAdapter) ldapTemplate.lookup(deptDN);
 		context.setAttributeValue("status", Department.SATAL_NOT_NORMAL.toString());
 		ldapTemplate.modifyAttributes(deptDN, context.getModificationItems());
@@ -99,20 +103,18 @@ public class DeptDaoImpl implements DeptDao {
 		return dn;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see net.shopin.ldap.dao.DeptDao#delete(net.shopin.ldap.entity.Department)
-	 */
 	public Department findByDN(String deptDN) {
-
+		if(deptDN.contains(PropertiesUtil.getProperties("base"))){
+			deptDN = deptDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
 		return (Department)ldapTemplate.lookup(deptDN, new DeptContextMapper());
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.dao.DeptDao#findSubDeptsByParentNo(java.lang.String)
-	 */
 	public List<Department> findSubDeptsByParentDN(String parentDN) {
+		if(parentDN.contains(PropertiesUtil.getProperties("base"))){
+			parentDN = parentDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
 		SearchControls controls  = new SearchControls();
 		controls.setCountLimit(Integer.MAX_VALUE);
 		controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
@@ -126,11 +128,6 @@ public class DeptDaoImpl implements DeptDao {
 
 	private void mapToContext(Department department, DirContextAdapter context) {
 
-		//modified by awen for extend openldap's schema on 2011-11-21 begin
-		
-			/*context.setAttributeValues("objectclass", new String[] { "top", "organizationalUnit", "extensibleObject"});
-			context.setAttributeValue("description", department.getDeptName());*/
-		
 		context.setAttributeValues("objectclass", new String[] { "top", "shopin-organization"});
 		context.setAttributeValue("displayName", department.getDeptName());
 		context.setAttributeValue("description", StringUtils.isNotEmpty(department.getDeptDesc()) ? department.getDeptDesc() : null);
@@ -138,19 +135,14 @@ public class DeptDaoImpl implements DeptDao {
 		context.setAttributeValue("displayOrder", department.getDisplayOrder().toString());
 		context.setAttributeValue("parentNo", StringUtils.isNotEmpty(department.getParentNo()) ? department.getParentNo() : null);		
 		context.setAttributeValue("erpId", StringUtils.isNotEmpty(department.getErpId()) ? department.getErpId() : null);		
-		//modified by awen for extend openldap's schema on 2011-11-21 end
 	}
 	
-	/* (non-Javadoc)
-	 * @see net.shopin.ldap.dao.DeptDao#findDeptsByParam(java.lang.String)
-	 */
 	public List<Department> findDeptsByParam(String param) {
-		// TODO Auto-generated method stub
 		String filter=null;
 		if(param != null && !param.equals("")){
-			filter="(&(objectClass=shopin-organization)|(o=*" + param + "*)(displayName=*" + param + "*)(description=*"+ param + "*))";
+			filter="(&(objectClass=shopin-organization)|(o=*" + param + "*)(displayName=*" + param + "*))";
 		}else{
-			filter="(&(objectClass=shopin-organization)|(o=*)(displayName=*)(description=*))";
+			filter="(&(objectClass=shopin-organization)|(o=*)(displayName=*))";
 		}
 		List<Department> depts = ldapTemplate.search("ou=orgnizations", filter, getContextMapper());
 
@@ -158,7 +150,6 @@ public class DeptDaoImpl implements DeptDao {
 	}
 	
 	public ContextMapper getContextMapper() {
-		// TODO Auto-generated method stub
 		return new DeptContextMapper();
 	}
 	
@@ -166,9 +157,8 @@ public class DeptDaoImpl implements DeptDao {
 
 		public Object mapFromContext(Object ctx) {
 			DirContextAdapter context = (DirContextAdapter) ctx;
-			//DistinguishedName dn = new DistinguishedName(context.getDn());
 			Department dept = new Department();
-			dept.setDn(context.getDn().toString());
+			dept.setDn(context.getDn().toString() + (StringUtils.isNotEmpty(PropertiesUtil.getProperties("base")) ? ',' + PropertiesUtil.getProperties("base") : ""));
 			dept.setDeptNo(context.getStringAttribute("o"));
 			dept.setDeptName(context.getStringAttribute("displayName"));
 			dept.setDeptDesc(context.getStringAttribute("description"));
