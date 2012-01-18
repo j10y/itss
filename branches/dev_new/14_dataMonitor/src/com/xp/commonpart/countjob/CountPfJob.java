@@ -54,6 +54,7 @@ public class CountPfJob {
 //		}
 		ComQueryService comqueryService=(ComQueryService) ContextHolder.getBean("comqueryService");
 		comqueryService.connectDataBase();
+		comqueryService.checkWebStatus();
 //		CronTriggerBean trigger1 = (CronTriggerBean) scheduler.getTrigger("defJobTrigger", Scheduler.DEFAULT_GROUP);  
 //		trigger1.setCronExpression("0 0 0 ? 12 6L 2055");
 //		scheduler.rescheduleJob("defJobTrigger", Scheduler.DEFAULT_GROUP, trigger1);
