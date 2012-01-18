@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(dn);
 		mapToContext(user, context);
 		String filter="(&(objectClass=shopin-inetOrgPerson)(uid=" + user.getUid() + "))";
-		List result = ldapTemplate.search("ou=users", filter, new UserContextMapper());
+		List result = ldapTemplate.search("ou=orgnizations", filter, new UserContextMapper());
 		if(result.size()==0){
 			ldapTemplate.bind(dn, context, null);
 		}else{
@@ -389,7 +389,7 @@ public class UserDaoImpl implements UserDao {
 			DirContextAdapter context = new DirContextAdapter(dn);
 			mapToContext(user, context);
 			String filter="(uid=" + user.getUid() + ")";
-			List result = ldapTemplate.search("ou=users", filter, new UserContextMapper());
+			List result = ldapTemplate.search("ou=orgnizations", filter, new UserContextMapper());
 			if(result.size()==0){
 				ldapTemplate.bind(dn, context, null);
 			}else{
@@ -513,7 +513,7 @@ public class UserDaoImpl implements UserDao {
 		}else{
 			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*)(cn=*)(title=*)(displayName=*)))";
 		}
-		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
+		List<User> users = ldapTemplate.search("ou=orgnizations", filter, getContextMapper());
 
 		return users;
 	
