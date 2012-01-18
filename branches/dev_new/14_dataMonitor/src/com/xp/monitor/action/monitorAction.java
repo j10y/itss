@@ -160,4 +160,34 @@ public class monitorAction {
 		}
 		return null;
 	}
+	public String toGetAllWebMonitor(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse response=ServletActionContext.getResponse();
+		String startdate=request.getParameter("startdate");
+		String enddate=request.getParameter("enddate");
+		String sql="select webserverlist.webName as type, date_format(webmonitorinfo.createDate, '%Y-%m-%d %H:%i') as date,webmonitorinfo.status as totalFinish from webserverlist,webmonitorinfo where webmonitorinfo.webId=webserverlist.id";
+		if(startdate!=null&&startdate.length()>0){
+			sql+=" and UNIX_TIMESTAMP(webmonitorinfo.createDate)>=UNIX_TIMESTAMP('"+startdate+"')";
+		}else{
+			startdate=DateUtil.convertDateTimeToString(DateUtil.addMinutes(new Date(), -60*24));
+			sql+=" and UNIX_TIMESTAMP(webmonitorinfo.createDate)>=UNIX_TIMESTAMP('"+ startdate+"')";
+		}
+		if(enddate!=null&&enddate.length()>0){
+			sql+=" and UNIX_TIMESTAMP(webmonitorinfo.createDate)<=UNIX_TIMESTAMP('"+enddate+"')";
+		}else{
+			enddate=DateUtil.convertDateTimeToString(new Date());
+			sql+=" and UNIX_TIMESTAMP(webmonitorinfo.createDate)<=UNIX_TIMESTAMP('"+ enddate+"')";
+		}
+		List list=selectDataService.getData(sql);
+		MainTableChart mainTableChart=new MainTableChart();
+		mainTableChart.setSeriesName("type");
+		mainTableChart.setAxisvalueX("date");
+		mainTableChart.setAxisvalueY("totalFinish");
+		mainTableChart.setAxisNameY("统计");
+		String parm=ChartUtil.getDataSetByPar(mainTableChart, list);		
+		request.setAttribute("parm", parm);
+		request.setAttribute("startdate", startdate);
+		request.setAttribute("enddate", enddate);
+		return "webjk";
+	}
 }
