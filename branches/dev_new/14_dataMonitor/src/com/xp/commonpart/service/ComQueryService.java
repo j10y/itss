@@ -23,4 +23,6 @@ public interface ComQueryService {
 	 * @return
 	 */
 	public Map connectDataBaseByBaseId(String id,String type);
+	
+	public void checkWebStatus();
 }

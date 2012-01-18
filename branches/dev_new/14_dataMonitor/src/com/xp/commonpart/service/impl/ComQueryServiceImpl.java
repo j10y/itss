@@ -17,6 +17,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +29,7 @@ import com.xp.commonpart.bean.MainTableColumn;
 import com.xp.commonpart.bean.MonitorInfo;
 import com.xp.commonpart.bean.QueryPanel;
 import com.xp.commonpart.bean.TreeObject;
+import com.xp.commonpart.bean.WebMonitorInfo;
 import com.xp.commonpart.dao.BaseDao;
 import com.xp.commonpart.service.ComQueryService;
 import com.xp.commonpart.service.SelectDataService;
@@ -569,6 +574,55 @@ public class ComQueryServiceImpl implements ComQueryService{
 			}
 		}else{
 			return false;
+		}
+	}
+
+	public void checkWebStatus() {
+		// TODO Auto-generated method stub
+		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");
+		String sql="select * from webserverlist where isClose=1 ";
+		List<Map> list=selectDataService.getData(sql);
+		for(Map map:list){
+			String id=map.get("id")!=null?map.get("id").toString():"";
+			String webName=map.get("webName")!=null?map.get("webName").toString():"";
+			String webUrl=map.get("webUrl")!=null?map.get("webUrl").toString():"";
+			HttpClient client = new HttpClient(); 
+		    HttpMethod method=new GetMethod(webUrl);
+		    WebMonitorInfo webmo=new WebMonitorInfo();
+		    webmo.setWebId(Long.parseLong(id));
+		    webmo.setCreateDate(new Date());
+		    try {
+				client.executeMethod(method);
+				int status=method.getStatusCode();
+				if(status==200){
+					webmo.setStatus(1);
+					webmo.setDescrpition("访问应用成功");
+				}else{
+					webmo.setStatus(-1);
+					webmo.setDescrpition("访问应用失败，原因："+method.getStatusLine());
+				}
+			    //释放连接
+			    method.releaseConnection();
+			    baseDao.save(webmo,WebMonitorInfo.class,"id");
+			} catch (HttpException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				webmo.setStatus(-1);
+				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！");
+				baseDao.save(webmo,WebMonitorInfo.class,"id");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				webmo.setStatus(-1);
+				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！");
+				baseDao.save(webmo,WebMonitorInfo.class,"id");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				webmo.setStatus(-1);
+				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！"+e.getMessage());
+				baseDao.save(webmo,WebMonitorInfo.class,"id");
+			}
 		}
 	}
 }
