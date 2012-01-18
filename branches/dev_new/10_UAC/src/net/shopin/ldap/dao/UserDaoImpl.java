@@ -509,9 +509,9 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
-			filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*)))";
 		}else{
-			filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(title=*)(displayName=*))";
+			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*)(cn=*)(title=*)(displayName=*)))";
 		}
 		List<User> users = ldapTemplate.search("ou=users", filter, getContextMapper());
 
@@ -524,15 +524,18 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	public List<User> findUserList(String deptDN, String uidORName, long limit) {
+		if(StringUtils.isNotEmpty(deptDN) && deptDN.contains(PropertiesUtil.getProperties("base"))){
+			deptDN = deptDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+		}
 		String filters = null;
 		List<User> users = new ArrayList();
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(StringUtils.isNotEmpty(uidORName)){
-			filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))";
+			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*)))";
 			
 		}else{
-			filter="(&(objectClass=shopin-inetOrgPerson)|(uid=*)(cn=*)(title=*)(displayName=*))";
+			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*)(cn=*)(title=*)(displayName=*)))";
 		}
 		SearchControls controls  = new SearchControls();
 		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);

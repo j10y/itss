@@ -32,7 +32,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.taglibs.standard.lang.jstl.ArraySuffix;
 import org.springframework.ldap.NameAlreadyBoundException;
 import org.springframework.ldap.samples.utils.LdapTreeBuilder;
 
@@ -394,6 +396,7 @@ public class UserServlet extends HttpServlet {
 		for(String groupDN : newRealateDNs) {
 			UserGroup userGroup = groupDao.findByDN(groupDN);
 			if(userGroup != null) {
+				if(ArrayUtils.isEmpty(userGroup.getMembers())){continue;}
 				List<String> list = Arrays.asList(userGroup.getMembers());
 				List<String> memberList = new ArrayList<String>(list);
 				if(!memberList.contains(user.getDn())) {//该用户组不包含当前用户，则加入
@@ -420,6 +423,7 @@ public class UserServlet extends HttpServlet {
 		for(String groupDN : delRealateDNs) {
 			UserGroup userGroup = groupDao.findByDN(groupDN);
 			if(userGroup != null) {
+				if(ArrayUtils.isEmpty(userGroup.getMembers())){continue;}
 				List<String> list = Arrays.asList(userGroup.getMembers());
 				List<String> memberList = new ArrayList<String>(list);
 				if(memberList.contains(user.getDn())) {//该用户组不包含当前用户，则加入
