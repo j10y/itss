@@ -286,7 +286,8 @@ UserModifyForm = Ext.extend(Ext.Window, {
 								}, {
 									name : "mail",
 									id : "mail",
-									fieldLabel : "邮箱"
+									fieldLabel : "邮箱",
+									allowBlank : false
 								}, {
 									name : "mobile",
 									id : "mobile",
