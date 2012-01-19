@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="belongTitleDN" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="cn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="departmentNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="deptName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="displayName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="displayOrder" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -50,16 +51,18 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user", propOrder = { "belongDeptDN", "belongTitleDN", "cn",
-		"departmentNumber", "description", "displayName", "displayOrder", "dn",
-		"employeeNumber", "employeeType", "facsimileTelephoneNumber",
-		"givenName", "mail", "mobile", "o", "password", "photo", "sn",
-		"status", "telephoneNumber", "title", "uid", "userType" })
+		"departmentNumber", "deptName", "description", "displayName",
+		"displayOrder", "dn", "employeeNumber", "employeeType",
+		"facsimileTelephoneNumber", "givenName", "mail", "mobile", "o",
+		"password", "photo", "sn", "status", "telephoneNumber", "title", "uid",
+		"userType" })
 public class User {
 
 	protected String belongDeptDN;
 	protected String belongTitleDN;
 	protected String cn;
 	protected String departmentNumber;
+	protected String deptName;
 	protected String description;
 	protected String displayName;
 	protected Integer displayOrder;
@@ -162,6 +165,27 @@ public class User {
 	 */
 	public void setDepartmentNumber(String value) {
 		this.departmentNumber = value;
+	}
+
+	/**
+	 * Gets the value of the deptName property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getDeptName() {
+		return deptName;
+	}
+
+	/**
+	 * Sets the value of the deptName property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setDeptName(String value) {
+		this.deptName = value;
 	}
 
 	/**

@@ -38,6 +38,8 @@ public class User  implements Serializable {
 	
 	private String belongTitleDN;//所在职位的DN
 	
+	private String deptName;//仅供用来接口兼容
+	
 	public String getGivenName() {
 		return givenName;
 	}
@@ -137,7 +139,10 @@ public class User  implements Serializable {
 		return o;
 	}
 	
-
+	public void setDeptName(String deptName) {
+		this.o = deptName;
+	}
+	
 	public String getDescription() {
 		return description;
 	}
