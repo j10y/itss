@@ -72,9 +72,16 @@ public class DeptDaoImpl implements DeptDao {
 		// TODO Auto-generated method stub
 		DistinguishedName dn = null;
 		if(StringUtils.isNotEmpty(department.getDeptNo())){
-			dn = new DistinguishedName(department.getDeptNo());
+			String deptNO = department.getDeptNo();
+			if(deptNO.contains(PropertiesUtil.getProperties("base"))){
+				deptNO = deptNO.replace(("," + PropertiesUtil.getProperties("base")), "");
+			}
+			dn = new DistinguishedName(deptNO);
 		}else{//添加子部门
 			String parentDN = department.getParentNo();
+			if(parentDN.contains(PropertiesUtil.getProperties("base"))){
+				parentDN = parentDN.replace(("," + PropertiesUtil.getProperties("base")), "");
+			}
 			final List<String> children = new ArrayList();
 			ldapTemplate.listBindings(parentDN,
 					new AbstractContextMapper() {
