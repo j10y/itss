@@ -509,9 +509,9 @@ public class UserDaoImpl implements UserDao {
 		DirContextAdapter context = new DirContextAdapter(DistinguishedName.EMPTY_PATH);
 		String filter=null;
 		if(uidORName != null && !uidORName.equals("")){
-			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*)))";
+			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*" + uidORName + "*)(cn=*"+ uidORName + "*)(title=*"+ uidORName + "*)(displayName=*"+ uidORName + "*))(status=0))";
 		}else{
-			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*)(cn=*)(title=*)(displayName=*)))";
+			filter="(&(objectClass=shopin-inetOrgPerson)(|(uid=*)(cn=*)(title=*)(displayName=*))(status=0))";
 		}
 		List<User> users = ldapTemplate.search("ou=orgnizations", filter, getContextMapper());
 
