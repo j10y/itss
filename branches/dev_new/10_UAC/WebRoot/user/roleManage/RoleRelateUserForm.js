@@ -183,6 +183,7 @@ RoleRelateUserForm = Ext.extend(Ext.Window, {
 					buttons : Ext.MessageBox.OK,
 					icon : Ext.MessageBox.INFO
 				});
+				a.close();
 			},
 			failure : function() {
 				Ext.MessageBox.show({
