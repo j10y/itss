@@ -40,77 +40,77 @@ public class ProcessRunServiceImpl extends BaseServiceImpl<ProcessRun>
 	private JbpmService jbpmService;
 
 	public ProcessRunServiceImpl(ProcessRunDao dao) {
-		/* 45 */super(dao);
-		/* 46 */this.dao = dao;
+		super(dao);
+		this.dao = dao;
 	}
 
 	public ProcessRun getByExeId(String exeId) {
-		/* 55 */ProcessInstance pi = this.jbpmService
+		ProcessInstance pi = this.jbpmService
 				.getProcessInstanceByExeId(exeId);
-		/* 56 */if (pi != null) {
-			/* 57 */return getByPiId(pi.getId());
+		if (pi != null) {
+			return getByPiId(pi.getId());
 		}
-		/* 59 */return null;
+		return null;
 	}
 
 	public ProcessRun getByTaskId(String taskId) {
-		/* 63 */ProcessInstance pi = this.jbpmService
+		ProcessInstance pi = this.jbpmService
 				.getProcessInstanceByTaskId(taskId);
-		/* 64 */if (pi != null) {
-			/* 65 */return getByPiId(pi.getId());
+		if (pi != null) {
+			return getByPiId(pi.getId());
 		}
-		/* 67 */return null;
+		return null;
 	}
 
 	public ProcessRun getByPiId(String piId) {
-		/* 71 */return this.dao.getByPiId(piId);
+		return this.dao.getByPiId(piId);
 	}
 
 	public ProcessRun initNewProcessRun(ProDefinition proDefinition) {
-		/* 80 */ProcessRun processRun = new ProcessRun();
-		/* 81 */AppUser curUser = ContextUtil.getCurrentUser();
+		ProcessRun processRun = new ProcessRun();
+		AppUser curUser = ContextUtil.getCurrentUser();
 
-		/* 83 */Date curDate = new Date();
-		/* 84 */SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
+		Date curDate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
-		/* 86 */processRun.setSubject(proDefinition.getName()
+		processRun.setSubject(proDefinition.getName()
 				+ sdf.format(curDate) + "(" + curUser.getFullname() + ")");
-		/* 87 */processRun.setCreator(curUser.getFullname());
-		/* 88 */processRun.setAppUser(curUser);
-		/* 89 */processRun.setCreatetime(curDate);
-		/* 90 */processRun.setProDefinition(proDefinition);
+		processRun.setCreator(curUser.getFullname());
+		processRun.setAppUser(curUser);
+		processRun.setCreatetime(curDate);
+		processRun.setProDefinition(proDefinition);
 
-		/* 92 */return processRun;
+		return processRun;
 	}
 
 	public void saveProcessRun(ProcessRun processRun, ProcessForm processForm,
 			FlowRunInfo runInfo) {
-		/* 102 */Map variables = new HashMap();
+		Map variables = new HashMap();
 
-		/* 105 */variables.putAll(runInfo.getVariables());
+		variables.putAll(runInfo.getVariables());
 
-		/* 108 */save(processRun);
+		save(processRun);
 
-		/* 110 */boolean isNewsForm = processForm.getFormId() == null;
+		boolean isNewsForm = processForm.getFormId() == null;
 
-		/* 112 */if (isNewsForm) {
-			/* 113 */AppUser curUser = ContextUtil.getCurrentUser();
+		if (isNewsForm) {
+			AppUser curUser = ContextUtil.getCurrentUser();
 
-			/* 115 */processForm.setCreatorId(curUser.getUserId());
-			/* 116 */processForm.setCreatorName(curUser.getFullname());
+			processForm.setCreatorId(curUser.getUserId());
+			processForm.setCreatorName(curUser.getFullname());
 		}
 
-		/* 120 */this.processFormDao.save(processForm);
+		this.processFormDao.save(processForm);
 
-		/* 122 */Iterator fieldNames = runInfo.getParamFields().keySet()
+		Iterator fieldNames = runInfo.getParamFields().keySet()
 				.iterator();
 
-		/* 124 */while (fieldNames.hasNext()) {
-			/* 125 */String fieldName = (String) fieldNames.next();
-			/* 126 */ParamField paramField = (ParamField) runInfo
+		while (fieldNames.hasNext()) {
+			String fieldName = (String) fieldNames.next();
+			ParamField paramField = (ParamField) runInfo
 					.getParamFields().get(fieldName);
-			/* 127 */FormData fd = null;
-			/* 128 */if (!isNewsForm) {
+			FormData fd = null;
+			if (!isNewsForm) {
 				/* 129 */fd = this.formDataDao.getByFormIdFieldName(
 						processForm.getFormId(), fieldName);
 				/* 130 */fd.copyValue(paramField);
@@ -201,38 +201,31 @@ public class ProcessRunServiceImpl extends BaseServiceImpl<ProcessRun>
 	}
 
 	public void remove(Long runId) {
-		/* 220 */ProcessRun processRun = (ProcessRun) this.dao.get(runId);
-		/* 221 */if (ProcessRun.RUN_STATUS_INIT.equals(processRun
+		ProcessRun processRun = (ProcessRun) this.dao.get(runId);
+		if (ProcessRun.RUN_STATUS_INIT.equals(processRun
 				.getRunStatus())) {
-			/* 222 */List<ProcessForm> processForms = this.processFormDao
+			List<ProcessForm> processForms = this.processFormDao
 					.getByRunId(runId);
-			/* 223 */for (ProcessForm processForm : processForms) {
-				/* 224 */this.processFormDao.remove(processForm);
+			for (ProcessForm processForm : processForms) {
+				this.processFormDao.remove(processForm);
 			}
 		}
-		/* 227 */this.dao.remove(processRun);
+		this.dao.remove(processRun);
 	}
 
 	public void removeByDefId(Long defId) {
-		/* 236 */List processRunList = this.dao.getByDefId(defId,
+		List processRunList = this.dao.getByDefId(defId,
 				new PagingBean(0, 25));
-		/* 237 */for (int i = 0; i < processRunList.size(); i++) {
-			/* 238 */this.dao.remove((ProcessRun) processRunList.get(i));
+		for (int i = 0; i < processRunList.size(); i++) {
+			this.dao.remove((ProcessRun) processRunList.get(i));
 		}
 
-		/* 241 */if (processRunList.size() == 25)
-			/* 242 */removeByDefId(defId);
+		if (processRunList.size() == 25)
+			removeByDefId(defId);
 	}
 
 	public List<ProcessRun> getByUserIdSubject(Long userId, String subject,
 			PagingBean pb) {
-		/* 254 */return this.dao.getByUserIdSubject(userId, subject, pb);
+		return this.dao.getByUserIdSubject(userId, subject, pb);
 	}
 }
-
-/*
- * Location:
- * C:\Users\Jack\Downloads\oa\joffice131Tomcat6\joffice131Tomcat6\tomcat6
- * -joffice\webapps\joffice1.3.1\WEB-INF\classes\ Qualified Name:
- * com.xpsoft.oa.service.flow.impl.ProcessRunServiceImpl JD-Core Version: 0.6.0
- */
