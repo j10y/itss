@@ -25,6 +25,7 @@ import net.shopin.ldap.dao.UserDao;
 import net.shopin.ldap.entity.User;
 import net.shopin.ldap.entity.UserGroup;
 import net.shopin.util.PropertiesUtil;
+import net.shopin.util.Result;
 import net.shopin.util.SpringContextUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -34,7 +35,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.taglibs.standard.lang.jstl.ArraySuffix;
 import org.springframework.ldap.NameAlreadyBoundException;
 import org.springframework.ldap.samples.utils.LdapTreeBuilder;
 
@@ -355,6 +355,13 @@ public class UserServlet extends HttpServlet {
 					json.deleteCharAt(json.length() - 1);
 				}
 				json.append("]");
+			} else if(methodCall.equalsIgnoreCase("validateUser")) {
+				Result result = validateUser(req);
+				if(!result.isSuccess()){
+					json = new StringBuffer("false");
+				}else{
+					json = new StringBuffer("true");
+				}
 			}
 		}catch(NameAlreadyBoundException e){
 			e.printStackTrace();
@@ -371,6 +378,23 @@ public class UserServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Result validateUser(HttpServletRequest req) {
+		Result result = new Result();
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		User user = userDao.findByPrimaryKey(username);
+		if(user==null){
+			result.setMsg("用户不存在！");
+		}else{
+			if (!user.getPassword().equals(password)) {
+				result.setMsg("密码不正确！");
+			}else{
+				result.setSuccess(true);
+			}
+		}
+		return result;
 	}
 
 	private void modifyUser(HttpServletRequest req, User user) {
