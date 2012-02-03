@@ -615,7 +615,7 @@ ArchivesDraftView = Ext
 																			+ "/archive/comboArchivesType.do",
 																	fields : [
 																			"typeId",
-																			"typeName" ]
+																			"typeName", "defId" ]
 																}),
 														displayField : "typeName",
 														valueField : "typeId",
@@ -627,6 +627,7 @@ ArchivesDraftView = Ext
 																				"archives.typeName")
 																		.setValue(
 																				b.data.typeName);
+																ArchivesDraftView.defId = b.data.defId;
 															}
 														}
 													}
