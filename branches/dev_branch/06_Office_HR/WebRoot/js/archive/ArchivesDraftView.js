@@ -627,7 +627,7 @@ ArchivesDraftView = Ext
 																				"archives.typeName")
 																		.setValue(
 																				b.data.typeName);
-																ArchivesDraftView.defId = b.data.defId;
+																Ext.getCmp("ArchivesDraftView").setDefId(b.data.defId);
 															}
 														}
 													}
