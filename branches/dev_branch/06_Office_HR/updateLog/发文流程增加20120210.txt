@@ -23,7 +23,14 @@ js列表：
 /js/archive/ArchivesIssueMonitor.js
 /js/archive/ArchivesIssueManage.js
 /js/archive/ArchivesDraftManage.js
+/js/archive/ArchivesDraftView.js
+
+/js/App.import.js
+
 
 jsp列表
 /pages/archive/archiveInfo.jsp
 
+
+公文菜单的更新：
+js/menu/menu.xml
