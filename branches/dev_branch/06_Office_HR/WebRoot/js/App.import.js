@@ -282,6 +282,7 @@ App.importJs = {
 			__ctxPath + "/js/archive/ArchivesDraftView.js",
 			__ctxPath + "/js/archive/ArchivesDocForm.js",
 			__ctxPath + "/js/archive/ArchTemplateView.js",
+			__ctxPath + "/js/archive/ArchTemplateForm.js",
 			__ctxPath + "/js/archive/ArchTemplateSelector.js",
 			__ctxPath + "/js/archive/OfficeTemplateView.js",
 			__ctxPath + "/js/archive/ArchivesDocHistoryWin.js" ],
