@@ -1439,13 +1439,13 @@ public class FlowServiceImpl implements FlowService {
 		String sql="";
 		if(pep.getIsDist()==null||pep.getIsDist()==0){
 			sql = "select app_user.* from user_role,app_role,app_user "
-				+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
+				+ "where user_role.roleId=app_role.roleId and app_user.userId=user_role.userId and app_user.delFlag=0 and app_user.status=1 ";
 			sql += "and app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+")";
 		}else{
 			while(pep!=null&&pep.getIsDist()==1){//如果是分局，又不是顶层的话，找到顶层
 				pep=this.findDepartmentByDeptId(pep.getParentId());
 			}
-			sql="select app_user.* from app_user where depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
+			sql="select app_user.* from app_user where app_user.delFlag=0 and app_user.status=1 and depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
 		}
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
@@ -1468,12 +1468,12 @@ public class FlowServiceImpl implements FlowService {
 		Department pep=this.findDepartmentByDeptId(deptId);
 		String sql="";
 		if(pep.getIsDist()==null||pep.getIsDist()==0){
-			 sql = "select app_user.* from department,app_user where app_user.depId=department.depId and department.isDist!=0 and app_user.userId>0";
+			 sql = "select app_user.* from department,app_user where app_user.delFlag=0 and app_user.status=1 and app_user.depId=department.depId and department.isDist!=0 and app_user.userId>0";
 		}else{
 			while(pep!=null&&pep.getIsDist()==1){//如果是分局，又不是顶层的话，找到顶层
 				pep=this.findDepartmentByDeptId(pep.getParentId());
 			}
-			sql="select app_user.* from app_user where depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
+			sql="select app_user.* from app_user where  app_user.delFlag=0 and app_user.status=1 and app_user.delFlag=0 and app_user.status=1 and depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
 		}
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
@@ -1497,13 +1497,13 @@ public class FlowServiceImpl implements FlowService {
 		String sql="";
 		if(pep.getIsDist()==null||pep.getIsDist()==0){
 			sql= "select app_user.* from app_role,app_user,user_role "
-				+ "where  user_role.roleId=app_role.roleId and app_user.userId=user_role.userId ";
+				+ "where  user_role.roleId=app_role.roleId and app_user.userId=user_role.userId and app_user.delFlag=0 and app_user.status=1 ";
 			sql += "and (app_role.roleId="+AppUtil.getPropertity("role.leaderId")+" or app_role.roleId in ("+AppUtil.getPropertity("role.proxyLeaderId")+"))";
 		}else{
 			while(pep!=null&&pep.getIsDist()==1){//如果是分局，又不是顶层的话，找到顶层
 				pep=this.findDepartmentByDeptId(pep.getParentId());
 			}
-			sql="select app_user.* from app_user where depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
+			sql="select app_user.* from app_user where app_user.delFlag=0 and app_user.status=1 and depId in (select department.depId from department where department.path like '"+pep.getPath()+"%')";
 		}
 		List<Map> list = userService.findDataList(sql);
 		String json="{\"success\":true,data:[";
