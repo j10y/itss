@@ -37,17 +37,17 @@
 	</Items>
 	
 	<Items id="Archive" text="公文管理" iconCls="menu-archive" isPublic="false">
-		<Items id="ArchFlowConfView" text="公文配置" iconCls="menu-archive-setting">
-		   <Function id="_ArchFlowConfEdit" text="修改配置" iconCls="btn-edit">
-		      <url>/archive/saveArchFlowConf.do</url>
-		      <url>/archive/getArchFlowConf.do</url>
-		      <url>/archive/depListArchRecUser.do</url>
-		      <url>/archive/selectArchRecUser.do</url>
-		      <url>/archive/saveArchRecUser.do</url>
-		      <url>/flow/listProDefinition.do</url>
-		   </Function>
-		</Items>
-		<Items id="ArchiveIssue" text="发文管理" iconCls="menu-archive-issue">
+		<Items id="ArchiveSetting" text="公文配置" iconCls="menu-archive-setting" isPublic="false">
+			<Item id="ArchFlowConfView" text="公文配置" iconCls="menu-archive-setting">
+				<Function id="_ArchFlowConfEdit" text="修改配置" iconCls="btn-edit">
+				      <url>/archive/saveArchFlowConf.do</url>
+				      <url>/archive/getArchFlowConf.do</url>
+				      <url>/archive/depListArchRecUser.do</url>
+				      <url>/archive/selectArchRecUser.do</url>
+				      <url>/archive/saveArchRecUser.do</url>
+				      <url>/flow/listProDefinition.do</url>
+		  		 </Function>
+			</Item>
 			<Item id="ArchiveTypeTempView" text="公文类别、模板管理" iconCls="menu-archive-template">
 			    <Function id="_ArchiveTypeTempQuery" text="查看" iconCls="menu-list">
 			         <url>/archive/treeArchivesType.do</url>
@@ -88,6 +88,8 @@
 			         <url>/archive/multiDelArchTemplate.do</url>
 			    </Function>
 			</Item>
+		</Items>
+		<Items id="ArchiveIssue" text="发文管理" iconCls="menu-archive-issue">
 			<Item id="ArchivesDraftView" text="发文拟稿" iconCls="menu-archive-draft">
 			   <Function id="_AchivesDrafAdd" text="发文" iconCls="menu-add">
 			       <url>/archive/getFlowArchFlowConf.do</url>
@@ -105,47 +107,6 @@
 			    <Function id="_ArchivesDrafmDel" text="删除" iconCls="menu-del">
 			        <url>/archive/listArchives.do</url>
 			        <url>/archive/multiDelArchives.do</url>
-			    </Function>
-			</Item>
-			<Item id="ArchivesIssueAudit" text="科室审核" iconCls="menu-archive-department">
-			    <Function id="_ArchivesIssueQuery" text="查看" iconCls="menu-list">
-			        <url>/archive/listArchives.do</url>
-			    </Function>
-			    <Function id="_ArchivesIssueEdit" text="编辑" iconCls="btn-edit">
-			        <url>/archive/listArchives.do</url>
-			        <url>/archive/getArchives.do</url>
-			    </Function>
-			</Item>
-			<Item id="ArchivesIssueLead" text="主管领导审批" iconCls="menu-archive-lead">
-			    <Function id="_ArchivesIssueLeadQuery" text="查看" iconCls="menu-list">
-			        <url>/archive/listArchives.do</url>
-			    </Function>
-			    <Function id="_ArchivesIssueLeadEdit" text="编辑" iconCls="btn-edit">
-			        <url>/archive/listArchives.do</url>
-			       <url>/archive/getArchives.do</url>
-			    </Function>
-			</Item>
-			<Item id="ArchivesIssueCharge" text="分管领导签发" iconCls="menu-archive-charge">
-			    <Function id="_ArchivesIssueChargeQuery" text="查看" iconCls="menu-list">
-			        <url>/archive/listArchives.do</url>
-			    </Function>
-			    <Function id="_ArchivesIssueChargeEdit" text="编辑" iconCls="btn-edit">
-			        <url>/archive/listArchives.do</url>
-			       <url>/archive/getArchives.do</url>
-			    </Function>
-			</Item>
-			<Item id="ArchivesIssueProof" text="发文校对" iconCls="menu-archive-proof">
-			   <Function id="_ArchivesIssueProofQuery" text="查看" iconCls="menu-list">
-			        <url>/archive/listArchives.do</url>
-			    </Function>
-			    <Function id="_ArchivesIssueProofEdit" text="管理附件" iconCls="btn-edit">
-			       <url>/archive/listArchives.do</url>
-			       <url>/archive/getArchives.do</url>
-			    </Function>
-			</Item>
-			<Item id="ArchivesDocument" text="文件分发" iconCls="menu-archive-handout">
-			    <Function id="_ArchivesDocumentQuery" text="查看" iconCls="menu-list">
-			        <url>/archive/listArchives.do</url>
 			    </Function>
 			</Item>
 			<Item id="ArchivesIssueMonitor" text="发文监控" iconCls="menu-archive-monitor">
@@ -204,26 +165,6 @@
 			   <Function id="_ArchivesRecDel" text="删除" iconCls="menu-del">
 			      <url>/archive/listArchives.do</url>
 			      <url>/archive/multiDelArchives.do</url>
-			   </Function>
-			</Item>
-			<Item id="ArchivesHandleView" text="收文拟办" iconCls="menu-arch-handler">
-			   <Function id="_ArchivesHandleQuery" text="查看" iconCls="menu-list">
-			      <url>/archive/listArchivesHandle.do</url>
-			   </Function>
-			</Item>
-			<Item id="LeaderReadView" text="领导批示" iconCls="menu-arch-leader">
-			   <Function id="_LeaderReadQuery" text="查看" iconCls="menu-list">
-			      <url>/archive/listLeaderRead.do</url>
-			   </Function>
-			</Item>
-			<Item id="ArchDispatchView" text="文件分发" iconCls="menu-arch-dispatch">
-			   <Function id="_ArchDispatchQuery" text="查看" iconCls="menu-list">
-			      <url>/archive/listArchDispatch.do</url>
-			   </Function>
-			</Item>
-			<Item id="ArchUndertakeView" text="收文承办" iconCls="menu-arch-undertake">
-			   <Function id="_ArchUndertakeQuery" text="查看" iconCls="menu-list">
-			      <url>/archive/listArchDispatch.do</url>
 			   </Function>
 			</Item>
 			<Item id="ArchivesRecCtrlView" text="收文监控" iconCls="menu-arch-controll">
