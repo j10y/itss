@@ -28,17 +28,17 @@
 	<c:choose>
 		<c:when test="${arch.status == 1}">
 			<font style="font:1.9em 幼圆  ;color:red;font-weight: bold;">
-				(待核稿)
+				(待审批)
 			</font>
 		</c:when>
 		<c:when test="${arch.status == 2}">
 			<font style="font:1.9em 幼圆  ;color:red;font-weight: bold;">
-				(待审核)
+				(待审批)
 			</font>
 		</c:when>
 		<c:when test="${arch.status == 3}">
 			<font style="font:1.9em 幼圆  ;color:red;font-weight: bold;">
-				(待审批)
+				(已签发)
 			</font>
 		</c:when>
 		<c:when test="${arch.status == 4}">
@@ -46,24 +46,9 @@
 				(待签发)
 			</font>
 		</c:when>
-		<c:when test="${arch.status == 5}">
-			<font style="font:1.9em 幼圆  ;color:red;font-weight: bold;">
-				(待校对)
-			</font>
-		</c:when>
-		<c:when test="${arch.status == 6}">
-			<font style="font:1.9em 幼圆  ;color:red;font-weight: bold;">
-				(待分发)
-			</font>
-		</c:when>
-		<c:when test="${arch.status == 7}">
-			<font style="font:1.9em 幼圆  ;color:green;font-weight: bold;">
-				(归档)
-			</font>
-		</c:when>
 		<c:otherwise>
 			<font style="font:1.9em 幼圆  ;color:green;font-weight: bold;">
-				(草稿)
+				(归档)
 			</font>
 		</c:otherwise>
 	</c:choose>
@@ -134,18 +119,70 @@
 				  			审批流程名称
 				  		</th>
 				  		<td	colspan="3">
-				  			[发文核稿]
+				  			[发文审批]
 				  		</td>
 				  	</tr>
 					 <tr>
 					 	<th width="15%">
-					 		核稿人
+					 		审批人
 					 	</th>
 					 	<td width="15%">
 					 		${att.fullname }
 					 	</td>
 					  	<th width="15%">
-					  		核稿意见
+					  		审批意见
+					  	</th>
+			  	 		<td>
+			  	 			${att.memo }
+			  			</td>
+			  		</tr>
+		  		 </table>
+	  		</c:if>
+	  		<c:if test="${att.attendType == 3}">
+				 <table class="table-info" cellpadding="0" cellspacing="1" width="98%" align="center">
+				  	<tr>
+				  		<th width="15%">
+				  			签发流程名称
+				  		</th>
+				  		<td	colspan="3">
+				  			[发文签发]
+				  		</td>
+				  	</tr>
+					 <tr>
+					 	<th width="15%">
+					 		签发人
+					 	</th>
+					 	<td width="15%">
+					 		${att.fullname }
+					 	</td>
+					  	<th width="15%">
+					  		签发意见
+					  	</th>
+			  	 		<td>
+			  	 			${att.memo }
+			  			</td>
+			  		</tr>
+		  		 </table>
+	  		</c:if>
+	  		<c:if test="${att.attendType == 4}">
+				 <table class="table-info" cellpadding="0" cellspacing="1" width="98%" align="center">
+				  	<tr>
+				  		<th width="15%">
+				  			审核流程名称
+				  		</th>
+				  		<td	colspan="3">
+				  			[发文审核]
+				  		</td>
+				  	</tr>
+					 <tr>
+					 	<th width="15%">
+					 		审核人
+					 	</th>
+					 	<td width="15%">
+					 		${att.fullname }
+					 	</td>
+					  	<th width="15%">
+					  		审核意见
 					  	</th>
 			  	 		<td>
 			  	 			${att.memo }
