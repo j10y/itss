@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-lazy-init="true">
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		lazy-init="false">
+		<property name="triggers">
+			<list>
+				<ref local="sendMessageTrigger"/>
+				<ref local="reloadUserRoleTrigger"/>
+				<ref local="addUserPbcTrigger"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Detial -->
+    <bean id="sendMessageDetial" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="officeGoodsService"></property>
+        <property name="targetMethod" value="sendWarmMessage"></property>
+        <property name="concurrent" value="false"></property>
+    </bean>
+    <bean name="appUtilJob"
+		class="com.xpsoft.core.util.AppUtil">		
+	</bean>
+	
+    <bean id="reloadUserRoleS" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="appUtilJob"></property>
+        <property name="targetMethod" value="reloadUserRole"></property>
+        <property name="concurrent" value="false"></property>
+    </bean>
+    <!-- Trigger -->
+	<bean id="reloadUserRoleTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 早上二点钟开始调用SENDWARMMESSAGE方法-->
+		<property name="cronExpression">
+		    <value>0 0/5 * * * ?</value>
+		</property> 
+	   <property name="jobDetail" ref="reloadUserRoleS"/>
+	</bean>
+	
+	<!-- Trigger -->
+	<bean id="sendMessageTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 早上二点钟开始调用SENDWARMMESSAGE方法-->
+		<property name="cronExpression">
+		    <value>0 0 2 * * ?</value>
+		</property> 
+	   <property name="jobDetail" ref="sendMessageDetial"/>
+	</bean>
+	
+	<!-- add by guanshiqiang for scheduling add user personal PBC at every first day of a cycle at 2011-11-18 begin -->
+    <bean name="HrPaKpipbcActionJob" class="com.xpsoft.oa.action.kpi.HrPaKpipbcAction"></bean>
+    <bean id="addUserPbc" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    	<property name="targetObject" ref="HrPaKpipbcActionJob"></property>
+    	<property name="targetMethod" value="schedAddUserPbc"></property>
+    	<property name="concurrent" value="false"></property>
+    </bean>
+    <bean id="addUserPbcTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    	<!-- 每月第一天早上三点调用 schedAddUserPbc方法-->
+    	<property name="cronExpression">
+    		<value>0 0 3 1 * ?</value>
+    	</property>
+    	<property name="jobDetail" ref="addUserPbc"></property>
+    </bean>
+    <!-- add by guanshiqiang for scheduling add user personal PBC at every first day of a cycle at 2011-11-18 end -->
+	
+</beans>
