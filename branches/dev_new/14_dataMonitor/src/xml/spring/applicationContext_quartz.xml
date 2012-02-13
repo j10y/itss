@@ -19,15 +19,15 @@
 		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="defJobDetail" />
 		<property name="cronExpression">
-			<value>0 0 * * * ?</value>
+			<value>0 0/5 * * * ?</value>
 		</property>
 	</bean>
 	<bean id="schedulerFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-			<!--  
-				<ref local="defJobTrigger" />-->
+			<!--  -->
+				<ref local="defJobTrigger" />
 			</list>
 		</property>
 	</bean>
