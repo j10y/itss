@@ -137,6 +137,7 @@ public class ComQueryAction extends ActionSupport{
 		Map map=comqueryService.queryTableForAjaxService(request);
 		Map listValueMap=(Map) map.get("listValueMap");
 		MainTable maintable=(MainTable) map.get("maintable");
+		request.setAttribute("maintable", maintable);
 		Page page=selectDataService.getListForPage(request, map.get("sql").toString());
 		List<MainTableColumn> vmtclist=comqueryService.getTitleColumn(request.getParameter("tableName"));
 		List list=(List)page.getData();
@@ -156,7 +157,7 @@ public class ComQueryAction extends ActionSupport{
 //					}
 					json+="\""+mc.getColumnName()+"\":\"<div height='100%'title=\'"+comment+"\'>"+comment1+"</div>\",";
 				}else if((mc.getPropertyType().equals("5")||mc.getPropertyType().equals("10"))&&st.get(mc.getColumnName())!=null){
-					json+="\""+mc.getColumnName()+"\":\""+st.get(mc.getColumnName()).toString().substring(0,19)+"\",";
+					json+="\""+mc.getColumnName()+"\":\""+(st.get(mc.getColumnName()).toString().length()>19?st.get(mc.getColumnName()).toString().substring(0,19):st.get(mc.getColumnName()).toString())+"\",";
 				}else if(mc.getPropertyType().equals("7")){
 					String comment=mc.getTypeSql();
 					String[] comments=comment.split("#");
@@ -400,7 +401,13 @@ public class ComQueryAction extends ActionSupport{
 		}
 		if(realtableid!=null&&realtableid.length()>0){
 			String selectsql=SqlUtil.getMainSql(detailList, queryList, maintable);
-			List resoultList=selectDataService.getData(selectsql);
+			
+			List resoultList=null;
+			if(maintable.getPosition()!=null&&maintable.getPosition().equals("1")){
+				resoultList=selectDataService.getRemoteData(maintable, selectsql);
+			}else{
+				resoultList=selectDataService.getData(selectsql);
+			}
 			map=(Map) resoultList.get(0);
 			for(int i=0;i<detailList.size();i++){
 				QueryPanel qp=(QueryPanel) detailList.get(i);

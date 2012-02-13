@@ -110,6 +110,8 @@ public class ManageAction extends ActionSupport{
 		//String classPath=request.getParameter("classPath");
 		String keyColumnName=request.getParameter("keyColumnName");
 		String isPutTemp=request.getParameter("isPutTemp");
+		String position=request.getParameter("position");
+		String databaseId=request.getParameter("databaseId");
 		
 		if(keyColumnName==null||keyColumnName.equals("")){
 			keyColumnName="ID";
@@ -133,6 +135,12 @@ public class ManageAction extends ActionSupport{
 		maintable.setMultiSql(multiSql);
 		maintable.setKeyColumnName(keyColumnName);
 		maintable.setIsPutTemp(isPutTemp);
+		if(databaseId!=null&&databaseId.length()>0){
+			maintable.setDatabaseId(Long.parseLong(databaseId));
+		}
+		if(position!=null&&position.length()>0){
+			maintable.setPosition(position);
+		}
 		maintable=mainTableService.saveMainTable(maintable);
 		List list=mainTableService.findMainTableList();
 		request.setAttribute("list", list);
@@ -158,6 +166,9 @@ public class ManageAction extends ActionSupport{
 			request.setAttribute("maintable", maintable);
 			request.setAttribute("columnlist", columnlist);
 		}
+		String sql="select * from databaselist";
+		List databaselist=selectDataService.getData(sql);
+		request.setAttribute("databaselist", databaselist);
 		return "detail";
 	}
 	/**
