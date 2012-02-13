@@ -14,7 +14,22 @@ public class MainTable {
 	private String keyColumnName;//唯一标识的字段名
 	private String isPutTemp;
 	
+	private String position;//0 本地 1 远程
 	
+	private Long databaseId;//数据库配置信息ID
+	
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public Long getDatabaseId() {
+		return databaseId;
+	}
+	public void setDatabaseId(Long databaseId) {
+		this.databaseId = databaseId;
+	}
 	public String getIsPutTemp() {
 		return isPutTemp;
 	}

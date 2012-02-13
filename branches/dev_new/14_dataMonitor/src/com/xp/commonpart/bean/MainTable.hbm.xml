@@ -20,5 +20,7 @@
      	 <property name="multiSql" type="string" column="MULTISQL" length="2000"/>
      	 <property name="keyColumnName" type="string" column="KEY_COLUMN_NAME"/>
      	 <property name="isPutTemp" type="string" column="ISPUTTEMP"/>
+     	 <property name="position" type="string" column="POSITION"/>
+     	 <property name="databaseId" type="long" column="DATABASEID"/>
     </class>
 </hibernate-mapping>
