@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.xp.commonpart.Page;
+import com.xp.commonpart.bean.MainTable;
 /**
  * 通过sql语句进行的基础接口
  * @author tongjp
@@ -59,4 +60,11 @@ public interface SelectDataService {
 	 * @return
 	 */
 	public Page getListForPage(HttpServletRequest request,String sql); 
+	/**
+	 * 远程获取数据
+	 * @param maintable
+	 * @param sqlpage
+	 * @return
+	 */
+	public List getRemoteData(MainTable maintable,String sqlpage);
 }
