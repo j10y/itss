@@ -20,9 +20,18 @@
 	  var xform = document.maintableform;
 	  var isMulti=document.getElementById("isMulti").value;
 	  var multiSql=document.getElementById("multiSql").value;
+	  var position=document.getElementById("position").value;
+	  var databaseId=document.getElementById("databaseId").value;
+	 
 	  if(isMulti==1&&(multiSql==null||multiSql.length==0)){
 	  	alert("当为拼接表是，获取表名的sql不能为空！");
 	  	return false;
+	  }
+	  if(position==1){
+		  if(databaseId==""||databaseId.length==0){
+		  	alert("如果远程，服务器地址不能为空");
+		  	return false;
+		  }
 	  }
 	 // alert(isMulti);
 	  //alert(multiSql);
@@ -103,7 +112,24 @@
    <textarea id="multiSql" name="multiSql" rows="5" cols="70">${maintable.multiSql }</textarea>
    </td>
    </tr>
-   
+    <tr>
+   <td bgcolor="#FFFFFF">是否远程</td>
+   <td bgcolor="#FFFFFF">
+     <select name="position" id="position" >
+         <option value="0" <c:if test="${maintable.position eq 0 }">selected</c:if> >本地</option>
+         <option value="1" <c:if test="${maintable.position eq 1 }">selected</c:if> >远程</option>
+      </select> 
+   </td>
+   <td bgcolor="#FFFFFF">服务器地址</td>
+   <td bgcolor="#FFFFFF">
+     <select name="databaseId" id="databaseId" >
+     <option value="" >请选择</option>
+     <c:forEach var="database" items="${databaselist}">
+         <option value="${database['id'] }" <c:if test="${database['id'] eq maintable.databaseId }">selected</c:if> >${database['ipaddress'] }/${database['dataName'] }</option>
+     </c:forEach>  
+     </select> 
+   </td>
+   </tr>
    <tr>
    <td colspan="3" bgcolor="#FFFFFF">
    </td>
