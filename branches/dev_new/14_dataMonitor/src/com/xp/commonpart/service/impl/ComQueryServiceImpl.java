@@ -586,11 +586,19 @@ public class ComQueryServiceImpl implements ComQueryService{
 			String id=map.get("id")!=null?map.get("id").toString():"";
 			String webName=map.get("webName")!=null?map.get("webName").toString():"";
 			String webUrl=map.get("webUrl")!=null?map.get("webUrl").toString():"";
+			String telephoneUser=map.get("telephoneUser")!=null?map.get("telephoneUser").toString():"";
 			HttpClient client = new HttpClient(); 
+			client.setConnectionTimeout(3000);//设置为延时3秒
+			client.setTimeout(3000);
 		    HttpMethod method=new GetMethod(webUrl);
 		    WebMonitorInfo webmo=new WebMonitorInfo();
 		    webmo.setWebId(Long.parseLong(id));
 		    webmo.setCreateDate(new Date());
+		    List<Map> userlist=new ArrayList();
+		    if(telephoneUser!=null&&telephoneUser.length()>0){
+		    	String telsql="select * from sys_sec_userinfo where id in ("+telephoneUser+")";
+		    	userlist=selectDataService.getData(telsql);
+		    }
 		    try {
 				client.executeMethod(method);
 				int status=method.getStatusCode();
@@ -600,6 +608,14 @@ public class ComQueryServiceImpl implements ComQueryService{
 				}else{
 					webmo.setStatus(-1);
 					webmo.setDescrpition("访问应用失败，原因："+method.getStatusLine());
+					for(Map userMap:userlist){
+						String realname=userMap.get("realname")!=null?userMap.get("realname").toString():"";
+						String telp=userMap.get("mobiphone")!=null?userMap.get("mobiphone").toString():"";
+						String message="webName:"+webName+",webUrl:"+webUrl+"访问应用失败，原因："+method.getStatusLine();
+						if(telp!=null&&telp.length()>0){
+							ExceptionMessage.sendMessage(message,telp,realname);
+						}
+					}
 				}
 			    //释放连接
 			    method.releaseConnection();
@@ -610,18 +626,42 @@ public class ComQueryServiceImpl implements ComQueryService{
 				webmo.setStatus(-1);
 				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！");
 				baseDao.save(webmo,WebMonitorInfo.class,"id");
+				for(Map userMap:userlist){
+					String realname=userMap.get("realname")!=null?userMap.get("realname").toString():"";
+					String telp=userMap.get("mobiphone")!=null?userMap.get("mobiphone").toString():"";
+					String message="webName:"+webName+",webUrl:"+webUrl+"访问应用失败，原因：访问服务器失败！";
+					if(telp!=null&&telp.length()>0){
+						ExceptionMessage.sendMessage(message,telp,realname);
+					}
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				webmo.setStatus(-1);
 				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！");
 				baseDao.save(webmo,WebMonitorInfo.class,"id");
+				for(Map userMap:userlist){
+					String realname=userMap.get("realname")!=null?userMap.get("realname").toString():"";
+					String telp=userMap.get("mobiphone")!=null?userMap.get("mobiphone").toString():"";
+					String message="webName:"+webName+",webUrl:"+webUrl+"访问应用失败，原因：访问服务器失败！";
+					if(telp!=null&&telp.length()>0){
+						ExceptionMessage.sendMessage(message,telp,realname);
+					}
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				webmo.setStatus(-1);
 				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！"+e.getMessage());
 				baseDao.save(webmo,WebMonitorInfo.class,"id");
+				for(Map userMap:userlist){
+					String realname=userMap.get("realname")!=null?userMap.get("realname").toString():"";
+					String telp=userMap.get("mobiphone")!=null?userMap.get("mobiphone").toString():"";
+					String message="webName:"+webName+",webUrl:"+webUrl+"访问应用失败，原因：访问服务器失败！";
+					if(telp!=null&&telp.length()>0){
+						ExceptionMessage.sendMessage(message,telp,realname);
+					}
+				}
 			}
 		}
 	}
