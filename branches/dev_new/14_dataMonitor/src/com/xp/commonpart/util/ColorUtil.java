@@ -19,7 +19,17 @@ public final class ColorUtil {
 		list.add("DBFF25");
 		list.add("DBEE25");
 		list.add("DBCC25");
-		
+		list.add("F1383C");
+		list.add("2AE62A");
+		list.add("DBEC25");
+		list.add("DBAF25");
+		list.add("DBAE27");
+		list.add("DBAC27");
+		list.add("FFFFE0");
+		list.add("00EEFF");
+		list.add("1DEED1");
+		list.add("ffEEa7");
+		list.add("F1EE3C");
 		return list;
 	}
 }
