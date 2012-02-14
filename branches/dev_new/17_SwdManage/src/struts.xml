@@ -168,6 +168,9 @@
 		<action name="*TmTemplate" class="TmTemplateAction" method="{1}">
 			<result>${successResultValue}</result>
 		</action>
+		<action name="*TmSend" class="TmSendAction" method="{1}">
+			<result>${successResultValue}</result>
+		</action>
 	</package>
 	<package name="danpin" extends="struts-default" namespace="/danpin">
 		<action name="*SupplyInfo" class="SupplyInfoAction" method="{1}">
