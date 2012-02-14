@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.miswap.TmSend"
+        table="tm_send"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="id"
+            column="id"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+        <property
+            name="sendDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="send_date"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="sendCount"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="send_count"
+            not-null="false"
+            unique="false"
+        />
+    </class>
+</hibernate-mapping>
