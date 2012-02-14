@@ -267,103 +267,24 @@
 		<Item id="ProcessRunView" text="我的申请流程" iconCls="menu-flowMine" />
 		<Item id="ProcessRunFinishView" text="已办结流程" iconCls="menu-flowEnd"/>
 	</Items>
-	<Items id="BandPoor" text="品牌池管理" iconCls="menu-kpfxxgl" isPublic="false">
-		<Items id="ScoreManage" text="可评分管理" iconCls="menu-kpfgl" >
-			<Item id="ScoreManageView" text="可评分信息管理" iconCls="menu-kpfxxgl" >
-				<Function id="_ScoreManageAdd" text="添加" iconCls="menu-list">
-				</Function>
-				<Function id="_ScoreManageDel" text="删除" iconCls="menu-list">
-				</Function>
-				<Function id="_ScoreManageEdit" text="修改" iconCls="menu-list">
-				</Function>
-				<Function id="_ScoreManageImport" text="批量导入品牌信息" iconCls="menu-list">
-				</Function>
-			</Item>
-			<Item id="ApplyScoreManage" text="可评分信息审核" iconCls="menu-kpfxxsh" >
-				<Function id="_ApplyScoreManagePass" text="审批通过" iconCls="menu-list">
-				</Function>
-				<Function id="_ApplyScoreManageUnPass" text="打回" iconCls="menu-list">
-				</Function>
-			</Item>
-			<Item id="DXCScoreManage" text="可评分待选池评分" iconCls="menu-kpfdxcpf" >
-				<Function id="_DXCScoreManageSet" text="指定分值设定" iconCls="menu-list">
-				</Function>
-				<Function id="_DXCScoreManageAllSet" text="全部设定" iconCls="menu-list">
-				</Function>
-				<Function id="_DXCScoreManageCountScore" text="分值计算" iconCls="menu-list">
-				</Function>
-				<Function id="_DXCScoreManageDel" text="删除" iconCls="menu-list">
-				</Function>
-			</Item>
-			<Item id="YYCScoreManage" text="可评分应用池管理" iconCls="menu-kpfxxgl" >
-				<Function id="_YYCScoreManageSet" text="设定品牌等级" iconCls="menu-list">
-				</Function>
-			</Item>
-			<Item id="BXCScoreManage" text="可评分备选池查看" iconCls="menu-kpfbxcck" >
-			</Item>
-			<Item id="ModifyScoreManageView" text="可评分信息修正" iconCls="menu-kpfxxxz" >
-				<Function id="_ModifyScoreManageAdd" text="添加" iconCls="menu-list">
-				</Function>
-				<Function id="_ModifyScoreManageDel" text="删除信息并同步品牌池" iconCls="menu-list">
-				</Function>
-				<Function id="_ModifyScoreManagePass" text="审核并进入品牌池" iconCls="menu-list">
-				</Function>
-			</Item>
-		</Items>
-		<Items id="UnScoreManage" text="不可评分管理" iconCls="menu-kpfgl" >
-			<Item id="UnScoreManageView" text="不可评分信息管理" iconCls="menu-bkpfxxgl" >
-				<Function id="_UnScoreManageAdd" text="添加" iconCls="menu-list">
-				</Function>
-				<Function id="_UnScoreManageEdit" text="编辑" iconCls="menu-list">
-				</Function>
-				<Function id="_UnScoreManageDel" text="删除" iconCls="menu-list">
-				</Function>
-			</Item>
-			<Item id="ApplyUnScoreManage" text="不可评分信息审核" iconCls="menu-bkpfxxsh" >
-				<Function id="_ApplyUnScoreManagePass" text="审批通过" iconCls="menu-list">
-				</Function>
-				<Function id="_ApplyUnScoreManageUnPass" text="打回" iconCls="menu-list">
-				</Function>
-			</Item>
-			<Item id="DXCUnScoreManage" text="不可评分待选池考核" iconCls="menu-kpfdxcpf" >
-				<Function id="_DXCUnScoreManageCheck" text="考核" iconCls="menu-list">
-				</Function>
-				<Function id="_DXCUnScoreManageDel" text="删除" iconCls="menu-list">
-				</Function>
-			</Item>
-			<Item id="PPCUnScoreManage" text="不可评分品牌池管理" iconCls="menu-bkpfppcgl" >
-			</Item>
-		</Items>
-		<Items id="PoorDictionary" text="相关类型管理" iconCls="menu-xglxgl" >
-			<Item id="BandView" text="品牌管理" iconCls="menu-ppgl" >
-			</Item>
-			<Item id="ProClassView" text="品类管理" iconCls="menu-plgl" >
-			</Item>
-			<Item id="BandStyleView" text="品牌风格管理" iconCls="menu-ppfggl" >
-			</Item>
-			<Item id="BusinessAreaView" text="商圈管理" iconCls="menu-sqgl" >
-			</Item>
-			<Item id="SaleStoreView" text="可评分商场管理" iconCls="menu-kpfscgl" >
-			</Item>
-			<Item id="BandLevelView" text="可应用品牌池分类" iconCls="menu-kyyppcfl" >
-			</Item>
-			<Item id="BandChannelView" text="品牌渠道" iconCls="menu-ppqd" >
-			</Item>
-			<!-- 
-			<Item id="MainPriceView" text="主力价格" iconCls="menu-flowNew" >
-			</Item> -->
-			<Item id="FloorView" text="楼层管理" iconCls="menu-lcgl" >
-			</Item>
-			<Item id="BpShopinBandView" text="品牌关联管理" iconCls="menu-flowNew" >
-			</Item>
-			<Item id="BpShopinPorClassView" text="品类关联管理" iconCls="menu-flowNew" >
-			</Item>
-		</Items>
-		<Items id="AutoCollectionInfoManage" text="自动采集信息管理" iconCls="menu-zdcjxxgl" >
-			<Item id="AutoCollectionInfoView" text="自动采集信息管理" iconCls="menu-zdcjxxgl1" >
-				<Function id="_AutoCollectionDel" text="删除" iconCls="menu-list">
-				</Function>
-			</Item>
-		</Items>
+	
+	<Items id="MisWap" text="供应商报表管理" iconCls="menu-kpfxxgl" isPublic="false">
+		<Item id="SupplyInfoView" text="供应商管理" iconCls="menu-kpfgl">
+			<Function id="_SupplyInfoSendConfig" text="发送配置" iconCls="menu-list">
+			</Function>
+			<Function id="_SupplyLinkerManage" text="联系人管理" iconCls="menu-list">
+			</Function>
+		</Item>
+		<Item id="TmTemplateView" text="短信模板管理" iconCls="menu-kpfgl">
+			<Function id="_TmTemplatePreview" text="预览" iconCls="menu-preview">
+			</Function>
+		</Item>
+		<Item id="EmailTemplateView" text="邮件模板管理" iconCls="menu-kpfgl">
+			<Function id="_EmailTemplatePreview" text="预览" iconCls="menu-preview">
+			</Function>
+		</Item>
+		<Item id="TmSendView" text="短信发送记录" iconCls="menu-kpfgl">
+			
+		</Item>
 	</Items>
 </Menus>
