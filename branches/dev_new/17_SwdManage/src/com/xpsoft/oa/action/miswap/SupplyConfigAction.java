@@ -1,5 +1,7 @@
 package com.xpsoft.oa.action.miswap;
 
+import javax.annotation.Resource;
+
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.miswap.SupplyConfig;
 import com.xpsoft.oa.service.miswap.SupplyConfigService;
@@ -7,6 +9,7 @@ import com.xpsoft.oa.service.miswap.SupplyConfigService;
 public class SupplyConfigAction extends BaseAction{
 	private Long id;
 	private SupplyConfig supplyConfig;
+	@Resource
 	private SupplyConfigService supplyConfigService;
 	
 	public Long getId() {

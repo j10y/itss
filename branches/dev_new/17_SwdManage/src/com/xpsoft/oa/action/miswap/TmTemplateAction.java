@@ -1,5 +1,7 @@
 package com.xpsoft.oa.action.miswap;
 
+import javax.annotation.Resource;
+
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.miswap.TmTemplate;
 import com.xpsoft.oa.service.miswap.TmTemplateService;
@@ -7,6 +9,7 @@ import com.xpsoft.oa.service.miswap.TmTemplateService;
 public class TmTemplateAction extends BaseAction{
 	private Long id;
 	private TmTemplate tmTemplate;
+	@Resource
 	private TmTemplateService tmTemplateService;
 	
 	public Long getId() {

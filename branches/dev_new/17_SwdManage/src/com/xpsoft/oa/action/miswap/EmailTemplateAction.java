@@ -1,5 +1,7 @@
 package com.xpsoft.oa.action.miswap;
 
+import javax.annotation.Resource;
+
 import com.xpsoft.core.web.action.BaseAction;
 import com.xpsoft.oa.model.miswap.EmailTemplate;
 import com.xpsoft.oa.service.miswap.EmailTemplateService;
@@ -7,6 +9,7 @@ import com.xpsoft.oa.service.miswap.EmailTemplateService;
 public class EmailTemplateAction extends BaseAction{
 	private Long id;
 	private EmailTemplate emailTemplate;
+	@Resource
 	private EmailTemplateService emailTemplateService;
 	
 	public Long getId() {
