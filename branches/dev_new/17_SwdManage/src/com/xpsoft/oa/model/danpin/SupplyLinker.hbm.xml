@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.xpsoft.oa.model.danpin.SupplyLinker"
+        table="supply_linker"
+        select-before-update="false"
+        dynamic-update="false"
+        dynamic-insert="false"
+        optimistic-lock="version"
+    >
+		<id
+            name="sid"
+            column="sid"
+            type="java.lang.Long"
+            length="19"
+        >
+            <generator class="native"/>
+        </id>
+         <property
+            name="supplyInfoSid"
+            type="java.lang.Long"
+            update="true"
+            insert="true"
+            access="property"
+            column="supply_info_sid"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="linker"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="linker"
+            length="50"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="linkerPhone"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="linker_phone"
+            length="200"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="email"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="email"
+            length="200"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="status"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="status"
+            length="10"
+            not-null="false"
+            unique="false"
+        />
+    </class>
+</hibernate-mapping>
