@@ -50,4 +50,16 @@ public class SupplyInfoAction extends BaseAction{
 		
 		return "success";
 	}
+	
+	public String get() {
+		this.supplyInfo = this.supplyInfoService.get(this.sid);
+		
+		JSONSerializer json = new JSONSerializer();
+		StringBuffer buff = new StringBuffer("{success:true,data:");
+		buff.append(json.exclude(new String[] {}).serialize(this.supplyInfo));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
 }
