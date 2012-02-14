@@ -30,4 +30,11 @@ public class SupplyConfigAction extends BaseAction{
 	public void setSupplyConfigService(SupplyConfigService supplyConfigService) {
 		this.supplyConfigService = supplyConfigService;
 	}
+	
+	public String save() {
+		this.supplyConfigService.save(this.supplyConfig);
+		this.jsonString = "{success:true}";
+		
+		return "success";
+	}
 }

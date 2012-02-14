@@ -1,10 +1,16 @@
 package com.xpsoft.oa.action.miswap;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.miswap.TmSend;
 import com.xpsoft.oa.model.miswap.TmTemplate;
 import com.xpsoft.oa.service.miswap.TmTemplateService;
+
+import flexjson.JSONSerializer;
 
 public class TmTemplateAction extends BaseAction{
 	private Long id;
@@ -29,5 +35,31 @@ public class TmTemplateAction extends BaseAction{
 	}
 	public void setTmTemplateService(TmTemplateService tmTemplateService) {
 		this.tmTemplateService = tmTemplateService;
+	}
+	
+	public String list() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<TmTemplate> list = this.tmTemplateService.getAll(filter);
+		
+		StringBuffer buff = new StringBuffer("{success:true,'totalCounts':")
+				.append(filter.getPagingBean().getTotalItems()).append(",result:");
+		JSONSerializer json = new JSONSerializer();
+		buff.append(json.exclude(new String[] {}).serialize(list));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
+		return "success";
+	}
+	
+	public String get() {
+		this.tmTemplate = this.tmTemplateService.get(this.id);
+		
+		JSONSerializer json = new JSONSerializer();
+		StringBuffer buff = new StringBuffer("{success:true,data:");
+		buff.append(json.exclude(new String[] {}).serialize(this.tmTemplate));
+		buff.append("}");
+		this.jsonString = buff.toString();
+		
+		return "success";
 	}
 }
