@@ -17,9 +17,13 @@
    	<context:component-scan base-package="com.xpsoft.oa.service"/>
 
     <tx:annotation-driven transaction-manager="txManager"/>
+    <tx:annotation-driven transaction-manager="danpinTxManager"/>
     
   	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 	   <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="danpinTxManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	   <property name="sessionFactory" ref="danpinSessionFactory" />
     </bean>
     
 	<bean id="logAspect" class="com.xpsoft.core.log.LogAspect"/>
@@ -27,8 +31,10 @@
 	<aop:config>
 		<aop:pointcut id="servicePointCut" expression="execution(* com.xpsoft.oa.service..*(..))"/>
 		<aop:pointcut id="servicePointCut2" expression="execution(* com.xpsoft.core.service..*(..))"/>
+		<aop:pointcut id="danpinServicePointCut" expression="execution(* com.xpsoft.oa.service..*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointCut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointCut2"/>
+		<aop:advisor advice-ref="danpinTxAdvice" pointcut-ref="danpinServicePointCut"/>
 		
 		<!-- 
 		<aop:aspect ref="logAspect">
@@ -39,6 +45,14 @@
 	</aop:config>
 	
 	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="is*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	<tx:advice id="danpinTxAdvice" transaction-manager="danpinTxManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true"/>
 			<tx:method name="is*" read-only="true"/>
@@ -218,6 +232,9 @@
    	 </bean>
    	 <bean id="tmTemplateService" class="com.xpsoft.oa.service.miswap.impl.TmTemplateServiceImpl">
    	 	<constructor-arg index="0" ref="tmTemplateDao"/>
+   	 </bean>
+   	 <bean id="tmSendService" class="com.xpsoft.oa.service.miswap.impl.TmSendServiceImpl">
+   	 	<constructor-arg index="0" ref="tmSendDao"/>
    	 </bean>
    	 <bean id="supplyInfoService" class="com.xpsoft.oa.service.danpin.impl.SupplyInfoServiceImpl">
    	 	<constructor-arg index="0" ref="supplyInfoDao"/>

@@ -7,11 +7,15 @@
 	
 	<bean id="genericDao" abstract="true" class="com.xpsoft.core.dao.impl.GenericDaoImpl">
 		<property name="jdbcTemplate" ref="miswapJdbcTemplate"/>
-   		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
 	</bean>
 	<bean id="danpinGenericDao" abstract="true" class="com.xpsoft.core.dao.impl.DanpinGenericDaoImpl">
 		<property name="jdbcTemplate" ref="danpinJdbcTemplate"/>
-   		<property name="sessionFactory" ref="danpinSessionFactory"/>
+   		<property name="sessionFactory">
+			<ref bean="danpinSessionFactory"/>
+		</property>
 	</bean>
    	<bean id="baseDao" abstract="true" class="com.xpsoft.core.dao.impl.BaseDaoImpl" parent="genericDao"/>
    	<bean id="danpinBaseDao" abstract="true" class="com.xpsoft.core.dao.impl.DanpinBaseDaoImpl" parent="danpinGenericDao"/>
@@ -60,7 +64,8 @@
 	<bean id="emailTemplateDao" class="com.xpsoft.oa.dao.miswap.impl.EmailTemplateDaoImpl" parent="baseDao"/>
 	<bean id="supplyConfigDao" class="com.xpsoft.oa.dao.miswap.impl.SupplyConfigDaoImpl" parent="baseDao"/>
 	<bean id="tmTemplateDao" class="com.xpsoft.oa.dao.miswap.impl.TmTemplateDaoImpl" parent="baseDao"/>
-	<bean id="supplyInfoDao" class="com.xpsoft.oa.dao.danpin.impl.SupplyInfoDaoImpl" parent="baseDao"/>
-	<bean id="supplyLinkerDao" class="com.xpsoft.oa.dao.danpin.impl.SupplyLinkerDaoImpl" parent="baseDao"/>
+	<bean id="tmSendDao" class="com.xpsoft.oa.dao.miswap.impl.TmSendDaoImpl" parent="baseDao"/>
+	<bean id="supplyInfoDao" class="com.xpsoft.oa.dao.danpin.impl.SupplyInfoDaoImpl" parent="danpinBaseDao"/>
+	<bean id="supplyLinkerDao" class="com.xpsoft.oa.dao.danpin.impl.SupplyLinkerDaoImpl" parent="danpinBaseDao"/>
 	
 </beans>

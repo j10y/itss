@@ -55,6 +55,7 @@
   <bean id="EmailTemplateAction" class="com.xpsoft.oa.action.miswap.EmailTemplateAction" scope="prototype"/>
   <bean id="SupplyConfigAction" class="com.xpsoft.oa.action.miswap.SupplyConfigAction" scope="prototype"/>
   <bean id="TmTemplateAction" class="com.xpsoft.oa.action.miswap.TmTemplateAction" scope="prototype"/>
+  <bean id="TmSendAction" class="com.xpsoft.oa.action.miswap.TmSendAction" scope="prototype"/>
   <bean id="SupplyInfoAction" class="com.xpsoft.oa.action.danpin.SupplyInfoAction" scope="prototype"/>
   <bean id="SupplyLinkerAction" class="com.xpsoft.oa.action.danpin.SupplyLinkerAction" scope="prototype"/>
   
