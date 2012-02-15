@@ -282,6 +282,10 @@ public class MrbsRoomAction extends BaseAction {
 	public static void  toJson(List<MrbsRoom> list,StringBuffer sb){
 		sb.append("[");
 		for(MrbsRoom f:list){
+			String roomDesc = f.getRoomAdminEmail();
+			if(roomDesc != null && !"".equalsIgnoreCase(roomDesc)){
+				roomDesc = roomDesc.replace("\n", "\\n");
+			}
 			sb.append("{")
 			.append("'id':'" + f.getId() + "',")
 			.append("'roomName':'" + f.getRoomName() + "',")
@@ -289,7 +293,7 @@ public class MrbsRoomAction extends BaseAction {
 			.append("'areaId':'" + f.getArea().getId() + "',")
 			.append("'desc':'" + f.getDescription() + "',")
 			.append("'capacity':'" + f.getCapacity() + "',")
-			.append("'adminEmail':'" + f.getRoomAdminEmail() + "'},");
+			.append("'adminEmail':'" + roomDesc + "'},");
 		}
 		if(list.size() > 0) {
 			sb.deleteCharAt(sb.length() - 1);
@@ -316,6 +320,11 @@ public class MrbsRoomAction extends BaseAction {
 
 		Gson gson = new Gson();
 
+		String roomDesc = f.getRoomAdminEmail();
+		if(roomDesc != null && !"".equalsIgnoreCase(roomDesc)){
+			roomDesc = roomDesc.replace("\n", "\\n");
+		}
+		
 		StringBuffer sb = new StringBuffer("{success:true,data:");
 		       sb.append("{")
 		       		.append("'id':'" + f.getId() + "',")
@@ -324,7 +333,7 @@ public class MrbsRoomAction extends BaseAction {
 					.append("'areaId':'" + f.getArea().getId() + "',")
 					.append("'desc':'" + f.getDescription() + "',")
 					.append("'capacity':'" + f.getCapacity() + "',")
-					.append("'roomAdminEmail':'" + f.getRoomAdminEmail() + "'},");
+					.append("'roomAdminEmail':'" + roomDesc + "'},");
 		       
 		sb.append("}");
 		setJsonString(sb.toString());
