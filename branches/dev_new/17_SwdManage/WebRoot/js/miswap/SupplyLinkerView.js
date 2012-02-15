@@ -201,7 +201,9 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	addSupplyLinker : function() {
-		new SupplyLinkerForm().show();
+		new SupplyLinkerForm({
+			supplyInfoSid : Ext.getCmp("SupplyLinkerView").supplyInfoSid
+		}).show();
 	},
 	delSupplyLinker : function() {
 		var e = Ext.getCmp("SupplyLinkerGrid");
@@ -218,7 +220,8 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 	},
 	editSupplyLinker : function(a) {
 		new SupplyLinkerForm({
-			supplyLinkerSid : a.data.sid
+			supplyLinkerSid : a.data.sid,
+			supplyInfoSid : Ext.getCmp("SupplyLinkerView").supplyInfoSid
 		}).show();
 	},
 	onRowAction : function(c, a, d, e, b) {
