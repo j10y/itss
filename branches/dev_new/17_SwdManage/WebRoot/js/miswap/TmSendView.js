@@ -87,7 +87,11 @@ TmSendView = Ext.extend(Ext.Panel, {
 					hidden : true
 				}, {
 					header : "发送日期",
-					dataIndex : "sendDate"
+					dataIndex : "sendDate",
+					renderer : function(c) {
+						var date = new Date(c);
+						return date.getFullYear() + "年" + date.getMonth() + "月" + date.getDate() + "日";
+					}
 				}, {
 					header : "发送条数",
 					dataIndex : "sendCount"
