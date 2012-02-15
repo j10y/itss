@@ -32,3 +32,13 @@ com\xpsoft\oa\action\system\MrbsRoomAction.java
 4.一般人员可以删除 自己的预订记录
 更改文件：
 WebRoot/js/system/MeetingRoomForm.js
+
+
+2012 02-15
+修改输入 会议室内容中的转义字符 替换
+/src/com/xpsoft/oa/action/system/MrbsScheduleAction.java
+line 107-line 108
+String desc = request.getParameter("mrbsRepeat.description");
+this.mrbsSchedule.setDescription(desc.replace("\n", "\\n"));
+
+
