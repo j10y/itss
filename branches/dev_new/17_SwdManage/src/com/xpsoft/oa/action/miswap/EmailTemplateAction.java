@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.miswap;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -59,6 +60,23 @@ public class EmailTemplateAction extends BaseAction{
 		buff.append("}");
 		this.jsonString = buff.toString();
 		
+		return "success";
+	}
+	
+	public String combo() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<EmailTemplate> list = this.emailTemplateService.getAll(filter);
+		StringBuffer buff = new StringBuffer("[");
+		for(EmailTemplate et : list) {
+			buff.append("[" + 
+					"'" + et.getId() + "'," + 
+					"'" + et.getName() + "'],");
+		}
+        if (list.size() > 0) {
+        	buff.deleteCharAt(buff.length() - 1);
+        }
+        buff.append("]");
+        setJsonString(buff.toString());
 		return "success";
 	}
 }

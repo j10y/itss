@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import com.xpsoft.core.command.QueryFilter;
 import com.xpsoft.core.web.action.BaseAction;
+import com.xpsoft.oa.model.miswap.EmailTemplate;
 import com.xpsoft.oa.model.miswap.TmSend;
 import com.xpsoft.oa.model.miswap.TmTemplate;
 import com.xpsoft.oa.service.miswap.TmTemplateService;
@@ -60,6 +61,23 @@ public class TmTemplateAction extends BaseAction{
 		buff.append("}");
 		this.jsonString = buff.toString();
 		
+		return "success";
+	}
+	
+	public String combo() {
+		QueryFilter filter = new QueryFilter(this.getRequest());
+		List<TmTemplate> list = this.tmTemplateService.getAll(filter);
+		StringBuffer buff = new StringBuffer("[");
+		for(TmTemplate tt : list) {
+			buff.append("[" + 
+					"'" + tt.getId() + "'," + 
+					"'" + tt.getName() + "'],");
+		}
+        if (list.size() > 0) {
+        	buff.deleteCharAt(buff.length() - 1);
+        }
+        buff.append("]");
+        setJsonString(buff.toString());
 		return "success";
 	}
 }
