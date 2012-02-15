@@ -68,4 +68,21 @@ public class SupplyLinkerAction extends BaseAction{
 		
 		return "success";
 	}
+	
+	public String multiDel() {
+		String[] sids = this.getRequest().getParameterValues("sids");
+		try {
+			if(sids != null) {
+				for(String sid : sids) {
+					this.supplyLinkerService.remove(Long.parseLong(sid));
+				}
+			}
+			this.jsonString = "{success:true}";
+		} catch(Exception e) {
+			this.jsonString = "{success:false}";
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
 }
