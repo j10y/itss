@@ -43,15 +43,22 @@ SupplyLinkerForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "姓名",
 					name : "supplyLinker.linker",
-					id : "linker"
+					id : "linker",
+					allowBlank : false,
+					blankText : "姓名不能为空！"
 				}, {
 					fieldLabel : "联系电话",
 					name : "supplyLinker.linkerPhone",
-					id : "linkerPhone"
+					id : "linkerPhone",
+					allowBlank : false,
+					blankText : "联系电话不能为空，且必须为可使用手机号码！"
 				}, {
 					fieldLabel : "邮箱",
 					name : "supplyLinker.email",
-					id : "email"
+					vtype : "email",
+					id : "email",
+					allowBlank : false,
+					blankText : "邮箱不能为空!"
 				}, {
 					name : "supplyLinker.status",
 					id : "status",
@@ -89,6 +96,16 @@ SupplyLinkerForm = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	save : function(a, b) {
+		var reg =/^0{0,1}(13[0-9]|15[0-9])[0-9]{8}$/;
+		if(!reg.test(Ext.getCmp("linkerPhone").getValue())) {
+			Ext.MessageBox.show({
+				title : "操作信息",
+				msg : "联系电话必须为手机号，请重新输入！",
+				buttons : Ext.MessageBox.OK,
+				icon : Ext.MessageBox.ERROR
+			});
+			return ;
+		}
 		if(a.getForm().isValid()) {
 			a.getForm().submit({
 				method : "post",

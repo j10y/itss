@@ -49,13 +49,15 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 					name : "supplyInfo.supplyId",
 					width : 300,
 					id : "supplyId",
-					xtype : "textfield"
+					xtype : "textfield",
+					readOnly : true
 				}, {
 					fieldLabel : "供应商名称",
 					name : "supplyInfo.companyName",
 					width : 300,
 					id : "companyName",
-					xtype : "textfield"
+					xtype : "textfield",
+					readOnly : true
 				}
 			]
 		});
@@ -143,12 +145,14 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 			bodyStyle : "text-align:left",
 			items : []
 		});
-		this.topbar.add({
-			iconCls : "btn-add",
-			text : "添加联系人",
-			xtype : "button",
-			handler : this.addSupplyLinker
-		});
+		if(isGranted("_SupplyLinkerAdd")) {
+			this.topbar.add({
+				iconCls : "btn-add",
+				text : "添加联系人",
+				xtype : "button",
+				handler : this.addSupplyLinker
+			});
+		}
 		this.gridPanel = new Ext.grid.EditorGridPanel({
 			id : "SupplyLinkerGrid",
 			region : "center",
@@ -208,7 +212,7 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 		}
 		var f = Array();
 		for(var d = 0; d < c.length; d++) {
-			f.push(c[d].data.id);
+			f.push(c[d].data.sid);
 		}
 		SupplyLinkerView.remove(f);
 	},
@@ -237,7 +241,7 @@ SupplyLinkerView.remove = function(b) {
 			Ext.Ajax.request({
 				url : __ctxPath + "/danpin/multiDelSupplyLinker.do",
 				params : {
-					ids : b
+					sids : b
 				},
 				method : "post",
 				success : function() {

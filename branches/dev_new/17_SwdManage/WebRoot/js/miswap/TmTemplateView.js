@@ -77,11 +77,13 @@ TmTemplateView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		b.push({
-			iconCls : "btn-preview",
-			qtip : "预览",
-			style : "margin:0 3px 0 3px"
-		});
+		if(isGranted("_TmTemplatePreview")) {
+			b.push({
+				iconCls : "btn-preview",
+				qtip : "预览",
+				style : "margin:0 3px 0 3px"
+			});
+		}
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,

@@ -83,16 +83,20 @@ SupplyInfoView = Ext.extend(Ext.Panel, {
 			}
 		});
 		var b = new Array();
-		b.push({
-			iconCls : "btn-edit",
-			qtip : "发送配置",
-			style : "margin:0 3px 0 3px"
-		});
-		b.push({
-			iconCls : "btn-del",
-			qtip : "联系人管理",
-			style : "margin:0 3px 0 3px"
-		});
+		if(isGranted("_SupplyInfoSendConfig")) {
+			b.push({
+				iconCls : "btn-edit",
+				qtip : "发送配置",
+				style : "margin:0 3px 0 3px"
+			});
+		}
+		if(isGranted("_SupplyLinkerManage")) {
+			b.push({
+				iconCls : "btn-del",
+				qtip : "联系人管理",
+				style : "margin:0 3px 0 3px"
+			});
+		}
 		this.rowActions = new Ext.ux.grid.RowActions({
 			header : "管理",
 			width : 80,

@@ -11,7 +11,7 @@ SupplyConfigForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 240,
+			height : 245,
 			width : 500,
 			title : "供应商发送配置",
 			buttonAlign : "center",
@@ -42,11 +42,11 @@ SupplyConfigForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "供应商编码",
 					id : "supplyConfigSupplyId",
-					value : "aaaaa"
+					readOnly : true
 				}, {
 					fieldLabel : "供应商名称",
 					id : "supplyConfigCompanyName",
-					value : "aaaaa"
+					readOnly : true
 				}, {
 					fieldLabel : "是否发送短信",
 					xtype : "checkboxgroup",
@@ -129,6 +129,8 @@ SupplyConfigForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
+					Ext.getCmp("supplyConfigSupplyId").setValue(e.data.supplyId);
+					Ext.getCmp("supplyConfigCompanyName").setValue(e.data.companyName);
 					Ext.getCmp("tmName").setValue(e.data.tmId);
 					Ext.getCmp("tmName").setRawValue(e.data.tmName);
 					Ext.getCmp("emailName").setValue(e.data.emailId);
@@ -161,6 +163,28 @@ SupplyConfigForm = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	save : function(a, b) {
+		if(Ext.getCmp("receiveTm").getValue() == "1") {
+			if(Ext.getCmp("tmName").getValue() == "") {
+				Ext.MessageBox.show({
+					title : "操作信息",
+					msg : "请选择短信模板",
+					buttons : Ext.MessageBox.OK,
+					icon : Ext.MessageBox.ERROR
+				});
+				return ;
+			}
+		}
+		if(Ext.getCmp("receiveEmail").getValue() == "1") {
+			if(Ext.getCmp("emailName").getValue() == "") {
+				Ext.MessageBox.show({
+					title : "操作信息",
+					msg : "请选择短信模板",
+					buttons : Ext.MessageBox.OK,
+					icon : Ext.MessageBox.ERROR
+				});
+				return ;
+			}
+		}
 		if(a.getForm().isValid()) {
 			a.getForm().submit({
 				method : "post",
