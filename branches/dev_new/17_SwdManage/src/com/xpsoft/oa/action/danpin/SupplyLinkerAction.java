@@ -1,6 +1,7 @@
 package com.xpsoft.oa.action.danpin;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -63,7 +64,17 @@ public class SupplyLinkerAction extends BaseAction{
 	}
 	
 	public String save() {
-		this.supplyLinkerService.save(this.supplyLinker);
+		if(this.supplyLinker == null || this.supplyLinker.getSid() == null || this.supplyLinker.getSid().longValue() == 0l) {
+			String sql = "select sid from supply_linker where rownum < 2 order by sid desc";
+			List<Map<String, Object>> list = this.supplyLinkerService.findDataList(sql);
+			Long newSid = Long.parseLong(list.get(0).get("sid").toString()) + 1;
+			this.supplyLinker.setSid(newSid);
+			String insertSql = "insert into supply_linker(sid, supply_info_sid, linker, linker_phone, email, status) " +
+					"values(" + this.supplyLinker.getSid() + "," + this.supplyLinker.getSupplyInfoSid() + ",'" + this.supplyLinker.getLinker() + "','" + this.supplyLinker.getLinkerPhone() + "','" + this.supplyLinker.getEmail() + "',1)";
+			this.supplyLinkerService.updateDatabySql(insertSql);
+		} else {
+			this.supplyLinkerService.save(this.supplyLinker);
+		}
 		this.jsonString = "{success:true}";
 		
 		return "success";
