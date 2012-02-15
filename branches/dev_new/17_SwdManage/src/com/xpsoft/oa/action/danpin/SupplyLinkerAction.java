@@ -64,13 +64,26 @@ public class SupplyLinkerAction extends BaseAction{
 	}
 	
 	public String save() {
+		if(this.supplyLinker.getIsMainLinker() == null) {
+			this.supplyLinker.setIsMainLinker(0);
+		} else {
+			String removeMainLinkerSql = "update supply_linker set is_main_linker = 0 where supply_info_sid = " + 
+					this.supplyLinker.getSupplyInfoSid();
+			this.supplyLinkerService.updateDatabySql(removeMainLinkerSql);
+			//往supply_info表回写主联系人
+			String updateLinkerSql = "update supply_info set linker = '" + this.supplyLinker.getLinker() + 
+					"', linker_phone = '" + this.supplyLinker.getLinkerPhone() + "' where sid = " + this.supplyLinker.getSupplyInfoSid();
+			this.supplyLinkerService.updateDatabySql(updateLinkerSql);
+		}
 		if(this.supplyLinker == null || this.supplyLinker.getSid() == null || this.supplyLinker.getSid().longValue() == 0l) {
 			String sql = "select sid from supply_linker where rownum < 2 order by sid desc";
 			List<Map<String, Object>> list = this.supplyLinkerService.findDataList(sql);
 			Long newSid = Long.parseLong(list.get(0).get("sid").toString()) + 1;
 			this.supplyLinker.setSid(newSid);
-			String insertSql = "insert into supply_linker(sid, supply_info_sid, linker, linker_phone, email, status) " +
-					"values(" + this.supplyLinker.getSid() + "," + this.supplyLinker.getSupplyInfoSid() + ",'" + this.supplyLinker.getLinker() + "','" + this.supplyLinker.getLinkerPhone() + "','" + this.supplyLinker.getEmail() + "',1)";
+			String insertSql = "insert into supply_linker(sid, supply_info_sid, linker, linker_phone, email, status, is_main_linker) " +
+					"values(" + this.supplyLinker.getSid() + "," + this.supplyLinker.getSupplyInfoSid() + ",'" + 
+					this.supplyLinker.getLinker() + "','" + this.supplyLinker.getLinkerPhone() + "','" + 
+					this.supplyLinker.getEmail() + "',1," + this.supplyLinker.getIsMainLinker() + ")";
 			this.supplyLinkerService.updateDatabySql(insertSql);
 		} else {
 			this.supplyLinkerService.save(this.supplyLinker);
