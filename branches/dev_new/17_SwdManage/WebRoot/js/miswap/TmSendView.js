@@ -42,11 +42,12 @@ TmSendView = Ext.extend(Ext.Panel, {
 			},
 			items : [
 				{
-					text : "查询条件：模板名称"
+					text : "查询条件：开始日期"
 				}, {
-					fieldLabel : "模板名称",
-					name : "Q_name_S_LK",
-					xtype : "textfield"
+					xtype : "datefield",
+					name : "Q_sendDate_D_GE",
+					format : "Y-m-d",
+					editable : false
 				}, {
 					xtype : "button",
 					text : "查询",

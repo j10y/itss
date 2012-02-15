@@ -76,7 +76,7 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 		}
 		var supplyInfoSid = (this.supplyInfoSid == null || this.supplyInfoSid == "undefined") ? 0 : this.supplyInfoSid;
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/danpin/listSupplyLinker.do?Q_supplyInfoSid_L_EQ=" + supplyInfoSid,
+			url : __ctxPath + "/danpin/listSupplyLinker.do?Q_status_N_EQ=1&Q_supplyInfoSid_L_EQ=" + supplyInfoSid,
 			id : "sid",
 			root : "result",
 			remoteSort : true,
@@ -84,7 +84,8 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 				"sid",
 				"linker",
 				"linkerPhone",
-				"email"
+				"email",
+				"isMainLinker"
 			]
 		});
 		this.store.setDefaultSort("id", "asc");
@@ -132,6 +133,16 @@ SupplyLinkerView = Ext.extend(Ext.Window, {
 				}, {
 					header : "邮箱",
 					dataIndex : "email"
+				}, {
+					header : "备注",
+					dataIndex : "isMainLinker",
+					renderer : function(c) {
+						if(c == "1") {
+							return "<font color='red'>主联系人</font>";
+						} else {
+							return "";
+						}
+					}
 				},
 				this.rowActions
 			],

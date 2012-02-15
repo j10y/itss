@@ -85,14 +85,14 @@ SupplyInfoView = Ext.extend(Ext.Panel, {
 		var b = new Array();
 		if(isGranted("_SupplyInfoSendConfig")) {
 			b.push({
-				iconCls : "btn-edit",
+				iconCls : "btn-setting",
 				qtip : "发送配置",
 				style : "margin:0 3px 0 3px"
 			});
 		}
 		if(isGranted("_SupplyLinkerManage")) {
 			b.push({
-				iconCls : "btn-del",
+				iconCls : "menu-appuser",
 				qtip : "联系人管理",
 				style : "margin:0 3px 0 3px"
 			});
@@ -179,10 +179,10 @@ SupplyInfoView = Ext.extend(Ext.Panel, {
 	},
 	onRowAction : function(c, a, d, e, b) {
 		switch(d) {
-			case "btn-del":
+			case "menu-appuser":
 				this.manageLinker(a);
 				break ;
-			case "btn-edit":
+			case "btn-setting":
 				this.configSend(a);
 				break ;
 			default:

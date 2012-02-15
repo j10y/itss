@@ -55,7 +55,7 @@ TmTemplateView = Ext.extend(Ext.Panel, {
 			]
 		});
 		this.store = new Ext.data.JsonStore({
-			url : __ctxPath + "/miswap/listTmTemplate.do",
+			url : __ctxPath + "/miswap/listTmTemplate.do?Q_status_N_EQ=1",
 			totalProperty : "totalCounts",
 			id : "id",
 			root : "result",
@@ -142,8 +142,8 @@ TmTemplateView = Ext.extend(Ext.Panel, {
 		});
 		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
 			f.getSelectionModel().each(function(e) {
-				new TmTemplateForm({
-					floorId : e.data.id
+				new TmTemplatePreview({
+					tmTemplateId : a.data.id
 				}).show();
 			});
 		});
@@ -153,12 +153,26 @@ TmTemplateView = Ext.extend(Ext.Panel, {
 		if(a.searchPanel.getForm().isValid()) {
 			a.searchPanel.getForm().submit({
 				waitMsg : "正在提交查询……",
-				url : __ctxPath + "/miswap/listTmTemplate.do",
+				url : __ctxPath + "/miswap/listTmTemplate.do?Q_status_N_EQ=1",
 				success : function(c, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
 					a.gridPanel.getStore().loadData(e);
 				}
 			});
+		}
+	},
+	preview : function(a) {
+		new TmTemplatePreview({
+			tmTemplateId : a.data.id
+		}).show();
+	},
+	onRowAction : function(c, a, d, e, b) {
+		switch(d) {
+			case "btn-preview":
+				this.preview(a);
+				break ;
+			default:
+				break ;
 		}
 	}
 });

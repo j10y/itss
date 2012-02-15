@@ -11,7 +11,7 @@ SupplyLinkerForm = Ext.extend(Ext.Window, {
 			layout : "fit",
 			items : this.formPanel,
 			modal : true,
-			height : 180,
+			height : 200,
 			width : 350,
 			title : "联系人添加/修改",
 			buttonAlign : "center",
@@ -49,16 +49,23 @@ SupplyLinkerForm = Ext.extend(Ext.Window, {
 				}, {
 					fieldLabel : "联系电话",
 					name : "supplyLinker.linkerPhone",
-					id : "linkerPhone",
-					allowBlank : false,
-					blankText : "联系电话不能为空，且必须为可使用手机号码！"
+					id : "linkerPhone"
 				}, {
 					fieldLabel : "邮箱",
 					name : "supplyLinker.email",
-					vtype : "email",
-					id : "email",
-					allowBlank : false,
-					blankText : "邮箱不能为空!"
+					id : "email"
+				}, {
+					fieldLabel : "是否主联系人",
+					xtype : "checkboxgroup",
+					columns : 1,
+					items : [
+						{
+							boxLabel : "是",
+							name : "supplyLinker.isMainLinker",
+							id : "isMainLinker",
+							inputValue : 1
+						}
+					]
 				}, {
 					name : "supplyLinker.status",
 					id : "status",
@@ -74,6 +81,9 @@ SupplyLinkerForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
+					if(e.data.isMainLinker == "1") {
+						Ext.getCmp("isMainLinker").setValue(true);
+					}
 				},
 				failure : function() {
 					
@@ -96,15 +106,29 @@ SupplyLinkerForm = Ext.extend(Ext.Window, {
 		a.close();
 	},
 	save : function(a, b) {
-		var reg =/^0{0,1}(13[0-9]|15[0-9])[0-9]{8}$/;
-		if(!reg.test(Ext.getCmp("linkerPhone").getValue())) {
-			Ext.MessageBox.show({
-				title : "操作信息",
-				msg : "联系电话必须为手机号，请重新输入！",
-				buttons : Ext.MessageBox.OK,
-				icon : Ext.MessageBox.ERROR
-			});
-			return ;
+		var phoneReg =/^0{0,1}(13[0-9]|15[0-9])[0-9]{8}$/;
+		if(Ext.getCmp("linkerPhone").getValue() != "") {
+			if(!phoneReg.test(Ext.getCmp("linkerPhone").getValue())) {
+				Ext.MessageBox.show({
+					title : "操作信息",
+					msg : "联系电话必须为手机号，请重新输入！",
+					buttons : Ext.MessageBox.OK,
+					icon : Ext.MessageBox.ERROR
+				});
+				return ;
+			}
+		}
+		var emailReg =/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+		if(Ext.getCmp("email").getValue() != "") {
+			if(!emailReg.test(Ext.getCmp("email").getValue())) {
+				Ext.MessageBox.show({
+					title : "操作信息",
+					msg : "邮箱格式不正确，请重新输入！",
+					buttons : Ext.MessageBox.OK,
+					icon : Ext.MessageBox.ERROR
+				});
+				return ;
+			}
 		}
 		if(a.getForm().isValid()) {
 			a.getForm().submit({
