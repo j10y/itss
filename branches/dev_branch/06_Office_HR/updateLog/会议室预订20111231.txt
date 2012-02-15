@@ -35,10 +35,29 @@ WebRoot/js/system/MeetingRoomForm.js
 
 
 2012 02-15
-修改输入 会议室内容中的转义字符 替换
+1.修改输入 会议室内容中的转义字符 替换
 /src/com/xpsoft/oa/action/system/MrbsScheduleAction.java
-line 107-line 108
-String desc = request.getParameter("mrbsRepeat.description");
-this.mrbsSchedule.setDescription(desc.replace("\n", "\\n"));
+f.getDescription().replace("\n", "\\n")
+2.发送邮件中的时间格式
+DateUtil.formatDateTimeToString(ms.getStartTime(),"yyyy-MM-dd HH:mm")
+3.发送邮件中的换行格式
+ms.getDescription().replace("\n", "<br/>")
+
+
+
+src/com/xpsoft/oa/action/system/MrbsRoomAction.java
+m.get("description").toString().replace("\n", "\\n")
+
+line 285-288
+String roomDesc = f.getRoomAdminEmail();
+			if(roomDesc != null && !"".equalsIgnoreCase(roomDesc)){
+				roomDesc = roomDesc.replace("\n", "\\n");
+			}
+line 323-326
+String roomDesc = f.getRoomAdminEmail();
+		if(roomDesc != null && !"".equalsIgnoreCase(roomDesc)){
+			roomDesc = roomDesc.replace("\n", "\\n");
+		}
+
 
 
