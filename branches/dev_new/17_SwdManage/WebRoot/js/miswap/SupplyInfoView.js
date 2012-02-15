@@ -149,13 +149,6 @@ SupplyInfoView = Ext.extend(Ext.Panel, {
 				emptyMsg : "当前没有记录"
 			})
 		});
-		this.gridPanel.addListener("rowdblclick", function(f, d, g) {
-			f.getSelectionModel().each(function(e) {
-				new SupplyConfigForm({
-					floorId : e.data.id
-				}).show();
-			});
-		});
 		this.rowActions.on("action", this.onRowAction, this);
 	},
 	search : function(a) {
@@ -168,6 +161,28 @@ SupplyInfoView = Ext.extend(Ext.Panel, {
 					a.gridPanel.getStore().loadData(e);
 				}
 			});
+		}
+	},
+	manageLinker : function(a) {
+		new SupplyLinkerView({
+			supplyInfoSid : a.data.sid
+		}).show();
+	},
+	configSend : function(a) {
+		new SupplyConfigForm({
+			supplyInfoSid : a.data.sid
+		}).show();
+	},
+	onRowAction : function(c, a, d, e, b) {
+		switch(d) {
+			case "btn-del":
+				this.manageLinker(a);
+				break ;
+			case "btn-edit":
+				this.configSend(a);
+				break ;
+			default:
+				break ;
 		}
 	}
 });
