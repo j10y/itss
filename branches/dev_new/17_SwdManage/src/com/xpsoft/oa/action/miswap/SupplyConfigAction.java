@@ -44,6 +44,12 @@ public class SupplyConfigAction extends BaseAction{
 	}
 	
 	public String save() {
+		if(this.supplyConfig.getReceiveTm() == null) {
+			this.supplyConfig.setReceiveTm(0);
+		}
+		if(this.supplyConfig.getReceiveEmail() == null) {
+			this.supplyConfig.setReceiveEmail(0);
+		}
 		this.supplyConfigService.save(this.supplyConfig);
 		this.jsonString = "{success:true}";
 		
@@ -79,6 +85,7 @@ public class SupplyConfigAction extends BaseAction{
 				.append("'id':'" + (this.supplyConfig == null ? "" : this.supplyConfig.getId()) + "',")
 				.append("'supplyInfoSid':'" + supplyInfo.getSid() + "',")
 				.append("'supplyId':'" + supplyInfo.getSupplyId() + "',")
+				.append("'companyName':'" + supplyInfo.getCompanyName() + "',")
 				.append("'receiveTm':'" + (this.supplyConfig == null ? "" : this.supplyConfig.getReceiveTm()) + "',")
 				.append("'tmId':'" + (tt.getId() == null ? "" : tt.getId()) + "',")
 				.append("'tmName':'" + (tt.getName() == null ? "" : tt.getName()) + "',")
