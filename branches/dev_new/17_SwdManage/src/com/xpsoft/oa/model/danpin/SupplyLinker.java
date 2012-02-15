@@ -6,6 +6,7 @@ public class SupplyLinker {
 	private String linker;
 	private String linkerPhone;
 	private String email;
+	private Integer isMainLinker;
 	private Integer status;
 	
 	public Long getSid() {
@@ -43,5 +44,11 @@ public class SupplyLinker {
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public Integer getIsMainLinker() {
+		return isMainLinker;
+	}
+	public void setIsMainLinker(Integer isMainLinker) {
+		this.isMainLinker = isMainLinker;
 	}
 }

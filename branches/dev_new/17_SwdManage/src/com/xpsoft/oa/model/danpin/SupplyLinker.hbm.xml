@@ -65,6 +65,17 @@
             unique="false"
         />
         <property
+            name="isMainLinker"
+            type="java.lang.Integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="is_main_linker"
+            length="10"
+            not-null="false"
+            unique="false"
+        />
+        <property
             name="status"
             type="java.lang.Integer"
             update="true"
