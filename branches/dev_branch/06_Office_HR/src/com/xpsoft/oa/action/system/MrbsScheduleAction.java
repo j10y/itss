@@ -104,7 +104,8 @@ public class MrbsScheduleAction extends BaseAction {
 		this.mrbsSchedule = new MrbsSchedule(Long.valueOf(request.getParameter("schedule_id")));
 		this.mrbsSchedule.setConferenceCall(null);
 		this.mrbsSchedule.setCreateBy(ContextUtil.getCurrentUser());
-		this.mrbsSchedule.setDescription(request.getParameter("mrbsRepeat.description"));
+		String desc = request.getParameter("mrbsRepeat.description");
+		this.mrbsSchedule.setDescription(desc.replace("\n", "\\n"));
 			String date = request.getParameter("mrbsRepeat.startDate");
 			String start_hour = request.getParameter("mrbsRepeat.startHour");
 			String start_mini = request.getParameter("mrbsRepeat.startMini");
