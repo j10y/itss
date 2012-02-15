@@ -274,6 +274,12 @@
 			</Function>
 			<Function id="_SupplyLinkerManage" text="联系人管理" iconCls="menu-list">
 			</Function>
+			<Function id="_SupplyLinkerAdd" text="添加联系人" iconCls="menu-list">
+			</Function>
+			<Function id="_SupplyLinkerEdit" text="编辑联系人" iconCls="menu-list">
+			</Function>
+			<Function id="_SupplyLinkerDel" text="删除联系人" iconCls="menu-list">
+			</Function>
 		</Item>
 		<Item id="TmTemplateView" text="短信模板管理" iconCls="menu-kpfgl">
 			<Function id="_TmTemplatePreview" text="预览" iconCls="menu-preview">
