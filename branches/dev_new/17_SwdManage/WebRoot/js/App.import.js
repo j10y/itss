@@ -122,7 +122,9 @@ App.importJs = {
 			__ctxPath + "/js/miswap/SupplyLinkerView.js",
 			__ctxPath + "/js/miswap/SupplyLinkerForm.js",
 			__ctxPath + "/js/miswap/SupplyConfigForm.js"],
-	TmTemplateView : [__ctxPath + "/js/miswap/TmTemplateView.js"],
-	EmailTemplateView : [__ctxPath + "/js/miswap/EmailTemplateView.js"],
+	TmTemplateView : [__ctxPath + "/js/miswap/TmTemplateView.js",
+			__ctxPath + "/js/miswap/TmTemplatePreview.js"],
+	EmailTemplateView : [__ctxPath + "/js/miswap/EmailTemplateView.js",
+			__ctxPath + "/js/miswap/EmailTemplatePreview.js"],
 	TmSendView : [__ctxPath + "/js/miswap/TmSendView.js"]
 };
