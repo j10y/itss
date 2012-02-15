@@ -118,7 +118,10 @@ App.importJs = {
 			__ctxPath + "/js/flow/ProcessRunDetail.js" ],
 	PersonalTipsView : [ __ctxPath + "/js/info/PersonalTipsView.js" ],
 	
-	SupplyInfoView : [__ctxPath + "/js/miswap/SupplyInfoView.js"],
+	SupplyInfoView : [__ctxPath + "/js/miswap/SupplyInfoView.js",
+			__ctxPath + "/js/miswap/SupplyLinkerView.js",
+			__ctxPath + "/js/miswap/SupplyLinkerForm.js",
+			__ctxPath + "/js/miswap/SupplyConfigForm.js"],
 	TmTemplateView : [__ctxPath + "/js/miswap/TmTemplateView.js"],
 	EmailTemplateView : [__ctxPath + "/js/miswap/EmailTemplateView.js"],
 	TmSendView : [__ctxPath + "/js/miswap/TmSendView.js"]
