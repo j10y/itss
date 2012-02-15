@@ -99,9 +99,13 @@ public class MrbsRoomAction extends BaseAction {
 		int mf = 0;
 		for(MrbsRoom room : list) {
 			mf++;
+			String roomDesc = room.getRoomAdminEmail();
+			if(roomDesc != null && !"".equalsIgnoreCase(roomDesc)){
+				roomDesc = roomDesc.replace("\n", "\\n");
+			}
 			buff.append("{'id':'" + room.getId() + "',")
 					.append("'roomName':'" + room.getRoomName() + "',")
-					.append("'room_admin_email':'"+ room.getRoomAdminEmail()+"',");
+					.append("'room_admin_email':'"+ roomDesc+"',");
 			StringBuffer content = new StringBuffer("<div>");
 			Date endTime = DateUtil.parseDate(searchDate);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
