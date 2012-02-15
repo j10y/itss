@@ -104,8 +104,7 @@ public class MrbsScheduleAction extends BaseAction {
 		this.mrbsSchedule = new MrbsSchedule(Long.valueOf(request.getParameter("schedule_id")));
 		this.mrbsSchedule.setConferenceCall(null);
 		this.mrbsSchedule.setCreateBy(ContextUtil.getCurrentUser());
-		String desc = request.getParameter("mrbsRepeat.description");
-		this.mrbsSchedule.setDescription(desc.replace("\n", "\\n"));
+		this.mrbsSchedule.setDescription(request.getParameter("mrbsRepeat.description"));
 			String date = request.getParameter("mrbsRepeat.startDate");
 			String start_hour = request.getParameter("mrbsRepeat.startHour");
 			String start_mini = request.getParameter("mrbsRepeat.startMini");
@@ -269,7 +268,7 @@ public class MrbsScheduleAction extends BaseAction {
 		       		.append("'mrbsRepeat.room.id':'" +f.getRoom().getId() + "',")
 		       		.append("'roomName':'" +f.getRoom().getRoomName() + "',")
 		       		.append("'mrbsRepeat.orderman':'" +f.getPreside() + "',")
-		       		.append("'mrbsRepeat.description':'" +f.getDescription() + "',")
+		       		.append("'mrbsRepeat.description':'" +f.getDescription().replace("\n", "\\n") + "',")
 		       		.append("'mrbsRepeat.num':'" +f.getNum() + "',")
 		       		.append("'mrbsRepeat.projector':'"+f.getProjector()+"',")
 		       		//select name from Appuser
@@ -306,9 +305,9 @@ public class MrbsScheduleAction extends BaseAction {
 		mailList = getAssignUserEmail(attendIdListStr);
 		
 		Map model = new HashMap();
-		model.put("startTime", DateUtil.formatDateTimeToString(ms.getStartTime(),"yyyy-MM-dd hh:mm"));
+		model.put("startTime", DateUtil.formatDateTimeToString(ms.getStartTime(),"yyyy-MM-dd HH:mm"));
 		model.put("roomName", ms.getRoom().getRoomName());
-		model.put("description", ms.getDescription());
+		model.put("description", ms.getDescription().replace("\n", "<br/>"));
 		model.put("presideEmail", ms.getPresideEmail());
 		
 		AsynMeetingMailSendProcess amsp = new AsynMeetingMailSendProcess(mailList, null, attendIdListStr,model);
