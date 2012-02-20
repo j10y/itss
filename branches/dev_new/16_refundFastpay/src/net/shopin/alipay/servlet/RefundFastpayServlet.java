@@ -83,7 +83,9 @@ public class RefundFastpayServlet extends HttpServlet {
 					json.append("refundDate:'" + DateUtil.formatDate((Date)resultDetails.get("refundDate"), "yyyy-MM-dd HH:mm:ss") + "',");
 					json.append("isSuccess:'" + resultDetails.get("isSuccess") + "',");
 					json.append("successNum:'" + (resultDetails.get("successNum") != null ? resultDetails.get("successNum") : "") + "',");
-					json.append("resultDetails:'" + (resultDetails.get("resultDetails")!=null ? resultDetails.get("resultDetails") : "") + "'");
+					json.append("resultDetails:'" + (resultDetails.get("resultDetails")!=null ? resultDetails.get("resultDetails") : "") + "',");
+					json.append("relation:'" + (resultDetails.get("relation")!=null ? resultDetails.get("relation") : "") + "',");
+					json.append("totalRefund:'" + (resultDetails.get("totalRefund")!=null ? resultDetails.get("totalRefund") : "") + "'");
 					json.append("},msg:'获取原批量退款批次号为:" +req.getParameter("batchNo") + "的批量退款信息成功！'}");
 				}
 			}			
@@ -155,6 +157,8 @@ public class RefundFastpayServlet extends HttpServlet {
 		//2011112421847473^0.01^NOT_THIS_PARTNERS_TRAD
 		int batchNum = 0;
 		StringBuffer batchData = new StringBuffer(); 
+		StringBuffer relation = new StringBuffer(); 
+		BigDecimal totalRefund = new BigDecimal(0);//退款总金额
 		boolean hasError = false;
 		try {
 			try {
@@ -190,7 +194,7 @@ public class RefundFastpayServlet extends HttpServlet {
 					
 					//校验money
 					String totalFee = cells[Integer.valueOf(PropertiesUtil.getProperties("totalFeeIndex", "0"))].getContents().trim();
-					
+					totalRefund = totalRefund.add(new BigDecimal(totalFee));
 					String tradeNo = getTradeNoByOutTradeNo(outTradeNo, new BigDecimal(totalFee));
 					
 					//校验tradeNo逻辑
@@ -200,6 +204,12 @@ public class RefundFastpayServlet extends HttpServlet {
 					}else if(tradeNo.indexOf(PropertiesUtil.getProperties("alipay.interface.returncode.outoftotalfee", "OUTOFTOTALFEE")) == 0){
 						msg.append("EXCEL第" +  i + "行（不包含表头部分）数据-单品订单号[" + outTradeNo + "]退款总金额大于当前可退款金额！<br/>");
 						hasError = true;
+					}else{
+						//拼接relation （商家订单号1^支付宝交易号1#商家订单号2^支付宝交易号2）
+						relation.append(outTradeNo).append("^").append(tradeNo);
+						if(i<count-2){
+							relation.append("#");
+						}
 					}
 					
 					String remark = PropertiesUtil.getProperties("refundRemark", "上品折扣支付宝退款");
@@ -217,7 +227,7 @@ public class RefundFastpayServlet extends HttpServlet {
 				return result;
 			}
 			
-			result = refundFastpayService.processRefundFastpayExcel(batchNum, batchData.toString(), realPath);
+			result = refundFastpayService.processRefundFastpayExcel(batchNum, batchData.toString(), realPath, relation.toString(), totalRefund);
 			
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -319,10 +329,4 @@ public class RefundFastpayServlet extends HttpServlet {
 		return null;
 	}
 	
-	public static void main(String [] args){
-		BigDecimal totalFee = new BigDecimal("200.1");//总金额
-		BigDecimal refund_fee = new BigDecimal("100.11");//退款金额
-		System.out.println(totalFee.subtract(refund_fee));
-		System.out.print(refund_fee.compareTo(new BigDecimal("100.11")));
-	}
 }

@@ -23,7 +23,12 @@
 				var refundFastpayExcel = document.getElementById("refundFastpayExcel").value;
 				if(refundFastpayExcel){
 					if(refundFastpayExcel.indexOf(".xls")!=-1||refundFastpayExcel.indexOf(".xlsx")!=-1){
-						 document.getElementById("refundFastpayForm").submit();
+					     //增加提示conrim功能
+					     var confm = confirm("为防止重复提交，请检查并确认是否提交？");
+					     if(confm == true){
+							document.getElementById("refundFastpayForm").submit();
+							alert("请稍等退款结果，谨防重复提交！！！");
+					     }
 					}else{
 						alert("请选择EXCEL文件上传！");
 						return false;

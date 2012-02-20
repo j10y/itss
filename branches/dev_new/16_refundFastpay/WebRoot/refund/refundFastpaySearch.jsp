@@ -52,6 +52,8 @@
 			     			var isSuccess = dataObj.data.isSuccess;//成功T 失败F P处理中
 			     			var successNum = dataObj.data.successNum;//成功退款笔数
 			     			var resultDetails = dataObj.data.resultDetails;//退款结果详情
+			     			var relation = dataObj.data.relation;//商家订单号、支付宝交易号关系
+			     			var totalRefund = dataObj.data.totalRefund;//退款总金额
 			     			
 			     			//--整理数据格式Map-开始
 			     			var batchDataArray= new Array(); //定义一数组
@@ -67,6 +69,16 @@
 			     				}			     				
 			     			}
 			     			
+			     			var relationArray = new Array(); //定义一数组
+			     			var relationMap = {};//{key=支付宝交易号 ,value=[商家订单号,支付宝交易号]}
+			     			if(relation && relation != ""){
+			     				relationArray = relation.split('#');
+			     				for(var i=0; i<relationArray.length; i++){
+			     					var recordData = relationArray[i].split("^");
+			     					relationMap[recordData[1]] = recordData;
+			     				}			     				
+			     			}
+			     						     			
 			     			//--整理数据格式Map-结束
 			     			
 			     			
@@ -89,10 +101,12 @@
 			     			'<td width="25%">' + refundDate + '</td>' + 
 			     			'</tr>' + 
 			     			'<tr bgcolor="#EFF7F0">' + 
-			     			'<td width="15%">即时返回结果：</td>' + 
-			     			'<td width="20%">' + (isSuccess=="T" ? "成功" : (isSuccess=="F" ? "失败" : "处理中或银行卡充退中")) + '</td>' + 
-			     			'<td width="30%" colspan="2">成功笔数（异步返回）：</td>' + 
-			     			'<td width="35%" colspan="2">' + (successNum!='' ? ('共成功' + successNum + '笔') : "") + '</td>' + 
+			     			'<td>即时返回结果：</td>' + 
+			     			'<td>' + (isSuccess=="T" ? "成功" : (isSuccess=="F" ? "失败" : "处理中或银行卡充退中")) + '</td>' + 
+			     			'<td colspan="1">退款总金额<br>（单位：元）：</td>' + 
+			     			'<td colspan="1">' + (totalRefund!='' ? totalRefund : "---") + '</td>' + 
+			     			'<td colspan="1">成功笔数（异步返回）：</td>' + 
+			     			'<td colspan="1">' + (successNum!='' ? ('共成功' + successNum + '笔') : "") + '</td>' + 
 			     			'</tr>' + 
 			     			'</tbody>' + 
 			     			'</table>' + 
@@ -109,27 +123,40 @@
 			     			'<tbody>' + 
 			     			'<tr align="center" bgcolor="#EFF7F0" >' + 
 			     			'<td width="5%">序号</td>' +
-			     			'<td width="20%">单品订单号</td>' + 
-			     			'<td width="20%">退款金额（单位：元）</td>' + 
-			     			'<td width="25%">退款备注</td>' + 
-			     			'<td width="30%">异步结果</td>' + 
+			     			'<td width="15%">单品订单号</td>' + 
+			     			'<td width="20%">支付宝交易号</td>' + 
+			     			'<td width="20%">退款金额<br>（单位：元）</td>' + 
+			     			'<td width="20%">退款备注</td>' + 
+			     			'<td width="20%">异步结果</td>' + 
 			     			'</tr>';
 			     			
 			     			for(var i=0; i<batchDataArray.length; i++){
 			     				var recordData = new Array();
-			     				recordDate = batchDataArray[i].split("^");
+			     				recordData = batchDataArray[i].split("^");
+			     				
+			     				//商家订单号
+			     				var outTradeNo = "";
+			     				if(relationMap[recordData[0]]){
+			     					outTradeNo = relationMap[recordData[0]][0];
+			     				}else{
+			     					outTradeNo = "-----------";
+			     				}
+			     				
+			     				//异步结果
 			     				var result = "";
-			     				if(resultDetailMap[recordDate[0]]){
-			     					result = resultDetailMap[recordDate[0]][2];
+			     				if(resultDetailMap[recordData[0]]){
+			     					result = resultDetailMap[recordData[0]][2];
 			     				}else{
 			     					result = "-----------";
 			     				}
+			     				
 			     				resultStr += '<tr align="center" bgcolor="#EFF7F0" >' + 
 				     			'<td width="5%">' + (i+1) + '</td>' + 
-				     			'<td width="20%">' + recordDate[0]+ '</td>' + 
-				     			'<td width="20%">' + recordDate[1]+ '</td>' + 
-				     			'<td width="25%">' + recordDate[2]+ '</td>' + 
-				     			'<td width="30%">' + result + '</td>' + 
+				     			'<td width="15%">' + outTradeNo + '</td>' + 
+				     			'<td width="20%">' + recordData[0]+ '</td>' + 
+				     			'<td width="20%" align="right">' + recordData[1]+ '</td>' + 
+				     			'<td width="20%">' + recordData[2]+ '</td>' + 
+				     			'<td width="20%">' + result + '</td>' + 
 				     			'</tr>';
 			     			}
 			     			
