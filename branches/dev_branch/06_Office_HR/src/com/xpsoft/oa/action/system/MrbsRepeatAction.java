@@ -184,9 +184,9 @@ public class MrbsRepeatAction extends BaseAction {
 		mailList = getAssignUserEmail(attendIdListStr);
 		
 		Map model = new HashMap();
-		model.put("startTime", DateUtil.formatDateTimeToString(ms.getStartTime(),"yyyy-MM-dd hh:mm"));
+		model.put("startTime", DateUtil.formatDateTimeToString(ms.getStartTime(),"yyyy-MM-dd HH:mm"));
 		model.put("roomName", ms.getRoom().getRoomName());
-		model.put("description", ms.getDescription());
+		model.put("description", ms.getDescription().replace("\n", "<br/>"));
 		model.put("presideEmail", ms.getPresideEmail());
 		
 		AsynMeetingMailSendProcess amsp = new AsynMeetingMailSendProcess(mailList, null, attendIdListStr,model);
