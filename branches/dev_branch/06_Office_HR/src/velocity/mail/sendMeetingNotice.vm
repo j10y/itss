@@ -36,7 +36,7 @@ a:hover{ color:#FF0000; text-decoration:underline}
   <div class="content">
 <br/>
 <br/> 
-您好，<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请与 ${startTime}到 ${roomName}开会,会议内容如下：<br/>
+您好，<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请于 ${startTime}到 ${roomName}开会,会议内容如下：<br/>
       <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${description}
 <br/><br/><br/><br/>
   </div>
