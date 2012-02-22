@@ -84,6 +84,8 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 								title : e.result[i].areaName,
 								autoDestroy: true,
 								layout:"table",
+								autoScroll : true,
+								bodyStyle:"padding-bottom:40px;",
 								defaults:{
 										bodyStyle : 'padding:20px;'
 								},
@@ -123,6 +125,8 @@ var MeetingRoomView = Ext.extend(Ext.Panel,{
 								title : e.result[i].areaName,
 								autoDestroy: true,
 								layout:"table",
+								autoScroll : true,
+								bodyStyle:"padding-bottom:40px;",
 								defaults:{
 										bodyStyle : 'padding:20px;'
 								},
