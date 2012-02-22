@@ -1,0 +1,7 @@
+一般用户只能预订明天的会议室
+/js/system/MeetingRoomForm.js
+
+增加滚动条，显示所有会议室预订面板
+/js/system/MeetingRoomView.js
+
+
