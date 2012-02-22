@@ -39,12 +39,12 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 		if(isGranted("_SelectEveryDayCalendar")){
 			date.setDate(date.getDate()-1);
 		}else{
-			date.setDate(date.getDate()+2);
+			date.setDate(date.getDate());
 			// max
 			var date_max = new Date();
 			date_max.setDate(date_max.getDate()+7);
 			this.maxDate  = date_max;
-			this.emptyText = "您只能预订两天以后的会议!";
+			this.emptyText = "您只能从明天开始预订会议!";
 		}
 		this.rightDate = date;
 		
@@ -248,7 +248,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 					  id : 'note',
 					xtype : 'label',
 					hidden : isGranted("_SelectEveryDayCalendar") ? true : false,
-					html:'<font color="red"><b>* 您只能预订两天以后的会议室！</b></font><br/><br/>'
+					html:'<font color="red"><b>* 您只能从明天开始预订会议！</b></font><br/><br/>'
 				},
 				{
 					name : 'schedule_id',
@@ -944,8 +944,8 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 			var time_s = new Number(select_day.getTime());
 			var time_t = new Number(now.getTime());
 			var sub = (time_s.valueOf()- time_t.valueOf())/(1000*60*60*24);
-			if(sub <=2){
-				today.setDate(today.getDate()+3);
+			if(sub <=0){
+				today.setDate(today.getDate()+1);
 				var error_day = today.format("Y-m-d日");
 				Ext.MessageBox.show({
 							title : "操作信息",
