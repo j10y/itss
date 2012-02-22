@@ -949,7 +949,7 @@ MeetingRoomForm = Ext.extend(Ext.Window, {
 				var error_day = today.format("Y-m-d日");
 				Ext.MessageBox.show({
 							title : "操作信息",
-							msg : "您只能预订两天以后的，您可以从"+error_day+"重新预订！",
+							msg : "您只能从明天开始预订，您可以从"+error_day+"重新预订！",
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.ERROR
 						});
