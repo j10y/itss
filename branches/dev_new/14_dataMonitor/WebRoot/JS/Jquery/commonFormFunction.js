@@ -774,7 +774,7 @@ function isTel(str){
 	}
 }
 function isMobi(str){
-	var pattern=/^(?:13\d|15[89]|18\d)-?\d{5}(\d{3}|\*{3})$/;
+	var pattern=/^(?:13\d|15\d|18\d)-?\d{5}(\d{3}|\*{3})$/;
 	if(!pattern.test(str)){
 		//alert("手机号码格式不正确");
 		return false;
