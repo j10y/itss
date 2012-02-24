@@ -155,7 +155,7 @@
 			}
 			$('#pagegrid').datagrid({
 					width:'auto',
-					height:'auto',
+					height:350,
 					nowrap: true,
 					striped: false,
 					pageSize:pageSize,
