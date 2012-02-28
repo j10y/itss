@@ -64,19 +64,27 @@
 </head>
 <body class="easyui-layout">
         <input type="hidden" id="username" name="username" value="${usermap['username']}">
-		<div region="north" title="" border="false" style="height:50px;padding:0px; background: #dfe8f7;" >
-		<div align="center"> 
+		<div region="north" title="" border="false" style="height:68px;padding:0px; " >
+		<table width="100%">
+		<tr>
+		<td width="100px"><img src="${pageContext.request.contextPath}/Images/logo.gif" border="0"/></td>
+		<td><div align="center"> 
 			<font size="5"><strong>${sysconfigmap['title']}</strong></font>
-		</div> 
-		<div align="reight">
+		</div>
+		<div align="right" style="font-size:12px">
 		欢迎${usermap['realname']}登录该系统
 		<a href="http://172.16.103.165:8090/cas3/logout?service=http://www.shopin.net">退出</a> 
 		<c:if test="${usermap['username'] eq 'admin'}">
 		<a href="manage_toAdminManage.action">进入后台管理系统</a>
 		</c:if>
 		</div>
+		</td>
+		</tr></table>
+		
+		
 		</div>
 		<div region="center" title="" style="overflow:hidden;">
+		
 		<div id="tt" style="width:auto;height:500px;">
 			
 		</div>
