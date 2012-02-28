@@ -57,7 +57,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		// TODO Auto-generated method stub
 		this.getHibernateTemplate().delete(obj);
 	}
-	public Long selectMaxIdFromTable(Class clazz,String propertyName){
+	public synchronized Long selectMaxIdFromTable(Class clazz,String propertyName){
 		Criteria c=this.getSession().createCriteria(clazz);
 		c.setProjection(Projections.projectionList()
 				.add(Projections.max(propertyName))
