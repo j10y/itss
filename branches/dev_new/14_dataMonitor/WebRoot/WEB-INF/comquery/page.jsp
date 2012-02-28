@@ -465,8 +465,8 @@
 							<td class='MzTreeViewCell1'>
 								<input style="height: 15px; width: 160px; font-size: 12px;"
 									class="Wdate" type="text" runat="server" name="${list.name }"
-									value="${fn:substring(list.value,0,19) }" size="18"
-									onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+									value="${fn:substring(list.value,0,10) }" size="18"
+									onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
 									ispost="true" isclear="true">
 							</td>
 						</c:if>
