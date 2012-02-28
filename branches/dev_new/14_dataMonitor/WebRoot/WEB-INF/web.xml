@@ -37,7 +37,14 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>CAS Single Sign Out Filter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/index.jsp</url-pattern>
+		<url-pattern>/WEB-INF/index.jsp</url-pattern>
+		<url-pattern>/comquery_*</url-pattern>
+		<url-pattern>/jfchart_*</url-pattern>
+		<url-pattern>/login_*</url-pattern>
+		<url-pattern>/manage_*</url-pattern>
+		<url-pattern>/monitor_*</url-pattern>
+		<url-pattern>/tree_*</url-pattern>
 	</filter-mapping>
 	<listener>
 		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
@@ -98,25 +105,53 @@
 	<filter-mapping>
 		<filter-name>CAS Authentication Filter</filter-name>
 		<url-pattern>/</url-pattern>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/index.jsp</url-pattern>
+		<url-pattern>/WEB-INF/index.jsp</url-pattern>
+		<url-pattern>/comquery_*</url-pattern>
+		<url-pattern>/jfchart_*</url-pattern>
+		<url-pattern>/login_*</url-pattern>
+		<url-pattern>/manage_*</url-pattern>
+		<url-pattern>/monitor_*</url-pattern>
+		<url-pattern>/tree_*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>CAS Validation Filter</filter-name>
 		<url-pattern>/</url-pattern>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/index.jsp</url-pattern>
+		<url-pattern>/WEB-INF/index.jsp</url-pattern>
+		<url-pattern>/comquery_*</url-pattern>
+		<url-pattern>/jfchart_*</url-pattern>
+		<url-pattern>/login_*</url-pattern>
+		<url-pattern>/manage_*</url-pattern>
+		<url-pattern>/monitor_*</url-pattern>
+		<url-pattern>/tree_*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>CAS HttpServletRequest WrapperFilter</filter-name>
 		<url-pattern>/</url-pattern>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/index.jsp</url-pattern>
+		<url-pattern>/WEB-INF/index.jsp</url-pattern>
+		<url-pattern>/comquery_*</url-pattern>
+		<url-pattern>/jfchart_*</url-pattern>
+		<url-pattern>/login_*</url-pattern>
+		<url-pattern>/manage_*</url-pattern>
+		<url-pattern>/monitor_*</url-pattern>
+		<url-pattern>/tree_*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>CAS Assertion Thread Local Filter</filter-name>
 		<url-pattern>/</url-pattern>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/index.jsp</url-pattern>
+		<url-pattern>/WEB-INF/index.jsp</url-pattern>
+		<url-pattern>/comquery_*</url-pattern>
+		<url-pattern>/jfchart_*</url-pattern>
+		<url-pattern>/login_*</url-pattern>
+		<url-pattern>/manage_*</url-pattern>
+		<url-pattern>/monitor_*</url-pattern>
+		<url-pattern>/tree_*</url-pattern>
 	</filter-mapping>
 	
 	
