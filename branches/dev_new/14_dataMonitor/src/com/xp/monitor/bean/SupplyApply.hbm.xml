@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.xp.monitor.bean" default-access="field">
+
+    <class name="SupplyApply" table="zs_supplyapply" 
+    	   dynamic-insert="true" dynamic-update="true">
+       
+        <id name="id" type="long"  column="id" >
+        </id>	
+        <property name="supplyName" type="string" column="supplyName"/>  
+        
+        <property name="brandRegistArea" type="string" column="brandRegistArea"/> 
+        
+        <property name="brandBelong" type="string" column="brandBelong"/>
+        
+        <property name="brandName" type="string" column="brandName"/> 
+        
+        <property name="brandPrice" type="string" column="brandPrice"/>  
+            
+     	 <property name="brandClass" type="string" column="brandClass" /> 
+     	 
+     	 <property name="brandStyle" type="string" column="brandStyle"/>
+     	 
+     	 <property name="storeNum" type="integer" column="storeNum"/>
+     	 
+     	 <property name="storeAddress" type="string" column="storeAddress" />
+     	 
+     	 <property name="website" type="string" column="website"/>
+     	 
+     	 <property name="cooperateWebSite" type="string" column="cooperateWebSite"/>
+     	 
+     	 <property name="companyAddress" type="string" column="companyAddress"/>
+     	 
+     	 <property name="companyTel" type="string" column="companyTel"/>
+     	 
+     	 <property name="companyEmail" type="string" column="companyEmail"/>
+     	 
+     	 <property name="businessUser" type="string" column="businessUser"/>
+     	 
+     	 <property name="businessTel" type="string" column="businessTel"/>
+     	  
+     	 <property name="businessEmail" type="string" column="businessEmail"/>
+     	   
+     	 <property name="eCommerceUser" type="string" column="eCommerceUser"/>
+     	    
+     	 <property name="eCommerceTel" type="string" column="eCommerceTel"/>
+     	     
+     	 <property name="eCommerceEmail" type="string" column="eCommerceEmail"/>
+     	 
+     	 <property name="createDate" type="timestamp" column="createDate"/>
+     	 
+     	 <many-to-one name="uploadFile" not-null="false" class="com.xp.monitor.bean.UpLoadFile" column="uploadFile"></many-to-one>
+    </class>
+</hibernate-mapping>
