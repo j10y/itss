@@ -84,6 +84,7 @@ public class LoginAction {
 		//usermap.put("username","tongjp");
 		request.getSession().setAttribute("userid", usermap.get("id"));
 		request.getSession().setAttribute("usermap", usermap);
+		baseService.saveSysTemUserLog(request, "登陆该系统");
 		return "sucess";
 	}
 	public String toLoginForUserName(){
@@ -131,6 +132,7 @@ public class LoginAction {
 		//usermap.put("username","tongjp");
 		request.getSession().setAttribute("userid", usermap.get("id"));
 		request.getSession().setAttribute("usermap", usermap);
+		baseService.saveSysTemUserLog(request, "登陆该系统");
 		return "sucess";
 	}
 	public String getMenuList(){
