@@ -606,7 +606,7 @@ public class SqlUtil {
 		return sql;
 	}
 	//路由插入sql语句
-	public static String getInsertSql(List detailList,MainTable maintable,boolean haskey){
+	public static synchronized String getInsertSql(List detailList,MainTable maintable,boolean haskey){
 		String databasetype=PropertiesUtil.getProperties("jdbc.driverClassName");
 		String sql="";
 		//sql=getMySqlForInsert(detailList,maintable,haskey);
@@ -620,7 +620,7 @@ public class SqlUtil {
 		return sql;
 	}
 	//mysql插入语句
-	public static String getMySqlForInsert(List detailList,MainTable maintable,boolean haskey){
+	public static  String getMySqlForInsert(List detailList,MainTable maintable,boolean haskey){
 		String sql="";
 		if(haskey==true){
 			sql+="UPDATE "+maintable.getTableRealName()+" SET ";
