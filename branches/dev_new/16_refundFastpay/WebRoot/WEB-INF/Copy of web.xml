@@ -66,7 +66,7 @@
 		</init-param>
 		<init-param>
 			<param-name>serverName</param-name>
-			<param-value>http://172.16.100.173:8080</param-value>
+			<param-value>http://172.16.200.83:9090</param-value>
 		</init-param>
 	</filter>
 
@@ -79,7 +79,7 @@
 		</init-param>
 		<init-param>
 			<param-name>serverName</param-name>
-			<param-value>http://172.16.100.173:8080</param-value>
+			<param-value>http://172.16.200.83:9090</param-value>
 		</init-param>
 		<init-param>
 			<param-name>useSession</param-name>
@@ -104,6 +104,7 @@
 	<filter-mapping>
 		<filter-name>CAS Authentication Filter</filter-name>
 		<url-pattern>/</url-pattern>
+		<url-pattern>/includefiles.jsp</url-pattern>
 		<url-pattern>/refund/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 		<url-pattern>/refund_fastpay_by_platform_nopwd.jsp</url-pattern>
@@ -112,6 +113,7 @@
 	<filter-mapping>
 		<filter-name>CAS Validation Filter</filter-name>
 		<url-pattern>/</url-pattern>
+		<url-pattern>/includefiles.jsp</url-pattern>
 		<url-pattern>/refund/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 		<url-pattern>/refund_fastpay_by_platform_nopwd.jsp</url-pattern>
@@ -120,6 +122,7 @@
 	<filter-mapping>
 		<filter-name>CAS HttpServletRequest WrapperFilter</filter-name>
 		<url-pattern>/</url-pattern>
+		<url-pattern>/includefiles.jsp</url-pattern>
 		<url-pattern>/refund/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 		<url-pattern>/refund_fastpay_by_platform_nopwd.jsp</url-pattern>
@@ -128,6 +131,7 @@
 	<filter-mapping>
 		<filter-name>CAS Assertion Thread Local Filter</filter-name>
 		<url-pattern>/</url-pattern>
+		<url-pattern>/includefiles.jsp</url-pattern>
 		<url-pattern>/refund/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 		<url-pattern>/refund_fastpay_by_platform_nopwd.jsp</url-pattern>

@@ -1,4 +1,3 @@
-<%@page import="net.shopin.alipay.util.PropertiesUtil"%>
 <%
 	/* *
 	 *功能：即时到帐批量退款无密接口调试入口页面
@@ -10,12 +9,21 @@
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	
+<%@ page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
+<%
+	AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal(); 
+	String currentUser = principal.getName();
+%>
+
+<%@page import="net.shopin.alipay.util.PropertiesUtil"%>
 <%@ page import="com.alipay.services.*"%>
 <%@ page import="com.alipay.util.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <html>
 	<head>
+	
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>即时到帐批量退款</title>
 		<script type="text/javascript">
@@ -44,12 +52,16 @@
 		</script>
 	</head>
 	<body>
+		<!-- 
 	    <a href="#" onclick="logout();">退出</a>
+	     -->
 		<br>
 		<h3 style="color:red" align="center">
 			*建议上传前验证上传文件格式是否正确，是否已经进行过退款<br>
 			*支付宝即时到账批量退款，最大支持<%=net.shopin.alipay.util.PropertiesUtil.getProperties("alipay.batchNumLimit", "1000")%>笔<br><br>
+			<!-- 
 			<a href="${pageContext.request.contextPath }/refund/refundFastpaySearch.jsp" target="_blank">点击查询历史批量退款信息</a>
+			 -->
 		</h3>
 		<br>
 		<br>

@@ -1,4 +1,3 @@
-<%@page import="net.shopin.alipay.util.PropertiesUtil"%>
 <%
 	/* *
 	 *功能：即时到帐批量退款无密接口调试入口页面
@@ -10,6 +9,14 @@
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	
+<%@ page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
+<%
+	AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal(); 
+	String currentUser = principal.getName();
+%>
+
+<%@page import="net.shopin.alipay.util.PropertiesUtil"%>
 <%@ page import="com.alipay.services.*"%>
 <%@ page import="com.alipay.util.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -36,7 +43,9 @@
 			function logout(){
 				window.location.href = "${pageContext.request.contextPath }/logout.jsp";
 			}
-		
+			function reset(){
+				document.getElementById("batchNoInput").innerText = "";
+			}
 			function checkForm(){
 				var batchNoInputText = document.getElementById("batchNoInput").value;
 				if(batchNoInputText){
@@ -176,6 +185,7 @@
 		     			}
 		   			});
 				}else{
+					document.getElementById("resultDiv").innerHTML = "";
 					alert("请输入原退款批次号！");
 					return false;
 				}
@@ -183,17 +193,19 @@
 		</script>
 	</head>
 	<body>
+		<!--
 		<a href="#" onclick="logout();">退出</a>
+		-->
 		<br>
 		<h3 style="color:red" align="center">
-			*注意：在导入批量退款文件后，立即查询不会即时展现所有退款详情，支付宝接口存在延迟<br>
+			*注意：在导入批量退款文件后，立即查询可能不会即时展现所有退款详情，支付宝接口存在延迟<br>
 		</h3>
 		<br>
 		<br>
 		<form id="refundFastpayQueryForm" action="#" method="post" target="_blank">
 			<div style="text-align: center; font-size: 9pt; font-family: 宋体">
 			  请输入原退款批次号：<INPUT  id="batchNoInput" type="text" size="30" name="batchNo" value="">		  
-              <INPUT type="button" onclick="checkForm();" value="查询"  name="btnAlipay">
+              <INPUT type="button" onclick="checkForm();" value="查询"  name="btnAlipay"><INPUT type="button" onclick="reset();" value="重置"  name="btnAlipaySearchReset">
 			</div>
 		</form>
 		<div id="resultDiv" style="text-align: center; font-size: 9pt; font-family: 宋体">

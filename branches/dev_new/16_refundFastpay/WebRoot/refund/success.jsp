@@ -13,15 +13,8 @@
 	<body oncontextmenu="return false" >
 		<br>
 		<center>
-		<h1>
-		
-		<c:if test="${result.success }">
-			操作成功！
-		</c:if>
-		<c:if test="${not result.success }">
-			操作失败！
-		</c:if>
-		
+		<h1>		
+		操作成功！		
 		</h1>
 		<br/>
 		<c:if test="${not empty result.errorCode }">
