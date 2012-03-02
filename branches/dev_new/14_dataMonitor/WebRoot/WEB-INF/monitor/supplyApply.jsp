@@ -11,7 +11,7 @@
 		.table-info table td  { border-bottom:1px solid #e0e0e0;background-color:#FFFFFF;}
 		img{ border:0;}
 		.frame{ 
-		    width:800px; 
+		    width:830px; 
 		    margin:0 auto;
 			padding:0;
 			text-align:left;
@@ -111,19 +111,6 @@
 			alert("拥有实体店/专柜数量必须为数字！");
 			return false;
 		}
-		/**
-		if(storeAddress.length==0){
-		alert("实体店区域分布不能为空！");
-		return false;
-		}
-		if(website.length==0){
-			alert("品牌官方网站不能为空！");
-			return false;
-		}
-		if(cooperateWebSite.length==0){
-			alert("合作网站不能为空！");
-			return false;
-		}*/
 		if(companyAddress.length==0){
 			alert("公司地址不能为空！");
 			return false;
@@ -131,17 +118,12 @@
 		if(companyTel.length==0){
 			alert("公司电话不能为空！");
 			return false;
-		}else if(isTel(companyTel)==false&&isMobi(companyTel)==false){
-			alert("公司电话格式不正确！");
-			return false;
 		}
 		if(companyEmail.length==0){
 			alert("E-mail不能为空！");
 			return false;
-		}else if(!isEmail(companyEmail)){
-			alert("E-mail格式不正确！");
-			return false;
 		}
+		
 		if(businessUser.length==0){
 			alert("业务负责人/职位不能为空！");
 			return false;
@@ -149,40 +131,13 @@
 		if(businessTel.length==0){
 			alert("业务负责人手机不能为空！");
 			return false;
-		}else if(isMobi(businessTel)==false){
-			alert("业务负责人手机格式不正确！");
-			return false;
 		}
+		
 		if(businessEmail.length==0){
 			alert("业务负责人E-mail不能为空！");
 			return false;
-		}else if(!isEmail(businessEmail)){
-			alert("业务负责人E-mail格式不正确！");
-			return false;
-		}
-		if(eCommerceUser.length==0){
-			//alert("电商负责人/职位不能为空！");
-			//return false;
-		}
-		if(eCommerceTel.length==0){
-			//alert("电商负责人手机不能为空！");
-			//return false;
-		}else if(isMobi(eCommerceTel)==false){
-			alert("电商负责人手机格式不正确！");
-			return false;
 		}
 		
-		if(eCommerceEmail.length==0){
-			//alert("电商负责人E-mail不能为空！");
-			//return false;
-		}else if(!isEmail(eCommerceEmail)){
-			alert("电商负责人E-mail格式不正确！");
-			return false;
-		}
-		//if(upload.length==0){
-		//	alert("品牌宣传/产品图需打包上传，不能为空！");
-		//	return false;
-		//}
 		var xform = document.supplyForm;
 			xform.submit();
 		}
@@ -195,17 +150,25 @@
   <div class="gap"></div>
 </div>
 <div style="font-size:20px"><strong>合作资料表 </strong></div>
+<table align="center"width="830">
+<tr>
+<td>
+<div style="font-size:12px" align="right">注：带红色<font color="#ff0000">*</font>为必填项</div>
+</td>
+</tr>
+</table>
+
 <input type="hidden"id="supplyApply.id" name="supplyApply.id" >
-<table class="table-info"align="center"width="800" border="0" cellpadding="1" cellspacing="1" bgcolor="black">
+<table class="table-info"align="center"width="830" border="0" cellpadding="1" cellspacing="1" bgcolor="black">
 <tr >
 <td rowspan=2  style="height:40px;width:170">
-供应商名称
+供应商名称<font color="#ff0000">*</font>
 </td>
-<td rowspan=2 colspan=2  style="height:40px;width:200">
+<td rowspan=2 colspan=2  style="height:40px;width:220">
 <input id="supplyApply.supplyName" name="supplyApply.supplyName" style="height:25">
 </td>
 <td  style="height:40px;width:200">
-品牌注册地（国家/地区）
+品牌注册地（国家/地区）<font color="#ff0000">*</font>
 </td>
 <td colspan=2  style="height:40px;width:230">
 <input id="supplyApply.brandRegistArea" name="supplyApply.brandRegistArea"  style="height:25">
@@ -213,7 +176,7 @@
 </tr>
 <tr >
 <td  style="height:40px">
-品牌持有
+品牌持有<font color="#ff0000">*</font>
 </td>
 <td colspan=2  style="height:40px">
 <input id="supplyApply.brandBelong" name="supplyApply.brandBelong" style="height:25">
@@ -221,13 +184,13 @@
 </tr>
 <tr >
 <td  style="height:40px">
-经营品牌名称（中/英）
+经营品牌名称（中/英）<font color="#ff0000">*</font>
 </td>
 <td colspan=2  style="height:40px">
 <input id="supplyApply.brandName" name="supplyApply.brandName" style="height:25">
 </td>
 <td  style="height:40px">
-品牌价格带
+品牌价格带<font color="#ff0000">*</font>
 </td>
 <td colspan=2  style="height:40px">
 <input id="supplyApply.brandPrice" name="supplyApply.brandPrice" style="height:25">
@@ -235,13 +198,24 @@
 </tr>
 <tr >
 <td  style="height:40px">
-品牌所属类别
+品牌所属类别<font color="#ff0000">*</font>
 </td>
 <td colspan=2  style="height:40px">
-<input id="supplyApply.brandClass" name="supplyApply.brandClass" style="height:25">
+<select id="supplyApply.brandClass" name="supplyApply.brandClass" style="width:160">
+<option value="">------请选择------</option>
+<option value="女装">女装</option>
+<option value="鞋">鞋</option>
+<option value="男装">男装</option>
+<option value="运动">运动</option>
+<option value="户外">户外</option>
+<option value="儿童">儿童</option>
+<option value="饰品">饰品</option>
+<option value="家居">家居</option>
+<option value="其他">其他</option>
+</select>
 </td>
 <td  style="height:40px">
-品牌风格（适合人群）
+品牌风格（适合人群）<font color="#ff0000">*</font>
 </td>
 <td colspan=2  style="height:40px">
 <input id="supplyApply.brandStyle" name="supplyApply.brandStyle" style="height:25">
@@ -282,19 +256,19 @@
 </tr>
 <tr >
 <td  style="height:40px;">
-公司地址
+公司地址<font color="#ff0000">*</font>
 </td>
 <td  style="height:40px;width:150px">
 <input id="supplyApply.companyAddress" name="supplyApply.companyAddress" style="height:25">
 </td>
 <td  style="height:40px;width:100px">
-公司电话
+公司电话<font color="#ff0000">*</font>
 </td>
-<td  style="height:40px;width:150px">
+<td  style="height:40px;width:160px">
 <input id="supplyApply.companyTel" name="supplyApply.companyTel" style="height:25">
 </td>
-<td  style="height:40px;width:80px">
-E-mail
+<td  style="height:40px;width:90px">
+E-mail<font color="#ff0000">*</font>
 </td>
 <td  style="height:40px;width:150px">
 <input id="supplyApply.companyEmail" name="supplyApply.companyEmail" style="height:25">
@@ -302,19 +276,19 @@ E-mail
 </tr>
 <tr >
 <td  style="height:40px">
-业务负责人/职位
+业务负责人/职位<font color="#ff0000">*</font>
 </td>
 <td  style="height:40px">
 <input id="supplyApply.businessUser" name="supplyApply.businessUser" style="height:25">
 </td>
 <td  style="height:40px">
-手机
+手机<font color="#ff0000">*</font>
 </td>
 <td  style="height:40px">
 <input id="supplyApply.businessTel" name="supplyApply.businessTel" style="height:25">
 </td>
 <td  style="height:40px;width:80px">
-E-mail
+E-mail<font color="#ff0000">*</font>
 </td>
 <td  style="height:40px;width:150px">
 <input id="supplyApply.businessEmail" name="supplyApply.businessEmail" style="height:25">
