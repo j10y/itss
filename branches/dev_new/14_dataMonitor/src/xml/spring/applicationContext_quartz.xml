@@ -14,10 +14,23 @@
 		<property name="targetMethod" value="defJob" />
 		<property name="concurrent" value="false" />
 	</bean>
+	<bean id="jobForWebDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="countPfJob" />
+		<property name="targetMethod" value="jobForWeb" />
+		<property name="concurrent" value="false" />
+	</bean>
 		
 	<bean id="defJobTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="defJobDetail" />
+		<property name="cronExpression">
+			<value>0 0/5 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="jobForWebTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="jobForWebDetail" />
 		<property name="cronExpression">
 			<value>0 0/5 * * * ?</value>
 		</property>
@@ -28,6 +41,7 @@
 			<list>
 			<!--  -->
 				<ref local="defJobTrigger" />
+				<ref local="jobForWebTrigger" />
 			</list>
 		</property>
 	</bean>
