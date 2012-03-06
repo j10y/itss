@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.xp.commonpart.bean.TreeObject;
+import com.xp.commonpart.bean.WebMonitorInfo;
 
 public interface ComQueryService {
 	public Map queryTableForAjaxService(HttpServletRequest request);
@@ -23,6 +24,13 @@ public interface ComQueryService {
 	 * @return
 	 */
 	public Map connectDataBaseByBaseId(String id,String type);
-	
+	/**
+	 * 定时检查应用
+	 */
 	public void checkWebStatus();
+	/**
+	 * 实时检查
+	 * @return
+	 */
+	public List<WebMonitorInfo> checkWebStatusTimer(String webid);
 }
