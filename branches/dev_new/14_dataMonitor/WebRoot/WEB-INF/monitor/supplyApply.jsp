@@ -211,6 +211,7 @@
 <option value="儿童">儿童</option>
 <option value="饰品">饰品</option>
 <option value="家居">家居</option>
+<option value="内衣">内衣</option>
 <option value="其他">其他</option>
 </select>
 </td>
