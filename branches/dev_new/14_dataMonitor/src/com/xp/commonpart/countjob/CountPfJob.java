@@ -41,25 +41,16 @@ public class CountPfJob {
 	   return "success:true";
 	}
 	public String defJob() throws SchedulerException, ParseException{
-//		BaseService baseService =(BaseService) ContextHolder.getBean("baseService");
-//		List<TaskScheduler> list=baseService.findObjectListByParamAndOrder(TaskScheduler.class, null, null);
-//		for(TaskScheduler ts:list){
-//			 CronTriggerBean trigger = (CronTriggerBean) scheduler.getTrigger(ts.getCronTrigger(), Scheduler.DEFAULT_GROUP);  
-//		     String originConExpression = trigger.getCronExpression(); 
-//		     if(!originConExpression.equals(ts.getRunTime())){
-//					trigger.setCronExpression(ts.getRunTime());
-//					scheduler.rescheduleJob(ts.getCronTrigger(), Scheduler.DEFAULT_GROUP, trigger); 
-//					logger.info(" -----------------------------start defJob-----"+originConExpression+(new Date()).getTime()+"---"+ts.getRunTime()+"-----------------------------");
-//		     }
-//		}
 		ComQueryService comqueryService=(ComQueryService) ContextHolder.getBean("comqueryService");
-		comqueryService.connectDataBase();
-		comqueryService.checkWebStatus();
-//		CronTriggerBean trigger1 = (CronTriggerBean) scheduler.getTrigger("defJobTrigger", Scheduler.DEFAULT_GROUP);  
-//		trigger1.setCronExpression("0 0 0 ? 12 6L 2055");
-//		scheduler.rescheduleJob("defJobTrigger", Scheduler.DEFAULT_GROUP, trigger1);
-//		logger.info(" -----------------------------set job 0 0 0 ? 12 6L 2055 tostart again --------------------------------");
+		//comqueryService.connectDataBase();
+		//logger.info(" -----------------------------set job 0 0 0 ? 12 6L 2055 tostart defJob again --------------------------------");
 		return null;		
 	}
 	
+	public String jobForWeb() throws SchedulerException, ParseException{
+		ComQueryService comqueryService=(ComQueryService) ContextHolder.getBean("comqueryService");
+		//comqueryService.checkWebStatus();
+		//logger.info(" -----------------------------set job 0 0 0 ? 12 6L 2055 tostart jobForWeb again --------------------------------");
+		return null;		
+	}
 }
