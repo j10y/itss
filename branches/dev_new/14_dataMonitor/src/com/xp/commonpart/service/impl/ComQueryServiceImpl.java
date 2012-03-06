@@ -587,9 +587,11 @@ public class ComQueryServiceImpl implements ComQueryService{
 			String webName=map.get("webName")!=null?map.get("webName").toString():"";
 			String webUrl=map.get("webUrl")!=null?map.get("webUrl").toString():"";
 			String telephoneUser=map.get("telephoneUser")!=null?map.get("telephoneUser").toString():"";
+			//默认延时15秒
+			Integer timeOuts=map.get("timeOuts")!=null?Integer.parseInt(map.get("timeOuts").toString()):15;
 			HttpClient client = new HttpClient(); 
-			client.setConnectionTimeout(3000);//设置为延时3秒
-			client.setTimeout(3000);
+			client.setConnectionTimeout(timeOuts*1000);//设置为延时15秒
+			client.setTimeout(timeOuts*1000);
 		    HttpMethod method=new GetMethod(webUrl);
 		    WebMonitorInfo webmo=new WebMonitorInfo();
 		    webmo.setWebId(Long.parseLong(id));
@@ -622,6 +624,8 @@ public class ComQueryServiceImpl implements ComQueryService{
 			    baseDao.save(webmo,WebMonitorInfo.class,"id");
 			} catch (HttpException e) {
 				// TODO Auto-generated catch block
+				 //释放连接
+			    method.releaseConnection();
 				e.printStackTrace();
 				webmo.setStatus(-1);
 				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！");
@@ -636,6 +640,8 @@ public class ComQueryServiceImpl implements ComQueryService{
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				 //释放连接
+			    method.releaseConnection();
 				e.printStackTrace();
 				webmo.setStatus(-1);
 				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！");
@@ -650,6 +656,8 @@ public class ComQueryServiceImpl implements ComQueryService{
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
+				 //释放连接
+			    method.releaseConnection();
 				e.printStackTrace();
 				webmo.setStatus(-1);
 				webmo.setDescrpition("访问应用失败，原因：访问服务器失败！"+e.getMessage());
@@ -664,5 +672,67 @@ public class ComQueryServiceImpl implements ComQueryService{
 				}
 			}
 		}
+	}
+	
+	public List<WebMonitorInfo> checkWebStatusTimer(String webid) {
+		// TODO Auto-generated method stub
+		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");
+		String sql="select * from webserverlist where isClose=1 and id="+webid;
+		List<Map> list=selectDataService.getData(sql);
+		List<WebMonitorInfo> webs=new ArrayList();
+		for(Map map:list){
+			String id=map.get("id")!=null?map.get("id").toString():"";
+			String webName=map.get("webName")!=null?map.get("webName").toString():"";
+			String webUrl=map.get("webUrl")!=null?map.get("webUrl").toString():"";
+			String telephoneUser=map.get("telephoneUser")!=null?map.get("telephoneUser").toString():"";
+			//默认延时15秒
+			Integer timeOuts=map.get("timeOuts")!=null?Integer.parseInt(map.get("timeOuts").toString()):15;
+			Long starttime=new Date().getTime();
+			HttpClient client = new HttpClient(); 
+			client.setConnectionTimeout(timeOuts*1000);//设置为延时15秒
+			client.setTimeout(timeOuts*1000);
+		    HttpMethod method=new GetMethod(webUrl);
+		    WebMonitorInfo webmo=new WebMonitorInfo();
+		    webmo.setWebId(Long.parseLong(id));
+		    webmo.setCreateDate(new Date());
+		    webmo.setWebName(webName);
+		    
+		    try {
+				client.executeMethod(method);
+				int status=method.getStatusCode();
+				Long endtime=new Date().getTime();
+				if(status==200){
+					webmo.setStatus(1);
+					webmo.setDescrpition("访问成功,用时"+(endtime-starttime)+"毫秒");
+					//System.out.println(webName+"访问成功,用时"+(endtime-starttime)/1000+"秒");
+				}else{
+					webmo.setStatus(-1);
+					webmo.setDescrpition((endtime-starttime)+"毫秒,访问应用失败，原因："+method.getStatusLine());
+					
+				}
+			    //释放连接
+			    method.releaseConnection();
+			} catch (HttpException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				webmo.setStatus(-1);
+				webmo.setDescrpition(timeOuts+"秒,访问应用失败，原因：访问服务器失败！");
+				method.releaseConnection();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				webmo.setStatus(-1);
+				webmo.setDescrpition(timeOuts+"秒,访问应用失败，原因：访问服务器失败！");
+				method.releaseConnection();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				webmo.setStatus(-1);
+				webmo.setDescrpition(timeOuts+"秒,访问应用失败，原因：访问服务器失败！"+e.getMessage());
+				method.releaseConnection();
+			}
+			webs.add(webmo);
+		}
+		return webs;
 	}
 }
