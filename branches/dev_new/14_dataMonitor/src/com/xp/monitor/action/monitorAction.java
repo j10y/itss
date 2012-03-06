@@ -19,6 +19,7 @@ import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.struts2.ServletActionContext;
 
 import com.xp.commonpart.bean.TreeObject;
+import com.xp.commonpart.bean.WebMonitorInfo;
 import com.xp.commonpart.service.BaseService;
 import com.xp.commonpart.service.ComQueryService;
 import com.xp.commonpart.service.SelectDataService;
@@ -189,5 +190,45 @@ public class monitorAction {
 		request.setAttribute("startdate", startdate);
 		request.setAttribute("enddate", enddate);
 		return "webjk";
+	}
+	public String toCheckWebStatusTimer(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");
+		String sql="select * from webserverlist where isClose=1 ";
+		List<Map> list=selectDataService.getData(sql);
+		request.setAttribute("weblist", list);
+//		for(Map map:list){
+//			String id=map.get("id")!=null?map.get("id").toString():"";
+//			String webName=map.get("webName")!=null?map.get("webName").toString():"";
+//			String webUrl=map.get("webUrl")!=null?map.get("webUrl").toString():"";
+//		}
+		return "webjktimer";
+	}
+	public String getWebStatusTimer(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse response=ServletActionContext.getResponse();
+		String webid=request.getParameter("webid");
+		List<WebMonitorInfo> list=comqueryService.checkWebStatusTimer(webid);
+		
+		String json="{'total':'"+list.size()+"','data':[";
+		for(WebMonitorInfo w:list){
+			json+="{'status':'"+w.getStatus()+"',";
+			json+="'descsp':'"+w.getDescrpition()+"',";
+			json+="'webName':'"+w.getWebName()+"',";
+			json+="'webId':'"+w.getWebId()+"'},";
+		}
+		if(list!=null&&list.size()>0){
+			json=json.substring(0,json.length()-1);
+		}
+		json+="]}";
+		try {
+        	response.setCharacterEncoding("utf-8");
+			PrintWriter out=response.getWriter();
+			out.print(json);   
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
