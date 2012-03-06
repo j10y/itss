@@ -8,6 +8,14 @@ public class WebMonitorInfo {
 	private Date createDate;
 	private Integer status;
 	private String descrpition;
+	private String webName;
+
+	public String getWebName() {
+		return webName;
+	}
+	public void setWebName(String webName) {
+		this.webName = webName;
+	}
 	public Long getId() {
 		return id;
 	}
