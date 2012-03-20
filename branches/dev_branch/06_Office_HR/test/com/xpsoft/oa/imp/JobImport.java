@@ -49,7 +49,7 @@ public class JobImport {
 		context = new ClassPathXmlApplicationContext("conf/app-context.xml");
 		if(args.length<=0){
 			//throw new RuntimeException("Usage: please input the import template file name!");
-			fileName = "C:/imp/岗位导入模板-王府井、行政部.xls";
+			fileName = "C:/Users/wchao/Desktop/岗位--导入.xls";
 		}else{
 			fileName = args[0];
 		}
@@ -100,10 +100,10 @@ public class JobImport {
 		}
 		
 		for(Department dept : depts){
-			if(dept.getDepLevel().intValue()!=1){
-				if(dept.getDepLevel().intValue() == 2){//
-					deptMap.put(dept.getDepDesc(), dept.getDepId());
-				}else if(dept.getDepLevel().intValue() == 3){
+			if(dept.getDepLevel().intValue()!=1 && dept.getDepLevel().intValue()!=2){
+				if(dept.getDepLevel().intValue() == 3){//
+					deptMap.put(dept.getDepName(), dept.getDepId());
+				}else if(dept.getDepLevel().intValue() == 4){
 					//格式：一级部门名称/二级部门名称
 					deptMap.put(tmpDeptMap.get(dept.getParentId()).getDepName() + "/" + dept.getDepName(), dept.getDepId());
 				}
@@ -190,22 +190,22 @@ public class JobImport {
 						bandId = dataMap.get("24").get(band);
 					}
 					String race = null;
-					if(cells[4]!=null && !cells[4].getContents().trim().equals("")){
+					if(cells.length>=5 && cells[4]!=null && !cells[4].getContents().trim().equals("")){
 						race = cells[4].getContents();//族群
 						//匹配族群
 						raceId = dataMap.get("18").get(race);
 					}
 					String seq = null;
-					if(cells[5]!=null && !cells[5].getContents().trim().equals("")){
+					if(cells.length>=6 && cells[5]!=null && !cells[5].getContents().trim().equals("")){
 						seq = cells[5].getContents();//序列
 						//匹配序列
 						seqId = dataMap.get("19").get(seq);
 					}
 					
 					String memo = null;
-					if(cells[6]!=null && !cells[6].getContents().trim().equals("")){
-						memo = cells[6].getContents();//说明
-					}
+//					if(cells.length>=6 && cells[6]!=null && !cells[6].getContents().trim().equals("")){
+//						memo = cells[6].getContents();//说明
+//					}
 					Job job = new Job();
 					job.setJobName(jobName);
 					Department dept = new Department();

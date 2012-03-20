@@ -55,7 +55,7 @@ public class StandSalaryImport {
 		context = new ClassPathXmlApplicationContext("conf/app-context.xml");
 		if(args.length<=0){
 			//throw new RuntimeException("Usage: please input the import template file name!");
-			fileName = "C:/imp/jobImp.xls";
+			fileName = "C:/Users/wchao/Desktop/薪酬标准--导入.xls";
 		}else{
 			fileName = args[0];
 		}
@@ -130,7 +130,7 @@ public class StandSalaryImport {
 
 		init(args);
 		
-		//process();
+		process();
 
 	}
 
@@ -158,7 +158,7 @@ public class StandSalaryImport {
 					Cell[] cells = sheet.getRow(i);
 					String salaryName = null;
 					if(cells[0]!=null && !cells[0].getContents().trim().equals("")){
-						salaryName = cells[0].toString();//岗位名称
+						salaryName = cells[0].getContents().toString();//岗位名称
 					}else{
 						System.out.println("--------Row: " + i + " data not contains salaryName info");
 						continue;
@@ -167,24 +167,36 @@ public class StandSalaryImport {
 					//固定薪资
 					BigDecimal baseMoney = null;
 					if(cells[1]!=null && !cells[1].getContents().trim().equals("")){
-						baseMoney = new BigDecimal(cells[1].toString());
+						baseMoney = new BigDecimal(Double.valueOf(cells[1].getContents().toString()));
 					}
 					
 					//绩效基数
 					BigDecimal perCoefficient = null;
 					if(cells[2]!=null && !cells[2].getContents().trim().equals("")){
-						perCoefficient = new BigDecimal(cells[2].toString());
+						perCoefficient = new BigDecimal(Double.valueOf(cells[2].getContents().toString()));
 					}
 					
 					//月度薪酬总额
 					BigDecimal totalMoney = null;
 					if(cells[3]!=null && !cells[3].getContents().trim().equals("")){
-						totalMoney = new BigDecimal(cells[3].toString());
+						totalMoney = new BigDecimal(Double.valueOf(cells[3].getContents().toString()));
+					}
+					
+					//年度总薪酬
+					BigDecimal yearTotalMoney = null;
+					if(cells[4]!=null && !cells[4].getContents().trim().equals("")){
+						yearTotalMoney = new BigDecimal(Double.valueOf(cells[4].getContents().toString()));
+					}
+					
+					//年终绩效基数
+					BigDecimal yearEndBonusCoefficient = null;
+					if(cells[5]!=null && !cells[5].getContents().trim().equals("")){
+						yearEndBonusCoefficient = new BigDecimal(Double.valueOf(cells[5].getContents().toString()));
 					}
 					
 					String memo = null;
-					if(cells[6]!=null && !cells[6].getContents().trim().equals("")){
-						memo = cells[6].toString();//说明
+					if(cells.length >=7 && cells[6]!=null && !cells[6].getContents().trim().equals("")){
+						memo = cells[6].getContents().toString();//说明
 					}
 					
 					StandSalary salary = new StandSalary();
@@ -196,9 +208,11 @@ public class StandSalaryImport {
 					salary.setBaseMoney(baseMoney);
 					salary.setPerCoefficient(perCoefficient);
 					salary.setTotalMoney(totalMoney);
+					salary.setYearTotalMoney(yearTotalMoney);
+					salary.setYearEndBonusCoefficient(yearEndBonusCoefficient);
 					
 					salary.setStandardName(salaryName);
-					
+					salary.setStatus(Short.valueOf("1"));
 					salary.setMemo(memo);
 					
 					//执行insert

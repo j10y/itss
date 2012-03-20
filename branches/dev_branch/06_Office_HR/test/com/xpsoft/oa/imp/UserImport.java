@@ -61,7 +61,7 @@ public class UserImport {
 		context = new ClassPathXmlApplicationContext("conf/app-context.xml");
 		if(args.length<=0){
 			//throw new RuntimeException("Usage: please input the import template file name!");
-			fileName = "C:/imp/用户导入模板-王府井、行政部.xls";
+			fileName = "C:/Users/wchao/Desktop/用户--导入（修改版）.xls";
 		}else{
 			fileName = args[0];
 		}
@@ -114,10 +114,10 @@ public class UserImport {
 		}
 		
 		for(Department dept : depts){
-			if(dept.getDepLevel().intValue()!=1){
-				if(dept.getDepLevel().intValue() == 2){//
+			if(dept.getDepLevel().intValue()!=1 && dept.getDepLevel().intValue()!=2){
+				if(dept.getDepLevel().intValue() == 3){//
 					deptMap.put(dept.getDepDesc(), dept.getDepId());
-				}else if(dept.getDepLevel().intValue() == 3){
+				}else if(dept.getDepLevel().intValue() == 4){
 					//格式：一级部门名称/二级部门名称
 					deptMap.put(tmpDeptMap.get(dept.getParentId()).getDepName() + "/" + dept.getDepName(), dept.getDepId());
 				}
@@ -158,6 +158,8 @@ public class UserImport {
 	private static void process() {
 		// TODO Auto-generated method stub
 		Workbook book = null;
+		AppUser user = null;
+		Set<String> names = new HashSet();
 		try {
 			try {
 				book = Workbook.getWorkbook(new File(fileName));
@@ -171,6 +173,7 @@ public class UserImport {
 			if(count<=1){
 				return;
 			}else{
+				int j=0;
 				for(int i=1; i < count; i++){
 					Long depId = null;
 					Long raceId = null;
@@ -184,6 +187,11 @@ public class UserImport {
 					}else{
 						System.out.println("--------Row: " + i + " data not contains userName info");
 						continue;
+					}
+					if(names.contains(userName)){
+						System.out.println("第" + i + "行" + userName + "重复");
+					}else{
+						names.add(userName);
 					}
 					String fullName = null;
 					if(cells[1]!=null && !cells[1].getContents().trim().equals("")){
@@ -220,9 +228,9 @@ public class UserImport {
 					Date accessionTime = null;
 					if(cells[5]!=null && !cells[5].getContents().trim().equals("")){
 						try {
-							System.out.println("---------------------------" + cells[5].getContents().trim() + "----------------");
+							//System.out.println("---------------------------" + cells[5].getContents().trim() + "----------------");
 							accessionTime = sdf.parse(cells[5].getContents().trim());//band
-							System.out.println("---------------------------" + accessionTime.toLocaleString() + "----------------");
+							//System.out.println("---------------------------" + accessionTime.toLocaleString() + "----------------");
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							accessionTime = new Date();
@@ -237,7 +245,7 @@ public class UserImport {
 					}
 									
 					
-					AppUser user = null;
+					
 					user = appUserService.getByUserName(userName);
 					if(user==null){
 						user = new AppUser();
@@ -267,11 +275,12 @@ public class UserImport {
 					AppRole appRole = appRoleService.get(6L);
 					roles.add(appRole);
 					user.setRoles(roles);
-					//appUserService.save(user);
+					appUserService.save(user);
+					//System.out.println("第" + j++ + "行");
 				}
 			}
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
+			System.out.println(user.getUsername());
 		} finally {
 			book.close();
 		}
