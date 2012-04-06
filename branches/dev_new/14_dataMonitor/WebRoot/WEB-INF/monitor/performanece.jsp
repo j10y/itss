@@ -21,8 +21,7 @@
 				params, //传递的参数 
 				function(json){ 
 				$("#pitablelist").html(json);
-				//var dataObj=eval("("+json+")");//
-					
+				$("#loadwindow").window('close');	
 				});
 		 }
 		</script>	
@@ -30,5 +29,6 @@
 <body class="easyui-layout" onload="queryDataList()">
 		<input type="hidden" name="dataid" id="dataid" value="${id}">
 		<div id="pitablelist" style="overflow:auto;height:470px;width:auto"><div>
+		
 </body>
 </html>
