@@ -20,16 +20,21 @@ public final class ColorUtil {
 		list.add("DBEE25");
 		list.add("DBCC25");
 		list.add("F1383C");
-		list.add("2AE62A");
-		list.add("DBEC25");
-		list.add("DBAF25");
-		list.add("DBAE27");
+		list.add("99CC00");
+		list.add("FFCC66");
+		list.add("999999");
+		list.add("33CC00");
 		list.add("DBAC27");
 		list.add("FFFFE0");
-		list.add("00EEFF");
-		list.add("1DEED1");
-		list.add("ffEEa7");
-		list.add("F1EE3C");
+		list.add("336600");
+		list.add("CC6699");
+		list.add("CC66FF");
+		list.add("CCFFFF");
+		list.add("FFFFE0");
+		list.add("660066");
+		list.add("6600CC");
+		list.add("FF0000");
+		list.add("FF3399");
 		return list;
 	}
 }
