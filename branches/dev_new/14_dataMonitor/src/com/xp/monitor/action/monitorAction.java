@@ -20,6 +20,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.xp.commonpart.bean.TreeObject;
 import com.xp.commonpart.bean.WebMonitorInfo;
+import com.xp.commonpart.countjob.CountPfJob;
 import com.xp.commonpart.service.BaseService;
 import com.xp.commonpart.service.ComQueryService;
 import com.xp.commonpart.service.SelectDataService;
@@ -170,7 +171,7 @@ public class monitorAction {
 		if(startdate!=null&&startdate.length()>0){
 			sql+=" and UNIX_TIMESTAMP(webmonitorinfo.createDate)>=UNIX_TIMESTAMP('"+startdate+"')";
 		}else{
-			startdate=DateUtil.convertDateTimeToString(DateUtil.addMinutes(new Date(), -60*24));
+			startdate=DateUtil.convertDateTimeToString(DateUtil.addMinutes(new Date(), -60*4));
 			sql+=" and UNIX_TIMESTAMP(webmonitorinfo.createDate)>=UNIX_TIMESTAMP('"+ startdate+"')";
 		}
 		if(enddate!=null&&enddate.length()>0){
@@ -230,5 +231,18 @@ public class monitorAction {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public String toReSetJob(){
+		return "resetJobPage";
+	}
+	public String reSetJob(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse response=ServletActionContext.getResponse();
+		String ctrigger=request.getParameter("ctrigger");
+		String cronexpress=request.getParameter("cronexpress");
+		CountPfJob j=new CountPfJob();
+		String s=j.resetTaskTime(ctrigger, cronexpress);
+		request.setAttribute("result", s);
+		return "jobpage";
 	}
 }
