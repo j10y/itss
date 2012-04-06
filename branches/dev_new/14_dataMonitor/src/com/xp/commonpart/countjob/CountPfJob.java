@@ -42,15 +42,15 @@ public class CountPfJob {
 	}
 	public String defJob() throws SchedulerException, ParseException{
 		ComQueryService comqueryService=(ComQueryService) ContextHolder.getBean("comqueryService");
-		//comqueryService.connectDataBase();
-		//logger.info(" -----------------------------set job 0 0 0 ? 12 6L 2055 tostart defJob again --------------------------------");
+		comqueryService.connectDataBase();
+		logger.info(" -----------------------------set job 0 0 0 ? 12 6L 2055 tostart defJob again --------------------------------");
 		return null;		
 	}
 	
 	public String jobForWeb() throws SchedulerException, ParseException{
 		ComQueryService comqueryService=(ComQueryService) ContextHolder.getBean("comqueryService");
 		//comqueryService.checkWebStatus();
-		//logger.info(" -----------------------------set job 0 0 0 ? 12 6L 2055 tostart jobForWeb again --------------------------------");
+		logger.info(" -----------------------------set job 0 0 0 ? 12 6L 2055 tostart jobForWeb again --------------------------------");
 		return null;		
 	}
 }
