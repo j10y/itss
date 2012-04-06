@@ -582,6 +582,7 @@ public class ComQueryServiceImpl implements ComQueryService{
 		SelectDataService selectDataService=(SelectDataService) ContextHolder.getBean("selectDataService");
 		String sql="select * from webserverlist where isClose=1 ";
 		List<Map> list=selectDataService.getData(sql);
+		Date createdate=new Date();
 		for(Map map:list){
 			String id=map.get("id")!=null?map.get("id").toString():"";
 			String webName=map.get("webName")!=null?map.get("webName").toString():"";
@@ -595,7 +596,7 @@ public class ComQueryServiceImpl implements ComQueryService{
 		    HttpMethod method=new GetMethod(webUrl);
 		    WebMonitorInfo webmo=new WebMonitorInfo();
 		    webmo.setWebId(Long.parseLong(id));
-		    webmo.setCreateDate(new Date());
+		    webmo.setCreateDate(createdate);
 		    List<Map> userlist=new ArrayList();
 		    if(telephoneUser!=null&&telephoneUser.length()>0){
 		    	String telsql="select * from sys_sec_userinfo where id in ("+telephoneUser+")";
