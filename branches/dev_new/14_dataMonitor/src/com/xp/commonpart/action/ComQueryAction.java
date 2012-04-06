@@ -99,7 +99,10 @@ public class ComQueryAction extends ActionSupport{
 		request.setAttribute("maintable", maintable);
 		//获取权限信息
 		Map usermap=(Map) request.getSession().getAttribute("usermap");
-		String username=(String) usermap.get("username");
+		String username="";
+		if(usermap!=null&&usermap.get("username")!=null){
+			username=(String) usermap.get("username");
+		}
 		String operid=request.getParameter("operid");
 		List list1=selectDataService.getData("select sys_sec_role.operateid from sys_sec_userinfo,sys_sec_role where sys_sec_role.id in (sys_sec_userinfo.role) and sys_sec_userinfo.username='"+username+"'");
 		String operateid="0";
