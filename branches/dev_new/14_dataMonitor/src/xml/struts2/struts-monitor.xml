@@ -9,6 +9,9 @@
 		    <result name="ztjk">/WEB-INF/monitor/ztjk.jsp</result>
 		    <result name="webjk">/WEB-INF/monitor/webjk.jsp</result>
 		    <result name="performanece">/WEB-INF/monitor/performanece.jsp</result>
+		    <result name="webjktimer">/WEB-INF/monitor/webjktimer.jsp</result>
+		    <result name="resetJobPage">/WEB-INF/monitor/resetJobPage.jsp</result>
+		    <result name="jobpage">/WEB-INF/monitor/jobpage.jsp</result>
 		</action>
 	</package>
 	
