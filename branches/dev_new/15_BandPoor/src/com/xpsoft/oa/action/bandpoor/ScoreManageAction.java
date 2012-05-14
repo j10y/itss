@@ -526,7 +526,7 @@ public class ScoreManageAction extends BaseAction{
 				ifpoor.setSaleStoreName(saleStoreName);
 				ifpoor.setBandBusinessAreaId(saleStoreId.getAllowAreaId());
 				ifpoor.setBandBusinessAreaName(saleStoreId.getAllowAreaId().getAreaName());
-				String index=sheet.getCell(0, i).getContents();
+				String index=sheet.getCell(0, i).getContents();				
 				String zhName=sheet.getCell(1, i).getContents();
 				String enName=sheet.getCell(2, i).getContents();
 				QueryFilter bandfilter = new QueryFilter(getRequest());
