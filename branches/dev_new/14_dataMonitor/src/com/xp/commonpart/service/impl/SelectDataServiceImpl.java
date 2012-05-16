@@ -104,7 +104,7 @@ public class SelectDataServiceImpl implements SelectDataService{
 			}
 		}
 		if(databasetype.indexOf("oracle")>=0){
-			sql="select rownum as oid, pagetable.* from ("+sql+") pagetable ";
+			//sql="select rownum as oid, pagetable.* from ("+sql+") pagetable ";
 			sqlpage="select * from ("+sql+") tables1 where tables1.oid>="+((page-1)*pageSize+1)+" and tables1.oid<="+page*pageSize;
 		}else if(databasetype.indexOf("mysql")>=0){
 			sqlpage=sql+" limit "+((page-1)*pageSize)+","+pageSize;
