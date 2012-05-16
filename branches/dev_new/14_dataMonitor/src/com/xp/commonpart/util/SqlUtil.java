@@ -502,8 +502,23 @@ public class SqlUtil {
 	}
 	
 	public static String getMainSql(List viewList,List queryList,MainTable maintable){
+		SelectDataService selectDataService = (SelectDataService) ContextHolder.getBean("selectDataService");
 		String databasetype=PropertiesUtil.getProperties("jdbc.driverClassName");
 		String sql="";
+		if(maintable.getPosition()!=null&&maintable.getPosition().equals("1")){
+			String datasql="select * from dataBaseList where id="+maintable.getDatabaseId();
+			List<Map> list=selectDataService.getData(datasql);
+			if(list!=null&&list.size()>0){
+				Map map=list.get(0);
+				String dbType=map.get("dataBaseType")!=null?map.get("dataBaseType").toString():"";
+				switch(Integer.parseInt(dbType)){
+		            case 0 : databasetype= "oracle" ; break;
+		            case 1 : databasetype= "sqlserver" ; break;
+		            case 2 : databasetype= "mysql" ; break;
+		            default : databasetype= "mysql" ; break;
+				}
+			}
+		}
 		if(databasetype.indexOf("mysql")>=0){
 			sql=getMySql(viewList,queryList,maintable );
 		}else if (databasetype.indexOf("oracle")>=0){
