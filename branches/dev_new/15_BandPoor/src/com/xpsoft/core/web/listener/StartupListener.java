@@ -28,14 +28,6 @@ public class StartupListener extends ContextLoaderListener {
 		if (isAynMenu)
 			AppUtil.synMenu();
 		
-		//add by jack for cas resource loaded when application startup at 2011-9-30 begin
-		//测试用，上线后去除
-		//ServletContext servletContext = event.getServletContext();
-		//SecurityDataSource sds = this.getSecurityManager(servletContext);
-		//Map<String, Set<String>> urlAuthorities = sds.getDataSource();
-		//servletContext.setAttribute("urlAuthorities", urlAuthorities);
-		//add by jack for cas resource loaded when application startup at 2011-9-30 end
-		
 	}
 	
 	 protected SecurityDataSource getSecurityManager(ServletContext servletContext) {
