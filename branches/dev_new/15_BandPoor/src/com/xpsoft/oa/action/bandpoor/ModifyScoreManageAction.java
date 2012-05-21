@@ -149,7 +149,7 @@ public class ModifyScoreManageAction extends BaseAction{
 			scoreManageService.save(ip);
 			this.countScoreValueForModify(year, poorVersion, beElectedBandPoor);
 		}else if(flag==InfoPoor.STATUS_DELETE){
-			if(beElectedBandPoorlist!=null||beElectedBandPoorlist.size()>0){
+			if(beElectedBandPoorlist!=null&&beElectedBandPoorlist.size()>0){
 				BeElectedBandPoor beElectedBandPoor=(BeElectedBandPoor) beElectedBandPoorlist.get(0);
 				beElectedBandPoor.setModifyDate(new Date());
 				beElectedBandPoor.setModifyUser(ContextUtil.getCurrentUser());
