@@ -45,7 +45,7 @@ SaleStoreView = Ext.extend(Ext.Panel, {
 					text : "查询条件：名称"
 				}, {
 					fieldLabel : "名称",
-					name : "Q_areaName_S_LK",
+					name : "Q_storeName_S_LK",
 					xtype : "textfield"
 				}, {
 					xtype : "button",
