@@ -139,8 +139,9 @@ public class SaleStoreAction extends BaseAction{
 				}else{
 					ss.setStoreScore(Double.valueOf(sheet.getCell(2, i).getContents()));
 				}
-				
-				
+				if(!StringUtils.isEmpty(sheet.getCell(0, i).getContents())) {
+					ss.setStoreDesc(sheet.getCell(3, i).getContents());
+				}
 				ss.setFlag(SaleStore.CREATE);
 				
 				boolean flag = true;
