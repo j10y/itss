@@ -438,7 +438,7 @@ public class ScoreManageAction extends BaseAction{
 	public String applyRecord(){
 		String[] ids = getRequest().getParameterValues("ids");
 		String status=getRequest().getParameter("status");
-		if (ids != null) {
+		if (ids != null&&ids.length>0&&ids[0].length()>0) {
 			for (String id : ids) {
 				InfoPoor ip=scoreManageService.get(new Long(id));
 				if(status.equals(InfoPoor.STATUS_PASS+"")){
@@ -471,6 +471,43 @@ public class ScoreManageAction extends BaseAction{
 				}
 				ip.setInfoStatus(Integer.parseInt(status));
 				scoreManageService.save(ip);
+			}
+		}else if(ids==null||ids.length==0||ids[0].length()==0){
+			if(status.equals(InfoPoor.STATUS_PASS+"")){
+				Map ipmap = new HashMap();
+				ipmap.put("Q_infoStatus_N_EQ",InfoPoor.STATUS_CREATE+"");
+				QueryFilter ipfilter = new QueryFilter(ipmap);
+				List<InfoPoor> list=scoreManageService.getAll(ipfilter);
+				for(InfoPoor ip:list){
+					Map map = new HashMap();
+					map.put("Q_bandId.id_L_EQ",  ip.getBandId().getId()+"");
+					map.put("Q_status_N_NEQ",  BeElectedBandPoor.STATUS_DELETE+"");
+					QueryFilter filter = new QueryFilter(map);
+					List beElectedBandPoorlist=beElectedBandPoorService.getAll(filter);
+					if(beElectedBandPoorlist==null||beElectedBandPoorlist.size()==0){
+						BeElectedBandPoor beElectedBandPoor=new BeElectedBandPoor();
+						beElectedBandPoor.setBandId(ip.getBandId());
+						beElectedBandPoor.setBandName(ip.getBandName());
+						beElectedBandPoor.setCreatDate(new Date());
+						beElectedBandPoor.setCreateUser(ContextUtil.getCurrentUser());
+						beElectedBandPoor.setInfoType(BeElectedBandPoor.TYPE_SCORE);
+						beElectedBandPoor.setStatus(BeElectedBandPoor.STATUS_CREATE);
+						Set<InfoPoor> ips=beElectedBandPoor.getInfoPoors();
+						ips.add(ip);
+						beElectedBandPoor.setInfoPoors(ips);
+						beElectedBandPoorService.save(beElectedBandPoor);
+					}else{
+						BeElectedBandPoor beElectedBandPoor=(BeElectedBandPoor) beElectedBandPoorlist.get(0);
+						Set<InfoPoor> ips=beElectedBandPoor.getInfoPoors();
+						ips.add(ip);
+						beElectedBandPoor.setInfoPoors(ips);
+						beElectedBandPoor.setModifyDate(new Date());
+						beElectedBandPoor.setModifyUser(ContextUtil.getCurrentUser());
+						beElectedBandPoorService.save(beElectedBandPoor);
+					}
+					ip.setInfoStatus(Integer.parseInt(status));
+					scoreManageService.save(ip);
+				}
 			}
 		}
 		this.jsonString = "{success:true}";
