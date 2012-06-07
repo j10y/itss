@@ -53,7 +53,7 @@ public class DxcScoreManageAction extends BaseAction{
 			buff.append("{id:'")
 			.append(beElectedBandPoor.getId())
 			.append("',bandName:'")
-			.append(beElectedBandPoor.getBandName())
+			.append(beElectedBandPoor.getBandName().replace("'", "\\'"))
 			.append("',saleStoreNum:'")
 			.append(infopoors.size())
 			.append("',bandScore:'")
