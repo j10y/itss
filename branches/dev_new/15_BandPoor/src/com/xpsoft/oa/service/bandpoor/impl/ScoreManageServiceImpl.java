@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -138,7 +140,6 @@ public class ScoreManageServiceImpl extends BaseServiceImpl<InfoPoor> implements
 		Map map=new HashMap();
 		map.put("result", "true");
 		for(int i = 3; i < row; i++){
-			System.out.println(i);
 			InfoPoor ifpoor=new InfoPoor();
 			ifpoor.setSaleStoreid(saleStoreId);
 			ifpoor.setSaleStoreName(saleStoreName);
@@ -147,14 +148,32 @@ public class ScoreManageServiceImpl extends BaseServiceImpl<InfoPoor> implements
 			String index=sheet.getCell(0, i).getContents();				
 			String zhName=sheet.getCell(1, i).getContents();
 			String enName=sheet.getCell(2, i).getContents();
+//			zhName=replaceBlank(zhName);
+//			enName=replaceBlank(enName);
 			QueryFilter bandfilter = new QueryFilter(request);
-			bandfilter.addFilter("Q_bandChName_S_EQ", zhName);
-			bandfilter.addFilter("Q_bandEnName_S_EQ", enName);
-			List bandlist=bandService.getAll(bandfilter);
+			if(zhName!=null&&zhName.length()>0){
+				bandfilter.addFilter("Q_bandChName_S_EQ", zhName);
+			}
+			if(enName!=null&&enName.length()>0){
+				bandfilter.addFilter("Q_bandEnName_S_EQ", enName);
+			}
+//			bandfilter.addFilter("Q_bandChName_S_EQ", zhName);
+//			bandfilter.addFilter("Q_bandEnName_S_EQ", enName);
+			List bandlist=new ArrayList();
+			try {
+				bandlist = bandService.getAll(bandfilter);
+			} catch (RuntimeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中英文品牌出现异常，请核实！'}";
+				map.put("jsonString", jsonString);
+				map.put("result", "false");
+				break;
+			}
 			if(bandlist.size()>0){
 				Band bandId=(Band) bandlist.get(0);
 				ifpoor.setBandId(bandId);
-				ifpoor.setBandName(bandId.getBandChName()+"/"+bandId.getBandEnName());
+				ifpoor.setBandName((bandId.getBandChName()!=null?bandId.getBandChName():"")+"/"+(bandId.getBandEnName()!=null?bandId.getBandEnName():""));
 			}else{
 				jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中英文品牌在已有品牌不存在，请核实！'}";
 				map.put("jsonString", jsonString);
@@ -190,7 +209,7 @@ public class ScoreManageServiceImpl extends BaseServiceImpl<InfoPoor> implements
 			}
 			String proClassName=sheet.getCell(4, i).getContents();
 			QueryFilter proClassfilter = new QueryFilter(request);
-			proClassfilter.addFilter("Q_proClassNum_S_EQ", proClassName);
+			proClassfilter.addFilter("Q_proClassNum_S_EQ", replaceBlank(proClassName));
 			List proClasslist=proClassService.getAll(proClassfilter);
 			if(proClasslist.size()>0){
 				ProClass proClassId=(ProClass) proClasslist.get(0);
@@ -206,7 +225,7 @@ public class ScoreManageServiceImpl extends BaseServiceImpl<InfoPoor> implements
 			String mainStyleName=sheet.getCell(5, i).getContents();
 			
 			QueryFilter mainStylefilter = new QueryFilter(request);
-			mainStylefilter.addFilter("Q_styleNum_S_EQ", mainStyleName);
+			mainStylefilter.addFilter("Q_styleNum_S_EQ", replaceBlank(mainStyleName));
 			mainStylefilter.addFilter("Q_proClassId.id_L_EQ", ifpoor.getProClassId().getId()+"");
 			List mainStylelist=bandStyleService.getAll(mainStylefilter);
 			if(mainStylelist.size()>0){
@@ -227,8 +246,17 @@ public class ScoreManageServiceImpl extends BaseServiceImpl<InfoPoor> implements
 				map.put("result", "false");
 				break;
 			}
-			ifpoor.setMainPriceStart(Long.parseLong(prices[0]));
-			ifpoor.setMainPriceEnd(Long.parseLong(prices[1]));
+			try {
+				ifpoor.setMainPriceStart(Long.parseLong(replaceBlank(prices[0])));
+				ifpoor.setMainPriceEnd(Long.parseLong(replaceBlank(prices[1])));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				jsonString = "{success:true,flag:'0',msg:'excel中序号为【" + index + "】的数据中主力价格带填写不符合要求，需要是整数，请核实！'}";
+				map.put("jsonString", jsonString);
+				map.put("result", "false");
+				break;
+			}
 			ifpoor.setMainPriceName(mainPriceName);
 			String bandDesc=sheet.getCell(7, i).getContents();
 			ifpoor.setBandDesc(bandDesc);
@@ -241,4 +269,16 @@ public class ScoreManageServiceImpl extends BaseServiceImpl<InfoPoor> implements
 		map.put("list", list);
 		return map;
 	}
+	
+	public String replaceBlank(String str) {
+		 String dest ="";
+		 if (str!=null) {
+		 Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+		 Matcher m = p.matcher(str);
+		 dest = m.replaceAll("");
+		 }
+		 dest=dest.replaceAll("　",""); 
+		 return dest;
+	}
 }
+	 
