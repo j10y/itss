@@ -21,6 +21,8 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 	store : null,
 	topbar : null,
 	initComponents : function() {
+		var a = __ctxPath + "/system/listDepartment.do?opt=appUser";
+		var departments = new TreeSelector("publishPaAssessmentDepName", a, "所属部门", "depId");
 		this.searchPanel = new Ext.FormPanel({
 			region : "north",
 			height : 40,
@@ -54,9 +56,21 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 					name : "Q_acKey_S_LK",
 					xtype : "textfield"
 				}, {
+					text : "所属部门"
+				}, 
+				departments, 
+				{
 					xtype : "button",
 					text : "查询",
 					handler : this.search.createCallback(this)
+				}, {
+					xtype : "button",
+					text : "重置",
+					handler : this.reset.createCallback(this)
+				}, {
+					name : "Q_belongDept.depId_L_EQ",
+					id : "depId",
+					xtype : "hidden"
 				}
 			]
 		});
@@ -73,6 +87,7 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 				},
 				"acName",
 				"acKey",
+				"belongDept.depName", 
 				"publishStatus"
 			]
 		});
@@ -118,6 +133,9 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 				}, {
 					header : "考核标准关键字",
 					dataIndex : "acKey"
+				}, {
+					header : "所属部门",
+					dataIndex : "belongDept.depName"
 				}, {
 					header : "状态",
 					dataIndex : "publishStatus",
@@ -254,6 +272,9 @@ PublishHrPaAssessmentcriteriaView = Ext.extend(Ext.Panel, {
 			default:
 				break ;
 		}
+	},
+	reset : function(a) {
+		a.searchPanel.getForm().reset();
 	},
 	uploadAcHrPaAssessmentcriteria : function() {
 		//上传考核标准excel

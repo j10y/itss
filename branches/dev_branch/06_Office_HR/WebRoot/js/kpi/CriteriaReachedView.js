@@ -35,7 +35,8 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 					type : "int"
 				},
 				"acName",
-				"acKey"
+				"acKey",
+				"belongDept.depName"
 			]
 		});
 		this.store.setDefaultSort("id", "desc");
@@ -55,6 +56,9 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 			}, {
 				name : "acKey",
 				mapping : "acKey"
+			}, {
+				name : "belongDept.depName",
+				mapping : "belongDept.depName"
 			}
 		];
 		var store2 = new Ext.data.JsonStore({
@@ -76,6 +80,9 @@ CriteriaReachedView = Ext.extend(Ext.Panel, {
 					header : "考核标准关键字",
 					id : "acKey",
 					dataIndex : "acKey"
+				}, {
+					header : "所属部门",
+					dataIndex : "belongDept.depName"
 				}
 			],
 			defaults : {
