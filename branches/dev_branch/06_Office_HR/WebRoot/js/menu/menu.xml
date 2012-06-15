@@ -1213,6 +1213,15 @@
 					<url>/hrm/comboJob.do</url>
 					<url>/hrm/comboStandSalary.do</url>
 				</Function>
+				<Function id="_EmpProfileFormEditSalary" text="薪资信息编辑" iconCls="btn-edit">
+					<url>/hrm/listEmpProfile.do</url>
+					<url>/hrm/saveEmpProfile.do</url>
+					<url>/hrm/numberEmpProfile.do</url>
+					<url>/hrm/delphotoEmpProfile.do</url>
+					<url>/hrm/comboJob.do</url>
+					<url>/hrm/comboStandSalary.do</url>
+					<url>/hrm/getEmpProfile.do</url>
+				</Function>
 			</Item>
 			<Item id="EmpProfileView" text="档案管理" iconCls="menu-profile"
 				isPublic="false">
@@ -1248,6 +1257,15 @@
 					iconCls="btn-empProfile-recovery">
 					<url>/hrm/listEmpProfile.do</url>
 					<url>/hrm/recoveryEmpProfile.do</url>
+				</Function>
+				<Function id="_EmpProfileEditSalary" text="薪资信息编辑" iconCls="btn-edit">
+					<url>/hrm/listEmpProfile.do</url>
+					<url>/hrm/saveEmpProfile.do</url>
+					<url>/hrm/numberEmpProfile.do</url>
+					<url>/hrm/delphotoEmpProfile.do</url>
+					<url>/hrm/comboJob.do</url>
+					<url>/hrm/comboStandSalary.do</url>
+					<url>/hrm/getEmpProfile.do</url>
 				</Function>
 			</Item>
 			<Item id="EmpProfileHistView" text="档案历史查询" iconCls="menu-profile" isPublic="false">
