@@ -964,6 +964,7 @@ EmpProfileForm = Ext
 											},
 											{
 												xtype : "fieldset",
+												id : "salaryInfo",
 												title : "职务薪酬信息",
 												defaultType : "textfield",
 												layout : "column",
@@ -1042,7 +1043,7 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.position",
 																		xtype : "combo",
 																		mode : "local",
-																		allowBlank : false,
+																		//allowBlank : false,
 																		editable : false,
 																		valueField : "jobName",
 																		displayField : "jobName",
@@ -1105,7 +1106,7 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.standardName",
 																		xtype : "combo",
 																		mode : "local",
-																		allowBlank : false,
+																		//allowBlank : false,
 																		editable : false,
 																		valueField : "standardName",
 																		displayField : "standardName",
@@ -1165,11 +1166,11 @@ EmpProfileForm = Ext
 																					//基本工资
 																					Ext.getCmp("empProfileForm.baseMoney").setValue(c.data.baseMoney);
 																					//试用期工资
-																					Ext.getCmp("empProfileForm.standardMoneyTmp").setValue(c.data.totalMoney*0.8);
+																					Ext.getCmp("empProfileForm.standardMoneyTmp").setValue(Math.round(c.data.totalMoney*0.8));
 																					//试用期固定工资
-																					Ext.getCmp("empProfileForm.baseMoneyTmp").setValue(c.data.baseMoney*0.8);
+																					Ext.getCmp("empProfileForm.baseMoneyTmp").setValue(Math.round(c.data.baseMoney*0.8));
 																					//试用期绩效基数
-																					Ext.getCmp("empProfileForm.perCoefficientTmp").setValue(c.data.perCoefficient*0.8);
+																					Ext.getCmp("empProfileForm.perCoefficientTmp").setValue(Math.round(c.data.perCoefficient*0.8));
 																				}catch(err){
 																					
 																				}
@@ -1231,7 +1232,7 @@ EmpProfileForm = Ext
 																anchor : "100%,100%"
 															},
 															items : [ {
-																fieldLabel : "培训情况",
+																fieldLabel : "异动情况",
 																name : "empProfile.trainingCase",
 																xtype : "textarea",
 																id : "empProfileForm.trainingCase"
@@ -1466,10 +1467,10 @@ EmpProfileForm = Ext
 												} ]
 											}, {
 												xtype : "fieldset",
-												title : "实习记录",
+												title : "培训记录",
 												layout : "anchor",
 												items : [ {
-													fieldLabel : "实习记录",
+													fieldLabel : "培训记录",
 													name : "empProfile.practiceRecord",
 													anchor : "100%",
 													id : "empProfileForm.practiceRecord",
@@ -1488,6 +1489,7 @@ EmpProfileForm = Ext
 												} ]
 											} ]
 								});
+						
 						this.topbar = new Ext.Toolbar({
 							height : 30,
 							bodyStyle : "text-align:left",
@@ -1608,15 +1610,12 @@ EmpProfileForm = Ext
 													if (e.realPositiveTime != ""
 														&& e.realPositiveTime != null
 														&& e.realPositiveTime != "undefined") {
-														var f = getDateFromFormat(
-																e.realPositiveTime,
-														"yyyy-MM-dd HH:mm:ss");
 														Ext
 														.getCmp(
 														"empProfileForm.realPositiveTime")
 														.setValue(
 																new Date(
-																		f));
+																		e.realPositiveTime));
 													}
 													if (e.contractBeginDate != ""
 														&& e.contractBeginDate != null
@@ -1724,11 +1723,11 @@ EmpProfileForm = Ext
 																//基本工资
 																Ext.getCmp("empProfileForm.baseMoney").setValue(standSalary.baseMoney);
 																//试用期工资
-																Ext.getCmp("empProfileForm.standardMoneyTmp").setValue(standSalary.totalMoney*0.8);
+																Ext.getCmp("empProfileForm.standardMoneyTmp").setValue(Math.round(standSalary.totalMoney*0.8));
 																//试用期固定工资
-																Ext.getCmp("empProfileForm.baseMoneyTmp").setValue(standSalary.baseMoney*0.8);
+																Ext.getCmp("empProfileForm.baseMoneyTmp").setValue(Math.round(standSalary.baseMoney*0.8));
 																//试用期绩效基数
-																Ext.getCmp("empProfileForm.perCoefficientTmp").setValue(standSalary.perCoefficient*0.8);
+																Ext.getCmp("empProfileForm.perCoefficientTmp").setValue(Math.round(standSalary.perCoefficient*0.8));
 															}catch(err){
 																
 															}
@@ -1744,6 +1743,11 @@ EmpProfileForm = Ext
 												}
 											});
 						}
+						//add by guanshiqiang for 编辑档案时薪酬信息权限的添加 at 2012-03-19 begin
+						if(!isGranted("_EmpProfileEditSalary")) {
+							Ext.getCmp("salaryInfo").hide();
+						}
+						//add by guanshiqiang for 编辑档案时薪酬信息权限的添加 at 2012-03-19 end
 					},
 					reset : function(a) {
 						a.getForm().reset();
