@@ -281,7 +281,6 @@ JobSalaryRelationForm = Ext.extend(
 								Ext.Msg.alert("提示信息","<font color='red'>在编人数应小于等于岗位人数</font>");
 								return;
 							}
-							return;
 							a.getForm()
 									.submit(
 											{
