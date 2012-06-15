@@ -162,7 +162,10 @@ public class HrPaAcreachedAction extends BaseAction{
 			AppUserService appUserService = (AppUserService)AppUtil.getBean("appUserService");
 			List<AppUser> userList = new ArrayList<AppUser>();
 			for(int i = 0; i < empProfileList.size(); i++) {
-				userList.add(appUserService.get(empProfileList.get(i).getUserId()));
+				if(empProfileList.get(i).getRealPositiveTime() != null && 
+						new Date().getTime() > empProfileList.get(i).getRealPositiveTime().getTime()) {
+					userList.add(appUserService.get(empProfileList.get(i).getUserId()));
+				}
 			}
 			//开始创建excel模板
 			try {
@@ -179,23 +182,25 @@ public class HrPaAcreachedAction extends BaseAction{
 				WritableWorkbook book = Workbook.createWorkbook(file);
 				WritableSheet sheet = book.createSheet("第一页", 0);
 				for(int i = 0; i < criteriaList.size(); i++) {
-					Label label1 = new Label(i+3, 0,  String.valueOf(criteriaList.get(i).getId()));
-					Label label2 = new Label(i+3, 1, criteriaList.get(i).getAcName());
+					Label label1 = new Label(i+4, 0,  String.valueOf(criteriaList.get(i).getId()));
+					Label label2 = new Label(i+4, 1, criteriaList.get(i).getAcName());
 					sheet.addCell(label1);
 					sheet.addCell(label2);
 				}
 				for(int j = 0; j < userList.size(); j++) {
 					Label label3 = new Label(0, j+2, String.valueOf(userList.get(j).getUserId()));
 					Label label4 = new Label(1, j+2, userList.get(j).getDepartment().getDepName());
-					Label label5 = new Label(2, j+2, userList.get(j).getFullname());
+					Label label5 = new Label(2, j+2, userList.get(j).getPosition());
+					Label label6 = new Label(3, j+2, userList.get(j).getFullname());
 					sheet.addCell(label3);
 					sheet.addCell(label4);
 					sheet.addCell(label5);
+					sheet.addCell(label6);
 				}
 				//设置模板编号
 				Label numberLabel = new Label(0, 0, UUIDGenerator.getUUID());
 				sheet.addCell(numberLabel);
-				sheet.mergeCells(0, 0, 2, 0);
+				sheet.mergeCells(0, 0, 3, 0);
 				//设置excel标签页标题
 				WritableFont font1 = new WritableFont(WritableFont.createFont("黑体_GB2312"), 13, WritableFont.NO_BOLD);
 				WritableCellFormat format1 = new WritableCellFormat(font1);
@@ -203,7 +208,7 @@ public class HrPaAcreachedAction extends BaseAction{
 				format1.setVerticalAlignment(VerticalAlignment.CENTRE);
 				Label titleLabel = new Label(0, 1, "达成excel模板", format1);
 				sheet.addCell(titleLabel);
-				sheet.mergeCells(0, 1, 2, 1);
+				sheet.mergeCells(0, 1, 3, 1);
 				book.write();
 				book.close();
 				this.jsonString = "{success:true,'filePath':'" + "/attachFiles/kpiReached/" + 
@@ -279,7 +284,7 @@ public class HrPaAcreachedAction extends BaseAction{
 				}
 				this.hrPaAcreachedService.multiSave(reachList, templateId, deptId);
 			} else if("2".equals(uploadFileType)) {//按人员导入
-				for(int i = 3; i < col; i++) {
+				for(int i = 4; i < col; i++) {
 					for(int j = 2; j < row; j++) {
 						if(sheet.getCell(i, j) != null && !"".equals(sheet.getCell(i, j).getContents().trim())) {
 							HrPaAcreached reach = new HrPaAcreached();
