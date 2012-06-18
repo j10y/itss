@@ -19,8 +19,8 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import com.ibatis.common.resources.Resources;
 
+import com.ibatis.common.resources.Resources;
 import com.xpsoft.framework.dao.BaseObject;
 
 /**

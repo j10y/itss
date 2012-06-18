@@ -9,11 +9,11 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/aspectjrt.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/aspectjweaver.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/backport-util-concurrent-3.0.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-2.1_3.jar" sourcepath="C:/Users/Administrator.DADI-20111127UK/.m2/repository/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/common-annotations.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-collections.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-dbcp-1.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-fileupload-1.2.1.jar" sourcepath="D:/Apache/.m2/repository/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-1.3.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-pool-1.1.jar"/>
@@ -22,10 +22,10 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-3.1.7-bin.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ognl-2.7.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-webmvc-struts.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring.jar" sourcepath="C:/Users/Administrator.DADI-20111127UK/.m2/repository/org/springframework/spring/2.5.6/spring-2.5.6-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/struts2-core-2.1.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/struts2-spring-plugin-2.1.8.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xwork-core-2.1.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xwork-core-2.1.6.jar" sourcepath="C:/Users/Administrator.DADI-20111127UK/.m2/repository/com/opensymphony/xwork-core/2.1.6/xwork-core-2.1.6-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/pinyin4j-2.5.0.jar" sourcepath="D:/工作涉及功能参考资料/java中文拼音/pinyin4j-2.5.0/src/"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/oscache-2.3.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/XmlSchema-1.1.jar"/>
@@ -34,8 +34,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-httpclient-3.0.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang-2.5.jar" sourcepath="D:/Apache/.m2/repository/commons-lang/commons-lang/2.5/commons-lang-2.5-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ezmorph-1.0.6.jar"/>
@@ -48,7 +47,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.2.3-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/oracle10.2.0.1.0-ojdbc14.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/quartz-1.5.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/standard.jar"/>
@@ -56,5 +54,14 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/wsdl4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/wstx-asl-3.2.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xfire-all-1.2.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/axis-ant.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/axis.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-discovery-0.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxrpc.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.14.jar" sourcepath="C:/Users/Administrator.DADI-20111127UK/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14-sources.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail-1.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/saaj.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/wsdl4j.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

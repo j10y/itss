@@ -37,6 +37,7 @@ public class InitSys {
 	 * @param context void
 	 */
 	public void initUserCheckMap(ServletContext context) {
+//		UserCheckMap.getInstance();
 		context.setAttribute(Constants.USER_CHECK_MAP, UserCheckMap.getInstance());
 	}
 	

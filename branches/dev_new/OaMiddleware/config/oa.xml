@@ -35,7 +35,9 @@
         <action name="*SpaqAction" class="com.xpsoft.spaq.action.FoodSafetyAction" method="{1}">
             <result>/insertOk.jsp</result>
         </action>
-		
+		<action name="*MobileAction" class="com.xpsoft.mobile.action.MobileCheck" method="{1}">
+            <result>/insertOk.jsp</result>
+        </action>
     </package>
     
 </struts>

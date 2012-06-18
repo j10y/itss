@@ -44,7 +44,10 @@ public class StaticHtml {
 			connection.setRequestProperty("User-Agent", "Mozilla/4.0");
 			connection.connect();
 			in = connection.getInputStream();
-			htmlCode = new String(InputStreamToByte(in), "utf8");
+			String contentType = connection.getContentType();
+			String encode = contentType.substring(contentType.indexOf("charset=")+"charset=".length(),contentType.length());
+			System.out.println(encode);
+			htmlCode = new String(InputStreamToByte(in),encode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -58,7 +61,15 @@ public class StaticHtml {
 	}
 
 	public static byte[] InputStreamToByte(InputStream is) throws IOException {
+//		 java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(is,"UTF-8"));  
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//		
+//		 String currentLine = "";  
+//		 String backJsonString = "";  
+//		 while ((currentLine = reader.readLine()) != null) {
+//			backJsonString+=currentLine;  
+//		 }
+//		
 		// 至少用1K的缓冲
 		byte[] bs = new byte[1024]; 
 		int len = -1;
@@ -78,6 +89,9 @@ public class StaticHtml {
 		URLConnection urlConnection = theURL.openConnection();
 		urlConnection.connect();
 		in = urlConnection.getInputStream();
+		String contentType = urlConnection.getContentType();
+		String encode = contentType.substring(contentType.indexOf("charset=")+"charset=".length(),contentType.length());
+		System.out.println(encode);
 		int i = 0;
 		while ((i = in.read(buff)) != -1) {
 			for (int k = 0; k < i; k++) {
@@ -89,7 +103,8 @@ public class StaticHtml {
 		for (int j = 0, size = byteList.size(); j < size; j++) {
 			content[j] = byteList.get(j).byteValue();
 		}
-		String ret = new String(content, "utf8");
+		String ret = new String(content, encode);
+		System.out.println(ret);
 		return ret;
 	}
 
@@ -159,9 +174,10 @@ public class StaticHtml {
 		}
 	}
 
-	public static void main(String[] args) {
-		String url = "http://127.0.0.1:8080/";
+	public static void main(String[] args) throws Throwable {
+		String url = "http://127.0.0.1:8080/yhwz/fund/yjpjfund.do?methodCall=queryYjpjFundOfDayList&type=1&staticTransKey=1";
 		writeHtml("c:/demo.htm", getHtmlCode(url), "NO");
+//		refreshURL(url);
 		// writeFile("c:/demo.htm", getHtmlCode(url));
 		try {
 			// System.out.println(refreshURL(url));

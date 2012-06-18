@@ -66,6 +66,6 @@ public class TestAction extends BaseAction{
 	public String list() throws Exception  {
 //		List<LoginSendLog> list = super.getBaseService().getObjects(LoginSendLog.class);
 		System.out.print("hi");
-		return null;
+		return null; 
 	}
 }
