@@ -289,6 +289,27 @@ EmpProfileForm = Ext
 													},{
 														name : "empProfileForm.isDepartFiled",
 														mapping : "isDepartFiled"
+													},{
+														name : "empProfileForm.chestCardNumber",
+														mapping : "chestCardNumber"
+													},{
+														name : "empProfileForm.isOrientation",
+														mapping : "isOrientation"
+													},{
+														name : "empProfileForm.firstTryUserId",
+														mapping : "firstTryUserId"
+													},{
+														name : "empProfileForm.firstTryUser",
+														mapping : "firstTryUser"
+													},{
+														name : "empProfileForm.secondTryUserId",
+														mapping : "secondTryUserId"
+													},{
+														name : "empProfileForm.secondTryUser",
+														mapping : "secondTryUser"
+													},{
+														name : "empProfileForm.contractRenewalRecord",
+														mapping : "contractRenewalRecord"
 													} ]),
 									defaultType : "textfield",
 									items : [
@@ -628,6 +649,161 @@ EmpProfileForm = Ext
 																				}
 																			}
 																		}
+																	},
+																	{
+																		fieldLabel : "胸卡号码",
+																		name : "empProfile.chestCardNumber",
+																		id : "empProfileForm.chestCardNumber"
+																	},
+																	{
+																		xtype : "container",
+																		height : 26,
+																		layout : "column",
+																		anchor : "100%",
+																		items : [
+																				{
+																					fieldLabel : "初试人ID",
+																					name : "empProfile.firstTryUserId",
+																					xtype : "hidden",
+																					id : "empProfileForm.firstTryUserId"
+																				},
+																				{
+																					xtype : "label",
+																					style : "padding:3px 5px 0px 0px;width:100px;",
+																					text : "初试人:"
+																				},
+																				{
+																					width : 200,
+																					xtype : "textfield",
+																					name : "empProfile.firstTryUser",
+																					id : "empProfileForm.firstTryUser",
+																					readOnly : true
+																				},
+																				{
+																					xtype : "button",
+																					id : "firstTryUserSelector",
+																					text : "选择员工",
+																					iconCls : "btn-mail_recipient",
+																					handler : function() {
+																						UserSelector
+																								.getView(
+																										function(
+																												d,
+																												c) {
+																											Ext
+																													.getCmp(
+																															"empProfileForm.firstTryUser")
+																													.setValue(
+																															c);
+																											Ext
+																													.getCmp(
+																															"empProfileForm.firstTryUserId")
+																													.setValue(
+																															d);
+																											Ext.Ajax
+																													.request({
+																														url : __ctxPath
+																																+ "/system/getAppUser.do",
+																														params : {
+																															userId : d
+																														},
+																														method : "post",
+																														success : function(
+																																f) {
+																															var e = Ext.util.JSON
+																																	.decode(f.responseText).data[0];
+																															Ext
+																																	.getCmp(
+																																			"empProfileForm.depId")
+																																	.setValue(
+																																			e.department.depId);
+																															Ext
+																																	.getCmp(
+																																			"empProfile.depName")
+																																	.setValue(
+																																			e.department.depName);
+																														}
+																													});
+																										},
+																										true)
+																								.show();
+																					}
+																				} ]
+																	},
+																	{
+																		xtype : "container",
+																		height : 26,
+																		layout : "column",
+																		anchor : "100%",
+																		items : [
+																				{
+																					fieldLabel : "复试人ID",
+																					name : "empProfile.secondTryUserId",
+																					xtype : "hidden",
+																					id : "empProfileForm.secondTryUserId"
+																				},
+																				{
+																					xtype : "label",
+																					style : "padding:3px 5px 0px 0px;width:100px;",
+																					text : "复试人:"
+																				},
+																				{
+																					width : 200,
+																					xtype : "textfield",
+																					name : "empProfile.secondTryUser",
+																					id : "empProfileForm.secondTryUser",
+																					readOnly : true
+																				},
+																				{
+																					xtype : "button",
+																					id : "secondTryUserSelector",
+																					text : "选择员工",
+																					iconCls : "btn-mail_recipient",
+																					handler : function() {
+																						UserSelector
+																								.getView(
+																										function(
+																												d,
+																												c) {
+																											Ext
+																													.getCmp(
+																															"empProfileForm.secondTryUser")
+																													.setValue(
+																															c);
+																											Ext
+																													.getCmp(
+																															"empProfileForm.secondTryUserId")
+																													.setValue(
+																															d);
+																											Ext.Ajax
+																													.request({
+																														url : __ctxPath
+																																+ "/system/getAppUser.do",
+																														params : {
+																															userId : d
+																														},
+																														method : "post",
+																														success : function(
+																																f) {
+																															var e = Ext.util.JSON
+																																	.decode(f.responseText).data[0];
+																															Ext
+																																	.getCmp(
+																																			"empProfileForm.depId")
+																																	.setValue(
+																																			e.department.depId);
+																															Ext
+																																	.getCmp(
+																																			"empProfile.depName")
+																																	.setValue(
+																																			e.department.depName);
+																														}
+																													});
+																										},
+																										true)
+																								.show();
+																					}
+																				} ]
 																	}]
 														},
 														{
@@ -796,7 +972,35 @@ EmpProfileForm = Ext
 																		}
 																	},
 																	{
-																		fieldLabel : "出生地",
+																		fieldLabel : "户籍性质",
+																		name : "empProfile.censusRegisterType",
+																		id : "empProfileForm.censusRegisterType",
+																		maxHeight : 200,
+																		xtype : "combo",
+																		editable : false,
+																		triggerAction : "all",
+																		store : [],
+																		listeners : {
+																			focus : function(d) {
+																				var c = Ext.getCmp("empProfileForm.censusRegisterType").getStore();
+																				if(c.getCount() <= 0) {
+																					Ext.Ajax.request({
+																						url : __ctxPath + "/system/loadDictionary.do",
+																						method : "post",
+																						params : {
+																							itemName : "户籍性质"
+																						},
+																						success : function(f) {
+																							var e =  Ext.util.JSON.decode(f.responseText);
+																							c.loadData(e);
+																						}
+																					});
+																				}
+																			}
+																		}
+																	},
+																	{
+																		fieldLabel : "户口所在地",
 																		name : "empProfile.birthPlace",
 																		id : "empProfileForm.birthPlace"
 																	} ,
@@ -839,6 +1043,13 @@ EmpProfileForm = Ext
 																		fieldLabel : "是否办理离职手续",
 																		name : "empProfile.isDepartFiled",
 																		id : "empProfileForm.isDepartFiled",
+																		xtype : "checkbox",
+																		inputValue : 1
+																	},
+																	{
+																		fieldLabel : "是否接受入职培训",
+																		name : "empProfile.isOrientation",
+																		id : "empProfileForm.isOrientation",
 																		xtype : "checkbox",
 																		inputValue : 1
 																	}]
@@ -1432,6 +1643,18 @@ EmpProfileForm = Ext
 											},
 											{
 												xtype : "fieldset",
+												title : "合同续签记录",
+												layout : "anchor",
+												items : [ {
+													fieldLabel : "合同续签记录",
+													name : "empProfile.contractRenewalRecord",
+													xtype : "textarea",
+													id : "empProfileForm.contractRenewalRecord",
+													anchor : "100%"
+												} ]
+											},
+											{
+												xtype : "fieldset",
 												title : "奖惩情况",
 												layout : "anchor",
 												items : [ {
@@ -1738,6 +1961,12 @@ EmpProfileForm = Ext
 													});
 													
 													//add by awen for get standSalary info by ajax on 2011-10-11 end
+													
+													//add by guanshiqiang at 2012-06-18 begin
+													if(e.censusRegisterType != null && e.censusRegisterType != "") {
+														Ext.getCmp("empProfileForm.censusRegisterType").setRawValue(e.censusRegisterType);
+													}
+													//add by guanshiqiang at 2012-06-18 end
 												},
 												failure : function(c, d) {
 												}
