@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+        
+
+     <package name="test"  namespace="/test" extends="struts-default">
+     	<result-types>
+			<result-type name="dispatcher"
+				class="org.apache.struts2.dispatcher.ServletDispatcherResult"
+				default="true" />
+			<result-type name="redirect"
+				class="org.apache.struts2.dispatcher.ServletRedirectResult" />
+		</result-types>
+
+		<interceptors>
+			<interceptor name="params"
+				class="com.opensymphony.xwork2.interceptor.ParametersInterceptor" />
+			<interceptor name="staticParams"
+				class="com.opensymphony.xwork2.interceptor.StaticParametersInterceptor" />
+				
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="params" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="defaultStack" />
+        <action name="*testAction" class="com.xpsoft.padoa.test.action.TestAction" method="{1}">
+            <result>/insertOk.jsp</result>
+        </action>
+        
+    </package>
+    
+</struts>

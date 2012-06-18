@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+<appender name="Console" class="org.apache.log4j.ConsoleAppender">
+<layout class="org.apache.log4j.PatternLayout">
+<param name="Target" value="System.out"/>
+<param name="ConversionPattern" value="%c %d{ISO8601}
+-- %p -- %m%n"/>
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMin" value="Info" />
+<param name="LevelMax" value="ERROR" />
+</filter>
+</appender>
+
+<!---->
+<appender name="IBatis" class="org.apache.log4j.ConsoleAppender">
+  <layout class="org.apache.log4j.PatternLayout">
+   <param name="ConversionPattern"
+    value="%-4r [%t] %-5p %c %x - %m%n" />
+  </layout>
+  <filter class="org.apache.log4j.varia.LevelRangeFilter">
+   <param name="LevelMin" value="DEBUG" />
+   <param name="LevelMax" value="DEBUG" />
+  </filter>
+</appender>
+
+<appender name="DEBUG" class="org.apache.log4j.DailyRollingFileAppender">
+<!-- 指定输出的文件路径 -->
+<param name="File" value="E:\\log\\debug.log"/>
+<!-- 设置每间隔多久生成一个日志文件和文件的命名格式 -->
+<param name="DatePattern" value="'_'yyyy-MM-dd@HH_mm'.log'" />    
+<param name="Append" value="true"/>
+<!-- param name="MaxFileSize" value="500KB" -->
+<!-- param name="MaxBackupIndex" value="2"/-->
+<!-- #Log4j的layout布局   
+#org.apache.log4j.HTMLLayout 以HTML表格形式布局   
+#org.apache.log4j.PatternLayout 可以灵活地指定布局模式   
+#org.apache.log4j.SimpleLayout  包含日志信息的级别和信息字符串   
+#org.apache.log4j.TTCCLayout    包含日志产生的时间、线程、类别等等信息    -->
+<layout class="org.apache.log4j.PatternLayout">
+<!-- 格式说明
+#输出格式,log4j javadoc org.apache.log4j.PatternLayout   
+#-X号:X信息输出时左对齐；   
+#%p:日志信息级别   
+# %d{}:日志信息产生时间   
+# %c:日志信息所在地（类名）    
+# %m:产生的日志具体信息   
+# %n:%n:输出日志信息换行 
+ -->
+<param name="ConversionPattern" value="%c %d{ISO8601}
+-- %p -- %m%n"/>
+</layout>
+<!--过滤器设置输出的级别-->  
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMin" value="DEBUG" />
+<param name="LevelMax" value="DEBUG" />
+</filter>
+</appender>
+
+<appender name="INFO" class="org.apache.log4j.DailyRollingFileAppender">
+<param name="File" value="E:\\log\\info_.log"/>
+<param name="DatePattern" value="'_'yyyy-MM-dd@HH_mm'.log'" />    
+<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->  
+<param name="Append" value="true"/>
+<layout class="org.apache.log4j.PatternLayout">
+<!-- 格式说明
+#输出格式,log4j javadoc org.apache.log4j.PatternLayout   
+#-X号:X信息输出时左对齐；   
+#%p:日志信息级别   
+# %d{}:日志信息产生时间   
+# %c:日志信息所在地（类名）    
+# %m:产生的日志具体信息   
+# %n:%n:输出日志信息换行 
+ -->
+<param name="ConversionPattern" value="-%p- %d{ISO8601} %c  
+ %m %n"/>
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMin" value="INFO" />
+<param name="LevelMax" value="INFO" />
+</filter>
+</appender>
+
+<appender name="ERROR" class="org.apache.log4j.DailyRollingFileAppender">
+<param name="File" value="E:\\log\\error_.log"/>
+<param name="DatePattern" value="'_'yyyy-MM-dd@HH_mm'.log'" />    
+<param name="Append" value="true"/>
+<layout class="org.apache.log4j.PatternLayout">
+<param name="ConversionPattern" value="-%p- %d{ISO8601} %c  
+ %m %n"/>
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMin" value="ERROR" />
+<param name="LevelMax" value="ERROR" />
+</filter>
+</appender>
+
+
+<root>
+<priority value="debug"/>
+<appender-ref ref="INFO"/>
+<appender-ref ref="ERROR"/>
+<appender-ref ref="Console"/>
+</root>
+
+
+<logger name="com.ibatis" additivity="true">
+  <level value="DEBUG" />
+</logger>
+<logger name="java.sql.Connection" additivity="true">
+  <level value="DEBUG" />
+</logger>
+<logger name="java.sql.Statement" additivity="true">
+  <level value="DEBUG" />
+</logger>
+<logger name="java.sql.PreparedStatement" additivity="true">
+  <level value="DEBUG" />
+  <appender-ref ref="IBatis" />
+</logger>
+<logger name="java.sql.ResultSet" additivity="true">
+  <level value="DEBUG" />
+  <appender-ref ref="IBatis" />
+</logger>
+<!-- logger name="com.chinastock.*" additivity="true">
+  <level value="DEBUG" />
+  <appender-ref ref="Console" />
+</logger-->
+</log4j:configuration>

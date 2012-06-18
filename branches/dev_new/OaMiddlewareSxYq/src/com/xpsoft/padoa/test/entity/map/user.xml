@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="User">
+	<resultMap id="User-result-list"
+		class="com.xpsoft.padoa.test.entity.User">
+
+		<result property="id" column="id" />
+
+		<result property="children.username" column="username" />
+
+		<result property="children.password" column="password" />
+
+	</resultMap>
+
+	<insert id="insertUser">
+		INSERT INTO userTest ( username, password) VALUES ( #children.username#,
+		#children.password# )
+	</insert>
+	
+	<select id="selectUser" resultMap="User-result-list">
+		select id,username,password from userTest
+	</select>
+	
+	<delete id="deleteUser">
+		delete from userTest where id = #id#
+	</delete>
+	
+	<select id="selectSingleUser" parameterClass="com.xpsoft.padoa.test.entity.User" resultMap="User-result-list">
+		select * from userTest where id = #id#
+	</select>
+	
+	<update id="updateUser" parameterClass="com.xpsoft.padoa.test.entity.User">
+		update userTest set password = #children.password# where id = #id#
+	</update>
+</sqlMap>

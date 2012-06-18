@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="com.xpsoft.padoa.test.entity.LoginSendLog">
+  <typeAlias alias="LoginSendLog" type="com.xpsoft.padoa.test.entity.LoginSendLog"/>
+  <resultMap id="LoginSendLogMap" class="LoginSendLog">
+    <result property="id" column="ID" jdbcType="Long"/>
+    <result property="sendInfo" column="SENDINFO" jdbcType="String"/>
+    <result property="receiveInfo" column="RECEIVEINFO" jdbcType="String"/>
+    <result property="account" column="ACCOUNT" jdbcType="String"/>
+    <result property="sendTime" column="SENDTIME" jdbcType="java.util.Date"/>
+    <result property="receiveTime" column="RECEIVETIME" jdbcType="java.util.Date"/>
+  </resultMap>
+  <insert id="insert" parameterClass="LoginSendLog">
+    <selectKey resultClass="Long" type="pre" keyProperty="id">SELECT CS_LOGINSENDLOG_SEQUENCE.NEXTVAL AS VALUE FROM DUAL</selectKey>INSERT INTO CS_LOGINSENDLOG(ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME) VALUES (#id#,#sendInfo#,#receiveInfo#,#account#,#sendTime#,#receiveTime#)
+  </insert>
+  <update id="update" parameterClass="LoginSendLog">UPDATE CS_LOGINSENDLOG <dynamic prepend=" SET "><isNotNull prepend="," property="sendInfo">SENDINFO=#sendInfo#</isNotNull><isNotNull prepend="," property="receiveInfo">RECEIVEINFO=#receiveInfo#</isNotNull><isNotNull prepend="," property="account">ACCOUNT=#account#</isNotNull><isNotNull prepend="," property="sendTime">SENDTIME=#sendTime#</isNotNull><isNotNull prepend="," property="receiveTime">RECEIVETIME=#receiveTime#</isNotNull></dynamic> where ID=#id#</update>
+  <delete id="delete">DELETE FROM CS_LOGINSENDLOG WHERE ID=#id#</delete>
+  <delete id="deleteByIds" parameterClass="java.lang.String">DELETE FROM CS_LOGINSENDLOG WHERE ID IN ($ids$)</delete>
+  <update id="deleteByLogic">UPDATE CS_LOGINSENDLOG SET DELETEFLAG=1 WHERE ID=#id#</update>
+  <update id="deleteObjectsByLogic" parameterClass="java.lang.String">UPDATE CS_LOGINSENDLOG SET DELETEFLAG=1 WHERE ID IN ($ids$)</update>
+  <select id="selectAll" resultMap="LoginSendLogMap">SELECT ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME FROM CS_LOGINSENDLOG</select>
+  <select id="selectById" resultClass="LoginSendLog">SELECT ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME FROM CS_LOGINSENDLOG WHERE ID=#id#</select>
+  <select id="selectTotal" resultClass="java.lang.Integer">SELECT COUNT(*) FROM CS_LOGINSENDLOG</select>
+  <select id="selectPage" parameterClass="java.util.Map" resultMap="LoginSendLogMap">select ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME,r from (select ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME, rownum r from (select ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME from CS_LOGINSENDLOG <dynamic><isNotNull property="orderBy"> order by $orderBy$ <isNotNull property="asc"> $asc$ </isNotNull></isNotNull></dynamic> )) where r &gt;#start# and r &lt;= #end#</select>
+  <select id="selectTotalByParam" resultClass="java.lang.Integer">SELECT COUNT(*) FROM CS_LOGINSENDLOG <dynamic prepend="where"><isNotNull prepend=" AND " property="id">(ID=#id#)</isNotNull><isNotNull prepend=" AND " property="sendInfo">(SENDINFO like '%$sendInfo$%')</isNotNull><isNotNull prepend=" AND " property="receiveInfo">(RECEIVEINFO like '%$receiveInfo$%')</isNotNull><isNotNull prepend=" AND " property="account">(ACCOUNT like '%$account$%')</isNotNull><isNotNull prepend=" AND " property="sendTime">( to_char(SENDTIME,'yyyy-MM-dd HH:mm:ss') like '%$sendTime$%')</isNotNull><isNotNull prepend=" AND " property="receiveTime">( to_char(RECEIVETIME,'yyyy-MM-dd HH:mm:ss') like '%$receiveTime$%')</isNotNull></dynamic></select>
+  <select id="selectPageByParam" parameterClass="java.util.Map" resultMap="LoginSendLogMap">select r,ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME from (select ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME, rownum r from (select ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME from CS_LOGINSENDLOG <dynamic prepend="where"><isNotNull prepend=" AND " property="id">(ID=#id#)</isNotNull><isNotNull prepend=" AND " property="sendInfo">(SENDINFO like '%$sendInfo$%')</isNotNull><isNotNull prepend=" AND " property="receiveInfo">(RECEIVEINFO like '%$receiveInfo$%')</isNotNull><isNotNull prepend=" AND " property="account">(ACCOUNT like '%$account$%')</isNotNull><isNotNull prepend=" AND " property="sendTime">( to_char(SENDTIME,'yyyy-MM-dd HH:mm:ss') like '%$sendTime$%')</isNotNull><isNotNull prepend=" AND " property="receiveTime">( to_char(RECEIVETIME,'yyyy-MM-dd HH:mm:ss') like '%$receiveTime$%')</isNotNull></dynamic> <dynamic><isNotNull property="orderBy"> order by $orderBy$ <isNotNull property="asc"> $asc$ </isNotNull></isNotNull></dynamic> )) where r &gt;#start# and r &lt;=#end#</select>
+  <select id="selectObjectsByParamNoPage" parameterClass="java.util.Map" resultMap="LoginSendLogMap">select ID,SENDINFO,RECEIVEINFO,ACCOUNT,SENDTIME,RECEIVETIME from CS_LOGINSENDLOG <dynamic prepend="where"><isNotNull prepend=" AND " property="id">(ID=#id#)</isNotNull><isNotNull prepend=" AND " property="sendInfo">(SENDINFO like '%$sendInfo$%')</isNotNull><isNotNull prepend=" AND " property="receiveInfo">(RECEIVEINFO like '%$receiveInfo$%')</isNotNull><isNotNull prepend=" AND " property="account">(ACCOUNT like '%$account$%')</isNotNull><isNotNull prepend=" AND " property="sendTime">( to_char(SENDTIME,'yyyy-MM-dd HH:mm:ss') like '%$sendTime$%')</isNotNull><isNotNull prepend=" AND " property="receiveTime">( to_char(RECEIVETIME,'yyyy-MM-dd HH:mm:ss') like '%$receiveTime$%')</isNotNull></dynamic> <dynamic><isNotNull property="orderBy"> order by $orderBy$ <isNotNull property="asc"> $asc$ </isNotNull></isNotNull></dynamic></select>
+</sqlMap>
