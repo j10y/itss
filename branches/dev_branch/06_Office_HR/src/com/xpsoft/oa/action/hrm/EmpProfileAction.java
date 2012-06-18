@@ -143,6 +143,11 @@ public class EmpProfileAction extends BaseAction {
 			
 			this.empProfile.setEmpType(empType);
 			//add by awen for add empType logic on 2011-10-11 end
+			
+			if(StringUtils.isEmpty(getRequest().getParameter("empProfile.isOrientation"))) {
+				this.empProfile.setIsOrientation(0);
+			}
+			
 			this.empProfileService.save(this.empProfile);
 			
 			//add by awen for add empProfile changelist on 2011-12-25 begin
