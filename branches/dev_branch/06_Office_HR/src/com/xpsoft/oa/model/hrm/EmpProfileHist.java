@@ -102,6 +102,15 @@ public class EmpProfileHist extends BaseModel {
 	protected Date modifiedDate;//修改时间
 	protected AppUser modifiedUser;//修改人
 	
+	protected String chestCardNumber;//胸卡号码
+	protected String censusRegisterType;//户籍性质
+	protected Long firstTryUserId;//初试人UserId
+	protected String firstTryUser;//初试人
+	protected Long secondTryUserId;//复试人UserId
+	protected String secondTryUser;//复试人
+	protected String contractRenewalRecord;//合同续签记录
+	protected Integer isOrientation;//是否接受入职培训
+	
 	
 	public Long getProfileHistId() {
 		return profileHistId;
@@ -878,5 +887,69 @@ public class EmpProfileHist extends BaseModel {
 		/* 899 */.append("pbcSingedDate", this.pbcSingedDate)
 		/* 899 */.append("isDepartFiled", this.isDepartFiled)
 		/* 1009 */.toString();
+	}
+
+	public String getChestCardNumber() {
+		return chestCardNumber;
+	}
+
+	public void setChestCardNumber(String chestCardNumber) {
+		this.chestCardNumber = chestCardNumber;
+	}
+
+	public String getCensusRegisterType() {
+		return censusRegisterType;
+	}
+
+	public void setCensusRegisterType(String censusRegisterType) {
+		this.censusRegisterType = censusRegisterType;
+	}
+
+	public Long getFirstTryUserId() {
+		return firstTryUserId;
+	}
+
+	public void setFirstTryUserId(Long firstTryUserId) {
+		this.firstTryUserId = firstTryUserId;
+	}
+
+	public String getFirstTryUser() {
+		return firstTryUser;
+	}
+
+	public void setFirstTryUser(String firstTryUser) {
+		this.firstTryUser = firstTryUser;
+	}
+
+	public Long getSecondTryUserId() {
+		return secondTryUserId;
+	}
+
+	public void setSecondTryUserId(Long secondTryUserId) {
+		this.secondTryUserId = secondTryUserId;
+	}
+
+	public String getSecondTryUser() {
+		return secondTryUser;
+	}
+
+	public void setSecondTryUser(String secondTryUser) {
+		this.secondTryUser = secondTryUser;
+	}
+
+	public String getContractRenewalRecord() {
+		return contractRenewalRecord;
+	}
+
+	public void setContractRenewalRecord(String contractRenewalRecord) {
+		this.contractRenewalRecord = contractRenewalRecord;
+	}
+
+	public Integer getIsOrientation() {
+		return isOrientation;
+	}
+
+	public void setIsOrientation(Integer isOrientation) {
+		this.isOrientation = isOrientation;
 	}
 }
