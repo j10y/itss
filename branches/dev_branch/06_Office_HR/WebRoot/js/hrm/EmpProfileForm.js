@@ -232,10 +232,6 @@ EmpProfileForm = Ext
 														mapping : "workCase"
 													},
 													{
-														name : "empProfileForm.hobby",
-														mapping : "hobby"
-													},
-													{
 														name : "empProfileForm.memo",
 														mapping : "memo"
 													},
@@ -310,6 +306,21 @@ EmpProfileForm = Ext
 													},{
 														name : "empProfileForm.contractRenewalRecord",
 														mapping : "contractRenewalRecord"
+													},{
+														name : "empProfileForm.renewalBeginDate",
+														mapping : "renewalBeginDate"
+													},{
+														name : "empProfileForm.renewalEndDate",
+														mapping : "renewalEndDate"
+													},{
+														name : "empProfileForm.seRenewalBeginDate",
+														mapping : "seRenewalBeginDate"
+													},{
+														name : "empProfileForm.seRenewalEndDate",
+														mapping : "seRenewalEndDate"
+													},{
+														name : "empProfileForm.isOpenEnded",
+														mapping : "isOpenEnded"
 													} ]),
 									defaultType : "textfield",
 									items : [
@@ -611,9 +622,37 @@ EmpProfileForm = Ext
 																		format : "Y-m-d"
 																	},
 																	{
-																		fieldLabel : "PBC签署日期",
-																		name : "empProfile.pbcSingedDate",
-																		id : "empProfileForm.pbcSingedDate",
+																		fieldLabel : "合同截止日期",
+																		name : "empProfile.contractEndDate",
+																		id : "empProfileForm.contractEndDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
+																	},
+																	{
+																		fieldLabel : "合同签署日期-续1",
+																		name : "empProfile.renewalBeginDate",
+																		id : "empProfileForm.renewalBeginDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
+																	},
+																	{
+																		fieldLabel : "合同截止日期-续1",
+																		name : "empProfile.renewalEndDate",
+																		id : "empProfileForm.renewalEndDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
+																	},
+																	{
+																		fieldLabel : "合同签署日期-续2",
+																		name : "empProfile.seRenewalBeginDate",
+																		id : "empProfileForm.seRenewalBeginDate",
+																		xtype : "datefield",
+																		format : "Y-m-d"
+																	},
+																	{
+																		fieldLabel : "合同截止日期-续2",
+																		name : "empProfile.seRenewalEndDate",
+																		id : "empProfileForm.seRenewalEndDate",
 																		xtype : "datefield",
 																		format : "Y-m-d"
 																	},
@@ -654,156 +693,6 @@ EmpProfileForm = Ext
 																		fieldLabel : "胸卡号码",
 																		name : "empProfile.chestCardNumber",
 																		id : "empProfileForm.chestCardNumber"
-																	},
-																	{
-																		xtype : "container",
-																		height : 26,
-																		layout : "column",
-																		anchor : "100%",
-																		items : [
-																				{
-																					fieldLabel : "初试人ID",
-																					name : "empProfile.firstTryUserId",
-																					xtype : "hidden",
-																					id : "empProfileForm.firstTryUserId"
-																				},
-																				{
-																					xtype : "label",
-																					style : "padding:3px 5px 0px 0px;width:100px;",
-																					text : "初试人:"
-																				},
-																				{
-																					width : 150,
-																					xtype : "textfield",
-																					name : "empProfile.firstTryUser",
-																					id : "empProfileForm.firstTryUser",
-																					readOnly : true
-																				},
-																				{
-																					xtype : "button",
-																					id : "firstTryUserSelector",
-																					text : "选择员工",
-																					iconCls : "btn-mail_recipient",
-																					handler : function() {
-																						UserSelector
-																								.getView(
-																										function(
-																												d,
-																												c) {
-																											Ext
-																													.getCmp(
-																															"empProfileForm.firstTryUser")
-																													.setValue(
-																															c);
-																											Ext
-																													.getCmp(
-																															"empProfileForm.firstTryUserId")
-																													.setValue(
-																															d);
-																											Ext.Ajax
-																													.request({
-																														url : __ctxPath
-																																+ "/system/getAppUser.do",
-																														params : {
-																															userId : d
-																														},
-																														method : "post",
-																														success : function(
-																																f) {
-																															var e = Ext.util.JSON
-																																	.decode(f.responseText).data[0];
-																															Ext
-																																	.getCmp(
-																																			"empProfileForm.depId")
-																																	.setValue(
-																																			e.department.depId);
-																															Ext
-																																	.getCmp(
-																																			"empProfile.depName")
-																																	.setValue(
-																																			e.department.depName);
-																														}
-																													});
-																										},
-																										true)
-																								.show();
-																					}
-																				} ]
-																	},
-																	{
-																		xtype : "container",
-																		height : 26,
-																		layout : "column",
-																		anchor : "100%",
-																		items : [
-																				{
-																					fieldLabel : "复试人ID",
-																					name : "empProfile.secondTryUserId",
-																					xtype : "hidden",
-																					id : "empProfileForm.secondTryUserId"
-																				},
-																				{
-																					xtype : "label",
-																					style : "padding:3px 5px 0px 0px;width:100px;",
-																					text : "复试人:"
-																				},
-																				{
-																					width : 150,
-																					xtype : "textfield",
-																					name : "empProfile.secondTryUser",
-																					id : "empProfileForm.secondTryUser",
-																					readOnly : true
-																				},
-																				{
-																					xtype : "button",
-																					id : "secondTryUserSelector",
-																					text : "选择员工",
-																					iconCls : "btn-mail_recipient",
-																					handler : function() {
-																						UserSelector
-																								.getView(
-																										function(
-																												d,
-																												c) {
-																											Ext
-																													.getCmp(
-																															"empProfileForm.secondTryUser")
-																													.setValue(
-																															c);
-																											Ext
-																													.getCmp(
-																															"empProfileForm.secondTryUserId")
-																													.setValue(
-																															d);
-																											Ext.Ajax
-																													.request({
-																														url : __ctxPath
-																																+ "/system/getAppUser.do",
-																														params : {
-																															userId : d
-																														},
-																														method : "post",
-																														success : function(
-																																f) {
-																															var e = Ext.util.JSON
-																																	.decode(f.responseText).data[0];
-																															Ext
-																																	.getCmp(
-																																			"empProfileForm.depId")
-																																	.setValue(
-																																			e.department.depId);
-																															Ext
-																																	.getCmp(
-																																			"empProfile.depName")
-																																	.setValue(
-																																			e.department.depName);
-																														}
-																													});
-																										},
-																										true)
-																								.show();
-																					}
-																				} ]
 																	}]
 														},
 														{
@@ -1026,9 +915,9 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.realPositiveTime"
 																	},
 																	{
-																		fieldLabel : "合同截止日期",
-																		name : "empProfile.contractEndDate",
-																		id : "empProfileForm.contractEndDate",
+																		fieldLabel : "PBC签署日期",
+																		name : "empProfile.pbcSingedDate",
+																		id : "empProfileForm.pbcSingedDate",
 																		xtype : "datefield",
 																		format : "Y-m-d"
 																	},
@@ -1052,6 +941,163 @@ EmpProfileForm = Ext
 																		id : "empProfileForm.isOrientation",
 																		xtype : "checkbox",
 																		inputValue : 1
+																	},
+																	{
+																		fieldLabel : "签订无固定期限",
+																		name : "empProfile.isOpenEnded",
+																		id : "empProfileForm.isOpenEnded",
+																		xtype : "checkbox",
+																		inputValue : 1
+																	},
+																	{
+																		xtype : "container",
+																		height : 26,
+																		layout : "column",
+																		anchor : "100%",
+																		items : [
+																				{
+																					fieldLabel : "初试人ID",
+																					name : "empProfile.firstTryUserId",
+																					xtype : "hidden",
+																					id : "empProfileForm.firstTryUserId"
+																				},
+																				{
+																					xtype : "label",
+																					style : "padding:3px 5px 0px 0px;width:100px;",
+																					text : "初试人:"
+																				},
+																				{
+																					width : 150,
+																					xtype : "textfield",
+																					name : "empProfile.firstTryUser",
+																					id : "empProfileForm.firstTryUser",
+																					readOnly : true
+																				},
+																				{
+																					xtype : "button",
+																					id : "firstTryUserSelector",
+																					text : "选择员工",
+																					iconCls : "btn-mail_recipient",
+																					handler : function() {
+																						UserSelector
+																								.getView(
+																										function(
+																												d,
+																												c) {
+																											Ext
+																													.getCmp(
+																															"empProfileForm.firstTryUser")
+																													.setValue(
+																															c);
+																											Ext
+																													.getCmp(
+																															"empProfileForm.firstTryUserId")
+																													.setValue(
+																															d);
+																											Ext.Ajax
+																													.request({
+																														url : __ctxPath
+																																+ "/system/getAppUser.do",
+																														params : {
+																															userId : d
+																														},
+																														method : "post",
+																														success : function(
+																																f) {
+																															var e = Ext.util.JSON
+																																	.decode(f.responseText).data[0];
+																															Ext
+																																	.getCmp(
+																																			"empProfileForm.depId")
+																																	.setValue(
+																																			e.department.depId);
+																															Ext
+																																	.getCmp(
+																																			"empProfile.depName")
+																																	.setValue(
+																																			e.department.depName);
+																														}
+																													});
+																										},
+																										true)
+																								.show();
+																					}
+																				} ]
+																	},
+																	{
+																		xtype : "container",
+																		height : 26,
+																		layout : "column",
+																		anchor : "100%",
+																		items : [
+																				{
+																					fieldLabel : "复试人ID",
+																					name : "empProfile.secondTryUserId",
+																					xtype : "hidden",
+																					id : "empProfileForm.secondTryUserId"
+																				},
+																				{
+																					xtype : "label",
+																					style : "padding:3px 5px 0px 0px;width:100px;",
+																					text : "复试人:"
+																				},
+																				{
+																					width : 150,
+																					xtype : "textfield",
+																					name : "empProfile.secondTryUser",
+																					id : "empProfileForm.secondTryUser",
+																					readOnly : true
+																				},
+																				{
+																					xtype : "button",
+																					id : "secondTryUserSelector",
+																					text : "选择员工",
+																					iconCls : "btn-mail_recipient",
+																					handler : function() {
+																						UserSelector
+																								.getView(
+																										function(
+																												d,
+																												c) {
+																											Ext
+																													.getCmp(
+																															"empProfileForm.secondTryUser")
+																													.setValue(
+																															c);
+																											Ext
+																													.getCmp(
+																															"empProfileForm.secondTryUserId")
+																													.setValue(
+																															d);
+																											Ext.Ajax
+																													.request({
+																														url : __ctxPath
+																																+ "/system/getAppUser.do",
+																														params : {
+																															userId : d
+																														},
+																														method : "post",
+																														success : function(
+																																f) {
+																															var e = Ext.util.JSON
+																																	.decode(f.responseText).data[0];
+																															Ext
+																																	.getCmp(
+																																			"empProfileForm.depId")
+																																	.setValue(
+																																			e.department.depId);
+																															Ext
+																																	.getCmp(
+																																			"empProfile.depName")
+																																	.setValue(
+																																			e.department.depName);
+																														}
+																													});
+																										},
+																										true)
+																								.show();
+																					}
+																				} ]
 																	}]
 														},
 														{
@@ -1643,10 +1689,10 @@ EmpProfileForm = Ext
 											},
 											{
 												xtype : "fieldset",
-												title : "合同续签记录",
+												title : "合同签订记录",
 												layout : "anchor",
 												items : [ {
-													fieldLabel : "合同续签记录",
+													fieldLabel : "合同签订记录",
 													name : "empProfile.contractRenewalRecord",
 													xtype : "textarea",
 													id : "empProfileForm.contractRenewalRecord",
@@ -1678,17 +1724,6 @@ EmpProfileForm = Ext
 												} ]
 											},
 											{
-												xtype : "fieldset",
-												title : "个人爱好",
-												layout : "anchor",
-												items : [ {
-													fieldLabel : "爱好",
-													name : "empProfile.hobby",
-													id : "empProfileForm.hobby",
-													anchor : "100%",
-													xtype : "textarea"
-												} ]
-											}, {
 												xtype : "fieldset",
 												title : "培训记录",
 												layout : "anchor",
@@ -1916,6 +1951,58 @@ EmpProfileForm = Ext
 																		+ ""
 																		+ d
 																		+ '" width="88" height="120"/>');
+													}
+													if (e.renewalBeginDate != ""
+														&& e.renewalBeginDate != null
+														&& e.renewalBeginDate != "undefined") {
+														var f = getDateFromFormat(
+																e.renewalBeginDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.renewalBeginDate")
+														.setValue(
+																new Date(
+																		f));
+													}
+													if (e.renewalEndDate != ""
+														&& e.renewalEndDate != null
+														&& e.renewalEndDate != "undefined") {
+														var f = getDateFromFormat(
+																e.renewalEndDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.renewalEndDate")
+														.setValue(
+																new Date(
+																		f));
+													}
+													if (e.seRenewalBeginDate != ""
+														&& e.seRenewalBeginDate != null
+														&& e.seRenewalBeginDate != "undefined") {
+														var f = getDateFromFormat(
+																e.seRenewalBeginDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.seRenewalBeginDate")
+														.setValue(
+																new Date(
+																		f));
+													}
+													if (e.seRenewalEndDate != ""
+														&& e.seRenewalEndDate != null
+														&& e.seRenewalEndDate != "undefined") {
+														var f = getDateFromFormat(
+																e.seRenewalEndDate,
+														"yyyy-MM-dd HH:mm:ss");
+														Ext
+														.getCmp(
+														"empProfileForm.seRenewalEndDate")
+														.setValue(
+																new Date(
+																		f));
 													}
 													Ext
 															.getCmp(
