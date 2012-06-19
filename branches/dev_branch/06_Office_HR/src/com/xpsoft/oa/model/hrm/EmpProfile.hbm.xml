@@ -811,5 +811,59 @@
         	not-null="false"
         	unique="false"
         />
+        <property
+            name="renewalBeginDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="renewalBeginDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="renewalEndDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="renewalEndDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="seRenewalBeginDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="seRenewalBeginDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property
+            name="seRenewalEndDate"
+            type="java.util.Date"
+            update="true"
+            insert="true"
+            access="property"
+            column="seRenewalEndDate"
+            length="19"
+            not-null="false"
+            unique="false"
+        />
+        <property 
+        	name="isOpenEnded"
+        	type="java.lang.Integer"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="isOpenEnded"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>

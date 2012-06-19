@@ -106,6 +106,11 @@ public class EmpProfile extends BaseModel {
 	protected String secondTryUser;//复试人
 	protected String contractRenewalRecord;//合同续签记录
 	protected Integer isOrientation;//是否接受入职培训
+	protected Date renewalBeginDate;//合同签署日期（第一次续签）
+	protected Date renewalEndDate;//合同截止日期（第一次续签）
+	protected Date seRenewalBeginDate;//合同签署日期（第二次续签）
+	protected Date seRenewalEndDate;//合同截止日期（第二次续签）
+	protected Integer isOpenEnded;//是否签订无固定期限
 	
 	public Integer getOrganization() {
 		return organization;
@@ -919,5 +924,45 @@ public class EmpProfile extends BaseModel {
 
 	public void setSecondTryUserId(Long secondTryUserId) {
 		this.secondTryUserId = secondTryUserId;
+	}
+
+	public Date getRenewalBeginDate() {
+		return renewalBeginDate;
+	}
+
+	public void setRenewalBeginDate(Date renewalBeginDate) {
+		this.renewalBeginDate = renewalBeginDate;
+	}
+
+	public Date getRenewalEndDate() {
+		return renewalEndDate;
+	}
+
+	public void setRenewalEndDate(Date renewalEndDate) {
+		this.renewalEndDate = renewalEndDate;
+	}
+
+	public Date getSeRenewalBeginDate() {
+		return seRenewalBeginDate;
+	}
+
+	public void setSeRenewalBeginDate(Date seRenewalBeginDate) {
+		this.seRenewalBeginDate = seRenewalBeginDate;
+	}
+
+	public Date getSeRenewalEndDate() {
+		return seRenewalEndDate;
+	}
+
+	public void setSeRenewalEndDate(Date seRenewalEndDate) {
+		this.seRenewalEndDate = seRenewalEndDate;
+	}
+
+	public Integer getIsOpenEnded() {
+		return isOpenEnded;
+	}
+
+	public void setIsOpenEnded(Integer isOpenEnded) {
+		this.isOpenEnded = isOpenEnded;
 	}
 }
