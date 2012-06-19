@@ -92,7 +92,8 @@ public class EmpProfileAction extends BaseAction {
 
 		/* 110 */JSONSerializer json = JsonUtil.getJSONSerializer(new String[] {
 				"birthday", "startWorkDate", "createtime", "checktime", "accessionTime", "departureTime", "positiveTime", 
-				"contractEndDate", "contractBeginDate", "providentDate", "pbcSingedDate", "pbcExecuteDate" });
+				"contractEndDate", "contractBeginDate", "providentDate", "pbcSingedDate", "pbcExecuteDate", 
+				"renewalBeginDate", "renewalEndDate", "seRenewalBeginDate", "seRenewalEndDate" });
 
 		/* 113 */StringBuffer sb = new StringBuffer("{success:true,data:[");
 
@@ -146,6 +147,9 @@ public class EmpProfileAction extends BaseAction {
 			
 			if(StringUtils.isEmpty(getRequest().getParameter("empProfile.isOrientation"))) {
 				this.empProfile.setIsOrientation(0);
+			}
+			if(StringUtils.isEmpty(getRequest().getParameter("empProfile.isOpenEnded"))) {
+				this.empProfile.setIsOpenEnded(0);
 			}
 			
 			this.empProfileService.save(this.empProfile);
