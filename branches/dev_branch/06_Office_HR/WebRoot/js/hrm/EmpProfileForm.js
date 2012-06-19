@@ -673,7 +673,7 @@ EmpProfileForm = Ext
 																					text : "初试人:"
 																				},
 																				{
-																					width : 200,
+																					width : 150,
 																					xtype : "textfield",
 																					name : "empProfile.firstTryUser",
 																					id : "empProfileForm.firstTryUser",
@@ -748,7 +748,7 @@ EmpProfileForm = Ext
 																					text : "复试人:"
 																				},
 																				{
-																					width : 200,
+																					width : 150,
 																					xtype : "textfield",
 																					name : "empProfile.secondTryUser",
 																					id : "empProfileForm.secondTryUser",
