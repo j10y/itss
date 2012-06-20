@@ -115,6 +115,7 @@ public class EmpProfileHist extends BaseModel {
 	protected Date seRenewalBeginDate;//合同签署日期（第二次续签）
 	protected Date seRenewalEndDate;//合同截止日期（第二次续签）
 	protected Integer isOpenEnded;//是否签订无固定期限
+	protected String leaveReason;//离职原因
 	
 	
 	public Long getProfileHistId() {
@@ -996,5 +997,13 @@ public class EmpProfileHist extends BaseModel {
 
 	public void setIsOpenEnded(Integer isOpenEnded) {
 		this.isOpenEnded = isOpenEnded;
+	}
+
+	public String getLeaveReason() {
+		return leaveReason;
+	}
+
+	public void setLeaveReason(String leaveReason) {
+		this.leaveReason = leaveReason;
 	}
 }

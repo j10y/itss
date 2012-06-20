@@ -865,5 +865,15 @@
         	not-null="false"
         	unique="false"
         />
+        <property 
+        	name="leaveReason"
+        	type="java.lang.String"
+        	update="true"
+        	insert="true"
+        	access="property"
+        	column="leaveReason"
+        	not-null="false"
+        	unique="false"
+        />
     </class>
 </hibernate-mapping>
