@@ -321,6 +321,9 @@ EmpProfileForm = Ext
 													},{
 														name : "empProfileForm.isOpenEnded",
 														mapping : "isOpenEnded"
+													},{
+														name : "empProfileForm.leaveReason",
+														mapping : "leaveReason"
 													} ]),
 									defaultType : "textfield",
 									items : [
@@ -1734,7 +1737,20 @@ EmpProfileForm = Ext
 													id : "empProfileForm.practiceRecord",
 													xtype : "textarea"
 												} ]
-											}, {
+											},
+											{
+												xtype : "fieldset",
+												title : "离职原因",
+												layout : "anchor",
+												items : [ {
+													fieldLabel : "离职原因",
+													name : "empProfile.leaveReason",
+													anchor : "100%",
+													id : "empProfileForm.leaveReason",
+													xtype : "textarea"
+												} ]
+											},
+											{
 												xtype : "fieldset",
 												title : "备注",
 												layout : "anchor",
