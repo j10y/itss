@@ -752,6 +752,18 @@ public class FlowServiceImpl implements FlowService {
 		ArchRecFiledTypeService archRecFiledTypeService = (ArchRecFiledTypeService) AppUtil.getBean("archRecFiledTypeService");
 		AppUserService appUserService = (AppUserService) AppUtil.getBean("appUserService");
 		ArchivesDistService archivesDistService= (ArchivesDistService) AppUtil.getBean("archivesDistService");
+		if(activityName==null||activityName.length()==0){
+			TaskService flowTaskService = (TaskService) AppUtil
+			.getBean("flowTaskService");
+			PagingBean pb = new PagingBean(0, 999999);
+			List<TaskInfo> tasks = flowTaskService.getTaskInfosByUserId(userId, pb);
+			for (TaskInfo task : tasks) {
+				if(task.getTaskId().equals(Long.parseLong(taskId))){
+					activityName=task.getActivityName();
+					break;
+				}
+			}
+		}
 		this.setActivityName(activityName);
 		this.setTaskId(taskId);
 		JbpmService jbpmService=(JbpmService) AppUtil.getBean("jbpmService");
