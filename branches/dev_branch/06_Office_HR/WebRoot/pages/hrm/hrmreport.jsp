@@ -5,6 +5,6 @@
 	<HEAD>
 	</HEAD>
 <body >
-<iframe frameborder="0" scrolling="yes"width="99%" height="99%"src="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/lzdj.raq"></iframe>
+<iframe frameborder="0" scrolling="yes"width="99%" height="99%"src="${pageContext.request.contextPath}/reportJsp/showReport.jsp?raq=/${param.reporttemplet}.raq"></iframe>
 </body>	
 </HTML>
