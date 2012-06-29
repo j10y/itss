@@ -571,7 +571,13 @@ EmpProfileForm = Ext
 																		name : "empProfile.accessionTime",
 																		id : "empProfileForm.accessionTime",
 																		xtype : "datefield",
-																		format : "Y-m-d"
+																		format : "Y-m-d",
+																		listeners : {
+																			"select" : function() {
+																				Ext.getCmp("empProfileForm.contractBeginDate").setValue(Ext.getCmp("empProfileForm.accessionTime").getValue());
+																				Ext.getCmp("empProfileForm.contractEndDate").setValue(new Date(Ext.getCmp("empProfileForm.accessionTime").getValue()).add(Date.YEAR, 3).add(Date.DAY, -1));
+																			}
+																		}
 																	},/*{
 																		fieldLabel : "是否离职",
 																		name : "empProfile.isDepart",
@@ -1247,7 +1253,8 @@ EmpProfileForm = Ext
 																	{
 																		fieldLabel : "开户银行",
 																		name : "empProfile.openBank",
-																		id : "empProfileForm.openBank"
+																		id : "empProfileForm.openBank",
+																		value : "招商银行"
 																	},
 																	{
 																		fieldLabel : "银行账号",
@@ -1673,22 +1680,7 @@ EmpProfileForm = Ext
 																		xtype : "datefield",
 																		format : "Y-m-d"
 																	} ]
-														},
-														{
-															xtype : "container",
-															columnWidth : 1,
-															defaultType : "textfield",
-															layout : "form",
-															defaults : {
-																anchor : "100%,100%"
-															},
-															items : [ {
-																fieldLabel : "教育背景",
-																name : "empProfile.eduCase",
-																xtype : "textarea",
-																id : "empProfileForm.eduCase"
-															} ]
-														} ]
+														}]
 											},
 											{
 												xtype : "fieldset",
