@@ -1759,9 +1759,21 @@
 			</Item>
 			<Item id="HrBudgetReportView" text="人力成本分析" iconCls="menu-report" isPublic="false">
 			</Item>
-			<Item id="HrDepartureReportView" text="人员离职分析" iconCls="menu-report" isPublic="false">
-			</Item>
 			<Item id="HrPositionAtlasView" text="岗位图谱" iconCls="menu-report" isPublic="false">
+			</Item>
+			<Item id="RzdjReportView" text="入职登记表" iconCls="menu-report" isPublic="false">
+			</Item>
+			<Item id="HrDepartureReportView" text="离职登记表" iconCls="menu-report" isPublic="false">
+			</Item>
+			<Item id="YghmcReportView" text="员工花名册" iconCls="menu-report" isPublic="false">
+			</Item>
+			<Item id="XzrysyReportView" text="新增人员试用薪酬表" iconCls="menu-report" isPublic="false">
+			</Item>
+			<Item id="YddjReportView" text="异动登记表" iconCls="menu-report" isPublic="false">
+			</Item>
+			<Item id="ZzdjReportView" text="转正登记表" iconCls="menu-report" isPublic="false">
+			</Item>
+			<Item id="HtqdReportView" text="合同签订登记表" iconCls="menu-report" isPublic="false">
 			</Item>
 		</Items>
 		<Item id="HrPaDatadictionaryView" iconCls="menu-dictionary" text="数据字典">
