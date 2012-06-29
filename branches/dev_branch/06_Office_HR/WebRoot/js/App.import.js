@@ -481,6 +481,13 @@ App.importJs = {
 	       			__ctxPath + "/js/budget/BudgetQuarterFormView.js"],
 	HrBudgetReportView:[__ctxPath + "/js/hrm/HrBudgetReportView.js"],
 	HrDepartureReportView:[__ctxPath + "/js/hrm/HrDepartureReportView.js"],
+	RzdjReportView:[__ctxPath + "/js/hrm/RzdjReportView.js"],
+	YghmcReportView:[__ctxPath + "/js/hrm/YghmcReportView.js"],
+	XzrysyReportView:[__ctxPath + "/js/hrm/XzrysyReportView.js"],
+	YddjReportView:[__ctxPath + "/js/hrm/YddjReportView.js"],
+	ZzdjReportView:[__ctxPath + "/js/hrm/ZzdjReportView.js"],
+	HtqdReportView:[__ctxPath + "/js/hrm/HtqdReportView.js"],
+	
 	HrPositionAtlasView:[__ctxPath + "/js/hrm/HrPositionAtlasView.js"],
 	EmpProfileHistView : [__ctxPath + "/js/hrm/EmpProfileHistView.js",
 			__ctxPath + "/js/hrm/CheckEmpProfileHistForm.js",
