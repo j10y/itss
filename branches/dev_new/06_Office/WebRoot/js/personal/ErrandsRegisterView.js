@@ -290,7 +290,7 @@ ErrandsRegisterView.prototype.topbar = function() {
 			handler : function() {
 				new ErrandsRegisterForm();
 			}
-		}, {
+		}/*, {
 			iconCls : "btn-del",
 			text : "删除请假单",
 			xtype : "button",
@@ -307,7 +307,7 @@ ErrandsRegisterView.prototype.topbar = function() {
 				}
 				ErrandsRegisterView.remove(e);
 			}
-		} ]
+		}*/ ]
 	});
 	return a;
 };
