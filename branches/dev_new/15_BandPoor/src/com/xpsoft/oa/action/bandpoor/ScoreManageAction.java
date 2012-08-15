@@ -183,6 +183,9 @@ public class ScoreManageAction extends BaseAction{
 		valmap.put("Q_id_L_NEQ", infoPoor.getId()!=null?infoPoor.getId()+"":"0");
 		valmap.put("Q_infoType_N_EQ", InfoPoor.TYPE_SCORE+"");
 		valmap.put("Q_saleStoreid.id_L_EQ", infoPoor.getSaleStoreid().getId()+"");
+		valmap.put("Q_bandStyleId.id_L_EQ", infoPoor.getBandStyleId().getId()+"");
+		valmap.put("Q_proClassId.id_L_EQ", infoPoor.getProClassId().getId()+"");
+		valmap.put("Q_floorNumId.id_L_EQ", infoPoor.getFloorNumId().getId()+"");
 		valmap.put("Q_bandId.id_L_EQ", infoPoor.getBandId().getId()+"");
 		valmap.put("Q_infoStatus_N_NEQ", InfoPoor.STATUS_DELETE+"");
 		QueryFilter valfilter = new QueryFilter(valmap);
