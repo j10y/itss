@@ -44,7 +44,7 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 							mode : "local",
 							editable : true,
 							triggerAction : "all",
-							valueField : "fromBandId",
+							valueField : "fromBandName",
 							displayField : "fromBandName",
 							store : new Ext.data.SimpleStore(
 							{
@@ -77,28 +77,35 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 						}
 					]
 				});
-			this.store = new Ext.data.Store({
-					proxy : new Ext.data.HttpProxy({
-						url : __ctxPath + "/bandpoor/listScoreManage.do"
-					}),
-					reader : new Ext.data.JsonReader({
-						root : "result",
-						totalProperty : "totalCounts",
-						id : "id",
-						fields : [{
+			this.store = new Ext.data.JsonStore({
+					url : __ctxPath + "/bandpoor/listScoreManage.do",
+					root : "result",
+					totalProperty : "totalCounts",
+					remoteSort : true,
+					fields : [{
 								name : "id",
 								type : "int"
-							}, "bandName", "floorNumName", "proClassName","bandStyleName","mainPriceName","saleStoreName","bandBusinessAreaName","bandDesc","infoStatus"]
-					}),
-					remoteSort : true
+							}, "bandName", 
+							"floorNumName",
+							 "proClassName",
+							 "bandStyleName",
+							"mainPriceName",
+							"saleStoreName",
+							"bandBusinessAreaName",
+							"bandDesc",
+							"infoStatus"],
+					listeners : {
+						beforeload : function() {
+							this.baseParams = {
+								Q_bandName_S_LK : Ext.getCmp("ScoreManageSearchFormBandName").getValue(),
+								start : 0,
+								limit : 25
+							};
+						}
+					}
+
 				});
-			this.store.setDefaultSort("id", "desc");
-			this.store.load({
-				params : {
-					start : 0,
-					limit : 25
-				}
-			});
+			this.store.load();
 			var b = [];
 			if (isGranted("_ScoreManageDel")) {
 				b.push({

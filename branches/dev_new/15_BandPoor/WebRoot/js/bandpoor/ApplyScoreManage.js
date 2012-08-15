@@ -285,6 +285,14 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 						scope : this
 					}));
 			}
+			if (isGranted("_ApplyScoreManageAllPass")) {
+				this.topbar.add(new Ext.Button({
+						iconCls : "btn-add",
+						text : "全部审批通过",
+						handler : this.passAllRecords,
+						scope : this
+					}));
+			}
 			if (isGranted("_ApplyScoreManageUnPass")) {
 				this.topbar.add(new Ext.Button({
 						iconCls : "btn-del",
@@ -370,6 +378,27 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 					return;
 				}
 			}
+			this.optionByIds(d,"2");
+		},
+		passAllRecords : function () {
+			var c = Ext.getCmp("ApplyScoreManageGrid");
+			var a = c.getSelectionModel().getSelections();
+			/*if (a.length == 0) {
+				Ext.ux.Toast.msg("信息", "请选择要审批通过的记录！");
+				return;
+			}*/
+			var d = Array();
+			/*
+			for (var b = 0; b < a.length; b++) {
+				d.push(a[b].data.id);
+				if(a[b].data.infoStatus==2){
+					Ext.ux.Toast.msg("信息", "审批通过的记录无需再次审批！");
+					return;
+				}else if(a[b].data.infoStatus==3){
+					Ext.ux.Toast.msg("信息", "其中有打回的记录不能再次审批！");
+					return;
+				}
+			}*/
 			this.optionByIds(d,"2");
 		},
 		unPassRecords : function () {
