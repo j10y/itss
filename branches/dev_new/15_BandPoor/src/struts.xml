@@ -11,7 +11,7 @@
 		<global-results>
 			<result name="input">/error.jsp </result>
 		</global-results>
-	</package>
+	</package> 
 	<constant name="struts.custom.i18n.resources" value="conf/message" />
 	 -->
 
