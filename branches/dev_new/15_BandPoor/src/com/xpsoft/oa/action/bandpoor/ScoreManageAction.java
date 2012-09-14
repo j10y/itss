@@ -448,12 +448,14 @@ public class ScoreManageAction extends BaseAction{
 					Map map = new HashMap();
 					map.put("Q_bandId.id_L_EQ",  ip.getBandId().getId()+"");
 					map.put("Q_status_N_NEQ",  BeElectedBandPoor.STATUS_DELETE+"");
+					map.put("Q_proClassId.id_L_EQ",  ip.getProClassId().getId()+"");
 					QueryFilter filter = new QueryFilter(map);
 					List beElectedBandPoorlist=beElectedBandPoorService.getAll(filter);
 					if(beElectedBandPoorlist==null||beElectedBandPoorlist.size()==0){
 						BeElectedBandPoor beElectedBandPoor=new BeElectedBandPoor();
 						beElectedBandPoor.setBandId(ip.getBandId());
 						beElectedBandPoor.setBandName(ip.getBandName());
+						beElectedBandPoor.setProClassId(ip.getProClassId());
 						beElectedBandPoor.setCreatDate(new Date());
 						beElectedBandPoor.setCreateUser(ContextUtil.getCurrentUser());
 						beElectedBandPoor.setInfoType(BeElectedBandPoor.TYPE_SCORE);
@@ -481,16 +483,23 @@ public class ScoreManageAction extends BaseAction{
 				ipmap.put("Q_infoStatus_N_EQ",InfoPoor.STATUS_CREATE+"");
 				QueryFilter ipfilter = new QueryFilter(ipmap);
 				List<InfoPoor> list=scoreManageService.getAll(ipfilter);
+				int ii=0;
 				for(InfoPoor ip:list){
+					ii++;
+					if(ii==1000){
+						break;
+					}
 					Map map = new HashMap();
 					map.put("Q_bandId.id_L_EQ",  ip.getBandId().getId()+"");
 					map.put("Q_status_N_NEQ",  BeElectedBandPoor.STATUS_DELETE+"");
+					map.put("Q_proClassId.id_L_EQ",  ip.getProClassId().getId()+"");
 					QueryFilter filter = new QueryFilter(map);
 					List beElectedBandPoorlist=beElectedBandPoorService.getAll(filter);
 					if(beElectedBandPoorlist==null||beElectedBandPoorlist.size()==0){
 						BeElectedBandPoor beElectedBandPoor=new BeElectedBandPoor();
 						beElectedBandPoor.setBandId(ip.getBandId());
 						beElectedBandPoor.setBandName(ip.getBandName());
+						beElectedBandPoor.setProClassId(ip.getProClassId());
 						beElectedBandPoor.setCreatDate(new Date());
 						beElectedBandPoor.setCreateUser(ContextUtil.getCurrentUser());
 						beElectedBandPoor.setInfoType(BeElectedBandPoor.TYPE_SCORE);

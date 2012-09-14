@@ -171,20 +171,25 @@ public class BandAction extends BaseAction {
 				map.put("Q_id_L_NEQ", "0");
 				if(StringUtils.isNotEmpty(band1.getBandChName())) {
 					map.put("Q_bandChName_S_EQ", band1.getBandChName());
-					flag = this.bandService.validateUnique(map);
-					if(!flag) {
-						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据中文名称【" + band1.getBandChName() + "】在数据库中已存在，请核实！'}";
-						return "success";
-					}
-					map.remove("Q_bandChName_S_EQ");
+//					flag = this.bandService.validateUnique(map);
+//					if(!flag) {
+//						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据中文名称【" + band1.getBandChName() + "】在数据库中已存在，请核实！'}";
+//						return "success";
+//					}
+					//map.remove("Q_bandChName_S_EQ");
 				}
 				if(StringUtils.isNotEmpty(band1.getBandEnName())) {
 					map.put("Q_bandEnName_S_EQ", band1.getBandEnName());
-					flag = this.bandService.validateUnique(map);
-					if(!flag) {
-						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据英文名称【" + band1.getBandEnName() + "】在数据库中已存在，请核实！'}";
-						return "success";
-					}
+//					flag = this.bandService.validateUnique(map);
+//					if(!flag) {
+//						this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据英文名称【" + band1.getBandEnName() + "】在数据库中已存在，请核实！'}";
+//						return "success";
+//					}
+				}
+				flag = this.bandService.validateUnique(map);
+				if(!flag) {
+					this.jsonString = "{success:true,flag:'0',msg:'excel中第【" + (i + 1) + "】行数据中英文名称【" + band1.getBandChName()+"-"+band1.getBandEnName() + "】在数据库中已存在，请核实！'}";
+					return "success";
 				}
 				list.add(band1);
 			}

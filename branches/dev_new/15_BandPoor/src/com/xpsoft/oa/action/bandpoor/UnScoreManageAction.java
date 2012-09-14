@@ -258,7 +258,7 @@ public class UnScoreManageAction extends BaseAction{
 		List<Band> list=bandService.getAll(filter);
 		StringBuffer sb = new StringBuffer("[");
 	       for (Band band : list) {
-	         sb.append("['").append(band.getId()).append("','").append(band.getBandChName()+"/"+band.getBandEnName()).append("'],");
+	    	   sb.append("['").append(band.getId()).append("','").append((band.getBandChName()!=null?band.getBandChName().replace("'", "\\'"):"")+"/"+(band.getBandEnName()!=null?band.getBandEnName().replace("'", "\\'"):"")).append("'],");
 	       }
 	       if (list.size() > 0) {
 	         sb.deleteCharAt(sb.length() - 1);
