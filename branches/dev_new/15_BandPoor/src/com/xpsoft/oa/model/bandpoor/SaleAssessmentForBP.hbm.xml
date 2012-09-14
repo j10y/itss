@@ -30,6 +30,14 @@
 			<column name="BPId" />
 		</many-to-one>
 		
+		<property
+            name="targetShop"
+            type="String"
+            update="true"
+            insert="true"
+            access="property"
+            column="targetShop"
+        />
          <property
             name="targetValue"
             type="double"
@@ -46,7 +54,31 @@
             access="property"
             column="requireValue"
         />
+         <property
+            name="targetShopTwo"
+            type="String"
+            update="true"
+            insert="true"
+            access="property"
+            column="targetShopTwo"
+        />
         
+         <property
+            name="targetValueTwo"
+            type="double"
+            update="true"
+            insert="true"
+            access="property"
+            column="targetValueTwo"
+        />
+        <property
+            name="requireValueTwo"
+            type="double"
+            update="true"
+            insert="true"
+            access="property"
+            column="requireValueTwo"
+        />
         <property
             name="status"
             type="integer"

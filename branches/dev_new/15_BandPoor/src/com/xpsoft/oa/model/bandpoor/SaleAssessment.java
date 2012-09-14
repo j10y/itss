@@ -13,9 +13,13 @@ public class SaleAssessment extends BaseModel{
 	
 	private Long id;
 	private BeElectedBandPoor beElectedBPId;
-	
+	private String targetShop;
 	private Double targetValue;
 	private Double requireValue;
+	private String targetShopTwo;
+	private Double targetValueTwo;
+	private Double requireValueTwo;
+	
 	private Integer status;
 	private Date createDate;
 	private AppUser createUser;
@@ -139,6 +143,28 @@ public class SaleAssessment extends BaseModel{
 	public void setSelBandRankValue(Integer selBandRankValue) {
 		this.selBandRankValue = selBandRankValue;
 	}
-	
-
+	public String getTargetShop() {
+		return targetShop;
+	}
+	public void setTargetShop(String targetShop) {
+		this.targetShop = targetShop;
+	}
+	public String getTargetShopTwo() {
+		return targetShopTwo;
+	}
+	public void setTargetShopTwo(String targetShopTwo) {
+		this.targetShopTwo = targetShopTwo;
+	}
+	public Double getTargetValueTwo() {
+		return targetValueTwo;
+	}
+	public void setTargetValueTwo(Double targetValueTwo) {
+		this.targetValueTwo = targetValueTwo;
+	}
+	public Double getRequireValueTwo() {
+		return requireValueTwo;
+	}
+	public void setRequireValueTwo(Double requireValueTwo) {
+		this.requireValueTwo = requireValueTwo;
+	}	
 }
