@@ -9,7 +9,7 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 			ApplyScoreManage.superclass.constructor.call(this, {
 				id : "ApplyScoreManage",
 				iconCls : "menu-dictionary",
-				title : "可评分品牌池",
+				title : "可评分信息审核",
 				region : "center",
 				layout : "border",
 				items : [this.searchPanel, this.gridPanel]
@@ -44,7 +44,7 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 							mode : "local",
 							editable : true,
 							triggerAction : "all",
-							valueField : "fromBandId",
+							valueField : "fromBandName",
 							displayField : "fromBandName",
 							store : new Ext.data.SimpleStore(
 							{
@@ -80,7 +80,7 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 							mode : "local",
 							editable : true,
 							triggerAction : "all",
-							valueField : "fromproClassId",
+							valueField : "fromproClassName",
 							displayField : "fromproClassName",
 							store : new Ext.data.SimpleStore(
 							{
@@ -116,7 +116,7 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 							mode : "local",
 							editable : true,
 							triggerAction : "all",
-							valueField : "fromBandStyleId",
+							valueField : "fromBandStyleName",
 							displayField : "fromBandStyleName",
 							store : new Ext.data.SimpleStore(
 							{
@@ -172,29 +172,31 @@ ApplyScoreManage = Ext.extend(Ext.Panel, {
 						}
 					]
 				});
-			this.store = new Ext.data.Store({
-					proxy : new Ext.data.HttpProxy({
-						url : __ctxPath + "/bandpoor/listScoreManage.do"
-					}),
-					reader : new Ext.data.JsonReader({
-						root : "result",
-						totalProperty : "totalCounts",
-						id : "id",
-						fields : [{
+			
+			this.store = new Ext.data.JsonStore({
+					url : __ctxPath + "/bandpoor/listScoreManage.do",
+					root : "result",
+					totalProperty : "totalCounts",
+					remoteSort : true,
+					fields : [{
 								name : "id",
 								type : "int"
-							}, "bandName", "floorNumName", "proClassName","bandStyleName","mainPriceName","saleStoreName","bandBusinessAreaName","bandDesc","infoStatus","infoSource"]
-					}),
-					remoteSort : true
+							}, "bandName", "floorNumName", "proClassName","bandStyleName","mainPriceName","saleStoreName","bandBusinessAreaName","bandDesc","infoStatus","infoSource"],
+					listeners : {
+						beforeload : function() {
+							this.baseParams = {
+								Q_bandName_S_LK : Ext.getCmp("ApplyScoreManageSearchFormBandName").getValue(),
+								Q_proClassName_S_LK : Ext.getCmp("ApplyScoreManageSearchFormProClass").getValue(),
+								Q_bandStyleName_S_LK : Ext.getCmp("ApplyScoreManageSearchFormBandStyle").getValue(),
+								Q_infoStatus_N_EQ : Ext.getCmp("Q_infoStatus_N_EQ").getValue(),
+								start : 0,
+								limit : 25
+							};
+						}
+					}
+
 				});
-			this.store.setDefaultSort("id", "desc");
-			this.store.load({
-				params : {
-					start : 0,
-					limit : 25
-				}
-			});
-			
+			this.store.load();
 			var c = new Ext.grid.CheckboxSelectionModel();
 			var a = new Ext.grid.ColumnModel({
 					columns : [c, new Ext.grid.RowNumberer(), {

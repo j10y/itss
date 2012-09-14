@@ -7,7 +7,7 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 			this.initComponents();
 			YYCScoreManage.superclass.constructor.call(this, {
 				id : "YYCScoreManage",
-				title : "应用池管理",
+				title : "可评分应用池管理",
 				region : "center",
 				iconCls : "menu-personal-salary",
 				layout : "border",

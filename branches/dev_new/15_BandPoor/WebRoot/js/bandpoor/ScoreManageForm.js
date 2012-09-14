@@ -1,4 +1,4 @@
-ScoreManageForm = Ext.extend(Ext.Window, {
+ScoreManageForm = Ext.extend(Ext.Window,{
 		formPanel : null,
 		constructor : function (a) {
 			Ext.applyIf(this, a);

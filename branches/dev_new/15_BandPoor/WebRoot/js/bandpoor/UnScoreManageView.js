@@ -9,7 +9,7 @@ UnScoreManageView = Ext.extend(Ext.Panel, {
 			UnScoreManageView.superclass.constructor.call(this, {
 				id : "UnScoreManageView",
 				iconCls : "menu-dictionary",
-				title : "不可评分品牌池",
+				title : "不可评分信息管理",
 				region : "center",
 				layout : "border",
 				items : [this.searchPanel, this.gridPanel]

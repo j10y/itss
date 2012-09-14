@@ -9,7 +9,7 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 			ApplyUnScoreManage.superclass.constructor.call(this, {
 				id : "ApplyUnScoreManage",
 				iconCls : "menu-dictionary",
-				title : "不可评分品牌池",
+				title : "不可评分信息审核",
 				region : "center",
 				layout : "border",
 				items : [this.searchPanel, this.gridPanel]

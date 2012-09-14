@@ -7,7 +7,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 			this.initComponents();
 			DXCScoreManage.superclass.constructor.call(this, {
 				id : "DXCScoreManage",
-				title : "待选池评分管理",
+				title : "可评分待选池评分管理",
 				region : "center",
 				iconCls : "menu-personal-salary",
 				layout : "border",
@@ -95,7 +95,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 					fields : [{
 							name : "id",
 							type : "int"
-						}, "bandName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","mainprice"]
+						}, "bandName","proClassName","saleStoreNum", "bandScore", "status", "infoType", "creatDate", "createUser", "content","bandrealScore","mainprice"]
 				});
 			this.store.setDefaultSort("id", "desc");
 			this.store.load({
@@ -117,6 +117,10 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							header : "品牌名称",
 							width : 60,
 							dataIndex : "bandName"
+						}, {
+							header : "品类",
+							width : 60,
+							dataIndex : "proClassName"
 						}, {
 							header : "销售场所数量",
 							width : 60,

@@ -9,7 +9,7 @@ ScoreManageView = Ext.extend(Ext.Panel, {
 			ScoreManageView.superclass.constructor.call(this, {
 				id : "ScoreManageView",
 				iconCls : "menu-dictionary",
-				title : "可评分品牌池",
+				title : "可评分信息管理",
 				region : "center",
 				layout : "border",
 				items : [this.searchPanel, this.gridPanel]

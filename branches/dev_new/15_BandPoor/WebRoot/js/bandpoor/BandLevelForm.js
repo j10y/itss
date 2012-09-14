@@ -36,11 +36,11 @@ BandLevelForm = Ext.extend(Ext.Window, {
 					xtype : "hidden",
 					value : this.bandLevelId == null ? "" : this.bandLevelId
 				}, {
-					fieldLabel : "品牌池名称",
+					fieldLabel : "品牌池分类名称",
 					name : "bandLevel.levelName",
 					id : "levelName",
 					allowBlank : false,
-					blankText : "品牌池名称不能为空！"
+					blankText : "品牌池分类名称不能为空！"
 				}, {
 					fieldLabel : "分数下限",
 					xtype:"numberfield",
@@ -57,7 +57,7 @@ BandLevelForm = Ext.extend(Ext.Window, {
 					blankText : "分数上限不能为空！"
 				},  
 				{
-					fieldLabel : "品牌池描述",
+					fieldLabel : "品牌池分类描述",
 					name : "bandLevel.levelDesc",
 					id : "levelDesc",
 					xtype:"textarea"

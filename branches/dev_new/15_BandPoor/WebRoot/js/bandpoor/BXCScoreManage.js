@@ -7,7 +7,7 @@ BXCScoreManage = Ext.extend(Ext.Panel, {
 			this.initComponents();
 			BXCScoreManage.superclass.constructor.call(this, {
 				id : "BXCScoreManage",
-				title : "待选池评分管理",
+				title : "可评分备选池管理",
 				region : "center",
 				iconCls : "menu-personal-salary",
 				layout : "border",
