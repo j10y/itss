@@ -38,7 +38,14 @@
 		>	
 			<column name="bandId" />
 		</many-to-one>
-		
+		<many-to-one
+			name="proClassId"
+			class="com.xpsoft.oa.model.bandpoor.ProClass"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="proClassId" />
+		</many-to-one>
 		
         <property
             name="bandScore"

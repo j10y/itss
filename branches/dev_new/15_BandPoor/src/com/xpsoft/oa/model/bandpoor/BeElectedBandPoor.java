@@ -36,6 +36,8 @@ public class BeElectedBandPoor extends BaseModel{
 	
 	private Integer infoType;
 
+	private ProClass proClassId;
+	
 	private Set<InfoPoor> infoPoors=new HashSet();
 
 	public Long getId() {
@@ -217,6 +219,14 @@ public class BeElectedBandPoor extends BaseModel{
 		} else if (!status.equals(other.status))
 			return false;
 		return true;
+	}
+
+	public ProClass getProClassId() {
+		return proClassId;
+	}
+
+	public void setProClassId(ProClass proClassId) {
+		this.proClassId = proClassId;
 	}
 	
 	
