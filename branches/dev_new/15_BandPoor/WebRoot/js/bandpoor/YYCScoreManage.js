@@ -93,7 +93,7 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							id : "bandPoor.poorVersionName",
 							xtype : "combo",
 							triggerAction : "all",
-							store : [["1","一次采集(6月-10)"],["2","二次采集(11月-次年5月)"]],
+							store : [["1","一次采集(6月-10月使用)"],["2","二次采集(11月-次年5月使用)"]],
 							listeners : {
 									select:function(e,c,d){
 										var poorVersion=Ext.getCmp("bandPoor.poorVersionName").getValue();
@@ -166,9 +166,9 @@ YYCScoreManage = Ext.extend(Ext.Panel, {
 							dataIndex : "poorVersion",
 							renderer : function (e) {
 								if(e==1){
-									return  "一次采集(6月-10)";
+									return  "一次采集(6月-10月使用)";
 								}else{
-									return  "二次采集(11月-次年5月)";
+									return  "二次采集(11月-次年5月使用)";
 								}
 							}
 						}, {
