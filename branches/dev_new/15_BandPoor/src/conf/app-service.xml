@@ -259,6 +259,8 @@
    	 
    	 <bean id="beElectedBandPoorService" class="com.xpsoft.oa.service.bandpoor.impl.BeElectedBandPoorServiceImpl">
    	 	<constructor-arg index="0" ref="beElectedBandPoorDao"/>
+   	 	<property name="bandPoorDao" ref="bandPoorDao"></property> 
+   	 	<property name="bandLevelDao" ref="bandLevelDao"></property> 
    	 </bean>
    	 
    	  <bean id="bandPoorService" class="com.xpsoft.oa.service.bandpoor.impl.BandPoorServiceImpl">
