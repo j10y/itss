@@ -27,7 +27,7 @@
   <config>
     <name>dataSource</name>
    
-    <value>jdbc/hrmanage,mysql,GBK</value>
+    <value>jdbc/hrmanage11,mysql,GBK</value>
     
       <!-- 
      <value>jdbc/itil,sqlsvr,GBK</value>
