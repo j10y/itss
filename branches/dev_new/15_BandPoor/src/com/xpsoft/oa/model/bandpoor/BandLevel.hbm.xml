@@ -53,6 +53,14 @@
             access="property"
             column="endValue"
         />
+        <many-to-one
+			name="proClassId"
+			class="com.xpsoft.oa.model.bandpoor.ProClass"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="proClassId" />
+		</many-to-one>
          <property
             name="flag"
             type="java.lang.Integer"

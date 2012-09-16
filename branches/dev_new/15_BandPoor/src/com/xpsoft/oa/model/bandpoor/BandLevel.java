@@ -9,13 +9,22 @@ public class BandLevel extends BaseModel{
 	private String levelName;
 	private String levelDesc;
 	private Double startValue;
+	private Double endValue;
+	private ProClass proClassId;//品类
+		
+	public ProClass getProClassId() {
+		return proClassId;
+	}
+	public void setProClassId(ProClass proClassId) {
+		this.proClassId = proClassId;
+	}
 	public Double getStartValue() {
 		return startValue;
 	}
 	public void setStartValue(Double startValue) {
 		this.startValue = startValue;
 	}
-	private Double endValue;
+	
 	
 	public Double getEndValue() {
 		return endValue;
