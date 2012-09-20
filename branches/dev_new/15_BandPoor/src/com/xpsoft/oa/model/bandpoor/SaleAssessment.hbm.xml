@@ -32,7 +32,7 @@
 		
 		<property
             name="targetShop"
-            type="String"
+            type="java.lang.String"
             update="true"
             insert="true"
             access="property"
@@ -58,7 +58,7 @@
         
         <property
             name="targetShopTwo"
-            type="String"
+            type="java.lang.String"
             update="true"
             insert="true"
             access="property"
@@ -116,6 +116,24 @@
             insert="true"
             access="property"
             column="selBandRankValue"
+        />
+        
+        <property
+            name="bandRankValueTwo"
+            type="integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="bandRankValueTwo"
+        />
+        
+        <property
+            name="selBandRankValueTwo"
+            type="integer"
+            update="true"
+            insert="true"
+            access="property"
+            column="selBandRankValueTwo"
         />
         
         <many-to-one

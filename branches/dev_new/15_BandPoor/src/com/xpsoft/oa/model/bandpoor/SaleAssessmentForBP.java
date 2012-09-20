@@ -13,10 +13,10 @@ public class SaleAssessmentForBP extends BaseModel{
 	
 	private Long id;
 	private BandPoor bpId;
-	private String targetShop;
+	private String targetShop;//考核一店名
 	private Double targetValue;
 	private Double requireValue;
-	private String targetShopTwo;
+	private String targetShopTwo;//考核二店名
 	private Double targetValueTwo;
 	private Double requireValueTwo;
 	
@@ -25,6 +25,24 @@ public class SaleAssessmentForBP extends BaseModel{
 	private AppUser createUser;
 	private Integer bandRankValue;
 	private Integer selBandRankValue;
+	
+	private Integer bandRankValueTwo;//考核二品类排名 
+	private Integer selBandRankValueTwo;//考核二本品牌排名 
+	
+	
+	public Integer getBandRankValueTwo() {
+		return bandRankValueTwo;
+	}
+	public void setBandRankValueTwo(Integer bandRankValueTwo) {
+		this.bandRankValueTwo = bandRankValueTwo;
+	}
+	public Integer getSelBandRankValueTwo() {
+		return selBandRankValueTwo;
+	}
+	public void setSelBandRankValueTwo(Integer selBandRankValueTwo) {
+		this.selBandRankValueTwo = selBandRankValueTwo;
+	}
+	
 	public Long getId() {
 		return id;
 	}

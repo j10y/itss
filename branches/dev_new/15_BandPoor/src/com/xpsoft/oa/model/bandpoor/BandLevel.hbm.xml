@@ -69,5 +69,13 @@
             access="property"
             column="flag"
         />
+        <property
+            name="proClassName"
+            type="java.lang.String"
+            update="true"
+            insert="true"
+            access="property"
+            column="proClassName"
+        />
     </class>
 </hibernate-mapping>

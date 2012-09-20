@@ -25,6 +25,23 @@ public class SaleAssessment extends BaseModel{
 	private AppUser createUser;
 	private Integer bandRankValue;
 	private Integer selBandRankValue;
+	
+	private Integer bandRankValueTwo;
+	private Integer selBandRankValueTwo;
+	
+
+	public Integer getBandRankValueTwo() {
+		return bandRankValueTwo;
+	}
+	public void setBandRankValueTwo(Integer bandRankValueTwo) {
+		this.bandRankValueTwo = bandRankValueTwo;
+	}
+	public Integer getSelBandRankValueTwo() {
+		return selBandRankValueTwo;
+	}
+	public void setSelBandRankValueTwo(Integer selBandRankValueTwo) {
+		this.selBandRankValueTwo = selBandRankValueTwo;
+	}
 	public Long getId() {
 		return id;
 	}

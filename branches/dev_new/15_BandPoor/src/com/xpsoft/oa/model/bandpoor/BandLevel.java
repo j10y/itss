@@ -10,13 +10,20 @@ public class BandLevel extends BaseModel{
 	private String levelDesc;
 	private Double startValue;
 	private Double endValue;
-	private ProClass proClassId;//品类
+	private ProClass proClassId;//品类id
+	private String proClassName;//品类
 		
 	public ProClass getProClassId() {
 		return proClassId;
 	}
 	public void setProClassId(ProClass proClassId) {
 		this.proClassId = proClassId;
+	}
+	public String getProClassName() {
+		return proClassName;
+	}
+	public void setProClassName(String proClassName) {
+		this.proClassName = proClassName;
 	}
 	public Double getStartValue() {
 		return startValue;
@@ -65,6 +72,10 @@ public class BandLevel extends BaseModel{
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
+                + ((proClassName == null) ? 0 : proClassName.hashCode());
+		result = prime * result
+		        + ((proClassId == null) ? 0 : proClassId.hashCode());
+		result = prime * result
 				+ ((levelDesc == null) ? 0 : levelDesc.hashCode());
 		result = prime * result
 				+ ((levelName == null) ? 0 : levelName.hashCode());
@@ -84,6 +95,16 @@ public class BandLevel extends BaseModel{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (proClassName == null) {
+			if (other.proClassName != null)
+				return false;
+		} else if (!proClassName.equals(other.proClassName))
+			return false;
+		if (proClassId == null) {
+			if (other.proClassId != null)
+				return false;
+		} else if (!proClassId.equals(other.proClassId))
+			return false;
 		if (levelDesc == null) {
 			if (other.levelDesc != null)
 				return false;
@@ -96,6 +117,7 @@ public class BandLevel extends BaseModel{
 			return false;
 		return true;
 	}
+	
 	
 	
 }
