@@ -40,8 +40,11 @@ public class DxcUnScoreManageAction extends BaseAction{
 		String total = mapList1.get(0).get("total").toString();
 		String sql2 = "select bp_beelectedbandpoor.id as id, bp_beelectedbandpoor.bandName as bandName, " +
 				"bp_beelectedbandpoor.creatDate as createDate, app_user.fullname as createUser, " +
+				"bp_saleassessment.targetShop as targetShop, bp_saleassessment.targetShopTwo as targetShopTwo, " +
 				"bp_saleassessment.targetValue as targetValue, bp_saleassessment.requireValue as requireValue, " +
 				"bp_saleassessment.bandRankValue as bandRankValue, bp_saleassessment.selBandRankValue as selBandRankValue, " +
+				"bp_saleassessment.targetValueTwo as targetValueTwo, bp_saleassessment.requireValueTwo as requireValueTwo, " +
+				"bp_saleassessment.bandRankValueTwo as bandRankValueTwo, bp_saleassessment.selBandRankValueTwo as selBandRankValueTwo, " +
 				"bp_saleassessment.status as status, bp_infopoor.saleStoreName as saleStoreName, " +
 				"bp_infopoor.saleSroteDesc as saleStoreDesc, bp_infopoor.mainPriceName as mainPriceName, " +
 				"bp_infopoor.proClassName as proClassName from " +
@@ -82,10 +85,16 @@ public class DxcUnScoreManageAction extends BaseAction{
 			content.append("</table>");
 			buff.append("{'id':'" + map.get("id").toString() + "'")
 					.append(",'bandName':'" + map.get("bandName").toString() + "'")
+					.append(",'targetShop':'" + (map.get("targetShop") == null ? "" : map.get("targetShop").toString()) + "'")
 					.append(",'targetValue':'" + (map.get("targetValue") == null ? "" : map.get("targetValue").toString()) + "'")
 					.append(",'requireValue':'" + (map.get("requireValue") == null ? "" : map.get("requireValue")) + "'")
 					.append(",'bandRankValue':'" + (map.get("bandRankValue") == null ? "" : map.get("bandRankValue")) + "'")
 					.append(",'selBandRankValue':'" + (map.get("selBandRankValue") == null ? "" : map.get("selBandRankValue")) + "'")
+					.append(",'targetShopTwo':'" + (map.get("targetShopTwo") == null ? "" : map.get("targetShopTwo").toString()) + "'")
+					.append(",'targetValueTwo':'" + (map.get("targetValueTwo") == null ? "" : map.get("targetValueTwo").toString()) + "'")
+					.append(",'requireValueTwo':'" + (map.get("requireValueTwo") == null ? "" : map.get("requireValueTwo")) + "'")
+					.append(",'bandRankValueTwo':'" + (map.get("bandRankValueTwo") == null ? "" : map.get("bandRankValueTwo")) + "'")
+					.append(",'selBandRankValueTwo':'" + (map.get("selBandRankValueTwo") == null ? "" : map.get("selBandRankValueTwo")) + "'")
 					.append(",'createDate':'" + map.get("createDate") + "'")
 					.append(",'createUser':'" + map.get("createUser") + "'")
 					.append(",'status':'" + (map.get("status") == null ? "1" : map.get("status")) + "'")
@@ -108,10 +117,16 @@ public class DxcUnScoreManageAction extends BaseAction{
 		try {
 			String id = this.getRequest().getParameter("id");
 			String method = this.getRequest().getParameter("method");
+			String targetShop = this.getRequest().getParameter("targetShop");
 			Double targetValue = "".equals(this.getRequest().getParameter("targetValue")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValue"));
 			Double requireValue = "".equals(this.getRequest().getParameter("requireValue")) ? null : Double.parseDouble(this.getRequest().getParameter("requireValue"));
 			Integer bandRankValue = "".equals(this.getRequest().getParameter("bandRankValue")) ? null : Integer.parseInt(this.getRequest().getParameter("bandRankValue"));
 			Integer selBandRankValue = "".equals(this.getRequest().getParameter("selBandRankValue")) ? null : Integer.parseInt(this.getRequest().getParameter("selBandRankValue"));
+			String targetShopTwo = this.getRequest().getParameter("targetShopTwo");
+			Double targetValueTwo = "".equals(this.getRequest().getParameter("targetValueTwo")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValueTwo"));
+			Double requireValueTwo = "".equals(this.getRequest().getParameter("requireValueTwo")) ? null : Double.parseDouble(this.getRequest().getParameter("requireValueTwo"));
+			Integer bandRankValueTwo = "".equals(this.getRequest().getParameter("bandRankValueTwo")) ? null : Integer.parseInt(this.getRequest().getParameter("bandRankValueTwo"));
+			Integer selBandRankValueTwo = "".equals(this.getRequest().getParameter("selBandRankValueTwo")) ? null : Integer.parseInt(this.getRequest().getParameter("selBandRankValueTwo"));
 			
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("Q_beElectedBPId.id_L_EQ", id);
@@ -126,14 +141,20 @@ public class DxcUnScoreManageAction extends BaseAction{
 				sa.setCreateUser(currentUser);
 			}
 			sa.setStatus(SaleAssessment.CREATE);
+			sa.setTargetShop(targetShop);
 			sa.setTargetValue(targetValue);
 			sa.setRequireValue(requireValue);
 			sa.setBandRankValue(bandRankValue);
 			sa.setSelBandRankValue(selBandRankValue);
+			sa.setTargetShopTwo(targetShopTwo);
+			sa.setTargetValueTwo(targetValueTwo);
+			sa.setRequireValueTwo(requireValueTwo);
+			sa.setBandRankValueTwo(bandRankValueTwo);
+			sa.setSelBandRankValueTwo(selBandRankValueTwo);
 			sa = saleAssessmentService.save(sa);
 			if("check".equals(method)) {
 				Integer bandPoorStatus = BandPoor.BANDSTATUS_BXC;
-				if(requireValue >= targetValue && selBandRankValue <= bandRankValue) {
+				if((requireValue >= targetValue && selBandRankValue <= bandRankValue) || (requireValueTwo!=null&&selBandRankValueTwo!=null&&requireValueTwo >= targetValueTwo && selBandRankValueTwo <= bandRankValueTwo)) {
 					bandPoorStatus = BandPoor.BANDSTATUS_YYC;
 					sa.setStatus(SaleAssessment.PASS);
 				} else {
@@ -161,10 +182,16 @@ public class DxcUnScoreManageAction extends BaseAction{
 				bp = bandPoorService.save(bp);
 				
 				safbp.setBpId(bp);
+				safbp.setTargetShop(sa.getTargetShop());
 				safbp.setTargetValue(sa.getTargetValue());
 				safbp.setRequireValue(sa.getRequireValue());
 				safbp.setBandRankValue(sa.getBandRankValue());
 				safbp.setSelBandRankValue(sa.getSelBandRankValue());
+				safbp.setTargetShopTwo(sa.getTargetShopTwo());
+				safbp.setTargetValueTwo(sa.getTargetValueTwo());
+				safbp.setRequireValueTwo(sa.getRequireValueTwo());
+				safbp.setBandRankValueTwo(sa.getBandRankValueTwo());
+				safbp.setSelBandRankValueTwo(sa.getSelBandRankValueTwo());
 				safbp.setStatus(sa.getStatus());
 				safbp.setCreateDate(currentDate);
 				safbp.setCreateUser(currentUser);

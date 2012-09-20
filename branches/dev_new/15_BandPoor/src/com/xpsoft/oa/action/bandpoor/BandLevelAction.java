@@ -56,7 +56,6 @@ public class BandLevelAction extends BaseAction{
 		buff.append(json.exclude(new String[] {}).serialize(this.bandLevel));
 		buff.append("}");
 		this.jsonString = buff.toString();
-		
 		return "success";
 	}
 	
@@ -65,6 +64,7 @@ public class BandLevelAction extends BaseAction{
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("Q_id_L_NEQ", this.bandLevel.getId() == null ? "0" : this.bandLevel.getId().toString());
 		map.put("Q_levelName_S_EQ", this.bandLevel.getLevelName());
+		map.put("Q_proClassName_S_EQ", this.bandLevel.getProClassName());
 		map.put("Q_flag_N_EQ", BandLevel.CREATE.toString());
 		boolean flag = this.bandLevelService.validateUnique(map);
 		if(!flag) {

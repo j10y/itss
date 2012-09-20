@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xpsoft.core.command.QueryFilter;
+import com.xpsoft.core.util.AppUtil;
 import com.xpsoft.core.util.ContextUtil;
 import com.xpsoft.core.util.JsonUtil;
 import com.xpsoft.core.web.action.BaseAction;
@@ -26,9 +27,12 @@ import com.xpsoft.oa.model.bandpoor.InfoPoor;
 import com.xpsoft.oa.model.bandpoor.MainPrice;
 import com.xpsoft.oa.model.bandpoor.PictureOrdoc;
 import com.xpsoft.oa.model.bandpoor.ProClass;
+import com.xpsoft.oa.model.bandpoor.SaleAssessment;
 import com.xpsoft.oa.model.bandpoor.SaleStore;
+import com.xpsoft.oa.model.system.AppUser;
 import com.xpsoft.oa.model.system.FileAttach;
 import com.xpsoft.oa.service.bandpoor.BandChannelService;
+import com.xpsoft.oa.service.bandpoor.BandPoorService;
 import com.xpsoft.oa.service.bandpoor.BandService;
 import com.xpsoft.oa.service.bandpoor.BandStyleService;
 import com.xpsoft.oa.service.bandpoor.BeElectedBandPoorService;
@@ -37,6 +41,7 @@ import com.xpsoft.oa.service.bandpoor.FloorService;
 import com.xpsoft.oa.service.bandpoor.MainPriceService;
 import com.xpsoft.oa.service.bandpoor.PictureOrdocService;
 import com.xpsoft.oa.service.bandpoor.ProClassService;
+import com.xpsoft.oa.service.bandpoor.SaleAssessmentService;
 import com.xpsoft.oa.service.bandpoor.SaleStoreService;
 import com.xpsoft.oa.service.bandpoor.ScoreManageService;
 import com.xpsoft.oa.service.system.FileAttachService;
@@ -393,8 +398,19 @@ public class UnScoreManageAction extends BaseAction{
 	 * @return
 	 */
 	public String applyRecord(){
+		SaleAssessmentService saleAssessmentService = (SaleAssessmentService)AppUtil.getBean("saleAssessmentService");
 		String[] ids = getRequest().getParameterValues("ids");
 		String status=getRequest().getParameter("status");
+		String targetShop = this.getRequest().getParameter("targetShop");
+		Double targetValue = "".equals(this.getRequest().getParameter("targetValue")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValue"));
+		Integer bandRankValue = "".equals(this.getRequest().getParameter("bandRankValue")) ? null : Integer.parseInt(this.getRequest().getParameter("bandRankValue"));
+		String targetShopTwo = this.getRequest().getParameter("targetShopTwo");
+		Double targetValueTwo = "".equals(this.getRequest().getParameter("targetValueTwo")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValueTwo"));
+		Integer bandRankValueTwo = "".equals(this.getRequest().getParameter("bandRankValueTwo")) ? null : Integer.parseInt(this.getRequest().getParameter("bandRankValueTwo"));
+		SaleAssessment sa = new SaleAssessment();
+		Date currentDate = new Date();
+		AppUser currentUser = ContextUtil.getCurrentUser();
+		
 		if (ids != null) {
 			for (String id : ids) {
 				InfoPoor ip=scoreManageService.get(new Long(id));
@@ -410,6 +426,18 @@ public class UnScoreManageAction extends BaseAction{
 					ips.add(ip);
 					beElectedBandPoor.setInfoPoors(ips);
 					beElectedBandPoorService.save(beElectedBandPoor);
+					//保存考核目标
+					sa.setCreateDate(currentDate);
+					sa.setCreateUser(currentUser);
+					sa.setStatus(SaleAssessment.CREATE);
+					sa.setTargetShop(targetShop);
+					sa.setTargetValue(targetValue);
+					sa.setBandRankValue(bandRankValue);
+					sa.setTargetShopTwo(targetShopTwo);
+					sa.setTargetValueTwo(targetValueTwo);
+					sa.setBandRankValueTwo(bandRankValueTwo);
+					sa.setBeElectedBPId(beElectedBandPoor);
+					sa =saleAssessmentService.save(sa);
 				}
 				ip.setInfoStatus(Integer.parseInt(status));
 				scoreManageService.save(ip);
