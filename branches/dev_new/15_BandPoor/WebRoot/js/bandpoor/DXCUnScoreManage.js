@@ -98,10 +98,16 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 						type : "int"
 					}, 
 					"bandName",
+					"targetShop",
 					"targetValue",
 					"requireValue",
 					"bandRankValue",
 					"selBandRankValue",
+					"targetShopTwo",
+					"targetValueTwo",
+					"requireValueTwo",
+					"bandRankValueTwo",
+					"selBandRankValueTwo",
 					"status",
 					"createDate",
 					"createUser",
@@ -150,22 +156,46 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 						header : "品牌名称",
 						width : 60,
 						dataIndex : "bandName"
-					}, {
-						header : "品类评效",
+					},{
+						header : "店名一",
+						width : 60,
+						dataIndex : "targetShop"
+					},{
+						header : "品类评效一",
 						width : 60,
 						dataIndex : "targetValue"
 					}, {
-						header : "本品牌评效",
+						header : "本品牌评效一",
 						width : 60,
 						dataIndex : "requireValue"
 					}, {
-						header : "品类排名",
+						header : "品类排名一",
 						width : 60,
 						dataIndex : "bandRankValue"
 					}, {
-						header : "本品牌排名",
+						header : "本品牌排名一",
 						width : 60,
 						dataIndex : "selBandRankValue"
+					},{
+						header : "店名二",
+						width : 60,
+						dataIndex : "targetShopTwo"
+					},{
+						header : "品类评效二",
+						width : 60,
+						dataIndex : "targetValueTwo"
+					}, {
+						header : "本品牌评效二",
+						width : 60,
+						dataIndex : "requireValueTwo"
+					}, {
+						header : "品类排名二",
+						width : 60,
+						dataIndex : "bandRankValueTwo"
+					}, {
+						header : "本品牌排名二",
+						width : 60,
+						dataIndex : "selBandRankValueTwo"
 					}, {
 						header : "状态",
 						width : 60,
@@ -282,43 +312,82 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 				return;
 			}
 			var formPanel = new Ext.FormPanel({
-				layout : "form",
-				bodyStyle : "padding:10px 10px 10px 10px",
-				border : false,
+				//bodyStyle : "padding:10px 10px 10px 10px",
+				//border : false,
 				id : "bandUnScoreValueForm",
 				defaults : {
 					anchor : "98%,98%"
 				},
-				defaultType : "numberfield",
+				layoutConfig : {
+					columns:2	
+				},
+				defaultType : "textfield",
+				layout : "tableform",
 				items : [
-					{
-						fieldLabel : "品类评效",
+				    {
+						fieldLabel : "店名一",
+						name : "targetShop",
+						id : "targetShop",
+						value : a[0].data.targetShop,
+						readOnly: true
+					},{
+						fieldLabel : "店名二",
+						name : "targetShopTwo",
+						id : "targetShopTwo",
+						value : a[0].data.targetShopTwo,
+						readOnly: true
+					},{
+						fieldLabel : "品类评效一",
 						name : "targetValue",
 						id : "targetValue",
-						value : a[0].data.targetValue
+						value : a[0].data.targetValue,
+						readOnly: true
+					},{
+						fieldLabel : "品类评效二",
+						name : "targetValueTwo",
+						id : "targetValueTwo",
+						value : a[0].data.targetValueTwo,
+						readOnly: true
 					}, {
-						fieldLabel : "本品牌评效",
+						fieldLabel : "本品牌评效一",
 						name : "requireValue",
 						id : "requireValue",
 						value : a[0].data.requireValue
+					},{
+						fieldLabel : "本品牌评效二",
+						name : "requireValueTwo",
+						id : "requireValueTwo",
+						value : a[0].data.requireValueTwo
 					}, {
-						fieldLabel : "品类排名",
+						fieldLabel : "品类排名一",
 						name : "bandRankValue",
 						id : "bandRankValue",
-						value : a[0].data.bandRankValue
+						value : a[0].data.bandRankValue,
+						readOnly: true
 					}, {
-						fieldLabel : "本品牌排名",
+						fieldLabel : "品类排名二",
+						name : "bandRankValueTwo",
+						id : "bandRankValueTwo",
+						value : a[0].data.bandRankValueTwo,
+						readOnly: true
+					}, {
+						fieldLabel : "本品牌排名一",
 						name : "selBandRankValue",
 						id : "selBandRankValue",
 						value : a[0].data.selBandRankValue
+					}, {
+						fieldLabel : "本品牌排名二",
+						name : "selBandRankValueTwo",
+						id : "selBandRankValueTwo",
+						value : a[0].data.selBandRankValueTwo
 					}
 				]
 			});
 			var win = new Ext.Window({
 				id : "checkUnScoreWin",
 				title : "考核",
-				width : "300",
-				height : "200",
+				height : 250,
+				width: 500,
 				layout : "fit",
 				modal : true,
 				maximizable : true,
@@ -351,10 +420,19 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 						text : "考核",
 						iconCls : "btn-check",
 						handler : function() {
+						    if(Ext.getCmp("targetShop").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "店名一不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
 							if(Ext.getCmp("targetValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
-									msg : "品类评效不允许为空！",
+									msg : "品类评效一不允许为空！",
 									buttons : Ext.MessageBox.OK,
 									icon : Ext.MessageBox.ERROR
 								});
@@ -363,7 +441,7 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 							if(Ext.getCmp("requireValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
-									msg : "本品牌评效不允许为空！",
+									msg : "本品牌评效一不允许为空！",
 									buttons : Ext.MessageBox.OK,
 									icon : Ext.MessageBox.ERROR
 								});
@@ -372,7 +450,7 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 							if(Ext.getCmp("bandRankValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
-									msg : "品类排名不允许为空！",
+									msg : "品类排名一不允许为空！",
 									buttons : Ext.MessageBox.OK,
 									icon : Ext.MessageBox.ERROR
 								});
@@ -381,11 +459,31 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 							if(Ext.getCmp("selBandRankValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
-									msg : "本品牌排名不允许为空！",
+									msg : "本品牌排名一不允许为空！",
 									buttons : Ext.MessageBox.OK,
 									icon : Ext.MessageBox.ERROR
 								});
 								return ;
+							}
+							if(Ext.getCmp("targetShopTwo").getValue() != ""&&Ext.getCmp("targetValueTwo").getValue() != ""&&Ext.getCmp("bandRankValueTwo").getValue() != "") {
+								if(Ext.getCmp("targetValueTwo").getValue() == "") {
+									Ext.MessageBox.show({
+										title : "操作信息",
+										msg : "品类评效二不允许为空！",
+										buttons : Ext.MessageBox.OK,
+										icon : Ext.MessageBox.ERROR
+									});
+									return ;
+								}
+								if(Ext.getCmp("selBandRankValueTwo").getValue() == "") {
+									Ext.MessageBox.show({
+										title : "操作信息",
+										msg : "本品牌排名二不允许为空！",
+										buttons : Ext.MessageBox.OK,
+										icon : Ext.MessageBox.ERROR
+									});
+									return ;
+								}
 							}
 							Ext.getCmp("bandUnScoreValueForm").getForm().submit({
 								waitMsg : "正在提交数据...",

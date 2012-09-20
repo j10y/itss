@@ -32,34 +32,78 @@ BandLevelForm = Ext.extend(Ext.Window, {
 			items : [
 				{
 					name : "bandLevel.id",
-					id : "bandLevelId",
+					id : "bandLevel.bandLevelId",
 					xtype : "hidden",
 					value : this.bandLevelId == null ? "" : this.bandLevelId
 				}, {
+													name : "bandLevel.proClassId.id",
+													id : "bandLevel.proClassId",
+													xtype : "hidden"
+												}, {
+													fieldLabel : "品类",
+													name : "bandLevel.proClassName",
+													id : "bandLevel.proClassName",
+													maxHeight : 200,
+													xtype : "combo",
+													mode : "local",
+													editable : true,
+													allowBlank : false,
+													triggerAction : "all",
+													valueField : "fromProClassId",
+													displayField : "fromProClassName",
+													store : new Ext.data.SimpleStore({
+														url : __ctxPath
+														 + "/bandpoor/getProClassScoreManage.do",
+														fields : [
+															"fromProClassId",
+															"fromProClassName"]
+													}),
+													listeners : {
+														focus : function (b) {
+															var a = Ext.getCmp("bandLevel.proClassName").getStore();
+															if (a.getCount() <= 0) {
+																Ext.Ajax.request({
+																	url : __ctxPath + "/bandpoor/getProClassScoreManage.do",
+																	method : "post",
+																	success : function (d) {
+																		var c = Ext.util.JSON.decode(d.responseText);
+																		a.loadData(c);
+																	}
+																});
+															}
+														},
+														select:function(e,c,d){
+															var proClassId=Ext.getCmp("bandLevel.proClassName").getValue();
+															Ext.getCmp("bandLevel.proClassId").setValue(proClassId);
+														}
+													}
+												}, 
+				
+				{
 					fieldLabel : "品牌池分类名称",
 					name : "bandLevel.levelName",
-					id : "levelName",
+					id : "bandLevel.levelName",
 					allowBlank : false,
 					blankText : "品牌池分类名称不能为空！"
 				}, {
 					fieldLabel : "分数下限",
 					xtype:"numberfield",
 					name : "bandLevel.startValue",
-					id : "startValue",
+					id : "bandLevel.startValue",
 					allowBlank : false,
 					blankText : "分数下限不能为空！"
 				}, {
 					fieldLabel : "分数上限",
 					xtype:"numberfield",
 					name : "bandLevel.endValue",
-					id : "endValue",
+					id : "bandLevel.endValue",
 					allowBlank : false,
 					blankText : "分数上限不能为空！"
 				},  
 				{
 					fieldLabel : "品牌池分类描述",
 					name : "bandLevel.levelDesc",
-					id : "levelDesc",
+					id : "bandLevel.levelDesc",
 					xtype:"textarea"
 				}
 			]
@@ -71,6 +115,15 @@ BandLevelForm = Ext.extend(Ext.Window, {
 				waitMsg : "正在载入数据……",
 				success : function(f, d) {
 					var e = Ext.util.JSON.decode(d.response.responseText);
+					//var e =Ext.util.JSON.decode(d.response.responseText).data[0];
+					Ext.getCmp("bandLevel.bandLevelId").setValue(e.data.id);
+					Ext.getCmp("bandLevel.proClassId").setValue(e.data.proClassId.id);
+					Ext.getCmp("bandLevel.proClassName").setValue(e.data.proClassName);
+					Ext.getCmp("bandLevel.levelName").setValue(e.data.levelName);
+					Ext.getCmp("bandLevel.startValue").setValue(e.data.startValue);
+					Ext.getCmp("bandLevel.endValue").setValue(e.data.endValue);
+					Ext.getCmp("bandLevel.levelDesc").setValue(e.data.levelDesc);
+					
 				},
 				failure : function() {
 					
@@ -94,8 +147,8 @@ BandLevelForm = Ext.extend(Ext.Window, {
 	},
 	save : function(a, b) {
 		if(a.getForm().isValid()) {
-		   var ev = Ext.getCmp("endValue").getValue();
-		   var sv = Ext.getCmp("startValue").getValue();
+		   var ev = Ext.getCmp("bandLevel.endValue").getValue();
+		   var sv = Ext.getCmp("bandLevel.startValue").getValue();
 		   if(ev<sv){
 		   	Ext.MessageBox.show({
 						title : "操作信息",

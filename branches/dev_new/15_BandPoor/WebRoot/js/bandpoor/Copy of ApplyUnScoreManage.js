@@ -304,107 +304,69 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 				});
 			}
 		},
-		optionByIds : function (a,status) {
-			Ext.Msg.confirm("信息确认", "您确认处理所选记录吗？", function (b) {
-				if (b == "yes") {
-					Ext.Ajax.request({
-						url : __ctxPath + "/bandpoor/applyRecordScoreManageUn.do",
-						params : {
-							ids : a,
-							status:status
-						},
-						method : "POST",
-						success : function (c, d) {
-							Ext.ux.Toast.msg("信息提示", "成功操作所选记录！");
-							Ext.getCmp("ApplyUnScoreManageGrid").getStore().reload();
-						},
-						failure : function (c, d) {
-							Ext.ux.Toast.msg("操作信息", "操作出错，请联系管理员！");
-						}
-					});
-				}
-			});
-		},
-		passRecords : function () {
-			var c = Ext.getCmp("ApplyUnScoreManageGrid");
+		optionByIds : function () {
+		    var c = Ext.getCmp("ApplyUnScoreManageGrid");
 			var a = c.getSelectionModel().getSelections();
 			if (a.length == 0) {
-				Ext.ux.Toast.msg("信息", "请选择要审批通过的记录！");
+				Ext.ux.Toast.msg("信息", "请选择要考核的记录！");
 				return;
 			}
 			if(a.length > 1) {
 				Ext.ux.Toast.msg("信息", "一次只能选择一条记录！");
 				return;
 			}
-			var d = Array();
-			for (var b = 0; b < a.length; b++) {
-				d.push(a[b].data.id);
-				if(a[b].data.infoStatus==2){
-					Ext.ux.Toast.msg("信息", "审批通过的记录无需再次审批！");
-					return;
-				}else if(a[b].data.infoStatus==3){
-					Ext.ux.Toast.msg("信息", "其中有打回的记录不能再次审批！");
-					return;
-				}
+			if(a[0].data.status != "1") {
+				Ext.ux.Toast.msg("信息", "不是新建状态的记录不能被考核！");
+				return;
 			}
 			var formPanel = new Ext.FormPanel({
 				//bodyStyle : "padding:10px 10px 10px 10px",
 				//border : false,
-				id : "ApplyUnScoreForm",
+				id : "bandUnScoreValueForm",
 				defaults : {
 					anchor : "98%,98%"
 				},
 				layoutConfig : {
 					columns:2	
 				},
-				defaultType : "textfield",
+				defaultType : "numberfield",
 				layout : "tableform",
 				items : [
 				    {
 						fieldLabel : "店名一",
 						name : "targetShop",
-						id : "ApplyUnScoreForm.targetShop",
-						value :""
+						id : "targetShop",
+						value : a[0].data.targetShop
 					},{
 						fieldLabel : "店名二",
 						name : "targetShopTwo",
-						id : "ApplyUnScoreForm.targetShopTwo",
-						value :""
+						id : "targetShopTwo",
+						value : a[0].data.targetShopTwo
 					},{
 						fieldLabel : "品类评效一",
 						name : "targetValue",
-						id : "ApplyUnScoreForm.targetValue",
-						value : ""
+						id : "targetValue",
+						value : a[0].data.targetValue
 					},{
 						fieldLabel : "品类评效二",
 						name : "targetValueTwo",
-						id : "ApplyUnScoreForm.targetValueTwo",
-						value :""
+						id : "targetValueTwo",
+						value : a[0].data.targetValueTwo
 					}, {
 						fieldLabel : "品类排名一",
 						name : "bandRankValue",
-						id : "ApplyUnScoreForm.bandRankValue",
-						value :""
+						id : "bandRankValue",
+						value : a[0].data.bandRankValue
 					}, {
 						fieldLabel : "品类排名二",
 						name : "bandRankValueTwo",
-						id : "ApplyUnScoreForm.bandRankValueTwo",
-						value :""
-					},{
-						name : "ids",
-						id : "ApplyUnScoreForm.ids",
-						xtype : "hidden",
-						value : d
-					},{
-						name : "status",
-						id : "ApplyUnScoreForm.status",
-						xtype : "hidden",
-						value : "2"
+						id : "bandRankValueTwo",
+						value : a[0].data.bandRankValueTwo
 					}
 				]
 			});
 			var win = new Ext.Window({
-				id : "ApplyUnScoreWin",
+				id : "checkUnScoreWin",
 				title : "考核",
 				height : 200,
 				width: 500,
@@ -415,10 +377,31 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 				buttonAlign : "center",
 				buttons : [
 					{
+						text : "保存",
+						iconCls : "btn-save",
+						handler : function() {
+							Ext.getCmp("bandUnScoreValueForm").getForm().submit({
+								waitMsg : "正在提交数据...",
+								url : __ctxPath + "/bandpoor/checkDxcUnScore.do?method=save&id=" + a[0].data.id,
+								success : function() {
+									Ext.getCmp("checkUnScoreWin").close();
+									Ext.ux.Toast.msg("提示信息", "保存成功！");
+								},
+								failure : function() {
+									Ext.MessageBox.show({
+										title : "操作信息",
+										msg : "保存出错，请联系管理员！",
+										buttons : Ext.MessageBox.OK,
+										icon : Ext.MessageBox.ERROR
+									});
+								}
+							});
+						}
+					}, {
 						text : "考核",
 						iconCls : "btn-check",
 						handler : function() {
-						    if(Ext.getCmp("ApplyUnScoreForm.targetShop").getValue() == "") {
+						    if(Ext.getCmp("targetShop").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
 									msg : "店名一不允许为空！",
@@ -427,7 +410,7 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 								});
 								return ;
 							}
-							if(Ext.getCmp("ApplyUnScoreForm.targetValue").getValue() == "") {
+							if(Ext.getCmp("targetValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
 									msg : "品类评效一不允许为空！",
@@ -435,8 +418,17 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 									icon : Ext.MessageBox.ERROR
 								});
 								return ;
-							}							
-							if(Ext.getCmp("ApplyUnScoreForm.bandRankValue").getValue() == "") {
+							}
+							if(Ext.getCmp("requireValue").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "本品牌评效一不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							if(Ext.getCmp("bandRankValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
 									msg : "品类排名一不允许为空！",
@@ -444,41 +436,66 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 									icon : Ext.MessageBox.ERROR
 								});
 								return ;
-							}	
-							if(Ext.getCmp("ApplyUnScoreForm.targetShopTwo").getValue() != ""||Ext.getCmp("ApplyUnScoreForm.targetValueTwo").getValue() != ""||Ext.getCmp("ApplyUnScoreForm.bandRankValueTwo").getValue() != "") {
-								if(Ext.getCmp("ApplyUnScoreForm.targetShopTwo").getValue() == "") {
-									Ext.MessageBox.show({
-										title : "操作信息",
-										msg : "店名二不允许为空！",
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-									return ;
-								}
-								if(Ext.getCmp("ApplyUnScoreForm.targetValueTwo").getValue() == "") {
-									Ext.MessageBox.show({
-										title : "操作信息",
-										msg : "品类评效二不允许为空！",
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-									return ;
-								}							
-								if(Ext.getCmp("ApplyUnScoreForm.bandRankValueTwo").getValue() == "") {
-									Ext.MessageBox.show({
-										title : "操作信息",
-										msg : "品类排名二不允许为空！",
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-									return ;
-								}
-							}													
-							Ext.getCmp("ApplyUnScoreForm").getForm().submit({
+							}
+							if(Ext.getCmp("selBandRankValue").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "本品牌排名一不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							if(Ext.getCmp("targetShopTwo").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "店名二不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							if(Ext.getCmp("targetValueTwo").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "品类评效二不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							if(Ext.getCmp("requireValueTwo").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "本品牌评效二不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							if(Ext.getCmp("bandRankValueTwo").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "品类排名二不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							if(Ext.getCmp("selBandRankValueTwo").getValue() == "") {
+								Ext.MessageBox.show({
+									title : "操作信息",
+									msg : "本品牌排名二不允许为空！",
+									buttons : Ext.MessageBox.OK,
+									icon : Ext.MessageBox.ERROR
+								});
+								return ;
+							}
+							Ext.getCmp("bandUnScoreValueForm").getForm().submit({
 								waitMsg : "正在提交数据...",
-								url : __ctxPath + "/bandpoor/applyRecordScoreManageUn.do",
+								url : __ctxPath + "/bandpoor/checkDxcUnScore.do?method=check&id=" + a[0].data.id,
 								success : function() {
-									Ext.getCmp("ApplyUnScoreWin").close();
+									Ext.getCmp("checkUnScoreWin").close();
 									Ext.ux.Toast.msg("提示信息", "保存成功！");
 								},
 								failure : function() {
@@ -494,7 +511,26 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 					}
 				]
 			}).show();
-			//this.optionByIds(d,"2");
+		},
+		passRecords : function () {
+			var c = Ext.getCmp("ApplyUnScoreManageGrid");
+			var a = c.getSelectionModel().getSelections();
+			if (a.length == 0) {
+				Ext.ux.Toast.msg("信息", "请选择要审批通过的记录！");
+				return;
+			}
+			var d = Array();
+			for (var b = 0; b < a.length; b++) {
+				d.push(a[b].data.id);
+				if(a[b].data.infoStatus==2){
+					Ext.ux.Toast.msg("信息", "审批通过的记录无需再次审批！");
+					return;
+				}else if(a[b].data.infoStatus==3){
+					Ext.ux.Toast.msg("信息", "其中有打回的记录不能再次审批！");
+					return;
+				}
+			}
+			this.optionByIds(d,"2");
 		},
 		unPassRecords : function () {
 			var c = Ext.getCmp("ApplyUnScoreManageGrid");

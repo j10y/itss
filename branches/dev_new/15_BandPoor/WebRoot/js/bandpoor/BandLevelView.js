@@ -65,6 +65,8 @@ BandLevelView = Ext.extend(Ext.Panel, {
 					name : "id",
 					type : "int"
 				},
+				"proClassId",
+				"proClassName",
 				"levelName",
 				"levelDesc",
 				"startValue",
@@ -105,6 +107,13 @@ BandLevelView = Ext.extend(Ext.Panel, {
 					dataIndex : "id",
 					hidden : true
 				}, {
+					header : "品类id",
+					dataIndex : "proClassId",
+					hidden : true
+                }, {
+					header : "品类",
+					dataIndex : "proClassName",
+                },{
 					header : "分类名称",
 					dataIndex : "levelName"
 				}, {
