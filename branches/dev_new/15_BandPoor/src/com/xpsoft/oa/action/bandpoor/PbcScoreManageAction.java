@@ -48,7 +48,7 @@ public class PbcScoreManageAction extends BaseAction{
 			buff.append("{id:'")
 			.append(bandPoor.getId())
 			.append("',bandName:'")
-			.append(bandPoor.getBandName())
+			.append(bandPoor.getBandName().replace("'", " "))
 			.append("',saleStoreNum:'")
 			.append(infopoors.size())
 			.append("',bandScore:'")

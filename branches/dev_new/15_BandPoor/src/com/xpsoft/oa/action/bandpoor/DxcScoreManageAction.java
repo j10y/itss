@@ -128,11 +128,14 @@ public class DxcScoreManageAction extends BaseAction{
 		String bandScoreValue=getRequest().getParameter("bandScoreValue");
 		String ids=getRequest().getParameter("ids");
 		String settype=getRequest().getParameter("settype");
+		String proClassId=getRequest().getParameter("proClassId");
 		String sql="update bp_beelectedbandpoor set bandScore="+bandScoreValue;
 		if(settype.equals("1")){
 			sql+=" where status!="+BeElectedBandPoor.STATUS_DELETE+" and infoType="+BeElectedBandPoor.TYPE_SCORE;
 		}else if(settype.equals("2")){
 			sql+=" where id in ("+ids+")";
+		}else if(settype.equals("3")){
+			sql+=" where status!="+BeElectedBandPoor.STATUS_DELETE+" and infoType="+BeElectedBandPoor.TYPE_SCORE +" and proClassId="+proClassId;
 		}
 		this.beElectedBandPoorService.updateDatabySql(sql);
 		this.jsonString = "{success:true}";

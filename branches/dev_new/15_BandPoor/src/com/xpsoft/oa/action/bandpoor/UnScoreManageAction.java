@@ -402,10 +402,10 @@ public class UnScoreManageAction extends BaseAction{
 		String[] ids = getRequest().getParameterValues("ids");
 		String status=getRequest().getParameter("status");
 		String targetShop = this.getRequest().getParameter("targetShop");
-		Double targetValue = "".equals(this.getRequest().getParameter("targetValue")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValue"));
+		//Double targetValue = "".equals(this.getRequest().getParameter("targetValue")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValue"));
 		Integer bandRankValue = "".equals(this.getRequest().getParameter("bandRankValue")) ? null : Integer.parseInt(this.getRequest().getParameter("bandRankValue"));
 		String targetShopTwo = this.getRequest().getParameter("targetShopTwo");
-		Double targetValueTwo = "".equals(this.getRequest().getParameter("targetValueTwo")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValueTwo"));
+		//Double targetValueTwo = "".equals(this.getRequest().getParameter("targetValueTwo")) ? null : Double.parseDouble(this.getRequest().getParameter("targetValueTwo"));
 		Integer bandRankValueTwo = "".equals(this.getRequest().getParameter("bandRankValueTwo")) ? null : Integer.parseInt(this.getRequest().getParameter("bandRankValueTwo"));
 		SaleAssessment sa = new SaleAssessment();
 		Date currentDate = new Date();
@@ -431,10 +431,10 @@ public class UnScoreManageAction extends BaseAction{
 					sa.setCreateUser(currentUser);
 					sa.setStatus(SaleAssessment.CREATE);
 					sa.setTargetShop(targetShop);
-					sa.setTargetValue(targetValue);
+					//sa.setTargetValue(targetValue);
 					sa.setBandRankValue(bandRankValue);
 					sa.setTargetShopTwo(targetShopTwo);
-					sa.setTargetValueTwo(targetValueTwo);
+					//sa.setTargetValueTwo(targetValueTwo);
 					sa.setBandRankValueTwo(bandRankValueTwo);
 					sa.setBeElectedBPId(beElectedBandPoor);
 					sa =saleAssessmentService.save(sa);
