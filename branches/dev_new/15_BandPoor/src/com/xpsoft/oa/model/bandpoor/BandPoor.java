@@ -49,6 +49,8 @@ public class BandPoor extends BaseModel{
 	
 	private Integer poorVersion;
 	
+	private ProClass proClassId;
+	
 	private Set<InfoPoor> infoPoors;
 
 	public Long getId() {
@@ -304,6 +306,14 @@ public class BandPoor extends BaseModel{
 		} else if (!year.equals(other.year))
 			return false;
 		return true;
+	}
+
+	public ProClass getProClassId() {
+		return proClassId;
+	}
+
+	public void setProClassId(ProClass proClassId) {
+		this.proClassId = proClassId;
 	}
 
 	

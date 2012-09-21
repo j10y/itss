@@ -142,7 +142,14 @@
             access="property"
             column="poorVersion"
         />
-        
+        <many-to-one
+			name="proClassId"
+			class="com.xpsoft.oa.model.bandpoor.ProClass"
+            not-null="false"
+			fetch="select"
+		>	
+			<column name="proClassId" />
+		</many-to-one>
        <set name="infoPoors" table="bp_info_bandpoor" cascade="save-update" inverse="false" lazy="true">
         	<key column="bandPoorId"/>
         	<many-to-many fetch="join" class="com.xpsoft.oa.model.bandpoor.InfoPoor" column="infoBPId"/>
