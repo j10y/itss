@@ -395,7 +395,7 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 			});
 			var win = new Ext.Window({
 				id : "ApplyUnScoreWin",
-				title : "考核",
+				title : "审核",
 				height : 200,
 				width: 500,
 				layout : "fit",
@@ -405,7 +405,7 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 				buttonAlign : "center",
 				buttons : [
 					{
-						text : "考核",
+						text : "审核",
 						iconCls : "btn-check",
 						handler : function() {
 						    if(Ext.getCmp("ApplyUnScoreForm.targetShop").getValue() == "") {
