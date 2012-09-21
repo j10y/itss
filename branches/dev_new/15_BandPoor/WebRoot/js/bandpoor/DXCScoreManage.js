@@ -196,7 +196,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 			if (isGranted("_DXCScoreManageAllSet")) {
 				this.dxctopbar.add(new Ext.Button({
 						iconCls : "btn-setting",
-						text : "全部设定",
+						text : "按品类设定",
 						handler : this.setAllScore,
 						scope : this
 					}));
@@ -273,7 +273,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 		},
 		setAllScore : function () {
 			//1 为全部设定 2为部分设定
-				this.saveScoreValue("1","");
+				this.saveScoreValue("3","");
 		},
 		delRecords : function () {
 			var c = Ext.getCmp("DXCScoreManageGrid");
@@ -319,7 +319,46 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 						anchor : "98%,98%"
 					},
 					defaultType : "textfield",
-					items : [{
+					items : [
+					{
+					fieldLabel : "品类",
+													name : "DXCScore.proClassName",
+													id : "DXCScore.proClassName",
+													maxHeight : 200,
+													xtype : "combo",
+													mode : "local",
+													editable : true,
+													allowBlank : false,
+													triggerAction : "all",
+													valueField : "fromProClassId",
+													displayField : "fromProClassName",
+													store : new Ext.data.SimpleStore({
+														url : __ctxPath
+														 + "/bandpoor/getProClassScoreManage.do",
+														fields : [
+															"fromProClassId",
+															"fromProClassName"]
+													}),
+													listeners : {
+														focus : function (b) {
+															var a = Ext.getCmp("DXCScore.proClassName").getStore();
+															if (a.getCount() <= 0) {
+																Ext.Ajax.request({
+																	url : __ctxPath + "/bandpoor/getProClassScoreManage.do",
+																	method : "post",
+																	success : function (d) {
+																		var c = Ext.util.JSON.decode(d.responseText);
+																		a.loadData(c);
+																	}
+																});
+															}
+														},
+														select:function(e,c,d){
+															//var proClassId=Ext.getCmp("DXCScore.proClassName").getValue();
+															//Ext.getCmp("DXCScore.proClassId").setValue(proClassId);
+														}
+													}
+					},{
 					fieldLabel : "品牌考核分",
 					name : "bandScoreValue",
 					id : "bandScoreValue",
@@ -344,6 +383,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 							iconCls : "btn-save",
 							handler : function(){
 								var bandScoreValue=Ext.getCmp("bandScoreValue").getValue();
+								var proClassId=Ext.getCmp("DXCScore.proClassName").getValue();
 								if(bandScoreValue.length==0){
 									Ext.MessageBox
 												.show({
@@ -356,7 +396,7 @@ DXCScoreManage = Ext.extend(Ext.Panel, {
 								}
 								Ext.getCmp("bandScoreValueForm").getForm().submit({
 									waitMsg : "正在设定数据...",
-									url : __ctxPath + "/bandpoor/saveScoreValueDxcScore.do?bandScoreValue="+bandScoreValue+"&settype="+a+"&ids="+b,
+									url : __ctxPath + "/bandpoor/saveScoreValueDxcScore.do?bandScoreValue="+bandScoreValue+"&settype="+a+"&ids="+b+"&proClassId="+proClassId,
 									success : function (c, d) {
 											Ext.getCmp("setScoreWin").close();
 											Ext.getCmp("DXCScoreManageGrid").getStore().reload();

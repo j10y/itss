@@ -370,23 +370,13 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 						name : "targetShopTwo",
 						id : "ApplyUnScoreForm.targetShopTwo",
 						value :""
-					},{
-						fieldLabel : "品类评效一",
-						name : "targetValue",
-						id : "ApplyUnScoreForm.targetValue",
-						value : ""
-					},{
-						fieldLabel : "品类评效二",
-						name : "targetValueTwo",
-						id : "ApplyUnScoreForm.targetValueTwo",
-						value :""
 					}, {
-						fieldLabel : "品类排名一",
+						fieldLabel : "品牌排名及格线一",
 						name : "bandRankValue",
 						id : "ApplyUnScoreForm.bandRankValue",
 						value :""
 					}, {
-						fieldLabel : "品类排名二",
+						fieldLabel : "品牌排名及格线二",
 						name : "bandRankValueTwo",
 						id : "ApplyUnScoreForm.bandRankValueTwo",
 						value :""
@@ -426,26 +416,17 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 									icon : Ext.MessageBox.ERROR
 								});
 								return ;
-							}
-							if(Ext.getCmp("ApplyUnScoreForm.targetValue").getValue() == "") {
-								Ext.MessageBox.show({
-									title : "操作信息",
-									msg : "品类评效一不允许为空！",
-									buttons : Ext.MessageBox.OK,
-									icon : Ext.MessageBox.ERROR
-								});
-								return ;
-							}							
+							}					
 							if(Ext.getCmp("ApplyUnScoreForm.bandRankValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
-									msg : "品类排名一不允许为空！",
+									msg : "品牌排名及格线一不允许为空！",
 									buttons : Ext.MessageBox.OK,
 									icon : Ext.MessageBox.ERROR
 								});
 								return ;
 							}	
-							if(Ext.getCmp("ApplyUnScoreForm.targetShopTwo").getValue() != ""||Ext.getCmp("ApplyUnScoreForm.targetValueTwo").getValue() != ""||Ext.getCmp("ApplyUnScoreForm.bandRankValueTwo").getValue() != "") {
+							if(Ext.getCmp("ApplyUnScoreForm.targetShopTwo").getValue() != ""||Ext.getCmp("ApplyUnScoreForm.bandRankValueTwo").getValue() != "") {
 								if(Ext.getCmp("ApplyUnScoreForm.targetShopTwo").getValue() == "") {
 									Ext.MessageBox.show({
 										title : "操作信息",
@@ -454,20 +435,11 @@ ApplyUnScoreManage = Ext.extend(Ext.Panel, {
 										icon : Ext.MessageBox.ERROR
 									});
 									return ;
-								}
-								if(Ext.getCmp("ApplyUnScoreForm.targetValueTwo").getValue() == "") {
-									Ext.MessageBox.show({
-										title : "操作信息",
-										msg : "品类评效二不允许为空！",
-										buttons : Ext.MessageBox.OK,
-										icon : Ext.MessageBox.ERROR
-									});
-									return ;
-								}							
+								}					
 								if(Ext.getCmp("ApplyUnScoreForm.bandRankValueTwo").getValue() == "") {
 									Ext.MessageBox.show({
 										title : "操作信息",
-										msg : "品类排名二不允许为空！",
+										msg : "品牌排名及格线二不允许为空！",
 										buttons : Ext.MessageBox.OK,
 										icon : Ext.MessageBox.ERROR
 									});

@@ -340,14 +340,12 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 						fieldLabel : "品类评效一",
 						name : "targetValue",
 						id : "targetValue",
-						value : a[0].data.targetValue,
-						readOnly: true
+						value : a[0].data.targetValue
 					},{
 						fieldLabel : "品类评效二",
 						name : "targetValueTwo",
 						id : "targetValueTwo",
-						value : a[0].data.targetValueTwo,
-						readOnly: true
+						value : a[0].data.targetValueTwo
 					}, {
 						fieldLabel : "本品牌评效一",
 						name : "requireValue",
@@ -359,13 +357,13 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 						id : "requireValueTwo",
 						value : a[0].data.requireValueTwo
 					}, {
-						fieldLabel : "品类排名一",
+						fieldLabel : "品牌排名及格线一",
 						name : "bandRankValue",
 						id : "bandRankValue",
 						value : a[0].data.bandRankValue,
 						readOnly: true
 					}, {
-						fieldLabel : "品类排名二",
+						fieldLabel : "品牌排名及格线二",
 						name : "bandRankValueTwo",
 						id : "bandRankValueTwo",
 						value : a[0].data.bandRankValueTwo,
@@ -450,7 +448,7 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 							if(Ext.getCmp("bandRankValue").getValue() == "") {
 								Ext.MessageBox.show({
 									title : "操作信息",
-									msg : "品类排名一不允许为空！",
+									msg : "品牌排名及格线一不允许为空！",
 									buttons : Ext.MessageBox.OK,
 									icon : Ext.MessageBox.ERROR
 								});
@@ -465,11 +463,20 @@ DXCUnScoreManage = Ext.extend(Ext.Panel, {
 								});
 								return ;
 							}
-							if(Ext.getCmp("targetShopTwo").getValue() != ""&&Ext.getCmp("targetValueTwo").getValue() != ""&&Ext.getCmp("bandRankValueTwo").getValue() != "") {
+							if(Ext.getCmp("targetShopTwo").getValue() != ""&&Ext.getCmp("bandRankValueTwo").getValue() != "") {
 								if(Ext.getCmp("targetValueTwo").getValue() == "") {
 									Ext.MessageBox.show({
 										title : "操作信息",
 										msg : "品类评效二不允许为空！",
+										buttons : Ext.MessageBox.OK,
+										icon : Ext.MessageBox.ERROR
+									});
+									return ;
+								}
+								if(Ext.getCmp("requireValueTwo").getValue() == "") {
+									Ext.MessageBox.show({
+										title : "操作信息",
+										msg : "本品牌评效二不允许为空！",
 										buttons : Ext.MessageBox.OK,
 										icon : Ext.MessageBox.ERROR
 									});
