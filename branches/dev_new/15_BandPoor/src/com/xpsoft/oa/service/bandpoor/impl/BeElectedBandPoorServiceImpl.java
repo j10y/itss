@@ -55,6 +55,7 @@ public class BeElectedBandPoorServiceImpl extends BaseServiceImpl<BeElectedBandP
 			valmap.put("Q_year_N_EQ", year);
 			valmap.put("Q_poorVersion_N_EQ", poorVersion);
 			valmap.put("Q_bandId.id_L_EQ", bbp.getBandId().getId()+"");
+			valmap.put("Q_proClassId.id_L_EQ", bbp.getProClassId().getId()+"");
 			QueryFilter valfilter = new QueryFilter(valmap);
 			valfilter.addFilter("Q_status_N_NEQ", BeElectedBandPoor.STATUS_DELETE+"");
 			valfilter.addFilter("Q_infoType_N_EQ", BeElectedBandPoor.TYPE_SCORE+"");
@@ -81,6 +82,7 @@ public class BeElectedBandPoorServiceImpl extends BaseServiceImpl<BeElectedBandP
 				QueryFilter levelfilter = new QueryFilter(levelmap);
 				levelfilter.addFilter("Q_startValue_DB_LE", scoreall+"");
 				levelfilter.addFilter("Q_endValue_DB_GT", scoreall+"");
+				levelfilter.addFilter("Q_proClassId.id_L_EQ", bbp.getProClassId().getId()+"");
 				List<BandLevel> levellist=bandLevelDao.getAll(levelfilter);
 				if(levellist.size()>0){
 					BandLevel bandLevel=levellist.get(0);
@@ -92,6 +94,7 @@ public class BeElectedBandPoorServiceImpl extends BaseServiceImpl<BeElectedBandP
 					bp.setBandPoorStatus(BandPoor.BANDSTATUS_BXC);
 				}
 			}else{
+				bp.setProClassId(bbp.getProClassId());
 				bp.setBandId(bbp.getBandId());
 				bp.setBandName(bbp.getBandName());
 				bp.setCreatDate(new Date());
@@ -113,6 +116,7 @@ public class BeElectedBandPoorServiceImpl extends BaseServiceImpl<BeElectedBandP
 				QueryFilter levelfilter = new QueryFilter(levelmap);
 				levelfilter.addFilter("Q_startValue_DB_LE", scoreall+"");
 				levelfilter.addFilter("Q_endValue_DB_GT", scoreall+"");
+				levelfilter.addFilter("Q_proClassId.id_L_EQ", bbp.getProClassId().getId()+"");
 				List<BandLevel> levellist=bandLevelDao.getAll(levelfilter);
 				if(levellist.size()>0){
 					BandLevel bandLevel=levellist.get(0);
