@@ -88,7 +88,9 @@ public class DeptDaoImpl implements DeptDao {
 						@Override
 						protected Object doMapFromContext(DirContextOperations ctx) {
 							DistinguishedName dn = (DistinguishedName) ctx.getDn();
-							children.add(dn.toString());
+							if(dn.toString().contains("o=")){
+								children.add(dn.toString());
+							}
 							return null;
 						}
 					});

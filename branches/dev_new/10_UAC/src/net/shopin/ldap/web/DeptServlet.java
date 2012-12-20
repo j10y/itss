@@ -86,7 +86,12 @@ public class DeptServlet extends HttpServlet {
 				for(int i=0; i<deptList.size(); i++){
 					json.append("{");
 					json.append("id:'" + deptList.get(i).getDn() + "',");
-					json.append("text:'" + deptList.get(i).getDeptName() + "'");
+					if(deptList.get(i).getStatus()==0){
+						json.append("text:'" + deptList.get(i).getDeptName() + "'");
+					}else{
+						json.append("text:'" + deptList.get(i).getDeptName() + "<font color=\"red\">(锁定)</font>'");
+					}
+					
 					if(i<(deptList.size()-1)) {
 						json.append("},");
 					}else {

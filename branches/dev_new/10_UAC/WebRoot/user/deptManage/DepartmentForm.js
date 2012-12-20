@@ -149,10 +149,10 @@ DepartmentForm = Ext.extend(Ext.Window, {
 						});
 						a.close();
 					},
-					failure : function(c, d) {
+					failure : function(form, action) {
 						Ext.MessageBox.show({
 							title : "操作信息",
-							msg : "保存失败，请联系管理员！",
+							msg : action.result.msg,
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.ERROR
 						});
@@ -166,13 +166,18 @@ DepartmentForm = Ext.extend(Ext.Window, {
 					method : "post",
 					waitMsg : "正在提交数据……",
 					success : function(c, d) {
-						alert("保存成功！");
-						a.close();
-					},
-					failure : function(c, d) {
 						Ext.MessageBox.show({
 							title : "操作信息",
-							msg : "保存失败，请联系管理员！",
+							msg : "保存成功！",
+							buttons : Ext.MessageBox.OK,
+							icon : Ext.MessageBox.INFO
+						});
+						a.close();
+					},
+					failure : function(form, action) {
+						Ext.MessageBox.show({
+							title : "操作信息",
+							msg : action.result.msg,
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.ERROR
 						});

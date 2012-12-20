@@ -65,6 +65,9 @@ public class SystemWSImpl implements SystemWS{
 	@WebMethod
 	public List<Department> getDeptList() {
 		List<Department> depts = deptDao.findDeptsByParam("");
+		for(Department dept : depts){
+			if(StringUtils.isNotEmpty(dept.getParentNo()))dept.setParentNo(dept.getParentNo().substring(2, dept.getParentNo().indexOf(",")));
+		}
 		return depts;
 	}
 	
