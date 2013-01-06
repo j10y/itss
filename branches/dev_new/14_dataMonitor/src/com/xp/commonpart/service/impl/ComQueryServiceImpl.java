@@ -651,6 +651,7 @@ public class ComQueryServiceImpl implements ComQueryService{
 					String realname=userMap.get("realname")!=null?userMap.get("realname").toString():"";
 					String telp=userMap.get("mobiphone")!=null?userMap.get("mobiphone").toString():"";
 					String message="webName:"+webName+",webUrl:"+webUrl+"访问应用失败，原因：访问服务器失败！";
+					log.info("webName:"+webName+",webUrl:"+webUrl+"访问应用失败，原因：访问服务器失败！,发送消息");
 					if(telp!=null&&telp.length()>0){
 						ExceptionMessage.sendMessage(message,telp,realname);
 					}
