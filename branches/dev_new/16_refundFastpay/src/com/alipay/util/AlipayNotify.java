@@ -26,7 +26,8 @@ public class AlipayNotify {
     /**
      * HTTPS形式消息验证地址
      */
-    private static final String HTTPS_VERIFY_URL = "https://www.alipay.com/cooperate/gateway.do?service=notify_verify&";
+    //private static final String HTTPS_VERIFY_URL = "https://www.alipay.com/cooperate/gateway.do?service=notify_verify&";
+	private static final String HTTPS_VERIFY_URL = "https://mapi.alipay.com/gateway.do?service=notify_verify&";
 
     /**
      * HTTP形式消息验证地址

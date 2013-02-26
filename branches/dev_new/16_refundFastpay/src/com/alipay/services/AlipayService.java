@@ -32,7 +32,7 @@ public class AlipayService {
     /**
      * 支付宝提供给商户的服务接入网关URL(新)
      */
-	public static final String ALIPAY_GATEWAY_NEW = PropertiesUtil.getProperties("alipay.gateway", "https://www.alipay.com/cooperate/gateway.do?");
+	public static final String ALIPAY_GATEWAY_NEW = PropertiesUtil.getProperties("alipay.gateway", "https://mapi.alipay.com/gateway.do?");
 
     /**
      * 构造即时到帐批量退款无密接口
