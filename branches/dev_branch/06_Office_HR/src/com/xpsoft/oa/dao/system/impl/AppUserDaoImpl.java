@@ -2,19 +2,24 @@ package com.xpsoft.oa.dao.system.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import net.shopin.ldap.ws.client.Role;
+import net.shopin.ldap.ws.client.System;
+import net.shopin.ldap.ws.client.SystemWSImpl;
+import net.shopin.ldap.ws.client.SystemWSImplService;
+import net.shopin.ldap.ws.client.User;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
@@ -77,10 +82,21 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 
 		return user;
 	}
-
+	
+	public AppRole getByRoleName(String roleName) {
+		String hql = "from AppRole ar where ar.roleName=?";
+		return (AppRole) findUnique(hql, new Object[] { roleName });
+	}
+	
+	public Department findByDepName(String depName){
+		String hql = "from Department vo where vo.depName=?";
+		return  (Department) findUnique(hql, new Object[] { depName });
+	}
+	
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
 		final String uName = username;
+		
 		AppUser user = (AppUser) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
@@ -89,10 +105,17 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 				query.setString(0, uName);
 				query.setShort(1, Constants.FLAG_UNDELETED.shortValue());
 				AppUser user = null;
+
 				try {
 					user = (AppUser) query.uniqueResult();
-
+					
+					//modify by Jack for unit ldap user information with sso at 2013-4-3 begin
+					String ldapURL = AppUtil.getPropertity("appSystem.ldap.server");
+					SystemWSImpl swip = SystemWSImplService.getPort(ldapURL);
+					
+					/*
 					if (user != null) {
+						
 						Hibernate.initialize(user.getRoles());
 						Hibernate.initialize(user.getDepartment());
 
@@ -119,6 +142,77 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 							}
 						}
 					}
+					*/
+					int ct = 0;
+					if(user == null){
+						User userInfo = swip.getUserDetailByUid(uName);
+						if(userInfo != null){
+							user = new AppUser();
+							user.setUsername(uName);
+							user.setEmail(userInfo.getMail());
+							user.setFullname(userInfo.getDisplayName());
+							Department dp = findByDepName(userInfo.getDeptName());
+							if(dp != null){
+								user.setDepartment(dp);
+							}
+							user.setEducation(userInfo.getDeptName());
+							user.setPhone(userInfo.getTelephoneNumber());
+							user.setMobile(userInfo.getMobile());
+							user.setFax(userInfo.getFacsimileTelephoneNumber());
+							user.setPosition(userInfo.getTitle());
+							user.setTitle((short) 1);
+							user.setPassword("a4ayc/80/OGda4BO/1o/V0etpOqiLx1JwB5S3beHW0s=");
+							user.setStatus((short) 1);
+							user.setAccessionTime(new Date());
+							user.setDelFlag((short) 0);
+							if(AppUtil.getPropertity("appSystem.public.role") != null && !"".equalsIgnoreCase(AppUtil.getPropertity("appSystem.public.role"))){
+								AppRole role = getByRoleName(AppUtil.getPropertity("appSystem.public.role"));
+								Set<AppRole> rs = new HashSet<AppRole>();
+								rs.add(role);
+								user.setRoles(rs);
+							}
+							user = save(user);
+						}else{
+							ct = 1;
+						}
+					}
+					if(ct != 1){
+						List<Role> roles = swip.findRolesByUserId(user.getUsername());
+						if(roles != null && roles.size() >0){
+							for(Role itemRole : roles){
+								AppRole role = getByRoleName(itemRole.getCn());
+								List<System> systems = swip.findSystemsByRoleCN(itemRole.getCn());
+								for(System sItem : systems){
+									if(AppUtil.getPropertity("appSystem.name").equalsIgnoreCase(sItem.getCn())){
+										if(role.getStatus() > 0){
+											String[] items = role.getRights().split("[,]");
+											for (int i = 0; i < items.length; i++) {
+												if (!user.getRights().contains(
+														items[i])) {
+													user.getRights().add(items[i]);
+												}
+											}
+										}
+									}
+								}
+							}
+						}else if(AppUtil.getPropertity("appSystem.public.role") != null && !"".equalsIgnoreCase(AppUtil.getPropertity("appSystem.public.role"))){
+							AppRole role = getByRoleName(AppUtil.getPropertity("appSystem.public.role"));
+							Set<AppRole> rs = new HashSet<AppRole>();
+							rs.add(role);
+							user.setRoles(rs);
+							String[] items = role.getRights().split("[,]");
+							for (int i = 0; i < items.length; i++) {
+								if (!user.getRights().contains(
+										items[i])) {
+									user.getRights().add(items[i]);
+								}
+							}
+						}else {
+							user = null;
+						}
+					}
+					
 				} catch (Exception ex) {
 					AppUserDaoImpl.this.logger.warn("user:"
 							+ uName +
@@ -128,6 +222,10 @@ public class AppUserDaoImpl extends BaseDaoImpl<AppUser> implements AppUserDao,
 				
 				if(user == null)
 					throw new UsernameNotFoundException(uName + " 不存在，请申请该系统使用权限！");
+				
+				//modify by Jack for unit ldap user information with sso at 2013-4-3 end
+				Hibernate.initialize(user.getRoles());
+				Hibernate.initialize(user.getDepartment());
 				return user;
 			}
 		});

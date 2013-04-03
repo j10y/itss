@@ -6,10 +6,12 @@
 <%
 	String basePath=request.getContextPath();
 	//登录成功后，需要把该用户显示至在线用户
-	AppUtil.addOnlineUser(request.getSession().getId(), ContextUtil.getCurrentUser());
-	if(ContextUtil.getCurrentUser().getRights().contains("__ALL")){
-		request.setAttribute("IS_MANAGER",true);
-	}
+	if(ContextUtil.getCurrentUser() != null){
+		AppUtil.addOnlineUser(request.getSession().getId(), ContextUtil.getCurrentUser());
+		if(ContextUtil.getCurrentUser().getRights().contains("__ALL")){
+			request.setAttribute("IS_MANAGER",true);
+		}
+	} 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
